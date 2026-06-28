@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://boh8yg4ai04cp"]
+
+[ext_resource type="Script" uid="uid://i0x5ju37mw8h" path="res://scenes/sleep_pod.gd" id="1_5udka"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jmr1g"]
+albedo_color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w70bv"]
+size = Vector3(0.98828125, 0.4765625, 0.005)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lbc2j"]
+size = Vector3(4.969002, 3.0245118, 2.8330078)
+
+[node name="SleepPod" type="Node3D" unique_id=121559252 groups=["sleep_pods"]]
+script = ExtResource("1_5udka")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1209115691]
+modulate = Color(0.23137255, 0.44705883, 0.23137255, 1)
+text = "00:00:30"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Label3D" unique_id=421943877]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.008117676, -0.0061035156, -0.006)
+material_override = SubResource("StandardMaterial3D_jmr1g")
+mesh = SubResource("BoxMesh_w70bv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=416387107]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1856392328]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.016536713, -0.012255847, 0.009277344)
+shape = SubResource("BoxShape3D_lbc2j")

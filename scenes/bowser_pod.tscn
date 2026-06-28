@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://e434i06gf7fs"]
+
+[ext_resource type="PackedScene" uid="uid://dcb1fjj3gcci3" path="res://loads/bowser_capsule/Hitem3d-1782155776080.glb" id="1_yr11i"]
+[ext_resource type="PackedScene" uid="uid://boh8yg4ai04cp" path="res://scenes/sleep_pod.tscn" id="2_vov1q"]
+
+[node name="bowser_pod" type="Node3D" unique_id=1094455652]
+
+[node name="AuxScene" parent="." unique_id=1356389083 instance=ExtResource("1_yr11i")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="SleepPod" parent="." unique_id=121559252 instance=ExtResource("2_vov1q")]
+l_rotation = Vector3(-53, 0, 0)
+l_position = Vector3(0, -1, 1.17)

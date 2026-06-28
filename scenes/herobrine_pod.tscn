@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c4tr5jkt2oo0v"]
+
+[ext_resource type="PackedScene" uid="uid://boh8yg4ai04cp" path="res://scenes/sleep_pod.tscn" id="2_h1hh6"]
+[ext_resource type="PackedScene" uid="uid://8v36k85w0p7w" path="res://loads/herobrine_capsule/Hitem3d-1782239593585.glb" id="2_we3dm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l7k0l"]
+albedo_color = Color(0.07450981, 0.09411765, 0.1254902, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e5hef"]
+size = Vector3(0.9355469, 0.02, 0.35131836)
+
+[node name="herobrine_pod" type="Node3D" unique_id=1094455652]
+
+[node name="SleepPod" parent="." unique_id=1357212878 instance=ExtResource("2_h1hh6")]
+l_color = Color(0.078431375, 0.25490198, 0.4392157, 1)
+l_rotation = Vector3(-7.2, 0, 0)
+l_position = Vector3(0, -0.87, 1.36)
+
+[node name="AuxScene" parent="." unique_id=1951161798 instance=ExtResource("2_we3dm")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, -0.64640784)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1057674833]
+transform = Transform3D(1, 0, 0, 0, 0.99573594, 0.092249386, 0, -0.092249386, 0.99573594, 0, -0.63530266, 1.1584995)
+material_override = SubResource("StandardMaterial3D_l7k0l")
+mesh = SubResource("BoxMesh_e5hef")

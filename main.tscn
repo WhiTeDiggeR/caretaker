@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://crvn80xqpmgdm"]
+
+[ext_resource type="PackedScene" uid="uid://dgok4h6v4ol4g" path="res://scenes/player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://c4tr5jkt2oo0v" path="res://scenes/herobrine_pod.tscn" id="3_7mycd"]
+[ext_resource type="Script" uid="uid://bqbyjq8othdst" path="res://game_manager.gd" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bctpg3nmjom30" path="res://scenes/containment_monitor.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://b05bfa3w5bv1x" path="res://scenes/control_panel.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://e434i06gf7fs" path="res://scenes/bowser_pod.tscn" id="7_5vw27"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e5hef"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_l7k0l"]
+size = Vector3(20, 1, 20)
+
+[node name="Main" type="Node3D" unique_id=357601100]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=955244325]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1911670855]
+shape = SubResource("BoxShape3D_e5hef")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=982337420]
+mesh = SubResource("BoxMesh_l7k0l")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1067915316]
+transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 0, 0, 0)
+
+[node name="Player" parent="." unique_id=1348182797 node_paths=PackedStringArray("interact_label") instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3999999, -0.3870101)
+interact_label = NodePath("../CanvasLayer/InteractLabel")
+
+[node name="bowser_pod" parent="." unique_id=1094455652 instance=ExtResource("7_5vw27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0245118, -8.437696)
+
+[node name="herobrine_pod" parent="bowser_pod" unique_id=649633800 instance=ExtResource("3_7mycd")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.953261, 0, 8.437696)
+
+[node name="GameManager" type="Node" parent="." unique_id=303789841]
+script = ExtResource("3_h2yge")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2098508217]
+
+[node name="InteractLabel" type="Label" parent="CanvasLayer" unique_id=1588331824 groups=["ui_interact"]]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "[E] Продлить сон"
+
+[node name="ContainmentMonitor" parent="." unique_id=1117962827 instance=ExtResource("4_1bvp3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.980051, 3.10873, -1.3667393)
+
+[node name="ControlPanel" parent="." unique_id=1277420794 instance=ExtResource("5_lquwl")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.4936814, 1.2499998, 1.0016074)
