@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bctpg3nmjom30" path="res://scenes/containment_monitor.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://b05bfa3w5bv1x" path="res://scenes/control_panel.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://e434i06gf7fs" path="res://scenes/bowser_pod.tscn" id="7_5vw27"]
+[ext_resource type="PackedScene" uid="uid://cu55r1hlix6lj" path="res://scenes/room_example.tscn" id="7_272bh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e5hef"]
 size = Vector3(20, 1, 20)
@@ -27,14 +28,14 @@ mesh = SubResource("BoxMesh_l7k0l")
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 0, 0, 0)
 
 [node name="Player" parent="." unique_id=1348182797 node_paths=PackedStringArray("interact_label") instance=ExtResource("1_ig7tw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3999999, -0.3870101)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11229229, 1.3999999, -1.2925193)
 interact_label = NodePath("../CanvasLayer/InteractLabel")
+
+[node name="herobrine_pod" parent="." unique_id=649633800 instance=ExtResource("3_7mycd")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.953261, 2.0245118, 0)
 
 [node name="bowser_pod" parent="." unique_id=1094455652 instance=ExtResource("7_5vw27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0245118, -8.437696)
-
-[node name="herobrine_pod" parent="bowser_pod" unique_id=649633800 instance=ExtResource("3_7mycd")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.953261, 0, 8.437696)
 
 [node name="GameManager" type="Node" parent="." unique_id=303789841]
 script = ExtResource("3_h2yge")
@@ -52,3 +53,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.98
 
 [node name="ControlPanel" parent="." unique_id=1277420794 instance=ExtResource("5_lquwl")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.4936814, 1.2499998, 1.0016074)
+
+[node name="RoomExample" parent="." unique_id=1 instance=ExtResource("7_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.470701, 0.5071037, -19.89983)
