@@ -17,6 +17,8 @@ extends StaticBody3D
 	$RightLowerAccent,
 	$LeftRearLowerAccent,
 	$RightRearLowerAccent,
+	$WarningIndicator,
+	$RearWarningIndicator,
 ]
 
 var is_open := false
