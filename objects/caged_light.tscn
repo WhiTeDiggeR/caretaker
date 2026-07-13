@@ -4,26 +4,17 @@
 [node name="CagedLight" type="Node3D"]
 script = ExtResource("2_script")
 [node name="Model" parent="." instance=ExtResource("1")]
-scale = Vector3(0.78, 0.78, 0.78)
+scale = Vector3(0.9, 0.9, 0.9)
 [node name="Light" type="SpotLight3D" parent="."]
 position = Vector3(0, -0.5, 0)
 rotation_degrees = Vector3(-90, 0, 0)
 light_color = Color(0.58, 0.72, 0.92, 1)
-light_energy = 8.5
-spot_range = 12.0
-spot_angle = 70.0
+light_energy = 9.25
+spot_range = 10.5
+spot_angle = 78.0
 spot_angle_attenuation = 0.65
 shadow_enabled = true
 distance_fade_enabled = true
 distance_fade_begin = 20.0
 distance_fade_shadow = 13.0
-distance_fade_length = 7.0
-[node name="LocalFill" type="OmniLight3D" parent="."]
-position = Vector3(0, -1.05, 0)
-light_color = Color(0.44, 0.62, 0.82, 1)
-light_energy = 0.72
-omni_range = 6.2
-shadow_enabled = false
-distance_fade_enabled = true
-distance_fade_begin = 20.0
 distance_fade_length = 7.0

@@ -25,7 +25,7 @@
 [ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="23_debris"]
 [ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="24_barrier"]
 [ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="25_terminal"]
-[ext_resource type="Script" uid="uid://dyi14bpmsxl8v" path="res://scenes/facility_prop_optimizer.gd" id="26_optimizer"]
+[ext_resource type="Script" path="res://scenes/facility_prop_optimizer.gd" id="26_optimizer"]
 
 [sub_resource type="BoxShape3D" id="ProgressionAreaShape"]
 size = Vector3(8, 3, 8)
@@ -1334,8 +1334,3 @@ autowrap_mode = 2
 [node name="MessageTimer" type="Timer" parent="CanvasLayer" unique_id=1500162206]
 wait_time = 9.0
 one_shot = true
-
-[node name="FacilityLight" type="DirectionalLight3D" parent="." unique_id=2084765054]
-transform = Transform3D(0.90630776, 0.34618863, -0.24240388, 0, 0.57357645, 0.81915206, 0.42261827, -0.74240386, 0.5198368, 0, 0, 0)
-light_color = Color(0.42, 0.52, 0.7, 1)
-light_energy = 0.025

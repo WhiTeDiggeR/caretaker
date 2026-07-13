@@ -1,7 +1,7 @@
 extends StaticBody3D
 
 @export var animation_time := 0.65
-@export var open_panel_x := 2.22
+@export var open_panel_x := 1.38
 
 @onready var left_panel: MeshInstance3D = $LeftPanel
 @onready var right_panel: MeshInstance3D = $RightPanel
