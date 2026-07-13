@@ -1,0 +1,35 @@
+schema_version: 1
+project: caretaker
+repository: WhiTeDiggeR/caretaker
+
+branches:
+  stable: main
+  integration: team/integration
+  task_prefix: task/
+
+engine:
+  name: godot
+  version: 4.7-stable
+  project_file: project.godot
+  main_scene: res://scenes/underground_research_complex.tscn
+
+verification:
+  import: godot --headless --editor --path . --quit
+  smoke: godot --headless --path . --quit-after 5
+  diff: git diff --check
+
+coordination:
+  task_system: github_issues
+  dispatcher: codex
+  coding_agents:
+    - codex
+    - github_copilot
+  require_issue: true
+  scene_ownership_required: true
+  release_requires_human_review: true
+
+protected_paths:
+  - project.godot
+  - scenes/underground_research_complex.tscn
+  - loads/**
+  - export_presets.cfg
