@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bctpg3nmjom30"]
 
 [ext_resource type="Script" uid="uid://dy1yxbmonblcp" path="res://scenes/containment_monitor.gd" id="1_script"]
+[ext_resource type="Script" path="res://objects/facility_interactable.gd" id="2_interact"]
 
 [sub_resource type="StandardMaterial3D" id="HousingMat"]
 albedo_color = Color(0.045, 0.055, 0.065, 1)
@@ -105,5 +106,9 @@ light_energy = 0.6
 omni_range = 3.2
 shadow_enabled = false
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+script = ExtResource("2_interact")
+interaction_prompt = "[E] ПРОВЕРИТЬ МОНИТОР"
+message_title = "СЕТЬ СОДЕРЖАНИЯ СНОВ"
+message_text = "Телеметрия нестабильна. Капсулы продолжают расходовать седативную смесь, хотя центральный резервуар числится пустым."
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("CollisionShape")

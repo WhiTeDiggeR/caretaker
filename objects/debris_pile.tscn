@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="DebrisMaterial"]
+albedo_color = Color(0.18, 0.17, 0.16, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="ChunkLarge"]
+material = SubResource("DebrisMaterial")
+size = Vector3(0.72, 0.24, 0.46)
+
+[sub_resource type="BoxMesh" id="ChunkSmall"]
+material = SubResource("DebrisMaterial")
+size = Vector3(0.38, 0.16, 0.3)
+
+[sub_resource type="BoxShape3D" id="DebrisShape"]
+size = Vector3(1.35, 0.35, 0.85)
+
+[node name="DebrisPile" type="StaticBody3D"]
+
+[node name="Chunk1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.28, 0.12, 0)
+rotation_degrees = Vector3(8, 17, -5)
+mesh = SubResource("ChunkLarge")
+
+[node name="Chunk2" type="MeshInstance3D" parent="."]
+position = Vector3(0.34, 0.09, 0.18)
+rotation_degrees = Vector3(-6, -28, 7)
+mesh = SubResource("ChunkSmall")
+
+[node name="Chunk3" type="MeshInstance3D" parent="."]
+position = Vector3(0.26, 0.08, -0.24)
+rotation_degrees = Vector3(12, 42, 3)
+mesh = SubResource("ChunkSmall")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.16, 0)
+shape = SubResource("DebrisShape")
+

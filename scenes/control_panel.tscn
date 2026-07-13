@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://b05bfa3w5bv1x"]
 
+[ext_resource type="Script" path="res://objects/facility_interactable.gd" id="1_interact"]
+
 [sub_resource type="StandardMaterial3D" id="BodyMat"]
 albedo_color = Color(0.055, 0.065, 0.075, 1)
 metallic = 0.8
@@ -119,6 +121,10 @@ font_size = 22
 text = "СЕКТОР // 01"
 modulate = Color(0.62, 0.72, 0.78, 1)
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+script = ExtResource("1_interact")
+interaction_prompt = "[E] ИСПОЛЬЗОВАТЬ ПУЛЬТ"
+message_title = "ЦЕНТРАЛЬНЫЙ ПОСТ"
+message_text = "Энергосеть работает от резервного контура. Камеры 03 и 04 не отвечают. В журнале осталась отметка: «Не будить заключённых ни при каких обстоятельствах»."
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 position = Vector3(0, -0.08, 0)
 shape = SubResource("CollisionShape")

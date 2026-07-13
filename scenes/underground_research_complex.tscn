@@ -19,6 +19,13 @@
 [ext_resource type="PackedScene" path="res://scenes/containment_monitor.tscn" id="17_monitor"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="18_player"]
 [ext_resource type="Script" path="res://scenes/complex_progression.gd" id="19_progression"]
+[ext_resource type="Script" path="res://scenes/facility_ambience.gd" id="20_ambience"]
+[ext_resource type="PackedScene" path="res://objects/emergency_light.tscn" id="21_emergency_light"]
+[ext_resource type="PackedScene" path="res://objects/facility_document.tscn" id="22_document"]
+[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="23_debris"]
+[ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="24_barrier"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="25_terminal"]
+[ext_resource type="Script" path="res://scenes/facility_prop_optimizer.gd" id="26_optimizer"]
 
 [sub_resource type="BoxMesh" id="DoorMesh"]
 size = Vector3(4.4, 3.8, 0.35)
@@ -43,7 +50,12 @@ script = ExtResource("19_progression")
 [node name="TemporaryDoors" type="Node3D" parent="."]
 [node name="RoomMarkers" type="Node3D" parent="."]
 [node name="FacilityProps" type="Node3D" parent="."]
+script = ExtResource("26_optimizer")
 [node name="ProgressionTriggers" type="Node3D" parent="."]
+
+[node name="FacilityAmbience" type="AudioStreamPlayer" parent="."]
+script = ExtResource("20_ambience")
+volume_db = -14.0
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label") instance=ExtResource("18_player")]
 position = Vector3(-2.5, 1, -22.5)
@@ -98,6 +110,35 @@ theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 20
 text = "WASD — ДВИЖЕНИЕ    SHIFT — БЕГ    МЫШЬ — ОБЗОР    E — ВЗАИМОДЕЙСТВИЕ"
 horizontal_alignment = 1
+
+[node name="MessagePanel" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -125.0
+offset_right = 340.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+modulate = Color(0.78, 0.9, 1, 0.96)
+
+[node name="MessageText" type="Label" parent="CanvasLayer/MessagePanel"]
+custom_minimum_size = Vector2(640, 220)
+theme_override_colors/font_color = Color(0.035, 0.08, 0.11, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 20
+text = "СЛУЖЕБНАЯ СИСТЕМА"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="MessageTimer" type="Timer" parent="CanvasLayer"]
+wait_time = 9.0
+one_shot = true
 
 [node name="ControlReached" type="Area3D" parent="ProgressionTriggers"]
 position = Vector3(-2.5, 1.5, -12.5)
@@ -861,13 +902,17 @@ position = Vector3(11.5, 0, -3.8)
 rotation_degrees = Vector3(0, 180, 0)
 
 [node name="StaffLocker01" parent="FacilityProps" instance=ExtResource("9_locker")]
-position = Vector3(-3.5, 0, 13.8)
+position = Vector3(-4.0, 0, 13.65)
+rotation_degrees = Vector3(0, 180, 0)
 [node name="StaffLocker02" parent="FacilityProps" instance=ExtResource("9_locker")]
-position = Vector3(-2.8, 0, 13.8)
+position = Vector3(-3.25, 0, 13.65)
+rotation_degrees = Vector3(0, 180, 0)
 [node name="StaffLocker03" parent="FacilityProps" instance=ExtResource("9_locker")]
-position = Vector3(-2.1, 0, 13.8)
+position = Vector3(-2.5, 0, 13.65)
+rotation_degrees = Vector3(0, 180, 0)
 [node name="StaffLocker04" parent="FacilityProps" instance=ExtResource("9_locker")]
-position = Vector3(-1.4, 0, 13.8)
+position = Vector3(-1.75, 0, 13.65)
+rotation_degrees = Vector3(0, 180, 0)
 
 [node name="CameraControl" parent="FacilityProps" instance=ExtResource("10_camera")]
 position = Vector3(-4.2, 3.3, -8.2)
@@ -906,18 +951,32 @@ position = Vector3(-2.5, 3.8, 10)
 position = Vector3(17.5, 3.8, 10)
 [node name="LightTechnical" parent="FacilityProps" instance=ExtResource("11_light")]
 position = Vector3(-22.5, 3.8, 10)
+flicker_enabled = true
 [node name="LightPersonnel" parent="FacilityProps" instance=ExtResource("11_light")]
 position = Vector3(-12.5, 3.8, 10)
 [node name="LightContainment01" parent="FacilityProps" instance=ExtResource("11_light")]
 position = Vector3(-32.5, 3.8, 2.5)
+[node name="LightContainment01South" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-37, 3.8, -2)
+[node name="LightContainment01North" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-28, 3.8, 7)
+flicker_enabled = true
 [node name="LightContainment02" parent="FacilityProps" instance=ExtResource("11_light")]
 position = Vector3(32.5, 3.8, 2.5)
+[node name="LightContainment02South" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(37, 3.8, -2)
+[node name="LightContainment02North" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(28, 3.8, 7)
+flicker_enabled = true
 [node name="LightContainment03" parent="FacilityProps" instance=ExtResource("11_light")]
 position = Vector3(-32.5, 3.8, 20)
+flicker_enabled = true
 [node name="LightContainment04" parent="FacilityProps" instance=ExtResource("11_light")]
 position = Vector3(30, 3.8, 20)
+flicker_enabled = true
 [node name="LightWestJunction" parent="FacilityProps" instance=ExtResource("11_light")]
 position = Vector3(-17.5, 3.8, 2.5)
+flicker_enabled = true
 [node name="LightEastJunction" parent="FacilityProps" instance=ExtResource("11_light")]
 position = Vector3(17.5, 3.8, 2.5)
 [node name="LightNorthJunction" parent="FacilityProps" instance=ExtResource("11_light")]
@@ -972,3 +1031,67 @@ scale = Vector3(0.72, 0.72, 0.72)
 position = Vector3(4.65, 2.45, -7.5)
 rotation_degrees = Vector3(0, -90, 0)
 scale = Vector3(0.7, 0.7, 0.7)
+
+[node name="TerminalControl" parent="FacilityProps" instance=ExtResource("25_terminal")]
+position = Vector3(4.78, 2.0, -10.5)
+rotation_degrees = Vector3(0, -90, 0)
+message_title = "ТЕРМИНАЛ ЦЕНТРАЛЬНОГО ПОСТА"
+message_text = "Последняя команда персонала: полная эвакуация. Подтверждение от медицинского блока не получено."
+
+[node name="TerminalMedical" parent="FacilityProps" instance=ExtResource("25_terminal")]
+position = Vector3(-10.0, 2.0, -4.78)
+message_title = "МЕДИЦИНСКИЙ ТЕРМИНАЛ"
+message_text = "Карантин нарушен. Семь сотрудников переведены в аварийные капсулы сна; сведения о пробуждении отсутствуют."
+
+[node name="TerminalTechnical" parent="FacilityProps" instance=ExtResource("25_terminal")]
+position = Vector3(-24.78, 2.0, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+message_title = "ТЕХНИЧЕСКИЙ ТЕРМИНАЛ"
+message_text = "Давление охлаждения ниже нормы. Автоматическая система продолжает перенаправлять питание в камеры содержания."
+
+[node name="DocumentResearch" parent="FacilityProps" instance=ExtResource("22_document")]
+position = Vector3(9.0, 1.0, -13.7)
+rotation_degrees = Vector3(0, 12, 0)
+message_title = "ОТЧЁТ О СНАХ — ФРАГМЕНТ"
+message_text = "Субъекты начали видеть один и тот же коридор. На последней записи в коридоре присутствует человек, которого нет среди сотрудников."
+
+[node name="DocumentArchive" parent="FacilityProps" instance=ExtResource("22_document")]
+position = Vector3(-1.2, 0.08, 2.8)
+rotation_degrees = Vector3(0, -24, 3)
+message_title = "ПРИКАЗ ОБ ЭВАКУАЦИИ"
+message_text = "Покинуть уровень немедленно. Не использовать служебный лифт после сигнала тревоги. Архивы и личные вещи оставить на местах."
+
+[node name="DocumentSecurity" parent="FacilityProps" instance=ExtResource("22_document")]
+position = Vector3(10.2, 0.08, -1.8)
+rotation_degrees = Vector3(0, 35, -2)
+message_title = "ЖУРНАЛ ПОСТА БЕЗОПАСНОСТИ"
+message_text = "03:17 — камеры отключились по очереди. 03:21 — дверь камеры 01 открылась без команды. 03:22 — связь потеряна."
+
+[node name="BarrierContainment03" parent="FacilityProps" instance=ExtResource("24_barrier")]
+position = Vector3(-32.5, 0, 24.25)
+
+[node name="DebrisContainment03" parent="FacilityProps" instance=ExtResource("23_debris")]
+position = Vector3(-34.2, 0, 18.0)
+rotation_degrees = Vector3(0, 25, 0)
+
+[node name="DebrisMaintenance" parent="FacilityProps" instance=ExtResource("23_debris")]
+position = Vector3(-24.0, 0, 12.8)
+rotation_degrees = Vector3(0, -18, 0)
+
+[node name="DebrisArchive" parent="FacilityProps" instance=ExtResource("23_debris")]
+position = Vector3(1.8, 0, 4.1)
+rotation_degrees = Vector3(0, 42, 0)
+
+[node name="EmergencyLightControl" parent="FacilityProps" instance=ExtResource("21_emergency_light")]
+position = Vector3(-2.5, 2.75, -5.18)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="EmergencyLightWest" parent="FacilityProps" instance=ExtResource("21_emergency_light")]
+position = Vector3(-20.0, 2.7, 4.78)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="EmergencyLightContainment03" parent="FacilityProps" instance=ExtResource("21_emergency_light")]
+position = Vector3(-32.5, 2.75, 15.18)
+
+[node name="EmergencyLightContainment04" parent="FacilityProps" instance=ExtResource("21_emergency_light")]
+position = Vector3(30.0, 2.75, 15.18)

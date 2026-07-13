@@ -1,4 +1,5 @@
 [gd_scene format=3]
+[ext_resource type="Script" path="res://objects/facility_interactable.gd" id="1_interact"]
 [sub_resource type="StandardMaterial3D" id="BodyMat"]
 albedo_color = Color(0.08, 0.1, 0.12, 1)
 metallic = 0.85
@@ -19,6 +20,10 @@ height = 1.7
 [sub_resource type="BoxShape3D" id="Shape"]
 size = Vector3(2.2, 2.5, 1.4)
 [node name="GeneratorUnit" type="StaticBody3D"]
+script = ExtResource("1_interact")
+interaction_prompt = "[E] ОСМОТРЕТЬ ГЕНЕРАТОР"
+message_title = "РЕЗЕРВНЫЙ ГЕНЕРАТОР"
+message_text = "Турбина вращается с перебоями. На кожухе выцарапано: «Не включать контур камер вручную»."
 [node name="Body" type="MeshInstance3D" parent="."]
 position = Vector3(0, 1.25, 0)
 mesh = SubResource("Body")
@@ -33,4 +38,3 @@ mesh = SubResource("Coil")
 [node name="Collision" type="CollisionShape3D" parent="."]
 position = Vector3(0, 1.25, 0)
 shape = SubResource("Shape")
-

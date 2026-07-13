@@ -1,0 +1,62 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="BarrierMaterial"]
+albedo_color = Color(0.34, 0.12, 0.025, 1)
+metallic = 0.18
+roughness = 0.72
+
+[sub_resource type="StandardMaterial3D" id="StripeMaterial"]
+albedo_color = Color(0.72, 0.48, 0.025, 1)
+emission_enabled = true
+emission = Color(0.3, 0.12, 0.005, 1)
+emission_energy_multiplier = 0.45
+
+[sub_resource type="BoxMesh" id="BeamMesh"]
+material = SubResource("BarrierMaterial")
+size = Vector3(3.3, 0.22, 0.22)
+
+[sub_resource type="BoxMesh" id="StripeMesh"]
+material = SubResource("StripeMaterial")
+size = Vector3(0.38, 0.235, 0.235)
+
+[sub_resource type="BoxMesh" id="LegMesh"]
+material = SubResource("BarrierMaterial")
+size = Vector3(0.22, 1.35, 0.22)
+
+[sub_resource type="BoxShape3D" id="BarrierShape"]
+size = Vector3(3.4, 1.4, 0.35)
+
+[node name="EmergencyBarrier" type="StaticBody3D"]
+
+[node name="Beam" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.05, 0)
+rotation_degrees = Vector3(0, 0, -5)
+mesh = SubResource("BeamMesh")
+
+[node name="Stripe1" type="MeshInstance3D" parent="."]
+position = Vector3(-1.05, 1.14, 0)
+rotation_degrees = Vector3(0, 0, -5)
+mesh = SubResource("StripeMesh")
+
+[node name="Stripe2" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.05, 0)
+rotation_degrees = Vector3(0, 0, -5)
+mesh = SubResource("StripeMesh")
+
+[node name="Stripe3" type="MeshInstance3D" parent="."]
+position = Vector3(1.05, 0.96, 0)
+rotation_degrees = Vector3(0, 0, -5)
+mesh = SubResource("StripeMesh")
+
+[node name="LegLeft" type="MeshInstance3D" parent="."]
+position = Vector3(-1.42, 0.68, 0)
+mesh = SubResource("LegMesh")
+
+[node name="LegRight" type="MeshInstance3D" parent="."]
+position = Vector3(1.42, 0.68, 0)
+mesh = SubResource("LegMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.72, 0)
+shape = SubResource("BarrierShape")
+
