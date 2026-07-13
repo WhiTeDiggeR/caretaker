@@ -10,7 +10,14 @@ var _rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	_rng.randomize()
+	_disable_fixture_shadows()
 	main_light.light_energy = base_energy
+
+func _disable_fixture_shadows() -> void:
+	if $Model is GeometryInstance3D:
+		($Model as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	for node in $Model.find_children("*", "GeometryInstance3D", true, false):
+		(node as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 func _process(delta: float) -> void:
 	if not flicker_enabled:
