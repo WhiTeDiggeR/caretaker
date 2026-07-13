@@ -98,6 +98,12 @@ text = "СОСТОЯНИЕ СОДЕРЖАНИЯ\n\nОЖИДАНИЕ ТЕЛЕМЕ
 horizontal_alignment = 0
 vertical_alignment = 0
 modulate = Color(0.45, 0.9, 1, 1)
+[node name="ScreenGlow" type="OmniLight3D" parent="."]
+position = Vector3(0, 0, 0.48)
+light_color = Color(0.16, 0.58, 1, 1)
+light_energy = 0.6
+omni_range = 3.2
+shadow_enabled = false
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("CollisionShape")

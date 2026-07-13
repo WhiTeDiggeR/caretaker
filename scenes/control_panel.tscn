@@ -89,6 +89,12 @@ width = 500.0
 text = "УПРАВЛЕНИЕ КОМПЛЕКСОМ\nЭНЕРГОСЕТЬ: РЕЗЕРВНАЯ\nДОСТУП: ОГРАНИЧЕН"
 horizontal_alignment = 0
 modulate = Color(0.48, 0.9, 1, 1)
+[node name="ScreenGlow" type="OmniLight3D" parent="."]
+position = Vector3(0, 0.58, -0.48)
+light_color = Color(0.18, 0.62, 1, 1)
+light_energy = 0.5
+omni_range = 2.4
+shadow_enabled = false
 [node name="ButtonPower" type="MeshInstance3D" parent="."]
 position = Vector3(-0.58, 0.51, 0.55)
 rotation_degrees = Vector3(72, 0, 0)
