@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dvrqo0o12xqf0"]
+
+[ext_resource type="Material" uid="uid://b4k0xdiu468m4" path="res://materials/hangar_concrete_floor.tres" id="1_3f04m"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_agi2o"]
+lightmap_size_hint = Vector2i(204, 116)
+material = ExtResource("1_3f04m")
+size = Vector3(5, 0.5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pnixg"]
+size = Vector3(5, 0.5, 5)
+
+[node name="Floor" type="StaticBody3D" unique_id=836958007]
+
+[node name="FloorMesh" type="MeshInstance3D" parent="." unique_id=15878626]
+mesh = SubResource("BoxMesh_agi2o")
+
+[node name="FloorCollision" type="CollisionShape3D" parent="." unique_id=1837207629]
+shape = SubResource("BoxShape3D_pnixg")
+debug_fill = false

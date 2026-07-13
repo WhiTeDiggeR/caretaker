@@ -1,0 +1,42 @@
+[gd_scene format=3]
+[sub_resource type="StandardMaterial3D" id="FrameMat"]
+albedo_color = Color(0.15, 0.18, 0.2, 1)
+metallic = 0.65
+roughness = 0.45
+[sub_resource type="StandardMaterial3D" id="PadMat"]
+albedo_color = Color(0.18, 0.28, 0.32, 1)
+roughness = 0.75
+[sub_resource type="BoxMesh" id="Frame"]
+material = SubResource("FrameMat")
+size = Vector3(0.95, 0.18, 2.15)
+[sub_resource type="BoxMesh" id="Pad"]
+material = SubResource("PadMat")
+size = Vector3(0.82, 0.14, 1.95)
+[sub_resource type="BoxMesh" id="Leg"]
+material = SubResource("FrameMat")
+size = Vector3(0.12, 0.65, 0.12)
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(0.95, 0.8, 2.15)
+[node name="MedicalBed" type="StaticBody3D"]
+[node name="Frame" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.72, 0)
+mesh = SubResource("Frame")
+[node name="Pad" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.88, 0)
+mesh = SubResource("Pad")
+[node name="Leg1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.35, 0.34, -0.82)
+mesh = SubResource("Leg")
+[node name="Leg2" type="MeshInstance3D" parent="."]
+position = Vector3(0.35, 0.34, -0.82)
+mesh = SubResource("Leg")
+[node name="Leg3" type="MeshInstance3D" parent="."]
+position = Vector3(-0.35, 0.34, 0.82)
+mesh = SubResource("Leg")
+[node name="Leg4" type="MeshInstance3D" parent="."]
+position = Vector3(0.35, 0.34, 0.82)
+mesh = SubResource("Leg")
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.45, 0)
+shape = SubResource("Shape")
+

@@ -1,0 +1,965 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/floor.tscn" id="1_floor"]
+[ext_resource type="PackedScene" path="res://objects/wall.tscn" id="2_wall"]
+[ext_resource type="PackedScene" path="res://objects/celling.tscn" id="3_ceil"]
+[ext_resource type="PackedScene" path="res://objects/temporary_blast_door.tscn" id="4_door"]
+[ext_resource type="PackedScene" path="res://scenes/herobrine_pod.tscn" id="5_hero"]
+[ext_resource type="PackedScene" path="res://scenes/bowser_pod.tscn" id="6_bowser"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="7_shelf"]
+[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="8_cabinet"]
+[ext_resource type="PackedScene" path="res://objects/loaded_locker.tscn" id="9_locker"]
+[ext_resource type="PackedScene" path="res://objects/security_camera.tscn" id="10_camera"]
+[ext_resource type="PackedScene" path="res://objects/caged_light.tscn" id="11_light"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="12_workbench"]
+[ext_resource type="PackedScene" path="res://objects/medical_bed.tscn" id="13_bed"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="14_generator"]
+[ext_resource type="PackedScene" path="res://objects/server_rack.tscn" id="15_server"]
+[ext_resource type="PackedScene" path="res://scenes/control_panel.tscn" id="16_panel"]
+[ext_resource type="PackedScene" path="res://scenes/containment_monitor.tscn" id="17_monitor"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="18_player"]
+[ext_resource type="Script" path="res://scenes/complex_progression.gd" id="19_progression"]
+
+[sub_resource type="BoxMesh" id="DoorMesh"]
+size = Vector3(4.4, 3.8, 0.35)
+[sub_resource type="BoxShape3D" id="DoorShape"]
+size = Vector3(4.4, 3.8, 0.35)
+[sub_resource type="StandardMaterial3D" id="DoorMaterial"]
+albedo_color = Color(0.07, 0.1, 0.14, 1)
+metallic = 0.8
+roughness = 0.35
+emission_enabled = true
+emission = Color(0.02, 0.12, 0.3, 1)
+emission_energy_multiplier = 1.3
+
+[sub_resource type="BoxShape3D" id="ProgressionAreaShape"]
+size = Vector3(8, 3, 8)
+
+[node name="UndergroundResearchComplex" type="Node3D"]
+script = ExtResource("19_progression")
+[node name="FloorModules" type="Node3D" parent="."]
+[node name="CeilingModules" type="Node3D" parent="."]
+[node name="WallModules" type="Node3D" parent="."]
+[node name="TemporaryDoors" type="Node3D" parent="."]
+[node name="RoomMarkers" type="Node3D" parent="."]
+[node name="FacilityProps" type="Node3D" parent="."]
+[node name="ProgressionTriggers" type="Node3D" parent="."]
+
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label") instance=ExtResource("18_player")]
+position = Vector3(-2.5, 1, -22.5)
+rotation_degrees = Vector3(0, 180, 0)
+interact_label = NodePath("../CanvasLayer/InteractLabel")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="ObjectiveLabel" type="Label" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 660.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.55, 0.86, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "ЦЕЛЬ: Добраться до центрального поста"
+[node name="InteractLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -92.0
+offset_right = 150.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.8, 0.92, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "[E] ВЗАИМОДЕЙСТВОВАТЬ"
+horizontal_alignment = 1
+[node name="StartHint" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = 150.0
+offset_right = 220.0
+offset_bottom = 195.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.7, 0.82, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.9)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 20
+text = "WASD — ДВИЖЕНИЕ    SHIFT — БЕГ    МЫШЬ — ОБЗОР    E — ВЗАИМОДЕЙСТВИЕ"
+horizontal_alignment = 1
+
+[node name="ControlReached" type="Area3D" parent="ProgressionTriggers"]
+position = Vector3(-2.5, 1.5, -12.5)
+collision_layer = 0
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProgressionTriggers/ControlReached"]
+shape = SubResource("ProgressionAreaShape")
+[node name="TechnicalReached" type="Area3D" parent="ProgressionTriggers"]
+position = Vector3(-22.5, 1.5, 10)
+collision_layer = 0
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProgressionTriggers/TechnicalReached"]
+shape = SubResource("ProgressionAreaShape")
+[node name="ContainmentReached" type="Area3D" parent="ProgressionTriggers"]
+position = Vector3(-32.5, 1.5, 0)
+collision_layer = 0
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProgressionTriggers/ContainmentReached"]
+shape = SubResource("ProgressionAreaShape")
+
+[node name="EntranceSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-2.5, 3.7, -22.5)
+text = "ГЛАВНЫЙ ВХОД\nСЛУЖЕБНЫЙ ЛИФТ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="ControlSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-2.5, 3.7, -12.5)
+text = "ЦЕНТРАЛЬНЫЙ ПОСТ\nСИСТЕМЫ БЕЗОПАСНОСТИ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="ResearchSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(7.5, 3.7, -12.5)
+text = "ЛАБОРАТОРИЯ СНОВ\nИССЛЕДОВАНИЕ СОЗНАНИЯ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="MedicalSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-12.5, 3.7, 0)
+text = "МЕДИЦИНСКИЙ БЛОК\nКАРАНТИН"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="ArchiveSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-2.5, 3.7, 0)
+text = "АРХИВ\nДОКУМЕНТЫ И ЖУРНАЛЫ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="SecuritySign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(7.5, 3.7, 0)
+text = "ШТАБ БЕЗОПАСНОСТИ\nАРСЕНАЛ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="PersonnelSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-12.5, 3.7, 10)
+text = "АВАРИЙНЫЙ СОН\nПЕРСОНАЛА"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="StaffSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-2.5, 3.7, 10)
+text = "СЛУЖЕБНАЯ ЗОНА\nСТОЛОВАЯ / ЖИЛЫЕ БЛОКИ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="WorkshopSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(17.5, 3.7, 10)
+text = "МАСТЕРСКАЯ\nИ СКЛАД"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="TechnicalSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-22.5, 3.7, 10)
+text = "ТЕХНИЧЕСКИЙ СЕКТОР\nВОДА / ВЕНТИЛЯЦИЯ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="C01Sign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-32.5, 3.7, 2.5)
+text = "КАМЕРА СОДЕРЖАНИЯ 01\nРАННИЙ ДОСТУП"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="C02Sign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(32.5, 3.7, 2.5)
+text = "КАМЕРА СОДЕРЖАНИЯ 02\nТРЕБУЕТСЯ ПИТАНИЕ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="C03Sign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-32.5, 3.7, 20)
+text = "КАМЕРА СОДЕРЖАНИЯ 03\nОБРУШЕННЫЙ МАРШРУТ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="C04Sign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(27.5, 3.7, 20)
+text = "КАМЕРА СОДЕРЖАНИЯ 04\nДОПУСК БЕЗОПАСНОСТИ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="CorridorSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-17.5, 3.7, 0)
+text = "СЛУЖЕБНЫЙ КОРИДОР"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="MaintenanceSign" type="Label3D" parent="RoomMarkers"]
+position = Vector3(-27.5, 3.7, 10)
+text = "ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ"
+font_size = 28
+outline_size = 7
+modulate = Color(0.2, 0.72, 1, 1)
+billboard = 1
+
+[node name="FacilityLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-55, -25, 0)
+light_color = Color(0.42, 0.52, 0.7, 1)
+light_energy = 0.45
+[node name="EmergencyGlow" type="OmniLight3D" parent="."]
+position = Vector3(-5, 5, 0)
+omni_range = 75.0
+light_color = Color(0.05, 0.18, 0.42, 1)
+light_energy = 1.6
+[node name="Floor_0" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-2.5, -0.25, -22.5)
+[node name="Ceiling_0" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-2.5, 4, -22.5)
+[node name="Floor_1" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-2.5, -0.25, -17.5)
+[node name="Ceiling_1" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-2.5, 4, -17.5)
+[node name="Floor_2" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(2.5, -0.25, -22.5)
+[node name="Ceiling_2" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(2.5, 4, -22.5)
+[node name="Floor_3" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(2.5, -0.25, -17.5)
+[node name="Ceiling_3" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(2.5, 4, -17.5)
+[node name="Floor_4" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-2.5, -0.25, -12.5)
+[node name="Ceiling_4" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-2.5, 4, -12.5)
+[node name="Floor_5" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-2.5, -0.25, -7.5)
+[node name="Ceiling_5" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-2.5, 4, -7.5)
+[node name="Floor_6" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(2.5, -0.25, -12.5)
+[node name="Ceiling_6" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(2.5, 4, -12.5)
+[node name="Floor_7" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(2.5, -0.25, -7.5)
+[node name="Ceiling_7" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(2.5, 4, -7.5)
+[node name="Floor_8" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(7.5, -0.25, -12.5)
+[node name="Ceiling_8" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(7.5, 4, -12.5)
+[node name="Floor_9" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(7.5, -0.25, -7.5)
+[node name="Ceiling_9" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(7.5, 4, -7.5)
+[node name="Floor_10" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(12.5, -0.25, -12.5)
+[node name="Ceiling_10" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(12.5, 4, -12.5)
+[node name="Floor_11" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(12.5, -0.25, -7.5)
+[node name="Ceiling_11" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(12.5, 4, -7.5)
+[node name="Floor_12" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(17.5, -0.25, -12.5)
+[node name="Ceiling_12" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(17.5, 4, -12.5)
+[node name="Floor_13" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(17.5, -0.25, -7.5)
+[node name="Ceiling_13" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(17.5, 4, -7.5)
+[node name="Floor_14" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-12.5, -0.25, -2.5)
+[node name="Ceiling_14" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-12.5, 4, -2.5)
+[node name="Floor_15" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-12.5, -0.25, 2.5)
+[node name="Ceiling_15" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-12.5, 4, 2.5)
+[node name="Floor_16" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-7.5, -0.25, -2.5)
+[node name="Ceiling_16" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-7.5, 4, -2.5)
+[node name="Floor_17" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-7.5, -0.25, 2.5)
+[node name="Ceiling_17" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-7.5, 4, 2.5)
+[node name="Floor_18" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-2.5, -0.25, -2.5)
+[node name="Ceiling_18" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-2.5, 4, -2.5)
+[node name="Floor_19" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-2.5, -0.25, 2.5)
+[node name="Ceiling_19" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-2.5, 4, 2.5)
+[node name="Floor_20" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(2.5, -0.25, -2.5)
+[node name="Ceiling_20" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(2.5, 4, -2.5)
+[node name="Floor_21" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(2.5, -0.25, 2.5)
+[node name="Ceiling_21" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(2.5, 4, 2.5)
+[node name="Floor_22" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(7.5, -0.25, -2.5)
+[node name="Ceiling_22" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(7.5, 4, -2.5)
+[node name="Floor_23" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(7.5, -0.25, 2.5)
+[node name="Ceiling_23" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(7.5, 4, 2.5)
+[node name="Floor_24" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(12.5, -0.25, -2.5)
+[node name="Ceiling_24" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(12.5, 4, -2.5)
+[node name="Floor_25" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(12.5, -0.25, 2.5)
+[node name="Ceiling_25" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(12.5, 4, 2.5)
+[node name="Floor_26" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-12.5, -0.25, 7.5)
+[node name="Ceiling_26" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-12.5, 4, 7.5)
+[node name="Floor_27" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-12.5, -0.25, 12.5)
+[node name="Ceiling_27" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-12.5, 4, 12.5)
+[node name="Floor_28" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-7.5, -0.25, 7.5)
+[node name="Ceiling_28" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-7.5, 4, 7.5)
+[node name="Floor_29" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-7.5, -0.25, 12.5)
+[node name="Ceiling_29" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-7.5, 4, 12.5)
+[node name="Floor_30" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-2.5, -0.25, 7.5)
+[node name="Ceiling_30" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-2.5, 4, 7.5)
+[node name="Floor_31" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-2.5, -0.25, 12.5)
+[node name="Ceiling_31" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-2.5, 4, 12.5)
+[node name="Floor_32" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(2.5, -0.25, 7.5)
+[node name="Ceiling_32" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(2.5, 4, 7.5)
+[node name="Floor_33" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(2.5, -0.25, 12.5)
+[node name="Ceiling_33" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(2.5, 4, 12.5)
+[node name="Floor_34" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(17.5, -0.25, 7.5)
+[node name="Ceiling_34" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(17.5, 4, 7.5)
+[node name="Floor_35" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(17.5, -0.25, 12.5)
+[node name="Ceiling_35" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(17.5, 4, 12.5)
+[node name="Floor_36" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(22.5, -0.25, 7.5)
+[node name="Ceiling_36" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(22.5, 4, 7.5)
+[node name="Floor_37" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(22.5, -0.25, 12.5)
+[node name="Ceiling_37" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(22.5, 4, 12.5)
+[node name="Floor_38" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-22.5, -0.25, 7.5)
+[node name="Ceiling_38" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-22.5, 4, 7.5)
+[node name="Floor_39" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-22.5, -0.25, 12.5)
+[node name="Ceiling_39" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-22.5, 4, 12.5)
+[node name="Floor_40" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-17.5, -0.25, 7.5)
+[node name="Ceiling_40" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-17.5, 4, 7.5)
+[node name="Floor_41" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-17.5, -0.25, 12.5)
+[node name="Ceiling_41" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-17.5, 4, 12.5)
+[node name="Floor_42" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-37.5, -0.25, -2.5)
+[node name="Ceiling_42" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-37.5, 4, -2.5)
+[node name="Floor_43" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-37.5, -0.25, 2.5)
+[node name="Ceiling_43" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-37.5, 4, 2.5)
+[node name="Floor_44" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-37.5, -0.25, 7.5)
+[node name="Ceiling_44" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-37.5, 4, 7.5)
+[node name="Floor_45" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-32.5, -0.25, -2.5)
+[node name="Ceiling_45" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-32.5, 4, -2.5)
+[node name="Floor_46" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-32.5, -0.25, 2.5)
+[node name="Ceiling_46" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-32.5, 4, 2.5)
+[node name="Floor_47" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-32.5, -0.25, 7.5)
+[node name="Ceiling_47" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-32.5, 4, 7.5)
+[node name="Floor_48" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-27.5, -0.25, -2.5)
+[node name="Ceiling_48" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-27.5, 4, -2.5)
+[node name="Floor_49" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-27.5, -0.25, 2.5)
+[node name="Ceiling_49" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-27.5, 4, 2.5)
+[node name="Floor_50" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-27.5, -0.25, 7.5)
+[node name="Ceiling_50" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-27.5, 4, 7.5)
+[node name="Floor_51" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(27.5, -0.25, -2.5)
+[node name="Ceiling_51" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(27.5, 4, -2.5)
+[node name="Floor_52" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(27.5, -0.25, 2.5)
+[node name="Ceiling_52" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(27.5, 4, 2.5)
+[node name="Floor_53" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(27.5, -0.25, 7.5)
+[node name="Ceiling_53" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(27.5, 4, 7.5)
+[node name="Floor_54" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(32.5, -0.25, -2.5)
+[node name="Ceiling_54" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(32.5, 4, -2.5)
+[node name="Floor_55" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(32.5, -0.25, 2.5)
+[node name="Ceiling_55" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(32.5, 4, 2.5)
+[node name="Floor_56" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(32.5, -0.25, 7.5)
+[node name="Ceiling_56" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(32.5, 4, 7.5)
+[node name="Floor_57" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(37.5, -0.25, -2.5)
+[node name="Ceiling_57" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(37.5, 4, -2.5)
+[node name="Floor_58" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(37.5, -0.25, 2.5)
+[node name="Ceiling_58" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(37.5, 4, 2.5)
+[node name="Floor_59" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(37.5, -0.25, 7.5)
+[node name="Ceiling_59" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(37.5, 4, 7.5)
+[node name="Floor_60" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-32.5, -0.25, 17.5)
+[node name="Ceiling_60" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-32.5, 4, 17.5)
+[node name="Floor_61" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-32.5, -0.25, 22.5)
+[node name="Ceiling_61" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-32.5, 4, 22.5)
+[node name="Floor_62" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-27.5, -0.25, 17.5)
+[node name="Ceiling_62" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-27.5, 4, 17.5)
+[node name="Floor_63" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-27.5, -0.25, 22.5)
+[node name="Ceiling_63" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-27.5, 4, 22.5)
+[node name="Floor_64" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(27.5, -0.25, 17.5)
+[node name="Ceiling_64" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(27.5, 4, 17.5)
+[node name="Floor_65" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(27.5, -0.25, 22.5)
+[node name="Ceiling_65" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(27.5, 4, 22.5)
+[node name="Floor_66" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(32.5, -0.25, 17.5)
+[node name="Ceiling_66" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(32.5, 4, 17.5)
+[node name="Floor_67" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(32.5, -0.25, 22.5)
+[node name="Ceiling_67" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(32.5, 4, 22.5)
+[node name="Floor_68" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-22.5, -0.25, 2.5)
+[node name="Ceiling_68" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-22.5, 4, 2.5)
+[node name="Floor_69" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-17.5, -0.25, 2.5)
+[node name="Ceiling_69" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-17.5, 4, 2.5)
+[node name="Floor_70" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(17.5, -0.25, 2.5)
+[node name="Ceiling_70" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(17.5, 4, 2.5)
+[node name="Floor_71" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(22.5, -0.25, 2.5)
+[node name="Ceiling_71" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(22.5, 4, 2.5)
+[node name="Floor_72" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(7.5, -0.25, 7.5)
+[node name="Ceiling_72" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(7.5, 4, 7.5)
+[node name="Floor_73" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(12.5, -0.25, 7.5)
+[node name="Ceiling_73" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(12.5, 4, 7.5)
+[node name="Floor_74" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(-27.5, -0.25, 12.5)
+[node name="Ceiling_74" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(-27.5, 4, 12.5)
+[node name="Floor_75" parent="FloorModules" instance=ExtResource("1_floor")]
+position = Vector3(22.5, -0.25, 17.5)
+[node name="Ceiling_75" parent="CeilingModules" instance=ExtResource("3_ceil")]
+position = Vector3(22.5, 4, 17.5)
+[node name="Wall_0" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-5, 2, -22.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_1" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-2.5, 2, -25)
+[node name="Wall_2" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-5, 2, -17.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_3" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(2.5, 2, -25)
+[node name="Wall_4" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-5, 2, -12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_5" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-5, 2, -7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_6" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(2.5, 2, -15)
+[node name="Wall_7" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(7.5, 2, -15)
+[node name="Wall_8" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(5, 2, -7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_9" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(12.5, 2, -15)
+[node name="Wall_10" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(17.5, 2, -15)
+[node name="Wall_11" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-15, 2, -2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_12" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-12.5, 2, -5)
+[node name="Wall_13" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-7.5, 2, -5)
+[node name="Wall_14" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-5, 2, 2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_15" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(2.5, 2, -5)
+[node name="Wall_16" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(7.5, 2, -5)
+[node name="Wall_17" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(5, 2, 2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_18" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(12.5, 2, -5)
+[node name="Wall_19" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-12.5, 2, 5)
+[node name="Wall_20" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-15, 2, 12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_21" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-7.5, 2, 5)
+[node name="Wall_22" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-5, 2, 12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_23" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(2.5, 2, 5)
+[node name="Wall_24" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(17.5, 2, 5)
+[node name="Wall_25" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(15, 2, 12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_26" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(22.5, 2, 5)
+[node name="Wall_27" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-25, 2, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_28" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-17.5, 2, 5)
+[node name="Wall_29" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-40, 2, -2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_30" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-37.5, 2, -5)
+[node name="Wall_31" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-40, 2, 2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_32" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-40, 2, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_33" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-32.5, 2, -5)
+[node name="Wall_34" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-27.5, 2, -5)
+[node name="Wall_35" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(25, 2, -2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_36" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(27.5, 2, -5)
+[node name="Wall_37" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(25, 2, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_38" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(32.5, 2, -5)
+[node name="Wall_39" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(37.5, 2, -5)
+[node name="Wall_40" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-35, 2, 17.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_41" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-32.5, 2, 15)
+[node name="Wall_42" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-35, 2, 22.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_43" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-27.5, 2, 15)
+[node name="Wall_44" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(25, 2, 17.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_45" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(27.5, 2, 15)
+[node name="Wall_46" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(25, 2, 22.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_47" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(32.5, 2, 15)
+[node name="Wall_48" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-22.5, 2, 0)
+[node name="Wall_49" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-17.5, 2, 0)
+[node name="Wall_50" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(17.5, 2, 0)
+[node name="Wall_51" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(22.5, 2, 0)
+[node name="Wall_52" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(5, 2, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_53" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(7.5, 2, 5)
+[node name="Wall_54" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(12.5, 2, 5)
+[node name="Wall_55" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-30, 2, 12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_56" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-27.5, 2, 10)
+[node name="Wall_57" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(20, 2, 17.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_58" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(5, 2, -22.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_59" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(5, 2, -17.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_60" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(20, 2, -12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_61" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(20, 2, -7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_62" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(17.5, 2, -5)
+[node name="Wall_63" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(15, 2, -2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_64" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-12.5, 2, 15)
+[node name="Wall_65" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-7.5, 2, 15)
+[node name="Wall_66" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-2.5, 2, 15)
+[node name="Wall_67" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(5, 2, 12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_68" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(2.5, 2, 15)
+[node name="Wall_69" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(17.5, 2, 15)
+[node name="Wall_70" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(25, 2, 12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_71" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-22.5, 2, 15)
+[node name="Wall_72" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-17.5, 2, 15)
+[node name="Wall_73" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-37.5, 2, 10)
+[node name="Wall_74" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-32.5, 2, 10)
+[node name="Wall_75" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-25, 2, -2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_76" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(27.5, 2, 10)
+[node name="Wall_77" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(32.5, 2, 10)
+[node name="Wall_78" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(40, 2, -2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_79" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(40, 2, 2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_80" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(40, 2, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_81" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(37.5, 2, 10)
+[node name="Wall_82" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-32.5, 2, 25)
+[node name="Wall_83" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-25, 2, 17.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_84" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-25, 2, 22.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_85" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(-27.5, 2, 25)
+[node name="Wall_86" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(27.5, 2, 25)
+[node name="Wall_87" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(35, 2, 17.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_88" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(35, 2, 22.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Wall_89" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(32.5, 2, 25)
+[node name="Wall_90" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(7.5, 2, 10)
+[node name="Wall_91" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(12.5, 2, 10)
+[node name="Wall_92" parent="WallModules" instance=ExtResource("2_wall")]
+position = Vector3(22.5, 2, 20)
+[node name="Door_0" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-2.5, 2, -15)
+rotation_degrees = Vector3(0, 0, 0)
+[node name="Door_1" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(5, 2, -12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_2" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-2.5, 2, -5)
+rotation_degrees = Vector3(0, 0, 0)
+[node name="Door_3" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-5, 2, -2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_4" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(5, 2, -2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_5" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-2.5, 2, 5)
+rotation_degrees = Vector3(0, 0, 0)
+[node name="Door_6" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-5, 2, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_7" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-15, 2, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_8" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(15, 2, 2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_9" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(25, 2, 2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_10" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-15, 2, 2.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_11" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-27.5, 2, 0)
+rotation_degrees = Vector3(0, 0, 0)
+[node name="Door_12" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-22.5, 2, 5)
+rotation_degrees = Vector3(0, 0, 0)
+[node name="Door_13" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-25, 2, 12.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_14" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(-27.5, 2, 20)
+rotation_degrees = Vector3(0, 0, 0)
+[node name="Door_15" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(15, 2, 7.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Door_16" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(22.5, 2, 15)
+rotation_degrees = Vector3(0, 0, 0)
+[node name="Door_17" parent="TemporaryDoors" instance=ExtResource("4_door")]
+position = Vector3(27.5, 2, 20)
+rotation_degrees = Vector3(0, 0, 0)
+
+[node name="HerobrineContainmentPod" parent="FacilityProps" instance=ExtResource("5_hero")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -32.5, 1.5245118, 2.5)
+
+[node name="BowserContainmentPod" parent="FacilityProps" instance=ExtResource("6_bowser")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5, 1.5245118, 2.5)
+
+[node name="ArchiveShelf01" parent="FacilityProps" instance=ExtResource("7_shelf")]
+position = Vector3(3.8, 0, 1.0)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="ArchiveShelf02" parent="FacilityProps" instance=ExtResource("7_shelf")]
+position = Vector3(3.8, 0, 3.3)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="StorageShelf01" parent="FacilityProps" instance=ExtResource("7_shelf")]
+position = Vector3(23.8, 0, 8.2)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="StorageShelf02" parent="FacilityProps" instance=ExtResource("7_shelf")]
+position = Vector3(23.8, 0, 11.0)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="MedicalCabinet01" parent="FacilityProps" instance=ExtResource("8_cabinet")]
+position = Vector3(-14.0, 0, -3.5)
+rotation_degrees = Vector3(0, 180, 0)
+[node name="MedicalCabinet02" parent="FacilityProps" instance=ExtResource("8_cabinet")]
+position = Vector3(-12.8, 0, -3.5)
+rotation_degrees = Vector3(0, 180, 0)
+[node name="SecurityCabinet" parent="FacilityProps" instance=ExtResource("8_cabinet")]
+position = Vector3(11.5, 0, -3.8)
+rotation_degrees = Vector3(0, 180, 0)
+
+[node name="StaffLocker01" parent="FacilityProps" instance=ExtResource("9_locker")]
+position = Vector3(-3.5, 0, 13.8)
+[node name="StaffLocker02" parent="FacilityProps" instance=ExtResource("9_locker")]
+position = Vector3(-2.8, 0, 13.8)
+[node name="StaffLocker03" parent="FacilityProps" instance=ExtResource("9_locker")]
+position = Vector3(-2.1, 0, 13.8)
+[node name="StaffLocker04" parent="FacilityProps" instance=ExtResource("9_locker")]
+position = Vector3(-1.4, 0, 13.8)
+
+[node name="CameraControl" parent="FacilityProps" instance=ExtResource("10_camera")]
+position = Vector3(-4.2, 3.3, -8.2)
+rotation_degrees = Vector3(0, 35, 0)
+[node name="CameraSecurity" parent="FacilityProps" instance=ExtResource("10_camera")]
+position = Vector3(9.0, 3.3, -3.8)
+rotation_degrees = Vector3(0, -45, 0)
+[node name="CameraContainment01" parent="FacilityProps" instance=ExtResource("10_camera")]
+position = Vector3(-34.5, 3.3, -4.2)
+rotation_degrees = Vector3(0, 45, 0)
+[node name="CameraContainment02" parent="FacilityProps" instance=ExtResource("10_camera")]
+position = Vector3(30.5, 3.3, -3.8)
+rotation_degrees = Vector3(0, -45, 0)
+[node name="CameraContainment03" parent="FacilityProps" instance=ExtResource("10_camera")]
+position = Vector3(-34.5, 3.3, 15.8)
+rotation_degrees = Vector3(0, 45, 0)
+[node name="CameraContainment04" parent="FacilityProps" instance=ExtResource("10_camera")]
+position = Vector3(30.5, 3.3, 16.2)
+rotation_degrees = Vector3(0, -45, 0)
+
+[node name="LightEntrance" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-2.5, 3.8, -22.5)
+[node name="LightControl" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-2.5, 3.8, -12.5)
+[node name="LightResearch" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(7.5, 3.8, -12.5)
+[node name="LightMedical" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-12.5, 3.8, 0)
+[node name="LightArchive" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-2.5, 3.8, 0)
+[node name="LightSecurity" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(7.5, 3.8, 0)
+[node name="LightStaff" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-2.5, 3.8, 10)
+[node name="LightWorkshop" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(17.5, 3.8, 10)
+[node name="LightTechnical" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-22.5, 3.8, 10)
+[node name="LightContainment01" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(-32.5, 3.8, 2.5)
+[node name="LightContainment02" parent="FacilityProps" instance=ExtResource("11_light")]
+position = Vector3(32.5, 3.8, 2.5)
+
+[node name="ResearchWorkbench01" parent="FacilityProps" instance=ExtResource("12_workbench")]
+position = Vector3(9.0, 0, -13.7)
+[node name="ResearchWorkbench02" parent="FacilityProps" instance=ExtResource("12_workbench")]
+position = Vector3(14.5, 0, -13.7)
+[node name="WorkshopBench01" parent="FacilityProps" instance=ExtResource("12_workbench")]
+position = Vector3(18.0, 0, 11.0)
+[node name="WorkshopBench02" parent="FacilityProps" instance=ExtResource("12_workbench")]
+position = Vector3(21.5, 0, 11.0)
+
+[node name="MedicalBed01" parent="FacilityProps" instance=ExtResource("13_bed")]
+position = Vector3(-12.0, 0, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="MedicalBed02" parent="FacilityProps" instance=ExtResource("13_bed")]
+position = Vector3(-9.0, 0, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="MedicalBed03" parent="FacilityProps" instance=ExtResource("13_bed")]
+position = Vector3(-9.0, 0, 2.5)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="Generator01" parent="FacilityProps" instance=ExtResource("14_generator")]
+position = Vector3(-22.0, 0, 13.4)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="Generator02" parent="FacilityProps" instance=ExtResource("14_generator")]
+position = Vector3(-18.5, 0, 13.4)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="ControlServer01" parent="FacilityProps" instance=ExtResource("15_server")]
+position = Vector3(-4.2, 0, -10.0)
+rotation_degrees = Vector3(0, -90, 0)
+[node name="ControlServer02" parent="FacilityProps" instance=ExtResource("15_server")]
+position = Vector3(-4.2, 0, -8.8)
+rotation_degrees = Vector3(0, -90, 0)
+[node name="SecurityServer" parent="FacilityProps" instance=ExtResource("15_server")]
+position = Vector3(13.5, 0, -3.5)
+[node name="TechnicalServer01" parent="FacilityProps" instance=ExtResource("15_server")]
+position = Vector3(-24.0, 0, 8.4)
+rotation_degrees = Vector3(0, 90, 0)
+[node name="TechnicalServer02" parent="FacilityProps" instance=ExtResource("15_server")]
+position = Vector3(-24.0, 0, 9.5)
+rotation_degrees = Vector3(0, 90, 0)
+
+[node name="CentralControlPanel" parent="FacilityProps" instance=ExtResource("16_panel")]
+position = Vector3(2.0, 1.25, -6.2)
+rotation_degrees = Vector3(0, 180, 0)
+[node name="ContainmentStatusMonitor" parent="FacilityProps" instance=ExtResource("17_monitor")]
+position = Vector3(4.4, 2.72, -7.5)
+rotation_degrees = Vector3(0, -90, 0)

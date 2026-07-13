@@ -1,6 +1,7 @@
 extends CharacterBody3D 
 
-const SPEED = 5.0
+const WALK_SPEED = 5.0
+const SPRINT_SPEED = 8.5
 const JUMP_VELOCITY = 4.5
 const MOUSE_SENS = 0.002
 
@@ -42,35 +43,34 @@ func _physics_process(delta):
 		transform.basis *
 		Vector3(input_dir.x, 0, input_dir.y)
 	).normalized()
+	var speed = SPRINT_SPEED if Input.is_action_pressed("sprint") else WALK_SPEED
 
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, WALK_SPEED)
+		velocity.z = move_toward(velocity.z, 0, WALK_SPEED)
 
 	move_and_slide()
 	handle_interaction()
 
 func handle_interaction():
+	if not ray.is_colliding():
+		interact_label.visible = false
+		return
 
-	if ray.is_colliding():
-		print(ray.get_collider())
-
-		var collider = ray.get_collider()
-
-		if collider:
-
-			var target = collider.get_parent()
-
-			if target.is_in_group("sleep_pods"):
-
-				interact_label.visible = true
-
-				if Input.is_action_just_pressed("interact"):
-					target.interact()
-
-				return
+	var target: Node = ray.get_collider()
+	while target:
+		if target.has_method("interact"):
+			interact_label.visible = true
+			if target.has_method("get_interaction_text"):
+				interact_label.text = target.get_interaction_text()
+			else:
+				interact_label.text = "[E] ВЗАИМОДЕЙСТВОВАТЬ"
+			if Input.is_action_just_pressed("interact"):
+				target.interact()
+			return
+		target = target.get_parent()
 
 	interact_label.visible = false

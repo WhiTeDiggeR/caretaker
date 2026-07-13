@@ -1,0 +1,123 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/temporary_blast_door.gd" id="1_script"]
+
+[sub_resource type="StandardMaterial3D" id="FrameMaterial"]
+albedo_color = Color(0.055, 0.075, 0.1, 1)
+metallic = 0.9
+roughness = 0.32
+
+[sub_resource type="StandardMaterial3D" id="PanelMaterial"]
+albedo_color = Color(0.1, 0.14, 0.18, 1)
+metallic = 0.82
+roughness = 0.42
+
+[sub_resource type="StandardMaterial3D" id="AccentMaterial"]
+albedo_color = Color(0.02, 0.16, 0.28, 1)
+emission_enabled = true
+emission = Color(0.02, 0.22, 0.7, 1)
+emission_energy_multiplier = 2.5
+
+[sub_resource type="StandardMaterial3D" id="WarningMaterial"]
+albedo_color = Color(0.5, 0.06, 0.015, 1)
+emission_enabled = true
+emission = Color(1, 0.08, 0.01, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="StandardMaterial3D" id="RearPanelMaterial"]
+albedo_color = Color(0.13, 0.17, 0.2, 1)
+metallic = 0.75
+roughness = 0.38
+
+[sub_resource type="BoxMesh" id="FrameVerticalMesh"]
+material = SubResource("FrameMaterial")
+size = Vector3(0.3, 4.2, 0.55)
+[sub_resource type="BoxMesh" id="FrameHeaderMesh"]
+material = SubResource("FrameMaterial")
+size = Vector3(5, 0.3, 0.55)
+[sub_resource type="BoxMesh" id="FrameThresholdMesh"]
+material = SubResource("FrameMaterial")
+size = Vector3(5, 0.18, 0.55)
+[sub_resource type="BoxMesh" id="PanelMesh"]
+material = SubResource("PanelMaterial")
+size = Vector3(2.2, 3.7, 0.28)
+[sub_resource type="BoxMesh" id="RearPanelMesh"]
+material = SubResource("RearPanelMaterial")
+size = Vector3(2.12, 3.56, 0.035)
+[sub_resource type="BoxMesh" id="PanelStripeMesh"]
+material = SubResource("AccentMaterial")
+size = Vector3(1.7, 0.08, 0.035)
+[sub_resource type="BoxMesh" id="IndicatorMesh"]
+material = SubResource("WarningMaterial")
+size = Vector3(0.16, 0.32, 0.06)
+[sub_resource type="BoxShape3D" id="DoorCollision"]
+size = Vector3(4.7, 3.95, 0.52)
+
+[sub_resource type="BoxShape3D" id="InteractionShape"]
+size = Vector3(4.8, 4, 1.0)
+
+[node name="TemporaryBlastDoor" type="StaticBody3D" groups=["interactable_doors"]]
+script = ExtResource("1_script")
+
+[node name="LeftFrame" type="MeshInstance3D" parent="."]
+position = Vector3(-2.35, 0, 0)
+mesh = SubResource("FrameVerticalMesh")
+[node name="RightFrame" type="MeshInstance3D" parent="."]
+position = Vector3(2.35, 0, 0)
+mesh = SubResource("FrameVerticalMesh")
+[node name="TopFrame" type="MeshInstance3D" parent="."]
+position = Vector3(0, 2.02, 0)
+mesh = SubResource("FrameHeaderMesh")
+[node name="BottomFrame" type="MeshInstance3D" parent="."]
+position = Vector3(0, -1.92, 0)
+mesh = SubResource("FrameThresholdMesh")
+[node name="LeftPanel" type="MeshInstance3D" parent="."]
+position = Vector3(-1.08, 0, 0.02)
+mesh = SubResource("PanelMesh")
+[node name="RightPanel" type="MeshInstance3D" parent="."]
+position = Vector3(1.08, 0, 0.02)
+mesh = SubResource("PanelMesh")
+[node name="LeftRearPanel" type="MeshInstance3D" parent="."]
+position = Vector3(-1.08, 0, -0.142)
+mesh = SubResource("RearPanelMesh")
+[node name="RightRearPanel" type="MeshInstance3D" parent="."]
+position = Vector3(1.08, 0, -0.142)
+mesh = SubResource("RearPanelMesh")
+[node name="LeftAccent" type="MeshInstance3D" parent="."]
+position = Vector3(-1.08, 0.55, 0.15)
+mesh = SubResource("PanelStripeMesh")
+[node name="RightAccent" type="MeshInstance3D" parent="."]
+position = Vector3(1.08, 0.55, 0.15)
+mesh = SubResource("PanelStripeMesh")
+[node name="LeftRearAccent" type="MeshInstance3D" parent="."]
+position = Vector3(-1.08, 0.55, -0.165)
+mesh = SubResource("PanelStripeMesh")
+[node name="RightRearAccent" type="MeshInstance3D" parent="."]
+position = Vector3(1.08, 0.55, -0.165)
+mesh = SubResource("PanelStripeMesh")
+[node name="LeftLowerAccent" type="MeshInstance3D" parent="."]
+position = Vector3(-1.08, -0.55, 0.17)
+mesh = SubResource("PanelStripeMesh")
+[node name="RightLowerAccent" type="MeshInstance3D" parent="."]
+position = Vector3(1.08, -0.55, 0.17)
+mesh = SubResource("PanelStripeMesh")
+[node name="LeftRearLowerAccent" type="MeshInstance3D" parent="."]
+position = Vector3(-1.08, -0.55, -0.165)
+mesh = SubResource("PanelStripeMesh")
+[node name="RightRearLowerAccent" type="MeshInstance3D" parent="."]
+position = Vector3(1.08, -0.55, -0.165)
+mesh = SubResource("PanelStripeMesh")
+[node name="WarningIndicator" type="MeshInstance3D" parent="."]
+position = Vector3(2.05, 1.2, 0.28)
+mesh = SubResource("IndicatorMesh")
+[node name="RearWarningIndicator" type="MeshInstance3D" parent="."]
+position = Vector3(-2.05, 1.2, -0.31)
+mesh = SubResource("IndicatorMesh")
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("DoorCollision")
+
+[node name="InteractionArea" type="Area3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea"]
+shape = SubResource("InteractionShape")

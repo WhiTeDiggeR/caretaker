@@ -1,0 +1,12 @@
+[gd_scene format=3]
+[ext_resource type="PackedScene" path="res://loads/3D_cabinet_3.fbx" id="1"]
+[ext_resource type="Script" path="res://objects/imported_furniture.gd" id="2_script"]
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(0.7, 1.88, 0.7)
+[node name="LoadedCabinet" type="StaticBody3D"]
+script = ExtResource("2_script")
+[node name="Model" parent="." instance=ExtResource("1")]
+scale = Vector3(1.25, 1.25, 1.25)
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.94, 0)
+shape = SubResource("Shape")
