@@ -1,0 +1,61 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="TableMaterial"]
+albedo_color = Color(0.28, 0.25, 0.2, 1)
+metallic = 0.05
+roughness = 0.78
+
+[sub_resource type="StandardMaterial3D" id="FrameMaterial"]
+albedo_color = Color(0.18, 0.2, 0.21, 1)
+metallic = 0.22
+roughness = 0.62
+
+[sub_resource type="BoxMesh" id="TopMesh"]
+material = SubResource("TableMaterial")
+size = Vector3(1.7, 0.12, 0.8)
+
+[sub_resource type="BoxMesh" id="LegMesh"]
+material = SubResource("FrameMaterial")
+size = Vector3(0.1, 0.72, 0.1)
+
+[sub_resource type="BoxMesh" id="BenchMesh"]
+material = SubResource("TableMaterial")
+size = Vector3(1.55, 0.1, 0.32)
+
+[sub_resource type="BoxShape3D" id="TableShape"]
+size = Vector3(1.75, 0.82, 1.65)
+
+[node name="StaffTable" type="StaticBody3D"]
+
+[node name="Top" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.78, 0)
+mesh = SubResource("TopMesh")
+
+[node name="Leg1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.68, 0.36, -0.27)
+mesh = SubResource("LegMesh")
+
+[node name="Leg2" type="MeshInstance3D" parent="."]
+position = Vector3(0.68, 0.36, -0.27)
+mesh = SubResource("LegMesh")
+
+[node name="Leg3" type="MeshInstance3D" parent="."]
+position = Vector3(-0.68, 0.36, 0.27)
+mesh = SubResource("LegMesh")
+
+[node name="Leg4" type="MeshInstance3D" parent="."]
+position = Vector3(0.68, 0.36, 0.27)
+mesh = SubResource("LegMesh")
+
+[node name="BenchLeft" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.44, -0.67)
+mesh = SubResource("BenchMesh")
+
+[node name="BenchRight" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.44, 0.67)
+mesh = SubResource("BenchMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.41, 0)
+shape = SubResource("TableShape")
+

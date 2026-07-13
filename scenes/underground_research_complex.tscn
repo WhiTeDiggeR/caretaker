@@ -26,6 +26,9 @@
 [ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="24_barrier"]
 [ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="25_terminal"]
 [ext_resource type="Script" path="res://scenes/facility_prop_optimizer.gd" id="26_optimizer"]
+[ext_resource type="PackedScene" path="res://objects/industrial_crate.tscn" id="27_crate"]
+[ext_resource type="PackedScene" path="res://objects/staff_table.tscn" id="28_staff_table"]
+[ext_resource type="PackedScene" path="res://objects/sector_marker.tscn" id="29_marker"]
 
 [sub_resource type="BoxShape3D" id="ProgressionAreaShape"]
 size = Vector3(8, 3, 8)
@@ -849,146 +852,146 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.5, 2, 20)
 [node name="RoomMarkers" type="Node3D" parent="." unique_id=970876482]
 
 [node name="EntranceSign" type="Label3D" parent="RoomMarkers" unique_id=983661971]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.7, -22.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35, 3, -22.5)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "ГЛАВНЫЙ ВХОД
 СЛУЖЕБНЫЙ ЛИФТ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="ControlSign" type="Label3D" parent="RoomMarkers" unique_id=1026997127]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.7, -12.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35, 3, -12.5)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "ЦЕНТРАЛЬНЫЙ ПОСТ
 СИСТЕМЫ БЕЗОПАСНОСТИ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="ResearchSign" type="Label3D" parent="RoomMarkers" unique_id=475628733]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.7, -12.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3, -14.25)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "ЛАБОРАТОРИЯ СНОВ
 ИССЛЕДОВАНИЕ СОЗНАНИЯ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="MedicalSign" type="Label3D" parent="RoomMarkers" unique_id=1751608902]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 3.7, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.15, 3, 0)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "МЕДИЦИНСКИЙ БЛОК
 КАРАНТИН"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="ArchiveSign" type="Label3D" parent="RoomMarkers" unique_id=1141582779]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.7, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3, 4.15)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "АРХИВ
 ДОКУМЕНТЫ И ЖУРНАЛЫ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="SecuritySign" type="Label3D" parent="RoomMarkers" unique_id=828060350]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.7, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3, -4.15)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "ШТАБ БЕЗОПАСНОСТИ
 АРСЕНАЛ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="PersonnelSign" type="Label3D" parent="RoomMarkers" unique_id=1623650822]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 3.7, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 3, 13.8)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "АВАРИЙНЫЙ СОН
 ПЕРСОНАЛА"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="StaffSign" type="Label3D" parent="RoomMarkers" unique_id=1471684351]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.7, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3, 13.8)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "СЛУЖЕБНАЯ ЗОНА
 СТОЛОВАЯ / ЖИЛЫЕ БЛОКИ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="WorkshopSign" type="Label3D" parent="RoomMarkers" unique_id=1183332504]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 3.7, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 3, 13.8)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "МАСТЕРСКАЯ
 И СКЛАД"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="TechnicalSign" type="Label3D" parent="RoomMarkers" unique_id=1574886730]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 3.7, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 3, 13.8)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "ТЕХНИЧЕСКИЙ СЕКТОР
 ВОДА / ВЕНТИЛЯЦИЯ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="C01Sign" type="Label3D" parent="RoomMarkers" unique_id=1207254328]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 3.7, 2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 3, 9.2)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "КАМЕРА СОДЕРЖАНИЯ 01
 РАННИЙ ДОСТУП"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="C02Sign" type="Label3D" parent="RoomMarkers" unique_id=1306891800]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5, 3.7, 2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5, 3, 9.2)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "КАМЕРА СОДЕРЖАНИЯ 02
 ТРЕБУЕТСЯ ПИТАНИЕ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="C03Sign" type="Label3D" parent="RoomMarkers" unique_id=171037379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 3.7, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 3, 24.2)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "КАМЕРА СОДЕРЖАНИЯ 03
 ОБРУШЕННЫЙ МАРШРУТ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="C04Sign" type="Label3D" parent="RoomMarkers" unique_id=2138325555]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.5, 3.7, 20)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 3, 24.2)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "КАМЕРА СОДЕРЖАНИЯ 04
 ДОПУСК БЕЗОПАСНОСТИ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="CorridorSign" type="Label3D" parent="RoomMarkers" unique_id=503549436]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 3.7, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 3, -4.15)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "СЛУЖЕБНЫЙ КОРИДОР"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="MaintenanceSign" type="Label3D" parent="RoomMarkers" unique_id=488489604]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 3.7, 10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.5, 3, 13.8)
 billboard = 1
 modulate = Color(0.2, 0.72, 1, 1)
 text = "ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ"
-font_size = 28
-outline_size = 7
+font_size = 18
+outline_size = 5
 
 [node name="FacilityProps" type="Node3D" parent="." unique_id=2059446040]
 script = ExtResource("26_optimizer")
@@ -997,7 +1000,7 @@ script = ExtResource("26_optimizer")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -32.5, 1.5245118, 2.5)
 
 [node name="BowserContainmentPod" parent="FacilityProps" unique_id=1517552713 instance=ExtResource("6_bowser")]
-transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 36.21509, 1.5245118, 2.5)
+transform = Transform3D(1.547206e-07, 0, -1.18, 0, 1.18, 0, 1.18, 0, 1.547206e-07, 33, 1.5245118, 2.5)
 
 [node name="ArchiveShelf01" parent="FacilityProps" unique_id=1509886616 instance=ExtResource("7_shelf")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.8, 0, 1)
@@ -1024,12 +1027,18 @@ transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, 11.5
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -4, 0, 14.582591)
 
 [node name="StaffLocker02" parent="FacilityProps" unique_id=357365137 instance=ExtResource("9_locker")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.25, 0, 14.582591)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.55, 0, 14.582591)
 
 [node name="StaffLocker03" parent="FacilityProps" unique_id=1895567944 instance=ExtResource("9_locker")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5, 0, 14.582591)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -3.1, 0, 14.582591)
 
 [node name="StaffLocker04" parent="FacilityProps" unique_id=616306096 instance=ExtResource("9_locker")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.65, 0, 14.582591)
+
+[node name="StaffLocker05" parent="FacilityProps" instance=ExtResource("9_locker")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.2, 0, 14.582591)
+
+[node name="StaffLocker06" parent="FacilityProps" instance=ExtResource("9_locker")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.75, 0, 14.582591)
 
 [node name="CameraControl" parent="FacilityProps" unique_id=846536788 instance=ExtResource("10_camera")]
@@ -1058,9 +1067,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.8, -12.5)
 
 [node name="LightResearch" parent="FacilityProps" unique_id=661697299 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.8, -12.5)
+fixture_color = Color(0.55, 0.78, 1, 1)
+
+[node name="LightResearchEast" parent="FacilityProps" instance=ExtResource("11_light")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 3.8, -12.5)
+fixture_color = Color(0.55, 0.78, 1, 1)
 
 [node name="LightMedical" parent="FacilityProps" unique_id=235301396 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 3.8, 0)
+fixture_color = Color(0.78, 0.9, 1, 1)
 
 [node name="LightArchive" parent="FacilityProps" unique_id=1696215813 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.8, 0)
@@ -1070,19 +1085,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.8, 0)
 
 [node name="LightStaff" parent="FacilityProps" unique_id=2075867323 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.8, 10)
+fixture_color = Color(1, 0.72, 0.45, 1)
 
 [node name="LightWorkshop" parent="FacilityProps" unique_id=1738796042 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 3.8, 10)
+fixture_color = Color(0.95, 0.62, 0.32, 1)
 
 [node name="LightTechnical" parent="FacilityProps" unique_id=1820316323 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 3.8, 10)
+fixture_color = Color(0.35, 0.78, 0.72, 1)
 flicker_enabled = true
+
+[node name="LightTechnicalEast" parent="FacilityProps" instance=ExtResource("11_light")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8, 3.8, 10)
+fixture_color = Color(0.35, 0.78, 0.72, 1)
 
 [node name="LightPersonnel" parent="FacilityProps" unique_id=466951788 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 3.8, 10)
 
 [node name="LightContainment01" parent="FacilityProps" unique_id=1038338623 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 3.8, 2.5)
+fixture_color = Color(0.38, 0.58, 1, 1)
 
 [node name="LightContainment01South" parent="FacilityProps" unique_id=170753318 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 3.8, -2)
@@ -1093,6 +1116,7 @@ flicker_enabled = true
 
 [node name="LightContainment02" parent="FacilityProps" unique_id=1237840430 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.5, 3.8, 2.5)
+fixture_color = Color(0.62, 0.78, 0.38, 1)
 
 [node name="LightContainment02South" parent="FacilityProps" unique_id=1730473981 instance=ExtResource("11_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 3.8, -2)
@@ -1125,6 +1149,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -13.7)
 [node name="ResearchWorkbench02" parent="FacilityProps" unique_id=640146005 instance=ExtResource("12_workbench")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5, 0, -13.7)
 
+[node name="ResearchShelf" parent="FacilityProps" instance=ExtResource("7_shelf")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.335, 0, -11.5)
+
 [node name="WorkshopBench01" parent="FacilityProps" unique_id=1627381344 instance=ExtResource("12_workbench")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 21.595552, 0, 6.5779905)
 
@@ -1132,13 +1159,13 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 21.5
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 21.595552, 0, 10.077991)
 
 [node name="MedicalBed01" parent="FacilityProps" unique_id=1387644248 instance=ExtResource("13_bed")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12.973824, 0, -1.5901854)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -13.3, 0, -2.5)
 
 [node name="MedicalBed02" parent="FacilityProps" unique_id=345509916 instance=ExtResource("13_bed")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -7.921, 0, 3)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -10.5, 0, 3.6)
 
 [node name="MedicalBed03" parent="FacilityProps" unique_id=839482966 instance=ExtResource("13_bed")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -6, 0, 3)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -7.7, 0, 3.6)
 
 [node name="Generator01" parent="FacilityProps" unique_id=863733944 instance=ExtResource("14_generator")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20.998983, 0, 13.4)
@@ -1220,6 +1247,61 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.5, 2.75, 15.18)
 
 [node name="EmergencyLightContainment04" parent="FacilityProps" unique_id=1515180470 instance=ExtResource("21_emergency_light")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 2.75, 15.18)
+
+[node name="StaffTable01" parent="FacilityProps" instance=ExtResource("28_staff_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 9.4)
+
+[node name="ResearchCrate01" parent="FacilityProps" instance=ExtResource("27_crate")]
+transform = Transform3D(0.9659258, 0, 0.25881904, 0, 1, 0, -0.25881904, 0, 0.9659258, 18.9, 0, -13.65)
+
+[node name="ResearchCrate02" parent="FacilityProps" instance=ExtResource("27_crate")]
+transform = Transform3D(0.9848077, 0, -0.17364818, 0, 1, 0, 0.17364818, 0, 0.9848077, 18.85, 0, -12.75)
+
+[node name="WorkshopCrate01" parent="FacilityProps" instance=ExtResource("27_crate")]
+transform = Transform3D(0.9396926, 0, 0.34202015, 0, 1, 0, -0.34202015, 0, 0.9396926, 16.2, 0, 13.8)
+
+[node name="WorkshopCrate02" parent="FacilityProps" instance=ExtResource("27_crate")]
+transform = Transform3D(0.9961947, 0, -0.087155744, 0, 1, 0, 0.087155744, 0, 0.9961947, 17.2, 0, 13.8)
+
+[node name="Containment03Crate" parent="FacilityProps" instance=ExtResource("27_crate")]
+transform = Transform3D(0.90630776, 0, 0.42261827, 0, 1, 0, -0.42261827, 0, 0.90630776, -36.2, 0, 22.8)
+
+[node name="Containment04Crate01" parent="FacilityProps" instance=ExtResource("27_crate")]
+transform = Transform3D(0.9659258, 0, -0.25881904, 0, 1, 0, 0.25881904, 0, 0.9659258, 33.8, 0, 23.2)
+
+[node name="Containment04Crate02" parent="FacilityProps" instance=ExtResource("27_crate")]
+transform = Transform3D(0.9961947, 0, 0.087155744, 0, 1, 0, -0.087155744, 0, 0.9961947, 32.8, 0, 23.3)
+
+[node name="DebrisContainment04" parent="FacilityProps" instance=ExtResource("23_debris")]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 33.8, 0, 18)
+
+[node name="MarkerResearch" parent="FacilityProps" instance=ExtResource("29_marker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0.01, -14.45)
+marker_color = Color(0.15, 0.65, 1, 1)
+
+[node name="MarkerMedical" parent="FacilityProps" instance=ExtResource("29_marker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0.01, -4.45)
+marker_color = Color(0.38, 0.82, 1, 1)
+
+[node name="MarkerStaff" parent="FacilityProps" instance=ExtResource("29_marker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.01, 14.45)
+marker_color = Color(1, 0.48, 0.16, 1)
+
+[node name="MarkerTechnical" parent="FacilityProps" instance=ExtResource("29_marker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.5, 0.01, 14.45)
+marker_color = Color(0.1, 0.78, 0.64, 1)
+
+[node name="MarkerWorkshop" parent="FacilityProps" instance=ExtResource("29_marker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 0.01, 14.45)
+marker_color = Color(1, 0.48, 0.1, 1)
+
+[node name="MarkerContainment01" parent="FacilityProps" instance=ExtResource("29_marker")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -25.55, 0.01, 2.5)
+marker_color = Color(0.18, 0.42, 1, 1)
+
+[node name="MarkerContainment02" parent="FacilityProps" instance=ExtResource("29_marker")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 25.55, 0.01, 2.5)
+marker_color = Color(0.55, 0.78, 0.15, 1)
 
 [node name="ProgressionTriggers" type="Node3D" parent="." unique_id=1773044487]
 
