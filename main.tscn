@@ -7,6 +7,15 @@
 [ext_resource type="PackedScene" uid="uid://b05bfa3w5bv1x" path="res://scenes/control_panel.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://e434i06gf7fs" path="res://scenes/bowser_pod.tscn" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://03cwcvaebh4p" path="res://scenes/room_example.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://xa265hohkybr" path="res://objects/loaded_cabinet.tscn" id="8_2cqfq"]
+[ext_resource type="PackedScene" path="res://objects/loaded_locker.tscn" id="9_yaehf"]
+[ext_resource type="PackedScene" path="res://objects/server_rack.tscn" id="10_074og"]
+[ext_resource type="PackedScene" uid="uid://c4vg0mih2vuwu" path="res://objects/medical_bed.tscn" id="11_cegan"]
+[ext_resource type="PackedScene" uid="uid://dvvoh82mm6wyp" path="res://objects/loaded_shelf.tscn" id="12_82xsv"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="13_getpj"]
+[ext_resource type="PackedScene" path="res://objects/temporary_blast_door.tscn" id="14_ryguw"]
+[ext_resource type="PackedScene" path="res://objects/facility_document.tscn" id="15_d13ii"]
+[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="16_1u8w0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e5hef"]
 size = Vector3(20, 1, 20)
@@ -30,7 +39,7 @@ mesh = SubResource("BoxMesh_l7k0l")
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 0, 0, 0)
 
 [node name="Player" parent="." unique_id=1348182797 node_paths=PackedStringArray("interact_label") instance=ExtResource("1_ig7tw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5728707, 1.3999999, -7.095788)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.7862725, 1.3999999, 5.874435)
 interact_label = NodePath("../CanvasLayer/InteractLabel")
 
 [node name="herobrine_pod" parent="." unique_id=649633800 instance=ExtResource("3_7mycd")]
@@ -51,11 +60,38 @@ offset_bottom = 23.0
 text = "[E] Продлить сон"
 
 [node name="ContainmentMonitor" parent="." unique_id=1117962827 instance=ExtResource("4_1bvp3")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.980051, 3.10873, -1.3667393)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5385675, 3.10873, -1.3667393)
 
 [node name="ControlPanel" parent="." unique_id=1277420794 instance=ExtResource("5_lquwl")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.4936814, 1.2499998, 1.0016074)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8.561118, 1.2499998, 2.656921)
 script = SubResource("GDScript_vhxdj")
 
 [node name="RoomExample" parent="." unique_id=1 instance=ExtResource("7_272bh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.470701, 0.5071037, -24.44996)
+
+[node name="LoadedCabinet" parent="." unique_id=1658085990 instance=ExtResource("8_2cqfq")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.065966, 0.49999994, 7.0962915)
+
+[node name="LoadedLocker" parent="." unique_id=229463886 instance=ExtResource("9_yaehf")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.736221, 0.5049998, 5.4439826)
+
+[node name="ServerRack" parent="." unique_id=1596986444 instance=ExtResource("10_074og")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -9.192708, 0.5, 8.545582)
+
+[node name="MedicalBed" parent="." unique_id=1619818706 instance=ExtResource("11_cegan")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.2994924, 0.49999994, 9.067176)
+
+[node name="LoadedShelf" parent="." unique_id=1636960410 instance=ExtResource("12_82xsv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1259494, 0.5, 9.077026)
+
+[node name="GeneratorUnit" parent="." unique_id=1429600816 instance=ExtResource("13_getpj")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.2196102, 0.5, 9.210086)
+
+[node name="TemporaryBlastDoor" parent="." unique_id=1232367517 instance=ExtResource("14_ryguw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2.3, -14.25)
+
+[node name="FacilityDocument" parent="." unique_id=409365157 instance=ExtResource("15_d13ii")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.121843, 0.515, 4.539076)
+
+[node name="DebrisPile" parent="." unique_id=1317240952 instance=ExtResource("16_1u8w0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.338737, 0.5149999, 5.8543363)

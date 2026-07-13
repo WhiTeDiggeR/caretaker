@@ -1,130 +1,156 @@
 [gd_scene format=3 uid="uid://b05bfa3w5bv1x"]
 
-[ext_resource type="Script" path="res://objects/facility_interactable.gd" id="1_interact"]
+[ext_resource type="Script" uid="uid://c3uwol8ytd3q4" path="res://objects/facility_interactable.gd" id="1_interact"]
+
+[sub_resource type="BoxShape3D" id="CollisionShape"]
+size = Vector3(2, 1.9334453, 1)
 
 [sub_resource type="StandardMaterial3D" id="BodyMat"]
 albedo_color = Color(0.055, 0.065, 0.075, 1)
 metallic = 0.8
 roughness = 0.38
+
+[sub_resource type="BoxMesh" id="BaseMesh"]
+material = SubResource("BodyMat")
+size = Vector3(1.85, 1.25, 0.82)
+
 [sub_resource type="StandardMaterial3D" id="TrimMat"]
 albedo_color = Color(0.015, 0.02, 0.026, 1)
 metallic = 0.7
 roughness = 0.3
+
+[sub_resource type="BoxMesh" id="FootMesh"]
+material = SubResource("TrimMat")
+size = Vector3(1.95, 0.18, 0.95)
+
 [sub_resource type="StandardMaterial3D" id="ScreenMat"]
 albedo_color = Color(0.005, 0.03, 0.045, 1)
 emission_enabled = true
 emission = Color(0.01, 0.24, 0.52, 1)
 emission_energy_multiplier = 1.5
+
+[sub_resource type="BoxMesh" id="ScreenMesh"]
+material = SubResource("ScreenMat")
+size = Vector3(1.3, 0.62, 0.035)
+
+[sub_resource type="BoxMesh" id="ScreenFrame"]
+material = SubResource("TrimMat")
+size = Vector3(1.5, 0.82, 0.14)
+
+[sub_resource type="BoxMesh" id="ConsoleDeck"]
+material = SubResource("BodyMat")
+size = Vector3(1.75, 0.16, 0.72)
+
 [sub_resource type="StandardMaterial3D" id="GreenMat"]
 albedo_color = Color(0.02, 0.35, 0.08, 1)
 emission_enabled = true
 emission = Color(0.02, 1, 0.16, 1)
 emission_energy_multiplier = 2.5
-[sub_resource type="StandardMaterial3D" id="RedMat"]
-albedo_color = Color(0.42, 0.025, 0.01, 1)
-emission_enabled = true
-emission = Color(1, 0.04, 0.01, 1)
-emission_energy_multiplier = 2.4
-[sub_resource type="StandardMaterial3D" id="AmberMat"]
-albedo_color = Color(0.45, 0.15, 0.01, 1)
-emission_enabled = true
-emission = Color(1, 0.3, 0.01, 1)
-emission_energy_multiplier = 2.2
-[sub_resource type="BoxMesh" id="BaseMesh"]
-material = SubResource("BodyMat")
-size = Vector3(1.85, 1.25, 0.82)
-[sub_resource type="BoxMesh" id="FootMesh"]
-material = SubResource("TrimMat")
-size = Vector3(1.95, 0.18, 0.95)
-[sub_resource type="BoxMesh" id="ConsoleDeck"]
-material = SubResource("BodyMat")
-size = Vector3(1.75, 0.16, 0.72)
-[sub_resource type="BoxMesh" id="ScreenFrame"]
-material = SubResource("TrimMat")
-size = Vector3(1.5, 0.82, 0.14)
-[sub_resource type="BoxMesh" id="ScreenMesh"]
-material = SubResource("ScreenMat")
-size = Vector3(1.3, 0.62, 0.035)
+
 [sub_resource type="CylinderMesh" id="ButtonGreen"]
 material = SubResource("GreenMat")
 top_radius = 0.075
 bottom_radius = 0.075
 height = 0.05
-[sub_resource type="CylinderMesh" id="ButtonRed"]
-material = SubResource("RedMat")
-top_radius = 0.095
-bottom_radius = 0.095
-height = 0.06
+
+[sub_resource type="StandardMaterial3D" id="AmberMat"]
+albedo_color = Color(0.45, 0.15, 0.01, 1)
+emission_enabled = true
+emission = Color(1, 0.3, 0.01, 1)
+emission_energy_multiplier = 2.2
+
 [sub_resource type="CylinderMesh" id="ButtonAmber"]
 material = SubResource("AmberMat")
 top_radius = 0.07
 bottom_radius = 0.07
 height = 0.05
-[sub_resource type="BoxShape3D" id="CollisionShape"]
-size = Vector3(1.9, 1.5, 0.95)
 
-[node name="ControlPanel" type="Node3D"]
-[node name="Base" type="MeshInstance3D" parent="."]
-position = Vector3(0, -0.18, 0)
-mesh = SubResource("BaseMesh")
-[node name="Foot" type="MeshInstance3D" parent="."]
-position = Vector3(0, -0.88, 0.02)
-mesh = SubResource("FootMesh")
-[node name="Deck" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.42, 0.32)
-rotation_degrees = Vector3(-18, 0, 0)
-mesh = SubResource("ConsoleDeck")
-[node name="ScreenFrame" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.52, -0.29)
-rotation_degrees = Vector3(-8, 0, 0)
-mesh = SubResource("ScreenFrame")
-[node name="Screen" type="MeshInstance3D" parent="."]
-position = Vector3(0, 0.52, -0.212)
-rotation_degrees = Vector3(-8, 0, 0)
-mesh = SubResource("ScreenMesh")
-[node name="ScreenText" type="Label3D" parent="."]
-position = Vector3(-0.55, 0.7, -0.19)
-rotation_degrees = Vector3(-8, 0, 0)
-pixel_size = 0.0022
-font_size = 25
-width = 500.0
-text = "УПРАВЛЕНИЕ КОМПЛЕКСОМ\nЭНЕРГОСЕТЬ: РЕЗЕРВНАЯ\nДОСТУП: ОГРАНИЧЕН"
-horizontal_alignment = 0
-modulate = Color(0.48, 0.9, 1, 1)
-[node name="ScreenGlow" type="OmniLight3D" parent="."]
-position = Vector3(0, 0.58, -0.48)
-light_color = Color(0.18, 0.62, 1, 1)
-light_energy = 0.5
-omni_range = 2.4
-shadow_enabled = false
-[node name="ButtonPower" type="MeshInstance3D" parent="."]
-position = Vector3(-0.58, 0.51, 0.55)
-rotation_degrees = Vector3(72, 0, 0)
-mesh = SubResource("ButtonGreen")
-[node name="ButtonSystem" type="MeshInstance3D" parent="."]
-position = Vector3(-0.32, 0.51, 0.55)
-rotation_degrees = Vector3(72, 0, 0)
-mesh = SubResource("ButtonAmber")
-[node name="ButtonLock" type="MeshInstance3D" parent="."]
-position = Vector3(-0.06, 0.51, 0.55)
-rotation_degrees = Vector3(72, 0, 0)
-mesh = SubResource("ButtonAmber")
-[node name="EmergencyStop" type="MeshInstance3D" parent="."]
-position = Vector3(0.55, 0.51, 0.55)
-rotation_degrees = Vector3(72, 0, 0)
-mesh = SubResource("ButtonRed")
-[node name="ControlLabel" type="Label3D" parent="."]
-position = Vector3(0.25, 0.545, 0.585)
-rotation_degrees = Vector3(-18, 0, 0)
-pixel_size = 0.0018
-font_size = 22
-text = "СЕКТОР // 01"
-modulate = Color(0.62, 0.72, 0.78, 1)
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[sub_resource type="StandardMaterial3D" id="RedMat"]
+albedo_color = Color(0.42, 0.025, 0.01, 1)
+emission_enabled = true
+emission = Color(1, 0.04, 0.01, 1)
+emission_energy_multiplier = 2.4
+
+[sub_resource type="CylinderMesh" id="ButtonRed"]
+material = SubResource("RedMat")
+top_radius = 0.095
+bottom_radius = 0.095
+height = 0.06
+
+[node name="ControlPanel" type="Node3D" unique_id=356458552]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=580059205]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 script = ExtResource("1_interact")
 interaction_prompt = "[E] ИСПОЛЬЗОВАТЬ ПУЛЬТ"
 message_title = "ЦЕНТРАЛЬНЫЙ ПОСТ"
 message_text = "Энергосеть работает от резервного контура. Камеры 03 и 04 не отвечают. В журнале осталась отметка: «Не будить заключённых ни при каких обстоятельствах»."
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-position = Vector3(0, -0.08, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1546082279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.055277355, 0)
 shape = SubResource("CollisionShape")
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=614603404]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.20706064, -0.013532877)
+mesh = SubResource("BaseMesh")
+
+[node name="Foot" type="MeshInstance3D" parent="." unique_id=1101165658]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.74889433, -0.0011763088)
+mesh = SubResource("FootMesh")
+
+[node name="Screen" type="Node3D" parent="." unique_id=1934898793]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.027060628, -0.013532877)
+
+[node name="Screen" type="MeshInstance3D" parent="Screen" unique_id=798481394]
+transform = Transform3D(1, 0, 0, 0, 0.99026805, 0.1391731, 0, -0.1391731, 0.99026805, 0, 0.52, -0.212)
+mesh = SubResource("ScreenMesh")
+
+[node name="ScreenFrame" type="MeshInstance3D" parent="Screen" unique_id=1534909071]
+transform = Transform3D(1, 0, 0, 0, 0.9902682, 0.13917312, 0, -0.13917312, 0.9902682, 0, 0.52, -0.29000002)
+mesh = SubResource("ScreenFrame")
+
+[node name="ScreenText" type="Label3D" parent="Screen" unique_id=1268593492]
+transform = Transform3D(1, 0, 0, 0, 0.9902682, 0.13917312, 0, -0.13917312, 0.9902682, -0.55, 0.7, -0.19000001)
+pixel_size = 0.0022
+modulate = Color(0.48, 0.9, 1, 1)
+text = "УПРАВЛЕНИЕ КОМПЛЕКСОМ
+ЭНЕРГОСЕТЬ: РЕЗЕРВНАЯ
+ДОСТУП: ОГРАНИЧЕН"
+font_size = 25
+horizontal_alignment = 0
+
+[node name="ScreenGlow" type="OmniLight3D" parent="Screen" unique_id=1076311020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.58, -0.48000008)
+light_color = Color(0.18, 0.62, 1, 1)
+light_energy = 0.5
+omni_range = 2.4
+
+[node name="Deck" type="Node3D" parent="." unique_id=1864231199]
+transform = Transform3D(0.8, 0, 0, 0, 0.67546237, -0.42866144, 0, 0.42866144, 0.67546237, 0, 0.059585243, -0.017830074)
+
+[node name="ControlLabel" type="Label3D" parent="Deck" unique_id=1212637208]
+transform = Transform3D(1, 0, 0, 0, 0.95105666, 0.309017, 0, -0.309017, 0.95105666, 0.25, 0.4755054, 0.70999926)
+pixel_size = 0.0018
+modulate = Color(0.62, 0.72, 0.78, 1)
+text = "СЕКТОР // 01"
+font_size = 22
+
+[node name="Deck" type="MeshInstance3D" parent="Deck" unique_id=60718016]
+transform = Transform3D(1, 0, 0, 0, 0.9510566, 0.30901703, 0, -0.30901703, 0.9510566, 0, 0.35624325, 0.36046126)
+mesh = SubResource("ConsoleDeck")
+
+[node name="ButtonPower" type="MeshInstance3D" parent="Deck" unique_id=1424869721]
+transform = Transform3D(1, 0, 0, 0, 0.30901697, -0.95105654, 0, 0.95105654, 0.30901697, -0.58, 0.51, 0.5500001)
+mesh = SubResource("ButtonGreen")
+
+[node name="ButtonSystem" type="MeshInstance3D" parent="Deck" unique_id=367660241]
+transform = Transform3D(1, 0, 0, 0, 0.30901697, -0.95105654, 0, 0.95105654, 0.30901697, -0.32, 0.51, 0.5500001)
+mesh = SubResource("ButtonAmber")
+
+[node name="ButtonLock" type="MeshInstance3D" parent="Deck" unique_id=703877039]
+transform = Transform3D(1, 0, 0, 0, 0.30901697, -0.95105654, 0, 0.95105654, 0.30901697, -0.06, 0.51, 0.5500001)
+mesh = SubResource("ButtonAmber")
+
+[node name="EmergencyStop" type="MeshInstance3D" parent="Deck" unique_id=1624328946]
+transform = Transform3D(1, 0, 0, 0, 0.30901697, -0.95105654, 0, 0.95105654, 0.30901697, 0.55, 0.51, 0.5500001)
+mesh = SubResource("ButtonRed")
