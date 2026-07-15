@@ -1,0 +1,116 @@
+name: Copilot task runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Optional ready Copilot issue number"
+        required: false
+        type: string
+      dry_run:
+        description: "Select and report a task without claiming or running Copilot"
+        required: true
+        default: true
+        type: boolean
+  issues:
+    types:
+      - labeled
+  schedule:
+    - cron: "17 * * * *"
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: copilot-task-runner
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      BASE_BRANCH: team/integration
+      COPILOT_DISPATCH_ENABLED: ${{ vars.COPILOT_DISPATCH_ENABLED || 'false' }}
+      COPILOT_MAX_AI_CREDITS: ${{ vars.COPILOT_MAX_AI_CREDITS || '50' }}
+      GH_TOKEN: ${{ github.token }}
+      COPILOT_GITHUB_TOKEN: ${{ github.token }}
+      GODOT_VERSION: 4.7-stable
+      GODOT_BINARY: Godot_v4.7-stable_linux.x86_64
+
+    steps:
+      - name: Check out integration branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BASE_BRANCH }}
+          fetch-depth: 0
+
+      - name: Select task
+        id: select
+        shell: bash
+        env:
+          REQUESTED_ISSUE: ${{ inputs.issue_number }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: bash tools/copilot_task_runner.sh select
+
+      - name: Report dry run
+        if: steps.select.outputs.issue_number != '' && inputs.dry_run == true
+        shell: bash
+        run: |
+          echo "Selected issue #${{ steps.select.outputs.issue_number }}; dry-run requested, so no state was changed." \
+            >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Claim task
+        if: steps.select.outputs.issue_number != '' && inputs.dry_run != true
+        id: claim
+        shell: bash
+        env:
+          ISSUE_NUMBER: ${{ steps.select.outputs.issue_number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: bash tools/copilot_task_runner.sh claim
+
+      - name: Set up Node.js
+        if: steps.claim.outcome == 'success'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Copilot CLI
+        if: steps.claim.outcome == 'success'
+        shell: bash
+        run: npm install --global @github/copilot
+
+      - name: Install Godot 4.7 stable
+        if: steps.claim.outcome == 'success'
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 \
+            --output "$RUNNER_TEMP/godot.zip" \
+            "https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v4.7-stable_linux.x86_64.zip"
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot"
+          chmod +x "$RUNNER_TEMP/godot/${GODOT_BINARY}"
+          echo "$RUNNER_TEMP/godot" >> "$GITHUB_PATH"
+
+      - name: Run Copilot on task
+        if: steps.claim.outcome == 'success'
+        shell: bash
+        env:
+          ISSUE_NUMBER: ${{ steps.select.outputs.issue_number }}
+        run: bash tools/copilot_task_runner.sh run
+
+      - name: Validate, commit, push, and open draft PR
+        if: steps.claim.outcome == 'success'
+        shell: bash
+        env:
+          ISSUE_NUMBER: ${{ steps.select.outputs.issue_number }}
+        run: bash tools/copilot_task_runner.sh deliver
+
+      - name: Mark task blocked after failure
+        if: failure() && steps.claim.outputs.claimed == 'true'
+        shell: bash
+        env:
+          ISSUE_NUMBER: ${{ steps.select.outputs.issue_number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: bash tools/copilot_task_runner.sh fail
