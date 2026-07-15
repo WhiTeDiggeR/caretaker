@@ -22,3 +22,7 @@ Godot is not currently discoverable through `PATH` on every contributor machine.
 ## Team development
 
 GitHub Issues are the single task backlog. Active work integrates into `team/integration`; `main` stays stable and only receives reviewed release PRs. Read [the team workflow](docs/TEAM_WORKFLOW.md) and [the agent guide](AGENTS.md) before making changes.
+
+### Local AI-agent handoff workflow
+
+When a GitHub Issue is labeled `agent:codex` or `agent:copilot`, the assigned agent works in an isolated task branch or worktree based on `team/integration`. The coordinating agent or human reviews the diff and verification results before delivery to `team/integration`. The GitHub Issue remains the source of requirements and coordination point for all work. See [AGENTS.md](AGENTS.md) and [the team workflow](docs/TEAM_WORKFLOW.md) for full implementation details, branch strategy, and verification procedures.
