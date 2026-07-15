@@ -113,6 +113,8 @@ You are already on a dedicated task branch based on ${base_branch}.
 Make only the smallest complete code change required by the issue.
 Do not commit, push, create or edit GitHub issues or pull requests, merge branches,
 or modify main. The surrounding workflow owns all GitHub mutations.
+Do not modify files under .github/workflows. GitHub blocks the workflow token from
+publishing workflow-file changes; those tasks require a human or Codex executor.
 Do not edit files or scene areas that the issue does not assign.
 Preserve Russian UTF-8 text and unrelated content.
 Run useful local checks, but the workflow will repeat the required verification.
@@ -143,6 +145,16 @@ deliver_task() {
 
   if [[ -z "$(git status --porcelain)" ]]; then
     echo "Copilot completed without producing changes." >&2
+    return 1
+  fi
+
+  local workflow_changes
+  workflow_changes="$(git status --porcelain -- .github/workflows)"
+  if [[ -n "$workflow_changes" ]]; then
+    echo "Copilot tasks cannot modify protected workflow files:" >&2
+    echo "$workflow_changes" >&2
+    gh issue comment "$issue_number" --repo "$repo" --body \
+      "Copilot CLI изменил защищённые файлы в .github/workflows. Изменения не опубликованы; такую задачу должен выполнить Codex или человек."
     return 1
   fi
 
