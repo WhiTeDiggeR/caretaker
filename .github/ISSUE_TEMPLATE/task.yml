@@ -1,0 +1,60 @@
+name: Development task
+description: A feature, improvement, refactor, content change, or tooling task
+title: "[Task] "
+labels:
+  - "status:triage"
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Результат
+      description: Что должно измениться для игрока или команды?
+      placeholder: После выполнения...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Контекст
+      description: Зачем это нужно, какие решения уже приняты, ссылки на связанные задачи.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Критерии приёмки
+      description: Один проверяемый пункт на строку.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: dropdown
+    id: executor
+    attributes:
+      label: Предпочтительный исполнитель
+      options:
+        - Dispatcher decides
+        - Codex
+        - GitHub Copilot
+        - Human
+    validations:
+      required: true
+  - type: textarea
+    id: ownership
+    attributes:
+      label: Файлы и области сцены
+      description: Укажите предполагаемые файлы, сцены и узлы. Это резервирует merge-sensitive области.
+  - type: textarea
+    id: verification
+    attributes:
+      label: Проверка
+      description: Автоматические команды и ручной игровой сценарий.
+      placeholder: |
+        godot --headless --editor --path . --quit
+        Ручная проверка: ...
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Зависимости и ограничения
+      description: Блокирующие задачи, запрещённые изменения, требования к ассетам или производительности.

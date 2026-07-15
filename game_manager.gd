@@ -12,7 +12,7 @@ func _process(delta):
 		if pod.villain_name == "Боузер" and pod.awakened:
 			bowser_awake = true
 
-		if pod.villain_name == "Широ Брин" and pod.awakened:
+		if pod.villain_name == "Херобрин" and pod.awakened:
 			shiro_awake = true
 
 	if bowser_awake and shiro_awake:

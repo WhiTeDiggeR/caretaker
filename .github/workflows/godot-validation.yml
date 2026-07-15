@@ -1,0 +1,46 @@
+name: Godot validation
+
+on:
+  push:
+    branches:
+      - main
+      - team/integration
+  pull_request:
+    branches:
+      - main
+      - team/integration
+
+permissions:
+  contents: read
+
+concurrency:
+  group: godot-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GODOT_VERSION: 4.7-stable
+      GODOT_BINARY: Godot_v4.7-stable_linux.x86_64
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Godot 4.7 stable
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 \
+            --output godot.zip \
+            "https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v4.7-stable_linux.x86_64.zip"
+          unzip -q godot.zip
+          chmod +x "${GODOT_BINARY}"
+
+      - name: Import project and validate resources
+        shell: bash
+        run: ./"${GODOT_BINARY}" --headless --editor --path . --quit
+
+      - name: Smoke-test startup scene
+        shell: bash
+        run: ./"${GODOT_BINARY}" --headless --path . --quit-after 5

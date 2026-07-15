@@ -1,0 +1,49 @@
+name: Bug report
+description: A reproducible defect in gameplay, scenes, rendering, audio, or tooling
+title: "[Bug] "
+labels:
+  - bug
+  - "status:triage"
+body:
+  - type: textarea
+    id: observed
+    attributes:
+      label: Что произошло
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Ожидаемое поведение
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Шаги воспроизведения
+      placeholder: |
+        1. Запустить...
+        2. Подойти...
+        3. Нажать...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Версия Godot и ОС
+      placeholder: Godot 4.7 stable, Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Логи, скриншоты или видео
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Критерии исправления
+      placeholder: |
+        - [ ] Ошибка больше не воспроизводится
+        - [ ] Соседний игровой сценарий не сломан
+    validations:
+      required: true

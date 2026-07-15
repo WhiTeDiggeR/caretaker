@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/facility_interactable.gd" id="1_script"]
+
+[sub_resource type="StandardMaterial3D" id="PaperMaterial"]
+albedo_color = Color(0.68, 0.65, 0.54, 1)
+roughness = 0.92
+
+[sub_resource type="StandardMaterial3D" id="InkMaterial"]
+albedo_color = Color(0.055, 0.06, 0.065, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="PaperMesh"]
+material = SubResource("PaperMaterial")
+size = Vector3(0.42, 0.018, 0.3)
+
+[sub_resource type="BoxMesh" id="InkLineMesh"]
+material = SubResource("InkMaterial")
+size = Vector3(0.28, 0.006, 0.012)
+
+[sub_resource type="BoxShape3D" id="DocumentShape"]
+size = Vector3(0.48, 0.08, 0.36)
+
+[node name="FacilityDocument" type="StaticBody3D"]
+script = ExtResource("1_script")
+interaction_prompt = "[E] ПРОЧИТАТЬ ДОКУМЕНТ"
+message_title = "СЛУЖЕБНАЯ ЗАПИСКА"
+message_text = "Часть текста уничтожена водой."
+
+[node name="Paper" type="MeshInstance3D" parent="."]
+mesh = SubResource("PaperMesh")
+
+[node name="Line1" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.012, -0.08)
+mesh = SubResource("InkLineMesh")
+
+[node name="Line2" type="MeshInstance3D" parent="."]
+position = Vector3(-0.03, 0.012, -0.045)
+scale = Vector3(0.78, 1, 1)
+mesh = SubResource("InkLineMesh")
+
+[node name="Line3" type="MeshInstance3D" parent="."]
+position = Vector3(0.015, 0.012, 0.03)
+scale = Vector3(0.9, 1, 1)
+mesh = SubResource("InkLineMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.025, 0)
+shape = SubResource("DocumentShape")

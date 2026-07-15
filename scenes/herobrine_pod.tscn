@@ -24,3 +24,10 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, -0.64640784)
 transform = Transform3D(1, 0, 0, 0, 0.99573594, 0.092249386, 0, -0.092249386, 0.99573594, 0, -0.63530266, 1.1584995)
 material_override = SubResource("StandardMaterial3D_l7k0l")
 mesh = SubResource("BoxMesh_e5hef")
+
+[node name="CapsuleInteriorLight" type="OmniLight3D" parent="."]
+position = Vector3(0, 0.15, 0.15)
+light_color = Color(0.42, 0.65, 1, 1)
+light_energy = 2.0
+omni_range = 1.6
+shadow_enabled = false

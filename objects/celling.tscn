@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cg871hhqhcy8x"]
+
+[ext_resource type="Material" uid="uid://r24nwthn31id" path="res://materials/ceiling_cracked_concrete.tres" id="1_jyu37"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6qdbn"]
+material = ExtResource("1_jyu37")
+size = Vector3(5, 0.5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_78340"]
+size = Vector3(5, 0.5, 5)
+
+[node name="Ceiling" type="StaticBody3D" unique_id=947759580]
+
+[node name="CeilingMesh" type="MeshInstance3D" parent="." unique_id=950579702]
+mesh = SubResource("BoxMesh_6qdbn")
+
+[node name="CeilingCollision" type="CollisionShape3D" parent="." unique_id=1931146475]
+shape = SubResource("BoxShape3D_78340")
+debug_fill = false

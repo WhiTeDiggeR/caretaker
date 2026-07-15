@@ -1,0 +1,9 @@
+[gd_scene format=3]
+[ext_resource type="PackedScene" path="res://loads/security_camera/security_camera_01_4k.fbx" id="1"]
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(0.28, 0.35, 0.45)
+[node name="SecurityCamera" type="StaticBody3D"]
+[node name="Model" parent="." instance=ExtResource("1")]
+scale = Vector3(1, 1, 1)
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("Shape")
