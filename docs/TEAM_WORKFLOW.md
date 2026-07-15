@@ -41,6 +41,19 @@ The issue, not a private chat, is the durable source of truth. Decisions made in
 
 Codex and local human contributors may push verified commits directly to `team/integration`. Copilot cloud agent cannot deliver without a PR; its narrowly scoped PR targets `team/integration` and is merged after CI/conflict checks without a separate release-review ceremony.
 
+## Automatic Copilot CLI dispatcher
+
+The `copilot-task-runner` workflow monitors for new work by polling open Issues. The dispatcher processes a queue of Issues that have both `agent:copilot` and `status:ready` labels. An empty queue consumes no AI credits and does not invoke the model.
+
+**Trigger modes:**
+- Manual: Run the workflow from the Actions tab to process a single Issue.
+- Hourly: The workflow checks the queue every hour during working hours.
+- Environment variable `COPILOT_DISPATCH_ENABLED=true` enables the dispatcher; set to `false` to pause without deleting the workflow.
+
+**Workflow limitation:** The Copilot runner is not permitted to modify `.github/workflows/`. Tasks that require workflow changes must be assigned to the Codex executor or carried out by a human contributor.
+
+**Delivery:** The dispatcher creates a draft PR targeting `team/integration`. After the PR passes CI and conflict checks, a human merges it promptly; the workflow does not auto-merge.
+
 ## Release
 
 When an increment is playable and CI is green, open one PR from `team/integration` to `main`. A human reviews gameplay impact, scene churn, asset provenance, and test evidence. Agents may review and suggest changes, but cannot approve the final release or merge it to `main`.
