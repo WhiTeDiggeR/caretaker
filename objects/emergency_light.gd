@@ -14,4 +14,3 @@ func _process(delta: float) -> void:
 	_phase += delta * pulse_speed
 	var pulse := (sin(_phase) + 1.0) * 0.5
 	light.light_energy = lerpf(minimum_energy, maximum_energy, pulse)
-

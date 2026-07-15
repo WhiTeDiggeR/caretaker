@@ -11,4 +11,3 @@ func interact() -> void:
 	var scene := get_tree().current_scene
 	if scene and scene.has_method("show_facility_message"):
 		scene.show_facility_message(message_title, message_text)
-

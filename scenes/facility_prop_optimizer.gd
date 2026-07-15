@@ -9,4 +9,3 @@ func _ready() -> void:
 		if geometry.visibility_range_end <= 0.0:
 			geometry.visibility_range_end = default_visibility_distance
 			geometry.visibility_range_end_margin = visibility_margin
-
