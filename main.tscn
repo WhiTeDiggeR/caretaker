@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://dgok4h6v4ol4g" path="res://scenes/player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://c4tr5jkt2oo0v" path="res://scenes/herobrine_pod.tscn" id="3_7mycd"]
-[ext_resource type="Script" uid="uid://bqbyjq8othdst" path="res://game_manager.gd" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://bctpg3nmjom30" path="res://scenes/containment_monitor.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://b05bfa3w5bv1x" path="res://scenes/control_panel.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://e434i06gf7fs" path="res://scenes/bowser_pod.tscn" id="7_5vw27"]
@@ -48,16 +47,13 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.9
 [node name="bowser_pod" parent="." unique_id=1094455652 instance=ExtResource("7_5vw27")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0245118, -8.437696)
 
-[node name="GameManager" type="Node" parent="." unique_id=303789841]
-script = ExtResource("3_h2yge")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2098508217]
 
 [node name="InteractLabel" type="Label" parent="CanvasLayer" unique_id=1588331824 groups=["ui_interact"]]
 visible = false
 offset_right = 40.0
 offset_bottom = 23.0
-text = "[E] Продлить сон"
+text = ""
 
 [node name="ContainmentMonitor" parent="." unique_id=1117962827 instance=ExtResource("4_1bvp3")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.5385675, 3.10873, -1.3667393)

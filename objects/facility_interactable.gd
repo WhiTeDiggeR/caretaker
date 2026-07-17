@@ -1,6 +1,6 @@
 extends StaticBody3D
 
-@export var interaction_prompt := "[E] ОСМОТРЕТЬ"
+@export var interaction_prompt := "ОСМОТРЕТЬ"
 @export var message_title := "СЛУЖЕБНАЯ СИСТЕМА"
 @export_multiline var message_text := "Устройство не отвечает."
 

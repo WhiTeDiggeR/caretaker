@@ -30,7 +30,7 @@ func _ready() -> void:
 		closed_y_positions.append(part.position.y)
 
 func get_interaction_text() -> String:
-	return "[E] ЗАКРЫТЬ ДВЕРЬ" if is_open else "[E] ОТКРЫТЬ ДВЕРЬ"
+	return "ЗАКРЫТЬ ДВЕРЬ" if is_open else "ОТКРЫТЬ ДВЕРЬ"
 
 func interact() -> void:
 	if is_moving:
