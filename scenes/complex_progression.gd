@@ -7,7 +7,7 @@ extends Node3D
 @onready var message_timer: Timer = $CanvasLayer/MessageTimer
 
 var stage := 0
-var objectives := [
+var objectives: Array[String] = [
 	"ЦЕЛЬ: Добраться до центрального поста",
 	"ЦЕЛЬ: Осмотреть технический сектор и генераторы",
 	"ЦЕЛЬ: Найти камеру содержания 01",
@@ -16,6 +16,14 @@ var objectives := [
 
 func _ready() -> void:
 	objective_label.text = objectives[stage]
+	start_hint.text = "%s/%s/%s/%s — ДВИЖЕНИЕ    %s — БЕГ    МЫШЬ — ОБЗОР    %s — ВЗАИМОДЕЙСТВИЕ" % [
+		InputPromptFormatter.action_label(&"move_forward"),
+		InputPromptFormatter.action_label(&"move_left"),
+		InputPromptFormatter.action_label(&"move_back"),
+		InputPromptFormatter.action_label(&"move_right"),
+		InputPromptFormatter.action_label(&"sprint"),
+		InputPromptFormatter.action_label(&"interact"),
+	]
 	$ProgressionTriggers/ControlReached.body_entered.connect(_on_stage_area.bind(0))
 	$ProgressionTriggers/TechnicalReached.body_entered.connect(_on_stage_area.bind(1))
 	$ProgressionTriggers/ContainmentReached.body_entered.connect(_on_stage_area.bind(2))
@@ -31,7 +39,11 @@ func _on_stage_area(body: Node3D, required_stage: int) -> void:
 	objective_label.text = objectives[stage]
 
 func show_facility_message(title: String, body: String) -> void:
-	message_label.text = "%s\n\n%s\n\n[ESC] ЗАКРЫТЬ" % [title, body]
+	message_label.text = "%s\n\n%s\n\n%s" % [
+		title,
+		body,
+		InputPromptFormatter.format_action(&"ui_cancel", "ЗАКРЫТЬ"),
+	]
 	message_panel.visible = true
 	message_timer.start()
 
