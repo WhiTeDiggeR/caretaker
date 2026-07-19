@@ -21,7 +21,7 @@ func _get_zones() -> Array[Dictionary]:
 		{"id": "T03_LINK", "rect": Rect2i(1, -3, 1, 1)},
 		{"id": "T04", "rect": Rect2i(5, -2, 4, 4)},
 		{"id": "T04_LINK", "rect": Rect2i(4, 0, 1, 1)},
-		{"id": "T05", "rect": Rect2i(7, 2, 1, 6)},
+		{"id": "T05", "rect": Rect2i(7, 2, 1, 4)},
 		{"id": "T05_ROOM", "rect": Rect2i(5, 6, 4, 3)},
 		{"id": "T06_TUNNEL", "rect": Rect2i(9, -1, 3, 1)},
 		{"id": "T06", "rect": Rect2i(12, -4, 5, 4)},
@@ -38,13 +38,19 @@ func _get_wall_openings() -> Array[Dictionary]:
 	]
 
 
-func _get_doors() -> Array[Dictionary]:
+func _get_connections() -> Array[Dictionary]:
 	return [
-		{"name": "GeneratorWorkshopDoor", "position": Vector3(-7.5, 0.0, 2.5), "rotation_y": 90.0},
-		{"name": "WaterTreatmentDoor", "position": Vector3(7.5, 0.0, -12.5)},
-		{"name": "SubstationDoor", "position": Vector3(22.5, 0.0, 2.5), "rotation_y": 90.0},
-		{"name": "CableTunnelDoor", "position": Vector3(37.5, 0.0, 10.0)},
-		{"name": "FreightTechnicalDoor", "position": Vector3(57.5, 0.0, -2.5), "rotation_y": 90.0},
+		{"from": "T01", "to": "T01_STAIR"},
+		{"from": "T01", "to": "T02_LINK", "name": "GeneratorWorkshopDoor", "door": true},
+		{"from": "T02_LINK", "to": "T02"},
+		{"from": "T02", "to": "T03_LINK", "name": "WaterTreatmentDoor", "door": true},
+		{"from": "T03_LINK", "to": "T03"},
+		{"from": "T02", "to": "T04_LINK", "name": "SubstationDoor", "door": true},
+		{"from": "T04_LINK", "to": "T04"},
+		{"from": "T04", "to": "T05", "name": "CableTunnelDoor", "door": true},
+		{"from": "T05", "to": "T05_ROOM"},
+		{"from": "T04", "to": "T06_TUNNEL", "name": "FreightTechnicalDoor", "door": true},
+		{"from": "T06_TUNNEL", "to": "T06"},
 	]
 
 

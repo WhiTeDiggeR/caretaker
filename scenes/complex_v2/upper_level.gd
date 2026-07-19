@@ -19,6 +19,7 @@ func _get_zones() -> Array[Dictionary]:
 		{"id": "U01", "rect": Rect2i(-12, -4, 4, 4)},
 		{"id": "U03A", "rect": Rect2i(-11, 0, 1, 7)},
 		{"id": "U03B", "rect": Rect2i(-11, 7, 2, 2)},
+		{"id": "U01_U02_LINK", "rect": Rect2i(-8, -3, 1, 1)},
 		{"id": "U02", "rect": Rect2i(-7, -4, 3, 3)},
 		{"id": "U02_LINK", "rect": Rect2i(-4, -3, 1, 1)},
 		{"id": "U05", "rect": Rect2i(-3, -4, 4, 4)},
@@ -53,19 +54,29 @@ func _get_wall_openings() -> Array[Dictionary]:
 	]
 
 
-func _get_doors() -> Array[Dictionary]:
+func _get_connections() -> Array[Dictionary]:
 	return [
-		{"name": "EmergencyManualDoor", "position": Vector3(-52.5, 0.0, 0.0)},
-		{"name": "MedicalDoor", "position": Vector3(-20.0, 0.0, -12.5), "rotation_y": 90.0},
-		{"name": "StaffControlDoor", "position": Vector3(2.5, 0.0, 2.5)},
-		{"name": "ServerDoor", "position": Vector3(7.5, 0.0, -7.5), "rotation_y": 90.0},
-		{"name": "ControlSecurityDoor", "position": Vector3(17.5, 0.0, 17.5), "rotation_y": 90.0},
-		{"name": "SecurityC04Door", "position": Vector3(37.5, 0.0, 7.5), "rotation_y": 90.0},
-		{"name": "C04InnerDoor", "position": Vector3(42.5, 0.0, 7.5), "rotation_y": 90.0},
-		{"name": "SecurityC06Door", "position": Vector3(37.5, 0.0, 22.5), "rotation_y": 90.0},
-		{"name": "C06InnerDoor", "position": Vector3(47.5, 0.0, 25.0)},
-		{"name": "FreightDoor", "position": Vector3(67.5, 0.0, -2.5), "rotation_y": 90.0},
-		{"name": "CentralShortcutDoor", "position": Vector3(10.0, 0.0, 30.0)},
+		{"from": "U01", "to": "U03A", "name": "EmergencyManualDoor", "door": true},
+		{"from": "U03A", "to": "U03B"},
+		{"from": "U01", "to": "U01_U02_LINK"},
+		{"from": "U01_U02_LINK", "to": "U02"},
+		{"from": "U02", "to": "U02_LINK", "name": "MedicalDoor", "door": true},
+		{"from": "U02_LINK", "to": "U05"},
+		{"from": "U05", "to": "U05_CONTROL_LINK", "name": "StaffControlDoor", "door": true},
+		{"from": "U05_CONTROL_LINK", "to": "U04"},
+		{"from": "U05", "to": "U07_LINK_A", "name": "ServerDoor", "door": true},
+		{"from": "U07_LINK_A", "to": "U07"},
+		{"from": "U07", "to": "U07_LINK_B"},
+		{"from": "U07_LINK_B", "to": "U04"},
+		{"from": "U04", "to": "U06_LINK", "name": "ControlSecurityDoor", "door": true},
+		{"from": "U06_LINK", "to": "U06"},
+		{"from": "U06", "to": "C04_LINK", "name": "SecurityC04Door", "door": true},
+		{"from": "C04_LINK", "to": "C04", "name": "C04InnerDoor", "door": true},
+		{"from": "U06", "to": "C06_LINK", "name": "SecurityC06Door", "door": true},
+		{"from": "C06_LINK", "to": "C06", "name": "C06InnerDoor", "door": true},
+		{"from": "C04", "to": "U08_LINK", "name": "FreightDoor", "door": true},
+		{"from": "U08_LINK", "to": "U08"},
+		{"from": "U04", "to": "CENTRAL_SHAFT", "name": "CentralShortcutDoor", "door": true},
 	]
 
 

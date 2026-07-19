@@ -22,7 +22,7 @@ func _get_zones() -> Array[Dictionary]:
 		{"id": "L01_LANDING", "rect": Rect2i(-11, 7, 2, 2)},
 		{"id": "L01_VERTICAL", "rect": Rect2i(-11, 3, 1, 4)},
 		{"id": "L01_HORIZONTAL", "rect": Rect2i(-10, 3, 5, 1)},
-		{"id": "L01_CONTROL_LINK", "rect": Rect2i(-5, 3, 1, 2)},
+		{"id": "L01_CONTROL_LINK", "rect": Rect2i(-5, 3, 1, 1)},
 		{"id": "L02", "rect": Rect2i(-5, 4, 3, 3)},
 		{"id": "L02_CORE_LINK", "rect": Rect2i(-4, 3, 1, 1)},
 		{"id": "L03", "rect": Rect2i(-7, -2, 4, 5)},
@@ -35,7 +35,7 @@ func _get_zones() -> Array[Dictionary]:
 		{"id": "C03", "rect": Rect2i(6, -2, 5, 5)},
 		{"id": "C03_LINK", "rect": Rect2i(5, 0, 1, 1)},
 		{"id": "C05", "rect": Rect2i(11, 3, 5, 5)},
-		{"id": "C05_LINK", "rect": Rect2i(10, 3, 2, 1)},
+		{"id": "C05_LINK", "rect": Rect2i(11, 2, 1, 1)},
 		{"id": "L06", "rect": Rect2i(12, -4, 5, 4)},
 		{"id": "L06_LINK", "rect": Rect2i(11, -1, 1, 1)},
 		{"id": "CENTRAL_SHAFT", "rect": Rect2i(1, 7, 2, 2)},
@@ -58,20 +58,29 @@ func _get_wall_openings() -> Array[Dictionary]:
 	]
 
 
-func _get_doors() -> Array[Dictionary]:
+func _get_connections() -> Array[Dictionary]:
 	return [
-		{"name": "C01BrokenOuterDoor", "position": Vector3(-52.5, 0.0, 15.0)},
-		{"name": "OldControlDoor", "position": Vector3(-25.0, 0.0, 17.5), "rotation_y": 90.0},
-		{"name": "OldCoreDoor", "position": Vector3(-17.5, 0.0, 17.5)},
-		{"name": "ArchiveDoor", "position": Vector3(-7.5, 0.0, 27.5), "rotation_y": 90.0},
-		{"name": "LaboratoryDoor", "position": Vector3(2.5, 0.0, 17.5)},
-		{"name": "C02Door", "position": Vector3(12.5, 0.0, -12.5)},
-		{"name": "C03OuterDoor", "position": Vector3(27.5, 0.0, 2.5), "rotation_y": 90.0},
-		{"name": "C03InnerDoor", "position": Vector3(32.5, 0.0, 2.5), "rotation_y": 90.0},
-		{"name": "C05Door", "position": Vector3(57.5, 0.0, 17.5), "rotation_y": 90.0},
-		{"name": "FreightDoor", "position": Vector3(57.5, 0.0, -2.5), "rotation_y": 90.0},
-		{"name": "CentralShortcutDoor", "position": Vector3(10.0, 0.0, 35.0)},
-		{"name": "GeneratorStairDoor", "position": Vector3(-22.5, 0.0, -12.5)},
+		{"from": "C01", "to": "L01_VERTICAL", "name": "C01BrokenOuterDoor", "door": true},
+		{"from": "L01_VERTICAL", "to": "L01_LANDING"},
+		{"from": "L01_VERTICAL", "to": "L01_HORIZONTAL"},
+		{"from": "L01_HORIZONTAL", "to": "L01_CONTROL_LINK"},
+		{"from": "L01_CONTROL_LINK", "to": "L02", "name": "OldControlDoor", "door": true},
+		{"from": "L02", "to": "L02_CORE_LINK", "name": "OldCoreDoor", "door": true},
+		{"from": "L02_CORE_LINK", "to": "L03"},
+		{"from": "L02", "to": "L04_LINK", "name": "ArchiveDoor", "door": true},
+		{"from": "L04_LINK", "to": "L04"},
+		{"from": "L04", "to": "L05_LINK", "name": "LaboratoryDoor", "door": true},
+		{"from": "L05_LINK", "to": "L05"},
+		{"from": "L05", "to": "C02_LINK"},
+		{"from": "C02_LINK", "to": "C02", "name": "C02Door", "door": true},
+		{"from": "L05", "to": "C03_LINK", "name": "C03OuterDoor", "door": true},
+		{"from": "C03_LINK", "to": "C03", "name": "C03InnerDoor", "door": true},
+		{"from": "C03", "to": "C05_LINK", "name": "C05Door", "door": true},
+		{"from": "C05_LINK", "to": "C05"},
+		{"from": "C03", "to": "L06_LINK", "name": "FreightDoor", "door": true},
+		{"from": "L06_LINK", "to": "L06"},
+		{"from": "L04", "to": "CENTRAL_SHAFT", "name": "CentralShortcutDoor", "door": true},
+		{"from": "L03", "to": "GENERATOR_STAIR", "name": "GeneratorStairDoor", "door": true},
 	]
 
 

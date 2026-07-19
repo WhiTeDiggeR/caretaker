@@ -12,9 +12,13 @@ const CAGED_LIGHT_SCENE := preload("res://objects/caged_light.tscn")
 const EMERGENCY_LIGHT_SCENE := preload("res://objects/emergency_light.tscn")
 
 var _scene_cache: Dictionary[String, PackedScene] = {}
+var _cell_rooms: Dictionary[Vector2i, String] = {}
+var _portal_edges: Dictionary[String, bool] = {}
+var _portal_records: Array[Dictionary] = []
 
 
 func _ready() -> void:
+	_compile_layout()
 	_build_structure()
 	_build_doors()
 	_build_lights()
@@ -26,7 +30,7 @@ func _get_zones() -> Array[Dictionary]:
 	return []
 
 
-func _get_doors() -> Array[Dictionary]:
+func _get_connections() -> Array[Dictionary]:
 	return []
 
 
@@ -51,34 +55,73 @@ func _get_wall_openings() -> Array[Dictionary]:
 
 
 func _build_structure() -> void:
-	var cells: Dictionary[Vector2i, bool] = {}
-	for zone: Dictionary in _get_zones():
-		var rect: Rect2i = zone["rect"]
-		for x: int in range(rect.position.x, rect.end.x):
-			for z: int in range(rect.position.y, rect.end.y):
-				cells[Vector2i(x, z)] = true
-
 	var ceiling_holes: Dictionary[Vector2i, bool] = {}
 	for hole: Vector2i in _get_ceiling_holes():
 		ceiling_holes[hole] = true
-	var wall_openings: Dictionary[String, bool] = {}
 	for opening: Dictionary in _get_wall_openings():
 		var opening_cell: Vector2i = opening["cell"]
 		var opening_direction: Vector2i = opening["direction"]
-		wall_openings[_wall_key(opening_cell, opening_direction)] = true
+		_portal_edges[_edge_key(opening_cell, opening_cell + opening_direction)] = true
 
 	var structure := Node3D.new()
 	structure.name = "Structure"
 	add_child(structure)
 
-	for cell: Vector2i in cells:
+	for cell: Vector2i in _cell_rooms:
 		_add_floor_tile(structure, cell)
 		if not ceiling_holes.has(cell):
 			_add_ceiling_tile(structure, cell)
-		_add_boundary_wall(structure, cells, wall_openings, cell, Vector2i(0, -1))
-		_add_boundary_wall(structure, cells, wall_openings, cell, Vector2i(0, 1))
-		_add_boundary_wall(structure, cells, wall_openings, cell, Vector2i(-1, 0))
-		_add_boundary_wall(structure, cells, wall_openings, cell, Vector2i(1, 0))
+		_add_required_wall(structure, cell, Vector2i(0, -1))
+		_add_required_wall(structure, cell, Vector2i(0, 1))
+		_add_required_wall(structure, cell, Vector2i(-1, 0))
+		_add_required_wall(structure, cell, Vector2i(1, 0))
+
+
+func _compile_layout() -> void:
+	_cell_rooms.clear()
+	_portal_edges.clear()
+	_portal_records.clear()
+	for zone: Dictionary in _get_zones():
+		var room_id := str(zone["id"])
+		var rect: Rect2i = zone["rect"]
+		for x: int in range(rect.position.x, rect.end.x):
+			for z: int in range(rect.position.y, rect.end.y):
+				var cell := Vector2i(x, z)
+				if _cell_rooms.has(cell):
+					push_error("Ячейка %s одновременно принадлежит %s и %s" % [cell, _cell_rooms[cell], room_id])
+					continue
+				_cell_rooms[cell] = room_id
+	for connection: Dictionary in _get_connections():
+		_compile_connection(connection)
+
+
+func _compile_connection(connection: Dictionary) -> void:
+	var room_a := str(connection["from"])
+	var room_b := str(connection["to"])
+	var candidates := _find_shared_edges(room_a, room_b)
+	if candidates.is_empty():
+		push_error("Помещения %s и %s не имеют общей границы" % [room_a, room_b])
+		return
+	var edge_index := clampi(int(connection.get("edge_index", candidates.size() / 2)), 0, candidates.size() - 1)
+	var portal: Dictionary = candidates[edge_index].duplicate()
+	portal["from"] = room_a
+	portal["to"] = room_b
+	portal["name"] = str(connection.get("name", "%s_%s" % [room_a, room_b]))
+	portal["door"] = bool(connection.get("door", false))
+	_portal_edges[_edge_key(portal["cell"], portal["cell"] + portal["direction"])] = true
+	_portal_records.append(portal)
+
+
+func _find_shared_edges(room_a: String, room_b: String) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for cell: Vector2i in _cell_rooms:
+		if _cell_rooms[cell] != room_a:
+			continue
+		for direction: Vector2i in [Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT, Vector2i.UP]:
+			var neighbour := cell + direction
+			if _cell_rooms.get(neighbour, "") == room_b:
+				result.append({"cell": cell, "direction": direction})
+	return result
 
 
 func _add_floor_tile(parent: Node3D, cell: Vector2i) -> void:
@@ -103,14 +146,14 @@ func _add_ceiling_tile(parent: Node3D, cell: Vector2i) -> void:
 	parent.add_child(tile)
 
 
-func _add_boundary_wall(
-	parent: Node3D,
-	cells: Dictionary[Vector2i, bool],
-	wall_openings: Dictionary[String, bool],
-	cell: Vector2i,
-	direction: Vector2i
-) -> void:
-	if cells.has(cell + direction) or wall_openings.has(_wall_key(cell, direction)):
+func _add_required_wall(parent: Node3D, cell: Vector2i, direction: Vector2i) -> void:
+	var neighbour := cell + direction
+	var edge_key := _edge_key(cell, neighbour)
+	if _portal_edges.has(edge_key):
+		return
+	if _cell_rooms.has(neighbour) and _cell_rooms[neighbour] == _cell_rooms[cell]:
+		return
+	if _cell_rooms.has(neighbour) and (direction == Vector2i.LEFT or direction == Vector2i.UP):
 		return
 
 	var wall := WALL_SCENE.instantiate() as Node3D
@@ -133,20 +176,36 @@ func _add_boundary_wall(
 	parent.add_child(wall)
 
 
-func _wall_key(cell: Vector2i, direction: Vector2i) -> String:
-	return "%d:%d:%d:%d" % [cell.x, cell.y, direction.x, direction.y]
+func _edge_key(cell_a: Vector2i, cell_b: Vector2i) -> String:
+	if cell_a.x > cell_b.x or (cell_a.x == cell_b.x and cell_a.y > cell_b.y):
+		var swap := cell_a
+		cell_a = cell_b
+		cell_b = swap
+	return "%d:%d|%d:%d" % [cell_a.x, cell_a.y, cell_b.x, cell_b.y]
 
 
 func _build_doors() -> void:
 	var group := Node3D.new()
 	group.name = "Doors"
 	add_child(group)
-	for data: Dictionary in _get_doors():
+	for data: Dictionary in _portal_records:
+		if not bool(data["door"]):
+			continue
 		var door := DOOR_SCENE.instantiate() as Node3D
-		door.name = str(data.get("name", "BlastDoor"))
-		door.position = data["position"] + Vector3(0.0, WALL_HEIGHT * 0.5, 0.0)
-		door.rotation_degrees.y = float(data.get("rotation_y", 0.0))
+		door.name = str(data["name"])
+		var cell: Vector2i = data["cell"]
+		var direction: Vector2i = data["direction"]
+		door.position = _edge_center(cell, direction) + Vector3(0.0, WALL_HEIGHT * 0.5, 0.0)
+		door.rotation_degrees.y = 90.0 if direction.x != 0 else 0.0
 		group.add_child(door)
+
+
+func _edge_center(cell: Vector2i, direction: Vector2i) -> Vector3:
+	return Vector3(
+		(cell.x + 0.5 + direction.x * 0.5) * CELL_SIZE,
+		0.0,
+		(cell.y + 0.5 + direction.y * 0.5) * CELL_SIZE
+	)
 
 
 func _build_lights() -> void:
@@ -158,7 +217,10 @@ func _build_lights() -> void:
 		var light_scene: PackedScene = EMERGENCY_LIGHT_SCENE if emergency else CAGED_LIGHT_SCENE
 		var light := light_scene.instantiate() as Node3D
 		light.name = str(data.get("name", "EmergencyLight" if emergency else "CagedLight"))
-		light.position = data["position"]
+		var requested_position: Vector3 = data["position"]
+		light.position = requested_position
+		if not emergency:
+			light.position.y = WALL_HEIGHT
 		light.rotation_degrees = data.get("rotation", Vector3.ZERO)
 		if not emergency:
 			light.set("flicker_enabled", bool(data.get("flicker", false)))
@@ -193,6 +255,20 @@ func _build_props() -> void:
 		var uniform_scale := float(data.get("scale", 1.0))
 		prop.scale = Vector3.ONE * uniform_scale
 		group.add_child(prop)
+		if bool(data.get("grounded", prop.position.y <= 1.0)):
+			_ground_prop(prop)
+
+
+func _ground_prop(prop: Node3D) -> void:
+	var minimum_y := INF
+	for child: Node in prop.find_children("*", "MeshInstance3D", true, false):
+		var mesh_instance := child as MeshInstance3D
+		if mesh_instance.mesh == null:
+			continue
+		var world_bounds: AABB = mesh_instance.global_transform * mesh_instance.get_aabb()
+		minimum_y = minf(minimum_y, world_bounds.position.y)
+	if is_finite(minimum_y):
+		prop.global_position.y -= minimum_y
 
 
 func _build_signs() -> void:
