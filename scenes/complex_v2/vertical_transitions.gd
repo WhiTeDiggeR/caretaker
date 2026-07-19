@@ -6,6 +6,8 @@ const WALL_MATERIAL: Material = preload("res://materials/concrete_slab_wall_02.t
 const EMERGENCY_LIGHT := preload("res://objects/emergency_light.tscn")
 const CAGED_LIGHT := preload("res://objects/caged_light.tscn")
 
+var _support_samples: Array[Vector3] = []
+
 
 func _ready() -> void:
 	_build_manual_evacuation_stair()
@@ -15,6 +17,7 @@ func _ready() -> void:
 
 func _build_manual_evacuation_stair() -> void:
 	_add_shaft_shell("ManualEvacShaft", -55.0, -40.0, 45.0, 67.5, 0.0, 16.0, false, -47.5)
+	_add_world_box(self, "ManualEvacUpperFloorTrim", Vector3(0.9, 0.5, 5.0), Vector3(-45.45, 11.75, 42.5), FLOOR_MATERIAL)
 	_add_ramp("ManualEvacUpper", Vector3(-47.5, 12.0, 40.0), Vector3(-50.0, 6.0, 60.0), true, 0.0, 2.0)
 	_add_landing("ManualEvacLanding", Vector3(-47.5, 6.0, 62.5), Vector2(14.0, 6.0))
 	_add_ramp("ManualEvacLower", Vector3(-45.0, 6.0, 60.0), Vector3(-47.5, 0.0, 40.0), true, 2.0, 0.0)
@@ -56,6 +59,10 @@ func _add_ramp(
 	var right := Vector3.UP.cross(direction).normalized()
 	var surface_up := direction.cross(right).normalized()
 	var length := start.distance_to(end)
+	for step: int in range(1, 10):
+		var center_sample := start.lerp(end, float(step) / 10.0)
+		for lateral_offset: float in [-1.7, 0.0, 1.7]:
+			_support_samples.append(center_sample + right * lateral_offset)
 
 	var body := StaticBody3D.new()
 	body.name = name_value
@@ -85,6 +92,9 @@ func _add_ramp(
 
 
 func _add_landing(name_value: String, surface_position: Vector3, size: Vector2) -> void:
+	for x_offset: float in [-size.x * 0.35, 0.0, size.x * 0.35]:
+		for z_offset: float in [-size.y * 0.35, 0.0, size.y * 0.35]:
+			_support_samples.append(surface_position + Vector3(x_offset, 0.0, z_offset))
 	var body := StaticBody3D.new()
 	body.name = name_value
 	body.position = surface_position - Vector3(0.0, 0.25, 0.0)
@@ -233,3 +243,7 @@ func _add_emergency_light(name_value: String, light_position: Vector3, rotation:
 	light.position = light_position
 	light.rotation_degrees = rotation
 	add_child(light)
+
+
+func get_transition_support_samples() -> Array[Vector3]:
+	return _support_samples

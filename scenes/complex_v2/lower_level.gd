@@ -44,10 +44,11 @@ func _get_zones() -> Array[Dictionary]:
 
 
 func _get_ceiling_holes() -> Array[Vector2i]:
-	return [
-		Vector2i(-11, 7), Vector2i(-10, 7),
-		Vector2i(1, 7), Vector2i(2, 7),
-	]
+	return []
+
+
+func _get_floor_holes() -> Array[Vector2i]:
+	return []
 
 
 func _get_wall_openings() -> Array[Dictionary]:
@@ -115,21 +116,21 @@ func _get_props() -> Array[Dictionary]:
 		{"scene": BARRIER, "position": Vector3(-57.0, 0.0, 10.0), "rotation": Vector3(0.0, 90.0, 0.0)},
 		{"scene": BARRIER, "position": Vector3(-57.0, 0.0, 4.5), "rotation": Vector3(0.0, 90.0, 0.0)},
 		{"scene": BARRIER, "position": Vector3(-47.0, 0.0, 10.0), "rotation": Vector3(0.0, 90.0, 0.0)},
-		{"scene": DEBRIS, "position": Vector3(-51.0, 0.0, 12.5), "scale": 1.4},
+		{"scene": DEBRIS, "position": Vector3(-57.0, 0.0, 7.0), "scale": 1.4},
 		{"scene": DEBRIS, "position": Vector3(-48.0, 0.0, 13.0), "scale": 1.2},
 		{"scene": CRATE, "position": Vector3(-61.0, 0.0, -6.0)},
 		{"scene": PANEL, "position": Vector3(-23.0, 0.0, 23.0)},
 		{"scene": PANEL, "position": Vector3(-12.0, 0.0, 23.0), "rotation": Vector3(0.0, 180.0, 0.0)},
 		{"scene": MONITOR, "position": Vector3(-17.5, 0.0, 32.0), "rotation": Vector3(0.0, 180.0, 0.0), "scale": 0.68},
-		{"scene": TERMINAL, "position": Vector3(-10.35, 1.3, 27.5), "rotation": Vector3(0.0, -90.0, 0.0)},
+		{"scene": TERMINAL, "position": Vector3(-17.5, 1.3, 34.65), "rotation": Vector3(0.0, 180.0, 0.0)},
 		{"scene": DEBRIS, "position": Vector3(-32.0, 0.0, 10.0)},
 		{"scene": GENERATOR, "position": Vector3(-31.0, 0.0, -5.0)},
 		{"scene": CABINET, "position": Vector3(-16.0, 0.0, -7.0), "rotation": Vector3(0.0, -90.0, 0.0)},
 		{"scene": SHELF, "position": Vector3(-3.5, 0.0, 22.0)},
-		{"scene": SHELF, "position": Vector3(2.5, 0.0, 22.0)},
+		{"scene": SHELF, "position": Vector3(2.5, 0.0, 32.0), "rotation": Vector3(0.0, 180.0, 0.0)},
 		{"scene": SHELF, "position": Vector3(7.5, 0.0, 22.0)},
 		{"scene": CABINET, "position": Vector3(-3.5, 0.0, 33.0), "rotation": Vector3(0.0, 180.0, 0.0)},
-		{"scene": DOCUMENT, "position": Vector3(2.5, 1.0, 25.0)},
+		{"scene": DOCUMENT, "position": Vector3(2.5, 1.0, 25.0), "grounded": false},
 		{"scene": PANEL, "position": Vector3(3.0, 0.0, 10.0), "rotation": Vector3(0.0, 90.0, 0.0)},
 		{"scene": PANEL, "position": Vector3(20.0, 0.0, 10.0), "rotation": Vector3(0.0, -90.0, 0.0)},
 		{"scene": SERVER, "position": Vector3(3.0, 0.0, -7.0)},

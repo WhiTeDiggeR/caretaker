@@ -29,7 +29,7 @@ func _get_zones() -> Array[Dictionary]:
 
 
 func _get_ceiling_holes() -> Array[Vector2i]:
-	return [Vector2i(-4, -3)]
+	return []
 
 
 func _get_wall_openings() -> Array[Dictionary]:
@@ -85,7 +85,7 @@ func _get_props() -> Array[Dictionary]:
 		{"scene": WORKBENCH, "position": Vector3(0.0, 0.0, -7.0)},
 		{"scene": WORKBENCH, "position": Vector3(8.0, 0.0, -7.0)},
 		{"scene": SHELF, "position": Vector3(18.0, 0.0, -6.0), "rotation": Vector3(0.0, -90.0, 0.0)},
-		{"scene": SHELF, "position": Vector3(18.0, 0.0, 1.0), "rotation": Vector3(0.0, -90.0, 0.0)},
+		{"scene": SHELF, "position": Vector3(13.0, 0.0, 1.0), "rotation": Vector3(0.0, -90.0, 0.0)},
 		{"scene": CABINET, "position": Vector3(0.0, 0.0, 8.0), "rotation": Vector3(0.0, 180.0, 0.0)},
 		{"scene": CRATE, "position": Vector3(13.0, 0.0, 7.0)},
 		{"scene": CRATE, "position": Vector3(16.0, 0.0, 7.0)},
