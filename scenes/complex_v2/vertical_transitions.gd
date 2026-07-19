@@ -15,12 +15,13 @@ func _ready() -> void:
 
 func _build_manual_evacuation_stair() -> void:
 	_add_shaft_shell("ManualEvacShaft", -55.0, -40.0, 45.0, 67.5, 0.0, 16.0, false, -47.5)
-	_add_ramp("ManualEvacUpper", Vector3(-47.5, 12.0, 40.0), Vector3(-50.0, 6.0, 62.5), true)
-	_add_landing("ManualEvacLanding", Vector3(-47.5, 6.0, 62.5), Vector2(10.0, 8.0))
-	_add_ramp("ManualEvacLower", Vector3(-45.0, 6.0, 62.5), Vector3(-50.0, 0.0, 40.0), true)
+	_add_ramp("ManualEvacUpper", Vector3(-47.5, 12.0, 40.0), Vector3(-50.0, 6.0, 60.0), true, 0.0, 2.0)
+	_add_landing("ManualEvacLanding", Vector3(-47.5, 6.0, 62.5), Vector2(14.0, 6.0))
+	_add_ramp("ManualEvacLower", Vector3(-45.0, 6.0, 60.0), Vector3(-47.5, 0.0, 40.0), true, 2.0, 0.0)
 	_add_emergency_light("ManualEvacEmergency", Vector3(-47.5, 7.25, 64.8), Vector3(0.0, 180.0, 0.0))
 	_add_crossbeam_light("ManualEvacMidLight", Vector3(-47.5, 9.0, 59.0), 14.0)
 	_add_crossbeam_light("ManualEvacUpperLight", Vector3(-47.5, 15.0, 49.0), 14.0)
+	_add_free_caged_light("ManualEvacLowerLight", Vector3(-47.5, 7.75, 49.0), 8.5)
 
 
 func _build_central_shortcut() -> void:
@@ -43,7 +44,14 @@ func _build_generator_stair() -> void:
 	_add_crossbeam_light("GeneratorUpperLight", Vector3(-20.0, 3.0, -24.0), 14.0)
 
 
-func _add_ramp(name_value: String, start: Vector3, end: Vector3, clear_landings: bool = false) -> void:
+func _add_ramp(
+	name_value: String,
+	start: Vector3,
+	end: Vector3,
+	align_surface: bool = false,
+	start_rail_clearance: float = 0.0,
+	end_rail_clearance: float = 0.0
+) -> void:
 	var direction := (end - start).normalized()
 	var right := Vector3.UP.cross(direction).normalized()
 	var surface_up := direction.cross(right).normalized()
@@ -52,14 +60,14 @@ func _add_ramp(name_value: String, start: Vector3, end: Vector3, clear_landings:
 	var body := StaticBody3D.new()
 	body.name = name_value
 	body.position = (start + end) * 0.5
-	if clear_landings:
+	if align_surface:
 		body.position -= surface_up * 0.25
 	body.basis = Basis(right, surface_up, direction)
 	add_child(body)
 
 	_add_mesh_and_collision(body, "Ramp", Vector3(RAMP_WIDTH, 0.5, length), Vector3.ZERO, FLOOR_MATERIAL)
-	var rail_length := maxf(length - 4.0, 0.5) if clear_landings else length
-	var rail_offset := Vector3(0.0, 0.95, 0.0)
+	var rail_length := maxf(length - start_rail_clearance - end_rail_clearance, 0.5)
+	var rail_offset := Vector3(0.0, 0.95, (start_rail_clearance - end_rail_clearance) * 0.5)
 	_add_mesh_and_collision(
 		body,
 		"LeftRail",
@@ -176,6 +184,22 @@ func _add_crossbeam_light(name_value: String, position_value: Vector3, width: fl
 	fill.omni_range = 9.0
 	fill.shadow_enabled = false
 	support.add_child(fill)
+
+
+func _add_free_caged_light(name_value: String, position_value: Vector3, range_value: float) -> void:
+	var light := CAGED_LIGHT.instantiate() as Node3D
+	light.name = name_value
+	light.position = position_value
+	light.set("base_energy", 8.5)
+	add_child(light)
+	var fill := OmniLight3D.new()
+	fill.name = "ShaftFill"
+	fill.position = Vector3(0.0, -0.55, 0.0)
+	fill.light_color = Color(0.32, 0.5, 0.75, 1.0)
+	fill.light_energy = 1.8
+	fill.omni_range = range_value
+	fill.shadow_enabled = false
+	light.add_child(fill)
 
 
 func _add_mesh_and_collision(

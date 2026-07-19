@@ -75,6 +75,7 @@ func _get_lights() -> Array[Dictionary]:
 		{"name": "EmergencySleepLightB", "position": Vector3(-45.0, 3.75, -5.0), "flicker": true},
 		{"name": "EvacLightA", "position": Vector3(-52.5, 3.75, 7.5), "flicker": true},
 		{"name": "EvacLightB", "position": Vector3(-52.5, 3.75, 22.5)},
+		{"name": "EvacLightC", "position": Vector3(-52.5, 3.75, 37.5)},
 		{"name": "EvacEmergency", "position": Vector3(-54.7, 2.7, 32.5), "emergency": true, "rotation": Vector3(0.0, 90.0, 0.0)},
 		{"name": "MedicalLight", "position": Vector3(-27.5, 3.75, -17.5)},
 		{"name": "StaffLightA", "position": Vector3(-10.0, 3.75, -15.0)},
