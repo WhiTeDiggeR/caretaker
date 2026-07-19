@@ -99,7 +99,7 @@ func _get_props() -> Array[Dictionary]:
 		{"scene": BED, "name": "PersonnelPodPlaceholderC", "position": Vector3(-43.0, 0.0, -16.5), "rotation": Vector3(0.0, -90.0, 0.0)},
 		{"scene": CABINET, "position": Vector3(-57.0, 0.0, -3.0), "rotation": Vector3(0.0, 90.0, 0.0)},
 		{"scene": TERMINAL, "position": Vector3(-47.5, 1.3, -19.65)},
-		{"scene": BARRIER, "position": Vector3(-52.5, 0.0, 30.0), "rotation": Vector3(0.0, 0.0, 0.0)},
+		{"scene": BARRIER, "position": Vector3(-54.0, 0.0, 30.0), "rotation": Vector3(0.0, 8.0, 0.0)},
 		{"scene": BED, "position": Vector3(-32.5, 0.0, -22.0)},
 		{"scene": BED, "position": Vector3(-25.0, 0.0, -22.0)},
 		{"scene": CABINET, "position": Vector3(-21.0, 0.0, -15.0), "rotation": Vector3(0.0, -90.0, 0.0)},
