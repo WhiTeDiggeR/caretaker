@@ -1,0 +1,178 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scenes/complex_v2/complex_v2.gd" id="1_root"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v2/upper_level.tscn" id="2_upper"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v2/lower_level.tscn" id="3_lower"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v2/technical_level.tscn" id="4_technical"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v2/vertical_transitions.tscn" id="5_transitions"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="6_player"]
+[ext_resource type="Script" path="res://scenes/facility_ambience.gd" id="7_ambience"]
+
+[sub_resource type="Environment" id="Environment_complex_v2"]
+background_mode = 1
+background_color = Color(0.004, 0.007, 0.012, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.12, 0.18, 0.25, 1)
+ambient_light_energy = 0.18
+reflected_light_source = 2
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.08, 0.12, 0.17, 1)
+fog_light_energy = 0.35
+fog_density = 0.003
+
+[sub_resource type="BoxShape3D" id="ProgressionShape"]
+size = Vector3(9, 3.5, 9)
+
+[sub_resource type="StyleBoxFlat" id="MessagePanelStyle"]
+content_margin_left = 22.0
+content_margin_top = 18.0
+content_margin_right = 22.0
+content_margin_bottom = 18.0
+bg_color = Color(0.012, 0.022, 0.035, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.16, 0.68, 1, 0.95)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[node name="ComplexV2" type="Node3D"]
+script = ExtResource("1_root")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_complex_v2")
+
+[node name="UpperLevel" parent="." instance=ExtResource("2_upper")]
+position = Vector3(0, 12, 0)
+
+[node name="LowerLevel" parent="." instance=ExtResource("3_lower")]
+
+[node name="TechnicalLevel" parent="." instance=ExtResource("4_technical")]
+position = Vector3(0, -12, 0)
+
+[node name="VerticalTransitions" parent="." instance=ExtResource("5_transitions")]
+
+[node name="FacilityAmbience" type="AudioStreamPlayer" parent="."]
+volume_db = -14.0
+script = ExtResource("7_ambience")
+
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label") instance=ExtResource("6_player")]
+position = Vector3(-50, 13, -10)
+rotation_degrees = Vector3(0, 180, 0)
+interact_label = NodePath("../CanvasLayer/InteractLabel")
+
+[node name="ProgressionTriggers" type="Node3D" parent="."]
+
+[node name="EvacuationRoute" type="Area3D" parent="ProgressionTriggers"]
+position = Vector3(-52.5, 13.5, 12.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProgressionTriggers/EvacuationRoute"]
+shape = SubResource("ProgressionShape")
+
+[node name="OldControl" type="Area3D" parent="ProgressionTriggers"]
+position = Vector3(-17.5, 1.5, 27.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProgressionTriggers/OldControl"]
+shape = SubResource("ProgressionShape")
+
+[node name="MainGenerator" type="Area3D" parent="ProgressionTriggers"]
+position = Vector3(-25, -10.5, 2.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProgressionTriggers/MainGenerator"]
+shape = SubResource("ProgressionShape")
+
+[node name="CentralControl" type="Area3D" parent="ProgressionTriggers"]
+position = Vector3(2.5, 13.5, 17.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProgressionTriggers/CentralControl"]
+shape = SubResource("ProgressionShape")
+
+[node name="Containment03" type="Area3D" parent="ProgressionTriggers"]
+position = Vector3(42.5, 1.5, 2.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ProgressionTriggers/Containment03"]
+shape = SubResource("ProgressionShape")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ObjectiveLabel" type="Label" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 760.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0.55, 0.86, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "ЦЕЛЬ: Найти ручной эвакуационный путь"
+
+[node name="InteractLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -94.0
+offset_right = 220.0
+offset_bottom = -52.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.88, 0.96, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 23
+horizontal_alignment = 1
+
+[node name="StartHint" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = 155.0
+offset_right = 440.0
+offset_bottom = 205.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.72, 0.84, 0.92, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 19
+horizontal_alignment = 1
+
+[node name="MessagePanel" type="PanelContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -125.0
+offset_right = 340.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("MessagePanelStyle")
+
+[node name="MessageText" type="Label" parent="CanvasLayer/MessagePanel"]
+custom_minimum_size = Vector2(640, 220)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.97, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="MessageTimer" type="Timer" parent="CanvasLayer"]
+wait_time = 9.0
+one_shot = true
