@@ -1,0 +1,41 @@
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f4f3ef, #181a1d);
+  --fg: light-dark(#202429, #eef1f4);
+  --muted: light-dark(#626971, #aeb5bd);
+  --line: light-dark(#252a30, #e5e9ed);
+  --corridor: light-dark(#d5d9dc, #353b41);
+  --energy: light-dark(#9eb8ca, #294e69);
+  --utility: light-dark(#a9c5b7, #315d4e);
+  --work: light-dark(#c7ad89, #705033);
+  --shaft: light-dark(#e8e8e4, #25292e);
+  --equipment: light-dark(#55616b, #9ca7b0);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: "Segoe UI", Arial, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 18px; }
+h1 { margin: 0 0 6px; font-size: 22px; font-weight: 500; }
+p { margin: 0 0 14px; color: var(--muted); }
+svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: var(--bg); }
+.canvas { fill: var(--bg); }
+.room, .corridor, .shaft, .work, .utility, .energy { stroke: var(--line); stroke-width: 3; }
+.room { fill: var(--shaft); }
+.corridor { fill: var(--corridor); }
+.energy { fill: var(--energy); }
+.utility { fill: var(--utility); }
+.work { fill: var(--work); }
+.shaft { fill: var(--shaft); stroke-dasharray: 8 6; }
+.equipment { fill: none; stroke: var(--equipment); stroke-width: 2; }
+.wall { stroke: var(--line); stroke-width: 5; }
+.door-gap { stroke: var(--corridor); stroke-width: 12; }
+.room-gap { stroke: var(--shaft); stroke-width: 12; }
+.energy-gap { stroke: var(--energy); stroke-width: 12; }
+.utility-gap { stroke: var(--utility); stroke-width: 12; }
+.work-gap { stroke: var(--work); stroke-width: 12; }
+.door { fill: none; stroke: var(--line); stroke-width: 2; }
+.window { stroke: var(--line); stroke-width: 7; }
+text { fill: var(--fg); text-anchor: middle; dominant-baseline: middle; font-size: 16px; font-weight: 500; }
+.minor { font-size: 13px; font-weight: 400; }
+.tiny { font-size: 11px; font-weight: 400; fill: var(--muted); }
+.flow { fill: none; stroke: var(--equipment); stroke-width: 3; marker-end: url(#arrow); }
+@media (max-width: 600px) { main { padding: 8px; } h1 { font-size: 18px; } }
