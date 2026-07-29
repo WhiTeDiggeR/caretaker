@@ -19,11 +19,17 @@ def main() -> int:
     errors: list[str] = []
     expected_files = {
         "complex_v3_blockout.gd",
+        "complex_v3_assembly.gd",
         "complex_v3_blockout.tscn",
+        "complex_v3_zone.tscn",
+        "complex_v3_infrastructure.tscn",
+        "sector_catalog.json",
         "complex_v3_blockout_test.gd",
         "complex_v3_blockout_test.tscn",
         "complex_v3_blockout_check.gd",
         "complex_v3_portal_check.gd",
+        "complex_v3_sector_check.gd",
+        "complex_v3_visual_check.gd",
     }
     missing = sorted(name for name in expected_files if not (SCENE_DIR / name).is_file())
     if missing:

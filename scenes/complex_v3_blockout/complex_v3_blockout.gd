@@ -1,5 +1,5 @@
 extends Node3D
-class_name ComplexV3Blockout
+class_name ComplexV3BlockoutPart
 
 const DEFAULT_HANDOFF_PATH := "res://docs/design/complex_v3/handoff/geometry/complex-handoff.json"
 const DEFAULT_VERTICAL_PATH := "res://docs/design/complex_v3/handoff/vertical/vertical-transitions.json"
@@ -13,6 +13,10 @@ const MIN_SEGMENT_LENGTH := 0.05
 @export var build_collisions := true
 @export var include_ceilings := true
 @export var show_space_labels := false
+@export var build_room_spaces := true
+@export var build_shared_infrastructure := true
+@export var sector_ids := PackedStringArray()
+@export var preview_shared_infrastructure_when_standalone := false
 
 var _handoff: Dictionary = {}
 var _vertical: Dictionary = {}
@@ -24,6 +28,8 @@ var _stats: Dictionary[String, int] = {}
 
 
 func _ready() -> void:
+	if preview_shared_infrastructure_when_standalone and (get_parent() == null or get_parent().name != "Zones"):
+		build_shared_infrastructure = true
 	if build_on_ready:
 		build_from_handoff()
 
@@ -40,11 +46,14 @@ func build_from_handoff() -> void:
 	_index_spaces()
 	_compile_openings()
 	_build_spaces()
-	_build_connection_corridors()
-	_build_vertical_markers()
+	if build_shared_infrastructure:
+		_build_connection_corridors()
+		_build_vertical_markers()
 	set_meta("map_id", str(_handoff.get("map_id", "")))
 	set_meta("handoff_artifact_id", str(_handoff.get("artifact_id", "")))
 	set_meta("units", str(_handoff.get("units", "")))
+	set_meta("sector_ids", sector_ids)
+	set_meta("build_role", "infrastructure" if not build_room_spaces else "sector" if not build_shared_infrastructure else "full")
 
 
 func _load_json(path: String) -> Dictionary:
@@ -187,10 +196,20 @@ func _add_centered_opening(space_id: String, point: Vector2, bounds: Array, widt
 
 
 func _build_spaces() -> void:
-	for space_value: Variant in _handoff.get("spaces", []):
-		_build_space(space_value as Dictionary, false)
-	for route_value: Variant in _handoff.get("route_spaces", []):
-		_build_space(route_value as Dictionary, true)
+	if build_room_spaces:
+		for space_value: Variant in _handoff.get("spaces", []):
+			var space := space_value as Dictionary
+			if _space_is_included(space):
+				_build_space(space, false)
+	if build_shared_infrastructure:
+		for route_value: Variant in _handoff.get("route_spaces", []):
+			_build_space(route_value as Dictionary, true)
+
+
+func _space_is_included(space: Dictionary) -> bool:
+	if not build_room_spaces:
+		return false
+	return sector_ids.is_empty() or sector_ids.has(str(space.get("sector_id", "")))
 
 
 func _build_space(space: Dictionary, is_route: bool) -> void:
@@ -556,12 +575,17 @@ func get_portal_passages() -> Array[Dictionary]:
 	for portal_value: Variant in _handoff.get("internal_portals", []):
 		var portal := portal_value as Dictionary
 		var first_space := _spaces_by_id[str(portal["between"][0])]
+		var second_space := _spaces_by_id[str(portal["between"][1])]
+		if not _space_is_included(first_space) or not _space_is_included(second_space):
+			continue
 		passages.append(_portal_passage(portal, float(first_space["floor_y"]), ""))
 	for portal_value: Variant in _handoff.get("external_portals", []):
 		var portal := portal_value as Dictionary
 		if not bool(portal.get("traversable", true)):
 			continue
 		var space := _spaces_by_id[str(portal["space"])]
+		if not _space_is_included(space):
+			continue
 		passages.append(_portal_passage(portal, float(space["floor_y"]), str(portal.get("side", ""))))
 	return passages
 
@@ -602,16 +626,61 @@ func validate_against_handoff() -> PackedStringArray:
 		errors.append("Geometry handoff is not verified")
 	if str(_handoff.get("units", "")) != "m":
 		errors.append("Handoff units are not meters")
-	if _stats["spaces"] != 139:
-		errors.append("Expected 139 room spaces, built %d" % _stats["spaces"])
-	if _stats["route_spaces"] != 7:
-		errors.append("Expected 7 route spaces, built %d" % _stats["route_spaces"])
-	if _stats["anchors"] != 7:
-		errors.append("Expected 7 anchors, built %d" % _stats["anchors"])
-	if _stats["transitions"] != 8:
-		errors.append("Expected 8 transition records, built %d" % _stats["transitions"])
+	var expected_spaces := 0
+	for space_value: Variant in _handoff.get("spaces", []):
+		if _space_is_included(space_value as Dictionary):
+			expected_spaces += 1
+	if _stats["spaces"] != expected_spaces:
+		errors.append("Expected %d room spaces, built %d" % [expected_spaces, _stats["spaces"]])
+	var expected_routes := 7 if build_shared_infrastructure else 0
+	var expected_anchors := 7 if build_shared_infrastructure else 0
+	var expected_transitions := 8 if build_shared_infrastructure else 0
+	if _stats["route_spaces"] != expected_routes:
+		errors.append("Expected %d route spaces, built %d" % [expected_routes, _stats["route_spaces"]])
+	if _stats["anchors"] != expected_anchors:
+		errors.append("Expected %d anchors, built %d" % [expected_anchors, _stats["anchors"]])
+	if _stats["transitions"] != expected_transitions:
+		errors.append("Expected %d transition records, built %d" % [expected_transitions, _stats["transitions"]])
 	if _level_nodes.size() != 5:
 		errors.append("Expected three levels plus connection groups")
-	if _stats["colliders"] <= 0:
+	if expected_spaces + expected_routes > 0 and _stats["colliders"] <= 0:
 		errors.append("No collision geometry was built")
 	return errors
+
+
+func get_configured_sector_ids() -> PackedStringArray:
+	return sector_ids.duplicate()
+
+
+func get_primary_sector_id() -> String:
+	return sector_ids[0] if not sector_ids.is_empty() else ""
+
+
+func get_sector_level() -> String:
+	for space_value: Variant in _handoff.get("spaces", []):
+		var space := space_value as Dictionary
+		if _space_is_included(space):
+			return str(space.get("level", _level_for_floor(float(space["floor_y"]))))
+	return ""
+
+
+func get_focus_point() -> Vector3:
+	for space_value: Variant in _handoff.get("spaces", []):
+		var space := space_value as Dictionary
+		if _space_is_included(space):
+			var center := _bounds_center(space["bounds_xz"])
+			return Vector3(center.x, float(space["floor_y"]) + 1.1, center.y)
+	return Vector3.ZERO
+
+
+func set_level_filter(level_id: String) -> void:
+	for candidate: String in ["LV-U", "LV-L", "LV-T"]:
+		var level := get_node_or_null("Generated/%s" % candidate) as Node3D
+		if level != null:
+			level.visible = level_id == "ALL" or level_id == candidate
+	var connections := get_node_or_null("Generated/Connections") as Node3D
+	if connections != null:
+		connections.visible = level_id == "ALL"
+	var verticals := get_node_or_null("Generated/VerticalTransitions") as Node3D
+	if verticals != null:
+		verticals.visible = level_id == "ALL"

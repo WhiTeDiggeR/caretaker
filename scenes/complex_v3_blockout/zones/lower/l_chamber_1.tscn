@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/complex_v3_zone.tscn" id="1_zone"]
+
+[node name="L_CHAMBER_1" instance=ExtResource("1_zone")]
+sector_ids = PackedStringArray("L-CHAMBER-1")
+
+
+[node name="AuthoredContent" type="Node3D" parent="."]
+metadata/sector_id = "L-CHAMBER-1"
