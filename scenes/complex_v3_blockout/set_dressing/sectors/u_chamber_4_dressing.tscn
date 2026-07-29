@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="4"]
+
+[node name="U_CHAMBER_4_SetDressing" type="Node3D"]
+metadata/sector_id = "U-CHAMBER-4"
+metadata/material_family = "containment"
+
+[node name="001_U_CHAMBER_4_cargo_airlock__wall_beacon" parent="." instance=ExtResource("2")]
+position = Vector3(-97.4900, 2.3500, 59.4250)
+rotation = Vector3(0, -1.1876266, 0)
+metadata/placement_id = "U-CHAMBER-4/cargo_airlock::wall_beacon"
+
+[node name="002_U_CHAMBER_4_containment_chamber__wall_terminal" parent="." instance=ExtResource("4")]
+position = Vector3(-104.0600, 0.0000, 44.1400)
+rotation = Vector3(0, -2.0161324, 0)
+metadata/placement_id = "U-CHAMBER-4/containment_chamber::wall_terminal"
+
+[node name="003_U_CHAMBER_4_control_post__generator_unit" parent="." instance=ExtResource("3")]
+position = Vector3(-108.7000, 0.0000, 38.0000)
+rotation = Vector3(0, -2.1233807, 0)
+metadata/placement_id = "U-CHAMBER-4/control_post::generator_unit"
+
+[node name="004_U_CHAMBER_4_passenger_airlock__wall_beacon" parent="." instance=ExtResource("2")]
+position = Vector3(-82.7500, 2.3500, 37.5750)
+rotation = Vector3(0, 1.8775633, 0)
+metadata/placement_id = "U-CHAMBER-4/passenger_airlock::wall_beacon"
+
+[node name="005_U_CHAMBER_4_technical_gallery__wall_beacon" parent="." instance=ExtResource("2")]
+position = Vector3(-109.2500, 2.3500, 54.3650)
+rotation = Vector3(0, -0.3295561, 0)
+metadata/placement_id = "U-CHAMBER-4/technical_gallery::wall_beacon"
+
+[node name="006_P_U_CHAMBER_4_01" parent="." instance=ExtResource("1")]
+position = Vector3(-100.2000, 0.0000, 40.2200)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-CHAMBER-4-01"
+metadata/open_passage = true
+
+[node name="007_P_U_CHAMBER_4_02" parent="." instance=ExtResource("1")]
+position = Vector3(-107.4800, 0.0000, 43.4400)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-CHAMBER-4-02"
+metadata/open_passage = true
+
+[node name="008_P_U_CHAMBER_4_03" parent="." instance=ExtResource("1")]
+position = Vector3(-91.1000, 0.0000, 43.4400)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-CHAMBER-4-03"
+metadata/open_passage = true
+
+[node name="009_P_U_CHAMBER_4_04" parent="." instance=ExtResource("1")]
+position = Vector3(-92.6400, 0.0000, 54.9400)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-CHAMBER-4-04"
+metadata/open_passage = true
+
+[node name="010_PX_E_U07_U_CHAMBER_4" parent="." instance=ExtResource("1")]
+position = Vector3(-91.1000, 0.0000, 37.0000)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "PX-E-U07-U-CHAMBER-4"
+metadata/open_passage = true

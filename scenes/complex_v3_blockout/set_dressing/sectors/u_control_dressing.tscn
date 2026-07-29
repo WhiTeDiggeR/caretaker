@@ -1,0 +1,95 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/loaded_locker.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/security_camera.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/server_rack.tscn" id="6"]
+
+[node name="U_CONTROL_SetDressing" type="Node3D"]
+metadata/sector_id = "U-CONTROL"
+metadata/material_family = "command"
+
+[node name="001_U_CONTROL_access_vestibule__wall_beacon" parent="." instance=ExtResource("3")]
+position = Vector3(-31.2500, 2.3500, -4.2420)
+rotation = Vector3(0, -0.8090768, 0)
+metadata/placement_id = "U-CONTROL/access_vestibule::wall_beacon"
+
+[node name="002_U_CONTROL_command_office__server_rack" parent="." instance=ExtResource("6")]
+position = Vector3(-8.9500, 0.0000, -4.5670)
+rotation = Vector3(0, 0.8265510, 0)
+metadata/placement_id = "U-CONTROL/command_office::server_rack"
+
+[node name="003_U_CONTROL_communications_room__loaded_locker" parent="." instance=ExtResource("4")]
+position = Vector3(-9.0500, 0.0000, -2.8670)
+rotation = Vector3(0, 2.3405409, 0)
+metadata/placement_id = "U-CONTROL/communications_room::loaded_locker"
+
+[node name="004_U_CONTROL_coordination_room__security_camera" parent="." instance=ExtResource("5")]
+position = Vector3(-31.2000, 0.0000, -2.8670)
+rotation = Vector3(0, -2.3102173, 0)
+metadata/placement_id = "U-CONTROL/coordination_room::security_camera"
+
+[node name="005_U_CONTROL_operator_hall__operator_console" parent="." instance=ExtResource("2")]
+position = Vector3(-20.6700, 0.0000, -12.1000)
+rotation = Vector3(0, -3.0904921, 0)
+metadata/placement_id = "U-CONTROL/operator_hall::operator_console"
+
+[node name="006_U_CONTROL_server_room__server_rack" parent="." instance=ExtResource("6")]
+position = Vector3(-31.0500, 0.0000, 6.5670)
+rotation = Vector3(0, -2.3150416, 0)
+metadata/placement_id = "U-CONTROL/server_room::server_rack"
+
+[node name="007_U_CONTROL_service_aisle__loaded_locker" parent="." instance=ExtResource("4")]
+position = Vector3(-9.0500, 0.0000, 6.4670)
+rotation = Vector3(0, 2.3404763, 0)
+metadata/placement_id = "U-CONTROL/service_aisle::loaded_locker"
+
+[node name="008_P_U_CONTROL_01" parent="." instance=ExtResource("1")]
+position = Vector3(-21.9200, 0.0000, -8.3340)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-CONTROL-01"
+metadata/open_passage = true
+
+[node name="009_P_U_CONTROL_02" parent="." instance=ExtResource("1")]
+position = Vector3(-21.9200, 0.0000, 1.0000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-CONTROL-02"
+metadata/open_passage = true
+
+[node name="010_P_U_CONTROL_03" parent="." instance=ExtResource("1")]
+position = Vector3(-21.9200, 0.0000, 10.3340)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-CONTROL-03"
+metadata/open_passage = true
+
+[node name="011_P_U_CONTROL_04" parent="." instance=ExtResource("1")]
+position = Vector3(-18.0800, 0.0000, -8.3340)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-CONTROL-04"
+metadata/open_passage = true
+
+[node name="012_P_U_CONTROL_05" parent="." instance=ExtResource("1")]
+position = Vector3(-18.0800, 0.0000, 1.0000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-CONTROL-05"
+metadata/open_passage = true
+
+[node name="013_P_U_CONTROL_06" parent="." instance=ExtResource("1")]
+position = Vector3(-18.0800, 0.0000, 10.3340)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-CONTROL-06"
+metadata/open_passage = true
+
+[node name="014_PX_E_U04_U_CONTROL" parent="." instance=ExtResource("1")]
+position = Vector3(-26.9600, 0.0000, -13.0000)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-U04-U-CONTROL"
+metadata/open_passage = true

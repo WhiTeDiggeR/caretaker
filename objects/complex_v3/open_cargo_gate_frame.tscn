@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Metal"]
+albedo_color = Color(0.09, 0.1, 0.11, 1)
+metallic = 0.5
+roughness = 0.62
+
+[sub_resource type="StandardMaterial3D" id="Hazard"]
+albedo_color = Color(0.78, 0.38, 0.035, 1)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="Post"]
+material = SubResource("Metal")
+size = Vector3(0.34, 3.1, 0.42)
+
+[sub_resource type="BoxMesh" id="Header"]
+material = SubResource("Metal")
+size = Vector3(4.5, 0.38, 0.42)
+
+[sub_resource type="BoxMesh" id="Stripe"]
+material = SubResource("Hazard")
+size = Vector3(1.0, 0.09, 0.045)
+
+[node name="OpenCargoGateFrame" type="Node3D"]
+metadata/open_passage = true
+
+[node name="LeftPost" type="MeshInstance3D" parent="."]
+position = Vector3(-2.08, 1.55, 0)
+mesh = SubResource("Post")
+
+[node name="RightPost" type="MeshInstance3D" parent="."]
+position = Vector3(2.08, 1.55, 0)
+mesh = SubResource("Post")
+
+[node name="Header" type="MeshInstance3D" parent="."]
+position = Vector3(0, 2.91, 0)
+mesh = SubResource("Header")
+
+[node name="HazardLeft" type="MeshInstance3D" parent="."]
+position = Vector3(-1.25, 2.9, -0.235)
+mesh = SubResource("Stripe")
+
+[node name="HazardRight" type="MeshInstance3D" parent="."]
+position = Vector3(1.25, 2.9, -0.235)
+mesh = SubResource("Stripe")

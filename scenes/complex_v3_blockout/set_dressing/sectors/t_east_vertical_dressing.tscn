@@ -1,0 +1,81 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
+
+[node name="T_EAST_VERTICAL_SetDressing" type="Node3D"]
+metadata/sector_id = "T-EAST-VERTICAL"
+metadata/material_family = "utility"
+
+[node name="001_T_EAST_VERTICAL_closed_cable_pit__pipe_cluster" parent="." instance=ExtResource("2")]
+position = Vector3(19.7500, -11.5000, 6.8500)
+rotation = Vector3(0, -2.7921619, 0)
+metadata/placement_id = "T-EAST-VERTICAL/closed_cable_pit::pipe_cluster"
+
+[node name="002_T_EAST_VERTICAL_east_emergency_stair__utility_tank" parent="." instance=ExtResource("3")]
+position = Vector3(30.8500, -11.5000, 2.6500)
+rotation = Vector3(0, 2.8096983, 0)
+metadata/placement_id = "T-EAST-VERTICAL/east_emergency_stair::utility_tank"
+
+[node name="003_T_EAST_VERTICAL_fire_vestibule__wall_beacon" parent="." instance=ExtResource("4")]
+position = Vector3(18.7500, -9.1500, -2.4250)
+rotation = Vector3(0, -2.6058697, 0)
+metadata/placement_id = "T-EAST-VERTICAL/fire_vestibule::wall_beacon"
+
+[node name="004_T_EAST_VERTICAL_internal_circulation__wall_beacon" parent="." instance=ExtResource("4")]
+position = Vector3(25.0900, -9.1500, 14.4250)
+rotation = Vector3(0, 0.0069631, 0)
+metadata/placement_id = "T-EAST-VERTICAL/internal_circulation::wall_beacon"
+
+[node name="005_T_EAST_VERTICAL_new_substation__pipe_cluster" parent="." instance=ExtResource("2")]
+position = Vector3(30.2500, -11.5000, -11.1500)
+rotation = Vector3(0, 2.9198749, 0)
+metadata/placement_id = "T-EAST-VERTICAL/new_substation::pipe_cluster"
+
+[node name="006_T_EAST_VERTICAL_passenger_shaft_no_stop__utility_tank" parent="." instance=ExtResource("3")]
+position = Vector3(19.1500, -11.5000, -10.8500)
+rotation = Vector3(0, -2.6189175, 0)
+metadata/placement_id = "T-EAST-VERTICAL/passenger_shaft_no_stop::utility_tank"
+
+[node name="007_P_T_EAST_VERTICAL_01" parent="." instance=ExtResource("1")]
+position = Vector3(24.1600, -11.5000, -7.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-EAST-VERTICAL-01"
+metadata/open_passage = true
+
+[node name="008_P_T_EAST_VERTICAL_02" parent="." instance=ExtResource("1")]
+position = Vector3(24.1600, -11.5000, 1.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-EAST-VERTICAL-02"
+metadata/open_passage = true
+
+[node name="009_P_T_EAST_VERTICAL_03" parent="." instance=ExtResource("1")]
+position = Vector3(24.1600, -11.5000, 10.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-EAST-VERTICAL-03"
+metadata/open_passage = true
+
+[node name="010_P_T_EAST_VERTICAL_04" parent="." instance=ExtResource("1")]
+position = Vector3(25.8400, -11.5000, -5.2500)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-EAST-VERTICAL-04"
+metadata/open_passage = true
+
+[node name="011_P_T_EAST_VERTICAL_05" parent="." instance=ExtResource("1")]
+position = Vector3(25.8400, -11.5000, 8.2500)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-EAST-VERTICAL-05"
+metadata/open_passage = true
+
+[node name="012_PX_E_T04_T_EAST_VERTICAL" parent="." instance=ExtResource("1")]
+position = Vector3(25.0000, -11.5000, -12.0000)
+scale = Vector3(0.42353, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-T04-T-EAST-VERTICAL"
+metadata/open_passage = true

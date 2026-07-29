@@ -1,0 +1,83 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/industrial_crate.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="6"]
+
+[node name="U_FREIGHT_SetDressing" type="Node3D"]
+metadata/sector_id = "U-FREIGHT"
+metadata/material_family = "freight"
+
+[node name="001_U_FREIGHT_freight_lift__industrial_crate" parent="." instance=ExtResource("5")]
+position = Vector3(-15.0500, 0.0000, 78.0170)
+rotation = Vector3(0, -1.7487447, 0)
+metadata/placement_id = "U-FREIGHT/freight_lift::industrial_crate"
+
+[node name="002_U_FREIGHT_inspection_lane__emergency_barrier" parent="." instance=ExtResource("3")]
+position = Vector3(-14.6500, 0.0000, 68.3000)
+rotation = Vector3(0, -1.7629216, 0)
+metadata/placement_id = "U-FREIGHT/inspection_lane::emergency_barrier"
+
+[node name="003_U_FREIGHT_isolation_bay__workbench" parent="." instance=ExtResource("6")]
+position = Vector3(28.5500, 0.0000, 68.4500)
+rotation = Vector3(0, 1.8857717, 0)
+metadata/placement_id = "U-FREIGHT/isolation_bay::workbench"
+
+[node name="004_U_FREIGHT_operator_room__generator_unit" parent="." instance=ExtResource("4")]
+position = Vector3(-14.7000, 0.0000, 73.3330)
+rotation = Vector3(0, -1.7386982, 0)
+metadata/placement_id = "U-FREIGHT/operator_room::generator_unit"
+
+[node name="005_U_FREIGHT_service_walkway__industrial_crate" parent="." instance=ExtResource("5")]
+position = Vector3(29.0500, 0.0000, 75.6000)
+rotation = Vector3(0, 1.8792282, 0)
+metadata/placement_id = "U-FREIGHT/service_walkway::industrial_crate"
+
+[node name="006_U_FREIGHT_unloading_bay__emergency_barrier" parent="." instance=ExtResource("3")]
+position = Vector3(9.3300, 0.0000, 68.3000)
+rotation = Vector3(0, 2.7949395, 0)
+metadata/placement_id = "U-FREIGHT/unloading_bay::emergency_barrier"
+
+[node name="007_P_U_FREIGHT_01" parent="." instance=ExtResource("2")]
+position = Vector3(3.3200, 0.0000, 69.9165)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.21849, 1.87500, 1.00000)
+metadata/placement_id = "P-U-FREIGHT-01"
+metadata/open_passage = true
+
+[node name="008_P_U_FREIGHT_02" parent="." instance=ExtResource("2")]
+position = Vector3(3.3200, 0.0000, 74.7500)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.21849, 1.87500, 1.00000)
+metadata/placement_id = "P-U-FREIGHT-02"
+metadata/open_passage = true
+
+[node name="009_P_U_FREIGHT_03" parent="." instance=ExtResource("2")]
+position = Vector3(3.3200, 0.0000, 79.5835)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.21849, 1.87500, 1.00000)
+metadata/placement_id = "P-U-FREIGHT-03"
+metadata/open_passage = true
+
+[node name="010_P_U_FREIGHT_04" parent="." instance=ExtResource("1")]
+position = Vector3(10.6800, 0.0000, 71.1250)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.04567, 1.50000, 1.00000)
+metadata/placement_id = "P-U-FREIGHT-04"
+metadata/open_passage = true
+
+[node name="011_P_U_FREIGHT_05" parent="." instance=ExtResource("1")]
+position = Vector3(10.6800, 0.0000, 78.3750)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.04567, 1.50000, 1.00000)
+metadata/placement_id = "P-U-FREIGHT-05"
+metadata/open_passage = true
+
+[node name="012_PX_E_U13_U_FREIGHT" parent="." instance=ExtResource("1")]
+position = Vector3(-6.3400, 0.0000, 82.0000)
+scale = Vector3(1.08173, 1.50000, 1.00000)
+metadata/placement_id = "PX-E-U13-U-FREIGHT"
+metadata/open_passage = true

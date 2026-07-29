@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="4"]
+
+[node name="U_ROUTE_A_SetDressing" type="Node3D"]
+metadata/sector_id = "U-ROUTE-A"
+metadata/material_family = "historic"
+
+[node name="001_U_ROUTE_A_service_store__debris_pile" parent="." instance=ExtResource("2")]
+position = Vector3(-60.8500, 0.0000, -7.0000)
+rotation = Vector3(0, -2.9910894, 0)
+metadata/placement_id = "U-ROUTE-A/service_store::debris_pile"
+
+[node name="002_U_ROUTE_A_stair_landing__loaded_shelf" parent="." instance=ExtResource("3")]
+position = Vector3(-47.2000, 0.0000, -7.1500)
+rotation = Vector3(0, 2.9981029, 0)
+metadata/placement_id = "U-ROUTE-A/stair_landing::loaded_shelf"
+
+[node name="003_U_ROUTE_A_ventilation_room__workbench" parent="." instance=ExtResource("4")]
+position = Vector3(-55.2170, 0.0000, -7.0500)
+rotation = Vector3(0, -3.0210849, 0)
+metadata/placement_id = "U-ROUTE-A/ventilation_room::workbench"
+
+[node name="004_P_U_ROUTE_A_01" parent="." instance=ExtResource("1")]
+position = Vector3(-56.6670, 0.0000, 3.0000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-ROUTE-A-01"
+metadata/open_passage = true
+
+[node name="005_P_U_ROUTE_A_02" parent="." instance=ExtResource("1")]
+position = Vector3(-51.3330, 0.0000, 3.0000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-ROUTE-A-02"
+metadata/open_passage = true
+
+[node name="006_PX_E_U02_U_ROUTE_A" parent="." instance=ExtResource("1")]
+position = Vector3(-62.0000, 0.0000, 3.0000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-U02-U-ROUTE-A"
+metadata/open_passage = true

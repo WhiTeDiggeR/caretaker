@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/industrial_crate.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
+
+[node name="T_FREIGHT_SetDressing" type="Node3D"]
+metadata/sector_id = "T-FREIGHT"
+metadata/material_family = "freight"
+
+[node name="001_T_FREIGHT_freight_lift__industrial_crate" parent="." instance=ExtResource("4")]
+position = Vector3(29.0500, -11.5000, 81.1500)
+rotation = Vector3(0, 0.9803812, 0)
+metadata/placement_id = "T-FREIGHT/freight_lift::industrial_crate"
+
+[node name="002_T_FREIGHT_heavy_spine__emergency_barrier" parent="." instance=ExtResource("2")]
+position = Vector3(-18.6500, -11.5000, 68.3000)
+rotation = Vector3(0, -1.8702550, 0)
+metadata/placement_id = "T-FREIGHT/heavy_spine::emergency_barrier"
+
+[node name="003_T_FREIGHT_service_bypass__workbench" parent="." instance=ExtResource("5")]
+position = Vector3(-18.5500, -11.5000, 75.7000)
+rotation = Vector3(0, -1.8581933, 0)
+metadata/placement_id = "T-FREIGHT/service_bypass::workbench"
+
+[node name="004_T_FREIGHT_service_reception__generator_unit" parent="." instance=ExtResource("3")]
+position = Vector3(7.7000, -11.5000, 68.5000)
+rotation = Vector3(0, 2.7338079, 0)
+metadata/placement_id = "T-FREIGHT/service_reception::generator_unit"
+
+[node name="005_P_T_FREIGHT_01" parent="." instance=ExtResource("1")]
+position = Vector3(1.0000, -11.5000, 71.1250)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.04567, 1.50000, 1.00000)
+metadata/placement_id = "P-T-FREIGHT-01"
+metadata/open_passage = true
+
+[node name="006_P_T_FREIGHT_02" parent="." instance=ExtResource("1")]
+position = Vector3(1.0000, -11.5000, 78.3750)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.04567, 1.50000, 1.00000)
+metadata/placement_id = "P-T-FREIGHT-02"
+metadata/open_passage = true
+
+[node name="007_P_T_FREIGHT_03" parent="." instance=ExtResource("1")]
+position = Vector3(9.0000, -11.5000, 74.7500)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.08173, 1.50000, 1.00000)
+metadata/placement_id = "P-T-FREIGHT-03"
+metadata/open_passage = true
+
+[node name="008_PX_E_T08_T_FREIGHT" parent="." instance=ExtResource("1")]
+position = Vector3(19.5000, -11.5000, 67.5000)
+scale = Vector3(1.08173, 1.50000, 1.00000)
+metadata/placement_id = "PX-E-T08-T-FREIGHT"
+metadata/open_passage = true

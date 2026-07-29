@@ -2,6 +2,14 @@
 extends Node3D
 class_name ComplexV3BlockoutPart
 
+const MEDICAL_PANELS := preload("res://materials/complex_v3/medical_panels.tres")
+const COMMAND_PANELS := preload("res://materials/complex_v3/command_panels.tres")
+const DOMESTIC_PANELS := preload("res://materials/complex_v3/domestic_panels.tres")
+const CONTAINMENT_PANELS := preload("res://materials/complex_v3/containment_panels.tres")
+const FREIGHT_PANELS := preload("res://materials/complex_v3/freight_panels.tres")
+const UTILITY_PANELS := preload("res://materials/complex_v3/utility_panels.tres")
+const HISTORIC_PANELS := preload("res://materials/complex_v3/historic_panels.tres")
+
 const DEFAULT_HANDOFF_PATH := "res://docs/design/complex_v3/handoff/geometry/complex-handoff.json"
 const DEFAULT_VERTICAL_PATH := "res://docs/design/complex_v3/handoff/vertical/vertical-transitions.json"
 const FLOOR_THICKNESS := 0.2
@@ -129,11 +137,14 @@ func _reset_stats() -> void:
 
 func _create_materials() -> void:
 	_materials.clear()
-	_materials["personnel"] = _material(Color(0.30, 0.48, 0.36), 0.82)
-	_materials["control"] = _material(Color(0.27, 0.43, 0.62), 0.82)
-	_materials["containment"] = _material(Color(0.52, 0.36, 0.37), 0.82)
-	_materials["historic"] = _material(Color(0.52, 0.45, 0.30), 0.82)
-	_materials["utility"] = _material(Color(0.31, 0.43, 0.46), 0.82)
+	_materials["medical"] = MEDICAL_PANELS
+	_materials["personnel"] = MEDICAL_PANELS
+	_materials["domestic"] = DOMESTIC_PANELS
+	_materials["control"] = COMMAND_PANELS
+	_materials["containment"] = CONTAINMENT_PANELS
+	_materials["historic"] = HISTORIC_PANELS
+	_materials["utility"] = UTILITY_PANELS
+	_materials["freight"] = FREIGHT_PANELS
 	_materials["passenger_route"] = _material(Color(0.30, 0.56, 0.72), 0.92)
 	_materials["service_route"] = _material(Color(0.36, 0.62, 0.62), 0.92)
 	_materials["freight_route"] = _material(Color(0.72, 0.48, 0.18), 0.92)
@@ -542,13 +553,19 @@ func _material_for_space(space: Dictionary, is_route: bool) -> Material:
 			return _materials["passenger_route"]
 		return _materials["service_route"]
 	var sector_id := str(space.get("sector_id", ""))
+	if sector_id.contains("MEDBAY") or sector_id.contains("EMERGENCY"):
+		return _materials["medical"]
+	if sector_id.contains("DOMESTIC") or sector_id.contains("EAST-SUPPORT"):
+		return _materials["domestic"]
 	if sector_id.contains("CHAMBER") or sector_id.contains("SLEEP"):
 		return _materials["containment"]
 	if sector_id.contains("CONTROL") or sector_id.contains("SECURITY"):
 		return _materials["control"]
 	if sector_id.contains("OLD") or sector_id.contains("ARCHIVE"):
 		return _materials["historic"]
-	if sector_id.begins_with("T-") or sector_id.contains("FREIGHT"):
+	if sector_id.contains("FREIGHT"):
+		return _materials["freight"]
+	if sector_id.begins_with("T-"):
 		return _materials["utility"]
 	return _materials["personnel"]
 

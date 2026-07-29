@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="4"]
+
+[node name="L_SERVICE_INTERCHANGE_SetDressing" type="Node3D"]
+metadata/sector_id = "L-SERVICE-INTERCHANGE"
+metadata/material_family = "utility"
+
+[node name="001_L_SERVICE_INTERCHANGE_double_airlock__wall_beacon" parent="." instance=ExtResource("3")]
+position = Vector3(-47.2500, -3.6500, 42.5750)
+rotation = Vector3(0, -2.7179445, 0)
+metadata/placement_id = "L-SERVICE-INTERCHANGE/double_airlock::wall_beacon"
+
+[node name="002_L_SERVICE_INTERCHANGE_electrical_room__utility_tank" parent="." instance=ExtResource("2")]
+position = Vector3(-46.8500, -6.0000, 52.1500)
+rotation = Vector3(0, -2.7533902, 0)
+metadata/placement_id = "L-SERVICE-INTERCHANGE/electrical_room::utility_tank"
+
+[node name="003_L_SERVICE_INTERCHANGE_service_lobby__wall_beacon" parent="." instance=ExtResource("3")]
+position = Vector3(-42.2100, -3.6500, 42.5750)
+rotation = Vector3(0, -3.1166720, 0)
+metadata/placement_id = "L-SERVICE-INTERCHANGE/service_lobby::wall_beacon"
+
+[node name="004_L_SERVICE_INTERCHANGE_service_stair__workbench" parent="." instance=ExtResource("4")]
+position = Vector3(-37.4500, -6.0000, 42.9500)
+rotation = Vector3(0, 3.0094480, 0)
+metadata/placement_id = "L-SERVICE-INTERCHANGE/service_stair::workbench"
+
+[node name="005_P_L_SERVICE_INTERCHANGE_01" parent="." instance=ExtResource("1")]
+position = Vector3(-42.9600, -6.0000, 46.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-L-SERVICE-INTERCHANGE-01"
+metadata/open_passage = true
+
+[node name="006_P_L_SERVICE_INTERCHANGE_02" parent="." instance=ExtResource("1")]
+position = Vector3(-42.9600, -6.0000, 55.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-L-SERVICE-INTERCHANGE-02"
+metadata/open_passage = true
+
+[node name="007_P_L_SERVICE_INTERCHANGE_03" parent="." instance=ExtResource("1")]
+position = Vector3(-41.0400, -6.0000, 51.0000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-L-SERVICE-INTERCHANGE-03"
+metadata/open_passage = true
+
+[node name="008_PX_E_L08_L_SERVICE_INTERCHANGE" parent="." instance=ExtResource("1")]
+position = Vector3(-42.0000, -6.0000, 42.0000)
+scale = Vector3(0.48403, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-L08-L-SERVICE-INTERCHANGE"
+metadata/open_passage = true
+
+[node name="009_PX_E_L15_L_SERVICE_INTERCHANGE" parent="." instance=ExtResource("1")]
+position = Vector3(-42.0000, -6.0000, 60.0000)
+scale = Vector3(0.48403, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-L15-L-SERVICE-INTERCHANGE"
+metadata/open_passage = true

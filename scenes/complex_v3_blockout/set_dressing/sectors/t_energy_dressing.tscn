@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
+
+[node name="T_ENERGY_SetDressing" type="Node3D"]
+metadata/sector_id = "T-ENERGY"
+metadata/material_family = "utility"
+
+[node name="001_T_ENERGY_cooling_room__pipe_cluster" parent="." instance=ExtResource("2")]
+position = Vector3(-66.7500, -11.5000, 0.8500)
+rotation = Vector3(0, 2.2831539, 0)
+metadata/placement_id = "T-ENERGY/cooling_room::pipe_cluster"
+
+[node name="002_T_ENERGY_fire_vestibule__wall_beacon" parent="." instance=ExtResource("3")]
+position = Vector3(-65.7500, -9.1500, -14.4250)
+rotation = Vector3(0, 2.2430794, 0)
+metadata/placement_id = "T-ENERGY/fire_vestibule::wall_beacon"
+
+[node name="003_T_ENERGY_generator_hall__generator_unit" parent="." instance=ExtResource("4")]
+position = Vector3(-108.7000, -11.5000, -14.0000)
+rotation = Vector3(0, -2.2440391, 0)
+metadata/placement_id = "T-ENERGY/generator_hall::generator_unit"
+
+[node name="004_T_ENERGY_service_approach__workbench" parent="." instance=ExtResource("5")]
+position = Vector3(-89.6500, -11.5000, 14.0500)
+rotation = Vector3(0, -0.1518470, 0)
+metadata/placement_id = "T-ENERGY/service_approach::workbench"
+
+[node name="005_T_ENERGY_switchgear_room__pipe_cluster" parent="." instance=ExtResource("2")]
+position = Vector3(-108.2500, -11.5000, 0.8500)
+rotation = Vector3(0, -2.2831539, 0)
+metadata/placement_id = "T-ENERGY/switchgear_room::pipe_cluster"
+
+[node name="006_P_T_ENERGY_01" parent="." instance=ExtResource("1")]
+position = Vector3(-91.1000, -11.5000, -7.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-ENERGY-01"
+metadata/open_passage = true
+
+[node name="007_P_T_ENERGY_02" parent="." instance=ExtResource("1")]
+position = Vector3(-91.1000, -11.5000, 7.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-ENERGY-02"
+metadata/open_passage = true
+
+[node name="008_P_T_ENERGY_03" parent="." instance=ExtResource("1")]
+position = Vector3(-83.9000, -11.5000, -7.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-ENERGY-03"
+metadata/open_passage = true
+
+[node name="009_P_T_ENERGY_04" parent="." instance=ExtResource("1")]
+position = Vector3(-83.9000, -11.5000, 7.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-ENERGY-04"
+metadata/open_passage = true
+
+[node name="010_PX_E_T01_T_ENERGY" parent="." instance=ExtResource("1")]
+position = Vector3(-87.5000, -11.5000, -15.0000)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-T01-T-ENERGY"
+metadata/open_passage = true

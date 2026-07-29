@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/complex_v3_zone.tscn" id="1_zone"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/set_dressing/sectors/l_chamber_3_dressing.tscn" id="2_dressing"]
 
 [node name="L_CHAMBER_3" instance=ExtResource("1_zone")]
 sector_ids = PackedStringArray("L-CHAMBER-3")
@@ -9,3 +10,5 @@ editor_preview_enabled = true
 
 [node name="AuthoredContent" type="Node3D" parent="."]
 metadata/sector_id = "L-CHAMBER-3"
+
+[node name="SetDressing" parent="AuthoredContent" instance=ExtResource("2_dressing")]

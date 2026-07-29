@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
+
+[node name="T_OLD_ACCESS_SetDressing" type="Node3D"]
+metadata/sector_id = "T-OLD-ACCESS"
+metadata/material_family = "historic"
+
+[node name="001_T_OLD_ACCESS_old_core_substation__debris_pile" parent="." instance=ExtResource("3")]
+position = Vector3(-79.1500, -11.5000, 21.5000)
+rotation = Vector3(0, 2.8086842, 0)
+metadata/placement_id = "T-OLD-ACCESS/old_core_substation::debris_pile"
+
+[node name="002_T_OLD_ACCESS_old_stair__loaded_shelf" parent="." instance=ExtResource("4")]
+position = Vector3(-100.8000, -11.5000, 21.3500)
+rotation = Vector3(0, -2.8166875, 0)
+metadata/placement_id = "T-OLD-ACCESS/old_stair::loaded_shelf"
+
+[node name="003_T_OLD_ACCESS_service_vestibule__wall_beacon" parent="." instance=ExtResource("2")]
+position = Vector3(-91.1700, -9.1500, 44.4250)
+rotation = Vector3(0, -0.0998807, 0)
+metadata/placement_id = "T-OLD-ACCESS/service_vestibule::wall_beacon"
+
+[node name="004_P_T_OLD_ACCESS_01" parent="." instance=ExtResource("1")]
+position = Vector3(-91.9200, -11.5000, 32.7500)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-OLD-ACCESS-01"
+metadata/open_passage = true
+
+[node name="005_P_T_OLD_ACCESS_02" parent="." instance=ExtResource("1")]
+position = Vector3(-88.0800, -11.5000, 32.7500)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-T-OLD-ACCESS-02"
+metadata/open_passage = true
+
+[node name="006_PX_E_T03_T_OLD_ACCESS" parent="." instance=ExtResource("1")]
+position = Vector3(-90.0000, -11.5000, 20.5000)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-T03-T-OLD-ACCESS"
+metadata/open_passage = true

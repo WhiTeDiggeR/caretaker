@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3]
+
+[sub_resource type="StandardMaterial3D" id="ShellMat"]
+albedo_color = Color(0.13, 0.16, 0.18, 1)
+metallic = 0.42
+roughness = 0.58
+
+[sub_resource type="StandardMaterial3D" id="GlowMat"]
+albedo_color = Color(0.01, 0.08, 0.08, 1)
+emission_enabled = true
+emission = Color(0.02, 0.72, 0.6, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CapsuleMesh" id="Capsule"]
+material = SubResource("ShellMat")
+radius = 0.72
+height = 2.9
+radial_segments = 20
+rings = 8
+
+[sub_resource type="BoxMesh" id="Glow"]
+material = SubResource("GlowMat")
+size = Vector3(1.25, 0.06, 0.22)
+
+[sub_resource type="BoxShape3D" id="Shape"]
+size = Vector3(3.0, 1.5, 1.5)
+
+[node name="ContainmentCapsule" type="StaticBody3D"]
+
+[node name="Shell" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.86, 0)
+rotation_degrees = Vector3(0, 0, 90)
+mesh = SubResource("Capsule")
+
+[node name="StatusStrip" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.38, -0.65)
+mesh = SubResource("Glow")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.75, 0)
+shape = SubResource("Shape")

@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="5"]
+
+[node name="L_CHAMBER_1_SetDressing" type="Node3D"]
+metadata/sector_id = "L-CHAMBER-1"
+metadata/material_family = "containment"
+
+[node name="001_L_CHAMBER_1_combined_vestibule__wall_beacon" parent="." instance=ExtResource("3")]
+position = Vector3(-109.2500, -3.6500, -7.4250)
+rotation = Vector3(0, -2.8246415, 0)
+metadata/placement_id = "L-CHAMBER-1/combined_vestibule::wall_beacon"
+
+[node name="002_L_CHAMBER_1_control_post__wall_terminal" parent="." instance=ExtResource("5")]
+position = Vector3(-100.4330, -6.0000, 14.3000)
+rotation = Vector3(0, -0.3077699, 0)
+metadata/placement_id = "L-CHAMBER-1/control_post::wall_terminal"
+
+[node name="003_L_CHAMBER_1_mechanical_cage__generator_unit" parent="." instance=ExtResource("4")]
+position = Vector3(-85.3000, -6.0000, -7.0000)
+rotation = Vector3(0, 2.8603458, 0)
+metadata/placement_id = "L-CHAMBER-1/mechanical_cage::generator_unit"
+
+[node name="004_P_L_CHAMBER_1_01" parent="." instance=ExtResource("1")]
+position = Vector3(-101.3330, -6.0000, 3.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.08173, 1.50000, 1.00000)
+metadata/placement_id = "P-L-CHAMBER-1-01"
+metadata/open_passage = true
+
+[node name="005_P_L_CHAMBER_1_02" parent="." instance=ExtResource("1")]
+position = Vector3(-92.6670, -6.0000, 3.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.08173, 1.50000, 1.00000)
+metadata/placement_id = "P-L-CHAMBER-1-02"
+metadata/open_passage = true
+
+[node name="006_PX_E_L02_L_CHAMBER_1" parent="." instance=ExtResource("2")]
+position = Vector3(-97.0000, -6.0000, -8.0000)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-L02-L-CHAMBER-1"
+metadata/open_passage = true

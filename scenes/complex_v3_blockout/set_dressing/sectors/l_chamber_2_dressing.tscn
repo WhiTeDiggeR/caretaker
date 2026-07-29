@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="5"]
+
+[node name="L_CHAMBER_2_SetDressing" type="Node3D"]
+metadata/sector_id = "L-CHAMBER-2"
+metadata/material_family = "containment"
+
+[node name="001_L_CHAMBER_2_cargo_vestibule__wall_beacon" parent="." instance=ExtResource("3")]
+position = Vector3(-62.1300, -3.6500, 59.4250)
+rotation = Vector3(0, -0.9245355, 0)
+metadata/placement_id = "L-CHAMBER-2/cargo_vestibule::wall_beacon"
+
+[node name="002_L_CHAMBER_2_containment_chamber__wall_terminal" parent="." instance=ExtResource("5")]
+position = Vector3(-48.9000, -6.0000, 52.0400)
+rotation = Vector3(0, 0.7888048, 0)
+metadata/placement_id = "L-CHAMBER-2/containment_chamber::wall_terminal"
+
+[node name="003_L_CHAMBER_2_control_post__generator_unit" parent="." instance=ExtResource("4")]
+position = Vector3(-64.7000, -6.0000, 28.0000)
+rotation = Vector3(0, -2.6433676, 0)
+metadata/placement_id = "L-CHAMBER-2/control_post::generator_unit"
+
+[node name="004_L_CHAMBER_2_gas_equipment_room__operator_console" parent="." instance=ExtResource("2")]
+position = Vector3(-70.7500, -6.0000, 36.1500)
+rotation = Vector3(0, -2.9221140, 0)
+metadata/placement_id = "L-CHAMBER-2/gas_equipment_room::operator_console"
+
+[node name="005_L_CHAMBER_2_passenger_airlock__wall_beacon" parent="." instance=ExtResource("3")]
+position = Vector3(-59.2500, -3.6500, 34.6750)
+rotation = Vector3(0, -0.6764562, 0)
+metadata/placement_id = "L-CHAMBER-2/passenger_airlock::wall_beacon"
+
+[node name="006_P_L_CHAMBER_2_01" parent="." instance=ExtResource("1")]
+position = Vector3(-60.0000, -6.0000, 31.1250)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-L-CHAMBER-2-01"
+metadata/open_passage = true
+
+[node name="007_P_L_CHAMBER_2_02" parent="." instance=ExtResource("1")]
+position = Vector3(-56.4000, -6.0000, 35.2500)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-L-CHAMBER-2-02"
+metadata/open_passage = true
+
+[node name="008_P_L_CHAMBER_2_03" parent="." instance=ExtResource("1")]
+position = Vector3(-58.0800, -6.0000, 52.7400)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-L-CHAMBER-2-03"
+metadata/open_passage = true
+
+[node name="009_PX_E_L05_L_CHAMBER_2" parent="." instance=ExtResource("1")]
+position = Vector3(-56.4000, -6.0000, 27.0000)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "PX-E-L05-L-CHAMBER-2"
+metadata/open_passage = true

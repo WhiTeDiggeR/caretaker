@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/loaded_locker.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/security_camera.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/server_rack.tscn" id="5"]
+
+[node name="U_SECURITY_SetDressing" type="Node3D"]
+metadata/sector_id = "U-SECURITY"
+metadata/material_family = "command"
+
+[node name="001_U_SECURITY_access_vestibule__wall_beacon" parent="." instance=ExtResource("2")]
+position = Vector3(-31.2500, 2.3500, 31.5750)
+rotation = Vector3(0, -2.0060736, 0)
+metadata/placement_id = "U-SECURITY/access_vestibule::wall_beacon"
+
+[node name="002_U_SECURITY_armory__server_rack" parent="." instance=ExtResource("5")]
+position = Vector3(-0.9500, 0.0000, 42.4000)
+rotation = Vector3(0, 2.1910458, 0)
+metadata/placement_id = "U-SECURITY/armory::server_rack"
+
+[node name="003_U_SECURITY_duty_room__loaded_locker" parent="." instance=ExtResource("3")]
+position = Vector3(-1.0500, 0.0000, 40.7000)
+rotation = Vector3(0, 0.9318516, 0)
+metadata/placement_id = "U-SECURITY/duty_room::loaded_locker"
+
+[node name="004_U_SECURITY_equipment_room__security_camera" parent="." instance=ExtResource("4")]
+position = Vector3(-31.2000, 0.0000, 38.8000)
+rotation = Vector3(0, -1.9791643, 0)
+metadata/placement_id = "U-SECURITY/equipment_room::security_camera"
+
+[node name="005_U_SECURITY_internal_circulation__wall_beacon" parent="." instance=ExtResource("2")]
+position = Vector3(-14.8300, 2.3500, 51.4250)
+rotation = Vector3(0, 0.1173426, 0)
+metadata/placement_id = "U-SECURITY/internal_circulation::wall_beacon"
+
+[node name="006_U_SECURITY_two_gate_checkpoint__server_rack" parent="." instance=ExtResource("5")]
+position = Vector3(-31.0500, 0.0000, 45.9000)
+rotation = Vector3(0, -1.9743001, 0)
+metadata/placement_id = "U-SECURITY/two_gate_checkpoint::server_rack"
+
+[node name="007_P_U_SECURITY_01" parent="." instance=ExtResource("1")]
+position = Vector3(-17.9200, 0.0000, 34.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-SECURITY-01"
+metadata/open_passage = true
+
+[node name="008_P_U_SECURITY_02" parent="." instance=ExtResource("1")]
+position = Vector3(-17.9200, 0.0000, 41.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-SECURITY-02"
+metadata/open_passage = true
+
+[node name="009_P_U_SECURITY_03" parent="." instance=ExtResource("1")]
+position = Vector3(-17.9200, 0.0000, 48.5000)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-SECURITY-03"
+metadata/open_passage = true
+
+[node name="010_P_U_SECURITY_04" parent="." instance=ExtResource("1")]
+position = Vector3(-14.0800, 0.0000, 36.2500)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-SECURITY-04"
+metadata/open_passage = true
+
+[node name="011_P_U_SECURITY_05" parent="." instance=ExtResource("1")]
+position = Vector3(-14.0800, 0.0000, 46.7500)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "P-U-SECURITY-05"
+metadata/open_passage = true
+
+[node name="012_PX_E_U08_U_SECURITY" parent="." instance=ExtResource("1")]
+position = Vector3(-16.0000, 0.0000, 31.0000)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-U08-U-SECURITY"
+metadata/open_passage = true
+
+[node name="013_PX_E_U09_U_SECURITY" parent="." instance=ExtResource("1")]
+position = Vector3(-24.9600, 0.0000, 52.0000)
+scale = Vector3(0.75630, 1.00000, 1.00000)
+metadata/placement_id = "PX-E-U09-U-SECURITY"
+metadata/open_passage = true
