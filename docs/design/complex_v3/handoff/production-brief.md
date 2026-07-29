@@ -1,6 +1,6 @@
 # Комплекс v3 — производственный brief 3D-handoff
 
-Статус: `stage-2 / verified / awaiting-user-approval`
+Статус: `stage-2 / approved / ready-for-godot-blockout`
 
 Задача: [GitHub Issue #34](https://github.com/WhiTeDiggeR/caretaker/issues/34)
 

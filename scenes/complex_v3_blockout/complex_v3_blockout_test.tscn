@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scenes/complex_v3_blockout/complex_v3_blockout_test.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/complex_v3_blockout.tscn" id="2_blockout"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="3_player"]
+
+[sub_resource type="Environment" id="Environment_blockout"]
+background_mode = 1
+background_color = Color(0.012, 0.018, 0.026, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.48, 0.58, 0.68, 1)
+ambient_light_energy = 0.72
+reflected_light_source = 2
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.12, 0.16, 0.2, 1)
+fog_light_energy = 0.35
+fog_density = 0.0015
+
+[node name="ComplexV3BlockoutTest" type="Node3D"]
+script = ExtResource("1_test")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_blockout")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-58, -32, 0)
+light_color = Color(0.72, 0.82, 1, 1)
+light_energy = 1.15
+shadow_enabled = true
+
+[node name="ComplexV3Blockout" parent="." instance=ExtResource("2_blockout")]
+include_ceilings = false
+
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label") instance=ExtResource("3_player")]
+position = Vector3(-104, 1.1, -5)
+rotation_degrees = Vector3(0, 180, 0)
+interact_label = NodePath("../CanvasLayer/InteractLabel")
+
+[node name="OverviewCamera" type="Camera3D" parent="."]
+position = Vector3(-38, 142, 38)
+fov = 58.0
+near = 0.2
+far = 500.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="StatusLabel" type="Label" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 710.0
+offset_bottom = 112.0
+theme_override_colors/font_color = Color(0.75, 0.9, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.95)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 20
+
+[node name="InteractLabel" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -94.0
+offset_right = 220.0
+offset_bottom = -52.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.88, 0.96, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 23
+horizontal_alignment = 1

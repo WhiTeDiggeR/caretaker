@@ -4,7 +4,7 @@ Date: 2026-07-29
 
 Map: `caretaker-complex-v3`
 
-Gate: full 3D handoff, awaiting user approval
+Gate: full 3D handoff, approved by user on 2026-07-29
 
 ## Automated checks
 
@@ -12,6 +12,7 @@ Gate: full 3D handoff, awaiting user approval
 - Stage 2 geometry: passed — 30 passports, 139 exact room spaces, 109 internal portals, 43 external portals.
 - Physical topology coverage: passed — all 49 approved topology edges are represented by corridors, portals, stairs, lifts, shaft rules, or the old inclined tunnel.
 - Positive-area room overlaps: none across all spaces on the same level.
+- Engine follow-up regression: passed — exact technical-sector footprints were clipped to the real boundary of `T-TECH`; no room overlaps a physical route. The cable gallery remains an explicitly non-floor service overlay.
 - Portal contact: every internal portal lies on the exact shared boundary of its two rooms; every external portal lies on its owning room boundary.
 - Vertical rules: passed — anchor sets agree, level rises agree within 0.05 m, the main lift has no LV-T stop, and the old incline remains below 16% grade.
 - Portable map-package contract: passed — 36 graph spaces, 49 connections and 8 linked artifacts.

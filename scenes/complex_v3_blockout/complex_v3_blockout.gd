@@ -1,0 +1,617 @@
+extends Node3D
+class_name ComplexV3Blockout
+
+const DEFAULT_HANDOFF_PATH := "res://docs/design/complex_v3/handoff/geometry/complex-handoff.json"
+const DEFAULT_VERTICAL_PATH := "res://docs/design/complex_v3/handoff/vertical/vertical-transitions.json"
+const FLOOR_THICKNESS := 0.2
+const WALL_EPSILON := 0.01
+const MIN_SEGMENT_LENGTH := 0.05
+
+@export_file("*.json") var handoff_path: String = DEFAULT_HANDOFF_PATH
+@export_file("*.json") var vertical_path: String = DEFAULT_VERTICAL_PATH
+@export var build_on_ready := true
+@export var build_collisions := true
+@export var include_ceilings := true
+@export var show_space_labels := false
+
+var _handoff: Dictionary = {}
+var _vertical: Dictionary = {}
+var _materials: Dictionary[String, StandardMaterial3D] = {}
+var _level_nodes: Dictionary[String, Node3D] = {}
+var _spaces_by_id: Dictionary[String, Dictionary] = {}
+var _openings_by_space: Dictionary[String, Array] = {}
+var _stats: Dictionary[String, int] = {}
+
+
+func _ready() -> void:
+	if build_on_ready:
+		build_from_handoff()
+
+
+func build_from_handoff() -> void:
+	_clear_generated()
+	_handoff = _load_json(handoff_path)
+	_vertical = _load_json(vertical_path)
+	if _handoff.is_empty() or _vertical.is_empty():
+		return
+	_reset_stats()
+	_create_materials()
+	_create_level_nodes()
+	_index_spaces()
+	_compile_openings()
+	_build_spaces()
+	_build_connection_corridors()
+	_build_vertical_markers()
+	set_meta("map_id", str(_handoff.get("map_id", "")))
+	set_meta("handoff_artifact_id", str(_handoff.get("artifact_id", "")))
+	set_meta("units", str(_handoff.get("units", "")))
+
+
+func _load_json(path: String) -> Dictionary:
+	if not FileAccess.file_exists(path):
+		push_error("Не найден файл handoff: %s" % path)
+		return {}
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		push_error("Не удалось открыть handoff: %s" % path)
+		return {}
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	if not parsed is Dictionary:
+		push_error("Некорректный JSON handoff: %s" % path)
+		return {}
+	return parsed as Dictionary
+
+
+func _clear_generated() -> void:
+	var existing := get_node_or_null("Generated")
+	if existing != null:
+		existing.free()
+	_level_nodes.clear()
+	_spaces_by_id.clear()
+	_openings_by_space.clear()
+
+
+func _reset_stats() -> void:
+	_stats = {
+		"spaces": 0,
+		"route_spaces": 0,
+		"floors": 0,
+		"ceilings": 0,
+		"walls": 0,
+		"colliders": 0,
+		"corridors": 0,
+		"anchors": 0,
+		"transitions": 0,
+	}
+
+
+func _create_materials() -> void:
+	_materials.clear()
+	_materials["personnel"] = _material(Color(0.30, 0.48, 0.36), 0.82)
+	_materials["control"] = _material(Color(0.27, 0.43, 0.62), 0.82)
+	_materials["containment"] = _material(Color(0.52, 0.36, 0.37), 0.82)
+	_materials["historic"] = _material(Color(0.52, 0.45, 0.30), 0.82)
+	_materials["utility"] = _material(Color(0.31, 0.43, 0.46), 0.82)
+	_materials["passenger_route"] = _material(Color(0.30, 0.56, 0.72), 0.92)
+	_materials["service_route"] = _material(Color(0.36, 0.62, 0.62), 0.92)
+	_materials["freight_route"] = _material(Color(0.72, 0.48, 0.18), 0.92)
+	_materials["stair"] = _material(Color(0.48, 0.35, 0.68, 0.62), 0.7, true)
+	_materials["lift"] = _material(Color(0.20, 0.56, 0.76, 0.55), 0.65, true)
+	_materials["old_incline"] = _material(Color(0.88, 0.38, 0.16), 0.9)
+
+
+func _material(color: Color, roughness: float, transparent := false) -> StandardMaterial3D:
+	var result := StandardMaterial3D.new()
+	result.albedo_color = color
+	result.roughness = roughness
+	if transparent:
+		result.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		result.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	return result
+
+
+func _create_level_nodes() -> void:
+	var generated := Node3D.new()
+	generated.name = "Generated"
+	add_child(generated)
+	for level_value: Variant in _handoff.get("levels", []):
+		var level := level_value as Dictionary
+		var level_id := str(level["id"])
+		var node := Node3D.new()
+		node.name = level_id
+		node.set_meta("level_id", level_id)
+		node.set_meta("floor_y", float(level["floor_y"]))
+		generated.add_child(node)
+		_level_nodes[level_id] = node
+	var connectors := Node3D.new()
+	connectors.name = "Connections"
+	generated.add_child(connectors)
+	_level_nodes["Connections"] = connectors
+	var verticals := Node3D.new()
+	verticals.name = "VerticalTransitions"
+	generated.add_child(verticals)
+	_level_nodes["VerticalTransitions"] = verticals
+
+
+func _index_spaces() -> void:
+	for space_value: Variant in _handoff.get("spaces", []):
+		var space := space_value as Dictionary
+		_spaces_by_id[str(space["id"])] = space
+	for route_value: Variant in _handoff.get("route_spaces", []):
+		var route := route_value as Dictionary
+		_spaces_by_id[str(route["id"])] = route
+
+
+func _compile_openings() -> void:
+	for portal_value: Variant in _handoff.get("internal_portals", []):
+		var portal := portal_value as Dictionary
+		for space_id_value: Variant in portal["between"]:
+			_add_opening(str(space_id_value), portal["segment_xz"], float(portal["height"]))
+	for portal_value: Variant in _handoff.get("external_portals", []):
+		var portal := portal_value as Dictionary
+		_add_opening(str(portal["space"]), portal["segment_xz"], float(portal["height"]))
+	for corridor_value: Variant in _handoff.get("connection_corridors", []):
+		var corridor := corridor_value as Dictionary
+		for point_value: Variant in [corridor["centerline_xz"][0], corridor["centerline_xz"][-1]]:
+			var point := _vector2(point_value)
+			for route_value: Variant in _handoff.get("route_spaces", []):
+				var route := route_value as Dictionary
+				var bounds: Array = route["bounds_xz"]
+				if _point_on_boundary(point, bounds):
+					_add_centered_opening(str(route["id"]), point, bounds, float(corridor["width"]), float(corridor["clear_height"]))
+	for transition_value: Variant in _handoff.get("controlled_technical_transitions", []):
+		var transition := transition_value as Dictionary
+		var points: Array = transition["centerline_xz"]
+		_add_centered_opening("T-TECH", _vector2(points[0]), _spaces_by_id["T-TECH"]["bounds_xz"], float(transition["width"]), float(transition["clear_height"]))
+		_add_centered_opening("T-FRT", _vector2(points[-1]), _spaces_by_id["T-FRT"]["bounds_xz"], float(transition["width"]), float(transition["clear_height"]))
+
+
+func _add_opening(space_id: String, segment: Array, height: float) -> void:
+	if not _openings_by_space.has(space_id):
+		_openings_by_space[space_id] = []
+	_openings_by_space[space_id].append({"segment": segment, "height": height})
+
+
+func _add_centered_opening(space_id: String, point: Vector2, bounds: Array, width: float, height: float) -> void:
+	var x0 := float(bounds[0])
+	var z0 := float(bounds[1])
+	var x1 := float(bounds[2])
+	var z1 := float(bounds[3])
+	var half := width * 0.5
+	var segment: Array
+	if absf(point.x - x0) <= WALL_EPSILON or absf(point.x - x1) <= WALL_EPSILON:
+		segment = [[point.x, clampf(point.y - half, z0, z1)], [point.x, clampf(point.y + half, z0, z1)]]
+	else:
+		segment = [[clampf(point.x - half, x0, x1), point.y], [clampf(point.x + half, x0, x1), point.y]]
+	_add_opening(space_id, segment, height)
+
+
+func _build_spaces() -> void:
+	for space_value: Variant in _handoff.get("spaces", []):
+		_build_space(space_value as Dictionary, false)
+	for route_value: Variant in _handoff.get("route_spaces", []):
+		_build_space(route_value as Dictionary, true)
+
+
+func _build_space(space: Dictionary, is_route: bool) -> void:
+	var level_id := str(space.get("level", _level_for_floor(float(space["floor_y"]))))
+	var parent := _level_nodes.get(level_id) as Node3D
+	if parent == null:
+		push_error("Неизвестный уровень пространства %s: %s" % [space["id"], level_id])
+		return
+	var root := Node3D.new()
+	root.name = _safe_name(str(space["id"]))
+	root.set_meta("space_id", str(space["id"]))
+	root.set_meta("sector_id", str(space.get("sector_id", space["id"])))
+	root.set_meta("level_id", level_id)
+	root.set_meta("kind", str(space.get("kind", "room")))
+	parent.add_child(root)
+	if is_route and str(space.get("kind", "")) == "cable_gallery":
+		_build_overlay_route(root, space)
+		_stats["route_spaces"] += 1
+		return
+	var bounds: Array = space["bounds_xz"]
+	var floor_y := float(space["floor_y"])
+	var height := float(space["clear_height"])
+	var thickness := float(space.get("wall_thickness", 0.35 if is_route else 0.3))
+	var material := _material_for_space(space, is_route)
+	_build_floor(root, bounds, floor_y, material)
+	_build_walls(root, str(space["id"]), bounds, floor_y, height, thickness, material)
+	if include_ceilings:
+		_build_ceiling(root, bounds, floor_y + height, material)
+	if show_space_labels:
+		_add_label(root, space, bounds, floor_y)
+	_stats["route_spaces" if is_route else "spaces"] += 1
+
+
+func _build_overlay_route(parent: Node3D, space: Dictionary) -> void:
+	var bounds: Array = space["bounds_xz"]
+	var center := _bounds_center(bounds)
+	var size := _bounds_size(bounds)
+	_add_box(parent, "ServiceOverlay", Vector3(center.x, float(space["floor_y"]) + 0.04, center.y), Vector3(size.x, 0.08, size.y), _materials["service_route"], false)
+
+
+func _build_floor(parent: Node3D, bounds: Array, floor_y: float, material: Material) -> void:
+	var center := _bounds_center(bounds)
+	var size := _bounds_size(bounds)
+	_add_box(parent, "Floor", Vector3(center.x, floor_y - FLOOR_THICKNESS * 0.5, center.y), Vector3(size.x, FLOOR_THICKNESS, size.y), material, build_collisions)
+	_stats["floors"] += 1
+
+
+func _build_ceiling(parent: Node3D, bounds: Array, ceiling_y: float, material: Material) -> void:
+	var center := _bounds_center(bounds)
+	var size := _bounds_size(bounds)
+	_add_box(parent, "Ceiling", Vector3(center.x, ceiling_y + FLOOR_THICKNESS * 0.5, center.y), Vector3(size.x, FLOOR_THICKNESS, size.y), material, build_collisions)
+	_stats["ceilings"] += 1
+
+
+func _build_walls(parent: Node3D, space_id: String, bounds: Array, floor_y: float, height: float, thickness: float, material: Material) -> void:
+	var x0 := float(bounds[0])
+	var z0 := float(bounds[1])
+	var x1 := float(bounds[2])
+	var z1 := float(bounds[3])
+	_build_wall_side(parent, space_id, "North", x0, x1, z0, true, floor_y, height, thickness, material)
+	_build_wall_side(parent, space_id, "South", x0, x1, z1, true, floor_y, height, thickness, material)
+	_build_wall_side(parent, space_id, "West", z0, z1, x0, false, floor_y, height, thickness, material)
+	_build_wall_side(parent, space_id, "East", z0, z1, x1, false, floor_y, height, thickness, material)
+
+
+func _build_wall_side(parent: Node3D, space_id: String, side_name: String, start: float, end: float, fixed: float, horizontal: bool, floor_y: float, height: float, thickness: float, material: Material) -> void:
+	var openings := _openings_on_side(space_id, fixed, horizontal, start, end)
+	var merged := _merge_intervals(openings)
+	var cursor := start
+	var index := 0
+	for opening: Dictionary in merged:
+		var opening_start := float(opening["start"])
+		var opening_end := float(opening["end"])
+		if opening_start - cursor > MIN_SEGMENT_LENGTH:
+			_add_wall_segment(parent, "%s_%02d" % [side_name, index], cursor, opening_start, fixed, horizontal, floor_y, height, thickness, material)
+			index += 1
+		var opening_height := minf(float(opening["height"]), height)
+		if height - opening_height > MIN_SEGMENT_LENGTH:
+			_add_wall_segment(parent, "%s_Lintel_%02d" % [side_name, index], opening_start, opening_end, fixed, horizontal, floor_y + opening_height, height - opening_height, thickness, material)
+			index += 1
+		cursor = maxf(cursor, opening_end)
+	if end - cursor > MIN_SEGMENT_LENGTH:
+		_add_wall_segment(parent, "%s_%02d" % [side_name, index], cursor, end, fixed, horizontal, floor_y, height, thickness, material)
+
+
+func _openings_on_side(space_id: String, fixed: float, horizontal: bool, start: float, end: float) -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	for opening_value: Variant in _openings_by_space.get(space_id, []):
+		var opening := opening_value as Dictionary
+		var segment: Array = opening["segment"]
+		var a := _vector2(segment[0])
+		var b := _vector2(segment[1])
+		var same_side := absf(a.y - fixed) <= WALL_EPSILON and absf(b.y - fixed) <= WALL_EPSILON if horizontal else absf(a.x - fixed) <= WALL_EPSILON and absf(b.x - fixed) <= WALL_EPSILON
+		if not same_side:
+			continue
+		var lo := minf(a.x, b.x) if horizontal else minf(a.y, b.y)
+		var hi := maxf(a.x, b.x) if horizontal else maxf(a.y, b.y)
+		lo = clampf(lo, start, end)
+		hi = clampf(hi, start, end)
+		if hi - lo > MIN_SEGMENT_LENGTH:
+			result.append({"start": lo, "end": hi, "height": float(opening["height"])})
+	return result
+
+
+func _merge_intervals(intervals: Array[Dictionary]) -> Array[Dictionary]:
+	if intervals.is_empty():
+		return []
+	intervals.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["start"]) < float(b["start"]))
+	var result: Array[Dictionary] = []
+	for interval: Dictionary in intervals:
+		if result.is_empty() or float(interval["start"]) > float(result[-1]["end"]) + WALL_EPSILON:
+			result.append(interval.duplicate())
+		else:
+			result[-1]["end"] = maxf(float(result[-1]["end"]), float(interval["end"]))
+			result[-1]["height"] = maxf(float(result[-1]["height"]), float(interval["height"]))
+	return result
+
+
+func _add_wall_segment(parent: Node3D, node_name: String, start: float, end: float, fixed: float, horizontal: bool, base_y: float, height: float, thickness: float, material: Material) -> void:
+	var length := end - start
+	if length <= MIN_SEGMENT_LENGTH or height <= MIN_SEGMENT_LENGTH:
+		return
+	var center: Vector3
+	var size: Vector3
+	if horizontal:
+		center = Vector3((start + end) * 0.5, base_y + height * 0.5, fixed)
+		size = Vector3(length, height, thickness)
+	else:
+		center = Vector3(fixed, base_y + height * 0.5, (start + end) * 0.5)
+		size = Vector3(thickness, height, length)
+	_add_box(parent, node_name, center, size, material, build_collisions)
+	_stats["walls"] += 1
+
+
+func _build_connection_corridors() -> void:
+	var parent := _level_nodes["Connections"]
+	for corridor_value: Variant in _handoff.get("connection_corridors", []):
+		var corridor := corridor_value as Dictionary
+		if str(corridor["connection_id"]) == "E-X05":
+			continue
+		var points: Array = corridor["centerline_xz"]
+		var start := _vector2(points[0])
+		var end := _vector2(points[-1])
+		var delta := end - start
+		if delta.length() <= MIN_SEGMENT_LENGTH:
+			continue
+		var floor_y := _floor_for_connection(str(corridor["connection_id"]))
+		_build_corridor_segment(parent, str(corridor["id"]), start, end, floor_y, float(corridor["width"]), float(corridor["clear_height"]), _materials["service_route"])
+		_stats["corridors"] += 1
+	for transition_value: Variant in _handoff.get("controlled_technical_transitions", []):
+		var transition := transition_value as Dictionary
+		var points: Array = transition["centerline_xz"]
+		_build_corridor_segment(parent, str(transition["id"]), _vector2(points[0]), _vector2(points[-1]), -11.5, float(transition["width"]), float(transition["clear_height"]), _materials["service_route"])
+		_stats["corridors"] += 1
+
+
+func _build_corridor_segment(parent: Node3D, corridor_id: String, start: Vector2, end: Vector2, floor_y: float, width: float, height: float, material: Material) -> void:
+	var delta := end - start
+	var length := delta.length()
+	if length <= MIN_SEGMENT_LENGTH:
+		return
+	var direction := Vector3(delta.x, 0.0, delta.y).normalized()
+	var side := Vector3(direction.z, 0.0, -direction.x)
+	var basis := Basis(side, Vector3.UP, direction)
+	var midpoint := Vector3((start.x + end.x) * 0.5, floor_y, (start.y + end.y) * 0.5)
+	var root := Node3D.new()
+	root.name = _safe_name(corridor_id)
+	root.set_meta("connection_id", corridor_id)
+	root.set_meta("clear_height", height)
+	parent.add_child(root)
+	_add_oriented_box(root, "Floor", Transform3D(basis, midpoint + Vector3(0.0, -FLOOR_THICKNESS * 0.5, 0.0)), Vector3(width, FLOOR_THICKNESS, length), material, build_collisions)
+
+
+func _build_vertical_markers() -> void:
+	var parent := _level_nodes["VerticalTransitions"]
+	var anchors: Array = _vertical.get("anchors", [])
+	for anchor_value: Variant in anchors:
+		var anchor := anchor_value as Dictionary
+		var root := Node3D.new()
+		root.name = _safe_name(str(anchor["id"]))
+		root.set_meta("anchor_id", str(anchor["id"]))
+		parent.add_child(root)
+		if anchor.has("position_xz"):
+			var point := _vector2(anchor["position_xz"])
+			var levels: Array = anchor["levels"]
+			var top := _level_datum(str(levels[0])) + 2.0
+			var bottom := _level_datum(str(levels[-1]))
+			_add_box(root, "Datum", Vector3(point.x, (top + bottom) * 0.5, point.y), Vector3(0.35, top - bottom, 0.35), _materials["stair"], false)
+		else:
+			var z := float(anchor["centerline_z"])
+			_add_box(root, "HeavySpineDatum", Vector3(-39.0, -5.75, z), Vector3(142.0, 0.12, 0.35), _materials["freight_route"], false)
+		_stats["anchors"] += 1
+	for transition_value: Variant in _vertical.get("transitions", []):
+		var transition := transition_value as Dictionary
+		_build_transition_marker(parent, transition)
+		_stats["transitions"] += 1
+
+
+func _build_transition_marker(parent: Node3D, transition: Dictionary) -> void:
+	var root := Node3D.new()
+	root.name = _safe_name(str(transition["id"]))
+	root.set_meta("transition_id", str(transition["id"]))
+	root.set_meta("kind", str(transition["kind"]))
+	parent.add_child(root)
+	if transition.has("shaft_bounds_xz"):
+		var bounds: Array = transition["shaft_bounds_xz"]
+		var center := _bounds_center(bounds)
+		var size := _bounds_size(bounds)
+		var bottom := -11.5
+		var top := 4.5
+		_add_box(root, "ShaftEnvelope", Vector3(center.x, (top + bottom) * 0.5, center.y), Vector3(size.x, top - bottom, size.y), _materials["lift"], false)
+	elif transition.has("centerline_xyz"):
+		var points: Array = transition["centerline_xyz"]
+		for index: int in range(points.size() - 1):
+			var a := _vector3_x_y_z(points[index])
+			var b := _vector3_x_y_z(points[index + 1])
+			_add_ramp_segment(root, "Ramp_%02d" % index, a, b, float(transition["clear_width"]), _materials["old_incline"])
+	elif transition.has("center_xz"):
+		var center_xz := _vector2(transition["center_xz"])
+		var connects: Array = transition.get("connects", ["LV-U", "LV-L"])
+		var top := _level_datum(str(connects[0])) + 0.25
+		var bottom := _level_datum(str(connects[-1]))
+		_add_box(root, "StairEnvelope", Vector3(center_xz.x, (top + bottom) * 0.5, center_xz.y), Vector3(float(transition.get("clear_width", 1.5)), top - bottom, 2.2), _materials["stair"], false)
+
+
+func _add_ramp_segment(parent: Node3D, node_name: String, start: Vector3, end: Vector3, width: float, material: Material) -> void:
+	var delta := end - start
+	var length := delta.length()
+	if length <= MIN_SEGMENT_LENGTH:
+		return
+	var direction := delta.normalized()
+	var side := Vector3.UP.cross(direction).normalized()
+	if side.length() <= MIN_SEGMENT_LENGTH:
+		side = Vector3.RIGHT
+	var up := direction.cross(side).normalized()
+	var basis := Basis(side, up, direction)
+	_add_oriented_box(parent, node_name, Transform3D(basis, (start + end) * 0.5), Vector3(width, FLOOR_THICKNESS, length), material, build_collisions)
+
+
+func _add_box(parent: Node3D, node_name: String, center: Vector3, size: Vector3, material: Material, collision: bool) -> void:
+	_add_oriented_box(parent, node_name, Transform3D(Basis.IDENTITY, center), size, material, collision)
+
+
+func _add_oriented_box(parent: Node3D, node_name: String, box_transform: Transform3D, size: Vector3, material: Material, collision: bool) -> void:
+	var root: Node3D
+	if collision:
+		root = StaticBody3D.new()
+	else:
+		root = Node3D.new()
+	root.name = node_name
+	root.transform = box_transform
+	parent.add_child(root)
+	var mesh_instance := MeshInstance3D.new()
+	mesh_instance.name = "Mesh"
+	var mesh := BoxMesh.new()
+	mesh.size = size
+	mesh.material = material
+	mesh_instance.mesh = mesh
+	root.add_child(mesh_instance)
+	if collision:
+		var collision_shape := CollisionShape3D.new()
+		collision_shape.name = "Collision"
+		var shape := BoxShape3D.new()
+		shape.size = size
+		collision_shape.shape = shape
+		root.add_child(collision_shape)
+		_stats["colliders"] += 1
+
+
+func _add_label(parent: Node3D, space: Dictionary, bounds: Array, floor_y: float) -> void:
+	var center := _bounds_center(bounds)
+	var label := Label3D.new()
+	label.name = "Label"
+	label.text = str(space["id"])
+	label.position = Vector3(center.x, floor_y + 0.03, center.y)
+	label.rotation_degrees = Vector3(-90.0, 0.0, 0.0)
+	label.font_size = 56
+	label.modulate = Color(0.92, 0.96, 1.0)
+	label.outline_size = 8
+	parent.add_child(label)
+
+
+func _material_for_space(space: Dictionary, is_route: bool) -> Material:
+	if is_route:
+		var kind := str(space.get("kind", ""))
+		if kind.contains("freight") or kind.contains("heavy"):
+			return _materials["freight_route"]
+		if kind.contains("passenger"):
+			return _materials["passenger_route"]
+		return _materials["service_route"]
+	var sector_id := str(space.get("sector_id", ""))
+	if sector_id.contains("CHAMBER") or sector_id.contains("SLEEP"):
+		return _materials["containment"]
+	if sector_id.contains("CONTROL") or sector_id.contains("SECURITY"):
+		return _materials["control"]
+	if sector_id.contains("OLD") or sector_id.contains("ARCHIVE"):
+		return _materials["historic"]
+	if sector_id.begins_with("T-") or sector_id.contains("FREIGHT"):
+		return _materials["utility"]
+	return _materials["personnel"]
+
+
+func _floor_for_connection(connection_id: String) -> float:
+	for portal_value: Variant in _handoff.get("external_portals", []):
+		var portal := portal_value as Dictionary
+		if str(portal["connection_id"]) == connection_id:
+			var space := _spaces_by_id.get(str(portal["space"])) as Dictionary
+			if space != null:
+				return float(space["floor_y"])
+	return 0.0
+
+
+func _level_for_floor(floor_y: float) -> String:
+	for level_value: Variant in _handoff.get("levels", []):
+		var level := level_value as Dictionary
+		if is_equal_approx(float(level["floor_y"]), floor_y):
+			return str(level["id"])
+	return ""
+
+
+func _level_datum(level_id: String) -> float:
+	return float((_vertical.get("level_datums", {}) as Dictionary).get(level_id, 0.0))
+
+
+func _point_on_boundary(point: Vector2, bounds: Array) -> bool:
+	var x0 := float(bounds[0])
+	var z0 := float(bounds[1])
+	var x1 := float(bounds[2])
+	var z1 := float(bounds[3])
+	var on_vertical := (absf(point.x - x0) <= WALL_EPSILON or absf(point.x - x1) <= WALL_EPSILON) and point.y >= z0 - WALL_EPSILON and point.y <= z1 + WALL_EPSILON
+	var on_horizontal := (absf(point.y - z0) <= WALL_EPSILON or absf(point.y - z1) <= WALL_EPSILON) and point.x >= x0 - WALL_EPSILON and point.x <= x1 + WALL_EPSILON
+	return on_vertical or on_horizontal
+
+
+func _bounds_center(bounds: Array) -> Vector2:
+	return Vector2((float(bounds[0]) + float(bounds[2])) * 0.5, (float(bounds[1]) + float(bounds[3])) * 0.5)
+
+
+func _bounds_size(bounds: Array) -> Vector2:
+	return Vector2(float(bounds[2]) - float(bounds[0]), float(bounds[3]) - float(bounds[1]))
+
+
+func _vector2(value: Variant) -> Vector2:
+	var values := value as Array
+	return Vector2(float(values[0]), float(values[1]))
+
+
+func _vector3_x_y_z(value: Variant) -> Vector3:
+	var values := value as Array
+	return Vector3(float(values[0]), float(values[1]), float(values[2]))
+
+
+func _safe_name(value: String) -> String:
+	return value.replace("/", "__").replace(":", "_").replace(" ", "_")
+
+
+func get_build_stats() -> Dictionary:
+	return _stats.duplicate()
+
+
+func get_portal_passages() -> Array[Dictionary]:
+	var passages: Array[Dictionary] = []
+	for portal_value: Variant in _handoff.get("internal_portals", []):
+		var portal := portal_value as Dictionary
+		var first_space := _spaces_by_id[str(portal["between"][0])]
+		passages.append(_portal_passage(portal, float(first_space["floor_y"]), ""))
+	for portal_value: Variant in _handoff.get("external_portals", []):
+		var portal := portal_value as Dictionary
+		if not bool(portal.get("traversable", true)):
+			continue
+		var space := _spaces_by_id[str(portal["space"])]
+		passages.append(_portal_passage(portal, float(space["floor_y"]), str(portal.get("side", ""))))
+	return passages
+
+
+func _portal_passage(portal: Dictionary, floor_y: float, declared_side: String) -> Dictionary:
+	var segment: Array = portal["segment_xz"]
+	var a := _vector2(segment[0])
+	var b := _vector2(segment[1])
+	var center := (a + b) * 0.5
+	var direction: Vector3
+	if declared_side == "west":
+		direction = Vector3.LEFT
+	elif declared_side == "east":
+		direction = Vector3.RIGHT
+	elif declared_side == "north":
+		direction = Vector3.FORWARD
+	elif declared_side == "south":
+		direction = Vector3.BACK
+	elif absf(a.x - b.x) <= WALL_EPSILON:
+		direction = Vector3.RIGHT
+	else:
+		direction = Vector3.BACK
+	return {
+		"id": str(portal["id"]),
+		"center": Vector3(center.x, floor_y + 1.05, center.y),
+		"direction": direction,
+		"width": float(portal["width"]),
+		"height": float(portal["height"]),
+	}
+
+
+func validate_against_handoff() -> PackedStringArray:
+	var errors := PackedStringArray()
+	if _handoff.is_empty() or _vertical.is_empty():
+		errors.append("Handoff data is not loaded")
+		return errors
+	if str(_handoff.get("status", "")) != "verified":
+		errors.append("Geometry handoff is not verified")
+	if str(_handoff.get("units", "")) != "m":
+		errors.append("Handoff units are not meters")
+	if _stats["spaces"] != 139:
+		errors.append("Expected 139 room spaces, built %d" % _stats["spaces"])
+	if _stats["route_spaces"] != 7:
+		errors.append("Expected 7 route spaces, built %d" % _stats["route_spaces"])
+	if _stats["anchors"] != 7:
+		errors.append("Expected 7 anchors, built %d" % _stats["anchors"])
+	if _stats["transitions"] != 8:
+		errors.append("Expected 8 transition records, built %d" % _stats["transitions"])
+	if _level_nodes.size() != 5:
+		errors.append("Expected three levels plus connection groups")
+	if _stats["colliders"] <= 0:
+		errors.append("No collision geometry was built")
+	return errors

@@ -30,4 +30,4 @@
 - `validation/stage-2-report.md` — сводный отчёт этапа.
 - `scripts/generate_passports.py`, `scripts/generate_handoff.py`, `scripts/generate_manifest.py` — детерминированное воспроизведение структурированных материалов.
 
-Статус этапа 2: `verified / awaiting-user-approval`. После утверждения пакет получает статус `ready-for-godot-blockout`; сам блок-аут остаётся отдельной задачей этапа 3.
+Статус этапа 2: `approved / ready-for-godot-blockout` с 29 июля 2026 года. Godot blockout выполняется отдельной задачей этапа 3.

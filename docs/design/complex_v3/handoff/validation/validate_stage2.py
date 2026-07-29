@@ -64,6 +64,12 @@ def main() -> int:
         if a["floor_y"] == b["floor_y"] and positive_overlap(a["bounds_xz"], b["bounds_xz"]):
             errors.append(f"positive room overlap: {a['id']} <> {b['id']}")
 
+    physical_routes = [item for item in geometry["route_spaces"] if item["kind"] != "cable_gallery"]
+    for space in spaces:
+        for route in physical_routes:
+            if space["floor_y"] == route["floor_y"] and positive_overlap(space["bounds_xz"], route["bounds_xz"]):
+                errors.append(f"room overlaps physical route: {space['id']} <> {route['id']}")
+
     for portal in geometry["internal_portals"]:
         a_id, b_id = portal["between"]
         if a_id not in space_by_id or b_id not in space_by_id:

@@ -21,12 +21,16 @@ FINAL_BOUNDS_OVERRIDE = {
     "U-CHAMBER-4": [-110.0, 37.0, -82.0, 60.0],
     "U-CHAMBER-6": [0.0, 29.0, 32.0, 60.0],
     "U-FREIGHT": [-16.0, 67.5, 30.0, 82.0],
-    "L-CHAMBER-1": [-110.0, -8.0, -84.0, 17.0],
+    "L-CHAMBER-1": [-110.0, -8.0, -84.0, 15.0],
+    "L-OLD-CORE": [-84.0, -14.0, -62.0, 15.0],
     "L-OLD-RECEIVING": [-110.0, 43.0, -72.0, 60.0],
     "L-CHAMBER-2": [-72.0, 27.0, -48.0, 60.0],
     "L-SERVICE-INTERCHANGE": [-48.0, 42.0, -36.0, 60.0],
     "L-CHAMBER-3": [-36.0, 27.0, -10.0, 60.0],
     "L-FREIGHT-SERVICE": [-38.0, 67.5, 30.0, 82.0],
+    "T-OLD-ACCESS": [-102.0, 20.5, -78.0, 45.0],
+    "T-EAST-VERTICAL": [18.0, -12.0, 32.0, 15.0],
+    "T-UTILITIES": [-57.0, 20.5, 18.0, 56.0],
     "T-FREIGHT": [-20.0, 67.5, 30.0, 82.0],
 }
 
@@ -267,6 +271,14 @@ def entry_keywords(kind: str) -> list[str]:
 
 
 def select_space(sector_id: str, spaces: list[dict], kind: str) -> dict:
+    special_entries = {
+        ("U-EMERGENCY", "short-side-passage"): "capsule_hall",
+        ("U-MEDBAY", "short-side-passage"): "triage",
+        ("L-SERVICE-INTERCHANGE", "controlled-transition"): "service_lobby",
+    }
+    special_name = special_entries.get((sector_id, kind))
+    if special_name:
+        return next(space for space in spaces if space["name"] == special_name)
     for keyword in entry_keywords(kind):
         for space in spaces:
             if space["name"] == keyword:
@@ -275,6 +287,36 @@ def select_space(sector_id: str, spaces: list[dict], kind: str) -> dict:
         if space["transit"]:
             return space
     return spaces[0]
+
+
+def shared_portal_segment(a: list[float], b: list[float], requested_width: float) -> list[list[float]] | None:
+    ax0, az0, ax1, az1 = a
+    bx0, bz0, bx1, bz1 = b
+    eps = 1e-6
+    if abs(ax1 - bx0) < eps or abs(bx1 - ax0) < eps:
+        x = ax1 if abs(ax1 - bx0) < eps else ax0
+        lo, hi = max(az0, bz0), min(az1, bz1)
+        if hi > lo:
+            width = min(requested_width, (hi - lo) * 0.6)
+            center = (lo + hi) / 2
+            return [[x, center - width / 2], [x, center + width / 2]]
+    if abs(az1 - bz0) < eps or abs(bz1 - az0) < eps:
+        z = az1 if abs(az1 - bz0) < eps else az0
+        lo, hi = max(ax0, bx0), min(ax1, bx1)
+        if hi > lo:
+            width = min(requested_width, (hi - lo) * 0.6)
+            center = (lo + hi) / 2
+            return [[center - width / 2, z], [center + width / 2, z]]
+    return None
+
+
+def side_of_segment(bounds: list[float], segment: list[list[float]]) -> str:
+    x0, z0, x1, z1 = bounds
+    (ax, az), (bx, bz) = segment
+    eps = 1e-6
+    if abs(ax - bx) < eps:
+        return "west" if abs(ax - x0) < eps else "east"
+    return "north" if abs(az - z0) < eps else "south"
 
 
 def side_for(bounds: list[float], sector_bounds: list[float], preferred: str | None = None) -> tuple[str, float, float, float]:
@@ -391,6 +433,7 @@ def main() -> None:
     ]
     routes_by_id = {route["id"]: route for route in route_spaces}
     vertical_kinds = {"stair", "passenger-vertical", "emergency-stair", "freight-lift", "old-stair", "service-stair", "passing-shaft"}
+    space_lookup = {space["id"]: space for space in all_spaces}
     external_portals: list[dict] = []
     connection_corridors: list[dict] = []
     for edge in topology["connections"]:
@@ -403,6 +446,16 @@ def main() -> None:
         if external_portals and endpoints:
             related = [portal for portal in external_portals if portal["connection_id"] == edge["id"]]
             if len(related) == 2:
+                first_space = space_lookup[related[0]["space"]]
+                second_space = space_lookup[related[1]["space"]]
+                aligned = shared_portal_segment(first_space["bounds_xz"], second_space["bounds_xz"], min(portal["width"] for portal in related))
+                if aligned:
+                    aligned = [[round(value, 3) for value in point] for point in aligned]
+                    aligned_width = round(math.dist(aligned[0], aligned[1]), 3)
+                    for portal, space in zip(related, (first_space, second_space), strict=True):
+                        portal["segment_xz"] = aligned
+                        portal["width"] = aligned_width
+                        portal["side"] = side_of_segment(space["bounds_xz"], aligned)
                 points = []
                 for portal in related:
                     p0, p1 = portal["segment_xz"]

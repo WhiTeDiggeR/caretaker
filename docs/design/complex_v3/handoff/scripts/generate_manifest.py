@@ -102,7 +102,7 @@ def main() -> None:
         },
         "approval": {
             "gate_1_overview": "approved",
-            "gate_2_handoff": "awaiting_user_approval",
+            "gate_2_handoff": "approved",
             "gate_3_godot_blockout": "separate_task_after_gate_2",
         },
     }
