@@ -1,0 +1,2095 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "PASSPORTS-01",
+  "map_id": "caretaker-complex-v3",
+  "plan_style_id": "caretaker-style-b-v1",
+  "status": "verified",
+  "passport_count": 30,
+  "passports": [
+    {
+      "id": "PASS-U-EMERGENCY",
+      "sector_id": "U-EMERGENCY",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-EMERGENCY",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../emergency-hall-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -110.0,
+        -13.0,
+        -62.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -110.0,
+        0.0,
+        -13.0
+      ],
+      "neighbors": [
+        "U-MEDBAY",
+        "U-PAX",
+        "U-ROUTE-A"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U01",
+          "neighbor": "U-PAX",
+          "kind": "passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-U02",
+          "neighbor": "U-ROUTE-A",
+          "kind": "service",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-U02A",
+          "neighbor": "U-MEDBAY",
+          "kind": "short-side-passage",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "capsule_hall",
+        "internal_technical_room",
+        "hermetic_vestibule",
+        "distribution_hall"
+      ],
+      "clearance_profile": "passenger",
+      "required_clearances": {
+        "minimum_width": 1.2,
+        "minimum_height": 2.4,
+        "turning_envelope": 1.5
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "capsule_service_bays"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-MEDBAY",
+      "sector_id": "U-MEDBAY",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-MEDBAY",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../medbay-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -102.0,
+        7.0,
+        -88.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -102.0,
+        0.0,
+        7.0
+      ],
+      "neighbors": [
+        "U-EMERGENCY"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U02A",
+          "neighbor": "U-EMERGENCY",
+          "kind": "short-side-passage",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "triage",
+        "clean_corridor",
+        "procedure_room",
+        "observation_ward",
+        "medical_utility"
+      ],
+      "clearance_profile": "passenger",
+      "required_clearances": {
+        "minimum_width": 1.2,
+        "minimum_height": 2.4,
+        "turning_envelope": 1.5
+      },
+      "hidden_or_inaccessible_reserved_volumes": [],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-ROUTE-A",
+      "sector_id": "U-ROUTE-A",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-ROUTE-A",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../emergency-hall-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -64.0,
+        -8.0,
+        -45.0,
+        14.0
+      ],
+      "local_origin_xyz": [
+        -64.0,
+        0.0,
+        -8.0
+      ],
+      "neighbors": [
+        "L-ARCHIVE-A",
+        "U-EMERGENCY"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U02",
+          "neighbor": "U-EMERGENCY",
+          "kind": "service",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X01",
+          "neighbor": "L-ARCHIVE-A",
+          "kind": "stair",
+          "traversable": true,
+          "anchor": "A-ROUTE-A"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "stair"
+      ],
+      "anchors": [
+        {
+          "id": "A-ROUTE-A",
+          "tolerance": 0.25,
+          "position_xz": [
+            -52.5,
+            9.5
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "service_store",
+        "ventilation_room",
+        "stair_landing"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "ventilation_plant"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-DOMESTIC",
+      "sector_id": "U-DOMESTIC",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-DOMESTIC",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../domestic-wing-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -61.0,
+        -17.0,
+        -33.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -61.0,
+        0.0,
+        -17.0
+      ],
+      "neighbors": [
+        "U-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U03",
+          "neighbor": "U-PAX",
+          "kind": "passenger",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "canteen",
+        "kitchen",
+        "dry_store",
+        "cold_store",
+        "staff_vestibule",
+        "locker_room",
+        "shower_room",
+        "rest_room"
+      ],
+      "clearance_profile": "passenger",
+      "required_clearances": {
+        "minimum_width": 1.2,
+        "minimum_height": 2.4,
+        "turning_envelope": 1.5
+      },
+      "hidden_or_inaccessible_reserved_volumes": [],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-CONTROL",
+      "sector_id": "U-CONTROL",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-CONTROL",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../control-center-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -32.0,
+        -13.0,
+        -8.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -32.0,
+        0.0,
+        -13.0
+      ],
+      "neighbors": [
+        "U-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U04",
+          "neighbor": "U-PAX",
+          "kind": "passenger",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "access_vestibule",
+        "operator_hall",
+        "command_office",
+        "coordination_room",
+        "communications_room",
+        "server_room",
+        "service_aisle"
+      ],
+      "clearance_profile": "passenger",
+      "required_clearances": {
+        "minimum_width": 1.2,
+        "minimum_height": 2.4,
+        "turning_envelope": 1.5
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "server_cooling"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-CENTRAL-CORE",
+      "sector_id": "U-CENTRAL-CORE",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-CENTRAL-CORE",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../central-passenger-core-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -8.0,
+        -12.0,
+        8.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -8.0,
+        0.0,
+        -12.0
+      ],
+      "neighbors": [
+        "L-CENTRAL-CORE",
+        "U-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U05",
+          "neighbor": "U-PAX",
+          "kind": "passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X02",
+          "neighbor": "L-CENTRAL-CORE",
+          "kind": "passenger-vertical",
+          "traversable": true,
+          "anchor": "A-MAIN-CORE"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [
+        {
+          "id": "A-MAIN-CORE",
+          "tolerance": 0.25,
+          "position_xz": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "access_lobby",
+        "passenger_elevator",
+        "main_stair",
+        "service_access"
+      ],
+      "clearance_profile": "passenger",
+      "required_clearances": {
+        "minimum_width": 1.2,
+        "minimum_height": 2.4,
+        "turning_envelope": 1.5
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "lift_shaft"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-EAST-SUPPORT",
+      "sector_id": "U-EAST-SUPPORT",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-EAST-SUPPORT",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../east-support-stair-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        10.0,
+        -13.0,
+        32.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        10.0,
+        0.0,
+        -13.0
+      ],
+      "neighbors": [
+        "L-EAST-STAIR",
+        "U-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U06",
+          "neighbor": "U-PAX",
+          "kind": "passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X03",
+          "neighbor": "L-EAST-STAIR",
+          "kind": "emergency-stair",
+          "traversable": true,
+          "anchor": "A-EAST-STAIR"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "emergency-stair"
+      ],
+      "anchors": [
+        {
+          "id": "A-EAST-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            27.0,
+            10.5
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "support_corridor",
+        "supply_store",
+        "cleaning_room",
+        "duty_room",
+        "fire_vestibule",
+        "emergency_stair"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-CHAMBER-4",
+      "sector_id": "U-CHAMBER-4",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-CHAMBER-4",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../chamber-6-sector-detailed-plan.html",
+      "source_use": "serial containment geometry; chamber-specific equipment excluded",
+      "parent_boundary_xz": [
+        -110.0,
+        37.0,
+        -82.0,
+        64.0
+      ],
+      "local_origin_xyz": [
+        -110.0,
+        0.0,
+        37.0
+      ],
+      "neighbors": [
+        "U-FRT",
+        "U-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U07",
+          "neighbor": "U-PAX",
+          "kind": "controlled-passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-U11",
+          "neighbor": "U-FRT",
+          "kind": "cargo-hermetic",
+          "traversable": false,
+          "state": "closed"
+        }
+      ],
+      "forbidden_direct_connections": [
+        {
+          "from": "U-CHAMBER-4",
+          "to": "U-CHAMBER-6"
+        }
+      ],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "passenger_airlock",
+        "control_post",
+        "containment_chamber",
+        "technical_gallery",
+        "cargo_airlock"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "capsule_service_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-SECURITY",
+      "sector_id": "U-SECURITY",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-SECURITY",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../main-security-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -32.0,
+        31.0,
+        0.0,
+        52.0
+      ],
+      "local_origin_xyz": [
+        -32.0,
+        0.0,
+        31.0
+      ],
+      "neighbors": [
+        "U-FRT",
+        "U-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U08",
+          "neighbor": "U-PAX",
+          "kind": "service",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-U09",
+          "neighbor": "U-FRT",
+          "kind": "controlled-transition",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "controlled-transition"
+      ],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "access_vestibule",
+        "duty_room",
+        "equipment_room",
+        "armory",
+        "two_gate_checkpoint"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "secure_storage"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-CHAMBER-6",
+      "sector_id": "U-CHAMBER-6",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-CHAMBER-6",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../chamber-6-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        0.0,
+        29.0,
+        32.0,
+        64.0
+      ],
+      "local_origin_xyz": [
+        0.0,
+        0.0,
+        29.0
+      ],
+      "neighbors": [
+        "U-FRT",
+        "U-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U10",
+          "neighbor": "U-PAX",
+          "kind": "controlled-passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-U12",
+          "neighbor": "U-FRT",
+          "kind": "cargo-hermetic",
+          "traversable": false,
+          "state": "closed"
+        }
+      ],
+      "forbidden_direct_connections": [
+        {
+          "from": "U-CHAMBER-4",
+          "to": "U-CHAMBER-6"
+        }
+      ],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "passenger_airlock",
+        "control_post",
+        "containment_chamber",
+        "technical_gallery",
+        "cargo_airlock"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "capsule_service_volume",
+        "sleep_entry_device_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-FREIGHT",
+      "sector_id": "U-FREIGHT",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-FREIGHT",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../freight-reception-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -16.0,
+        64.0,
+        30.0,
+        82.0
+      ],
+      "local_origin_xyz": [
+        -16.0,
+        0.0,
+        64.0
+      ],
+      "neighbors": [
+        "L-FREIGHT-SERVICE",
+        "U-FRT"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-U13",
+          "neighbor": "U-FRT",
+          "kind": "freight",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X04",
+          "neighbor": "L-FREIGHT-SERVICE",
+          "kind": "freight-lift",
+          "traversable": true,
+          "anchor": "A-FREIGHT-LIFT"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "freight-lift"
+      ],
+      "anchors": [
+        {
+          "id": "A-FREIGHT-LIFT",
+          "tolerance": 0.25,
+          "position_xz": [
+            20.0,
+            72.0
+          ]
+        },
+        {
+          "id": "A-HEAVY-SPINE",
+          "tolerance": 0.5,
+          "centerline_z": 64.0
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "unloading_bay",
+        "inspection_lane",
+        "isolation_bay",
+        "operator_room",
+        "service_walkway",
+        "freight_lift"
+      ],
+      "clearance_profile": "heavy",
+      "required_clearances": {
+        "minimum_width": 4.5,
+        "minimum_height": 4.5,
+        "turning_envelope": 7.0
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "lift_shaft",
+        "platform_turning_envelope"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-OLD-CORE",
+      "sector_id": "L-OLD-CORE",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-OLD-CORE",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-old-core-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -84.0,
+        -14.0,
+        -62.0,
+        21.0
+      ],
+      "local_origin_xyz": [
+        -84.0,
+        -6.0,
+        -14.0
+      ],
+      "neighbors": [
+        "L-ARCHIVE-A",
+        "L-CHAMBER-1",
+        "L-OLD-RECEIVING",
+        "L-PAX",
+        "T-OLD-ACCESS"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-L01",
+          "neighbor": "L-PAX",
+          "kind": "passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L02",
+          "neighbor": "L-CHAMBER-1",
+          "kind": "combined-historic-threshold",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L03",
+          "neighbor": "L-ARCHIVE-A",
+          "kind": "passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L04",
+          "neighbor": "L-OLD-RECEIVING",
+          "kind": "historic-mixed",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X06",
+          "neighbor": "T-OLD-ACCESS",
+          "kind": "old-stair",
+          "traversable": true,
+          "anchor": "A-OLD-STAIR"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "combined-historic-threshold",
+        "old-stair"
+      ],
+      "anchors": [
+        {
+          "id": "A-OLD-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            -90.0,
+            30.0
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "distribution_hall",
+        "reserve_control",
+        "relay_room",
+        "senior_room"
+      ],
+      "clearance_profile": "passenger",
+      "required_clearances": {
+        "minimum_width": 1.2,
+        "minimum_height": 2.4,
+        "turning_envelope": 1.5
+      },
+      "hidden_or_inaccessible_reserved_volumes": [],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-CHAMBER-1",
+      "sector_id": "L-CHAMBER-1",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-CHAMBER-1",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-chamber-1-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -110.0,
+        -8.0,
+        -83.0,
+        17.0
+      ],
+      "local_origin_xyz": [
+        -110.0,
+        -6.0,
+        -8.0
+      ],
+      "neighbors": [
+        "L-OLD-CORE"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-L02",
+          "neighbor": "L-OLD-CORE",
+          "kind": "combined-historic-threshold",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "combined-historic-threshold"
+      ],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "combined_vestibule",
+        "control_post",
+        "mechanical_cage"
+      ],
+      "clearance_profile": "heavy",
+      "required_clearances": {
+        "minimum_width": 4.5,
+        "minimum_height": 4.5,
+        "turning_envelope": 7.0
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "restraint_service_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-ARCHIVE-A",
+      "sector_id": "L-ARCHIVE-A",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-ARCHIVE-A",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-archive-route-a-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -61.0,
+        -14.0,
+        -41.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -61.0,
+        -6.0,
+        -14.0
+      ],
+      "neighbors": [
+        "L-OLD-CORE",
+        "U-ROUTE-A"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X01",
+          "neighbor": "U-ROUTE-A",
+          "kind": "stair",
+          "traversable": true,
+          "anchor": "A-ROUTE-A"
+        },
+        {
+          "connection_id": "E-L03",
+          "neighbor": "L-OLD-CORE",
+          "kind": "passenger",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "stair"
+      ],
+      "anchors": [
+        {
+          "id": "A-ROUTE-A",
+          "tolerance": 0.25,
+          "position_xz": [
+            -52.5,
+            9.5
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "archive_main",
+        "route_a_partition",
+        "route_a_service_passage",
+        "route_a_stair"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "archive_shelving"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-OLD-RECEIVING",
+      "sector_id": "L-OLD-RECEIVING",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-OLD-RECEIVING",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-old-receiving-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -110.0,
+        43.0,
+        -72.0,
+        68.0
+      ],
+      "local_origin_xyz": [
+        -110.0,
+        -6.0,
+        43.0
+      ],
+      "neighbors": [
+        "L-FRT",
+        "L-OLD-CORE",
+        "U-FRT"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X05",
+          "neighbor": "U-FRT",
+          "kind": "old-inclined-tunnel",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L04",
+          "neighbor": "L-OLD-CORE",
+          "kind": "historic-mixed",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L12",
+          "neighbor": "L-FRT",
+          "kind": "freight",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "old-inclined-tunnel"
+      ],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "receiving_hall",
+        "inspection_post",
+        "tunnel_landing"
+      ],
+      "clearance_profile": "heavy",
+      "required_clearances": {
+        "minimum_width": 4.5,
+        "minimum_height": 4.5,
+        "turning_envelope": 7.0
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "old_tunnel_mouth"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-CHAMBER-2",
+      "sector_id": "L-CHAMBER-2",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-CHAMBER-2",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-chamber-2-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -74.0,
+        27.0,
+        -48.0,
+        60.0
+      ],
+      "local_origin_xyz": [
+        -74.0,
+        -6.0,
+        27.0
+      ],
+      "neighbors": [
+        "L-FRT",
+        "L-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-L05",
+          "neighbor": "L-PAX",
+          "kind": "controlled-passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L13",
+          "neighbor": "L-FRT",
+          "kind": "cargo-hermetic",
+          "traversable": false,
+          "state": "closed"
+        }
+      ],
+      "forbidden_direct_connections": [
+        {
+          "from": "L-CHAMBER-2",
+          "to": "L-CHAMBER-3"
+        }
+      ],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "control_post",
+        "passenger_airlock",
+        "containment_chamber",
+        "gas_equipment_room",
+        "cargo_vestibule"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "restraint_platform_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-SLEEP-LAB",
+      "sector_id": "L-SLEEP-LAB",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-SLEEP-LAB",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-sleep-lab-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -34.0,
+        -12.0,
+        -12.0,
+        10.0
+      ],
+      "local_origin_xyz": [
+        -34.0,
+        -6.0,
+        -12.0
+      ],
+      "neighbors": [
+        "L-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-L06",
+          "neighbor": "L-PAX",
+          "kind": "passenger",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "preparation_room",
+        "neuro_monitoring",
+        "observation_room",
+        "equipment_room",
+        "internal_corridor"
+      ],
+      "clearance_profile": "passenger",
+      "required_clearances": {
+        "minimum_width": 1.2,
+        "minimum_height": 2.4,
+        "turning_envelope": 1.5
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "bed_service_envelopes"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-CHAMBER-3",
+      "sector_id": "L-CHAMBER-3",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-CHAMBER-3",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-chamber-3-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -36.0,
+        27.0,
+        -10.0,
+        60.0
+      ],
+      "local_origin_xyz": [
+        -36.0,
+        -6.0,
+        27.0
+      ],
+      "neighbors": [
+        "L-FRT",
+        "L-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-L07",
+          "neighbor": "L-PAX",
+          "kind": "controlled-passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L14",
+          "neighbor": "L-FRT",
+          "kind": "cargo-hermetic",
+          "traversable": false,
+          "state": "closed"
+        }
+      ],
+      "forbidden_direct_connections": [
+        {
+          "from": "L-CHAMBER-2",
+          "to": "L-CHAMBER-3"
+        },
+        {
+          "from": "L-CHAMBER-3",
+          "to": "L-CHAMBER-5"
+        }
+      ],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "passenger_airlock",
+        "operator_gallery",
+        "containment_chamber",
+        "diagnostics_room",
+        "cargo_airlock"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "capsule_service_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-SERVICE-INTERCHANGE",
+      "sector_id": "L-SERVICE-INTERCHANGE",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-SERVICE-INTERCHANGE",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-service-interchange-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -48.0,
+        42.0,
+        -34.0,
+        60.0
+      ],
+      "local_origin_xyz": [
+        -48.0,
+        -6.0,
+        42.0
+      ],
+      "neighbors": [
+        "L-FRT",
+        "L-PAX",
+        "T-CIRCULATION"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-L08",
+          "neighbor": "L-PAX",
+          "kind": "service",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L15",
+          "neighbor": "L-FRT",
+          "kind": "controlled-transition",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X07",
+          "neighbor": "T-CIRCULATION",
+          "kind": "service-stair",
+          "traversable": true,
+          "anchor": "A-SERVICE-STAIR"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "controlled-transition",
+        "service-stair"
+      ],
+      "anchors": [
+        {
+          "id": "A-SERVICE-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            -42.0,
+            50.0
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "service_lobby",
+        "double_airlock",
+        "service_stair",
+        "electrical_room"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-CENTRAL-CORE",
+      "sector_id": "L-CENTRAL-CORE",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-CENTRAL-CORE",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../central-passenger-core-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -8.0,
+        -12.0,
+        8.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -8.0,
+        -6.0,
+        -12.0
+      ],
+      "neighbors": [
+        "L-PAX",
+        "T-EAST-VERTICAL",
+        "U-CENTRAL-CORE"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X02",
+          "neighbor": "U-CENTRAL-CORE",
+          "kind": "passenger-vertical",
+          "traversable": true,
+          "anchor": "A-MAIN-CORE"
+        },
+        {
+          "connection_id": "E-L09",
+          "neighbor": "L-PAX",
+          "kind": "passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X08",
+          "neighbor": "T-EAST-VERTICAL",
+          "kind": "passing-shaft",
+          "traversable": false,
+          "state": "no-stop",
+          "anchor": "A-MAIN-CORE"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [
+        {
+          "id": "A-MAIN-CORE",
+          "tolerance": 0.25,
+          "position_xz": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "access_lobby",
+        "passenger_elevator",
+        "main_stair",
+        "service_access"
+      ],
+      "clearance_profile": "passenger",
+      "required_clearances": {
+        "minimum_width": 1.2,
+        "minimum_height": 2.4,
+        "turning_envelope": 1.5
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "lift_shaft"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-EAST-STAIR",
+      "sector_id": "L-EAST-STAIR",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-EAST-STAIR",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../east-support-stair-sector-detailed-plan.html",
+      "source_use": "east stair crop only",
+      "parent_boundary_xz": [
+        20.0,
+        6.0,
+        32.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        20.0,
+        -6.0,
+        6.0
+      ],
+      "neighbors": [
+        "L-PAX",
+        "T-EAST-VERTICAL",
+        "U-EAST-SUPPORT"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X03",
+          "neighbor": "U-EAST-SUPPORT",
+          "kind": "emergency-stair",
+          "traversable": true,
+          "anchor": "A-EAST-STAIR"
+        },
+        {
+          "connection_id": "E-L10",
+          "neighbor": "L-PAX",
+          "kind": "passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X09",
+          "neighbor": "T-EAST-VERTICAL",
+          "kind": "emergency-stair",
+          "traversable": true,
+          "anchor": "A-EAST-STAIR"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "emergency-stair",
+        "emergency-stair"
+      ],
+      "anchors": [
+        {
+          "id": "A-EAST-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            27.0,
+            10.5
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "fire_vestibule",
+        "emergency_stair"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-CHAMBER-5",
+      "sector_id": "L-CHAMBER-5",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-CHAMBER-5",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../chamber-6-sector-detailed-plan.html",
+      "source_use": "serial containment geometry; chamber-specific equipment excluded",
+      "parent_boundary_xz": [
+        4.0,
+        27.0,
+        32.0,
+        60.0
+      ],
+      "local_origin_xyz": [
+        4.0,
+        -6.0,
+        27.0
+      ],
+      "neighbors": [
+        "L-FRT",
+        "L-PAX"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-L11",
+          "neighbor": "L-PAX",
+          "kind": "controlled-passenger",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-L16",
+          "neighbor": "L-FRT",
+          "kind": "cargo-hermetic",
+          "traversable": false,
+          "state": "closed"
+        }
+      ],
+      "forbidden_direct_connections": [
+        {
+          "from": "L-CHAMBER-3",
+          "to": "L-CHAMBER-5"
+        }
+      ],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "passenger_airlock",
+        "control_post",
+        "containment_chamber",
+        "technical_gallery",
+        "cargo_airlock"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "capsule_service_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-FREIGHT-SERVICE",
+      "sector_id": "L-FREIGHT-SERVICE",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-FREIGHT-SERVICE",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../lower-freight-service-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -38.0,
+        60.0,
+        30.0,
+        82.0
+      ],
+      "local_origin_xyz": [
+        -38.0,
+        -6.0,
+        60.0
+      ],
+      "neighbors": [
+        "L-FRT",
+        "T-FREIGHT",
+        "U-FREIGHT"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X04",
+          "neighbor": "U-FREIGHT",
+          "kind": "freight-lift",
+          "traversable": true,
+          "anchor": "A-FREIGHT-LIFT"
+        },
+        {
+          "connection_id": "E-L17",
+          "neighbor": "L-FRT",
+          "kind": "freight",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-X10",
+          "neighbor": "T-FREIGHT",
+          "kind": "freight-lift",
+          "traversable": true,
+          "anchor": "A-FREIGHT-LIFT"
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "freight-lift",
+        "freight-lift"
+      ],
+      "anchors": [
+        {
+          "id": "A-FREIGHT-LIFT",
+          "tolerance": 0.25,
+          "position_xz": [
+            20.0,
+            72.0
+          ]
+        },
+        {
+          "id": "A-HEAVY-SPINE",
+          "tolerance": 0.5,
+          "centerline_z": 64.0
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "ventilation_room",
+        "electrical_room",
+        "service_zone",
+        "freight_platform",
+        "shaft_bypass",
+        "freight_lift"
+      ],
+      "clearance_profile": "heavy",
+      "required_clearances": {
+        "minimum_width": 4.5,
+        "minimum_height": 4.5,
+        "turning_envelope": 7.0
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "lift_shaft",
+        "platform_turning_envelope"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-T-ENERGY",
+      "sector_id": "T-ENERGY",
+      "level": "LV-T",
+      "detail_id": "DETAIL-T-ENERGY",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../technical-energy-core-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -110.0,
+        -15.0,
+        -65.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -110.0,
+        -11.5,
+        -15.0
+      ],
+      "neighbors": [
+        "T-TECH"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-T01",
+          "neighbor": "T-TECH",
+          "kind": "service",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "generator_hall",
+        "fire_vestibule",
+        "switchgear_room",
+        "cooling_room",
+        "service_approach"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "generator_service_envelope"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-T-WORKSHOP",
+      "sector_id": "T-WORKSHOP",
+      "level": "LV-T",
+      "detail_id": "DETAIL-T-WORKSHOP",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../technical-workshop-store-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -65.0,
+        -15.0,
+        -30.0,
+        15.0
+      ],
+      "local_origin_xyz": [
+        -65.0,
+        -11.5,
+        -15.0
+      ],
+      "neighbors": [
+        "T-TECH"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-T02",
+          "neighbor": "T-TECH",
+          "kind": "service",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "workshop",
+        "parts_store",
+        "internal_cargo_opening"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "cart_turning_envelope"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-T-OLD-ACCESS",
+      "sector_id": "T-OLD-ACCESS",
+      "level": "LV-T",
+      "detail_id": "DETAIL-T-OLD-ACCESS",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../technical-old-access-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -102.0,
+        20.0,
+        -78.0,
+        45.0
+      ],
+      "local_origin_xyz": [
+        -102.0,
+        -11.5,
+        20.0
+      ],
+      "neighbors": [
+        "L-OLD-CORE",
+        "T-TECH"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X06",
+          "neighbor": "L-OLD-CORE",
+          "kind": "old-stair",
+          "traversable": true,
+          "anchor": "A-OLD-STAIR"
+        },
+        {
+          "connection_id": "E-T03",
+          "neighbor": "T-TECH",
+          "kind": "service",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "old-stair"
+      ],
+      "anchors": [
+        {
+          "id": "A-OLD-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            -90.0,
+            30.0
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "old_stair",
+        "service_vestibule",
+        "old_core_substation"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-T-EAST-VERTICAL",
+      "sector_id": "T-EAST-VERTICAL",
+      "level": "LV-T",
+      "detail_id": "DETAIL-T-EAST-VERTICAL",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../technical-east-power-vertical-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        18.0,
+        -12.0,
+        32.0,
+        20.0
+      ],
+      "local_origin_xyz": [
+        18.0,
+        -11.5,
+        -12.0
+      ],
+      "neighbors": [
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "T-TECH"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X08",
+          "neighbor": "L-CENTRAL-CORE",
+          "kind": "passing-shaft",
+          "traversable": false,
+          "state": "no-stop",
+          "anchor": "A-MAIN-CORE"
+        },
+        {
+          "connection_id": "E-X09",
+          "neighbor": "L-EAST-STAIR",
+          "kind": "emergency-stair",
+          "traversable": true,
+          "anchor": "A-EAST-STAIR"
+        },
+        {
+          "connection_id": "E-T04",
+          "neighbor": "T-TECH",
+          "kind": "service",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "emergency-stair"
+      ],
+      "anchors": [
+        {
+          "id": "A-MAIN-CORE",
+          "tolerance": 0.25,
+          "position_xz": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "id": "A-EAST-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            27.0,
+            10.5
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "passenger_shaft_no_stop",
+        "new_substation",
+        "fire_vestibule",
+        "east_emergency_stair",
+        "closed_cable_pit"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "passenger_lift_shaft",
+        "closed_cable_pit"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-T-UTILITIES",
+      "sector_id": "T-UTILITIES",
+      "level": "LV-T",
+      "detail_id": "DETAIL-T-UTILITIES",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../technical-central-utilities-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -57.0,
+        20.0,
+        18.0,
+        56.0
+      ],
+      "local_origin_xyz": [
+        -57.0,
+        -11.5,
+        20.0
+      ],
+      "neighbors": [
+        "T-TECH"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-T05",
+          "neighbor": "T-TECH",
+          "kind": "service",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [
+        {
+          "id": "A-SERVICE-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            -42.0,
+            50.0
+          ]
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "late_block_substation",
+        "ventilation_room",
+        "reagent_room",
+        "drainage_room",
+        "cable_gallery",
+        "fire_vestibule"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "sealed_service_ducts"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-T-FREIGHT",
+      "sector_id": "T-FREIGHT",
+      "level": "LV-T",
+      "detail_id": "DETAIL-T-FREIGHT",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../technical-freight-sector-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -20.0,
+        60.0,
+        30.0,
+        82.0
+      ],
+      "local_origin_xyz": [
+        -20.0,
+        -11.5,
+        60.0
+      ],
+      "neighbors": [
+        "L-FREIGHT-SERVICE",
+        "T-FRT"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X10",
+          "neighbor": "L-FREIGHT-SERVICE",
+          "kind": "freight-lift",
+          "traversable": true,
+          "anchor": "A-FREIGHT-LIFT"
+        },
+        {
+          "connection_id": "E-T08",
+          "neighbor": "T-FRT",
+          "kind": "freight",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "freight-lift"
+      ],
+      "anchors": [
+        {
+          "id": "A-FREIGHT-LIFT",
+          "tolerance": 0.25,
+          "position_xz": [
+            20.0,
+            72.0
+          ]
+        },
+        {
+          "id": "A-HEAVY-SPINE",
+          "tolerance": 0.5,
+          "centerline_z": 64.0
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "heavy_spine",
+        "service_reception",
+        "freight_lift",
+        "service_bypass"
+      ],
+      "clearance_profile": "heavy",
+      "required_clearances": {
+        "minimum_width": 4.5,
+        "minimum_height": 4.5,
+        "turning_envelope": 7.0
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "lift_shaft",
+        "platform_turning_envelope"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-T-CIRCULATION",
+      "sector_id": "T-CIRCULATION",
+      "level": "LV-T",
+      "detail_id": "DETAIL-T-CIRCULATION",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "../../technical-circulation-detailed-plan.html",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -105.0,
+        15.0,
+        32.0,
+        68.0
+      ],
+      "local_origin_xyz": [
+        -105.0,
+        -11.5,
+        15.0
+      ],
+      "neighbors": [
+        "L-SERVICE-INTERCHANGE",
+        "T-FRT",
+        "T-TECH"
+      ],
+      "required_connections": [
+        {
+          "connection_id": "E-X07",
+          "neighbor": "L-SERVICE-INTERCHANGE",
+          "kind": "service-stair",
+          "traversable": true,
+          "anchor": "A-SERVICE-STAIR"
+        },
+        {
+          "connection_id": "E-T06",
+          "neighbor": "T-TECH",
+          "kind": "service",
+          "traversable": true
+        },
+        {
+          "connection_id": "E-T07",
+          "neighbor": "T-FRT",
+          "kind": "controlled-transition-pair",
+          "traversable": true
+        }
+      ],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [
+        "service-stair",
+        "controlled-transition-pair"
+      ],
+      "anchors": [
+        {
+          "id": "A-OLD-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            -90.0,
+            30.0
+          ]
+        },
+        {
+          "id": "A-SERVICE-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            -42.0,
+            50.0
+          ]
+        },
+        {
+          "id": "A-MAIN-CORE",
+          "tolerance": 0.25,
+          "position_xz": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "id": "A-EAST-STAIR",
+          "tolerance": 0.25,
+          "position_xz": [
+            27.0,
+            10.5
+          ]
+        },
+        {
+          "id": "A-FREIGHT-LIFT",
+          "tolerance": 0.25,
+          "position_xz": [
+            20.0,
+            72.0
+          ]
+        },
+        {
+          "id": "A-HEAVY-SPINE",
+          "tolerance": 0.5,
+          "centerline_z": 64.0
+        }
+      ],
+      "allowed_internal_subdivision": [
+        "main_service_corridor",
+        "cable_gallery",
+        "west_controlled_transition",
+        "east_controlled_transition",
+        "heavy_spine"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "non_transit_engineering_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    }
+  ]
+}

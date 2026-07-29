@@ -1,6 +1,6 @@
 # Комплекс v3 — производственный реестр
 
-Версия: `stage-1-v1`
+Версия: `stage-2-v1`
 
 Контракт стиля: `caretaker-style-b-v1`
 
@@ -49,7 +49,7 @@
 | Тяжёлые ворота | `4.5 × 4.5 m` | по грузовому габариту |
 | Допуск общей межэтажной оси | `0.25 m` | не увеличивать без причины |
 
-## Unknown, resolved at stage 2
+## Resolved provisionally at stage 2
 
 - Точные толщины стен по строительным эпохам.
 - Точные размеры каждого дверного и грузового проёма.
@@ -59,13 +59,13 @@
 - Границы скрытых конструктивных объёмов между секторными планами.
 - Итоговые точки спавна, навигационные области и игровые collision margins.
 
-Эти неизвестные не меняют общую топологию и не блокируют согласование этапа 1. Они блокируют статус `ready-for-3d` до завершения этапа 2.
+Для перечисленных параметров теперь заданы предварительные метрические значения в паспортах, `geometry/complex-handoff.json` и `vertical/vertical-transitions.json`. Они не меняют общую топологию и могут корректироваться только в пределах объявленных допусков после прохода блок-аута. Точки спавна, навигационные области и collision margins по-прежнему относятся к отдельному этапу Godot.
 
 ## Stable IDs
 
 - Уровни: `LV-U`, `LV-L`, `LV-T`.
 - Сети и маршруты: `R-PAX`, `R-FRT`, `R-TECH`, `R-A`, `R-OLD-FRT`.
-- Верхние сектора: `U-EMERGENCY`, `U-ROUTE-A`, `U-DOMESTIC`, `U-CONTROL`, `U-CENTRAL-CORE`, `U-EAST-SUPPORT`, `U-CHAMBER-4`, `U-SECURITY`, `U-CHAMBER-6`, `U-FREIGHT`.
+- Верхние сектора: `U-EMERGENCY`, `U-MEDBAY`, `U-ROUTE-A`, `U-DOMESTIC`, `U-CONTROL`, `U-CENTRAL-CORE`, `U-EAST-SUPPORT`, `U-CHAMBER-4`, `U-SECURITY`, `U-CHAMBER-6`, `U-FREIGHT`.
 - Нижние сектора: `L-OLD-CORE`, `L-CHAMBER-1`, `L-ARCHIVE-A`, `L-OLD-RECEIVING`, `L-CHAMBER-2`, `L-SLEEP-LAB`, `L-CHAMBER-3`, `L-SERVICE-INTERCHANGE`, `L-FREIGHT-SERVICE`, `L-CENTRAL-CORE`, `L-EAST-STAIR`, `L-CHAMBER-5`.
 - Технические сектора: `T-ENERGY`, `T-WORKSHOP`, `T-OLD-ACCESS`, `T-EAST-VERTICAL`, `T-UTILITIES`, `T-FREIGHT`, `T-CIRCULATION`.
 - Межэтажные опоры: `A-ROUTE-A`, `A-OLD-STAIR`, `A-SERVICE-STAIR`, `A-MAIN-CORE`, `A-EAST-STAIR`, `A-FREIGHT-LIFT`, `A-HEAVY-SPINE`.
@@ -82,3 +82,9 @@
 | `OVERVIEW-PLAN-01` | `overview/metric-overview.svg` | overview data, style | approved | 1 |
 | `OVERVIEW-GRAPH-01` | `overview/topology.json`, `overview/topology.md` | ledger, audits | approved | 1 |
 | `VALIDATION-01` | `validation/stage-1-report.md` | все артефакты stage 1 | approved | 1 |
+| `PASSPORTS-01` | `passports/sector-passports.json`, `.md` | overview, topology, sector plans | verified | 2 |
+| `HANDOFF-GEOMETRY-01` | `geometry/complex-handoff.json` | passports, topology | verified | 2 |
+| `VERTICAL-HANDOFF-01` | `vertical/vertical-transitions.json` | anchors, topology | verified | 2 |
+| `VERTICAL-SECTION-01` | `vertical/vertical-section.svg`, `.png` | vertical handoff, style | verified | 2 |
+| `MAP-PACKAGE-01` | `map-package.json` | all stage 1–2 artifacts | verified | 2 |
+| `VALIDATION-02` | `validation/stage-2-report.md` | all stage 2 artifacts | verified | 2 |

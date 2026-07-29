@@ -3,13 +3,14 @@
   "artifact_id": "OVERVIEW-GRAPH-01",
   "status": "approved",
   "nodes": [
-    "U-PAX", "U-FRT", "U-EMERGENCY", "U-ROUTE-A", "U-DOMESTIC", "U-CONTROL", "U-CENTRAL-CORE", "U-EAST-SUPPORT", "U-CHAMBER-4", "U-SECURITY", "U-CHAMBER-6", "U-FREIGHT",
+    "U-PAX", "U-FRT", "U-EMERGENCY", "U-MEDBAY", "U-ROUTE-A", "U-DOMESTIC", "U-CONTROL", "U-CENTRAL-CORE", "U-EAST-SUPPORT", "U-CHAMBER-4", "U-SECURITY", "U-CHAMBER-6", "U-FREIGHT",
     "L-PAX", "L-FRT", "L-OLD-CORE", "L-CHAMBER-1", "L-ARCHIVE-A", "L-OLD-RECEIVING", "L-CHAMBER-2", "L-SLEEP-LAB", "L-CHAMBER-3", "L-SERVICE-INTERCHANGE", "L-FREIGHT-SERVICE", "L-CENTRAL-CORE", "L-EAST-STAIR", "L-CHAMBER-5",
     "T-TECH", "T-FRT", "T-ENERGY", "T-WORKSHOP", "T-OLD-ACCESS", "T-EAST-VERTICAL", "T-UTILITIES", "T-FREIGHT", "T-CIRCULATION"
   ],
   "connections": [
     {"id": "E-U01", "from": "U-PAX", "to": "U-EMERGENCY", "kind": "passenger", "traversable": true},
     {"id": "E-U02", "from": "U-EMERGENCY", "to": "U-ROUTE-A", "kind": "service", "traversable": true},
+    {"id": "E-U02A", "from": "U-EMERGENCY", "to": "U-MEDBAY", "kind": "short-side-passage", "traversable": true},
     {"id": "E-U03", "from": "U-PAX", "to": "U-DOMESTIC", "kind": "passenger", "traversable": true},
     {"id": "E-U04", "from": "U-PAX", "to": "U-CONTROL", "kind": "passenger", "traversable": true},
     {"id": "E-U05", "from": "U-PAX", "to": "U-CENTRAL-CORE", "kind": "passenger", "traversable": true},

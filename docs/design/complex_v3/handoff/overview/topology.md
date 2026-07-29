@@ -10,6 +10,7 @@
 flowchart TB
   subgraph U[LV-U · верхний]
     UEA[U-EMERGENCY] --- URA[U-ROUTE-A]
+    UEA --- UMED[U-MEDBAY]
     UPAX((U-PAX)) --- UEA
     UPAX --- UDOM[U-DOMESTIC]
     UPAX --- UCTRL[U-CONTROL]

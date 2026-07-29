@@ -46,7 +46,7 @@ python docs/design/complex_v3/handoff/validation/validate_stage1.py
 Результат:
 
 ```text
-OK: stage-1 package is internally consistent: 3 levels, 7 anchors, 29 sectors, 5 routes, 48 topology connections
+OK: stage-1 package is internally consistent: 3 levels, 7 anchors, 30 sectors, 5 routes, 49 topology connections
 ```
 
 Дополнительно проверено:
@@ -93,3 +93,7 @@ OK: stage-1 package is internally consistent: 3 levels, 7 anchors, 29 sectors, 5
 - импорт или блок-аут в Godot.
 
 Эти пункты не позволяют считать пакет готовым для 3D до завершения этапа 2, но не блокируют утверждение общей метрической схемы.
+
+## Post-approval corrective regression
+
+При подготовке паспортов восстановлен отдельный стабильный ID `U-MEDBAY`, уже присутствовавший в утверждённой геометрии и имевший собственный детальный план. Топология и границы комплекса не изменены. Медотсек выделен из обзорного контура `U-EMERGENCY`, добавлено существующее соединение с распределительным холлом, после чего повторно выполняются все проверки overview.

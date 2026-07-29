@@ -1,0 +1,1254 @@
+{
+  "schema_version": "1.0",
+  "map_id": "caretaker-complex-v3",
+  "title": "Caretaker complex v3 implementation handoff",
+  "units": "m",
+  "coordinate_system": {
+    "plane": "XZ",
+    "up_axis": "Y",
+    "positive_x": "east/right",
+    "positive_z": "south/down",
+    "origin": "center of the main passenger elevator shaft at LV-U finished floor"
+  },
+  "plan_style": {
+    "id": "caretaker-style-b-v1",
+    "name": "opaque-functional-plan",
+    "source": "approved project style B",
+    "rules": {
+      "fills": "opaque functional zoning",
+      "geometry": "solid non-overlapping rooms with separate continuous corridors",
+      "labels": "minimal direct labels with one hierarchy",
+      "symbols": "explicit repeatable portals and vertical anchors",
+      "forbidden": "translucent overlaps and decorative door strokes"
+    }
+  },
+  "deliverables_requested": [
+    "overview",
+    "details",
+    "handoff"
+  ],
+  "spaces": [
+    {
+      "id": "U-PAX",
+      "name": "Верхняя пассажирская магистраль",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-FRT",
+      "name": "Верхняя грузовая магистраль",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-EMERGENCY",
+      "name": "Аварийный и персональный сектор",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-MEDBAY",
+      "name": "Медицинский отсек",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-ROUTE-A",
+      "name": "Верхняя часть маршрута A",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-DOMESTIC",
+      "name": "Бытовое крыло",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-CONTROL",
+      "name": "Новый центр управления",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-CENTRAL-CORE",
+      "name": "Центральное пассажирское ядро",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-EAST-SUPPORT",
+      "name": "Восточный хозблок и лестница",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-CHAMBER-4",
+      "name": "Камера 4",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-SECURITY",
+      "name": "Главная служба безопасности",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-CHAMBER-6",
+      "name": "Камера 6",
+      "layer": "LV-U"
+    },
+    {
+      "id": "U-FREIGHT",
+      "name": "Грузовая приёмная и лифт",
+      "layer": "LV-U"
+    },
+    {
+      "id": "L-PAX",
+      "name": "Нижняя пассажирская магистраль",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-FRT",
+      "name": "Нижняя грузовая магистраль",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-OLD-CORE",
+      "name": "Старое ядро",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-CHAMBER-1",
+      "name": "Камера 1",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-ARCHIVE-A",
+      "name": "Архив и маршрут A",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-OLD-RECEIVING",
+      "name": "Старый приёмный сектор",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-CHAMBER-2",
+      "name": "Камера 2",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-SLEEP-LAB",
+      "name": "Ранняя лаборатория сна",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-CHAMBER-3",
+      "name": "Камера 3",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-SERVICE-INTERCHANGE",
+      "name": "Служебная развязка",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-FREIGHT-SERVICE",
+      "name": "Грузовой и служебный сектор",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-CENTRAL-CORE",
+      "name": "Центральное пассажирское ядро",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-EAST-STAIR",
+      "name": "Восточная аварийная лестница",
+      "layer": "LV-L"
+    },
+    {
+      "id": "L-CHAMBER-5",
+      "name": "Камера 5",
+      "layer": "LV-L"
+    },
+    {
+      "id": "T-TECH",
+      "name": "Техническая служебная магистраль",
+      "layer": "LV-T"
+    },
+    {
+      "id": "T-FRT",
+      "name": "Техническая грузовая магистраль",
+      "layer": "LV-T"
+    },
+    {
+      "id": "T-ENERGY",
+      "name": "Энергетическое ядро",
+      "layer": "LV-T"
+    },
+    {
+      "id": "T-WORKSHOP",
+      "name": "Мастерская и склад",
+      "layer": "LV-T"
+    },
+    {
+      "id": "T-OLD-ACCESS",
+      "name": "Старый технический вход",
+      "layer": "LV-T"
+    },
+    {
+      "id": "T-EAST-VERTICAL",
+      "name": "Восточный энергетический узел",
+      "layer": "LV-T"
+    },
+    {
+      "id": "T-UTILITIES",
+      "name": "Центральные инженерные системы",
+      "layer": "LV-T"
+    },
+    {
+      "id": "T-FREIGHT",
+      "name": "Технический грузовой сектор",
+      "layer": "LV-T"
+    },
+    {
+      "id": "T-CIRCULATION",
+      "name": "Служебная циркуляция",
+      "layer": "LV-T"
+    }
+  ],
+  "connections": [
+    {
+      "id": "E-U01",
+      "from": "U-PAX",
+      "to": "U-EMERGENCY",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U02",
+      "from": "U-EMERGENCY",
+      "to": "U-ROUTE-A",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U02A",
+      "from": "U-EMERGENCY",
+      "to": "U-MEDBAY",
+      "kind": "short-side-passage",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U03",
+      "from": "U-PAX",
+      "to": "U-DOMESTIC",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U04",
+      "from": "U-PAX",
+      "to": "U-CONTROL",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U05",
+      "from": "U-PAX",
+      "to": "U-CENTRAL-CORE",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U06",
+      "from": "U-PAX",
+      "to": "U-EAST-SUPPORT",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U07",
+      "from": "U-PAX",
+      "to": "U-CHAMBER-4",
+      "kind": "controlled-passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U08",
+      "from": "U-PAX",
+      "to": "U-SECURITY",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U09",
+      "from": "U-SECURITY",
+      "to": "U-FRT",
+      "kind": "controlled-transition",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U10",
+      "from": "U-PAX",
+      "to": "U-CHAMBER-6",
+      "kind": "controlled-passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-U11",
+      "from": "U-FRT",
+      "to": "U-CHAMBER-4",
+      "kind": "cargo-hermetic",
+      "bidirectional": true,
+      "traversable": false,
+      "state": "closed"
+    },
+    {
+      "id": "E-U12",
+      "from": "U-FRT",
+      "to": "U-CHAMBER-6",
+      "kind": "cargo-hermetic",
+      "bidirectional": true,
+      "traversable": false,
+      "state": "closed"
+    },
+    {
+      "id": "E-U13",
+      "from": "U-FRT",
+      "to": "U-FREIGHT",
+      "kind": "freight",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X01",
+      "from": "U-ROUTE-A",
+      "to": "L-ARCHIVE-A",
+      "kind": "stair",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X02",
+      "from": "U-CENTRAL-CORE",
+      "to": "L-CENTRAL-CORE",
+      "kind": "passenger-vertical",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X03",
+      "from": "U-EAST-SUPPORT",
+      "to": "L-EAST-STAIR",
+      "kind": "emergency-stair",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X04",
+      "from": "U-FREIGHT",
+      "to": "L-FREIGHT-SERVICE",
+      "kind": "freight-lift",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X05",
+      "from": "L-OLD-RECEIVING",
+      "to": "U-FRT",
+      "kind": "old-inclined-tunnel",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L01",
+      "from": "L-PAX",
+      "to": "L-OLD-CORE",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L02",
+      "from": "L-OLD-CORE",
+      "to": "L-CHAMBER-1",
+      "kind": "combined-historic-threshold",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L03",
+      "from": "L-OLD-CORE",
+      "to": "L-ARCHIVE-A",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L04",
+      "from": "L-OLD-CORE",
+      "to": "L-OLD-RECEIVING",
+      "kind": "historic-mixed",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L05",
+      "from": "L-PAX",
+      "to": "L-CHAMBER-2",
+      "kind": "controlled-passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L06",
+      "from": "L-PAX",
+      "to": "L-SLEEP-LAB",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L07",
+      "from": "L-PAX",
+      "to": "L-CHAMBER-3",
+      "kind": "controlled-passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L08",
+      "from": "L-PAX",
+      "to": "L-SERVICE-INTERCHANGE",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L09",
+      "from": "L-PAX",
+      "to": "L-CENTRAL-CORE",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L10",
+      "from": "L-PAX",
+      "to": "L-EAST-STAIR",
+      "kind": "passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L11",
+      "from": "L-PAX",
+      "to": "L-CHAMBER-5",
+      "kind": "controlled-passenger",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L12",
+      "from": "L-FRT",
+      "to": "L-OLD-RECEIVING",
+      "kind": "freight",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L13",
+      "from": "L-FRT",
+      "to": "L-CHAMBER-2",
+      "kind": "cargo-hermetic",
+      "bidirectional": true,
+      "traversable": false,
+      "state": "closed"
+    },
+    {
+      "id": "E-L14",
+      "from": "L-FRT",
+      "to": "L-CHAMBER-3",
+      "kind": "cargo-hermetic",
+      "bidirectional": true,
+      "traversable": false,
+      "state": "closed"
+    },
+    {
+      "id": "E-L15",
+      "from": "L-FRT",
+      "to": "L-SERVICE-INTERCHANGE",
+      "kind": "controlled-transition",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-L16",
+      "from": "L-FRT",
+      "to": "L-CHAMBER-5",
+      "kind": "cargo-hermetic",
+      "bidirectional": true,
+      "traversable": false,
+      "state": "closed"
+    },
+    {
+      "id": "E-L17",
+      "from": "L-FRT",
+      "to": "L-FREIGHT-SERVICE",
+      "kind": "freight",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X06",
+      "from": "L-OLD-CORE",
+      "to": "T-OLD-ACCESS",
+      "kind": "old-stair",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X07",
+      "from": "L-SERVICE-INTERCHANGE",
+      "to": "T-CIRCULATION",
+      "kind": "service-stair",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X08",
+      "from": "L-CENTRAL-CORE",
+      "to": "T-EAST-VERTICAL",
+      "kind": "passing-shaft",
+      "bidirectional": true,
+      "traversable": false,
+      "state": "no-stop"
+    },
+    {
+      "id": "E-X09",
+      "from": "L-EAST-STAIR",
+      "to": "T-EAST-VERTICAL",
+      "kind": "emergency-stair",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-X10",
+      "from": "L-FREIGHT-SERVICE",
+      "to": "T-FREIGHT",
+      "kind": "freight-lift",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-T01",
+      "from": "T-TECH",
+      "to": "T-ENERGY",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-T02",
+      "from": "T-TECH",
+      "to": "T-WORKSHOP",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-T03",
+      "from": "T-TECH",
+      "to": "T-OLD-ACCESS",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-T04",
+      "from": "T-TECH",
+      "to": "T-EAST-VERTICAL",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-T05",
+      "from": "T-TECH",
+      "to": "T-UTILITIES",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-T06",
+      "from": "T-TECH",
+      "to": "T-CIRCULATION",
+      "kind": "service",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-T07",
+      "from": "T-CIRCULATION",
+      "to": "T-FRT",
+      "kind": "controlled-transition-pair",
+      "bidirectional": true,
+      "traversable": true
+    },
+    {
+      "id": "E-T08",
+      "from": "T-FRT",
+      "to": "T-FREIGHT",
+      "kind": "freight",
+      "bidirectional": true,
+      "traversable": true
+    }
+  ],
+  "required_paths": [
+    {
+      "from": "U-EMERGENCY",
+      "to": "L-OLD-CORE",
+      "reason": "initial Route A"
+    },
+    {
+      "from": "U-CONTROL",
+      "to": "U-CHAMBER-6",
+      "reason": "upper operational route"
+    },
+    {
+      "from": "U-CONTROL",
+      "to": "L-CHAMBER-5",
+      "reason": "cross-floor passenger route"
+    },
+    {
+      "from": "L-OLD-CORE",
+      "to": "T-ENERGY",
+      "reason": "first generator objective"
+    },
+    {
+      "from": "L-OLD-RECEIVING",
+      "to": "U-FREIGHT",
+      "reason": "old-to-modern internal logistics"
+    },
+    {
+      "from": "T-OLD-ACCESS",
+      "to": "T-FREIGHT",
+      "reason": "technical maintained-space reachability"
+    }
+  ],
+  "forbidden_connections": [
+    {
+      "from": "U-PAX",
+      "to": "U-FRT"
+    },
+    {
+      "from": "L-PAX",
+      "to": "L-FRT"
+    },
+    {
+      "from": "T-TECH",
+      "to": "T-FRT"
+    },
+    {
+      "from": "U-CHAMBER-4",
+      "to": "U-CHAMBER-6"
+    },
+    {
+      "from": "L-CHAMBER-2",
+      "to": "L-CHAMBER-3"
+    },
+    {
+      "from": "L-CHAMBER-3",
+      "to": "L-CHAMBER-5"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "overview-metric",
+      "type": "overview",
+      "path": "overview/metric-overview.svg",
+      "preview": "overview/metric-overview.png",
+      "status": "approved",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT",
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5",
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "topology-graph",
+      "type": "graph",
+      "path": "overview/topology.json",
+      "status": "approved",
+      "depends_on": [
+        "overview-metric"
+      ],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT",
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5",
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "sector-passports",
+      "type": "detail",
+      "path": "passports/sector-passports.json",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-metric",
+        "topology-graph"
+      ],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT",
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5",
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "vertical-section",
+      "type": "section",
+      "path": "vertical/vertical-section.svg",
+      "preview": "vertical/vertical-section.png",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-metric",
+        "topology-graph"
+      ],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT",
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5",
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "vertical-handoff",
+      "type": "handoff",
+      "path": "vertical/vertical-transitions.json",
+      "status": "verified",
+      "depends_on": [
+        "vertical-section",
+        "topology-graph"
+      ],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT",
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5",
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "geometry-handoff",
+      "type": "handoff",
+      "path": "geometry/complex-handoff.json",
+      "status": "verified",
+      "depends_on": [
+        "sector-passports",
+        "vertical-handoff"
+      ],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT",
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5",
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "validation-stage-2",
+      "type": "validation",
+      "path": "validation/stage-2-report.md",
+      "status": "verified",
+      "depends_on": [
+        "geometry-handoff"
+      ],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT",
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5",
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "package-index",
+      "type": "index",
+      "path": "README.md",
+      "status": "verified",
+      "depends_on": [
+        "validation-stage-2"
+      ],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT",
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5",
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    }
+  ],
+  "anchors": [
+    {
+      "id": "A-MAIN-CORE",
+      "tolerance": 0.25,
+      "occurrences": [
+        {
+          "artifact_id": "overview-metric",
+          "position": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "artifact_id": "vertical-section",
+          "position": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "artifact_id": "geometry-handoff",
+          "position": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A-ROUTE-A",
+      "tolerance": 0.25,
+      "occurrences": [
+        {
+          "artifact_id": "overview-metric",
+          "position": [
+            -52.5,
+            9.5
+          ]
+        },
+        {
+          "artifact_id": "vertical-section",
+          "position": [
+            -52.5,
+            9.5
+          ]
+        },
+        {
+          "artifact_id": "geometry-handoff",
+          "position": [
+            -52.5,
+            9.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A-OLD-STAIR",
+      "tolerance": 0.25,
+      "occurrences": [
+        {
+          "artifact_id": "overview-metric",
+          "position": [
+            -90.0,
+            30.0
+          ]
+        },
+        {
+          "artifact_id": "vertical-section",
+          "position": [
+            -90.0,
+            30.0
+          ]
+        },
+        {
+          "artifact_id": "geometry-handoff",
+          "position": [
+            -90.0,
+            30.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A-SERVICE-STAIR",
+      "tolerance": 0.25,
+      "occurrences": [
+        {
+          "artifact_id": "overview-metric",
+          "position": [
+            -42.0,
+            50.0
+          ]
+        },
+        {
+          "artifact_id": "vertical-section",
+          "position": [
+            -42.0,
+            50.0
+          ]
+        },
+        {
+          "artifact_id": "geometry-handoff",
+          "position": [
+            -42.0,
+            50.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A-EAST-STAIR",
+      "tolerance": 0.25,
+      "occurrences": [
+        {
+          "artifact_id": "overview-metric",
+          "position": [
+            27.0,
+            10.5
+          ]
+        },
+        {
+          "artifact_id": "vertical-section",
+          "position": [
+            27.0,
+            10.5
+          ]
+        },
+        {
+          "artifact_id": "geometry-handoff",
+          "position": [
+            27.0,
+            10.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A-FREIGHT-LIFT",
+      "tolerance": 0.25,
+      "occurrences": [
+        {
+          "artifact_id": "overview-metric",
+          "position": [
+            20.0,
+            72.0
+          ]
+        },
+        {
+          "artifact_id": "vertical-section",
+          "position": [
+            20.0,
+            72.0
+          ]
+        },
+        {
+          "artifact_id": "geometry-handoff",
+          "position": [
+            20.0,
+            72.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A-HEAVY-SPINE",
+      "tolerance": 0.5,
+      "occurrences": [
+        {
+          "artifact_id": "overview-metric",
+          "position": [
+            64.0
+          ]
+        },
+        {
+          "artifact_id": "vertical-section",
+          "position": [
+            64.0
+          ]
+        },
+        {
+          "artifact_id": "geometry-handoff",
+          "position": [
+            64.0
+          ]
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "logical": "passed",
+    "visual": "passed",
+    "cross_artifact": "passed",
+    "tested_in_engine": false
+  },
+  "approval": {
+    "gate_1_overview": "approved",
+    "gate_2_handoff": "awaiting_user_approval",
+    "gate_3_godot_blockout": "separate_task_after_gate_2"
+  }
+}
