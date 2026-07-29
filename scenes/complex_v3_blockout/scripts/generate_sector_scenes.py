@@ -61,6 +61,7 @@ def main() -> None:
                 "",
                 f'[node name="{node_name(sector_id)}" instance=ExtResource("1_zone")]',
                 f'sector_ids = PackedStringArray("{sector_id}")',
+                "editor_preview_enabled = true",
                 'preview_shared_infrastructure_when_standalone = true' if sector_id == "T-CIRCULATION" else "",
                 "",
                 '[node name="AuthoredContent" type="Node3D" parent="."]',
@@ -72,6 +73,12 @@ def main() -> None:
         if not scene_file.exists():
             write_text(scene_file, wrapper)
             created_scenes += 1
+        else:
+            existing = scene_file.read_text(encoding="utf-8")
+            if "editor_preview_enabled = true" not in existing:
+                marker = f'sector_ids = PackedStringArray("{sector_id}")\n'
+                existing = existing.replace(marker, marker + "editor_preview_enabled = true\n", 1)
+                write_text(scene_file, existing)
         catalog["sectors"].append(
             {
                 "sector_id": sector_id,

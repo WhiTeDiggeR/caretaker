@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 class_name ComplexV3Blockout
 
@@ -37,6 +38,8 @@ func _ready() -> void:
 
 func _apply_part_options() -> void:
 	for part: ComplexV3BlockoutPart in _get_parts():
+		if Engine.is_editor_hint():
+			part.editor_preview_enabled = false
 		part.include_ceilings = include_ceilings
 		part.build_collisions = build_collisions
 		part.show_space_labels = show_space_labels

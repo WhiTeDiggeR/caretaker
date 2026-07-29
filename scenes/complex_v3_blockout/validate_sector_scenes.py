@@ -52,6 +52,8 @@ def main() -> int:
             errors.append(f"scene does not instance the common zone base: {scene_path}")
         if '[node name="AuthoredContent" type="Node3D" parent="."]' not in content:
             errors.append(f"scene has no preserved AuthoredContent root: {scene_path}")
+        if "editor_preview_enabled = true" not in content:
+            errors.append(f"scene does not enable editor preview: {scene_path}")
         if item["sector_id"] == "T-CIRCULATION" and "preview_shared_infrastructure_when_standalone = true" not in content:
             errors.append("T-CIRCULATION must expose the standalone infrastructure preview")
         resource_path = item["scene"]
@@ -62,6 +64,14 @@ def main() -> int:
             errors.append(f"neighbor mismatch for {item['sector_id']}")
     if assembly.count("complex_v3_infrastructure.tscn") != 1:
         errors.append("assembly must instance shared infrastructure exactly once")
+    builder = (SCENE_DIR / "complex_v3_blockout.gd").read_text(encoding="utf-8")
+    assembly_script = (SCENE_DIR / "complex_v3_assembly.gd").read_text(encoding="utf-8")
+    if not builder.startswith("@tool\n"):
+        errors.append("sector builder must run as an editor tool")
+    if "return build_collisions and not Engine.is_editor_hint()" not in builder:
+        errors.append("editor preview must not build physics collisions")
+    if not assembly_script.startswith("@tool\n") or "part.editor_preview_enabled = false" not in assembly_script:
+        errors.append("full assembly must disable child editor previews")
     if errors:
         for error in errors:
             print(f"ERROR: {error}")

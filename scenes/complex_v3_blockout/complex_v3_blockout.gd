@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 class_name ComplexV3BlockoutPart
 
@@ -17,6 +18,13 @@ const MIN_SEGMENT_LENGTH := 0.05
 @export var build_shared_infrastructure := true
 @export var sector_ids := PackedStringArray()
 @export var preview_shared_infrastructure_when_standalone := false
+@export var editor_preview_enabled := false:
+	set(value):
+		if editor_preview_enabled == value:
+			return
+		editor_preview_enabled = value
+		if Engine.is_editor_hint() and is_inside_tree():
+			_refresh_editor_preview.call_deferred()
 
 var _handoff: Dictionary = {}
 var _vertical: Dictionary = {}
@@ -28,10 +36,23 @@ var _stats: Dictionary[String, int] = {}
 
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		if editor_preview_enabled:
+			build_from_handoff()
+		return
 	if preview_shared_infrastructure_when_standalone and (get_parent() == null or get_parent().name != "Zones"):
 		build_shared_infrastructure = true
 	if build_on_ready:
 		build_from_handoff()
+
+
+func _refresh_editor_preview() -> void:
+	if not Engine.is_editor_hint() or not is_inside_tree():
+		return
+	if editor_preview_enabled:
+		build_from_handoff()
+	else:
+		_clear_generated()
 
 
 func build_from_handoff() -> void:
@@ -253,14 +274,14 @@ func _build_overlay_route(parent: Node3D, space: Dictionary) -> void:
 func _build_floor(parent: Node3D, bounds: Array, floor_y: float, material: Material) -> void:
 	var center := _bounds_center(bounds)
 	var size := _bounds_size(bounds)
-	_add_box(parent, "Floor", Vector3(center.x, floor_y - FLOOR_THICKNESS * 0.5, center.y), Vector3(size.x, FLOOR_THICKNESS, size.y), material, build_collisions)
+	_add_box(parent, "Floor", Vector3(center.x, floor_y - FLOOR_THICKNESS * 0.5, center.y), Vector3(size.x, FLOOR_THICKNESS, size.y), material, _collisions_enabled())
 	_stats["floors"] += 1
 
 
 func _build_ceiling(parent: Node3D, bounds: Array, ceiling_y: float, material: Material) -> void:
 	var center := _bounds_center(bounds)
 	var size := _bounds_size(bounds)
-	_add_box(parent, "Ceiling", Vector3(center.x, ceiling_y + FLOOR_THICKNESS * 0.5, center.y), Vector3(size.x, FLOOR_THICKNESS, size.y), material, build_collisions)
+	_add_box(parent, "Ceiling", Vector3(center.x, ceiling_y + FLOOR_THICKNESS * 0.5, center.y), Vector3(size.x, FLOOR_THICKNESS, size.y), material, _collisions_enabled())
 	_stats["ceilings"] += 1
 
 
@@ -340,7 +361,7 @@ func _add_wall_segment(parent: Node3D, node_name: String, start: float, end: flo
 	else:
 		center = Vector3(fixed, base_y + height * 0.5, (start + end) * 0.5)
 		size = Vector3(thickness, height, length)
-	_add_box(parent, node_name, center, size, material, build_collisions)
+	_add_box(parent, node_name, center, size, material, _collisions_enabled())
 	_stats["walls"] += 1
 
 
@@ -380,7 +401,7 @@ func _build_corridor_segment(parent: Node3D, corridor_id: String, start: Vector2
 	root.set_meta("connection_id", corridor_id)
 	root.set_meta("clear_height", height)
 	parent.add_child(root)
-	_add_oriented_box(root, "Floor", Transform3D(basis, midpoint + Vector3(0.0, -FLOOR_THICKNESS * 0.5, 0.0)), Vector3(width, FLOOR_THICKNESS, length), material, build_collisions)
+	_add_oriented_box(root, "Floor", Transform3D(basis, midpoint + Vector3(0.0, -FLOOR_THICKNESS * 0.5, 0.0)), Vector3(width, FLOOR_THICKNESS, length), material, _collisions_enabled())
 
 
 func _build_vertical_markers() -> void:
@@ -446,7 +467,11 @@ func _add_ramp_segment(parent: Node3D, node_name: String, start: Vector3, end: V
 		side = Vector3.RIGHT
 	var up := direction.cross(side).normalized()
 	var basis := Basis(side, up, direction)
-	_add_oriented_box(parent, node_name, Transform3D(basis, (start + end) * 0.5), Vector3(width, FLOOR_THICKNESS, length), material, build_collisions)
+	_add_oriented_box(parent, node_name, Transform3D(basis, (start + end) * 0.5), Vector3(width, FLOOR_THICKNESS, length), material, _collisions_enabled())
+
+
+func _collisions_enabled() -> bool:
+	return build_collisions and not Engine.is_editor_hint()
 
 
 func _add_box(parent: Node3D, node_name: String, center: Vector3, size: Vector3, material: Material, collision: bool) -> void:

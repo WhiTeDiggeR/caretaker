@@ -30,6 +30,8 @@ def main() -> int:
         "complex_v3_portal_check.gd",
         "complex_v3_sector_check.gd",
         "complex_v3_visual_check.gd",
+        "complex_v3_editor_preview_check.gd",
+        "complex_v3_editor_preview_check.tscn",
     }
     missing = sorted(name for name in expected_files if not (SCENE_DIR / name).is_file())
     if missing:
