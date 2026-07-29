@@ -9,14 +9,17 @@ func _initialize() -> void:
 	await process_frame
 	await physics_frame
 	var errors := blockout.validate_against_handoff()
+	var stats := blockout.get_build_stats()
+	if int(stats.get("ceilings", 0)) != int(stats.get("floors", 0)):
+		errors.append("Runtime blockout must preserve one ceiling per generated floor")
 	if errors.is_empty():
-		var stats := blockout.get_build_stats()
-		print("COMPLEX_V3_BLOCKOUT_OK spaces=%d routes=%d anchors=%d transitions=%d floors=%d walls=%d colliders=%d" % [
+		print("COMPLEX_V3_BLOCKOUT_OK spaces=%d routes=%d anchors=%d transitions=%d floors=%d ceilings=%d walls=%d colliders=%d" % [
 			int(stats["spaces"]),
 			int(stats["route_spaces"]),
 			int(stats["anchors"]),
 			int(stats["transitions"]),
 			int(stats["floors"]),
+			int(stats["ceilings"]),
 			int(stats["walls"]),
 			int(stats["colliders"]),
 		])

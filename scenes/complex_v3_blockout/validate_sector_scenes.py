@@ -70,6 +70,8 @@ def main() -> int:
         errors.append("sector builder must run as an editor tool")
     if "return build_collisions and not Engine.is_editor_hint()" not in builder:
         errors.append("editor preview must not build physics collisions")
+    if "editor_preview_show_ceilings := false" not in builder or "not Engine.is_editor_hint() or editor_preview_show_ceilings" not in builder:
+        errors.append("editor preview ceilings must be independently hidden by default")
     if not assembly_script.startswith("@tool\n") or "part.editor_preview_enabled = false" not in assembly_script:
         errors.append("full assembly must disable child editor previews")
     if errors:

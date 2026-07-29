@@ -23,8 +23,15 @@ const MIN_SEGMENT_LENGTH := 0.05
 		if editor_preview_enabled == value:
 			return
 		editor_preview_enabled = value
-		if Engine.is_editor_hint() and is_inside_tree():
-			_refresh_editor_preview.call_deferred()
+		_queue_editor_preview_refresh()
+
+
+@export var editor_preview_show_ceilings := false:
+	set(value):
+		if editor_preview_show_ceilings == value:
+			return
+		editor_preview_show_ceilings = value
+		_queue_editor_preview_refresh()
 
 var _handoff: Dictionary = {}
 var _vertical: Dictionary = {}
@@ -53,6 +60,11 @@ func _refresh_editor_preview() -> void:
 		build_from_handoff()
 	else:
 		_clear_generated()
+
+
+func _queue_editor_preview_refresh() -> void:
+	if Engine.is_editor_hint() and is_inside_tree():
+		_refresh_editor_preview.call_deferred()
 
 
 func build_from_handoff() -> void:
@@ -257,7 +269,7 @@ func _build_space(space: Dictionary, is_route: bool) -> void:
 	var material := _material_for_space(space, is_route)
 	_build_floor(root, bounds, floor_y, material)
 	_build_walls(root, str(space["id"]), bounds, floor_y, height, thickness, material)
-	if include_ceilings:
+	if _ceilings_enabled():
 		_build_ceiling(root, bounds, floor_y + height, material)
 	if show_space_labels:
 		_add_label(root, space, bounds, floor_y)
@@ -472,6 +484,10 @@ func _add_ramp_segment(parent: Node3D, node_name: String, start: Vector3, end: V
 
 func _collisions_enabled() -> bool:
 	return build_collisions and not Engine.is_editor_hint()
+
+
+func _ceilings_enabled() -> bool:
+	return include_ceilings and (not Engine.is_editor_hint() or editor_preview_show_ceilings)
 
 
 func _add_box(parent: Node3D, node_name: String, center: Vector3, size: Vector3, material: Material, collision: bool) -> void:

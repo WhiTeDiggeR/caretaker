@@ -45,9 +45,22 @@ func _run() -> void:
 		var stats := part.get_build_stats()
 		if int(stats.get("spaces", 0)) != int(EXPECTED_SPACES[sector_id]):
 			errors.append("%s preview expected %d spaces, built %d" % [sector_id, int(EXPECTED_SPACES[sector_id]), int(stats.get("spaces", 0))])
+		if int(stats.get("ceilings", 0)) != 0 or not part.find_children("Ceiling", "", true, false).is_empty():
+			errors.append("%s editor preview shows ceilings by default" % sector_id)
+		part.editor_preview_show_ceilings = true
+		part.build_from_handoff()
+		stats = part.get_build_stats()
+		if int(stats.get("ceilings", 0)) != int(EXPECTED_SPACES[sector_id]):
+			errors.append("%s ceiling toggle expected %d ceilings, built %d" % [sector_id, int(EXPECTED_SPACES[sector_id]), int(stats.get("ceilings", 0))])
+		if part.find_children("Ceiling", "", true, false).is_empty():
+			errors.append("%s ceiling toggle did not show ceiling nodes" % sector_id)
+		part.editor_preview_show_ceilings = false
+		part.build_from_handoff()
+		if int(part.get_build_stats().get("ceilings", 0)) != 0:
+			errors.append("%s ceiling toggle did not hide ceilings again" % sector_id)
 		part.free()
 	if errors.is_empty():
-		print("COMPLEX_V3_EDITOR_PREVIEW_OK zones=%d collisions=0 transient=true" % CONTROL_SCENES.size())
+		print("COMPLEX_V3_EDITOR_PREVIEW_OK zones=%d collisions=0 transient=true ceilings=toggle" % CONTROL_SCENES.size())
 	else:
 		for error: String in errors:
 			push_error(error)
