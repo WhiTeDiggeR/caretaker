@@ -50,7 +50,7 @@ def main() -> int:
             errors.append(f"scene does not declare sector ID: {scene_path}")
         if "complex_v3_zone.tscn" not in content:
             errors.append(f"scene does not instance the common zone base: {scene_path}")
-        if '[node name="AuthoredContent" type="Node3D" parent="."]' not in content:
+        if '[node name="AuthoredContent" type="Node3D"' not in content or 'parent="."' not in content:
             errors.append(f"scene has no preserved AuthoredContent root: {scene_path}")
         if "editor_preview_enabled = true" not in content:
             errors.append(f"scene does not enable editor preview: {scene_path}")

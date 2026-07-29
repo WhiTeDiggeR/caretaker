@@ -232,7 +232,9 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
         raise ValueError(f"no shared boundary: {a['id']} / {b['id']}")
     axis, coordinate, lo, hi = shared
     span = hi - lo
-    actual_width = min(width, max(0.9, span * 0.6))
+    cargo_threshold = "cargo_airlock" in a["id"] or "cargo_airlock" in b["id"] or "cargo_vestibule" in a["id"] or "cargo_vestibule" in b["id"]
+    requested_width = 4.5 if cargo_threshold else width
+    actual_width = min(requested_width, max(0.9, span * 0.85 if cargo_threshold else span * 0.6))
     center = (lo + hi) / 2
     segment = [[coordinate, center - actual_width / 2], [coordinate, center + actual_width / 2]] if axis == "x" else [[center - actual_width / 2, coordinate], [center + actual_width / 2, coordinate]]
     return {
@@ -240,8 +242,8 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
         "between": [a["id"], b["id"]],
         "segment_xz": [[round(v, 3) for v in point] for point in segment],
         "width": round(actual_width, 3),
-        "height": height,
-        "type": "internal-door",
+        "height": 4.5 if cargo_threshold else height,
+        "type": "cargo-hermetic" if cargo_threshold else "internal-door",
         "direction": "bidirectional",
         "state": "openable",
         "status": "provisional-metric",

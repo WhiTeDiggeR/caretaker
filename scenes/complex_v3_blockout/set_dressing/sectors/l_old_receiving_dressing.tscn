@@ -2,27 +2,26 @@
 
 [ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
 
 [node name="L_OLD_RECEIVING_SetDressing" type="Node3D"]
 metadata/sector_id = "L-OLD-RECEIVING"
 metadata/material_family = "historic"
 
-[node name="001_L_OLD_RECEIVING_inspection_post__debris_pile" parent="." instance=ExtResource("3")]
-position = Vector3(-108.8500, -6.0000, 44.0000)
-rotation = Vector3(0, -2.4029155, 0)
+[node name="001_L_OLD_RECEIVING_inspection_post__debris_pile" parent="." instance=ExtResource("4")]
+position = Vector3(-108.8500, -6.0000, 51.5000)
+rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-OLD-RECEIVING/inspection_post::debris_pile"
 
-[node name="002_L_OLD_RECEIVING_receiving_hall__loaded_shelf" parent="." instance=ExtResource("4")]
-position = Vector3(-92.8400, -6.0000, 43.8500)
-rotation = Vector3(0, -2.9055533, 0)
-metadata/placement_id = "L-OLD-RECEIVING/receiving_hall::loaded_shelf"
+[node name="002_L_OLD_RECEIVING_receiving_hall__wall_beacon" parent="." instance=ExtResource("3")]
+position = Vector3(-93.2900, -3.6500, 51.5000)
+rotation = Vector3(0, 1.5707963, 0)
+metadata/placement_id = "L-OLD-RECEIVING/receiving_hall::wall_beacon"
 
 [node name="003_L_OLD_RECEIVING_tunnel_landing__workbench" parent="." instance=ExtResource("5")]
-position = Vector3(-73.4500, -6.0000, 43.9500)
-rotation = Vector3(0, 2.4285113, 0)
+position = Vector3(-79.9800, -6.0000, 43.9500)
 metadata/placement_id = "L-OLD-RECEIVING/tunnel_landing::workbench"
 
 [node name="004_P_L_OLD_RECEIVING_01" parent="." instance=ExtResource("1")]

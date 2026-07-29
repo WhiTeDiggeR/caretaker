@@ -22,6 +22,7 @@ const MIN_SEGMENT_LENGTH := 0.05
 @export var build_collisions := true
 @export var include_ceilings := true
 @export var show_space_labels := false
+@export var show_old_incline_debug := false
 @export var build_room_spaces := true
 @export var build_shared_infrastructure := true
 @export var sector_ids := PackedStringArray()
@@ -145,12 +146,12 @@ func _create_materials() -> void:
 	_materials["historic"] = HISTORIC_PANELS
 	_materials["utility"] = UTILITY_PANELS
 	_materials["freight"] = FREIGHT_PANELS
-	_materials["passenger_route"] = _material(Color(0.30, 0.56, 0.72), 0.92)
-	_materials["service_route"] = _material(Color(0.36, 0.62, 0.62), 0.92)
-	_materials["freight_route"] = _material(Color(0.72, 0.48, 0.18), 0.92)
+	_materials["passenger_route"] = COMMAND_PANELS
+	_materials["service_route"] = UTILITY_PANELS
+	_materials["freight_route"] = FREIGHT_PANELS
 	_materials["stair"] = _material(Color(0.48, 0.35, 0.68, 0.62), 0.7, true)
 	_materials["lift"] = _material(Color(0.20, 0.56, 0.76, 0.55), 0.65, true)
-	_materials["old_incline"] = _material(Color(0.88, 0.38, 0.16), 0.9)
+	_materials["old_incline"] = HISTORIC_PANELS
 
 
 func _material(color: Color, roughness: float, transparent := false) -> StandardMaterial3D:
@@ -458,6 +459,8 @@ func _build_transition_marker(parent: Node3D, transition: Dictionary) -> void:
 	root.set_meta("transition_id", str(transition["id"]))
 	root.set_meta("kind", str(transition["kind"]))
 	parent.add_child(root)
+	if str(transition["kind"]) == "historic_inclined_freight_tunnel":
+		root.visible = show_old_incline_debug
 	if transition.has("shaft_bounds_xz"):
 		var bounds: Array = transition["shaft_bounds_xz"]
 		var center := _bounds_center(bounds)

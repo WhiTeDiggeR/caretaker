@@ -3,6 +3,8 @@ extends SceneTree
 const BLOCKOUT_SCENE := preload("res://scenes/complex_v3_blockout/complex_v3_blockout.tscn")
 const CAPTURES := {
 	"U-MEDBAY": "LV-U",
+	"U-CHAMBER-6": "LV-U",
+	"U-FREIGHT": "LV-U",
 	"L-OLD-CORE": "LV-L",
 	"T-UTILITIES": "LV-T",
 }

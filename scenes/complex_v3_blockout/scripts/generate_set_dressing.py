@@ -75,8 +75,6 @@ def portal_centers(handoff: dict) -> dict[str, list[tuple[float, float]]]:
         for space_id in portal["between"]:
             result.setdefault(space_id, []).append(center)
     for portal in handoff["external_portals"]:
-        if not portal.get("traversable", True):
-            continue
         a, b = portal["segment_xz"]
         center = ((a[0] + b[0]) * 0.5, (a[1] + b[1]) * 0.5)
         result.setdefault(portal["space"], []).append(center)
@@ -87,9 +85,13 @@ def pick_position(space: dict, footprint: tuple[float, float], portals: list[tup
     x0, z0, x1, z1 = map(float, space["bounds_xz"])
     half_x = footprint[0] * 0.5 + 0.45
     half_z = footprint[1] * 0.5 + 0.45
+    center_x = (x0 + x1) * 0.5
+    center_z = (z0 + z1) * 0.5
     candidates = [
-        (x0 + half_x, z0 + half_z), (x1 - half_x, z0 + half_z),
-        (x0 + half_x, z1 - half_z), (x1 - half_x, z1 - half_z),
+        (x0 + half_x, center_z),
+        (x1 - half_x, center_z),
+        (center_x, z0 + half_z),
+        (center_x, z1 - half_z),
     ]
     if x1 - x0 < half_x * 2.0 or z1 - z0 < half_z * 2.0:
         return ((x0 + x1) * 0.5, float(space["floor_y"]), (z0 + z1) * 0.5)
@@ -102,7 +104,7 @@ def pick_position(space: dict, footprint: tuple[float, float], portals: list[tup
 
 
 def choose_prop(space: dict, family: str, index: int) -> str:
-    transit_words = ("airlock", "circulation", "corridor", "distribution", "gallery", "junction", "lobby", "threshold", "vestibule")
+    transit_words = ("airlock", "circulation", "corridor", "distribution", "gallery", "junction", "lobby", "threshold", "vestibule", "receiving_hall", "service_reception", "unloading_bay", "freight_platform")
     if any(word in str(space.get("name", "")).lower() for word in transit_words):
         return "wall_beacon"
     width = float(space["bounds_xz"][2]) - float(space["bounds_xz"][0])
@@ -122,8 +124,6 @@ def collect_frames(handoff: dict, spaces: dict[str, dict]) -> dict[str, list[dic
         owner = spaces[portal["between"][0]]["sector_id"]
         result.setdefault(owner, []).append(portal)
     for portal in handoff["external_portals"]:
-        if not portal.get("traversable", True):
-            continue
         owner = spaces[portal["space"]]["sector_id"]
         result.setdefault(owner, []).append(portal)
     return result
@@ -145,11 +145,15 @@ def make_manifest() -> dict:
             prop = choose_prop(space, family, index)
             path, size_x, size_z = PROP_DATA[prop]
             x, y, z = pick_position(space, (size_x, size_z), centers.get(space["id"], []))
-            if prop == "wall_beacon":
+            if prop == "wall_terminal":
+                y += 1.2
+            elif prop == "security_camera":
+                y += 2.65
+            elif prop == "wall_beacon":
                 y += 2.35
             cx = (float(space["bounds_xz"][0]) + float(space["bounds_xz"][2])) * 0.5
             cz = (float(space["bounds_xz"][1]) + float(space["bounds_xz"][3])) * 0.5
-            rotation_y = math.atan2(-(cx - x), -(cz - z))
+            rotation_y = math.atan2(cx - x, cz - z)
             placements.append({"kind": "prop", "id": f"{space['id']}::{prop}", "space_id": space["id"], "scene": path, "position": [x, y, z], "rotation_y": rotation_y, "footprint_xz": [size_x, size_z]})
         if not sector_spaces:
             x, y, z = map(float, sector["focus_xyz"])
@@ -158,13 +162,14 @@ def make_manifest() -> dict:
         for portal in frames.get(sector_id, []):
             a, b = portal["segment_xz"]
             width = float(portal["width"])
-            cargo = width >= 3.0 or "freight" in str(portal.get("type", "")) or "cargo" in str(portal.get("type", ""))
+            related_spaces = " ".join(portal.get("between", [portal.get("space", "")]))
+            cargo = width >= 3.0 or "freight" in str(portal.get("type", "")) or "cargo" in str(portal.get("type", "")) or "cargo_" in related_spaces
             frame_path = "res://objects/complex_v3/open_cargo_gate_frame.tscn" if cargo else "res://objects/complex_v3/open_door_frame.tscn"
             default_width = 4.16 if cargo else 2.38
             space_id = portal.get("space", portal.get("between", [""])[0])
             floor_y = float(spaces[space_id]["floor_y"])
             rotation_y = 0.0 if abs(float(b[0]) - float(a[0])) >= abs(float(b[1]) - float(a[1])) else math.pi * 0.5
-            placements.append({"kind": "open_portal_frame", "id": portal["id"], "space_id": space_id, "scene": frame_path, "position": [(float(a[0]) + float(b[0])) * 0.5, floor_y, (float(a[1]) + float(b[1])) * 0.5], "rotation_y": rotation_y, "scale": [width / default_width, float(portal["height"]) / (3.0 if cargo else 2.4), 1.0]})
+            placements.append({"kind": "open_portal_frame", "id": portal["id"], "space_id": space_id, "scene": frame_path, "position": [(float(a[0]) + float(b[0])) * 0.5, floor_y, (float(a[1]) + float(b[1])) * 0.5], "rotation_y": rotation_y, "scale": [width / default_width, float(portal["height"]) / (3.0 if cargo else 2.4), 1.0], "traversable": bool(portal.get("traversable", True))})
         sectors.append({"sector_id": sector_id, "family": family, "zone_scene": sector["scene"], "dressing_scene": f"res://scenes/complex_v3_blockout/set_dressing/sectors/{sector_id.lower().replace('-', '_')}_dressing.tscn", "placements": placements})
     return {"schema_version": "1.0", "source": "HANDOFF-GEOMETRY-01", "sector_count": len(sectors), "sectors": sectors}
 
@@ -193,6 +198,8 @@ def render_scene(sector: dict) -> str:
 
 def attach_to_zone(zone_path: Path, dressing_res: str) -> None:
     text = zone_path.read_text(encoding="utf-8")
+    if dressing_res in text and 'name="SetDressing"' in text:
+        return
     text = re.sub(r'\n\[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/set_dressing/[^\n]+\n', "\n", text)
     text = re.sub(r'\n\[node name="SetDressing" parent="AuthoredContent" instance=ExtResource\("2_dressing"\)\]\n?', "\n", text)
     text = re.sub(r"\[gd_scene load_steps=\d+ format=3\]", "[gd_scene load_steps=3 format=3]", text, count=1)
