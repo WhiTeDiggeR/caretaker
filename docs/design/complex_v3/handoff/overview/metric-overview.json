@@ -1,0 +1,76 @@
+{
+  "schema_version": "0.1-stage-1",
+  "map_id": "caretaker-complex-v3",
+  "artifact_id": "OVERVIEW-DATA-01",
+  "status": "approved",
+  "units": "m",
+  "plan_style_id": "caretaker-style-b-v1",
+  "coordinate_system": {
+    "plane": "XZ",
+    "up_axis": "Y",
+    "positive_x": "east/right",
+    "positive_z": "south/down",
+    "origin": "center of the main passenger elevator shaft at LV-U finished floor"
+  },
+  "levels": [
+    {"id": "LV-U", "name": "Верхний основной", "floor_y": 0.0, "status": "fixed-datum"},
+    {"id": "LV-L", "name": "Нижний основной", "floor_y": -6.0, "status": "provisional", "tolerance": 0.5},
+    {"id": "LV-T", "name": "Технический", "floor_y": -11.5, "status": "provisional", "tolerance": 0.5}
+  ],
+  "source_scale": [
+    {"levels": ["LV-U", "LV-L"], "approx_px_per_m": 9.0, "use": "proportions only"},
+    {"levels": ["LV-T"], "approx_px_per_m": 8.0, "use": "proportions and topology only; vertical anchors override source pixels"}
+  ],
+  "anchors": [
+    {"id": "A-MAIN-CORE", "position_xz": [0.0, 0.0], "levels": ["LV-U", "LV-L", "LV-T"], "tolerance": 0.25, "technical_stop": false},
+    {"id": "A-ROUTE-A", "position_xz": [-52.5, 9.5], "levels": ["LV-U", "LV-L"], "tolerance": 0.25},
+    {"id": "A-OLD-STAIR", "position_xz": [-90.0, 30.0], "levels": ["LV-L", "LV-T"], "tolerance": 0.25},
+    {"id": "A-SERVICE-STAIR", "position_xz": [-42.0, 50.0], "levels": ["LV-L", "LV-T"], "tolerance": 0.25},
+    {"id": "A-EAST-STAIR", "position_xz": [27.0, 10.5], "levels": ["LV-U", "LV-L", "LV-T"], "tolerance": 0.25},
+    {"id": "A-FREIGHT-LIFT", "position_xz": [20.0, 72.0], "levels": ["LV-U", "LV-L", "LV-T"], "tolerance": 0.25},
+    {"id": "A-HEAVY-SPINE", "centerline_z": 64.0, "levels": ["LV-U", "LV-L", "LV-T"], "tolerance": 0.5}
+  ],
+  "routes": [
+    {"id": "R-PAX", "name": "Пассажирская сеть", "nominal_width": 4.0, "levels": ["LV-U", "LV-L"], "bidirectional": true},
+    {"id": "R-TECH", "name": "Служебная сеть технического уровня", "nominal_width": 5.5, "levels": ["LV-T"], "bidirectional": true},
+    {"id": "R-FRT", "name": "Тяжёлая грузовая сеть", "nominal_width": 7.5, "allowed_range": [7.0, 8.0], "levels": ["LV-U", "LV-L", "LV-T"], "bidirectional": true},
+    {"id": "R-A", "name": "Маршрут A", "levels": ["LV-U", "LV-L"], "bidirectional": true},
+    {"id": "R-OLD-FRT", "name": "Старый наклонный тоннель", "levels": ["LV-U", "LV-L"], "bidirectional": true}
+  ],
+  "sector_envelopes": [
+    {"id": "U-EMERGENCY", "level": "LV-U", "name": "Аварийный и персональный сектор", "bounds_xz": [-110.0, -13.0, -62.0, 15.0]},
+    {"id": "U-ROUTE-A", "level": "LV-U", "name": "Верхняя часть маршрута A", "bounds_xz": [-64.0, -8.0, -45.0, 14.0]},
+    {"id": "U-DOMESTIC", "level": "LV-U", "name": "Бытовое крыло", "bounds_xz": [-61.0, -17.0, -33.0, 15.0]},
+    {"id": "U-CONTROL", "level": "LV-U", "name": "Новый центр управления", "bounds_xz": [-32.0, -13.0, -8.0, 15.0]},
+    {"id": "U-CENTRAL-CORE", "level": "LV-U", "name": "Центральное пассажирское ядро", "bounds_xz": [-8.0, -12.0, 8.0, 15.0]},
+    {"id": "U-EAST-SUPPORT", "level": "LV-U", "name": "Восточный хозблок и лестница", "bounds_xz": [10.0, -13.0, 32.0, 15.0]},
+    {"id": "U-CHAMBER-4", "level": "LV-U", "name": "Камера 4", "bounds_xz": [-110.0, 37.0, -82.0, 64.0]},
+    {"id": "U-SECURITY", "level": "LV-U", "name": "Главная служба безопасности", "bounds_xz": [-32.0, 31.0, 0.0, 52.0]},
+    {"id": "U-CHAMBER-6", "level": "LV-U", "name": "Камера 6", "bounds_xz": [0.0, 29.0, 32.0, 64.0]},
+    {"id": "U-FREIGHT", "level": "LV-U", "name": "Грузовая приёмная и лифт", "bounds_xz": [-16.0, 64.0, 30.0, 82.0]},
+    {"id": "L-CHAMBER-1", "level": "LV-L", "name": "Камера 1", "bounds_xz": [-110.0, -8.0, -83.0, 17.0]},
+    {"id": "L-OLD-CORE", "level": "LV-L", "name": "Старое ядро", "bounds_xz": [-84.0, -14.0, -62.0, 21.0]},
+    {"id": "L-ARCHIVE-A", "level": "LV-L", "name": "Архив и маршрут A", "bounds_xz": [-61.0, -14.0, -41.0, 15.0]},
+    {"id": "L-OLD-RECEIVING", "level": "LV-L", "name": "Старый приёмный сектор", "bounds_xz": [-110.0, 43.0, -72.0, 68.0]},
+    {"id": "L-CHAMBER-2", "level": "LV-L", "name": "Камера 2", "bounds_xz": [-74.0, 27.0, -48.0, 60.0]},
+    {"id": "L-SLEEP-LAB", "level": "LV-L", "name": "Ранняя лаборатория сна", "bounds_xz": [-34.0, -12.0, -12.0, 10.0]},
+    {"id": "L-CHAMBER-3", "level": "LV-L", "name": "Камера 3", "bounds_xz": [-36.0, 27.0, -10.0, 60.0]},
+    {"id": "L-SERVICE-INTERCHANGE", "level": "LV-L", "name": "Служебная развязка", "bounds_xz": [-48.0, 42.0, -34.0, 60.0]},
+    {"id": "L-CENTRAL-CORE", "level": "LV-L", "name": "Центральное пассажирское ядро", "bounds_xz": [-8.0, -12.0, 8.0, 15.0]},
+    {"id": "L-EAST-STAIR", "level": "LV-L", "name": "Восточная аварийная лестница", "bounds_xz": [20.0, 6.0, 32.0, 15.0]},
+    {"id": "L-CHAMBER-5", "level": "LV-L", "name": "Камера 5", "bounds_xz": [4.0, 27.0, 32.0, 60.0]},
+    {"id": "L-FREIGHT-SERVICE", "level": "LV-L", "name": "Грузовой и служебный сектор", "bounds_xz": [-38.0, 60.0, 30.0, 82.0]},
+    {"id": "T-ENERGY", "level": "LV-T", "name": "Энергетическое ядро", "bounds_xz": [-110.0, -15.0, -65.0, 15.0]},
+    {"id": "T-WORKSHOP", "level": "LV-T", "name": "Мастерская и склад", "bounds_xz": [-65.0, -15.0, -30.0, 15.0]},
+    {"id": "T-OLD-ACCESS", "level": "LV-T", "name": "Старый технический вход", "bounds_xz": [-102.0, 20.0, -78.0, 45.0]},
+    {"id": "T-EAST-VERTICAL", "level": "LV-T", "name": "Восточный энергетический узел", "bounds_xz": [18.0, -12.0, 32.0, 20.0]},
+    {"id": "T-UTILITIES", "level": "LV-T", "name": "Центральные инженерные системы", "bounds_xz": [-57.0, 20.0, 18.0, 56.0]},
+    {"id": "T-FREIGHT", "level": "LV-T", "name": "Технический грузовой сектор", "bounds_xz": [-20.0, 60.0, 30.0, 82.0]},
+    {"id": "T-CIRCULATION", "level": "LV-T", "name": "Служебная циркуляция", "bounds_xz": [-105.0, 15.0, 32.0, 68.0]}
+  ],
+  "notes": [
+    "sector_envelopes are review envelopes, not final wall footprints",
+    "some envelopes intentionally include internal circulation and may overlap another sector envelope; final spaces must not overlap",
+    "all exact portals, walls and clearances are deferred to stage 2 passports"
+  ]
+}
