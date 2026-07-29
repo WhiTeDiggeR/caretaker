@@ -1,7 +1,9 @@
 # Stage 2 validation report
 
-Date: 2026-07-29  
-Map: `caretaker-complex-v3`  
+Date: 2026-07-29
+
+Map: `caretaker-complex-v3`
+
 Gate: full 3D handoff, awaiting user approval
 
 ## Automated checks
