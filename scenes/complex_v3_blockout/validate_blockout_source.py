@@ -38,8 +38,9 @@ def main() -> int:
         errors.append(f"missing blockout files: {missing}")
     if handoff.get("status") != "verified" or handoff.get("units") != "m":
         errors.append("geometry handoff must be verified and metric")
-    if len(handoff.get("spaces", [])) != 139:
-        errors.append("handoff must contain 139 exact room spaces")
+    expected_spaces = sum(len(sector["space_ids"]) for sector in handoff.get("sectors", []))
+    if len(handoff.get("spaces", [])) != expected_spaces:
+        errors.append(f"handoff must contain {expected_spaces} passport-declared room spaces")
     if len(handoff.get("route_spaces", [])) != 7:
         errors.append("handoff must contain 7 route spaces")
     if len(vertical.get("anchors", [])) != 7:

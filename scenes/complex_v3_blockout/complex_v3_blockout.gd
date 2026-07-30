@@ -27,6 +27,7 @@ const MIN_SEGMENT_LENGTH := 0.05
 @export var build_shared_infrastructure := true
 @export var sector_ids := PackedStringArray()
 @export var preview_shared_infrastructure_when_standalone := false
+@export var preview_main_core_verticals_when_standalone := false
 @export var editor_preview_enabled := false:
 	set(value):
 		if editor_preview_enabled == value:
@@ -279,13 +280,74 @@ func _build_space(space: Dictionary, is_route: bool) -> void:
 	var height := float(space["clear_height"])
 	var thickness := float(space.get("wall_thickness", 0.35 if is_route else 0.3))
 	var material := _material_for_space(space, is_route)
-	_build_floor(root, bounds, floor_y, material)
+	var space_id := str(space["id"])
+	var open_vertical := space_id in [
+		"U-CENTRAL-CORE/passenger_elevator",
+		"U-CENTRAL-CORE/main_stair",
+		"L-CENTRAL-CORE/passenger_elevator",
+		"L-CENTRAL-CORE/main_stair",
+	]
+	if not open_vertical:
+		_build_floor(root, bounds, floor_y, material)
 	_build_walls(root, str(space["id"]), bounds, floor_y, height, thickness, material)
-	if _ceilings_enabled():
+	_build_special_space_features(root, space_id, bounds, floor_y, material)
+	if _ceilings_enabled() and not open_vertical:
 		_build_ceiling(root, bounds, floor_y + height, material)
 	if show_space_labels:
 		_add_label(root, space, bounds, floor_y)
 	_stats["route_spaces" if is_route else "spaces"] += 1
+
+
+func _build_special_space_features(parent: Node3D, space_id: String, bounds: Array, floor_y: float, material: Material) -> void:
+	if not preview_main_core_verticals_when_standalone:
+		return
+	if space_id.ends_with("CENTRAL-CORE/passenger_elevator"):
+		_build_passenger_elevator_cabin(parent, bounds, 0.0)
+	elif space_id.ends_with("CENTRAL-CORE/main_stair"):
+		_build_main_core_switchback_stair(parent, bounds, 0.0, material)
+
+
+func _build_passenger_elevator_cabin(parent: Node3D, bounds: Array, floor_y: float) -> void:
+	var center := _bounds_center(bounds)
+	var cabin_width := 2.6
+	var cabin_depth := 2.8
+	var cabin_height := 2.4
+	var wall := 0.12
+	_add_box(parent, "CabinFloor", Vector3(center.x, floor_y - 0.06, center.y), Vector3(cabin_width, 0.12, cabin_depth), _materials["lift"], _collisions_enabled())
+	_add_box(parent, "CabinBack", Vector3(center.x, floor_y + cabin_height * 0.5, center.y - cabin_depth * 0.5), Vector3(cabin_width, cabin_height, wall), _materials["lift"], _collisions_enabled())
+	_add_box(parent, "CabinWest", Vector3(center.x - cabin_width * 0.5, floor_y + cabin_height * 0.5, center.y), Vector3(wall, cabin_height, cabin_depth), _materials["lift"], _collisions_enabled())
+	_add_box(parent, "CabinEast", Vector3(center.x + cabin_width * 0.5, floor_y + cabin_height * 0.5, center.y), Vector3(wall, cabin_height, cabin_depth), _materials["lift"], _collisions_enabled())
+	_add_box(parent, "CabinCeiling", Vector3(center.x, floor_y + cabin_height, center.y), Vector3(cabin_width, 0.12, cabin_depth), _materials["lift"], false)
+
+
+func _build_main_core_switchback_stair(parent: Node3D, bounds: Array, floor_y: float, material: Material) -> void:
+	var x0 := float(bounds[0])
+	var z0 := float(bounds[1])
+	var x1 := float(bounds[2])
+	var z1 := float(bounds[3])
+	var flight_width := 1.8
+	var tread_depth := 0.3
+	var riser_height := 0.15
+	var risers := 20
+	var first_x := x0 + 1.55
+	var second_x := x1 - 1.55
+	var run_north := z0 + 3.5
+	var run_south := run_north + tread_depth * risers
+	var intermediate_y := floor_y - riser_height * risers
+	var lower_y := floor_y - riser_height * risers * 2
+	for index: int in range(risers):
+		var first_top := floor_y - riser_height * index
+		var first_height := first_top - intermediate_y
+		var first_z := run_south - tread_depth * (index + 0.5)
+		_add_box(parent, "WestFlight_%02d" % index, Vector3(first_x, intermediate_y + first_height * 0.5, first_z), Vector3(flight_width, first_height, tread_depth), material, _collisions_enabled())
+		var second_top := intermediate_y - riser_height * index
+		var second_height := second_top - lower_y
+		var second_z := run_north + tread_depth * (index + 0.5)
+		_add_box(parent, "EastFlight_%02d" % index, Vector3(second_x, lower_y + second_height * 0.5, second_z), Vector3(flight_width, second_height, tread_depth), material, _collisions_enabled())
+	var landing_width := x1 - x0 - 0.8
+	_add_box(parent, "IntermediateLanding", Vector3((x0 + x1) * 0.5, intermediate_y - 0.06, z0 + 1.2), Vector3(landing_width, 0.12, 2.4), material, _collisions_enabled())
+	_add_box(parent, "UpperLanding", Vector3((x0 + x1) * 0.5, floor_y - 0.06, (run_south + z1) * 0.5), Vector3(landing_width, 0.12, z1 - run_south), material, _collisions_enabled())
+	_add_box(parent, "LowerLanding", Vector3((x0 + x1) * 0.5, lower_y - 0.06, (run_south + z1) * 0.5), Vector3(landing_width, 0.12, z1 - run_south), material, _collisions_enabled())
 
 
 func _build_overlay_route(parent: Node3D, space: Dictionary) -> void:
@@ -468,6 +530,8 @@ func _build_transition_marker(parent: Node3D, transition: Dictionary) -> void:
 		var bottom := -11.5
 		var top := 4.5
 		_add_box(root, "ShaftEnvelope", Vector3(center.x, (top + bottom) * 0.5, center.y), Vector3(size.x, top - bottom, size.y), _materials["lift"], false)
+		if str(transition["id"]) == "VT-MAIN-ELEVATOR":
+			_build_passenger_elevator_cabin(root, bounds, 0.0)
 	elif transition.has("centerline_xyz"):
 		var points: Array = transition["centerline_xyz"]
 		for index: int in range(points.size() - 1):
@@ -475,11 +539,14 @@ func _build_transition_marker(parent: Node3D, transition: Dictionary) -> void:
 			var b := _vector3_x_y_z(points[index + 1])
 			_add_ramp_segment(root, "Ramp_%02d" % index, a, b, float(transition["clear_width"]), _materials["old_incline"])
 	elif transition.has("center_xz"):
-		var center_xz := _vector2(transition["center_xz"])
-		var connects: Array = transition.get("connects", ["LV-U", "LV-L"])
-		var top := _level_datum(str(connects[0])) + 0.25
-		var bottom := _level_datum(str(connects[-1]))
-		_add_box(root, "StairEnvelope", Vector3(center_xz.x, (top + bottom) * 0.5, center_xz.y), Vector3(float(transition.get("clear_width", 1.5)), top - bottom, 2.2), _materials["stair"], false)
+		if str(transition["id"]) == "VT-MAIN-STAIR":
+			_build_main_core_switchback_stair(root, [0.2, -5.0, 6.9, 9.5], 0.0, _materials["utility"])
+		else:
+			var center_xz := _vector2(transition["center_xz"])
+			var connects: Array = transition.get("connects", ["LV-U", "LV-L"])
+			var top := _level_datum(str(connects[0])) + 0.25
+			var bottom := _level_datum(str(connects[-1]))
+			_add_box(root, "StairEnvelope", Vector3(center_xz.x, (top + bottom) * 0.5, center_xz.y), Vector3(float(transition.get("clear_width", 1.5)), top - bottom, 2.2), _materials["stair"], false)
 
 
 func _add_ramp_segment(parent: Node3D, node_name: String, start: Vector3, end: Vector3, width: float, material: Material) -> void:

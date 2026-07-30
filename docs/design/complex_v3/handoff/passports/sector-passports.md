@@ -115,10 +115,10 @@ Required connections:
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
 - Source: `../../u_central_core.html` (full sector geometry)
-- Parent boundary XZ: `[-8.0, -12.0] → [8.0, 15.0] m`
-- Local origin XYZ: `[-8.0, 0.0, -12.0]`
+- Parent boundary XZ: `[-7.75, -6.0] → [7.75, 15.0] m`
+- Local origin XYZ: `[-7.75, 0.0, -6.0]`
 - Neighbors: `L-CENTRAL-CORE`, `U-PAX`
-- Allowed subdivisions: `access_lobby`, `passenger_elevator`, `main_stair`, `service_access`
+- Allowed subdivisions: `access_lobby`, `lift_lobby`, `passenger_elevator`, `main_stair`, `service_access`, `electrical_room`
 - Clearance profile: `passenger` — {'minimum_width': 1.2, 'minimum_height': 2.4, 'turning_envelope': 1.5}
 - Reserved volumes: `lift_shaft`
 - Anchors: `A-MAIN-CORE`
@@ -418,10 +418,10 @@ Required connections:
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
 - Source: `../../l_central_core.html` (full sector geometry)
-- Parent boundary XZ: `[-8.0, -12.0] → [8.0, 15.0] m`
-- Local origin XYZ: `[-8.0, -6.0, -12.0]`
+- Parent boundary XZ: `[-7.75, -6.0] → [7.75, 15.0] m`
+- Local origin XYZ: `[-7.75, -6.0, -6.0]`
 - Neighbors: `L-PAX`, `T-EAST-VERTICAL`, `U-CENTRAL-CORE`
-- Allowed subdivisions: `access_lobby`, `passenger_elevator`, `main_stair`, `service_access`
+- Allowed subdivisions: `access_lobby`, `lift_lobby`, `passenger_elevator`, `main_stair`, `service_access`, `electrical_room`
 - Clearance profile: `passenger` — {'minimum_width': 1.2, 'minimum_height': 2.4, 'turning_envelope': 1.5}
 - Reserved volumes: `lift_shaft`
 - Anchors: `A-MAIN-CORE`

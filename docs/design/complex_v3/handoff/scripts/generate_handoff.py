@@ -16,6 +16,7 @@ PASSPORTS_PATH = ROOT / "passports" / "sector-passports.json"
 OUTPUT_PATH = ROOT / "geometry" / "complex-handoff.json"
 
 FINAL_BOUNDS_OVERRIDE = {
+    "U-CENTRAL-CORE": [-7.75, -6.0, 7.75, 15.0],
     "U-ROUTE-A": [-62.0, -8.0, -46.0, 14.0],
     "U-DOMESTIC": [-46.0, -17.0, -33.0, 15.0],
     "U-CHAMBER-4": [-110.0, 37.0, -82.0, 60.0],
@@ -28,10 +29,20 @@ FINAL_BOUNDS_OVERRIDE = {
     "L-SERVICE-INTERCHANGE": [-48.0, 42.0, -36.0, 60.0],
     "L-CHAMBER-3": [-36.0, 27.0, -10.0, 60.0],
     "L-FREIGHT-SERVICE": [-38.0, 67.5, 30.0, 82.0],
+    "L-CENTRAL-CORE": [-7.75, -6.0, 7.75, 15.0],
     "T-OLD-ACCESS": [-102.0, 20.5, -78.0, 45.0],
     "T-EAST-VERTICAL": [18.0, -12.0, 32.0, 15.0],
     "T-UTILITIES": [-57.0, 20.5, 18.0, 56.0],
     "T-FREIGHT": [-20.0, 67.5, 30.0, 82.0],
+}
+
+CENTRAL_CORE_SECTORS = {"U-CENTRAL-CORE", "L-CENTRAL-CORE"}
+CENTRAL_CORE_PORTAL_WIDTHS = {
+    frozenset(("electrical_room", "service_access")): 1.5,
+    frozenset(("service_access", "lift_lobby")): 1.5,
+    frozenset(("passenger_elevator", "lift_lobby")): 2.0,
+    frozenset(("lift_lobby", "access_lobby")): 6.5,
+    frozenset(("main_stair", "access_lobby")): 2.33,
 }
 
 CONTAINMENT_SECTORS = {"U-CHAMBER-4", "U-CHAMBER-6", "L-CHAMBER-3", "L-CHAMBER-5"}
@@ -189,12 +200,35 @@ def emergency_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], l
     return result, [("capsule_hall", "hermetic_vestibule"), ("hermetic_vestibule", "distribution_hall"), ("capsule_hall", "internal_technical_room")]
 
 
+def central_core_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the approved 15.5 x 21 m passenger-core SVG at 24 px/m."""
+    x0, z0, x1, z1 = bounds
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "electrical_room", rect(-6.9, -5.0, -2.1, -0.25), height),
+        room(sector_id, "service_access", rect(-2.1, -5.0, -0.2, 5.0), height),
+        room(sector_id, "passenger_elevator", rect(-6.9, -0.25, -2.1, 5.0), height, True, "elevator"),
+        room(sector_id, "lift_lobby", rect(-6.9, 5.0, -0.2, 9.5), height, True, "circulation"),
+        room(sector_id, "main_stair", rect(0.2, -5.0, 6.9, 9.5), height, True, "stair"),
+        room(sector_id, "access_lobby", rect(-7.25, 9.5, 7.25, z1), height, True, "circulation"),
+    ]
+    return result, [
+        ("electrical_room", "service_access"),
+        ("service_access", "lift_lobby"),
+        ("passenger_elevator", "lift_lobby"),
+        ("lift_lobby", "access_lobby"),
+        ("main_stair", "access_lobby"),
+    ]
+
+
 def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, str]]]:
     sector_id = passport["sector_id"]
     names = passport["allowed_internal_subdivision"]
     bounds = FINAL_BOUNDS_OVERRIDE.get(sector_id, passport["parent_boundary_xz"])
     if sector_id == "U-EMERGENCY":
         return emergency_layout(sector_id, bounds)
+    if sector_id in CENTRAL_CORE_SECTORS:
+        return central_core_layout(sector_id, bounds)
     if sector_id in CONTAINMENT_SECTORS:
         return containment_layout(sector_id, names, bounds)
     if sector_id == "L-CHAMBER-2":
@@ -233,8 +267,12 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
     axis, coordinate, lo, hi = shared
     span = hi - lo
     cargo_threshold = "cargo_airlock" in a["id"] or "cargo_airlock" in b["id"] or "cargo_vestibule" in a["id"] or "cargo_vestibule" in b["id"]
-    requested_width = 4.5 if cargo_threshold else width
-    actual_width = min(requested_width, max(0.9, span * 0.85 if cargo_threshold else span * 0.6))
+    central_width = CENTRAL_CORE_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"]))) if sector_id in CENTRAL_CORE_SECTORS else None
+    requested_width = central_width if central_width is not None else 4.5 if cargo_threshold else width
+    if central_width is not None:
+        actual_width = min(requested_width, max(0.9, span * 0.95))
+    else:
+        actual_width = min(requested_width, max(0.9, span * 0.85 if cargo_threshold else span * 0.6))
     center = (lo + hi) / 2
     segment = [[coordinate, center - actual_width / 2], [coordinate, center + actual_width / 2]] if axis == "x" else [[center - actual_width / 2, coordinate], [center + actual_width / 2, coordinate]]
     return {
@@ -358,8 +396,9 @@ def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bound
     entry = select_space(sector_id, spaces, edge["kind"])
     side, coordinate, lo, hi = side_for(entry["bounds_xz"], sector_bounds, preferred_side(sector_id, other, edge["kind"], sector_bounds))
     heavy = "cargo" in edge["kind"] or "freight" in edge["kind"]
-    width = 4.5 if heavy else 1.8 if "controlled" in edge["kind"] or "hermetic" in edge["kind"] else 1.2
-    height = 4.5 if heavy else 2.8 if "airlock" in entry["name"] or "hermetic" in edge["kind"] else 2.4
+    central_entry = sector_id in CENTRAL_CORE_SECTORS and other in {"U-PAX", "L-PAX"}
+    width = 4.5 if heavy or central_entry else 1.8 if "controlled" in edge["kind"] or "hermetic" in edge["kind"] else 1.2
+    height = 4.5 if heavy else 2.8 if central_entry or "airlock" in entry["name"] or "hermetic" in edge["kind"] else 2.4
     actual_width = min(width, max(0.9, (hi - lo) * 0.6))
     center = (lo + hi) / 2
     segment = [[coordinate, center - actual_width / 2], [coordinate, center + actual_width / 2]] if side in {"west", "east"} else [[center - actual_width / 2, coordinate], [center + actual_width / 2, coordinate]]

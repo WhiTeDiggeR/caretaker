@@ -5,7 +5,6 @@ class_name ComplexV3Blockout
 const HANDOFF_PATH := "res://docs/design/complex_v3/handoff/geometry/complex-handoff.json"
 const SECTOR_CATALOG_PATH := "res://scenes/complex_v3_blockout/sector_catalog.json"
 const EXPECTED_COUNTS := {
-	"spaces": 139,
 	"route_spaces": 7,
 	"anchors": 7,
 	"transitions": 8,
@@ -43,6 +42,7 @@ func _apply_part_options() -> void:
 		part.include_ceilings = include_ceilings
 		part.build_collisions = build_collisions
 		part.show_space_labels = show_space_labels
+		part.preview_main_core_verticals_when_standalone = false
 
 
 func _get_parts() -> Array[ComplexV3BlockoutPart]:
@@ -121,11 +121,18 @@ func validate_against_handoff() -> PackedStringArray:
 				errors.append("Duplicate sector scene: %s" % sector_id)
 			seen.append(sector_id)
 	var stats := get_build_stats()
+	var expected_spaces := (_handoff.get("spaces", []) as Array).size()
+	if int(stats.get("spaces", 0)) != expected_spaces:
+		errors.append("Expected %d spaces, built %d" % [expected_spaces, int(stats.get("spaces", 0))])
 	for key: String in EXPECTED_COUNTS:
 		if int(stats.get(key, 0)) != int(EXPECTED_COUNTS[key]):
 			errors.append("Expected %d %s, built %d" % [int(EXPECTED_COUNTS[key]), key, int(stats.get(key, 0))])
-	if get_portal_passages().size() != 147:
-		errors.append("Expected 147 traversable portals, found %d" % get_portal_passages().size())
+	var expected_portals := (_handoff.get("internal_portals", []) as Array).size()
+	for portal_value: Variant in _handoff.get("external_portals", []):
+		if bool((portal_value as Dictionary).get("traversable", true)):
+			expected_portals += 1
+	if get_portal_passages().size() != expected_portals:
+		errors.append("Expected %d traversable portals, found %d" % [expected_portals, get_portal_passages().size()])
 	return errors
 
 

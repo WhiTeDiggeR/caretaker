@@ -35,8 +35,9 @@ def main() -> int:
             f"missing={sorted(missing_geometry_sectors)}, "
             f"extra={sorted(extra_geometry_sectors)}"
         )
-    if sum(item["space_count"] for item in catalog["sectors"]) != 139:
-        errors.append("catalog space counts do not total 139")
+    expected_space_count = len(geometry["spaces"])
+    if sum(item["space_count"] for item in catalog["sectors"]) != expected_space_count:
+        errors.append(f"catalog space counts do not total {expected_space_count}")
 
     assembly = ASSEMBLY_PATH.read_text(encoding="utf-8")
     for item in catalog["sectors"]:
@@ -79,7 +80,7 @@ def main() -> int:
             print(f"ERROR: {error}")
         print(f"FAILED: {len(errors)} issue(s)")
         return 1
-    print("OK: 30 sector scenes match passports, 139 spaces and one shared infrastructure scene")
+    print(f"OK: 30 sector scenes match passports, {expected_space_count} spaces and one shared infrastructure scene")
     return 0
 
 

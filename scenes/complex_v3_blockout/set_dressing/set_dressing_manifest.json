@@ -159,9 +159,57 @@
           "space_id": "L-CENTRAL-CORE/access_lobby",
           "scene": "res://objects/complex_v3/wall_beacon.tscn",
           "position": [
-            0.0,
+            -6.5,
             -3.65,
-            -11.425
+            12.25
+          ],
+          "rotation_y": 1.5707963267948966,
+          "footprint_xz": [
+            0.6,
+            0.25
+          ]
+        },
+        {
+          "kind": "prop",
+          "id": "L-CENTRAL-CORE/electrical_room::generator_unit",
+          "space_id": "L-CENTRAL-CORE/electrical_room",
+          "scene": "res://objects/generator_unit.tscn",
+          "position": [
+            -5.6000000000000005,
+            -6.0,
+            -2.625
+          ],
+          "rotation_y": 1.5707963267948966,
+          "footprint_xz": [
+            1.7,
+            1.1
+          ]
+        },
+        {
+          "kind": "prop",
+          "id": "L-CENTRAL-CORE/lift_lobby::wall_beacon",
+          "space_id": "L-CENTRAL-CORE/lift_lobby",
+          "scene": "res://objects/complex_v3/wall_beacon.tscn",
+          "position": [
+            -6.15,
+            -3.65,
+            7.25
+          ],
+          "rotation_y": 1.5707963267948966,
+          "footprint_xz": [
+            0.6,
+            0.25
+          ]
+        },
+        {
+          "kind": "prop",
+          "id": "L-CENTRAL-CORE/main_stair::wall_beacon",
+          "space_id": "L-CENTRAL-CORE/main_stair",
+          "scene": "res://objects/complex_v3/wall_beacon.tscn",
+          "position": [
+            3.5500000000000003,
+            -3.65,
+            -4.425
           ],
           "rotation_y": 0.0,
           "footprint_xz": [
@@ -171,65 +219,49 @@
         },
         {
           "kind": "prop",
-          "id": "L-CENTRAL-CORE/main_stair::utility_tank",
-          "space_id": "L-CENTRAL-CORE/main_stair",
-          "scene": "res://objects/complex_v3/utility_tank.tscn",
-          "position": [
-            4.64,
-            -6.0,
-            -10.85
-          ],
-          "rotation_y": 0.0,
-          "footprint_xz": [
-            1.4,
-            1.4
-          ]
-        },
-        {
-          "kind": "prop",
-          "id": "L-CENTRAL-CORE/passenger_elevator::generator_unit",
+          "id": "L-CENTRAL-CORE/passenger_elevator::wall_beacon",
           "space_id": "L-CENTRAL-CORE/passenger_elevator",
-          "scene": "res://objects/generator_unit.tscn",
+          "scene": "res://objects/complex_v3/wall_beacon.tscn",
           "position": [
-            -4.64,
-            -6.0,
-            -11.0
+            -4.5,
+            -3.65,
+            0.32499999999999996
           ],
           "rotation_y": 0.0,
           "footprint_xz": [
-            1.7,
-            1.1
+            0.6,
+            0.25
           ]
         },
         {
           "kind": "prop",
-          "id": "L-CENTRAL-CORE/service_access::workbench",
+          "id": "L-CENTRAL-CORE/service_access::wall_terminal",
           "space_id": "L-CENTRAL-CORE/service_access",
-          "scene": "res://objects/workbench.tscn",
+          "scene": "res://objects/wall_terminal.tscn",
           "position": [
-            -4.64,
-            -6.0,
-            14.05
+            -1.1,
+            -4.8,
+            0.0
           ],
-          "rotation_y": 3.141592653589793,
+          "rotation_y": -1.5707963267948966,
           "footprint_xz": [
-            2.0,
-            1.0
+            0.9,
+            0.5
           ]
         },
         {
           "kind": "open_portal_frame",
           "id": "P-L-CENTRAL-CORE-01",
-          "space_id": "L-CENTRAL-CORE/access_lobby",
+          "space_id": "L-CENTRAL-CORE/electrical_room",
           "scene": "res://objects/complex_v3/open_door_frame.tscn",
           "position": [
-            -1.28,
+            -2.1,
             -6.0,
-            -5.25
+            -2.625
           ],
           "rotation_y": 1.5707963267948966,
           "scale": [
-            0.5042016806722689,
+            0.6302521008403361,
             1.0,
             1.0
           ],
@@ -238,16 +270,16 @@
         {
           "kind": "open_portal_frame",
           "id": "P-L-CENTRAL-CORE-02",
-          "space_id": "L-CENTRAL-CORE/access_lobby",
+          "space_id": "L-CENTRAL-CORE/service_access",
           "scene": "res://objects/complex_v3/open_door_frame.tscn",
           "position": [
-            -1.28,
+            -1.15,
             -6.0,
-            8.25
+            5.0
           ],
-          "rotation_y": 1.5707963267948966,
+          "rotation_y": 0.0,
           "scale": [
-            0.5042016806722689,
+            0.6302521008403361,
             1.0,
             1.0
           ],
@@ -256,16 +288,52 @@
         {
           "kind": "open_portal_frame",
           "id": "P-L-CENTRAL-CORE-03",
-          "space_id": "L-CENTRAL-CORE/access_lobby",
+          "space_id": "L-CENTRAL-CORE/passenger_elevator",
           "scene": "res://objects/complex_v3/open_door_frame.tscn",
           "position": [
-            1.28,
+            -4.5,
             -6.0,
-            1.5
+            5.0
           ],
-          "rotation_y": 1.5707963267948966,
+          "rotation_y": 0.0,
           "scale": [
-            0.5042016806722689,
+            0.8403361344537815,
+            1.0,
+            1.0
+          ],
+          "traversable": true
+        },
+        {
+          "kind": "open_portal_frame",
+          "id": "P-L-CENTRAL-CORE-04",
+          "space_id": "L-CENTRAL-CORE/lift_lobby",
+          "scene": "res://objects/complex_v3/open_door_frame.tscn",
+          "position": [
+            -3.5500000000000003,
+            -6.0,
+            9.5
+          ],
+          "rotation_y": 0.0,
+          "scale": [
+            2.67436974789916,
+            1.0,
+            1.0
+          ],
+          "traversable": true
+        },
+        {
+          "kind": "open_portal_frame",
+          "id": "P-L-CENTRAL-CORE-05",
+          "space_id": "L-CENTRAL-CORE/main_stair",
+          "scene": "res://objects/complex_v3/open_door_frame.tscn",
+          "position": [
+            3.55,
+            -6.0,
+            9.5
+          ],
+          "rotation_y": 0.0,
+          "scale": [
+            0.9789915966386555,
             1.0,
             1.0
           ],
@@ -275,7 +343,7 @@
           "kind": "open_portal_frame",
           "id": "PX-E-L09-L-CENTRAL-CORE",
           "space_id": "L-CENTRAL-CORE/access_lobby",
-          "scene": "res://objects/complex_v3/open_door_frame.tscn",
+          "scene": "res://objects/complex_v3/open_cargo_gate_frame.tscn",
           "position": [
             0.0,
             -6.0,
@@ -283,8 +351,8 @@
           ],
           "rotation_y": 0.0,
           "scale": [
-            0.5042016806722689,
-            1.0,
+            1.0817307692307692,
+            0.9333333333333332,
             1.0
           ],
           "traversable": true
@@ -3013,9 +3081,57 @@
           "space_id": "U-CENTRAL-CORE/access_lobby",
           "scene": "res://objects/complex_v3/wall_beacon.tscn",
           "position": [
-            0.0,
+            -6.5,
             2.35,
-            -11.425
+            12.25
+          ],
+          "rotation_y": 1.5707963267948966,
+          "footprint_xz": [
+            0.6,
+            0.25
+          ]
+        },
+        {
+          "kind": "prop",
+          "id": "U-CENTRAL-CORE/electrical_room::generator_unit",
+          "space_id": "U-CENTRAL-CORE/electrical_room",
+          "scene": "res://objects/generator_unit.tscn",
+          "position": [
+            -5.6000000000000005,
+            0.0,
+            -2.625
+          ],
+          "rotation_y": 1.5707963267948966,
+          "footprint_xz": [
+            1.7,
+            1.1
+          ]
+        },
+        {
+          "kind": "prop",
+          "id": "U-CENTRAL-CORE/lift_lobby::wall_beacon",
+          "space_id": "U-CENTRAL-CORE/lift_lobby",
+          "scene": "res://objects/complex_v3/wall_beacon.tscn",
+          "position": [
+            -6.15,
+            2.35,
+            7.25
+          ],
+          "rotation_y": 1.5707963267948966,
+          "footprint_xz": [
+            0.6,
+            0.25
+          ]
+        },
+        {
+          "kind": "prop",
+          "id": "U-CENTRAL-CORE/main_stair::wall_beacon",
+          "space_id": "U-CENTRAL-CORE/main_stair",
+          "scene": "res://objects/complex_v3/wall_beacon.tscn",
+          "position": [
+            3.5500000000000003,
+            2.35,
+            -4.425
           ],
           "rotation_y": 0.0,
           "footprint_xz": [
@@ -3025,65 +3141,49 @@
         },
         {
           "kind": "prop",
-          "id": "U-CENTRAL-CORE/main_stair::utility_tank",
-          "space_id": "U-CENTRAL-CORE/main_stair",
-          "scene": "res://objects/complex_v3/utility_tank.tscn",
-          "position": [
-            4.64,
-            0.0,
-            -10.85
-          ],
-          "rotation_y": 0.0,
-          "footprint_xz": [
-            1.4,
-            1.4
-          ]
-        },
-        {
-          "kind": "prop",
-          "id": "U-CENTRAL-CORE/passenger_elevator::generator_unit",
+          "id": "U-CENTRAL-CORE/passenger_elevator::wall_beacon",
           "space_id": "U-CENTRAL-CORE/passenger_elevator",
-          "scene": "res://objects/generator_unit.tscn",
+          "scene": "res://objects/complex_v3/wall_beacon.tscn",
           "position": [
-            -4.64,
-            0.0,
-            -11.0
+            -4.5,
+            2.35,
+            0.32499999999999996
           ],
           "rotation_y": 0.0,
           "footprint_xz": [
-            1.7,
-            1.1
+            0.6,
+            0.25
           ]
         },
         {
           "kind": "prop",
-          "id": "U-CENTRAL-CORE/service_access::workbench",
+          "id": "U-CENTRAL-CORE/service_access::wall_terminal",
           "space_id": "U-CENTRAL-CORE/service_access",
-          "scene": "res://objects/workbench.tscn",
+          "scene": "res://objects/wall_terminal.tscn",
           "position": [
-            -4.64,
-            0.0,
-            14.05
+            -1.1,
+            1.2,
+            0.0
           ],
-          "rotation_y": 3.141592653589793,
+          "rotation_y": -1.5707963267948966,
           "footprint_xz": [
-            2.0,
-            1.0
+            0.9,
+            0.5
           ]
         },
         {
           "kind": "open_portal_frame",
           "id": "P-U-CENTRAL-CORE-01",
-          "space_id": "U-CENTRAL-CORE/access_lobby",
+          "space_id": "U-CENTRAL-CORE/electrical_room",
           "scene": "res://objects/complex_v3/open_door_frame.tscn",
           "position": [
-            -1.28,
+            -2.1,
             0.0,
-            -5.25
+            -2.625
           ],
           "rotation_y": 1.5707963267948966,
           "scale": [
-            0.5042016806722689,
+            0.6302521008403361,
             1.0,
             1.0
           ],
@@ -3092,16 +3192,16 @@
         {
           "kind": "open_portal_frame",
           "id": "P-U-CENTRAL-CORE-02",
-          "space_id": "U-CENTRAL-CORE/access_lobby",
+          "space_id": "U-CENTRAL-CORE/service_access",
           "scene": "res://objects/complex_v3/open_door_frame.tscn",
           "position": [
-            -1.28,
+            -1.15,
             0.0,
-            8.25
+            5.0
           ],
-          "rotation_y": 1.5707963267948966,
+          "rotation_y": 0.0,
           "scale": [
-            0.5042016806722689,
+            0.6302521008403361,
             1.0,
             1.0
           ],
@@ -3110,16 +3210,52 @@
         {
           "kind": "open_portal_frame",
           "id": "P-U-CENTRAL-CORE-03",
-          "space_id": "U-CENTRAL-CORE/access_lobby",
+          "space_id": "U-CENTRAL-CORE/passenger_elevator",
           "scene": "res://objects/complex_v3/open_door_frame.tscn",
           "position": [
-            1.28,
+            -4.5,
             0.0,
-            1.5
+            5.0
           ],
-          "rotation_y": 1.5707963267948966,
+          "rotation_y": 0.0,
           "scale": [
-            0.5042016806722689,
+            0.8403361344537815,
+            1.0,
+            1.0
+          ],
+          "traversable": true
+        },
+        {
+          "kind": "open_portal_frame",
+          "id": "P-U-CENTRAL-CORE-04",
+          "space_id": "U-CENTRAL-CORE/lift_lobby",
+          "scene": "res://objects/complex_v3/open_door_frame.tscn",
+          "position": [
+            -3.5500000000000003,
+            0.0,
+            9.5
+          ],
+          "rotation_y": 0.0,
+          "scale": [
+            2.67436974789916,
+            1.0,
+            1.0
+          ],
+          "traversable": true
+        },
+        {
+          "kind": "open_portal_frame",
+          "id": "P-U-CENTRAL-CORE-05",
+          "space_id": "U-CENTRAL-CORE/main_stair",
+          "scene": "res://objects/complex_v3/open_door_frame.tscn",
+          "position": [
+            3.55,
+            0.0,
+            9.5
+          ],
+          "rotation_y": 0.0,
+          "scale": [
+            0.9789915966386555,
             1.0,
             1.0
           ],
@@ -3129,7 +3265,7 @@
           "kind": "open_portal_frame",
           "id": "PX-E-U05-U-CENTRAL-CORE",
           "space_id": "U-CENTRAL-CORE/access_lobby",
-          "scene": "res://objects/complex_v3/open_door_frame.tscn",
+          "scene": "res://objects/complex_v3/open_cargo_gate_frame.tscn",
           "position": [
             0.0,
             0.0,
@@ -3137,8 +3273,8 @@
           ],
           "rotation_y": 0.0,
           "scale": [
-            0.5042016806722689,
-            1.0,
+            1.0817307692307692,
+            0.9333333333333332,
             1.0
           ],
           "traversable": true

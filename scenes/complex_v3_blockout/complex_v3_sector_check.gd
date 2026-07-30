@@ -6,6 +6,7 @@ const BLOCKOUT_SCENE := preload("res://scenes/complex_v3_blockout/complex_v3_blo
 
 func _initialize() -> void:
 	var catalog := _load_json(CATALOG_PATH)
+	var handoff := _load_json("res://docs/design/complex_v3/handoff/geometry/complex-handoff.json")
 	var errors := PackedStringArray()
 	var total_spaces := 0
 	var total_portals := 0
@@ -51,10 +52,15 @@ func _initialize() -> void:
 		blockout.show_full_complex()
 		if _visible_zone_count(blockout) != 30:
 			errors.append("Full view must show 30 zones")
-	if total_spaces != 139:
-		errors.append("Sector scenes total %d spaces instead of 139" % total_spaces)
-	if total_portals != 147:
-		errors.append("Sector scenes total %d passages instead of 147" % total_portals)
+	var expected_spaces := (handoff.get("spaces", []) as Array).size()
+	var expected_portals := (handoff.get("internal_portals", []) as Array).size()
+	for portal_value: Variant in handoff.get("external_portals", []):
+		if bool((portal_value as Dictionary).get("traversable", true)):
+			expected_portals += 1
+	if total_spaces != expected_spaces:
+		errors.append("Sector scenes total %d spaces instead of %d" % [total_spaces, expected_spaces])
+	if total_portals != expected_portals:
+		errors.append("Sector scenes total %d passages instead of %d" % [total_portals, expected_portals])
 
 	if errors.is_empty():
 		print("COMPLEX_V3_SECTORS_OK sectors=30 spaces=%d portals=%d modes=3" % [total_spaces, total_portals])

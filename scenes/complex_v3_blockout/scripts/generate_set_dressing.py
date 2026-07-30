@@ -104,6 +104,11 @@ def pick_position(space: dict, footprint: tuple[float, float], portals: list[tup
 
 
 def choose_prop(space: dict, family: str, index: int) -> str:
+    space_name = str(space.get("name", ""))
+    if space_name == "electrical_room" and str(space.get("sector_id", "")) in {"U-CENTRAL-CORE", "L-CENTRAL-CORE"}:
+        return "generator_unit"
+    if space_name in {"passenger_elevator", "main_stair"}:
+        return "wall_beacon"
     transit_words = ("airlock", "circulation", "corridor", "distribution", "gallery", "junction", "lobby", "threshold", "vestibule", "receiving_hall", "service_reception", "unloading_bay", "freight_platform")
     if any(word in str(space.get("name", "")).lower() for word in transit_words):
         return "wall_beacon"
@@ -163,7 +168,8 @@ def make_manifest() -> dict:
             a, b = portal["segment_xz"]
             width = float(portal["width"])
             related_spaces = " ".join(portal.get("between", [portal.get("space", "")]))
-            cargo = width >= 3.0 or "freight" in str(portal.get("type", "")) or "cargo" in str(portal.get("type", "")) or "cargo_" in related_spaces
+            central_wide_passenger = sector_id in {"U-CENTRAL-CORE", "L-CENTRAL-CORE"} and str(portal.get("type", "")) == "internal-door"
+            cargo = (width >= 3.0 and not central_wide_passenger) or "freight" in str(portal.get("type", "")) or "cargo" in str(portal.get("type", "")) or "cargo_" in related_spaces
             frame_path = "res://objects/complex_v3/open_cargo_gate_frame.tscn" if cargo else "res://objects/complex_v3/open_door_frame.tscn"
             default_width = 4.16 if cargo else 2.38
             space_id = portal.get("space", portal.get("between", [""])[0])

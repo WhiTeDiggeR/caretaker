@@ -1,15 +1,15 @@
 # Stage 2 validation report
 
-Date: 2026-07-29
+Date: 2026-07-30 (central-core trace revision, Issue #41)
 
 Map: `caretaker-complex-v3`
 
-Gate: full 3D handoff, approved by user on 2026-07-29
+Gate: full 3D handoff approved on 2026-07-29; central passenger core revised from its approved SVG on 2026-07-30
 
 ## Automated checks
 
 - Stage 1 regression: passed — 3 levels, 7 anchors, 30 sectors, 5 routes, 49 topology connections.
-- Stage 2 geometry: passed — 30 passports, 139 exact room spaces, 109 internal portals, 43 external portals.
+- Stage 2 geometry: passed — 30 passports, 143 exact room spaces, 113 internal portals, 43 external portals.
 - Physical topology coverage: passed — all 49 approved topology edges are represented by corridors, portals, stairs, lifts, shaft rules, or the old inclined tunnel.
 - Positive-area room overlaps: none across all spaces on the same level.
 - Engine follow-up regression: passed — exact technical-sector footprints were clipped to the real boundary of `T-TECH`; no room overlaps a physical route. The cable gallery remains an explicitly non-floor service overlay.
@@ -31,7 +31,7 @@ Gate: full 3D handoff, approved by user on 2026-07-29
 
 ## Engine verification
 
-Not performed at this gate. Godot greybox generation and runtime traversal are explicitly the next separately approved task after gate 2.
+Performed for the Issue #41 revision: Godot 4.7 imported the project, built 143 room spaces and 151 traversable sector passages, validated all 151 with the player capsule, and passed the startup smoke test. Editor-preview also confirmed the central staircase, lift cabin and ceiling toggle.
 
 ## Final package validation
 

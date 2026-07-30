@@ -2,11 +2,19 @@
 extends Node
 
 const CONTROL_SCENES := {
+	"U-CENTRAL-CORE": "res://scenes/complex_v3_blockout/zones/upper/u_central_core.tscn",
 	"U-MEDBAY": "res://scenes/complex_v3_blockout/zones/upper/u_medbay.tscn",
 	"L-OLD-CORE": "res://scenes/complex_v3_blockout/zones/lower/l_old_core.tscn",
 	"T-UTILITIES": "res://scenes/complex_v3_blockout/zones/technical/t_utilities.tscn",
 }
 const EXPECTED_SPACES := {
+	"U-CENTRAL-CORE": 6,
+	"U-MEDBAY": 5,
+	"L-OLD-CORE": 4,
+	"T-UTILITIES": 7,
+}
+const EXPECTED_CEILINGS := {
+	"U-CENTRAL-CORE": 4,
 	"U-MEDBAY": 5,
 	"L-OLD-CORE": 4,
 	"T-UTILITIES": 7,
@@ -45,13 +53,18 @@ func _run() -> void:
 		var stats := part.get_build_stats()
 		if int(stats.get("spaces", 0)) != int(EXPECTED_SPACES[sector_id]):
 			errors.append("%s preview expected %d spaces, built %d" % [sector_id, int(EXPECTED_SPACES[sector_id]), int(stats.get("spaces", 0))])
+		if sector_id == "U-CENTRAL-CORE":
+			if part.find_children("WestFlight_00", "", true, false).is_empty():
+				errors.append("U-CENTRAL-CORE preview has no switchback stair")
+			if part.find_children("CabinFloor", "", true, false).is_empty():
+				errors.append("U-CENTRAL-CORE preview has no passenger elevator cabin")
 		if int(stats.get("ceilings", 0)) != 0 or not part.find_children("Ceiling", "", true, false).is_empty():
 			errors.append("%s editor preview shows ceilings by default" % sector_id)
 		part.editor_preview_show_ceilings = true
 		part.build_from_handoff()
 		stats = part.get_build_stats()
-		if int(stats.get("ceilings", 0)) != int(EXPECTED_SPACES[sector_id]):
-			errors.append("%s ceiling toggle expected %d ceilings, built %d" % [sector_id, int(EXPECTED_SPACES[sector_id]), int(stats.get("ceilings", 0))])
+		if int(stats.get("ceilings", 0)) != int(EXPECTED_CEILINGS[sector_id]):
+			errors.append("%s ceiling toggle expected %d ceilings, built %d" % [sector_id, int(EXPECTED_CEILINGS[sector_id]), int(stats.get("ceilings", 0))])
 		if part.find_children("Ceiling", "", true, false).is_empty():
 			errors.append("%s ceiling toggle did not show ceiling nodes" % sector_id)
 		part.editor_preview_show_ceilings = false

@@ -86,9 +86,10 @@ func _focus_selected_sector(sector_id: String) -> void:
 func _update_status() -> void:
 	var stats := blockout.get_build_stats()
 	var sector_id := _sector_ids[_sector_index] if not _sector_ids.is_empty() else "—"
-	status_label.text = "COMPLEX v3 · %s · %s · %s\n139 помещений · 30 зон · %d коллайдеров\nF1 камера · F2 уровень · F3 режим · F4/Shift+F4 зона" % [
+	status_label.text = "COMPLEX v3 · %s · %s · %s\n%d помещений · 30 зон · %d коллайдеров\nF1 камера · F2 уровень · F3 режим · F4/Shift+F4 зона" % [
 		"ОБЗОР" if _overview_enabled else "ПЕРВОЕ ЛИЦО",
 		_level_filters[_level_filter_index],
 		"ВСЕ" if _scope_index == 0 else "%s: %s" % [_scopes[_scope_index], sector_id],
+		int(stats.get("spaces", 0)),
 		int(stats.get("colliders", 0)),
 	]
