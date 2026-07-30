@@ -3,18 +3,21 @@ extends Node
 
 const CONTROL_SCENES := {
 	"U-CENTRAL-CORE": "res://scenes/complex_v3_blockout/zones/upper/u_central_core.tscn",
+	"L-CENTRAL-CORE": "res://scenes/complex_v3_blockout/zones/lower/l_central_core.tscn",
 	"U-MEDBAY": "res://scenes/complex_v3_blockout/zones/upper/u_medbay.tscn",
 	"L-OLD-CORE": "res://scenes/complex_v3_blockout/zones/lower/l_old_core.tscn",
 	"T-UTILITIES": "res://scenes/complex_v3_blockout/zones/technical/t_utilities.tscn",
 }
 const EXPECTED_SPACES := {
 	"U-CENTRAL-CORE": 6,
+	"L-CENTRAL-CORE": 6,
 	"U-MEDBAY": 5,
 	"L-OLD-CORE": 4,
 	"T-UTILITIES": 7,
 }
 const EXPECTED_CEILINGS := {
 	"U-CENTRAL-CORE": 4,
+	"L-CENTRAL-CORE": 4,
 	"U-MEDBAY": 5,
 	"L-OLD-CORE": 4,
 	"T-UTILITIES": 7,
@@ -53,11 +56,17 @@ func _run() -> void:
 		var stats := part.get_build_stats()
 		if int(stats.get("spaces", 0)) != int(EXPECTED_SPACES[sector_id]):
 			errors.append("%s preview expected %d spaces, built %d" % [sector_id, int(EXPECTED_SPACES[sector_id]), int(stats.get("spaces", 0))])
-		if sector_id == "U-CENTRAL-CORE":
+		if sector_id in ["U-CENTRAL-CORE", "L-CENTRAL-CORE"]:
 			if part.find_children("WestFlight_00", "", true, false).is_empty():
-				errors.append("U-CENTRAL-CORE preview has no switchback stair")
+				errors.append("%s preview has no switchback stair" % sector_id)
 			if part.find_children("CabinFloor", "", true, false).is_empty():
-				errors.append("U-CENTRAL-CORE preview has no passenger elevator cabin")
+				errors.append("%s preview has no passenger elevator cabin" % sector_id)
+			if part.find_children("UpperLanding", "", true, false).is_empty() or part.find_children("IntermediateLanding", "", true, false).is_empty():
+				errors.append("%s preview has incomplete stair landings" % sector_id)
+			if part.find_children("*FlightRail*", "", true, false).size() < 4:
+				errors.append("%s preview has incomplete stair railings" % sector_id)
+			if not part.find_children("Datum", "", true, false).is_empty() or not part.find_children("ShaftEnvelope", "", true, false).is_empty():
+				errors.append("%s preview exposes vertical debug geometry" % sector_id)
 		if int(stats.get("ceilings", 0)) != 0 or not part.find_children("Ceiling", "", true, false).is_empty():
 			errors.append("%s editor preview shows ceilings by default" % sector_id)
 		part.editor_preview_show_ceilings = true
