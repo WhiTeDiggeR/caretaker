@@ -10,6 +10,12 @@ func _initialize() -> void:
 	await physics_frame
 	var errors := blockout.validate_against_handoff()
 	var stats := blockout.get_build_stats()
+	var stair := blockout.find_child("MainCoreSwitchbackStair", true, false) as MainCoreSwitchbackStair
+	if stair == null:
+		errors.append("Full assembly is missing the separate main-core stair scene")
+	else:
+		for stair_error: String in stair.validate_geometry():
+			errors.append("Main-core stair: %s" % stair_error)
 	if int(stats.get("ceilings", 0)) != int(stats.get("floors", 0)):
 		errors.append("Runtime blockout must preserve one ceiling per generated floor")
 	if errors.is_empty():

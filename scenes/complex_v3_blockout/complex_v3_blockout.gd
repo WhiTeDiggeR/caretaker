@@ -9,6 +9,7 @@ const CONTAINMENT_PANELS := preload("res://materials/complex_v3/containment_pane
 const FREIGHT_PANELS := preload("res://materials/complex_v3/freight_panels.tres")
 const UTILITY_PANELS := preload("res://materials/complex_v3/utility_panels.tres")
 const HISTORIC_PANELS := preload("res://materials/complex_v3/historic_panels.tres")
+const MAIN_CORE_STAIR_SCENE := preload("res://objects/complex_v3/main_core_switchback_stair.tscn")
 
 const DEFAULT_HANDOFF_PATH := "res://docs/design/complex_v3/handoff/geometry/complex-handoff.json"
 const DEFAULT_VERTICAL_PATH := "res://docs/design/complex_v3/handoff/vertical/vertical-transitions.json"
@@ -301,6 +302,9 @@ func _build_space(space: Dictionary, is_route: bool) -> void:
 
 
 func _build_special_space_features(parent: Node3D, space_id: String, bounds: Array, floor_y: float, material: Material) -> void:
+	if space_id.ends_with("CENTRAL-CORE/main_stair"):
+		_build_main_core_stair_opening(parent, bounds, floor_y, material)
+		return
 	if not preview_main_core_verticals_when_standalone:
 		return
 	if space_id.ends_with("CENTRAL-CORE/passenger_elevator"):
@@ -308,9 +312,29 @@ func _build_special_space_features(parent: Node3D, space_id: String, bounds: Arr
 		var size := _bounds_size(bounds)
 		_add_box(parent, "ElevatorLandingFloor", Vector3(center.x, floor_y - FLOOR_THICKNESS * 0.5, center.y), Vector3(size.x, FLOOR_THICKNESS, size.y), material, _collisions_enabled())
 		_build_passenger_elevator_cabin(parent, bounds, floor_y)
-	elif space_id.ends_with("CENTRAL-CORE/main_stair"):
-		var top_floor_y := floor_y if space_id.begins_with("U-") else floor_y + 6.0
-		_build_main_core_switchback_stair(parent, bounds, top_floor_y, material)
+
+
+func _build_main_core_stair_opening(parent: Node3D, bounds: Array, floor_y: float, material: Material) -> void:
+	var x0 := float(bounds[0])
+	var z0 := float(bounds[1])
+	var x1 := float(bounds[2])
+	var z1 := float(bounds[3])
+	var center := _bounds_center(bounds)
+	var opening_half_width := 2.95
+	var opening_x0 := center.x - opening_half_width
+	var opening_x1 := center.x + opening_half_width
+	var opening_z0 := center.y - 5.25
+	var opening_z1 := center.y + 3.75
+	_add_floor_panel(parent, "StairOpeningNorthSlab", [x0, z0, x1, opening_z0], floor_y, material)
+	_add_floor_panel(parent, "StairOpeningSouthSlab", [x0, opening_z1, x1, z1], floor_y, material)
+	_add_floor_panel(parent, "StairOpeningWestSlab", [x0, opening_z0, opening_x0, opening_z1], floor_y, material)
+	_add_floor_panel(parent, "StairOpeningEastSlab", [opening_x1, opening_z0, x1, opening_z1], floor_y, material)
+
+
+func _add_floor_panel(parent: Node3D, node_name: String, bounds: Array, floor_y: float, material: Material) -> void:
+	var center := _bounds_center(bounds)
+	var size := _bounds_size(bounds)
+	_add_box(parent, node_name, Vector3(center.x, floor_y - FLOOR_THICKNESS * 0.5, center.y), Vector3(size.x, FLOOR_THICKNESS, size.y), material, _collisions_enabled())
 
 
 func _build_passenger_elevator_cabin(parent: Node3D, bounds: Array, floor_y: float) -> void:
@@ -325,47 +349,6 @@ func _build_passenger_elevator_cabin(parent: Node3D, bounds: Array, floor_y: flo
 	_add_box(parent, "CabinEast", Vector3(center.x + cabin_width * 0.5, floor_y + cabin_height * 0.5, center.y), Vector3(wall, cabin_height, cabin_depth), _materials["lift"], _collisions_enabled())
 	_add_box(parent, "CabinCeiling", Vector3(center.x, floor_y + cabin_height, center.y), Vector3(cabin_width, 0.12, cabin_depth), _materials["lift"], false)
 	_add_box(parent, "CabinThreshold", Vector3(center.x, floor_y + 0.10, center.y + cabin_depth * 0.5), Vector3(cabin_width, 0.08, 0.22), _materials["lift"], _collisions_enabled())
-
-
-func _build_main_core_switchback_stair(parent: Node3D, bounds: Array, floor_y: float, material: Material) -> void:
-	var x0 := float(bounds[0])
-	var z0 := float(bounds[1])
-	var x1 := float(bounds[2])
-	var z1 := float(bounds[3])
-	var flight_width := 1.8
-	var tread_depth := 0.3
-	var riser_height := 0.15
-	var risers := 20
-	var first_x := x0 + 1.55
-	var second_x := x1 - 1.55
-	var run_north := z0 + 3.5
-	var run_south := run_north + tread_depth * risers
-	var intermediate_y := floor_y - riser_height * risers
-	var lower_y := floor_y - riser_height * risers * 2
-	var lower_center := _bounds_center(bounds)
-	var lower_size := _bounds_size(bounds)
-	_add_box(parent, "LowerFloor", Vector3(lower_center.x, lower_y - FLOOR_THICKNESS * 0.5, lower_center.y), Vector3(lower_size.x, FLOOR_THICKNESS, lower_size.y), material, _collisions_enabled())
-	for index: int in range(risers):
-		var first_top := floor_y - riser_height * index
-		var first_height := first_top - intermediate_y
-		var first_z := run_south - tread_depth * (index + 0.5)
-		_add_box(parent, "WestFlight_%02d" % index, Vector3(first_x, intermediate_y + first_height * 0.5, first_z), Vector3(flight_width, first_height, tread_depth), material, _collisions_enabled())
-		var second_top := intermediate_y - riser_height * index
-		var second_height := second_top - lower_y
-		var second_z := run_north + tread_depth * (index + 0.5)
-		_add_box(parent, "EastFlight_%02d" % index, Vector3(second_x, lower_y + second_height * 0.5, second_z), Vector3(flight_width, second_height, tread_depth), material, _collisions_enabled())
-	var landing_width := x1 - x0 - 0.8
-	_add_box(parent, "IntermediateLanding", Vector3((x0 + x1) * 0.5, intermediate_y - 0.06, z0 + 1.2), Vector3(landing_width, 0.12, 2.4), material, _collisions_enabled())
-	_add_box(parent, "UpperLanding", Vector3((x0 + x1) * 0.5, floor_y - 0.06, (run_south + z1) * 0.5), Vector3(landing_width, 0.12, z1 - run_south), material, _collisions_enabled())
-	var rail_index := 0
-	for rail_x: float in [first_x - flight_width * 0.5, first_x + flight_width * 0.5]:
-		_add_ramp_segment(parent, "WestFlightRail_%02d" % rail_index, Vector3(rail_x, floor_y + 0.95, run_south), Vector3(rail_x, intermediate_y + 0.95, run_north), 0.10, _materials["lift"])
-		rail_index += 1
-	rail_index = 0
-	for rail_x: float in [second_x - flight_width * 0.5, second_x + flight_width * 0.5]:
-		_add_ramp_segment(parent, "EastFlightRail_%02d" % rail_index, Vector3(rail_x, intermediate_y + 0.95, run_north), Vector3(rail_x, lower_y + 0.95, run_south), 0.10, _materials["lift"])
-		rail_index += 1
-	_add_box(parent, "UpperLandingGuard", Vector3((first_x + second_x) * 0.5, floor_y + 0.5, run_south), Vector3(second_x - first_x - flight_width, 1.0, 0.10), _materials["lift"], false)
 
 
 func _build_overlay_route(parent: Node3D, space: Dictionary) -> void:
@@ -561,7 +544,12 @@ func _build_transition_marker(parent: Node3D, transition: Dictionary) -> void:
 			_add_ramp_segment(root, "Ramp_%02d" % index, a, b, float(transition["clear_width"]), _materials["old_incline"])
 	elif transition.has("center_xz"):
 		if str(transition["id"]) == "VT-MAIN-STAIR":
-			_build_main_core_switchback_stair(root, [0.2, -5.0, 6.9, 9.5], 0.0, _materials["utility"])
+			var center_xz := _vector2(transition["center_xz"])
+			var stair := MAIN_CORE_STAIR_SCENE.instantiate() as MainCoreSwitchbackStair
+			stair.name = "MainCoreSwitchbackStair"
+			stair.position = Vector3(center_xz.x, 0.0, center_xz.y)
+			stair.build_collisions = _collisions_enabled()
+			root.add_child(stair)
 		else:
 			var center_xz := _vector2(transition["center_xz"])
 			var connects: Array = transition.get("connects", ["LV-U", "LV-L"])
