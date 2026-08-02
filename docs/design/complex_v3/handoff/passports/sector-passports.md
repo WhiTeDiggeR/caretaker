@@ -140,7 +140,7 @@ Required connections:
 - Parent boundary XZ: `[10.0, -13.0] → [32.0, 15.0] m`
 - Local origin XYZ: `[10.0, 0.0, -13.0]`
 - Neighbors: `L-EAST-STAIR`, `U-PAX`
-- Allowed subdivisions: `support_corridor`, `supply_store`, `cleaning_room`, `duty_room`, `fire_vestibule`, `emergency_stair`
+- Allowed subdivisions: `support_corridor`, `supply_store`, `cleaning_room`, `duty_room`, `service_vestibule`, `fire_vestibule`, `emergency_stair`
 - Clearance profile: `service` — {'minimum_width': 1.5, 'minimum_height': 2.5, 'turning_envelope': 1.8}
 - Reserved volumes: нет
 - Anchors: `A-EAST-STAIR`

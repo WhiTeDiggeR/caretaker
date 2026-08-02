@@ -16,6 +16,12 @@ func _initialize() -> void:
 	else:
 		for stair_error: String in stair.validate_geometry():
 			errors.append("Main-core stair: %s" % stair_error)
+	var east_stair := blockout.find_child("EastEmergencySwitchbackStair", true, false) as EastEmergencySwitchbackStair
+	if east_stair == null:
+		errors.append("Full assembly is missing the east emergency stair scene")
+	else:
+		for stair_error: String in east_stair.validate_geometry():
+			errors.append("East emergency stair: %s" % stair_error)
 	if int(stats.get("ceilings", 0)) != int(stats.get("floors", 0)):
 		errors.append("Runtime blockout must preserve one ceiling per generated floor")
 	if errors.is_empty():

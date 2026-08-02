@@ -1,81 +1,80 @@
 [gd_scene load_steps=6 format=3]
 
 [ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/staff_table.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
 
 [node name="U_EAST_SUPPORT_SetDressing" type="Node3D"]
 metadata/sector_id = "U-EAST-SUPPORT"
 metadata/material_family = "domestic"
 
-[node name="001_U_EAST_SUPPORT_cleaning_room__staff_table" parent="." instance=ExtResource("5")]
-position = Vector3(30.6500, 0.0000, -6.0000)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "U-EAST-SUPPORT/cleaning_room::staff_table"
+[node name="001_U_EAST_SUPPORT_supply_store__loaded_shelf__linen" parent="." instance=ExtResource("4")]
+position = Vector3(12.5000, 0.0000, -8.0000)
+metadata/placement_id = "U-EAST-SUPPORT/supply_store::loaded_shelf::linen"
 
-[node name="002_U_EAST_SUPPORT_duty_room__loaded_cabinet" parent="." instance=ExtResource("3")]
-position = Vector3(11.0500, 0.0000, 1.0000)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-EAST-SUPPORT/duty_room::loaded_cabinet"
+[node name="002_U_EAST_SUPPORT_supply_store__loaded_cabinet__chemicals" parent="." instance=ExtResource("3")]
+position = Vector3(15.5000, 0.0000, -8.0000)
+metadata/placement_id = "U-EAST-SUPPORT/supply_store::loaded_cabinet::chemicals"
 
-[node name="003_U_EAST_SUPPORT_emergency_stair__loaded_shelf" parent="." instance=ExtResource("4")]
-position = Vector3(11.2000, 0.0000, 10.3335)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-EAST-SUPPORT/emergency_stair::loaded_shelf"
+[node name="003_U_EAST_SUPPORT_cleaning_room__utility_tank__wash_sink" parent="." instance=ExtResource("2")]
+position = Vector3(12.5000, 0.0000, -2.5000)
+metadata/placement_id = "U-EAST-SUPPORT/cleaning_room::utility_tank::wash_sink"
 
-[node name="004_U_EAST_SUPPORT_fire_vestibule__wall_beacon" parent="." instance=ExtResource("2")]
-position = Vector3(31.2500, 2.3500, 8.0000)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "U-EAST-SUPPORT/fire_vestibule::wall_beacon"
+[node name="004_U_EAST_SUPPORT_cleaning_room__workbench__equipment" parent="." instance=ExtResource("5")]
+position = Vector3(15.2000, 0.0000, -2.5000)
+metadata/placement_id = "U-EAST-SUPPORT/cleaning_room::workbench::equipment"
 
-[node name="005_U_EAST_SUPPORT_supply_store__staff_table" parent="." instance=ExtResource("5")]
-position = Vector3(11.3500, 0.0000, -8.3335)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-EAST-SUPPORT/supply_store::staff_table"
+[node name="005_U_EAST_SUPPORT_duty_room__workbench__desk" parent="." instance=ExtResource("5")]
+position = Vector3(14.0000, 0.0000, 3.8000)
+metadata/placement_id = "U-EAST-SUPPORT/duty_room::workbench::desk"
 
-[node name="006_U_EAST_SUPPORT_support_corridor__wall_beacon" parent="." instance=ExtResource("2")]
-position = Vector3(21.0000, 2.3500, -12.4250)
-metadata/placement_id = "U-EAST-SUPPORT/support_corridor::wall_beacon"
+[node name="006_U_EAST_SUPPORT_duty_room__loaded_cabinet__cabinet" parent="." instance=ExtResource("3")]
+position = Vector3(12.5000, 0.0000, 5.6000)
+metadata/placement_id = "U-EAST-SUPPORT/duty_room::loaded_cabinet::cabinet"
 
 [node name="007_P_U_EAST_SUPPORT_01" parent="." instance=ExtResource("1")]
-position = Vector3(19.2400, 0.0000, -8.3340)
+position = Vector3(18.0000, 0.0000, -8.9000)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
+scale = Vector3(0.63025, 1.16667, 1.00000)
 metadata/placement_id = "P-U-EAST-SUPPORT-01"
 metadata/open_passage = true
 
 [node name="008_P_U_EAST_SUPPORT_02" parent="." instance=ExtResource("1")]
-position = Vector3(19.2400, 0.0000, 1.0000)
+position = Vector3(18.0000, 0.0000, -3.0000)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
+scale = Vector3(0.63025, 1.16667, 1.00000)
 metadata/placement_id = "P-U-EAST-SUPPORT-02"
 metadata/open_passage = true
 
 [node name="009_P_U_EAST_SUPPORT_03" parent="." instance=ExtResource("1")]
-position = Vector3(19.2400, 0.0000, 10.3340)
+position = Vector3(18.0000, 0.0000, 3.4500)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
+scale = Vector3(0.63025, 1.16667, 1.00000)
 metadata/placement_id = "P-U-EAST-SUPPORT-03"
 metadata/open_passage = true
 
 [node name="010_P_U_EAST_SUPPORT_04" parent="." instance=ExtResource("1")]
-position = Vector3(22.7600, 0.0000, -6.0000)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
+position = Vector3(18.7500, 0.0000, 7.0000)
+scale = Vector3(0.59874, 1.16667, 1.00000)
 metadata/placement_id = "P-U-EAST-SUPPORT-04"
 metadata/open_passage = true
 
 [node name="011_P_U_EAST_SUPPORT_05" parent="." instance=ExtResource("1")]
-position = Vector3(22.7600, 0.0000, 8.0000)
-rotation = Vector3(0, 1.5707963, 0)
+position = Vector3(30.5000, 0.0000, 11.0000)
 scale = Vector3(0.75630, 1.16667, 1.00000)
 metadata/placement_id = "P-U-EAST-SUPPORT-05"
 metadata/open_passage = true
 
 [node name="012_PX_E_U06_U_EAST_SUPPORT" parent="." instance=ExtResource("1")]
-position = Vector3(21.0000, 0.0000, 15.0000)
-scale = Vector3(0.50420, 1.00000, 1.00000)
+position = Vector3(16.7500, 0.0000, 15.0000)
+scale = Vector3(0.84034, 1.00000, 1.00000)
 metadata/placement_id = "PX-E-U06-U-EAST-SUPPORT"
+metadata/open_passage = true
+
+[node name="013_PX_E_U06_U_EAST_SUPPORT_FIRE" parent="." instance=ExtResource("1")]
+position = Vector3(27.0000, 0.0000, 15.0000)
+scale = Vector3(1.21849, 1.16667, 1.00000)
+metadata/placement_id = "PX-E-U06-U-EAST-SUPPORT-FIRE"
 metadata/open_passage = true

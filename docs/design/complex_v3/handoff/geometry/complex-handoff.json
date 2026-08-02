@@ -197,11 +197,12 @@
       ],
       "passport_id": "PASS-U-EAST-SUPPORT",
       "space_ids": [
-        "U-EAST-SUPPORT/support_corridor",
         "U-EAST-SUPPORT/supply_store",
-        "U-EAST-SUPPORT/duty_room",
-        "U-EAST-SUPPORT/emergency_stair",
         "U-EAST-SUPPORT/cleaning_room",
+        "U-EAST-SUPPORT/duty_room",
+        "U-EAST-SUPPORT/support_corridor",
+        "U-EAST-SUPPORT/service_vestibule",
+        "U-EAST-SUPPORT/emergency_stair",
         "U-EAST-SUPPORT/fire_vestibule"
       ],
       "reserved_volumes": [],
@@ -1427,24 +1428,6 @@
       "floor_y": 0.0
     },
     {
-      "id": "U-EAST-SUPPORT/support_corridor",
-      "name": "support_corridor",
-      "sector_id": "U-EAST-SUPPORT",
-      "kind": "circulation",
-      "bounds_xz": [
-        19.24,
-        -13.0,
-        22.76,
-        15.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
       "id": "U-EAST-SUPPORT/supply_store",
       "name": "supply_store",
       "sector_id": "U-EAST-SUPPORT",
@@ -1452,8 +1435,26 @@
       "bounds_xz": [
         10.0,
         -13.0,
-        19.24,
-        -3.667
+        18.0,
+        -5.9
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-EAST-SUPPORT/cleaning_room",
+      "name": "cleaning_room",
+      "sector_id": "U-EAST-SUPPORT",
+      "kind": "room",
+      "bounds_xz": [
+        10.0,
+        -5.9,
+        18.0,
+        0.3
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1469,13 +1470,49 @@
       "kind": "room",
       "bounds_xz": [
         10.0,
-        -3.667,
-        19.24,
-        5.667
+        0.3,
+        18.0,
+        7.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
       "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-EAST-SUPPORT/support_corridor",
+      "name": "support_corridor",
+      "sector_id": "U-EAST-SUPPORT",
+      "kind": "circulation",
+      "bounds_xz": [
+        18.0,
+        -13.0,
+        20.0,
+        7.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-EAST-SUPPORT/service_vestibule",
+      "name": "service_vestibule",
+      "sector_id": "U-EAST-SUPPORT",
+      "kind": "airlock",
+      "bounds_xz": [
+        14.0,
+        7.0,
+        19.5,
+        15.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1484,34 +1521,16 @@
       "id": "U-EAST-SUPPORT/emergency_stair",
       "name": "emergency_stair",
       "sector_id": "U-EAST-SUPPORT",
-      "kind": "room",
+      "kind": "stair",
       "bounds_xz": [
-        10.0,
-        5.667,
-        19.24,
-        15.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-EAST-SUPPORT/cleaning_room",
-      "name": "cleaning_room",
-      "sector_id": "U-EAST-SUPPORT",
-      "kind": "room",
-      "bounds_xz": [
-        22.76,
-        -13.0,
+        22.0,
+        5.5,
         32.0,
-        1.0
+        11.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1520,16 +1539,16 @@
       "id": "U-EAST-SUPPORT/fire_vestibule",
       "name": "fire_vestibule",
       "sector_id": "U-EAST-SUPPORT",
-      "kind": "room",
+      "kind": "airlock",
       "bounds_xz": [
-        22.76,
-        1.0,
+        22.0,
+        11.0,
         32.0,
         15.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -4318,15 +4337,15 @@
       ],
       "segment_xz": [
         [
-          19.24,
-          -9.234
+          18.0,
+          -9.65
         ],
         [
-          19.24,
-          -7.434
+          18.0,
+          -8.15
         ]
       ],
-      "width": 1.8,
+      "width": 1.5,
       "height": 2.8,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4337,19 +4356,19 @@
       "id": "P-U-EAST-SUPPORT-02",
       "between": [
         "U-EAST-SUPPORT/support_corridor",
-        "U-EAST-SUPPORT/duty_room"
+        "U-EAST-SUPPORT/cleaning_room"
       ],
       "segment_xz": [
         [
-          19.24,
-          0.1
+          18.0,
+          -3.75
         ],
         [
-          19.24,
-          1.9
+          18.0,
+          -2.25
         ]
       ],
-      "width": 1.8,
+      "width": 1.5,
       "height": 2.8,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4360,19 +4379,19 @@
       "id": "P-U-EAST-SUPPORT-03",
       "between": [
         "U-EAST-SUPPORT/support_corridor",
-        "U-EAST-SUPPORT/emergency_stair"
+        "U-EAST-SUPPORT/duty_room"
       ],
       "segment_xz": [
         [
-          19.24,
-          9.434
+          18.0,
+          2.7
         ],
         [
-          19.24,
-          11.234
+          18.0,
+          4.2
         ]
       ],
-      "width": 1.8,
+      "width": 1.5,
       "height": 2.8,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4383,19 +4402,19 @@
       "id": "P-U-EAST-SUPPORT-04",
       "between": [
         "U-EAST-SUPPORT/support_corridor",
-        "U-EAST-SUPPORT/cleaning_room"
+        "U-EAST-SUPPORT/service_vestibule"
       ],
       "segment_xz": [
         [
-          22.76,
-          -6.9
+          18.038,
+          7.0
         ],
         [
-          22.76,
-          -5.1
+          19.462,
+          7.0
         ]
       ],
-      "width": 1.8,
+      "width": 1.425,
       "height": 2.8,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4405,17 +4424,17 @@
     {
       "id": "P-U-EAST-SUPPORT-05",
       "between": [
-        "U-EAST-SUPPORT/support_corridor",
+        "U-EAST-SUPPORT/emergency_stair",
         "U-EAST-SUPPORT/fire_vestibule"
       ],
       "segment_xz": [
         [
-          22.76,
-          7.1
+          29.6,
+          11.0
         ],
         [
-          22.76,
-          8.9
+          31.4,
+          11.0
         ]
       ],
       "width": 1.8,
@@ -6462,21 +6481,45 @@
     {
       "id": "PX-E-U06-U-EAST-SUPPORT",
       "connection_id": "E-U06",
-      "space": "U-EAST-SUPPORT/support_corridor",
+      "space": "U-EAST-SUPPORT/service_vestibule",
       "neighbor": "U-PAX",
       "side": "south",
       "segment_xz": [
         [
-          20.4,
+          15.75,
           15.0
         ],
         [
-          21.6,
+          17.75,
           15.0
         ]
       ],
-      "width": 1.2,
+      "width": 2.0,
       "height": 2.4,
+      "type": "passenger",
+      "direction": "bidirectional",
+      "state": "openable",
+      "traversable": true,
+      "status": "provisional-metric"
+    },
+    {
+      "id": "PX-E-U06-U-EAST-SUPPORT-FIRE",
+      "connection_id": "E-U06",
+      "space": "U-EAST-SUPPORT/fire_vestibule",
+      "neighbor": "U-PAX",
+      "side": "south",
+      "segment_xz": [
+        [
+          25.55,
+          15.0
+        ],
+        [
+          28.45,
+          15.0
+        ]
+      ],
+      "width": 2.9,
+      "height": 2.8,
       "type": "passenger",
       "direction": "bidirectional",
       "state": "openable",
@@ -7414,16 +7457,16 @@
       "connection_id": "E-U06",
       "centerline_xz": [
         [
-          21.0,
+          16.75,
           15.0
         ],
         [
-          21.0,
+          27.0,
           15.0
         ]
       ],
-      "width": 1.2,
-      "clear_height": 2.4,
+      "width": 2.9,
+      "clear_height": 2.8,
       "traversable": true,
       "state": "openable"
     },

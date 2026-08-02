@@ -66,6 +66,24 @@ DOMESTIC_CONNECTIONS = {
     frozenset(("staff_vestibule", "rest_room")),
 }
 
+EAST_SUPPORT_BOUNDS = {
+    "U-EAST-SUPPORT/supply_store": [10.0, -13.0, 18.0, -5.9],
+    "U-EAST-SUPPORT/cleaning_room": [10.0, -5.9, 18.0, 0.3],
+    "U-EAST-SUPPORT/duty_room": [10.0, 0.3, 18.0, 7.0],
+    "U-EAST-SUPPORT/support_corridor": [18.0, -13.0, 20.0, 7.0],
+    "U-EAST-SUPPORT/service_vestibule": [14.0, 7.0, 19.5, 15.0],
+    "U-EAST-SUPPORT/emergency_stair": [22.0, 5.5, 32.0, 11.0],
+    "U-EAST-SUPPORT/fire_vestibule": [22.0, 11.0, 32.0, 15.0],
+}
+
+EAST_SUPPORT_CONNECTIONS = {
+    frozenset(("support_corridor", "supply_store")),
+    frozenset(("support_corridor", "cleaning_room")),
+    frozenset(("support_corridor", "duty_room")),
+    frozenset(("support_corridor", "service_vestibule")),
+    frozenset(("emergency_stair", "fire_vestibule")),
+}
+
 
 def load(relative: str) -> dict:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
@@ -131,6 +149,14 @@ def main() -> int:
     if actual_domestic_bounds != DOMESTIC_BOUNDS:
         errors.append(f"U-DOMESTIC no longer traces the approved 25 px/m SVG: {actual_domestic_bounds}")
 
+    actual_east_support_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in EAST_SUPPORT_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_east_support_bounds != EAST_SUPPORT_BOUNDS:
+        errors.append(f"U-EAST-SUPPORT no longer traces the approved normalized SVG: {actual_east_support_bounds}")
+
     for a, b in itertools.combinations(spaces, 2):
         if a["floor_y"] == b["floor_y"] and positive_overlap(a["bounds_xz"], b["bounds_xz"]):
             errors.append(f"positive room overlap: {a['id']} <> {b['id']}")
@@ -165,6 +191,14 @@ def main() -> int:
     if actual_domestic_connections != DOMESTIC_CONNECTIONS:
         errors.append("U-DOMESTIC internal connections differ from the approved plan")
 
+    actual_east_support_connections = {
+        frozenset(space_id.removeprefix("U-EAST-SUPPORT/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-U-EAST-SUPPORT-")
+    }
+    if actual_east_support_connections != EAST_SUPPORT_CONNECTIONS:
+        errors.append("U-EAST-SUPPORT internal connections differ from the approved plan")
+
     external_by_id = {item["id"]: item for item in geometry["external_portals"]}
     for portal in external_by_id.values():
         room = space_by_id.get(portal["space"])
@@ -176,6 +210,13 @@ def main() -> int:
     domestic_entry = external_by_id.get("PX-E-U03-U-DOMESTIC", {})
     if domestic_entry.get("space") != "U-DOMESTIC/internal_circulation" or domestic_entry.get("side") != "south":
         errors.append("U-DOMESTIC passenger entry must use the south end of internal_circulation")
+    east_support_entries = {
+        portal.get("space")
+        for portal in external_by_id.values()
+        if portal.get("connection_id") == "E-U06" and portal.get("neighbor") == "U-PAX"
+    }
+    if east_support_entries != {"U-EAST-SUPPORT/service_vestibule", "U-EAST-SUPPORT/fire_vestibule"}:
+        errors.append("U-EAST-SUPPORT must preserve independent service and fire-vestibule entries from U-PAX")
 
     represented: set[str] = set()
     for corridor in geometry["connection_corridors"]:

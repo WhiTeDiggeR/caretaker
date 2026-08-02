@@ -66,6 +66,22 @@ DOMESTIC_PORTAL_CENTERS = {
     frozenset(("staff_vestibule", "rest_room")): -34.64,
 }
 
+EAST_SUPPORT_PORTAL_WIDTHS = {
+    frozenset(("support_corridor", "supply_store")): 1.5,
+    frozenset(("support_corridor", "cleaning_room")): 1.5,
+    frozenset(("support_corridor", "duty_room")): 1.5,
+    frozenset(("support_corridor", "service_vestibule")): 1.5,
+    frozenset(("emergency_stair", "fire_vestibule")): 1.8,
+}
+
+EAST_SUPPORT_PORTAL_CENTERS = {
+    frozenset(("support_corridor", "supply_store")): -8.9,
+    frozenset(("support_corridor", "cleaning_room")): -3.0,
+    frozenset(("support_corridor", "duty_room")): 3.45,
+    frozenset(("support_corridor", "service_vestibule")): 18.75,
+    frozenset(("emergency_stair", "fire_vestibule")): 30.5,
+}
+
 CONTAINMENT_SECTORS = {"U-CHAMBER-4", "U-CHAMBER-6", "L-CHAMBER-3", "L-CHAMBER-5"}
 SEQUENCE_SECTORS = {"U-ROUTE-A", "L-CHAMBER-1", "L-EAST-STAIR"}
 SPINE_SECTORS = {"U-DOMESTIC", "U-SECURITY", "T-WORKSHOP", "T-EAST-VERTICAL", "T-UTILITIES"}
@@ -305,6 +321,27 @@ def domestic_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], li
     ]
 
 
+def east_support_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the approved east-support plan, normalized to its metric labels and anchor."""
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "supply_store", rect(10.0, -13.0, 18.0, -5.9), height),
+        room(sector_id, "cleaning_room", rect(10.0, -5.9, 18.0, 0.3), height),
+        room(sector_id, "duty_room", rect(10.0, 0.3, 18.0, 7.0), height),
+        room(sector_id, "support_corridor", rect(18.0, -13.0, 20.0, 7.0), height, True, "circulation"),
+        room(sector_id, "service_vestibule", rect(14.0, 7.0, 19.5, 15.0), height, True, "airlock"),
+        room(sector_id, "emergency_stair", rect(22.0, 5.5, 32.0, 11.0), height, True, "stair"),
+        room(sector_id, "fire_vestibule", rect(22.0, 11.0, 32.0, 15.0), height, True, "airlock"),
+    ]
+    return result, [
+        ("support_corridor", "supply_store"),
+        ("support_corridor", "cleaning_room"),
+        ("support_corridor", "duty_room"),
+        ("support_corridor", "service_vestibule"),
+        ("emergency_stair", "fire_vestibule"),
+    ]
+
+
 def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, str]]]:
     sector_id = passport["sector_id"]
     names = passport["allowed_internal_subdivision"]
@@ -315,6 +352,8 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
         return control_center_layout(sector_id, bounds)
     if sector_id == "U-DOMESTIC":
         return domestic_layout(sector_id, bounds)
+    if sector_id == "U-EAST-SUPPORT":
+        return east_support_layout(sector_id, bounds)
     if sector_id in CENTRAL_CORE_SECTORS:
         return central_core_layout(sector_id, bounds)
     if sector_id in CONTAINMENT_SECTORS:
@@ -358,6 +397,8 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
     special_width = CENTRAL_CORE_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"]))) if sector_id in CENTRAL_CORE_SECTORS else None
     if sector_id == "U-CONTROL":
         special_width = CONTROL_CENTER_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
+    if sector_id == "U-EAST-SUPPORT":
+        special_width = EAST_SUPPORT_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
     requested_width = special_width if special_width is not None else 4.5 if cargo_threshold else width
     if special_width is not None:
         actual_width = min(requested_width, max(0.9, span * 0.95))
@@ -366,6 +407,8 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
     center = (lo + hi) / 2
     if sector_id == "U-DOMESTIC":
         center = DOMESTIC_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
+    if sector_id == "U-EAST-SUPPORT":
+        center = EAST_SUPPORT_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     segment = [[coordinate, center - actual_width / 2], [coordinate, center + actual_width / 2]] if axis == "x" else [[center - actual_width / 2, coordinate], [center + actual_width / 2, coordinate]]
     return {
         "id": f"P-{sector_id}-{index:02d}",
@@ -486,14 +529,17 @@ def preferred_side(sector_id: str, neighbor: str, kind: str, bounds: list[float]
 
 def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bounds: list[float]) -> dict[str, Any]:
     other = edge["to"] if edge["from"] == sector_id else edge["from"]
-    entry = select_space(sector_id, spaces, edge["kind"])
+    if sector_id == "U-EAST-SUPPORT" and edge["id"] == "E-U06":
+        entry = next(space for space in spaces if space["name"] == "service_vestibule")
+    else:
+        entry = select_space(sector_id, spaces, edge["kind"])
     side, coordinate, lo, hi = side_for(entry["bounds_xz"], sector_bounds, preferred_side(sector_id, other, edge["kind"], sector_bounds))
     heavy = "cargo" in edge["kind"] or "freight" in edge["kind"]
     central_entry = sector_id in CENTRAL_CORE_SECTORS and other in {"U-PAX", "L-PAX"}
-    width = 4.5 if heavy or central_entry else 1.8 if "controlled" in edge["kind"] or "hermetic" in edge["kind"] else 1.2
+    width = 4.5 if heavy or central_entry else 2.0 if sector_id == "U-EAST-SUPPORT" and edge["id"] == "E-U06" else 1.8 if "controlled" in edge["kind"] or "hermetic" in edge["kind"] else 1.2
     height = 4.5 if heavy else 2.8 if central_entry or "airlock" in entry["name"] or "hermetic" in edge["kind"] else 2.4
     actual_width = min(width, max(0.9, (hi - lo) * 0.6))
-    center = (lo + hi) / 2
+    center = 16.75 if sector_id == "U-EAST-SUPPORT" and edge["id"] == "E-U06" else (lo + hi) / 2
     segment = [[coordinate, center - actual_width / 2], [coordinate, center + actual_width / 2]] if side in {"west", "east"} else [[center - actual_width / 2, coordinate], [center + actual_width / 2, coordinate]]
     return {
         "id": f"PX-{edge['id']}-{sector_id}",
@@ -504,6 +550,27 @@ def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bound
         "segment_xz": [[round(v, 3) for v in point] for point in segment],
         "width": round(actual_width, 3),
         "height": height,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
+def east_support_fire_entry(edge: dict, spaces: list[dict]) -> dict[str, Any]:
+    entry = next(space for space in spaces if space["name"] == "fire_vestibule")
+    width = 2.9
+    center = 27.0
+    return {
+        "id": "PX-E-U06-U-EAST-SUPPORT-FIRE",
+        "connection_id": edge["id"],
+        "space": entry["id"],
+        "neighbor": "U-PAX",
+        "side": "south",
+        "segment_xz": [[round(center - width * 0.5, 3), 15.0], [round(center + width * 0.5, 3), 15.0]],
+        "width": width,
+        "height": 2.8,
         "type": edge["kind"],
         "direction": "bidirectional",
         "state": edge.get("state", "openable"),
@@ -577,9 +644,25 @@ def main() -> None:
         for sector_id in endpoints:
             portal = external_portal(edge, sector_id, spaces_by_sector[sector_id], bounds_by_sector[sector_id])
             external_portals.append(portal)
+            if sector_id == "U-EAST-SUPPORT" and edge["id"] == "E-U06":
+                external_portals.append(east_support_fire_entry(edge, spaces_by_sector[sector_id]))
         if external_portals and endpoints:
             related = [portal for portal in external_portals if portal["connection_id"] == edge["id"]]
-            if len(related) == 2:
+            if edge["id"] == "E-U06" and len(related) == 2:
+                points = []
+                for portal in related:
+                    p0, p1 = portal["segment_xz"]
+                    points.append([round((p0[0] + p1[0]) / 2, 3), round((p0[1] + p1[1]) / 2, 3)])
+                connection_corridors.append({
+                    "id": f"C-{edge['id']}",
+                    "connection_id": edge["id"],
+                    "centerline_xz": points,
+                    "width": max(portal["width"] for portal in related),
+                    "clear_height": max(portal["height"] for portal in related),
+                    "traversable": edge["traversable"],
+                    "state": edge.get("state", "openable"),
+                })
+            elif len(related) == 2:
                 first_space = space_lookup[related[0]["space"]]
                 second_space = space_lookup[related[1]["space"]]
                 aligned = shared_portal_segment(first_space["bounds_xz"], second_space["bounds_xz"], min(portal["width"] for portal in related))

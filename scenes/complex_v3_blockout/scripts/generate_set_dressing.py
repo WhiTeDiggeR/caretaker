@@ -252,6 +252,18 @@ def domestic_props(spaces: dict[str, dict]) -> list[dict]:
     ]
 
 
+def east_support_props(spaces: dict[str, dict]) -> list[dict]:
+    sector_id = "U-EAST-SUPPORT"
+    return [
+        planned_prop(spaces, sector_id, "supply_store", "loaded_shelf", 12.50, -8.00, 0.0, "linen"),
+        planned_prop(spaces, sector_id, "supply_store", "loaded_cabinet", 15.50, -8.00, 0.0, "chemicals"),
+        planned_prop(spaces, sector_id, "cleaning_room", "utility_tank", 12.50, -2.50, 0.0, "wash_sink"),
+        planned_prop(spaces, sector_id, "cleaning_room", "workbench", 15.20, -2.50, 0.0, "equipment"),
+        planned_prop(spaces, sector_id, "duty_room", "workbench", 14.00, 3.80, 0.0, "desk"),
+        planned_prop(spaces, sector_id, "duty_room", "loaded_cabinet", 12.50, 5.60, 0.0, "cabinet"),
+    ]
+
+
 def make_manifest() -> dict:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
@@ -268,7 +280,9 @@ def make_manifest() -> dict:
             placements.extend(control_center_props(spaces))
         elif sector_id == "U-DOMESTIC":
             placements.extend(domestic_props(spaces))
-        for index, space in enumerate(sector_spaces if sector_id not in {"U-CONTROL", "U-DOMESTIC"} else []):
+        elif sector_id == "U-EAST-SUPPORT":
+            placements.extend(east_support_props(spaces))
+        for index, space in enumerate(sector_spaces if sector_id not in {"U-CONTROL", "U-DOMESTIC", "U-EAST-SUPPORT"} else []):
             prop = choose_prop(space, family, index)
             path, size_x, size_z = PROP_DATA[prop]
             x, y, z = pick_position(space, (size_x, size_z), centers.get(space["id"], []))

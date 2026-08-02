@@ -9,6 +9,7 @@ BLOCKOUT_DIR = ROOT / "scenes" / "complex_v3_blockout"
 PASSPORTS_PATH = ROOT / "docs" / "design" / "complex_v3" / "handoff" / "passports" / "sector-passports.json"
 GEOMETRY_PATH = ROOT / "docs" / "design" / "complex_v3" / "handoff" / "geometry" / "complex-handoff.json"
 LEVEL_FOLDERS = {"LV-U": "upper", "LV-L": "lower", "LV-T": "technical"}
+PLAN_ALIGNED_FOCUS_SECTORS = {"U-CONTROL", "U-DOMESTIC", "U-EAST-SUPPORT"}
 
 
 def scene_slug(sector_id: str) -> str:
@@ -29,9 +30,19 @@ def main() -> None:
     geometry = json.loads(GEOMETRY_PATH.read_text(encoding="utf-8"))
     passports = sorted(passports_data["passports"], key=lambda item: item["sector_id"])
     space_counts: dict[str, int] = {}
+    sector_bounds: dict[str, list[float]] = {}
     for space in geometry["spaces"]:
         sector_id = space["sector_id"]
         space_counts[sector_id] = space_counts.get(sector_id, 0) + 1
+        x0, z0, x1, z1 = map(float, space["bounds_xz"])
+        if sector_id not in sector_bounds:
+            sector_bounds[sector_id] = [x0, z0, x1, z1]
+        else:
+            bounds = sector_bounds[sector_id]
+            bounds[0] = min(bounds[0], x0)
+            bounds[1] = min(bounds[1], z0)
+            bounds[2] = max(bounds[2], x1)
+            bounds[3] = max(bounds[3], z1)
 
     catalog = {
         "schema_version": "1.0",
@@ -50,6 +61,11 @@ def main() -> None:
     for index, passport in enumerate(passports, start=3):
         sector_id = passport["sector_id"]
         level = passport["level"]
+        focus_bounds = (
+            sector_bounds.get(sector_id, passport["parent_boundary_xz"])
+            if sector_id in PLAN_ALIGNED_FOCUS_SECTORS
+            else passport["parent_boundary_xz"]
+        )
         folder = LEVEL_FOLDERS[level]
         relative_path = f"zones/{folder}/{scene_slug(sector_id)}.tscn"
         resource_path = f"res://scenes/complex_v3_blockout/{relative_path}"
@@ -87,9 +103,9 @@ def main() -> None:
                 "space_count": space_counts.get(sector_id, 0),
                 "neighbors": sorted(passport.get("neighbors", [])),
                 "focus_xyz": [
-                    (passport["parent_boundary_xz"][0] + passport["parent_boundary_xz"][2]) / 2,
+                    (focus_bounds[0] + focus_bounds[2]) / 2,
                     passport["local_origin_xyz"][1] + 1.1,
-                    (passport["parent_boundary_xz"][1] + passport["parent_boundary_xz"][3]) / 2,
+                    (focus_bounds[1] + focus_bounds[3]) / 2,
                 ],
                 "standalone_infrastructure_preview": sector_id == "T-CIRCULATION",
             }
