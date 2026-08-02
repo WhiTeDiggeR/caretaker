@@ -15,10 +15,10 @@ func _ready() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var views := [
-		{"name": "01_upper_entrance", "position": Vector3(-9.5, 5.8, 12.5), "target": Vector3(0.0, -2.4, -0.5)},
-		{"name": "02_intermediate_landing", "position": Vector3(9.5, 1.8, -12.5), "target": Vector3(0.0, -3.1, -0.8)},
-		{"name": "03_side_profile", "position": Vector3(14.0, 0.0, 1.5), "target": Vector3(0.0, -3.0, -0.8)},
-		{"name": "04_top_oblique", "position": Vector3(-10.5, 12.5, 9.5), "target": Vector3(0.0, -2.8, -0.8)},
+		{"name": "01_upper_entrance", "position": Vector3(-1.8, 1.65, 8.5), "target": Vector3(-1.8, -1.4, -1.0)},
+		{"name": "02_lower_entrance", "position": Vector3(1.8, -4.35, 8.5), "target": Vector3(1.8, -4.8, -0.8)},
+		{"name": "03_intermediate_inside", "position": Vector3(0.0, -1.2, 0.6), "target": Vector3(0.0, -3.0, -4.15)},
+		{"name": "04_top_oblique", "position": Vector3(-8.5, 13.5, 9.5), "target": Vector3(0.0, -2.4, -0.8)},
 	]
 	for view: Dictionary in views:
 		camera.global_position = view["position"] as Vector3
