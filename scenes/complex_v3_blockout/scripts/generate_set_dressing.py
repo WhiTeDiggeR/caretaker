@@ -36,6 +36,12 @@ PROP_DATA = {
     "wall_beacon": ("res://objects/complex_v3/wall_beacon.tscn", 0.6, 0.25),
 }
 
+CENTRAL_CORE_SECTORS = {"U-CENTRAL-CORE", "L-CENTRAL-CORE"}
+WALL_MOUNT = {
+    "wall_beacon": {"depth": 0.12, "center_offset": 0.0},
+    "wall_terminal": {"depth": 0.22, "center_offset": -0.01},
+}
+
 PALETTES = {
     "medical": ["medical_bed", "loaded_cabinet", "wall_terminal"],
     "command": ["operator_console", "server_rack", "loaded_locker", "security_camera"],
@@ -103,6 +109,27 @@ def pick_position(space: dict, footprint: tuple[float, float], portals: list[tup
     return x, float(space["floor_y"]), z
 
 
+def snap_to_nearest_wall(space: dict, x: float, z: float, center_offset: float) -> tuple[float, float, float, str]:
+    x0, z0, x1, z1 = map(float, space["bounds_xz"])
+    half_wall = float(space.get("wall_thickness", 0.3)) * 0.5
+    side = min(
+        (
+            (abs(x - x0), "west"),
+            (abs(x - x1), "east"),
+            (abs(z - z0), "north"),
+            (abs(z - z1), "south"),
+        ),
+        key=lambda candidate: candidate[0],
+    )[1]
+    if side == "west":
+        return x0 + half_wall + center_offset, z, math.pi * 0.5, side
+    if side == "east":
+        return x1 - half_wall - center_offset, z, -math.pi * 0.5, side
+    if side == "north":
+        return x, z0 + half_wall + center_offset, 0.0, side
+    return x, z1 - half_wall - center_offset, math.pi, side
+
+
 def choose_prop(space: dict, family: str, index: int) -> str:
     space_name = str(space.get("name", ""))
     if space_name == "electrical_room" and str(space.get("sector_id", "")) in {"U-CENTRAL-CORE", "L-CENTRAL-CORE"}:
@@ -159,7 +186,19 @@ def make_manifest() -> dict:
             cx = (float(space["bounds_xz"][0]) + float(space["bounds_xz"][2])) * 0.5
             cz = (float(space["bounds_xz"][1]) + float(space["bounds_xz"][3])) * 0.5
             rotation_y = math.atan2(cx - x, cz - z)
-            placements.append({"kind": "prop", "id": f"{space['id']}::{prop}", "space_id": space["id"], "scene": path, "position": [x, y, z], "rotation_y": rotation_y, "footprint_xz": [size_x, size_z]})
+            wall_mount_depth = None
+            wall_mount_side = None
+            wall_mount_center_offset = None
+            if sector_id in CENTRAL_CORE_SECTORS and prop in WALL_MOUNT:
+                wall_mount_depth = WALL_MOUNT[prop]["depth"]
+                wall_mount_center_offset = WALL_MOUNT[prop]["center_offset"]
+                x, z, rotation_y, wall_mount_side = snap_to_nearest_wall(space, x, z, wall_mount_center_offset)
+            placement = {"kind": "prop", "id": f"{space['id']}::{prop}", "space_id": space["id"], "scene": path, "position": [x, y, z], "rotation_y": rotation_y, "footprint_xz": [size_x, size_z]}
+            if wall_mount_depth is not None:
+                placement["wall_mount_depth"] = wall_mount_depth
+                placement["wall_mount_center_offset"] = wall_mount_center_offset
+                placement["wall_mount_side"] = wall_mount_side
+            placements.append(placement)
         if not sector_spaces:
             x, y, z = map(float, sector["focus_xyz"])
             path, size_x, size_z = PROP_DATA["pipe_cluster"]

@@ -20,6 +20,8 @@ def main() -> None:
     errors = []
     prop_count = 0
     frame_count = 0
+    wall_mount_count = 0
+    minimum_service_clearance = float("inf")
     for sector in manifest["sectors"]:
         scene_path = ROOT / sector["dressing_scene"].removeprefix("res://")
         if not scene_path.is_file():
@@ -36,8 +38,17 @@ def main() -> None:
                     space = spaces[placement["space_id"]]
                     x, _, z = placement["position"]
                     sx, sz = placement["footprint_xz"]
+                    sz = float(placement.get("wall_mount_depth", sz))
                     x0, z0, x1, z1 = map(float, space["bounds_xz"])
-                    if not (x0 <= x - sx * 0.5 and x + sx * 0.5 <= x1 and z0 <= z - sz * 0.5 and z + sz * 0.5 <= z1):
+                    if "wall_mount_depth" in placement:
+                        wall_mount_count += 1
+                        rotation = float(placement.get("rotation_y", 0.0))
+                        extent_x = abs(math.cos(rotation)) * sx * 0.5 + abs(math.sin(rotation)) * sz * 0.5
+                        extent_z = abs(math.sin(rotation)) * sx * 0.5 + abs(math.cos(rotation)) * sz * 0.5
+                    else:
+                        extent_x = sx * 0.5
+                        extent_z = sz * 0.5
+                    if not (x0 - 0.001 <= x - extent_x and x + extent_x <= x1 + 0.001 and z0 - 0.001 <= z - extent_z and z + extent_z <= z1 + 0.001):
                         errors.append(f"prop footprint outside {placement['space_id']}: {placement['id']}")
                     center_x = (x0 + x1) * 0.5
                     center_z = (z0 + z1) * 0.5
@@ -46,6 +57,28 @@ def main() -> None:
                     expected_offset = 2.65 if placement["scene"].endswith("security_camera.tscn") else 2.35 if placement["scene"].endswith("wall_beacon.tscn") else 1.2 if placement["scene"].endswith("wall_terminal.tscn") else 0.0
                     if not math.isclose(float(placement["position"][1]), float(space["floor_y"]) + expected_offset, abs_tol=0.01):
                         errors.append(f"invalid vertical placement: {placement['id']}")
+                    if "wall_mount_depth" in placement:
+                        half_wall = float(space.get("wall_thickness", 0.3)) * 0.5
+                        center_offset = float(placement.get("wall_mount_center_offset", 0.0))
+                        expected_centers = {
+                            "west": x0 + half_wall + center_offset,
+                            "east": x1 - half_wall - center_offset,
+                            "north": z0 + half_wall + center_offset,
+                            "south": z1 - half_wall - center_offset,
+                        }
+                        side = str(placement.get("wall_mount_side", ""))
+                        center_coordinate = x if side in {"west", "east"} else z
+                        wall_gap = abs(center_coordinate - expected_centers.get(side, float("inf")))
+                        if wall_gap > 0.01:
+                            errors.append(f"wall-mounted prop is detached from inner wall face: {placement['id']} gap={wall_gap:.3f}")
+                    if placement["id"].endswith("service_access::wall_terminal"):
+                        wall_thickness = float(space.get("wall_thickness", 0.3))
+                        depth = float(placement.get("wall_mount_depth", sz))
+                        center_offset = float(placement.get("wall_mount_center_offset", 0.0))
+                        clear_width = (x1 - x0) - wall_thickness - (depth * 0.5 + center_offset)
+                        minimum_service_clearance = min(minimum_service_clearance, clear_width)
+                        if clear_width < 1.5:
+                            errors.append(f"central service corridor blocked by terminal: {placement['id']} clear_width={clear_width:.3f}")
             else:
                 frame_count += 1
                 if placement.get("scale", [1])[0] <= 0:
@@ -60,7 +93,7 @@ def main() -> None:
         errors.append("five internal cargo thresholds must preserve 4.5 x 4.5 m clearance")
     if errors:
         raise SystemExit("Set-dressing validation failed:\n- " + "\n- ".join(errors))
-    print(f"Set-dressing validation passed: 30 sectors, {prop_count} props, {frame_count} open portal frames")
+    print(f"Set-dressing validation passed: 30 sectors, {prop_count} props, {frame_count} open portal frames, {wall_mount_count} central wall mounts, minimum service clearance {minimum_service_clearance:.2f} m")
 
 
 if __name__ == "__main__":
