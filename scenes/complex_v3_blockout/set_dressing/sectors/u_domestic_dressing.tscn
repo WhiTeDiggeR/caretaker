@@ -1,119 +1,169 @@
 [gd_scene load_steps=7 format=3]
 
 [ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/loaded_locker.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://objects/staff_table.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/loaded_locker.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/staff_table.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="6"]
 
 [node name="U_DOMESTIC_SetDressing" type="Node3D"]
 metadata/sector_id = "U-DOMESTIC"
 metadata/material_family = "domestic"
 
-[node name="001_U_DOMESTIC_canteen__staff_table" parent="." instance=ExtResource("6")]
-position = Vector3(-44.6500, 0.0000, -13.0000)
+[node name="001_U_DOMESTIC_canteen__staff_table__table_nw" parent="." instance=ExtResource("5")]
+position = Vector3(-54.1600, 0.0000, -9.2400)
+metadata/placement_id = "U-DOMESTIC/canteen::staff_table::table_nw"
+
+[node name="002_U_DOMESTIC_canteen__staff_table__table_ne" parent="." instance=ExtResource("5")]
+position = Vector3(-50.0000, 0.0000, -9.2400)
+metadata/placement_id = "U-DOMESTIC/canteen::staff_table::table_ne"
+
+[node name="003_U_DOMESTIC_canteen__staff_table__table_sw" parent="." instance=ExtResource("5")]
+position = Vector3(-54.1600, 0.0000, -7.3200)
+metadata/placement_id = "U-DOMESTIC/canteen::staff_table::table_sw"
+
+[node name="004_U_DOMESTIC_canteen__staff_table__table_se" parent="." instance=ExtResource("5")]
+position = Vector3(-50.0000, 0.0000, -7.3200)
+metadata/placement_id = "U-DOMESTIC/canteen::staff_table::table_se"
+
+[node name="005_U_DOMESTIC_canteen__loaded_cabinet__serving_counter" parent="." instance=ExtResource("2")]
+position = Vector3(-46.5000, 0.0000, -8.0000)
 rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/canteen::staff_table"
+metadata/placement_id = "U-DOMESTIC/canteen::loaded_cabinet::serving_counter"
 
-[node name="002_U_DOMESTIC_cold_store__loaded_cabinet" parent="." instance=ExtResource("3")]
-position = Vector3(-34.0500, 0.0000, -5.0000)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/cold_store::loaded_cabinet"
+[node name="006_U_DOMESTIC_kitchen__workbench__prep" parent="." instance=ExtResource("6")]
+position = Vector3(-39.4000, 0.0000, -9.3600)
+metadata/placement_id = "U-DOMESTIC/kitchen::workbench::prep"
 
-[node name="003_U_DOMESTIC_dry_store__loaded_shelf" parent="." instance=ExtResource("5")]
-position = Vector3(-44.8000, 0.0000, -5.0000)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/dry_store::loaded_shelf"
+[node name="007_U_DOMESTIC_kitchen__workbench__hot_line" parent="." instance=ExtResource("6")]
+position = Vector3(-35.5600, 0.0000, -9.3600)
+metadata/placement_id = "U-DOMESTIC/kitchen::workbench::hot_line"
 
-[node name="004_U_DOMESTIC_internal_circulation__wall_beacon" parent="." instance=ExtResource("2")]
-position = Vector3(-39.5300, 2.3500, -1.0000)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/internal_circulation::wall_beacon"
+[node name="008_U_DOMESTIC_kitchen__workbench__island_w" parent="." instance=ExtResource("6")]
+position = Vector3(-39.8000, 0.0000, -6.8000)
+metadata/placement_id = "U-DOMESTIC/kitchen::workbench::island_w"
 
-[node name="005_U_DOMESTIC_kitchen__staff_table" parent="." instance=ExtResource("6")]
-position = Vector3(-34.3500, 0.0000, -13.0000)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/kitchen::staff_table"
+[node name="009_U_DOMESTIC_kitchen__workbench__island_c" parent="." instance=ExtResource("6")]
+position = Vector3(-37.4800, 0.0000, -6.8000)
+metadata/placement_id = "U-DOMESTIC/kitchen::workbench::island_c"
 
-[node name="006_U_DOMESTIC_locker_room__loaded_cabinet" parent="." instance=ExtResource("3")]
-position = Vector3(-34.0500, 0.0000, 3.0000)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/locker_room::loaded_cabinet"
+[node name="010_U_DOMESTIC_kitchen__workbench__island_e" parent="." instance=ExtResource("6")]
+position = Vector3(-35.1600, 0.0000, -6.8000)
+metadata/placement_id = "U-DOMESTIC/kitchen::workbench::island_e"
 
-[node name="007_U_DOMESTIC_rest_room__loaded_shelf" parent="." instance=ExtResource("5")]
-position = Vector3(-34.2000, 0.0000, 11.0000)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/rest_room::loaded_shelf"
+[node name="011_U_DOMESTIC_kitchen__loaded_cabinet__wash_return" parent="." instance=ExtResource("2")]
+position = Vector3(-35.5600, 0.0000, -4.3200)
+metadata/placement_id = "U-DOMESTIC/kitchen::loaded_cabinet::wash_return"
 
-[node name="008_U_DOMESTIC_shower_room__loaded_locker" parent="." instance=ExtResource("4")]
-position = Vector3(-44.9500, 0.0000, 11.0000)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/shower_room::loaded_locker"
+[node name="012_U_DOMESTIC_dry_store__loaded_shelf__shelf_n" parent="." instance=ExtResource("4")]
+position = Vector3(-40.2000, 0.0000, 1.6000)
+metadata/placement_id = "U-DOMESTIC/dry_store::loaded_shelf::shelf_n"
 
-[node name="009_U_DOMESTIC_staff_vestibule__wall_beacon" parent="." instance=ExtResource("2")]
-position = Vector3(-45.2500, 2.3500, 3.0000)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-DOMESTIC/staff_vestibule::wall_beacon"
+[node name="013_U_DOMESTIC_dry_store__loaded_shelf__shelf_s" parent="." instance=ExtResource("4")]
+position = Vector3(-40.2000, 0.0000, 3.4000)
+metadata/placement_id = "U-DOMESTIC/dry_store::loaded_shelf::shelf_s"
 
-[node name="010_P_U_DOMESTIC_01" parent="." instance=ExtResource("1")]
-position = Vector3(-40.2800, 0.0000, -13.0000)
+[node name="014_U_DOMESTIC_cold_store__loaded_shelf__cold_rack_n" parent="." instance=ExtResource("4")]
+position = Vector3(-35.2000, 0.0000, 1.6000)
+metadata/placement_id = "U-DOMESTIC/cold_store::loaded_shelf::cold_rack_n"
+
+[node name="015_U_DOMESTIC_cold_store__loaded_shelf__cold_rack_s" parent="." instance=ExtResource("4")]
+position = Vector3(-35.2000, 0.0000, 3.4000)
+metadata/placement_id = "U-DOMESTIC/cold_store::loaded_shelf::cold_rack_s"
+
+[node name="016_U_DOMESTIC_locker_room__loaded_locker__west_n" parent="." instance=ExtResource("3")]
+position = Vector3(-41.2000, 0.0000, 8.2000)
+metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::west_n"
+
+[node name="017_U_DOMESTIC_locker_room__loaded_locker__west_c" parent="." instance=ExtResource("3")]
+position = Vector3(-41.2000, 0.0000, 9.8000)
+metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::west_c"
+
+[node name="018_U_DOMESTIC_locker_room__loaded_locker__west_s" parent="." instance=ExtResource("3")]
+position = Vector3(-41.2000, 0.0000, 11.4000)
+metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::west_s"
+
+[node name="019_U_DOMESTIC_locker_room__loaded_locker__east_n" parent="." instance=ExtResource("3")]
+position = Vector3(-39.8000, 0.0000, 8.2000)
+metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::east_n"
+
+[node name="020_U_DOMESTIC_locker_room__loaded_locker__east_c" parent="." instance=ExtResource("3")]
+position = Vector3(-39.8000, 0.0000, 9.8000)
+metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::east_c"
+
+[node name="021_U_DOMESTIC_locker_room__loaded_locker__east_s" parent="." instance=ExtResource("3")]
+position = Vector3(-39.8000, 0.0000, 11.4000)
+metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::east_s"
+
+[node name="022_U_DOMESTIC_rest_room__staff_table__table_n" parent="." instance=ExtResource("5")]
+position = Vector3(-34.6000, 0.0000, 9.2000)
+metadata/placement_id = "U-DOMESTIC/rest_room::staff_table::table_n"
+
+[node name="023_U_DOMESTIC_rest_room__staff_table__table_s" parent="." instance=ExtResource("5")]
+position = Vector3(-34.6000, 0.0000, 11.5000)
+metadata/placement_id = "U-DOMESTIC/rest_room::staff_table::table_s"
+
+[node name="024_P_U_DOMESTIC_01" parent="." instance=ExtResource("1")]
+position = Vector3(-45.0000, 0.0000, -6.7200)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-DOMESTIC-01"
 metadata/open_passage = true
 
-[node name="011_P_U_DOMESTIC_02" parent="." instance=ExtResource("1")]
-position = Vector3(-40.2800, 0.0000, -5.0000)
+[node name="025_P_U_DOMESTIC_02" parent="." instance=ExtResource("1")]
+position = Vector3(-42.0000, 0.0000, -4.0800)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-DOMESTIC-02"
 metadata/open_passage = true
 
-[node name="012_P_U_DOMESTIC_03" parent="." instance=ExtResource("1")]
-position = Vector3(-40.2800, 0.0000, 3.0000)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="026_P_U_DOMESTIC_03" parent="." instance=ExtResource("1")]
+position = Vector3(-39.2400, 0.0000, -2.4800)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-DOMESTIC-03"
 metadata/open_passage = true
 
-[node name="013_P_U_DOMESTIC_04" parent="." instance=ExtResource("1")]
-position = Vector3(-40.2800, 0.0000, 11.0000)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="027_P_U_DOMESTIC_04" parent="." instance=ExtResource("1")]
+position = Vector3(-35.3600, 0.0000, -2.4800)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-DOMESTIC-04"
 metadata/open_passage = true
 
-[node name="014_P_U_DOMESTIC_05" parent="." instance=ExtResource("1")]
-position = Vector3(-38.7200, 0.0000, -13.0000)
+[node name="028_P_U_DOMESTIC_05" parent="." instance=ExtResource("1")]
+position = Vector3(-42.0000, 0.0000, -0.1600)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-DOMESTIC-05"
 metadata/open_passage = true
 
-[node name="015_P_U_DOMESTIC_06" parent="." instance=ExtResource("1")]
-position = Vector3(-38.7200, 0.0000, -5.0000)
+[node name="029_P_U_DOMESTIC_06" parent="." instance=ExtResource("1")]
+position = Vector3(-42.0000, 0.0000, 6.0800)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.50420, 1.00000, 1.00000)
+scale = Vector3(0.44370, 1.00000, 1.00000)
 metadata/placement_id = "P-U-DOMESTIC-06"
 metadata/open_passage = true
 
-[node name="016_P_U_DOMESTIC_07" parent="." instance=ExtResource("1")]
-position = Vector3(-38.7200, 0.0000, 3.0000)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="030_P_U_DOMESTIC_07" parent="." instance=ExtResource("1")]
+position = Vector3(-40.6400, 0.0000, 6.8000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-DOMESTIC-07"
 metadata/open_passage = true
 
-[node name="017_P_U_DOMESTIC_08" parent="." instance=ExtResource("1")]
-position = Vector3(-38.7200, 0.0000, 11.0000)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="031_P_U_DOMESTIC_08" parent="." instance=ExtResource("1")]
+position = Vector3(-37.6800, 0.0000, 6.8000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-DOMESTIC-08"
 metadata/open_passage = true
 
-[node name="018_PX_E_U03_U_DOMESTIC" parent="." instance=ExtResource("1")]
-position = Vector3(-39.5000, 0.0000, 15.0000)
-scale = Vector3(0.39328, 1.00000, 1.00000)
+[node name="032_P_U_DOMESTIC_09" parent="." instance=ExtResource("1")]
+position = Vector3(-34.6400, 0.0000, 6.8000)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-DOMESTIC-09"
+metadata/open_passage = true
+
+[node name="033_PX_E_U03_U_DOMESTIC" parent="." instance=ExtResource("1")]
+position = Vector3(-43.5000, 0.0000, 15.0000)
+scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "PX-E-U03-U-DOMESTIC"
 metadata/open_passage = true

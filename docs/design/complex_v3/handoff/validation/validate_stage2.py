@@ -42,6 +42,30 @@ CONTROL_CENTER_CONNECTIONS = {
     frozenset(("service_aisle", "east_access")),
 }
 
+DOMESTIC_BOUNDS = {
+    "U-DOMESTIC/canteen": [-57.0, -13.0, -45.0, -6.0],
+    "U-DOMESTIC/internal_circulation": [-45.0, -8.52, -42.0, 15.0],
+    "U-DOMESTIC/kitchen": [-42.0, -13.0, -33.0, -2.48],
+    "U-DOMESTIC/dry_store": [-42.0, -2.48, -37.4, 5.04],
+    "U-DOMESTIC/cold_store": [-37.4, -2.48, -33.0, 5.04],
+    "U-DOMESTIC/staff_vestibule": [-42.0, 5.04, -33.0, 6.8],
+    "U-DOMESTIC/locker_room": [-42.0, 6.8, -39.0, 13.0],
+    "U-DOMESTIC/shower_room": [-39.0, 6.8, -36.2, 13.0],
+    "U-DOMESTIC/rest_room": [-36.2, 6.8, -33.0, 13.0],
+}
+
+DOMESTIC_CONNECTIONS = {
+    frozenset(("canteen", "internal_circulation")),
+    frozenset(("kitchen", "internal_circulation")),
+    frozenset(("kitchen", "dry_store")),
+    frozenset(("kitchen", "cold_store")),
+    frozenset(("dry_store", "internal_circulation")),
+    frozenset(("staff_vestibule", "internal_circulation")),
+    frozenset(("staff_vestibule", "locker_room")),
+    frozenset(("staff_vestibule", "shower_room")),
+    frozenset(("staff_vestibule", "rest_room")),
+}
+
 
 def load(relative: str) -> dict:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
@@ -99,6 +123,14 @@ def main() -> int:
     if actual_control_bounds != CONTROL_CENTER_BOUNDS:
         errors.append(f"U-CONTROL no longer traces the approved 24 px/m SVG: {actual_control_bounds}")
 
+    actual_domestic_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in DOMESTIC_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_domestic_bounds != DOMESTIC_BOUNDS:
+        errors.append(f"U-DOMESTIC no longer traces the approved 25 px/m SVG: {actual_domestic_bounds}")
+
     for a, b in itertools.combinations(spaces, 2):
         if a["floor_y"] == b["floor_y"] and positive_overlap(a["bounds_xz"], b["bounds_xz"]):
             errors.append(f"positive room overlap: {a['id']} <> {b['id']}")
@@ -125,6 +157,14 @@ def main() -> int:
     if actual_control_connections != CONTROL_CENTER_CONNECTIONS:
         errors.append("U-CONTROL internal connections differ from the approved plan")
 
+    actual_domestic_connections = {
+        frozenset(space_id.removeprefix("U-DOMESTIC/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-U-DOMESTIC-")
+    }
+    if actual_domestic_connections != DOMESTIC_CONNECTIONS:
+        errors.append("U-DOMESTIC internal connections differ from the approved plan")
+
     external_by_id = {item["id"]: item for item in geometry["external_portals"]}
     for portal in external_by_id.values():
         room = space_by_id.get(portal["space"])
@@ -133,6 +173,9 @@ def main() -> int:
     control_entry = external_by_id.get("PX-E-U04-U-CONTROL", {})
     if control_entry.get("space") != "U-CONTROL/east_access" or control_entry.get("side") != "south":
         errors.append("U-CONTROL passenger entry must use the south end of east_access")
+    domestic_entry = external_by_id.get("PX-E-U03-U-DOMESTIC", {})
+    if domestic_entry.get("space") != "U-DOMESTIC/internal_circulation" or domestic_entry.get("side") != "south":
+        errors.append("U-DOMESTIC passenger entry must use the south end of internal_circulation")
 
     represented: set[str] = set()
     for corridor in geometry["connection_corridors"]:

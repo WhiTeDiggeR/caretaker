@@ -169,8 +169,8 @@ def collect_frames(handoff: dict, spaces: dict[str, dict]) -> dict[str, list[dic
     return result
 
 
-def planned_prop(spaces: dict[str, dict], space_name: str, prop: str, x: float, z: float, rotation_y: float, suffix: str, wall_side: str | None = None) -> dict:
-    space_id = f"U-CONTROL/{space_name}"
+def planned_prop(spaces: dict[str, dict], sector_id: str, space_name: str, prop: str, x: float, z: float, rotation_y: float, suffix: str, wall_side: str | None = None) -> dict:
+    space_id = f"{sector_id}/{space_name}"
     space = spaces[space_id]
     path, size_x, size_z = PROP_DATA[prop]
     y = float(space["floor_y"])
@@ -199,27 +199,56 @@ def planned_prop(spaces: dict[str, dict], space_name: str, prop: str, x: float, 
 
 def control_center_props(spaces: dict[str, dict]) -> list[dict]:
     return [
-        planned_prop(spaces, "command_office", "operator_console", -29.083, -10.500, 0.0, "desk"),
-        planned_prop(spaces, "coordination_room", "operator_console", -23.250, -10.500, 0.0, "briefing"),
-        planned_prop(spaces, "communications_room", "wall_terminal", -19.725, -8.557, math.pi, "west", "south"),
-        planned_prop(spaces, "communications_room", "wall_terminal", -15.542, -8.557, math.pi, "center", "south"),
-        planned_prop(spaces, "communications_room", "wall_terminal", -12.333, -8.557, math.pi, "east", "south"),
-        planned_prop(spaces, "operator_hall", "wall_terminal", -31.860, -2.167, math.pi * 0.5, "status_screen", "west"),
-        planned_prop(spaces, "operator_hall", "operator_console", -26.958, -3.375, 0.0, "island_nw"),
-        planned_prop(spaces, "operator_hall", "operator_console", -22.083, -3.375, 0.0, "island_ne"),
-        planned_prop(spaces, "operator_hall", "operator_console", -26.958, -0.458, 0.0, "island_sw"),
-        planned_prop(spaces, "operator_hall", "operator_console", -22.083, -0.458, 0.0, "island_se"),
-        planned_prop(spaces, "operator_hall", "operator_console", -24.500, 2.333, math.pi, "central"),
-        planned_prop(spaces, "access_vestibule", "wall_beacon", -13.875, -1.275, math.pi, "south", "south"),
-        planned_prop(spaces, "duty_support", "loaded_cabinet", -13.875, 3.483, math.pi, "supplies"),
-        planned_prop(spaces, "fire_vestibule", "wall_beacon", -19.767, 4.708, math.pi * 0.5, "west", "west"),
-        planned_prop(spaces, "power_buffer", "generator_unit", -29.188, 7.833, 0.0, "ups"),
-        planned_prop(spaces, "network_node", "server_rack", -24.188, 7.833, 0.0, "network"),
-        planned_prop(spaces, "server_room", "server_rack", -20.208, 8.625, 0.0, "rack_1"),
-        planned_prop(spaces, "server_room", "server_rack", -17.958, 8.625, 0.0, "rack_2"),
-        planned_prop(spaces, "server_room", "server_rack", -15.708, 8.625, 0.0, "rack_3"),
-        planned_prop(spaces, "server_room", "server_rack", -13.458, 8.625, 0.0, "rack_4"),
-        planned_prop(spaces, "east_access", "wall_beacon", -8.150, 4.500, -math.pi * 0.5, "east", "east"),
+        planned_prop(spaces, "U-CONTROL", "command_office", "operator_console", -29.083, -10.500, 0.0, "desk"),
+        planned_prop(spaces, "U-CONTROL", "coordination_room", "operator_console", -23.250, -10.500, 0.0, "briefing"),
+        planned_prop(spaces, "U-CONTROL", "communications_room", "wall_terminal", -19.725, -8.557, math.pi, "west", "south"),
+        planned_prop(spaces, "U-CONTROL", "communications_room", "wall_terminal", -15.542, -8.557, math.pi, "center", "south"),
+        planned_prop(spaces, "U-CONTROL", "communications_room", "wall_terminal", -12.333, -8.557, math.pi, "east", "south"),
+        planned_prop(spaces, "U-CONTROL", "operator_hall", "wall_terminal", -31.860, -2.167, math.pi * 0.5, "status_screen", "west"),
+        planned_prop(spaces, "U-CONTROL", "operator_hall", "operator_console", -26.958, -3.375, 0.0, "island_nw"),
+        planned_prop(spaces, "U-CONTROL", "operator_hall", "operator_console", -22.083, -3.375, 0.0, "island_ne"),
+        planned_prop(spaces, "U-CONTROL", "operator_hall", "operator_console", -26.958, -0.458, 0.0, "island_sw"),
+        planned_prop(spaces, "U-CONTROL", "operator_hall", "operator_console", -22.083, -0.458, 0.0, "island_se"),
+        planned_prop(spaces, "U-CONTROL", "operator_hall", "operator_console", -24.500, 2.333, math.pi, "central"),
+        planned_prop(spaces, "U-CONTROL", "access_vestibule", "wall_beacon", -13.875, -1.275, math.pi, "south", "south"),
+        planned_prop(spaces, "U-CONTROL", "duty_support", "loaded_cabinet", -13.875, 3.483, math.pi, "supplies"),
+        planned_prop(spaces, "U-CONTROL", "fire_vestibule", "wall_beacon", -19.767, 4.708, math.pi * 0.5, "west", "west"),
+        planned_prop(spaces, "U-CONTROL", "power_buffer", "generator_unit", -29.188, 7.833, 0.0, "ups"),
+        planned_prop(spaces, "U-CONTROL", "network_node", "server_rack", -24.188, 7.833, 0.0, "network"),
+        planned_prop(spaces, "U-CONTROL", "server_room", "server_rack", -20.208, 8.625, 0.0, "rack_1"),
+        planned_prop(spaces, "U-CONTROL", "server_room", "server_rack", -17.958, 8.625, 0.0, "rack_2"),
+        planned_prop(spaces, "U-CONTROL", "server_room", "server_rack", -15.708, 8.625, 0.0, "rack_3"),
+        planned_prop(spaces, "U-CONTROL", "server_room", "server_rack", -13.458, 8.625, 0.0, "rack_4"),
+        planned_prop(spaces, "U-CONTROL", "east_access", "wall_beacon", -8.150, 4.500, -math.pi * 0.5, "east", "east"),
+    ]
+
+
+def domestic_props(spaces: dict[str, dict]) -> list[dict]:
+    sector_id = "U-DOMESTIC"
+    return [
+        planned_prop(spaces, sector_id, "canteen", "staff_table", -54.16, -9.24, 0.0, "table_nw"),
+        planned_prop(spaces, sector_id, "canteen", "staff_table", -50.00, -9.24, 0.0, "table_ne"),
+        planned_prop(spaces, sector_id, "canteen", "staff_table", -54.16, -7.32, 0.0, "table_sw"),
+        planned_prop(spaces, sector_id, "canteen", "staff_table", -50.00, -7.32, 0.0, "table_se"),
+        planned_prop(spaces, sector_id, "canteen", "loaded_cabinet", -46.50, -8.00, math.pi * 0.5, "serving_counter"),
+        planned_prop(spaces, sector_id, "kitchen", "workbench", -39.40, -9.36, 0.0, "prep"),
+        planned_prop(spaces, sector_id, "kitchen", "workbench", -35.56, -9.36, 0.0, "hot_line"),
+        planned_prop(spaces, sector_id, "kitchen", "workbench", -39.80, -6.80, 0.0, "island_w"),
+        planned_prop(spaces, sector_id, "kitchen", "workbench", -37.48, -6.80, 0.0, "island_c"),
+        planned_prop(spaces, sector_id, "kitchen", "workbench", -35.16, -6.80, 0.0, "island_e"),
+        planned_prop(spaces, sector_id, "kitchen", "loaded_cabinet", -35.56, -4.32, 0.0, "wash_return"),
+        planned_prop(spaces, sector_id, "dry_store", "loaded_shelf", -40.20, 1.60, 0.0, "shelf_n"),
+        planned_prop(spaces, sector_id, "dry_store", "loaded_shelf", -40.20, 3.40, 0.0, "shelf_s"),
+        planned_prop(spaces, sector_id, "cold_store", "loaded_shelf", -35.20, 1.60, 0.0, "cold_rack_n"),
+        planned_prop(spaces, sector_id, "cold_store", "loaded_shelf", -35.20, 3.40, 0.0, "cold_rack_s"),
+        planned_prop(spaces, sector_id, "locker_room", "loaded_locker", -41.20, 8.20, 0.0, "west_n"),
+        planned_prop(spaces, sector_id, "locker_room", "loaded_locker", -41.20, 9.80, 0.0, "west_c"),
+        planned_prop(spaces, sector_id, "locker_room", "loaded_locker", -41.20, 11.40, 0.0, "west_s"),
+        planned_prop(spaces, sector_id, "locker_room", "loaded_locker", -39.80, 8.20, 0.0, "east_n"),
+        planned_prop(spaces, sector_id, "locker_room", "loaded_locker", -39.80, 9.80, 0.0, "east_c"),
+        planned_prop(spaces, sector_id, "locker_room", "loaded_locker", -39.80, 11.40, 0.0, "east_s"),
+        planned_prop(spaces, sector_id, "rest_room", "staff_table", -34.60, 9.20, 0.0, "table_n"),
+        planned_prop(spaces, sector_id, "rest_room", "staff_table", -34.60, 11.50, 0.0, "table_s"),
     ]
 
 
@@ -237,7 +266,9 @@ def make_manifest() -> dict:
         sector_spaces = sorted((s for s in spaces.values() if s["sector_id"] == sector_id), key=lambda s: s["id"])
         if sector_id == "U-CONTROL":
             placements.extend(control_center_props(spaces))
-        for index, space in enumerate(sector_spaces if sector_id != "U-CONTROL" else []):
+        elif sector_id == "U-DOMESTIC":
+            placements.extend(domestic_props(spaces))
+        for index, space in enumerate(sector_spaces if sector_id not in {"U-CONTROL", "U-DOMESTIC"} else []):
             prop = choose_prop(space, family, index)
             path, size_x, size_z = PROP_DATA[prop]
             x, y, z = pick_position(space, (size_x, size_z), centers.get(space["id"], []))

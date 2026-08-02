@@ -89,7 +89,7 @@
       "level": "LV-U",
       "bounds_xz": [
         -62.0,
-        -8.0,
+        -6.0,
         -46.0,
         14.0
       ],
@@ -109,21 +109,21 @@
       "id": "U-DOMESTIC",
       "level": "LV-U",
       "bounds_xz": [
-        -46.0,
-        -17.0,
+        -57.0,
+        -13.0,
         -33.0,
         15.0
       ],
       "passport_id": "PASS-U-DOMESTIC",
       "space_ids": [
-        "U-DOMESTIC/internal_circulation",
         "U-DOMESTIC/canteen",
-        "U-DOMESTIC/dry_store",
-        "U-DOMESTIC/staff_vestibule",
-        "U-DOMESTIC/shower_room",
+        "U-DOMESTIC/internal_circulation",
         "U-DOMESTIC/kitchen",
+        "U-DOMESTIC/dry_store",
         "U-DOMESTIC/cold_store",
+        "U-DOMESTIC/staff_vestibule",
         "U-DOMESTIC/locker_room",
+        "U-DOMESTIC/shower_room",
         "U-DOMESTIC/rest_room"
       ],
       "reserved_volumes": [],
@@ -875,7 +875,7 @@
       "kind": "room",
       "bounds_xz": [
         -62.0,
-        -8.0,
+        -6.0,
         -56.667,
         14.0
       ],
@@ -893,7 +893,7 @@
       "kind": "room",
       "bounds_xz": [
         -56.667,
-        -8.0,
+        -6.0,
         -51.333,
         14.0
       ],
@@ -911,9 +911,27 @@
       "kind": "room",
       "bounds_xz": [
         -51.333,
-        -8.0,
+        -6.0,
         -46.0,
         14.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-DOMESTIC/canteen",
+      "name": "canteen",
+      "sector_id": "U-DOMESTIC",
+      "kind": "room",
+      "bounds_xz": [
+        -57.0,
+        -13.0,
+        -45.0,
+        -6.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -928,9 +946,9 @@
       "sector_id": "U-DOMESTIC",
       "kind": "circulation",
       "bounds_xz": [
-        -40.28,
-        -17.0,
-        -38.72,
+        -45.0,
+        -8.52,
+        -42.0,
         15.0
       ],
       "clear_height": 3.4,
@@ -941,15 +959,15 @@
       "floor_y": 0.0
     },
     {
-      "id": "U-DOMESTIC/canteen",
-      "name": "canteen",
+      "id": "U-DOMESTIC/kitchen",
+      "name": "kitchen",
       "sector_id": "U-DOMESTIC",
       "kind": "room",
       "bounds_xz": [
-        -46.0,
-        -17.0,
-        -40.28,
-        -9.0
+        -42.0,
+        -13.0,
+        -33.0,
+        -2.48
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -964,64 +982,10 @@
       "sector_id": "U-DOMESTIC",
       "kind": "room",
       "bounds_xz": [
-        -46.0,
-        -9.0,
-        -40.28,
-        -1.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-DOMESTIC/staff_vestibule",
-      "name": "staff_vestibule",
-      "sector_id": "U-DOMESTIC",
-      "kind": "room",
-      "bounds_xz": [
-        -46.0,
-        -1.0,
-        -40.28,
-        7.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-DOMESTIC/shower_room",
-      "name": "shower_room",
-      "sector_id": "U-DOMESTIC",
-      "kind": "room",
-      "bounds_xz": [
-        -46.0,
-        7.0,
-        -40.28,
-        15.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-DOMESTIC/kitchen",
-      "name": "kitchen",
-      "sector_id": "U-DOMESTIC",
-      "kind": "room",
-      "bounds_xz": [
-        -38.72,
-        -17.0,
-        -33.0,
-        -9.0
+        -42.0,
+        -2.48,
+        -37.4,
+        5.04
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1036,14 +1000,32 @@
       "sector_id": "U-DOMESTIC",
       "kind": "room",
       "bounds_xz": [
-        -38.72,
-        -9.0,
+        -37.4,
+        -2.48,
         -33.0,
-        -1.0
+        5.04
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
       "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-DOMESTIC/staff_vestibule",
+      "name": "staff_vestibule",
+      "sector_id": "U-DOMESTIC",
+      "kind": "circulation",
+      "bounds_xz": [
+        -42.0,
+        5.04,
+        -33.0,
+        6.8
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1054,10 +1036,28 @@
       "sector_id": "U-DOMESTIC",
       "kind": "room",
       "bounds_xz": [
-        -38.72,
-        -1.0,
-        -33.0,
-        7.0
+        -42.0,
+        6.8,
+        -39.0,
+        13.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-DOMESTIC/shower_room",
+      "name": "shower_room",
+      "sector_id": "U-DOMESTIC",
+      "kind": "room",
+      "bounds_xz": [
+        -39.0,
+        6.8,
+        -36.2,
+        13.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1072,10 +1072,10 @@
       "sector_id": "U-DOMESTIC",
       "kind": "room",
       "bounds_xz": [
-        -38.72,
-        7.0,
+        -36.2,
+        6.8,
         -33.0,
-        15.0
+        13.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -3675,11 +3675,11 @@
       "segment_xz": [
         [
           -56.667,
-          2.1
+          3.1
         ],
         [
           -56.667,
-          3.9
+          4.9
         ]
       ],
       "width": 1.8,
@@ -3698,11 +3698,11 @@
       "segment_xz": [
         [
           -51.333,
-          2.1
+          3.1
         ],
         [
           -51.333,
-          3.9
+          4.9
         ]
       ],
       "width": 1.8,
@@ -3715,17 +3715,17 @@
     {
       "id": "P-U-DOMESTIC-01",
       "between": [
-        "U-DOMESTIC/internal_circulation",
-        "U-DOMESTIC/canteen"
+        "U-DOMESTIC/canteen",
+        "U-DOMESTIC/internal_circulation"
       ],
       "segment_xz": [
         [
-          -40.28,
-          -13.6
+          -45.0,
+          -7.32
         ],
         [
-          -40.28,
-          -12.4
+          -45.0,
+          -6.12
         ]
       ],
       "width": 1.2,
@@ -3738,17 +3738,17 @@
     {
       "id": "P-U-DOMESTIC-02",
       "between": [
-        "U-DOMESTIC/internal_circulation",
-        "U-DOMESTIC/dry_store"
+        "U-DOMESTIC/kitchen",
+        "U-DOMESTIC/internal_circulation"
       ],
       "segment_xz": [
         [
-          -40.28,
-          -5.6
+          -42.0,
+          -4.68
         ],
         [
-          -40.28,
-          -4.4
+          -42.0,
+          -3.48
         ]
       ],
       "width": 1.2,
@@ -3761,17 +3761,17 @@
     {
       "id": "P-U-DOMESTIC-03",
       "between": [
-        "U-DOMESTIC/internal_circulation",
-        "U-DOMESTIC/staff_vestibule"
+        "U-DOMESTIC/kitchen",
+        "U-DOMESTIC/dry_store"
       ],
       "segment_xz": [
         [
-          -40.28,
-          2.4
+          -39.84,
+          -2.48
         ],
         [
-          -40.28,
-          3.6
+          -38.64,
+          -2.48
         ]
       ],
       "width": 1.2,
@@ -3784,17 +3784,17 @@
     {
       "id": "P-U-DOMESTIC-04",
       "between": [
-        "U-DOMESTIC/internal_circulation",
-        "U-DOMESTIC/shower_room"
+        "U-DOMESTIC/kitchen",
+        "U-DOMESTIC/cold_store"
       ],
       "segment_xz": [
         [
-          -40.28,
-          10.4
+          -35.96,
+          -2.48
         ],
         [
-          -40.28,
-          11.6
+          -34.76,
+          -2.48
         ]
       ],
       "width": 1.2,
@@ -3807,17 +3807,17 @@
     {
       "id": "P-U-DOMESTIC-05",
       "between": [
-        "U-DOMESTIC/internal_circulation",
-        "U-DOMESTIC/kitchen"
+        "U-DOMESTIC/dry_store",
+        "U-DOMESTIC/internal_circulation"
       ],
       "segment_xz": [
         [
-          -38.72,
-          -13.6
+          -42.0,
+          -0.76
         ],
         [
-          -38.72,
-          -12.4
+          -42.0,
+          0.44
         ]
       ],
       "width": 1.2,
@@ -3830,20 +3830,20 @@
     {
       "id": "P-U-DOMESTIC-06",
       "between": [
-        "U-DOMESTIC/internal_circulation",
-        "U-DOMESTIC/cold_store"
+        "U-DOMESTIC/staff_vestibule",
+        "U-DOMESTIC/internal_circulation"
       ],
       "segment_xz": [
         [
-          -38.72,
-          -5.6
+          -42.0,
+          5.552
         ],
         [
-          -38.72,
-          -4.4
+          -42.0,
+          6.608
         ]
       ],
-      "width": 1.2,
+      "width": 1.056,
       "height": 2.4,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -3853,17 +3853,17 @@
     {
       "id": "P-U-DOMESTIC-07",
       "between": [
-        "U-DOMESTIC/internal_circulation",
+        "U-DOMESTIC/staff_vestibule",
         "U-DOMESTIC/locker_room"
       ],
       "segment_xz": [
         [
-          -38.72,
-          2.4
+          -41.24,
+          6.8
         ],
         [
-          -38.72,
-          3.6
+          -40.04,
+          6.8
         ]
       ],
       "width": 1.2,
@@ -3876,17 +3876,40 @@
     {
       "id": "P-U-DOMESTIC-08",
       "between": [
-        "U-DOMESTIC/internal_circulation",
+        "U-DOMESTIC/staff_vestibule",
+        "U-DOMESTIC/shower_room"
+      ],
+      "segment_xz": [
+        [
+          -38.28,
+          6.8
+        ],
+        [
+          -37.08,
+          6.8
+        ]
+      ],
+      "width": 1.2,
+      "height": 2.4,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-DOMESTIC-09",
+      "between": [
+        "U-DOMESTIC/staff_vestibule",
         "U-DOMESTIC/rest_room"
       ],
       "segment_xz": [
         [
-          -38.72,
-          10.4
+          -35.24,
+          6.8
         ],
         [
-          -38.72,
-          11.6
+          -34.04,
+          6.8
         ]
       ],
       "width": 1.2,
@@ -6277,11 +6300,11 @@
       "segment_xz": [
         [
           -62.0,
-          2.4
+          3.4
         ],
         [
           -62.0,
-          3.6
+          4.6
         ]
       ],
       "width": 1.2,
@@ -6301,11 +6324,11 @@
       "segment_xz": [
         [
           -62.0,
-          2.4
+          3.4
         ],
         [
           -62.0,
-          3.6
+          4.6
         ]
       ],
       "width": 1.2,
@@ -6372,15 +6395,15 @@
       "side": "south",
       "segment_xz": [
         [
-          -39.968,
+          -44.1,
           15.0
         ],
         [
-          -39.032,
+          -42.9,
           15.0
         ]
       ],
-      "width": 0.936,
+      "width": 1.2,
       "height": 2.4,
       "type": "passenger",
       "direction": "bidirectional",
@@ -7302,11 +7325,11 @@
       "centerline_xz": [
         [
           -62.0,
-          3.0
+          4.0
         ],
         [
           -62.0,
-          3.0
+          4.0
         ]
       ],
       "width": 1.2,
@@ -7337,15 +7360,15 @@
       "connection_id": "E-U03",
       "centerline_xz": [
         [
-          -39.5,
+          -43.5,
           15.0
         ],
         [
-          -39.5,
+          -43.5,
           15.0
         ]
       ],
-      "width": 0.936,
+      "width": 1.2,
       "clear_height": 2.4,
       "traversable": true,
       "state": "openable"

@@ -18,8 +18,8 @@ OUTPUT_PATH = ROOT / "geometry" / "complex-handoff.json"
 FINAL_BOUNDS_OVERRIDE = {
     "U-CONTROL": [-32.0, -13.0, -8.0, 14.5],
     "U-CENTRAL-CORE": [-7.75, -6.0, 7.75, 15.0],
-    "U-ROUTE-A": [-62.0, -8.0, -46.0, 14.0],
-    "U-DOMESTIC": [-46.0, -17.0, -33.0, 15.0],
+    "U-ROUTE-A": [-62.0, -6.0, -46.0, 14.0],
+    "U-DOMESTIC": [-57.0, -13.0, -33.0, 15.0],
     "U-CHAMBER-4": [-110.0, 37.0, -82.0, 60.0],
     "U-CHAMBER-6": [0.0, 29.0, 32.0, 60.0],
     "U-FREIGHT": [-16.0, 67.5, 30.0, 82.0],
@@ -52,6 +52,18 @@ CONTROL_CENTER_PORTAL_WIDTHS = {
     frozenset(("operator_hall", "fire_vestibule")): 1.8,
     frozenset(("fire_vestibule", "server_room")): 1.8,
     frozenset(("service_aisle", "east_access")): 1.5,
+}
+
+DOMESTIC_PORTAL_CENTERS = {
+    frozenset(("canteen", "internal_circulation")): -6.72,
+    frozenset(("kitchen", "internal_circulation")): -4.08,
+    frozenset(("kitchen", "dry_store")): -39.24,
+    frozenset(("kitchen", "cold_store")): -35.36,
+    frozenset(("dry_store", "internal_circulation")): -0.16,
+    frozenset(("staff_vestibule", "internal_circulation")): 6.08,
+    frozenset(("staff_vestibule", "locker_room")): -40.64,
+    frozenset(("staff_vestibule", "shower_room")): -37.68,
+    frozenset(("staff_vestibule", "rest_room")): -34.64,
 }
 
 CONTAINMENT_SECTORS = {"U-CHAMBER-4", "U-CHAMBER-6", "L-CHAMBER-3", "L-CHAMBER-5"}
@@ -265,6 +277,34 @@ def control_center_layout(sector_id: str, bounds: list[float]) -> tuple[list[dic
     ]
 
 
+def domestic_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the approved domestic-wing SVG at 25 px/m."""
+    _x0, _z0, _x1, z1 = bounds
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "canteen", rect(-57.0, -13.0, -45.0, -6.0), height),
+        room(sector_id, "internal_circulation", rect(-45.0, -8.52, -42.0, z1), height, True, "circulation"),
+        room(sector_id, "kitchen", rect(-42.0, -13.0, -33.0, -2.48), height),
+        room(sector_id, "dry_store", rect(-42.0, -2.48, -37.4, 5.04), height),
+        room(sector_id, "cold_store", rect(-37.4, -2.48, -33.0, 5.04), height),
+        room(sector_id, "staff_vestibule", rect(-42.0, 5.04, -33.0, 6.8), height, True, "circulation"),
+        room(sector_id, "locker_room", rect(-42.0, 6.8, -39.0, 13.0), height),
+        room(sector_id, "shower_room", rect(-39.0, 6.8, -36.2, 13.0), height),
+        room(sector_id, "rest_room", rect(-36.2, 6.8, -33.0, 13.0), height),
+    ]
+    return result, [
+        ("canteen", "internal_circulation"),
+        ("kitchen", "internal_circulation"),
+        ("kitchen", "dry_store"),
+        ("kitchen", "cold_store"),
+        ("dry_store", "internal_circulation"),
+        ("staff_vestibule", "internal_circulation"),
+        ("staff_vestibule", "locker_room"),
+        ("staff_vestibule", "shower_room"),
+        ("staff_vestibule", "rest_room"),
+    ]
+
+
 def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, str]]]:
     sector_id = passport["sector_id"]
     names = passport["allowed_internal_subdivision"]
@@ -273,6 +313,8 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
         return emergency_layout(sector_id, bounds)
     if sector_id == "U-CONTROL":
         return control_center_layout(sector_id, bounds)
+    if sector_id == "U-DOMESTIC":
+        return domestic_layout(sector_id, bounds)
     if sector_id in CENTRAL_CORE_SECTORS:
         return central_core_layout(sector_id, bounds)
     if sector_id in CONTAINMENT_SECTORS:
@@ -322,6 +364,8 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
     else:
         actual_width = min(requested_width, max(0.9, span * 0.85 if cargo_threshold else span * 0.6))
     center = (lo + hi) / 2
+    if sector_id == "U-DOMESTIC":
+        center = DOMESTIC_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     segment = [[coordinate, center - actual_width / 2], [coordinate, center + actual_width / 2]] if axis == "x" else [[center - actual_width / 2, coordinate], [center + actual_width / 2, coordinate]]
     return {
         "id": f"P-{sector_id}-{index:02d}",
