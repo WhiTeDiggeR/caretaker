@@ -53,6 +53,15 @@ func _run() -> void:
 				errors.append("%s editor preview contains physics bodies" % sector_id)
 		if part.get_node_or_null("AuthoredContent") == null:
 			errors.append("%s lost AuthoredContent" % sector_id)
+		if sector_id == "U-CENTRAL-CORE" and generated != null:
+			generated.free()
+			await get_tree().process_frame
+			await get_tree().process_frame
+			generated = part.get_node_or_null("Generated") as Node3D
+			if generated == null:
+				errors.append("%s did not restore Generated after tool-script preview loss" % sector_id)
+			elif part.get_node_or_null("AuthoredContent") == null:
+				errors.append("%s self-heal removed AuthoredContent" % sector_id)
 		var stats := part.get_build_stats()
 		if int(stats.get("spaces", 0)) != int(EXPECTED_SPACES[sector_id]):
 			errors.append("%s preview expected %d spaces, built %d" % [sector_id, int(EXPECTED_SPACES[sector_id]), int(stats.get("spaces", 0))])
@@ -80,7 +89,7 @@ func _run() -> void:
 			errors.append("%s ceiling toggle did not hide ceilings again" % sector_id)
 		part.free()
 	if errors.is_empty():
-		print("COMPLEX_V3_EDITOR_PREVIEW_OK zones=%d collisions=0 transient=true ceilings=toggle" % CONTROL_SCENES.size())
+		print("COMPLEX_V3_EDITOR_PREVIEW_OK zones=%d collisions=0 transient=true ceilings=toggle self_heal=true" % CONTROL_SCENES.size())
 	else:
 		for error: String in errors:
 			push_error(error)

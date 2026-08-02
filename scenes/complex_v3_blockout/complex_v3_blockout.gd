@@ -52,9 +52,11 @@ var _level_nodes: Dictionary[String, Node3D] = {}
 var _spaces_by_id: Dictionary[String, Dictionary] = {}
 var _openings_by_space: Dictionary[String, Array] = {}
 var _stats: Dictionary[String, int] = {}
+var _editor_preview_refresh_pending := false
 
 
 func _ready() -> void:
+	set_process(Engine.is_editor_hint())
 	if Engine.is_editor_hint():
 		if editor_preview_enabled:
 			build_from_handoff()
@@ -65,7 +67,15 @@ func _ready() -> void:
 		build_from_handoff()
 
 
+func _process(_delta: float) -> void:
+	if not Engine.is_editor_hint() or not editor_preview_enabled:
+		return
+	if get_node_or_null("Generated") == null:
+		_queue_editor_preview_refresh()
+
+
 func _refresh_editor_preview() -> void:
+	_editor_preview_refresh_pending = false
 	if not Engine.is_editor_hint() or not is_inside_tree():
 		return
 	if editor_preview_enabled:
@@ -75,8 +85,10 @@ func _refresh_editor_preview() -> void:
 
 
 func _queue_editor_preview_refresh() -> void:
-	if Engine.is_editor_hint() and is_inside_tree():
-		_refresh_editor_preview.call_deferred()
+	if not Engine.is_editor_hint() or not is_inside_tree() or _editor_preview_refresh_pending:
+		return
+	_editor_preview_refresh_pending = true
+	_refresh_editor_preview.call_deferred()
 
 
 func build_from_handoff() -> void:
