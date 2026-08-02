@@ -84,6 +84,26 @@ EAST_SUPPORT_CONNECTIONS = {
     frozenset(("emergency_stair", "fire_vestibule")),
 }
 
+MEDBAY_BOUNDS = {
+    "U-MEDBAY/procedure_room": [-102.0, 7.0, -94.632, 11.205],
+    "U-MEDBAY/observation_ward": [-102.0, 11.205, -94.632, 15.0],
+    "U-MEDBAY/clean_corridor": [-94.632, 7.0, -92.298, 15.0],
+    "U-MEDBAY/medical_utility": [-92.298, 7.0, -88.0, 9.667],
+    "U-MEDBAY/triage": [-92.298, 9.667, -88.0, 15.0],
+}
+
+MEDBAY_CONNECTIONS = {
+    frozenset(("clean_corridor", "procedure_room")),
+    frozenset(("clean_corridor", "observation_ward")),
+    frozenset(("clean_corridor", "medical_utility")),
+    frozenset(("clean_corridor", "triage")),
+}
+
+PERSONNEL_MEDBAY_SEGMENTS = {
+    "PX-E-U02A-U-EMERGENCY": [[-80.0, 11.05], [-80.0, 12.25]],
+    "PX-E-U02A-U-MEDBAY": [[-88.0, 11.05], [-88.0, 12.25]],
+}
+
 
 def load(relative: str) -> dict:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
@@ -157,6 +177,14 @@ def main() -> int:
     if actual_east_support_bounds != EAST_SUPPORT_BOUNDS:
         errors.append(f"U-EAST-SUPPORT no longer traces the approved normalized SVG: {actual_east_support_bounds}")
 
+    actual_medbay_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in MEDBAY_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_medbay_bounds != MEDBAY_BOUNDS:
+        errors.append(f"U-MEDBAY no longer preserves the approved room bands: {actual_medbay_bounds}")
+
     for a, b in itertools.combinations(spaces, 2):
         if a["floor_y"] == b["floor_y"] and positive_overlap(a["bounds_xz"], b["bounds_xz"]):
             errors.append(f"positive room overlap: {a['id']} <> {b['id']}")
@@ -199,6 +227,14 @@ def main() -> int:
     if actual_east_support_connections != EAST_SUPPORT_CONNECTIONS:
         errors.append("U-EAST-SUPPORT internal connections differ from the approved plan")
 
+    actual_medbay_connections = {
+        frozenset(space_id.removeprefix("U-MEDBAY/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-U-MEDBAY-")
+    }
+    if actual_medbay_connections != MEDBAY_CONNECTIONS:
+        errors.append("U-MEDBAY internal connections differ from the approved plan")
+
     external_by_id = {item["id"]: item for item in geometry["external_portals"]}
     for portal in external_by_id.values():
         room = space_by_id.get(portal["space"])
@@ -217,6 +253,15 @@ def main() -> int:
     }
     if east_support_entries != {"U-EAST-SUPPORT/service_vestibule", "U-EAST-SUPPORT/fire_vestibule"}:
         errors.append("U-EAST-SUPPORT must preserve independent service and fire-vestibule entries from U-PAX")
+    personnel_entry = external_by_id.get("PX-E-U02A-U-EMERGENCY", {})
+    medbay_entry = external_by_id.get("PX-E-U02A-U-MEDBAY", {})
+    if personnel_entry.get("space") != "U-EMERGENCY/distribution_hall" or personnel_entry.get("side") != "west":
+        errors.append("E-U02A must leave from the west wall of the personnel distribution hall")
+    if medbay_entry.get("space") != "U-MEDBAY/triage" or medbay_entry.get("side") != "east":
+        errors.append("E-U02A must enter the east wall of medbay triage")
+    for portal_id, expected_segment in PERSONNEL_MEDBAY_SEGMENTS.items():
+        if external_by_id.get(portal_id, {}).get("segment_xz") != expected_segment:
+            errors.append(f"E-U02A portal segment moved away from the approved plan: {portal_id}")
 
     represented: set[str] = set()
     for corridor in geometry["connection_corridors"]:

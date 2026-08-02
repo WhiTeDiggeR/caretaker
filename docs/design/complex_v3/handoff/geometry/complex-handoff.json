@@ -74,11 +74,11 @@
       ],
       "passport_id": "PASS-U-MEDBAY",
       "space_ids": [
-        "U-MEDBAY/clean_corridor",
-        "U-MEDBAY/triage",
-        "U-MEDBAY/observation_ward",
         "U-MEDBAY/procedure_room",
-        "U-MEDBAY/medical_utility"
+        "U-MEDBAY/observation_ward",
+        "U-MEDBAY/clean_corridor",
+        "U-MEDBAY/medical_utility",
+        "U-MEDBAY/triage"
       ],
       "reserved_volumes": [],
       "source_detail": "../../u_medbay.html",
@@ -780,33 +780,15 @@
       "floor_y": 0.0
     },
     {
-      "id": "U-MEDBAY/clean_corridor",
-      "name": "clean_corridor",
-      "sector_id": "U-MEDBAY",
-      "kind": "circulation",
-      "bounds_xz": [
-        -96.12,
-        7.0,
-        -93.88,
-        15.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-MEDBAY/triage",
-      "name": "triage",
+      "id": "U-MEDBAY/procedure_room",
+      "name": "procedure_room",
       "sector_id": "U-MEDBAY",
       "kind": "room",
       "bounds_xz": [
         -102.0,
         7.0,
-        -96.12,
-        11.0
+        -94.632,
+        11.205
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -822,8 +804,8 @@
       "kind": "room",
       "bounds_xz": [
         -102.0,
-        11.0,
-        -96.12,
+        11.205,
+        -94.632,
         15.0
       ],
       "clear_height": 3.4,
@@ -834,19 +816,19 @@
       "floor_y": 0.0
     },
     {
-      "id": "U-MEDBAY/procedure_room",
-      "name": "procedure_room",
+      "id": "U-MEDBAY/clean_corridor",
+      "name": "clean_corridor",
       "sector_id": "U-MEDBAY",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
-        -93.88,
+        -94.632,
         7.0,
-        -88.0,
-        11.0
+        -92.298,
+        15.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -857,8 +839,26 @@
       "sector_id": "U-MEDBAY",
       "kind": "room",
       "bounds_xz": [
-        -93.88,
-        11.0,
+        -92.298,
+        7.0,
+        -88.0,
+        9.667
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-MEDBAY/triage",
+      "name": "triage",
+      "sector_id": "U-MEDBAY",
+      "kind": "room",
+      "bounds_xz": [
+        -92.298,
+        9.667,
         -88.0,
         15.0
       ],
@@ -3597,16 +3597,16 @@
       "id": "P-U-MEDBAY-01",
       "between": [
         "U-MEDBAY/clean_corridor",
-        "U-MEDBAY/triage"
+        "U-MEDBAY/procedure_room"
       ],
       "segment_xz": [
         [
-          -96.12,
-          8.4
+          -94.632,
+          8.502
         ],
         [
-          -96.12,
-          9.6
+          -94.632,
+          9.702
         ]
       ],
       "width": 1.2,
@@ -3624,12 +3624,12 @@
       ],
       "segment_xz": [
         [
-          -96.12,
-          12.4
+          -94.632,
+          12.502
         ],
         [
-          -96.12,
-          13.6
+          -94.632,
+          13.702
         ]
       ],
       "width": 1.2,
@@ -3643,16 +3643,16 @@
       "id": "P-U-MEDBAY-03",
       "between": [
         "U-MEDBAY/clean_corridor",
-        "U-MEDBAY/procedure_room"
+        "U-MEDBAY/medical_utility"
       ],
       "segment_xz": [
         [
-          -93.88,
-          8.4
+          -92.298,
+          7.734
         ],
         [
-          -93.88,
-          9.6
+          -92.298,
+          8.934
         ]
       ],
       "width": 1.2,
@@ -3666,16 +3666,16 @@
       "id": "P-U-MEDBAY-04",
       "between": [
         "U-MEDBAY/clean_corridor",
-        "U-MEDBAY/medical_utility"
+        "U-MEDBAY/triage"
       ],
       "segment_xz": [
         [
-          -93.88,
-          12.4
+          -92.298,
+          11.734
         ],
         [
-          -93.88,
-          13.6
+          -92.298,
+          12.934
         ]
       ],
       "width": 1.2,
@@ -6361,17 +6361,17 @@
     {
       "id": "PX-E-U02A-U-EMERGENCY",
       "connection_id": "E-U02A",
-      "space": "U-EMERGENCY/capsule_hall",
+      "space": "U-EMERGENCY/distribution_hall",
       "neighbor": "U-MEDBAY",
-      "side": "south",
+      "side": "west",
       "segment_xz": [
         [
-          -99.66,
-          7.0
+          -80.0,
+          11.05
         ],
         [
-          -98.46,
-          7.0
+          -80.0,
+          12.25
         ]
       ],
       "width": 1.2,
@@ -6387,15 +6387,15 @@
       "connection_id": "E-U02A",
       "space": "U-MEDBAY/triage",
       "neighbor": "U-EMERGENCY",
-      "side": "north",
+      "side": "east",
       "segment_xz": [
         [
-          -99.66,
-          7.0
+          -88.0,
+          11.05
         ],
         [
-          -98.46,
-          7.0
+          -88.0,
+          12.25
         ]
       ],
       "width": 1.2,
@@ -7385,12 +7385,12 @@
       "connection_id": "E-U02A",
       "centerline_xz": [
         [
-          -99.06,
-          7.0
+          -80.0,
+          11.65
         ],
         [
-          -99.06,
-          7.0
+          -88.0,
+          11.65
         ]
       ],
       "width": 1.2,

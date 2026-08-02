@@ -237,6 +237,24 @@ def emergency_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], l
     return result, [("capsule_hall", "hermetic_vestibule"), ("hermetic_vestibule", "distribution_hall"), ("capsule_hall", "internal_technical_room")]
 
 
+def medbay_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the approved medbay bands while preserving the existing passport IDs."""
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "procedure_room", rect(-102.0, 7.0, -94.632, 11.205), height),
+        room(sector_id, "observation_ward", rect(-102.0, 11.205, -94.632, 15.0), height),
+        room(sector_id, "clean_corridor", rect(-94.632, 7.0, -92.298, 15.0), height, True, "circulation"),
+        room(sector_id, "medical_utility", rect(-92.298, 7.0, -88.0, 9.667), height),
+        room(sector_id, "triage", rect(-92.298, 9.667, -88.0, 15.0), height),
+    ]
+    return result, [
+        ("clean_corridor", "procedure_room"),
+        ("clean_corridor", "observation_ward"),
+        ("clean_corridor", "medical_utility"),
+        ("clean_corridor", "triage"),
+    ]
+
+
 def central_core_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
     """Trace the approved 15.5 x 21 m passenger-core SVG at 24 px/m."""
     x0, z0, x1, z1 = bounds
@@ -348,6 +366,8 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
     bounds = FINAL_BOUNDS_OVERRIDE.get(sector_id, passport["parent_boundary_xz"])
     if sector_id == "U-EMERGENCY":
         return emergency_layout(sector_id, bounds)
+    if sector_id == "U-MEDBAY":
+        return medbay_layout(sector_id, bounds)
     if sector_id == "U-CONTROL":
         return control_center_layout(sector_id, bounds)
     if sector_id == "U-DOMESTIC":
@@ -447,8 +467,6 @@ def entry_keywords(kind: str) -> list[str]:
 
 def select_space(sector_id: str, spaces: list[dict], kind: str) -> dict:
     special_entries = {
-        ("U-EMERGENCY", "short-side-passage"): "capsule_hall",
-        ("U-MEDBAY", "short-side-passage"): "triage",
         ("U-CONTROL", "passenger"): "east_access",
         ("L-SERVICE-INTERCHANGE", "controlled-transition"): "service_lobby",
     }
@@ -527,8 +545,35 @@ def preferred_side(sector_id: str, neighbor: str, kind: str, bounds: list[float]
     return None
 
 
+def personnel_medbay_portal(edge: dict, sector_id: str, spaces: list[dict]) -> dict[str, Any]:
+    """Place E-U02A on the plan-approved hall/triage walls, not the capsule hall."""
+    entry_name = "distribution_hall" if sector_id == "U-EMERGENCY" else "triage"
+    entry = next(space for space in spaces if space["name"] == entry_name)
+    other = edge["to"] if edge["from"] == sector_id else edge["from"]
+    x = -80.0 if sector_id == "U-EMERGENCY" else -88.0
+    width = 1.2
+    center_z = 11.65
+    return {
+        "id": f"PX-{edge['id']}-{sector_id}",
+        "connection_id": edge["id"],
+        "space": entry["id"],
+        "neighbor": other,
+        "side": "west" if sector_id == "U-EMERGENCY" else "east",
+        "segment_xz": [[x, center_z - width * 0.5], [x, center_z + width * 0.5]],
+        "width": width,
+        "height": 2.4,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
 def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bounds: list[float]) -> dict[str, Any]:
     other = edge["to"] if edge["from"] == sector_id else edge["from"]
+    if edge["id"] == "E-U02A" and sector_id in {"U-EMERGENCY", "U-MEDBAY"}:
+        return personnel_medbay_portal(edge, sector_id, spaces)
     if sector_id == "U-EAST-SUPPORT" and edge["id"] == "E-U06":
         entry = next(space for space in spaces if space["name"] == "service_vestibule")
     else:
