@@ -14,11 +14,13 @@ func _initialize() -> void:
 		errors.append("Stair must connect the 6 m central-core level interval")
 	if float(summary.get("flight_width", 0.0)) < 1.2:
 		errors.append("Stair clear flight width is below the traversal minimum")
+	if absf(float(summary.get("wall_side_gap", 1.0))) > 0.001:
+		errors.append("Stair has a fall gap between treads and side walls")
 	var collision_count := stair.find_children("*", "StaticBody3D", true, false).size()
 	if collision_count < 65:
 		errors.append("Runtime stair is missing wall, closure, step, landing, or guard collisions")
 	if errors.is_empty():
-		print("MAIN_CORE_STAIR_OK risers=40 landings=3 rails=2 shaft_walls=8 upper_closure=1 level_height=6.0 collisions=%d" % collision_count)
+		print("MAIN_CORE_STAIR_OK risers=40 landings=3 rails=2 shaft_walls=3 upper_closure=1 wall_side_gap=0.0 level_height=6.0 collisions=%d" % collision_count)
 	else:
 		for error: String in errors:
 			push_error(error)

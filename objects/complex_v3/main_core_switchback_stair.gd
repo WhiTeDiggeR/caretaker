@@ -22,7 +22,10 @@ const SLAB_THICKNESS := 0.12
 const RAIL_HEIGHT := 0.95
 const WALL_THICKNESS := 0.24
 const SHAFT_TOP := 3.4
-const ENTRY_HEIGHT := 3.4
+const WALL_SIDE_TREAD_EXTENSION := OPENING_WIDTH * 0.5 + WEST_FLIGHT_X - FLIGHT_WIDTH * 0.5
+const TREAD_WIDTH := FLIGHT_WIDTH + WALL_SIDE_TREAD_EXTENSION
+const WEST_TREAD_X := WEST_FLIGHT_X - WALL_SIDE_TREAD_EXTENSION * 0.5
+const EAST_TREAD_X := EAST_FLIGHT_X + WALL_SIDE_TREAD_EXTENSION * 0.5
 
 @export var build_collisions := true
 @export var editor_preview_enabled := true:
@@ -70,26 +73,6 @@ func _build_shaft(parent: Node3D) -> void:
 	_add_box(parent, "ShaftWallWest", Vector3(-wall_x, shaft_y, (OPENING_NORTH + OPENING_SOUTH) * 0.5), Vector3(WALL_THICKNESS, shaft_height, OPENING_DEPTH + WALL_THICKNESS * 2.0), UTILITY_PANELS, _collisions_enabled())
 	_add_box(parent, "ShaftWallEast", Vector3(wall_x, shaft_y, (OPENING_NORTH + OPENING_SOUTH) * 0.5), Vector3(WALL_THICKNESS, shaft_height, OPENING_DEPTH + WALL_THICKNESS * 2.0), UTILITY_PANELS, _collisions_enabled())
 	_add_box(parent, "ShaftWallNorth", Vector3(0.0, shaft_y, wall_z), Vector3(OPENING_WIDTH, shaft_height, WALL_THICKNESS), UTILITY_PANELS, _collisions_enabled())
-	_build_south_entry_walls(parent)
-
-
-func _build_south_entry_walls(parent: Node3D) -> void:
-	var wall_z := OPENING_SOUTH + WALL_THICKNESS * 0.5
-	var west_entry_min := WEST_FLIGHT_X - FLIGHT_WIDTH * 0.5
-	var west_entry_max := WEST_FLIGHT_X + FLIGHT_WIDTH * 0.5
-	var east_entry_min := EAST_FLIGHT_X - FLIGHT_WIDTH * 0.5
-	var east_entry_max := EAST_FLIGHT_X + FLIGHT_WIDTH * 0.5
-	_add_wall_segment_x(parent, "UpperSouthWallWest", -OPENING_WIDTH * 0.5, west_entry_min, SHAFT_TOP - ENTRY_HEIGHT, SHAFT_TOP, wall_z)
-	_add_wall_segment_x(parent, "UpperSouthWallEast", west_entry_max, OPENING_WIDTH * 0.5, SHAFT_TOP - ENTRY_HEIGHT, SHAFT_TOP, wall_z)
-	_add_wall_segment_x(parent, "SouthWallMidBand", -OPENING_WIDTH * 0.5, OPENING_WIDTH * 0.5, -LEVEL_HEIGHT + ENTRY_HEIGHT, 0.0, wall_z)
-	_add_wall_segment_x(parent, "LowerSouthWallWest", -OPENING_WIDTH * 0.5, east_entry_min, -LEVEL_HEIGHT, -LEVEL_HEIGHT + ENTRY_HEIGHT, wall_z)
-	_add_wall_segment_x(parent, "LowerSouthWallEast", east_entry_max, OPENING_WIDTH * 0.5, -LEVEL_HEIGHT, -LEVEL_HEIGHT + ENTRY_HEIGHT, wall_z)
-
-
-func _add_wall_segment_x(parent: Node3D, node_name: String, x_min: float, x_max: float, y_min: float, y_max: float, z: float) -> void:
-	if x_max - x_min <= 0.01 or y_max - y_min <= 0.01:
-		return
-	_add_box(parent, node_name, Vector3((x_min + x_max) * 0.5, (y_min + y_max) * 0.5, z), Vector3(x_max - x_min, y_max - y_min, WALL_THICKNESS), UTILITY_PANELS, _collisions_enabled())
 
 
 func _build_decks(parent: Node3D) -> void:
@@ -106,10 +89,10 @@ func _build_flights(parent: Node3D) -> void:
 	for index: int in range(RISERS_PER_FLIGHT):
 		var west_top := -RISER_HEIGHT * index
 		var west_z := RUN_SOUTH - TREAD_DEPTH * (index + 0.5)
-		_add_box(parent, "WestFlight_%02d" % index, Vector3(WEST_FLIGHT_X, west_top - RISER_HEIGHT * 0.5, west_z), Vector3(FLIGHT_WIDTH, RISER_HEIGHT, TREAD_DEPTH), UTILITY_PANELS, _collisions_enabled())
+		_add_box(parent, "WestFlight_%02d" % index, Vector3(WEST_TREAD_X, west_top - RISER_HEIGHT * 0.5, west_z), Vector3(TREAD_WIDTH, RISER_HEIGHT, TREAD_DEPTH), UTILITY_PANELS, _collisions_enabled())
 		var east_top := intermediate_y - RISER_HEIGHT * index
 		var east_z := RUN_NORTH + TREAD_DEPTH * (index + 0.5)
-		_add_box(parent, "EastFlight_%02d" % index, Vector3(EAST_FLIGHT_X, east_top - RISER_HEIGHT * 0.5, east_z), Vector3(FLIGHT_WIDTH, RISER_HEIGHT, TREAD_DEPTH), UTILITY_PANELS, _collisions_enabled())
+		_add_box(parent, "EastFlight_%02d" % index, Vector3(EAST_TREAD_X, east_top - RISER_HEIGHT * 0.5, east_z), Vector3(TREAD_WIDTH, RISER_HEIGHT, TREAD_DEPTH), UTILITY_PANELS, _collisions_enabled())
 	var stringer_index := 0
 	for stringer_offset: float in [-0.55, 0.55]:
 		_add_sloped_box(parent, "WestStringer_%02d" % stringer_index, Vector3(WEST_FLIGHT_X + stringer_offset, -0.24, RUN_SOUTH), Vector3(WEST_FLIGHT_X + stringer_offset, intermediate_y - 0.24, RUN_NORTH), 0.22, UTILITY_PANELS)
@@ -160,7 +143,11 @@ func validate_geometry() -> PackedStringArray:
 		errors.append("East flight must contain %d risers" % RISERS_PER_FLIGHT)
 	if generated.find_children("*FlightRail_*", "", true, false).size() != 2:
 		errors.append("Stair must contain two open-edge handrails; wall-side rails are redundant")
-	for required_name: String in ["UpperLanding", "UpperRightClosure", "IntermediateLanding", "LowerLandingDeck", "ShaftWallWest", "ShaftWallEast", "ShaftWallNorth", "UpperSouthWallWest", "UpperSouthWallEast", "SouthWallMidBand", "LowerSouthWallWest", "LowerSouthWallEast", "IntermediateGapTopRail"]:
+	var west_wall_side_gap := (WEST_TREAD_X - TREAD_WIDTH * 0.5) - (-OPENING_WIDTH * 0.5)
+	var east_wall_side_gap := OPENING_WIDTH * 0.5 - (EAST_TREAD_X + TREAD_WIDTH * 0.5)
+	if absf(west_wall_side_gap) > 0.001 or absf(east_wall_side_gap) > 0.001:
+		errors.append("Stair treads must meet both side walls without fall gaps")
+	for required_name: String in ["UpperLanding", "UpperRightClosure", "IntermediateLanding", "LowerLandingDeck", "ShaftWallWest", "ShaftWallEast", "ShaftWallNorth", "IntermediateGapTopRail"]:
 		if generated.find_children(required_name, "", true, false).is_empty():
 			errors.append("Missing required stair component: %s" % required_name)
 	return errors
@@ -170,6 +157,8 @@ func get_geometry_summary() -> Dictionary:
 	return {
 		"level_height": LEVEL_HEIGHT,
 		"flight_width": FLIGHT_WIDTH,
+		"tread_width": TREAD_WIDTH,
+		"wall_side_gap": OPENING_WIDTH * 0.5 - (EAST_TREAD_X + TREAD_WIDTH * 0.5),
 		"riser_height": RISER_HEIGHT,
 		"tread_depth": TREAD_DEPTH,
 		"risers_per_flight": RISERS_PER_FLIGHT,
