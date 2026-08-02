@@ -37,6 +37,14 @@ PROP_DATA = {
 }
 
 CENTRAL_CORE_SECTORS = {"U-CENTRAL-CORE", "L-CENTRAL-CORE"}
+CHAMBER_SECTORS = {
+    "U-CHAMBER-4",
+    "U-CHAMBER-6",
+    "L-CHAMBER-1",
+    "L-CHAMBER-2",
+    "L-CHAMBER-3",
+    "L-CHAMBER-5",
+}
 WALL_MOUNT = {
     "wall_beacon": {"depth": 0.12, "center_offset": 0.0},
     "wall_terminal": {"depth": 0.22, "center_offset": -0.01},
@@ -189,7 +197,12 @@ def make_manifest() -> dict:
             wall_mount_depth = None
             wall_mount_side = None
             wall_mount_center_offset = None
-            if sector_id in CENTRAL_CORE_SECTORS and prop in WALL_MOUNT:
+            should_wall_mount = (
+                sector_id in CENTRAL_CORE_SECTORS and prop in WALL_MOUNT
+            ) or (
+                sector_id in CHAMBER_SECTORS and prop == "wall_beacon"
+            )
+            if should_wall_mount:
                 wall_mount_depth = WALL_MOUNT[prop]["depth"]
                 wall_mount_center_offset = WALL_MOUNT[prop]["center_offset"]
                 x, z, rotation_y, wall_mount_side = snap_to_nearest_wall(space, x, z, wall_mount_center_offset)

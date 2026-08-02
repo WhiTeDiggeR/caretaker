@@ -21,6 +21,7 @@ def main() -> None:
     prop_count = 0
     frame_count = 0
     wall_mount_count = 0
+    chamber_wall_mount_count = 0
     minimum_service_clearance = float("inf")
     for sector in manifest["sectors"]:
         scene_path = ROOT / sector["dressing_scene"].removeprefix("res://")
@@ -34,6 +35,12 @@ def main() -> None:
                 errors.append(f"missing asset: {placement['scene']}")
             if placement["kind"] == "prop":
                 prop_count += 1
+                is_chamber_beacon = (
+                    "CHAMBER" in placement["space_id"]
+                    and placement["scene"].endswith("wall_beacon.tscn")
+                )
+                if is_chamber_beacon and "wall_mount_depth" not in placement:
+                    errors.append(f"chamber wall beacon is not wall-mounted: {placement['id']}")
                 if placement["space_id"]:
                     space = spaces[placement["space_id"]]
                     x, _, z = placement["position"]
@@ -42,6 +49,8 @@ def main() -> None:
                     x0, z0, x1, z1 = map(float, space["bounds_xz"])
                     if "wall_mount_depth" in placement:
                         wall_mount_count += 1
+                        if is_chamber_beacon:
+                            chamber_wall_mount_count += 1
                         rotation = float(placement.get("rotation_y", 0.0))
                         extent_x = abs(math.cos(rotation)) * sx * 0.5 + abs(math.sin(rotation)) * sz * 0.5
                         extent_z = abs(math.sin(rotation)) * sx * 0.5 + abs(math.cos(rotation)) * sz * 0.5
@@ -88,12 +97,14 @@ def main() -> None:
         errors.append(f"portal frame count {frame_count}, expected {expected_frames}")
     if len(manifest["sectors"]) != 30:
         errors.append(f"sector count {len(manifest['sectors'])}, expected 30")
+    if chamber_wall_mount_count != 15:
+        errors.append(f"chamber wall mount count {chamber_wall_mount_count}, expected 15")
     cargo_portals = [portal for portal in handoff["internal_portals"] if any("/cargo_airlock" in space_id or "/cargo_vestibule" in space_id for space_id in portal["between"])]
     if len(cargo_portals) != 5 or any(float(portal["width"]) < 4.5 or float(portal["height"]) < 4.5 for portal in cargo_portals):
         errors.append("five internal cargo thresholds must preserve 4.5 x 4.5 m clearance")
     if errors:
         raise SystemExit("Set-dressing validation failed:\n- " + "\n- ".join(errors))
-    print(f"Set-dressing validation passed: 30 sectors, {prop_count} props, {frame_count} open portal frames, {wall_mount_count} central wall mounts, minimum service clearance {minimum_service_clearance:.2f} m")
+    print(f"Set-dressing validation passed: 30 sectors, {prop_count} props, {frame_count} open portal frames, {wall_mount_count} wall mounts ({chamber_wall_mount_count} chamber beacons), minimum service clearance {minimum_service_clearance:.2f} m")
 
 
 if __name__ == "__main__":
