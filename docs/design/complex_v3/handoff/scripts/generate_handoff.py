@@ -82,6 +82,24 @@ EAST_SUPPORT_PORTAL_CENTERS = {
     frozenset(("emergency_stair", "fire_vestibule")): 30.5,
 }
 
+FREIGHT_RECEPTION_PORTAL_WIDTHS = {
+    frozenset(("isolation_bay", "inspection_lane")): 2.8,
+    frozenset(("inspection_lane", "unloading_bay")): 4.5,
+    frozenset(("unloading_bay", "freight_lift")): 5.4,
+    frozenset(("isolation_bay", "service_walkway")): 1.5,
+    frozenset(("operator_room", "service_walkway")): 1.5,
+    frozenset(("freight_lift", "service_walkway")): 1.5,
+}
+
+FREIGHT_RECEPTION_PORTAL_CENTERS = {
+    frozenset(("isolation_bay", "inspection_lane")): 70.5,
+    frozenset(("inspection_lane", "unloading_bay")): 70.5,
+    frozenset(("unloading_bay", "freight_lift")): 72.0,
+    frozenset(("isolation_bay", "service_walkway")): -10.75,
+    frozenset(("operator_room", "service_walkway")): -1.0,
+    frozenset(("freight_lift", "service_walkway")): 20.0,
+}
+
 CONTAINMENT_SECTORS = {"U-CHAMBER-4", "U-CHAMBER-6", "L-CHAMBER-3", "L-CHAMBER-5"}
 SEQUENCE_SECTORS = {"U-ROUTE-A", "L-CHAMBER-1", "L-EAST-STAIR"}
 SPINE_SECTORS = {"U-DOMESTIC", "U-SECURITY", "T-WORKSHOP", "T-EAST-VERTICAL", "T-UTILITIES"}
@@ -90,7 +108,6 @@ HUB_NAMES = {
     "U-CONTROL": "operator_hall",
     "U-CENTRAL-CORE": "access_lobby",
     "U-EAST-SUPPORT": "support_corridor",
-    "U-FREIGHT": "unloading_bay",
     "L-OLD-CORE": "distribution_hall",
     "L-ARCHIVE-A": "route_a_service_passage",
     "L-OLD-RECEIVING": "receiving_hall",
@@ -360,6 +377,27 @@ def east_support_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict]
     ]
 
 
+def freight_reception_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the approved freight reception at 20 px/m around A-FREIGHT-LIFT."""
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "isolation_bay", rect(-13.0, 68.0, -6.0, 76.0), height),
+        room(sector_id, "inspection_lane", rect(-6.0, 68.0, 4.0, 73.0), height, True, "circulation"),
+        room(sector_id, "operator_room", rect(-6.0, 73.0, 4.0, 76.0), height),
+        room(sector_id, "unloading_bay", rect(4.0, 68.0, 13.5, 76.0), height, True, "circulation"),
+        room(sector_id, "freight_lift", rect(13.5, 68.0, 26.5, 76.0), height, True, "elevator"),
+        room(sector_id, "service_walkway", rect(-13.0, 76.0, 30.0, 78.0), height, True, "circulation"),
+    ]
+    return result, [
+        ("isolation_bay", "inspection_lane"),
+        ("inspection_lane", "unloading_bay"),
+        ("unloading_bay", "freight_lift"),
+        ("isolation_bay", "service_walkway"),
+        ("operator_room", "service_walkway"),
+        ("freight_lift", "service_walkway"),
+    ]
+
+
 def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, str]]]:
     sector_id = passport["sector_id"]
     names = passport["allowed_internal_subdivision"]
@@ -374,6 +412,8 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
         return domestic_layout(sector_id, bounds)
     if sector_id == "U-EAST-SUPPORT":
         return east_support_layout(sector_id, bounds)
+    if sector_id == "U-FREIGHT":
+        return freight_reception_layout(sector_id, bounds)
     if sector_id in CENTRAL_CORE_SECTORS:
         return central_core_layout(sector_id, bounds)
     if sector_id in CONTAINMENT_SECTORS:
@@ -419,6 +459,8 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
         special_width = CONTROL_CENTER_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
     if sector_id == "U-EAST-SUPPORT":
         special_width = EAST_SUPPORT_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
+    if sector_id == "U-FREIGHT":
+        special_width = FREIGHT_RECEPTION_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
     requested_width = special_width if special_width is not None else 4.5 if cargo_threshold else width
     if special_width is not None:
         actual_width = min(requested_width, max(0.9, span * 0.95))
@@ -429,6 +471,8 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
         center = DOMESTIC_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     if sector_id == "U-EAST-SUPPORT":
         center = EAST_SUPPORT_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
+    if sector_id == "U-FREIGHT":
+        center = FREIGHT_RECEPTION_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     segment = [[coordinate, center - actual_width / 2], [coordinate, center + actual_width / 2]] if axis == "x" else [[center - actual_width / 2, coordinate], [center + actual_width / 2, coordinate]]
     return {
         "id": f"P-{sector_id}-{index:02d}",
@@ -570,10 +614,32 @@ def personnel_medbay_portal(edge: dict, sector_id: str, spaces: list[dict]) -> d
     }
 
 
+def freight_reception_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
+    """Connect the heavy spine to the inspection gate shown on the approved plan."""
+    entry = next(space for space in spaces if space["name"] == "inspection_lane")
+    return {
+        "id": f"PX-{edge['id']}-U-FREIGHT",
+        "connection_id": edge["id"],
+        "space": entry["id"],
+        "neighbor": "U-FRT",
+        "side": "north",
+        "segment_xz": [[-3.25, 68.0], [1.25, 68.0]],
+        "width": 4.5,
+        "height": 4.5,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
 def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bounds: list[float]) -> dict[str, Any]:
     other = edge["to"] if edge["from"] == sector_id else edge["from"]
     if edge["id"] == "E-U02A" and sector_id in {"U-EMERGENCY", "U-MEDBAY"}:
         return personnel_medbay_portal(edge, sector_id, spaces)
+    if edge["id"] == "E-U13" and sector_id == "U-FREIGHT":
+        return freight_reception_portal(edge, spaces)
     if sector_id == "U-EAST-SUPPORT" and edge["id"] == "E-U06":
         entry = next(space for space in spaces if space["name"] == "service_vestibule")
     else:

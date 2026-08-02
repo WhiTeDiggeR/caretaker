@@ -104,6 +104,24 @@ PERSONNEL_MEDBAY_SEGMENTS = {
     "PX-E-U02A-U-MEDBAY": [[-88.0, 11.05], [-88.0, 12.25]],
 }
 
+FREIGHT_RECEPTION_BOUNDS = {
+    "U-FREIGHT/isolation_bay": [-13.0, 68.0, -6.0, 76.0],
+    "U-FREIGHT/inspection_lane": [-6.0, 68.0, 4.0, 73.0],
+    "U-FREIGHT/operator_room": [-6.0, 73.0, 4.0, 76.0],
+    "U-FREIGHT/unloading_bay": [4.0, 68.0, 13.5, 76.0],
+    "U-FREIGHT/freight_lift": [13.5, 68.0, 26.5, 76.0],
+    "U-FREIGHT/service_walkway": [-13.0, 76.0, 30.0, 78.0],
+}
+
+FREIGHT_RECEPTION_CONNECTIONS = {
+    frozenset(("isolation_bay", "inspection_lane")),
+    frozenset(("inspection_lane", "unloading_bay")),
+    frozenset(("unloading_bay", "freight_lift")),
+    frozenset(("isolation_bay", "service_walkway")),
+    frozenset(("operator_room", "service_walkway")),
+    frozenset(("freight_lift", "service_walkway")),
+}
+
 
 def load(relative: str) -> dict:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
@@ -185,6 +203,19 @@ def main() -> int:
     if actual_medbay_bounds != MEDBAY_BOUNDS:
         errors.append(f"U-MEDBAY no longer preserves the approved room bands: {actual_medbay_bounds}")
 
+    actual_freight_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in FREIGHT_RECEPTION_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_freight_bounds != FREIGHT_RECEPTION_BOUNDS:
+        errors.append(f"U-FREIGHT no longer traces the approved 20 px/m reception plan: {actual_freight_bounds}")
+    freight_lift_bounds = actual_freight_bounds.get("U-FREIGHT/freight_lift", [])
+    if freight_lift_bounds:
+        lift_center = [(freight_lift_bounds[0] + freight_lift_bounds[2]) / 2, (freight_lift_bounds[1] + freight_lift_bounds[3]) / 2]
+        if lift_center != [20.0, 72.0]:
+            errors.append(f"U-FREIGHT lift misses A-FREIGHT-LIFT: {lift_center}")
+
     for a, b in itertools.combinations(spaces, 2):
         if a["floor_y"] == b["floor_y"] and positive_overlap(a["bounds_xz"], b["bounds_xz"]):
             errors.append(f"positive room overlap: {a['id']} <> {b['id']}")
@@ -235,6 +266,14 @@ def main() -> int:
     if actual_medbay_connections != MEDBAY_CONNECTIONS:
         errors.append("U-MEDBAY internal connections differ from the approved plan")
 
+    actual_freight_connections = {
+        frozenset(space_id.removeprefix("U-FREIGHT/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-U-FREIGHT-")
+    }
+    if actual_freight_connections != FREIGHT_RECEPTION_CONNECTIONS:
+        errors.append("U-FREIGHT internal connections differ from the approved plan")
+
     external_by_id = {item["id"]: item for item in geometry["external_portals"]}
     for portal in external_by_id.values():
         room = space_by_id.get(portal["space"])
@@ -262,6 +301,11 @@ def main() -> int:
     for portal_id, expected_segment in PERSONNEL_MEDBAY_SEGMENTS.items():
         if external_by_id.get(portal_id, {}).get("segment_xz") != expected_segment:
             errors.append(f"E-U02A portal segment moved away from the approved plan: {portal_id}")
+    freight_entry = external_by_id.get("PX-E-U13-U-FREIGHT", {})
+    if freight_entry.get("space") != "U-FREIGHT/inspection_lane" or freight_entry.get("side") != "north":
+        errors.append("E-U13 must connect the heavy spine to the north inspection gate")
+    if freight_entry.get("segment_xz") != [[-3.25, 68.0], [1.25, 68.0]]:
+        errors.append("E-U13 inspection gate moved away from the approved plan")
 
     represented: set[str] = set()
     for corridor in geometry["connection_corridors"]:

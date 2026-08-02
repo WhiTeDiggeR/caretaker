@@ -291,11 +291,11 @@
       ],
       "passport_id": "PASS-U-FREIGHT",
       "space_ids": [
-        "U-FREIGHT/unloading_bay",
+        "U-FREIGHT/isolation_bay",
         "U-FREIGHT/inspection_lane",
         "U-FREIGHT/operator_room",
+        "U-FREIGHT/unloading_bay",
         "U-FREIGHT/freight_lift",
-        "U-FREIGHT/isolation_bay",
         "U-FREIGHT/service_walkway"
       ],
       "reserved_volumes": [
@@ -1842,19 +1842,19 @@
       "floor_y": 0.0
     },
     {
-      "id": "U-FREIGHT/unloading_bay",
-      "name": "unloading_bay",
+      "id": "U-FREIGHT/isolation_bay",
+      "name": "isolation_bay",
       "sector_id": "U-FREIGHT",
-      "kind": "circulation",
+      "kind": "room",
       "bounds_xz": [
-        3.32,
-        67.5,
-        10.68,
-        82.0
+        -13.0,
+        68.0,
+        -6.0,
+        76.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": true,
+      "transit": false,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1863,16 +1863,16 @@
       "id": "U-FREIGHT/inspection_lane",
       "name": "inspection_lane",
       "sector_id": "U-FREIGHT",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
-        -16.0,
-        67.5,
-        3.32,
-        72.333
+        -6.0,
+        68.0,
+        4.0,
+        73.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1883,14 +1883,32 @@
       "sector_id": "U-FREIGHT",
       "kind": "room",
       "bounds_xz": [
-        -16.0,
-        72.333,
-        3.32,
-        77.167
+        -6.0,
+        73.0,
+        4.0,
+        76.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
       "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-FREIGHT/unloading_bay",
+      "name": "unloading_bay",
+      "sector_id": "U-FREIGHT",
+      "kind": "circulation",
+      "bounds_xz": [
+        4.0,
+        68.0,
+        13.5,
+        76.0
+      ],
+      "clear_height": 5.0,
+      "wall_thickness": 0.3,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1899,34 +1917,16 @@
       "id": "U-FREIGHT/freight_lift",
       "name": "freight_lift",
       "sector_id": "U-FREIGHT",
-      "kind": "room",
+      "kind": "elevator",
       "bounds_xz": [
-        -16.0,
-        77.167,
-        3.32,
-        82.0
+        13.5,
+        68.0,
+        26.5,
+        76.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-FREIGHT/isolation_bay",
-      "name": "isolation_bay",
-      "sector_id": "U-FREIGHT",
-      "kind": "room",
-      "bounds_xz": [
-        10.68,
-        67.5,
-        30.0,
-        74.75
-      ],
-      "clear_height": 5.0,
-      "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1935,16 +1935,16 @@
       "id": "U-FREIGHT/service_walkway",
       "name": "service_walkway",
       "sector_id": "U-FREIGHT",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
-        10.68,
-        74.75,
+        -13.0,
+        76.0,
         30.0,
-        82.0
+        78.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -4746,20 +4746,20 @@
     {
       "id": "P-U-FREIGHT-01",
       "between": [
-        "U-FREIGHT/unloading_bay",
+        "U-FREIGHT/isolation_bay",
         "U-FREIGHT/inspection_lane"
       ],
       "segment_xz": [
         [
-          3.32,
-          68.467
+          -6.0,
+          69.1
         ],
         [
-          3.32,
-          71.366
+          -6.0,
+          71.9
         ]
       ],
-      "width": 2.9,
+      "width": 2.8,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4769,20 +4769,20 @@
     {
       "id": "P-U-FREIGHT-02",
       "between": [
-        "U-FREIGHT/unloading_bay",
-        "U-FREIGHT/operator_room"
+        "U-FREIGHT/inspection_lane",
+        "U-FREIGHT/unloading_bay"
       ],
       "segment_xz": [
         [
-          3.32,
-          73.3
+          4.0,
+          68.25
         ],
         [
-          3.32,
-          76.2
+          4.0,
+          72.75
         ]
       ],
-      "width": 2.9,
+      "width": 4.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4797,15 +4797,15 @@
       ],
       "segment_xz": [
         [
-          3.32,
-          78.134
+          13.5,
+          69.3
         ],
         [
-          3.32,
-          81.033
+          13.5,
+          74.7
         ]
       ],
-      "width": 2.9,
+      "width": 5.4,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4815,20 +4815,20 @@
     {
       "id": "P-U-FREIGHT-04",
       "between": [
-        "U-FREIGHT/unloading_bay",
-        "U-FREIGHT/isolation_bay"
+        "U-FREIGHT/isolation_bay",
+        "U-FREIGHT/service_walkway"
       ],
       "segment_xz": [
         [
-          10.68,
-          68.95
+          -11.5,
+          76.0
         ],
         [
-          10.68,
-          73.3
+          -10.0,
+          76.0
         ]
       ],
-      "width": 4.35,
+      "width": 1.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4838,20 +4838,43 @@
     {
       "id": "P-U-FREIGHT-05",
       "between": [
-        "U-FREIGHT/unloading_bay",
+        "U-FREIGHT/operator_room",
         "U-FREIGHT/service_walkway"
       ],
       "segment_xz": [
         [
-          10.68,
-          76.2
+          -1.75,
+          76.0
         ],
         [
-          10.68,
-          80.55
+          -0.25,
+          76.0
         ]
       ],
-      "width": 4.35,
+      "width": 1.5,
+      "height": 4.5,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-FREIGHT-06",
+      "between": [
+        "U-FREIGHT/freight_lift",
+        "U-FREIGHT/service_walkway"
+      ],
+      "segment_xz": [
+        [
+          19.25,
+          76.0
+        ],
+        [
+          20.75,
+          76.0
+        ]
+      ],
+      "width": 1.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -6673,17 +6696,17 @@
     {
       "id": "PX-E-U13-U-FREIGHT",
       "connection_id": "E-U13",
-      "space": "U-FREIGHT/freight_lift",
+      "space": "U-FREIGHT/inspection_lane",
       "neighbor": "U-FRT",
-      "side": "south",
+      "side": "north",
       "segment_xz": [
         [
-          -8.59,
-          82.0
+          -3.25,
+          68.0
         ],
         [
-          -4.09,
-          82.0
+          1.25,
+          68.0
         ]
       ],
       "width": 4.5,
@@ -7583,11 +7606,11 @@
       "connection_id": "E-U13",
       "centerline_xz": [
         [
-          -6.34,
-          82.0
+          -1.0,
+          68.0
         ],
         [
-          -6.34,
+          -1.0,
           67.5
         ]
       ],
