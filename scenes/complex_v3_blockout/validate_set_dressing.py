@@ -22,6 +22,7 @@ def main() -> None:
     frame_count = 0
     wall_mount_count = 0
     chamber_wall_mount_count = 0
+    control_plan_prop_count = 0
     minimum_service_clearance = float("inf")
     for sector in manifest["sectors"]:
         scene_path = ROOT / sector["dressing_scene"].removeprefix("res://")
@@ -35,6 +36,11 @@ def main() -> None:
                 errors.append(f"missing asset: {placement['scene']}")
             if placement["kind"] == "prop":
                 prop_count += 1
+                if placement["space_id"].startswith("U-CONTROL/"):
+                    if not placement.get("plan_aligned", False):
+                        errors.append(f"U-CONTROL prop is not plan-aligned: {placement['id']}")
+                    else:
+                        control_plan_prop_count += 1
                 is_chamber_beacon = (
                     "CHAMBER" in placement["space_id"]
                     and placement["scene"].endswith("wall_beacon.tscn")
@@ -61,7 +67,7 @@ def main() -> None:
                         errors.append(f"prop footprint outside {placement['space_id']}: {placement['id']}")
                     center_x = (x0 + x1) * 0.5
                     center_z = (z0 + z1) * 0.5
-                    if not (math.isclose(x, center_x, abs_tol=0.01) or math.isclose(z, center_z, abs_tol=0.01)):
+                    if not placement.get("plan_aligned", False) and not (math.isclose(x, center_x, abs_tol=0.01) or math.isclose(z, center_z, abs_tol=0.01)):
                         errors.append(f"prop is not wall-centered in {placement['space_id']}: {placement['id']}")
                     expected_offset = 2.65 if placement["scene"].endswith("security_camera.tscn") else 2.35 if placement["scene"].endswith("wall_beacon.tscn") else 1.2 if placement["scene"].endswith("wall_terminal.tscn") else 0.0
                     if not math.isclose(float(placement["position"][1]), float(space["floor_y"]) + expected_offset, abs_tol=0.01):
@@ -99,12 +105,14 @@ def main() -> None:
         errors.append(f"sector count {len(manifest['sectors'])}, expected 30")
     if chamber_wall_mount_count != 15:
         errors.append(f"chamber wall mount count {chamber_wall_mount_count}, expected 15")
+    if control_plan_prop_count != 21:
+        errors.append(f"U-CONTROL plan-aligned prop count {control_plan_prop_count}, expected 21")
     cargo_portals = [portal for portal in handoff["internal_portals"] if any("/cargo_airlock" in space_id or "/cargo_vestibule" in space_id for space_id in portal["between"])]
     if len(cargo_portals) != 5 or any(float(portal["width"]) < 4.5 or float(portal["height"]) < 4.5 for portal in cargo_portals):
         errors.append("five internal cargo thresholds must preserve 4.5 x 4.5 m clearance")
     if errors:
         raise SystemExit("Set-dressing validation failed:\n- " + "\n- ".join(errors))
-    print(f"Set-dressing validation passed: 30 sectors, {prop_count} props, {frame_count} open portal frames, {wall_mount_count} wall mounts ({chamber_wall_mount_count} chamber beacons), minimum service clearance {minimum_service_clearance:.2f} m")
+    print(f"Set-dressing validation passed: 30 sectors, {prop_count} props, {frame_count} open portal frames, {wall_mount_count} wall mounts ({chamber_wall_mount_count} chamber beacons), {control_plan_prop_count} U-CONTROL plan props, minimum service clearance {minimum_service_clearance:.2f} m")
 
 
 if __name__ == "__main__":

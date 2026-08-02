@@ -137,19 +137,26 @@
         -32.0,
         -13.0,
         -8.0,
-        15.0
+        14.5
       ],
       "passport_id": "PASS-U-CONTROL",
       "space_ids": [
-        "U-CONTROL/operator_hall",
-        "U-CONTROL/access_vestibule",
-        "U-CONTROL/coordination_room",
-        "U-CONTROL/server_room",
         "U-CONTROL/command_office",
+        "U-CONTROL/coordination_room",
         "U-CONTROL/communications_room",
-        "U-CONTROL/service_aisle"
+        "U-CONTROL/operator_hall",
+        "U-CONTROL/access_buffer",
+        "U-CONTROL/access_vestibule",
+        "U-CONTROL/duty_support",
+        "U-CONTROL/fire_vestibule",
+        "U-CONTROL/power_buffer",
+        "U-CONTROL/network_node",
+        "U-CONTROL/server_room",
+        "U-CONTROL/service_aisle",
+        "U-CONTROL/east_access"
       ],
       "reserved_volumes": [
+        "access_buffer",
         "server_cooling"
       ],
       "source_detail": "../../u_control.html",
@@ -1078,33 +1085,15 @@
       "floor_y": 0.0
     },
     {
-      "id": "U-CONTROL/operator_hall",
-      "name": "operator_hall",
-      "sector_id": "U-CONTROL",
-      "kind": "circulation",
-      "bounds_xz": [
-        -21.92,
-        -13.0,
-        -18.08,
-        15.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-CONTROL/access_vestibule",
-      "name": "access_vestibule",
+      "id": "U-CONTROL/command_office",
+      "name": "command_office",
       "sector_id": "U-CONTROL",
       "kind": "room",
       "bounds_xz": [
         -32.0,
         -13.0,
-        -21.92,
-        -3.667
+        -26.167,
+        -8.417
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1119,46 +1108,10 @@
       "sector_id": "U-CONTROL",
       "kind": "room",
       "bounds_xz": [
-        -32.0,
-        -3.667,
-        -21.92,
-        5.667
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-CONTROL/server_room",
-      "name": "server_room",
-      "sector_id": "U-CONTROL",
-      "kind": "room",
-      "bounds_xz": [
-        -32.0,
-        5.667,
-        -21.92,
-        15.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-CONTROL/command_office",
-      "name": "command_office",
-      "sector_id": "U-CONTROL",
-      "kind": "room",
-      "bounds_xz": [
-        -18.08,
+        -26.167,
         -13.0,
-        -8.0,
-        -3.667
+        -20.333,
+        -8.417
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1173,10 +1126,154 @@
       "sector_id": "U-CONTROL",
       "kind": "room",
       "bounds_xz": [
-        -18.08,
-        -3.667,
-        -8.0,
-        5.667
+        -20.333,
+        -13.0,
+        -10.75,
+        -8.417
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/operator_hall",
+      "name": "operator_hall",
+      "sector_id": "U-CONTROL",
+      "kind": "circulation",
+      "bounds_xz": [
+        -32.0,
+        -8.417,
+        -17.0,
+        4.083
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/access_buffer",
+      "name": "access_buffer",
+      "sector_id": "U-CONTROL",
+      "kind": "room",
+      "bounds_xz": [
+        -17.0,
+        -8.417,
+        -10.75,
+        -5.5
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/access_vestibule",
+      "name": "access_vestibule",
+      "sector_id": "U-CONTROL",
+      "kind": "airlock",
+      "bounds_xz": [
+        -17.0,
+        -5.5,
+        -10.75,
+        -1.125
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/duty_support",
+      "name": "duty_support",
+      "sector_id": "U-CONTROL",
+      "kind": "room",
+      "bounds_xz": [
+        -17.0,
+        -1.125,
+        -10.75,
+        4.083
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/fire_vestibule",
+      "name": "fire_vestibule",
+      "sector_id": "U-CONTROL",
+      "kind": "airlock",
+      "bounds_xz": [
+        -19.917,
+        4.083,
+        -15.333,
+        5.333
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/power_buffer",
+      "name": "power_buffer",
+      "sector_id": "U-CONTROL",
+      "kind": "room",
+      "bounds_xz": [
+        -32.0,
+        5.333,
+        -26.375,
+        10.333
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/network_node",
+      "name": "network_node",
+      "sector_id": "U-CONTROL",
+      "kind": "room",
+      "bounds_xz": [
+        -26.375,
+        5.333,
+        -22.0,
+        10.333
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/server_room",
+      "name": "server_room",
+      "sector_id": "U-CONTROL",
+      "kind": "room",
+      "bounds_xz": [
+        -22.0,
+        5.333,
+        -10.75,
+        10.333
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1189,16 +1286,34 @@
       "id": "U-CONTROL/service_aisle",
       "name": "service_aisle",
       "sector_id": "U-CONTROL",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
-        -18.08,
-        5.667,
-        -8.0,
-        15.0
+        -32.0,
+        10.333,
+        -10.75,
+        11.583
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-CONTROL/east_access",
+      "name": "east_access",
+      "sector_id": "U-CONTROL",
+      "kind": "circulation",
+      "bounds_xz": [
+        -10.75,
+        -5.5,
+        -8.0,
+        14.5
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -3785,16 +3900,16 @@
       "id": "P-U-CONTROL-01",
       "between": [
         "U-CONTROL/operator_hall",
-        "U-CONTROL/access_vestibule"
+        "U-CONTROL/command_office"
       ],
       "segment_xz": [
         [
-          -21.92,
-          -8.934
+          -29.684,
+          -8.417
         ],
         [
-          -21.92,
-          -7.734
+          -28.483,
+          -8.417
         ]
       ],
       "width": 1.2,
@@ -3812,12 +3927,12 @@
       ],
       "segment_xz": [
         [
-          -21.92,
-          0.4
+          -23.85,
+          -8.417
         ],
         [
-          -21.92,
-          1.6
+          -22.65,
+          -8.417
         ]
       ],
       "width": 1.2,
@@ -3831,16 +3946,16 @@
       "id": "P-U-CONTROL-03",
       "between": [
         "U-CONTROL/operator_hall",
-        "U-CONTROL/server_room"
+        "U-CONTROL/communications_room"
       ],
       "segment_xz": [
         [
-          -21.92,
-          9.734
+          -19.267,
+          -8.417
         ],
         [
-          -21.92,
-          10.934
+          -18.066,
+          -8.417
         ]
       ],
       "width": 1.2,
@@ -3854,19 +3969,19 @@
       "id": "P-U-CONTROL-04",
       "between": [
         "U-CONTROL/operator_hall",
-        "U-CONTROL/command_office"
+        "U-CONTROL/access_vestibule"
       ],
       "segment_xz": [
         [
-          -18.08,
-          -8.934
+          -17.0,
+          -4.213
         ],
         [
-          -18.08,
-          -7.734
+          -17.0,
+          -2.413
         ]
       ],
-      "width": 1.2,
+      "width": 1.8,
       "height": 2.4,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -3877,16 +3992,16 @@
       "id": "P-U-CONTROL-05",
       "between": [
         "U-CONTROL/operator_hall",
-        "U-CONTROL/communications_room"
+        "U-CONTROL/duty_support"
       ],
       "segment_xz": [
         [
-          -18.08,
-          0.4
+          -17.0,
+          0.879
         ],
         [
-          -18.08,
-          1.6
+          -17.0,
+          2.079
         ]
       ],
       "width": 1.2,
@@ -3899,20 +4014,158 @@
     {
       "id": "P-U-CONTROL-06",
       "between": [
+        "U-CONTROL/access_vestibule",
+        "U-CONTROL/east_access"
+      ],
+      "segment_xz": [
+        [
+          -10.75,
+          -4.213
+        ],
+        [
+          -10.75,
+          -2.413
+        ]
+      ],
+      "width": 1.8,
+      "height": 2.4,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-CONTROL-07",
+      "between": [
         "U-CONTROL/operator_hall",
+        "U-CONTROL/fire_vestibule"
+      ],
+      "segment_xz": [
+        [
+          -19.358,
+          4.083
+        ],
+        [
+          -17.559,
+          4.083
+        ]
+      ],
+      "width": 1.8,
+      "height": 2.4,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-CONTROL-08",
+      "between": [
+        "U-CONTROL/fire_vestibule",
+        "U-CONTROL/server_room"
+      ],
+      "segment_xz": [
+        [
+          -18.525,
+          5.333
+        ],
+        [
+          -16.725,
+          5.333
+        ]
+      ],
+      "width": 1.8,
+      "height": 2.4,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-CONTROL-09",
+      "between": [
+        "U-CONTROL/power_buffer",
         "U-CONTROL/service_aisle"
       ],
       "segment_xz": [
         [
-          -18.08,
-          9.734
+          -29.788,
+          10.333
         ],
         [
-          -18.08,
-          10.934
+          -28.587,
+          10.333
         ]
       ],
       "width": 1.2,
+      "height": 2.4,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-CONTROL-10",
+      "between": [
+        "U-CONTROL/network_node",
+        "U-CONTROL/service_aisle"
+      ],
+      "segment_xz": [
+        [
+          -24.788,
+          10.333
+        ],
+        [
+          -23.587,
+          10.333
+        ]
+      ],
+      "width": 1.2,
+      "height": 2.4,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-CONTROL-11",
+      "between": [
+        "U-CONTROL/server_room",
+        "U-CONTROL/service_aisle"
+      ],
+      "segment_xz": [
+        [
+          -16.975,
+          10.333
+        ],
+        [
+          -15.775,
+          10.333
+        ]
+      ],
+      "width": 1.2,
+      "height": 2.4,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-CONTROL-12",
+      "between": [
+        "U-CONTROL/service_aisle",
+        "U-CONTROL/east_access"
+      ],
+      "segment_xz": [
+        [
+          -10.75,
+          10.364
+        ],
+        [
+          -10.75,
+          11.552
+        ]
+      ],
+      "width": 1.188,
       "height": 2.4,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -6138,17 +6391,17 @@
     {
       "id": "PX-E-U04-U-CONTROL",
       "connection_id": "E-U04",
-      "space": "U-CONTROL/access_vestibule",
+      "space": "U-CONTROL/east_access",
       "neighbor": "U-PAX",
-      "side": "north",
+      "side": "south",
       "segment_xz": [
         [
-          -27.56,
-          -13.0
+          -9.975,
+          14.5
         ],
         [
-          -26.36,
-          -13.0
+          -8.775,
+          14.5
         ]
       ],
       "width": 1.2,
@@ -7102,11 +7355,11 @@
       "connection_id": "E-U04",
       "centerline_xz": [
         [
-          -26.96,
-          -13.0
+          -9.375,
+          14.5
         ],
         [
-          -26.96,
+          -9.375,
           15.0
         ]
       ],

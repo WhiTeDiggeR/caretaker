@@ -98,9 +98,9 @@ Required connections:
 - Parent boundary XZ: `[-32.0, -13.0] → [-8.0, 15.0] m`
 - Local origin XYZ: `[-32.0, 0.0, -13.0]`
 - Neighbors: `U-PAX`
-- Allowed subdivisions: `access_vestibule`, `operator_hall`, `command_office`, `coordination_room`, `communications_room`, `server_room`, `service_aisle`
+- Allowed subdivisions: `command_office`, `coordination_room`, `communications_room`, `operator_hall`, `access_buffer`, `access_vestibule`, `duty_support`, `fire_vestibule`, `power_buffer`, `network_node`, `server_room`, `service_aisle`, `east_access`
 - Clearance profile: `passenger` — {'minimum_width': 1.2, 'minimum_height': 2.4, 'turning_envelope': 1.5}
-- Reserved volumes: `server_cooling`
+- Reserved volumes: `access_buffer`, `server_cooling`
 
 Required connections:
 

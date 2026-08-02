@@ -16,8 +16,9 @@ func _initialize() -> void:
 	var errors := PackedStringArray()
 	var checked := 0
 	for passage: Dictionary in blockout.get_portal_passages():
+		var half_depth := float(passage.get("test_half_depth", 0.8))
 		for step: int in 5:
-			var distance := -0.8 + float(step) * 0.4
+			var distance := -half_depth + float(step) * half_depth * 0.5
 			var query := PhysicsShapeQueryParameters3D.new()
 			query.shape = capsule
 			query.transform = Transform3D(Basis.IDENTITY, passage["center"] + passage["direction"] * distance)

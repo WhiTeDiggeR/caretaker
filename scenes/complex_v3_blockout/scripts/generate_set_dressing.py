@@ -169,6 +169,60 @@ def collect_frames(handoff: dict, spaces: dict[str, dict]) -> dict[str, list[dic
     return result
 
 
+def planned_prop(spaces: dict[str, dict], space_name: str, prop: str, x: float, z: float, rotation_y: float, suffix: str, wall_side: str | None = None) -> dict:
+    space_id = f"U-CONTROL/{space_name}"
+    space = spaces[space_id]
+    path, size_x, size_z = PROP_DATA[prop]
+    y = float(space["floor_y"])
+    if prop == "wall_terminal":
+        y += 1.2
+    elif prop == "security_camera":
+        y += 2.65
+    elif prop == "wall_beacon":
+        y += 2.35
+    placement = {
+        "kind": "prop",
+        "id": f"{space_id}::{prop}::{suffix}",
+        "space_id": space_id,
+        "scene": path,
+        "position": [x, y, z],
+        "rotation_y": rotation_y,
+        "footprint_xz": [size_x, size_z],
+        "plan_aligned": True,
+    }
+    if wall_side is not None:
+        placement["wall_mount_depth"] = WALL_MOUNT[prop]["depth"]
+        placement["wall_mount_center_offset"] = WALL_MOUNT[prop]["center_offset"]
+        placement["wall_mount_side"] = wall_side
+    return placement
+
+
+def control_center_props(spaces: dict[str, dict]) -> list[dict]:
+    return [
+        planned_prop(spaces, "command_office", "operator_console", -29.083, -10.500, 0.0, "desk"),
+        planned_prop(spaces, "coordination_room", "operator_console", -23.250, -10.500, 0.0, "briefing"),
+        planned_prop(spaces, "communications_room", "wall_terminal", -19.725, -8.557, math.pi, "west", "south"),
+        planned_prop(spaces, "communications_room", "wall_terminal", -15.542, -8.557, math.pi, "center", "south"),
+        planned_prop(spaces, "communications_room", "wall_terminal", -12.333, -8.557, math.pi, "east", "south"),
+        planned_prop(spaces, "operator_hall", "wall_terminal", -31.860, -2.167, math.pi * 0.5, "status_screen", "west"),
+        planned_prop(spaces, "operator_hall", "operator_console", -26.958, -3.375, 0.0, "island_nw"),
+        planned_prop(spaces, "operator_hall", "operator_console", -22.083, -3.375, 0.0, "island_ne"),
+        planned_prop(spaces, "operator_hall", "operator_console", -26.958, -0.458, 0.0, "island_sw"),
+        planned_prop(spaces, "operator_hall", "operator_console", -22.083, -0.458, 0.0, "island_se"),
+        planned_prop(spaces, "operator_hall", "operator_console", -24.500, 2.333, math.pi, "central"),
+        planned_prop(spaces, "access_vestibule", "wall_beacon", -13.875, -1.275, math.pi, "south", "south"),
+        planned_prop(spaces, "duty_support", "loaded_cabinet", -13.875, 3.483, math.pi, "supplies"),
+        planned_prop(spaces, "fire_vestibule", "wall_beacon", -19.767, 4.708, math.pi * 0.5, "west", "west"),
+        planned_prop(spaces, "power_buffer", "generator_unit", -29.188, 7.833, 0.0, "ups"),
+        planned_prop(spaces, "network_node", "server_rack", -24.188, 7.833, 0.0, "network"),
+        planned_prop(spaces, "server_room", "server_rack", -20.208, 8.625, 0.0, "rack_1"),
+        planned_prop(spaces, "server_room", "server_rack", -17.958, 8.625, 0.0, "rack_2"),
+        planned_prop(spaces, "server_room", "server_rack", -15.708, 8.625, 0.0, "rack_3"),
+        planned_prop(spaces, "server_room", "server_rack", -13.458, 8.625, 0.0, "rack_4"),
+        planned_prop(spaces, "east_access", "wall_beacon", -8.150, 4.500, -math.pi * 0.5, "east", "east"),
+    ]
+
+
 def make_manifest() -> dict:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
@@ -181,7 +235,9 @@ def make_manifest() -> dict:
         family = family_for(sector_id)
         placements = []
         sector_spaces = sorted((s for s in spaces.values() if s["sector_id"] == sector_id), key=lambda s: s["id"])
-        for index, space in enumerate(sector_spaces):
+        if sector_id == "U-CONTROL":
+            placements.extend(control_center_props(spaces))
+        for index, space in enumerate(sector_spaces if sector_id != "U-CONTROL" else []):
             prop = choose_prop(space, family, index)
             path, size_x, size_z = PROP_DATA[prop]
             x, y, z = pick_position(space, (size_x, size_z), centers.get(space["id"], []))

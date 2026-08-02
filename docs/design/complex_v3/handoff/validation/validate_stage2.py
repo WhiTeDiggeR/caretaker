@@ -11,6 +11,37 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+CONTROL_CENTER_BOUNDS = {
+    "U-CONTROL/command_office": [-32.0, -13.0, -26.167, -8.417],
+    "U-CONTROL/coordination_room": [-26.167, -13.0, -20.333, -8.417],
+    "U-CONTROL/communications_room": [-20.333, -13.0, -10.75, -8.417],
+    "U-CONTROL/operator_hall": [-32.0, -8.417, -17.0, 4.083],
+    "U-CONTROL/access_buffer": [-17.0, -8.417, -10.75, -5.5],
+    "U-CONTROL/access_vestibule": [-17.0, -5.5, -10.75, -1.125],
+    "U-CONTROL/duty_support": [-17.0, -1.125, -10.75, 4.083],
+    "U-CONTROL/fire_vestibule": [-19.917, 4.083, -15.333, 5.333],
+    "U-CONTROL/power_buffer": [-32.0, 5.333, -26.375, 10.333],
+    "U-CONTROL/network_node": [-26.375, 5.333, -22.0, 10.333],
+    "U-CONTROL/server_room": [-22.0, 5.333, -10.75, 10.333],
+    "U-CONTROL/service_aisle": [-32.0, 10.333, -10.75, 11.583],
+    "U-CONTROL/east_access": [-10.75, -5.5, -8.0, 14.5],
+}
+
+CONTROL_CENTER_CONNECTIONS = {
+    frozenset(("operator_hall", "command_office")),
+    frozenset(("operator_hall", "coordination_room")),
+    frozenset(("operator_hall", "communications_room")),
+    frozenset(("operator_hall", "access_vestibule")),
+    frozenset(("operator_hall", "duty_support")),
+    frozenset(("access_vestibule", "east_access")),
+    frozenset(("operator_hall", "fire_vestibule")),
+    frozenset(("fire_vestibule", "server_room")),
+    frozenset(("power_buffer", "service_aisle")),
+    frozenset(("network_node", "service_aisle")),
+    frozenset(("server_room", "service_aisle")),
+    frozenset(("service_aisle", "east_access")),
+}
+
 
 def load(relative: str) -> dict:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
@@ -60,6 +91,14 @@ def main() -> int:
         if x1 <= x0 or z1 <= z0 or space["clear_height"] <= 0:
             errors.append(f"invalid room dimensions: {space['id']}")
 
+    actual_control_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in CONTROL_CENTER_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_control_bounds != CONTROL_CENTER_BOUNDS:
+        errors.append(f"U-CONTROL no longer traces the approved 24 px/m SVG: {actual_control_bounds}")
+
     for a, b in itertools.combinations(spaces, 2):
         if a["floor_y"] == b["floor_y"] and positive_overlap(a["bounds_xz"], b["bounds_xz"]):
             errors.append(f"positive room overlap: {a['id']} <> {b['id']}")
@@ -78,11 +117,22 @@ def main() -> int:
         if not shared_boundary_segment(portal["segment_xz"], space_by_id[a_id]["bounds_xz"], space_by_id[b_id]["bounds_xz"]):
             errors.append(f"internal portal is not on a shared boundary: {portal['id']}")
 
+    actual_control_connections = {
+        frozenset(space_id.removeprefix("U-CONTROL/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-U-CONTROL-")
+    }
+    if actual_control_connections != CONTROL_CENTER_CONNECTIONS:
+        errors.append("U-CONTROL internal connections differ from the approved plan")
+
     external_by_id = {item["id"]: item for item in geometry["external_portals"]}
     for portal in external_by_id.values():
         room = space_by_id.get(portal["space"])
         if room is None or not all(point_on_boundary(point, room["bounds_xz"]) for point in portal["segment_xz"]):
             errors.append(f"external portal is not on its room boundary: {portal['id']}")
+    control_entry = external_by_id.get("PX-E-U04-U-CONTROL", {})
+    if control_entry.get("space") != "U-CONTROL/east_access" or control_entry.get("side") != "south":
+        errors.append("U-CONTROL passenger entry must use the south end of east_access")
 
     represented: set[str] = set()
     for corridor in geometry["connection_corridors"]:

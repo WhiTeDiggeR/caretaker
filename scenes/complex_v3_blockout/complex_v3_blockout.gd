@@ -758,12 +758,22 @@ func _portal_passage(portal: Dictionary, floor_y: float, declared_side: String) 
 		direction = Vector3.RIGHT
 	else:
 		direction = Vector3.BACK
+	var test_half_depth := 0.8
+	if portal.has("between"):
+		var minimum_normal_depth := INF
+		var vertical_boundary := absf(a.x - b.x) <= WALL_EPSILON
+		for space_id: Variant in portal["between"]:
+			var bounds: Array = _spaces_by_id[str(space_id)]["bounds_xz"]
+			var normal_depth := float(bounds[2]) - float(bounds[0]) if vertical_boundary else float(bounds[3]) - float(bounds[1])
+			minimum_normal_depth = minf(minimum_normal_depth, normal_depth)
+		test_half_depth = minf(test_half_depth, maxf(0.2, minimum_normal_depth - 0.6))
 	return {
 		"id": str(portal["id"]),
 		"center": Vector3(center.x, floor_y + 1.05, center.y),
 		"direction": direction,
 		"width": float(portal["width"]),
 		"height": float(portal["height"]),
+		"test_half_depth": test_half_depth,
 	}
 
 
