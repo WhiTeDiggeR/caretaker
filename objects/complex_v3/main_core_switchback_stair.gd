@@ -77,8 +77,6 @@ func _build_shaft(parent: Node3D) -> void:
 
 func _build_decks(parent: Node3D) -> void:
 	_add_box(parent, "UpperLanding", Vector3(0.0, -SLAB_THICKNESS * 0.5, RUN_SOUTH + LANDING_DEPTH * 0.5), Vector3(OPENING_WIDTH, SLAB_THICKNESS, LANDING_DEPTH), UTILITY_PANELS, _collisions_enabled())
-	var upper_closure_x_min := WEST_FLIGHT_X + FLIGHT_WIDTH * 0.5
-	_add_box(parent, "UpperRightClosure", Vector3((upper_closure_x_min + OPENING_WIDTH * 0.5) * 0.5, -SLAB_THICKNESS * 0.5, (RUN_NORTH + RUN_SOUTH) * 0.5), Vector3(OPENING_WIDTH * 0.5 - upper_closure_x_min, SLAB_THICKNESS, RUN_SOUTH - RUN_NORTH), UTILITY_PANELS, _collisions_enabled())
 	_add_box(parent, "IntermediateLanding", Vector3(0.0, -LEVEL_HEIGHT * 0.5 - SLAB_THICKNESS * 0.5, OPENING_NORTH + LANDING_DEPTH * 0.5), Vector3(OPENING_WIDTH, SLAB_THICKNESS, LANDING_DEPTH), UTILITY_PANELS, _collisions_enabled())
 	_add_box(parent, "LowerLandingDeck", Vector3(0.0, -LEVEL_HEIGHT - SLAB_THICKNESS * 0.5, (OPENING_NORTH + OPENING_SOUTH) * 0.5), Vector3(OPENING_WIDTH, SLAB_THICKNESS, OPENING_DEPTH), UTILITY_PANELS, _collisions_enabled())
 
@@ -117,7 +115,19 @@ func _build_railings(parent: Node3D) -> void:
 		var east_z := lerpf(RUN_NORTH, RUN_SOUTH, west_t)
 		var east_y := lerpf(intermediate_y, lower_y, west_t)
 		_add_box(parent, "EastPost_%02d" % index, Vector3(east_rail_x, east_y + RAIL_HEIGHT * 0.5, east_z), Vector3(0.10, RAIL_HEIGHT, 0.10), _rail_material, _collisions_enabled())
+	_add_upper_guard(parent)
 	_add_landing_guard(parent, intermediate_y)
+
+
+func _add_upper_guard(parent: Node3D) -> void:
+	var x_min := WEST_FLIGHT_X + FLIGHT_WIDTH * 0.5
+	var x_max := OPENING_WIDTH * 0.5
+	var guard_z := RUN_SOUTH
+	_add_bar(parent, "UpperGapTopRail", Vector3(x_min, RAIL_HEIGHT, guard_z), Vector3(x_max, RAIL_HEIGHT, guard_z), 0.10, _collisions_enabled())
+	_add_bar(parent, "UpperGapMidRail", Vector3(x_min, RAIL_HEIGHT * 0.55, guard_z), Vector3(x_max, RAIL_HEIGHT * 0.55, guard_z), 0.08, _collisions_enabled())
+	for index: int in range(4):
+		var rail_x := lerpf(x_min, x_max, float(index) / 3.0)
+		_add_box(parent, "UpperGapPost_%02d" % index, Vector3(rail_x, RAIL_HEIGHT * 0.5, guard_z), Vector3(0.10, RAIL_HEIGHT, 0.10), _rail_material, _collisions_enabled())
 
 
 func _add_landing_guard(parent: Node3D, landing_y: float) -> void:
@@ -147,9 +157,11 @@ func validate_geometry() -> PackedStringArray:
 	var east_wall_side_gap := OPENING_WIDTH * 0.5 - (EAST_TREAD_X + TREAD_WIDTH * 0.5)
 	if absf(west_wall_side_gap) > 0.001 or absf(east_wall_side_gap) > 0.001:
 		errors.append("Stair treads must meet both side walls without fall gaps")
-	for required_name: String in ["UpperLanding", "UpperRightClosure", "IntermediateLanding", "LowerLandingDeck", "ShaftWallWest", "ShaftWallEast", "ShaftWallNorth", "IntermediateGapTopRail"]:
+	for required_name: String in ["UpperLanding", "IntermediateLanding", "LowerLandingDeck", "ShaftWallWest", "ShaftWallEast", "ShaftWallNorth", "UpperGapTopRail", "UpperGapMidRail", "IntermediateGapTopRail"]:
 		if generated.find_children(required_name, "", true, false).is_empty():
 			errors.append("Missing required stair component: %s" % required_name)
+	if not generated.find_children("UpperRightClosure", "", true, false).is_empty():
+		errors.append("Obsolete slab still overhangs the lower flight")
 	return errors
 
 
@@ -164,6 +176,7 @@ func get_geometry_summary() -> Dictionary:
 		"risers_per_flight": RISERS_PER_FLIGHT,
 		"opening_width": OPENING_WIDTH,
 		"opening_depth": OPENING_DEPTH,
+		"upper_guard_span": OPENING_WIDTH * 0.5 - (WEST_FLIGHT_X + FLIGHT_WIDTH * 0.5),
 	}
 
 
