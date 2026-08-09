@@ -18,6 +18,8 @@ const RAIL_HEIGHT := 0.95
 const WALL_THICKNESS := 0.24
 const SHAFT_HALF_WIDTH := 3.0
 const SHAFT_TOP := 3.4
+const UPPER_APPROACH_WALL_EDGE_X := 2.6
+const UPPER_SIDE_THRESHOLD_DEPTH := 1.5
 
 @export var build_collisions := true
 @export var editor_preview_enabled := true:
@@ -84,6 +86,15 @@ func _build_landings(parent: Node3D) -> void:
 		UTILITY_PANELS,
 		_collisions_enabled()
 	)
+	var upper_outer_x := FLIGHT_CENTER_X + FLIGHT_WIDTH * 0.5
+	_add_box(
+		parent,
+		"UpperSideThreshold",
+		Vector3((upper_outer_x + UPPER_APPROACH_WALL_EDGE_X) * 0.5, -SLAB_THICKNESS * 0.5, RUN_NORTH + UPPER_SIDE_THRESHOLD_DEPTH * 0.5),
+		Vector3(UPPER_APPROACH_WALL_EDGE_X - upper_outer_x, SLAB_THICKNESS, UPPER_SIDE_THRESHOLD_DEPTH),
+		UTILITY_PANELS,
+		_collisions_enabled()
+	)
 
 
 func _build_flights(parent: Node3D) -> void:
@@ -102,27 +113,34 @@ func _build_flights(parent: Node3D) -> void:
 
 func _build_railings(parent: Node3D) -> void:
 	var intermediate_y := -LEVEL_HEIGHT * 0.5
-	var upper_rail_x := FLIGHT_CENTER_X - FLIGHT_WIDTH * 0.5
-	var lower_rail_x := -FLIGHT_CENTER_X + FLIGHT_WIDTH * 0.5
-	_add_bar(parent, "UpperFlightTopRail", Vector3(upper_rail_x, RAIL_HEIGHT, RUN_NORTH), Vector3(upper_rail_x, intermediate_y + RAIL_HEIGHT, RUN_SOUTH), 0.10, _collisions_enabled())
-	_add_bar(parent, "UpperFlightMidRail", Vector3(upper_rail_x, RAIL_HEIGHT * 0.55, RUN_NORTH), Vector3(upper_rail_x, intermediate_y + RAIL_HEIGHT * 0.55, RUN_SOUTH), 0.08, _collisions_enabled())
-	_add_bar(parent, "LowerFlightTopRail", Vector3(lower_rail_x, intermediate_y + RAIL_HEIGHT, RUN_SOUTH), Vector3(lower_rail_x, -LEVEL_HEIGHT + RAIL_HEIGHT, RUN_NORTH), 0.10, _collisions_enabled())
-	_add_bar(parent, "LowerFlightMidRail", Vector3(lower_rail_x, intermediate_y + RAIL_HEIGHT * 0.55, RUN_SOUTH), Vector3(lower_rail_x, -LEVEL_HEIGHT + RAIL_HEIGHT * 0.55, RUN_NORTH), 0.08, _collisions_enabled())
+	var upper_inner_x := FLIGHT_CENTER_X - FLIGHT_WIDTH * 0.5
+	var upper_outer_x := FLIGHT_CENTER_X + FLIGHT_WIDTH * 0.5
+	var lower_inner_x := -FLIGHT_CENTER_X + FLIGHT_WIDTH * 0.5
+	var lower_outer_x := -FLIGHT_CENTER_X - FLIGHT_WIDTH * 0.5
+	_add_flight_guard(parent, "UpperInner", upper_inner_x, 0.0, intermediate_y, RUN_NORTH, RUN_SOUTH)
+	_add_flight_guard(parent, "UpperOuter", upper_outer_x, 0.0, intermediate_y, RUN_NORTH, RUN_SOUTH)
+	_add_flight_guard(parent, "LowerInner", lower_inner_x, intermediate_y, -LEVEL_HEIGHT, RUN_SOUTH, RUN_NORTH)
+	_add_flight_guard(parent, "LowerOuter", lower_outer_x, intermediate_y, -LEVEL_HEIGHT, RUN_SOUTH, RUN_NORTH)
+	_add_landing_guard(parent, "LandingWest", intermediate_y, -SHAFT_HALF_WIDTH, lower_outer_x, RUN_SOUTH)
+	_add_landing_guard(parent, "LandingGap", intermediate_y, lower_inner_x, upper_inner_x, RUN_SOUTH)
+	_add_landing_guard(parent, "LandingEast", intermediate_y, upper_outer_x, SHAFT_HALF_WIDTH, RUN_SOUTH)
+	_add_landing_guard(parent, "UpperOpening", 0.0, upper_outer_x, UPPER_APPROACH_WALL_EDGE_X, RUN_NORTH + UPPER_SIDE_THRESHOLD_DEPTH)
+
+
+func _add_flight_guard(parent: Node3D, prefix: String, rail_x: float, start_y: float, end_y: float, start_z: float, end_z: float) -> void:
+	_add_bar(parent, "%sTopRail" % prefix, Vector3(rail_x, start_y + RAIL_HEIGHT, start_z), Vector3(rail_x, end_y + RAIL_HEIGHT, end_z), 0.10, _collisions_enabled())
+	_add_bar(parent, "%sMidRail" % prefix, Vector3(rail_x, start_y + RAIL_HEIGHT * 0.55, start_z), Vector3(rail_x, end_y + RAIL_HEIGHT * 0.55, end_z), 0.08, _collisions_enabled())
 	for index: int in range(0, RISERS_PER_FLIGHT + 1, 5):
 		var t := float(index) / float(RISERS_PER_FLIGHT)
-		_add_box(parent, "UpperPost_%02d" % index, Vector3(upper_rail_x, lerpf(0.0, intermediate_y, t) + RAIL_HEIGHT * 0.5, lerpf(RUN_NORTH, RUN_SOUTH, t)), Vector3(0.10, RAIL_HEIGHT, 0.10), _rail_material, _collisions_enabled())
-		_add_box(parent, "LowerPost_%02d" % index, Vector3(lower_rail_x, lerpf(intermediate_y, -LEVEL_HEIGHT, t) + RAIL_HEIGHT * 0.5, lerpf(RUN_SOUTH, RUN_NORTH, t)), Vector3(0.10, RAIL_HEIGHT, 0.10), _rail_material, _collisions_enabled())
-	_add_landing_guard(parent, intermediate_y)
+		_add_box(parent, "%sPost_%02d" % [prefix, index], Vector3(rail_x, lerpf(start_y, end_y, t) + RAIL_HEIGHT * 0.5, lerpf(start_z, end_z, t)), Vector3(0.10, RAIL_HEIGHT, 0.10), _rail_material, _collisions_enabled())
 
 
-func _add_landing_guard(parent: Node3D, landing_y: float) -> void:
-	var x_min := -FLIGHT_CENTER_X + FLIGHT_WIDTH * 0.5
-	var x_max := FLIGHT_CENTER_X - FLIGHT_WIDTH * 0.5
-	_add_bar(parent, "LandingGapTopRail", Vector3(x_min, landing_y + RAIL_HEIGHT, RUN_SOUTH), Vector3(x_max, landing_y + RAIL_HEIGHT, RUN_SOUTH), 0.10, _collisions_enabled())
-	_add_bar(parent, "LandingGapMidRail", Vector3(x_min, landing_y + RAIL_HEIGHT * 0.55, RUN_SOUTH), Vector3(x_max, landing_y + RAIL_HEIGHT * 0.55, RUN_SOUTH), 0.08, _collisions_enabled())
+func _add_landing_guard(parent: Node3D, prefix: String, landing_y: float, x_min: float, x_max: float, rail_z: float) -> void:
+	_add_bar(parent, "%sTopRail" % prefix, Vector3(x_min, landing_y + RAIL_HEIGHT, rail_z), Vector3(x_max, landing_y + RAIL_HEIGHT, rail_z), 0.10, _collisions_enabled())
+	_add_bar(parent, "%sMidRail" % prefix, Vector3(x_min, landing_y + RAIL_HEIGHT * 0.55, rail_z), Vector3(x_max, landing_y + RAIL_HEIGHT * 0.55, rail_z), 0.08, _collisions_enabled())
 	for index: int in range(3):
 		var rail_x := lerpf(x_min, x_max, float(index) * 0.5)
-		_add_box(parent, "LandingGapPost_%02d" % index, Vector3(rail_x, landing_y + RAIL_HEIGHT * 0.5, RUN_SOUTH), Vector3(0.10, RAIL_HEIGHT, 0.10), _rail_material, _collisions_enabled())
+		_add_box(parent, "%sPost_%02d" % [prefix, index], Vector3(rail_x, landing_y + RAIL_HEIGHT * 0.5, rail_z), Vector3(0.10, RAIL_HEIGHT, 0.10), _rail_material, _collisions_enabled())
 
 
 func validate_geometry() -> PackedStringArray:
@@ -135,7 +153,7 @@ func validate_geometry() -> PackedStringArray:
 		errors.append("Upper flight must contain %d risers" % RISERS_PER_FLIGHT)
 	if generated.find_children("LowerFlight_*", "", true, false).size() != RISERS_PER_FLIGHT:
 		errors.append("Lower flight must contain %d risers" % RISERS_PER_FLIGHT)
-	for required_name: String in ["IntermediateLanding", "LowerThreshold", "ShaftWallWest", "ShaftWallEast", "ShaftWallSouth", "LandingGapTopRail"]:
+	for required_name: String in ["IntermediateLanding", "LowerThreshold", "UpperSideThreshold", "ShaftWallWest", "ShaftWallEast", "ShaftWallSouth", "UpperInnerTopRail", "UpperOuterTopRail", "LowerInnerTopRail", "LowerOuterTopRail", "LandingWestTopRail", "LandingGapTopRail", "LandingEastTopRail", "UpperOpeningTopRail"]:
 		if generated.find_children(required_name, "", true, false).is_empty():
 			errors.append("Missing Route A stair component: %s" % required_name)
 	return errors
@@ -148,6 +166,8 @@ func get_geometry_summary() -> Dictionary:
 		"riser_height": RISER_HEIGHT,
 		"tread_depth": TREAD_DEPTH,
 		"risers_per_flight": RISERS_PER_FLIGHT,
+		"guarded_flight_sides": 4,
+		"landing_guard_spans": 4,
 		"footprint_width": SHAFT_HALF_WIDTH * 2.0,
 		"footprint_depth": 7.0,
 	}

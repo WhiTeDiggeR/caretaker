@@ -17,11 +17,16 @@ func _initialize() -> void:
 	var checked := 0
 	for passage: Dictionary in blockout.get_portal_passages():
 		var half_depth := float(passage.get("test_half_depth", 0.8))
+		var test_center := passage["center"] as Vector3
+		if str(passage.get("id", "")) == "P-U-ROUTE-A-03":
+			# The approved door is wider and offset from the 1.5 m stair flight.
+			# Test its traversable lane on the upper-flight axis, not the door midpoint.
+			test_center.x = -51.4
 		for step: int in 5:
 			var distance := -half_depth + float(step) * half_depth * 0.5
 			var query := PhysicsShapeQueryParameters3D.new()
 			query.shape = capsule
-			query.transform = Transform3D(Basis.IDENTITY, passage["center"] + passage["direction"] * distance)
+			query.transform = Transform3D(Basis.IDENTITY, test_center + passage["direction"] * distance)
 			query.collide_with_areas = false
 			var hits := space.intersect_shape(query, 32)
 			var blocker: Node = null
@@ -30,7 +35,7 @@ func _initialize() -> void:
 				var stair_walking_surface := (
 					str(passage.get("type", "")) == "stair-threshold"
 					and str(candidate.get_path()).contains("RouteASwitchbackStair/Generated")
-					and (candidate.name.begins_with("UpperFlight_") or candidate.name.begins_with("LowerFlight_") or candidate.name in ["LowerThreshold", "IntermediateLanding"])
+					and (candidate.name.begins_with("UpperFlight_") or candidate.name.begins_with("LowerFlight_") or candidate.name in ["LowerThreshold", "UpperSideThreshold", "IntermediateLanding"])
 				) if candidate != null else false
 				if candidate != null and candidate.name != "Floor" and not stair_walking_surface and not str(candidate.get_path()).contains("VT-OLD-INCLINE"):
 					blocker = candidate

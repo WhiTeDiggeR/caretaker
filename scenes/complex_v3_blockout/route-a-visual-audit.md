@@ -1,6 +1,6 @@
 # Route A visual audit
 
-Status: passed on 2026-08-09.
+Status: geometry corrected and automated checks passed on 2026-08-09; fresh headless image capture timed out before saving frames.
 
 ## Zone views
 
@@ -10,6 +10,6 @@ Status: passed on 2026-08-09.
 
 ## Separate stair views
 
-Five hidden-window captures were inspected: upper approach, lower approach, intermediate landing, top oblique, and upper fall-protection view. Both flights, the intermediate landing, three shaft walls, continuous inner railings, and the two level thresholds are visible. No detached caps, unsupported floor slabs, or open fall edges were found.
+The earlier audit incorrectly treated the shaft walls as protection for the outer flight edges. The corrected stair now has rails on both sides of both flights, three guarded spans along the open edge of the intermediate landing, and a guarded side threshold beside the offset upper doorway. The doorway itself remains unobstructed.
 
-Automated geometry result: 40 risers, two flights, 6.0 x 7.0 m shaft footprint, 6.0 m level interval, and 64 collision bodies.
+Automated geometry result: 40 risers, two flights, four guarded flight sides, four horizontal guard spans, 6.0 x 7.0 m shaft footprint, 6.0 m level interval, 94 collision bodies, and 169 clear portal checks. A fresh in-editor visual confirmation is still required because the non-interactive multiview renderer timed out.
