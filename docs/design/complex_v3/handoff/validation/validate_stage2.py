@@ -460,6 +460,34 @@ def main() -> int:
         if external_by_id.get(portal_id, {}).get("segment_xz") != expected_segment:
             errors.append(f"U-SECURITY checkpoint gate moved away from the approved plan: {portal_id}")
 
+    old_core_chamber_entry = external_by_id.get("PX-E-L02-L-OLD-CORE", {})
+    chamber_1_entry = external_by_id.get("PX-E-L02-L-CHAMBER-1", {})
+    if old_core_chamber_entry.get("space") != "L-OLD-CORE/distribution_hall" or old_core_chamber_entry.get("side") != "west":
+        errors.append("E-L02 must leave through the west wall of the old-core distribution hall")
+    if chamber_1_entry.get("space") != "L-CHAMBER-1/control_post" or chamber_1_entry.get("side") != "east":
+        errors.append("E-L02 must enter the combined vestibule/post on Chamber 1's east wall")
+    if old_core_chamber_entry.get("segment_xz") != chamber_1_entry.get("segment_xz"):
+        errors.append("E-L02 must be a shared doorway, not a bridge")
+
+    service_freight_entry = external_by_id.get("PX-E-L15-L-SERVICE-INTERCHANGE", {})
+    if service_freight_entry.get("space") != "L-SERVICE-INTERCHANGE/double_airlock" or service_freight_entry.get("side") != "south":
+        errors.append("E-L15 must leave through the heavy side of the service-interchange double airlock")
+    technical_freight_entry = external_by_id.get("PX-E-T08-T-FREIGHT", {})
+    if technical_freight_entry.get("space") != "T-FREIGHT/heavy_spine" or technical_freight_entry.get("side") != "north":
+        errors.append("E-T08 must meet the technical heavy spine directly")
+    old_access_entry = external_by_id.get("PX-E-T03-T-OLD-ACCESS", {})
+    if old_access_entry.get("space") != "T-OLD-ACCESS/service_vestibule" or old_access_entry.get("side") != "north":
+        errors.append("E-T03 must enter the old service vestibule from the main technical corridor")
+
+    corridor_by_id = {item["id"]: item for item in geometry["connection_corridors"]}
+    expected_old_receiving_route = [[-80.0, 15.0], [-80.0, 20.0], [-91.0, 20.0], [-91.0, 43.0]]
+    if corridor_by_id.get("C-E-L04", {}).get("centerline_xz") != expected_old_receiving_route:
+        errors.append("E-L04 must use the orthogonal old-core access through the passenger-route junction")
+    for direct_connection in ["C-E-L02", "C-E-L15", "C-E-T03", "C-E-T08"]:
+        points = corridor_by_id.get(direct_connection, {}).get("centerline_xz", [])
+        if len(points) != 2 or points[0] != points[1]:
+            errors.append(f"Direct shared-boundary connection still produces a bridge: {direct_connection}")
+
     represented: set[str] = set()
     for corridor in geometry["connection_corridors"]:
         represented.add(corridor["connection_id"])

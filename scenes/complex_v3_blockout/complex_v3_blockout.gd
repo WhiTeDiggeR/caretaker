@@ -16,6 +16,8 @@ const ROUTE_A_STAIR_SCENE := preload("res://objects/complex_v3/route_a_switchbac
 const DEFAULT_HANDOFF_PATH := "res://docs/design/complex_v3/handoff/geometry/complex-handoff.json"
 const DEFAULT_VERTICAL_PATH := "res://docs/design/complex_v3/handoff/vertical/vertical-transitions.json"
 const FLOOR_THICKNESS := 0.2
+const CORRIDOR_WALL_THICKNESS := 0.3
+const ENCLOSED_CORRIDOR_MIN_LENGTH := 1.05
 const WALL_EPSILON := 0.01
 const MIN_SEGMENT_LENGTH := 0.05
 const FULL_SEAM_FLOOR_CONNECTION_IDS := ["E-U02"]
@@ -230,7 +232,7 @@ func _compile_openings() -> void:
 		var corridor := corridor_value as Dictionary
 		if not _shared_connection_is_included(str(corridor["connection_id"])):
 			continue
-		for point_value: Variant in [corridor["centerline_xz"][0], corridor["centerline_xz"][-1]]:
+		for point_value: Variant in corridor["centerline_xz"]:
 			var point := _vector2(point_value)
 			for route_value: Variant in _handoff.get("route_spaces", []):
 				var route := route_value as Dictionary
@@ -525,16 +527,25 @@ func _build_connection_corridors() -> void:
 		if str(corridor["connection_id"]) == "E-X05":
 			continue
 		var points: Array = corridor["centerline_xz"]
-		var start := _vector2(points[0])
-		var end := _vector2(points[-1])
-		var delta := end - start
-		if delta.length() <= MIN_SEGMENT_LENGTH:
-			continue
 		var connection_id := str(corridor["connection_id"])
 		var floor_y := _floor_for_connection(connection_id)
-		var floor_width := _connection_floor_width(connection_id, delta, float(corridor["width"]))
-		_build_corridor_segment(parent, str(corridor["id"]), start, end, floor_y, floor_width, float(corridor["clear_height"]), _materials["service_route"])
-		_stats["corridors"] += 1
+		var built_segment := false
+		for index: int in range(points.size() - 1):
+			var start := _vector2(points[index])
+			var end := _vector2(points[index + 1])
+			var delta := end - start
+			var length := delta.length()
+			if length <= MIN_SEGMENT_LENGTH or _segment_is_covered_by_route(start, end, floor_y):
+				continue
+			var floor_width := _connection_floor_width(connection_id, delta, float(corridor["width"]))
+			var segment_name := str(corridor["id"]) if points.size() == 2 else "%s_%02d" % [str(corridor["id"]), index + 1]
+			if length <= ENCLOSED_CORRIDOR_MIN_LENGTH:
+				_build_connector_floor_segment(parent, segment_name, start, end, floor_y, floor_width, _materials["service_route"])
+			else:
+				_build_corridor_segment(parent, segment_name, start, end, floor_y, floor_width, float(corridor["clear_height"]), _materials["service_route"])
+			built_segment = true
+		if built_segment:
+			_stats["corridors"] += 1
 	for transition_value: Variant in _handoff.get("controlled_technical_transitions", []):
 		var transition := transition_value as Dictionary
 		if not _controlled_transition_is_included(transition):
@@ -557,8 +568,57 @@ func _build_corridor_segment(parent: Node3D, corridor_id: String, start: Vector2
 	root.name = _safe_name(corridor_id)
 	root.set_meta("connection_id", corridor_id)
 	root.set_meta("clear_height", height)
+	root.set_meta("enclosed", true)
+	root.set_meta("segment_length", length)
 	parent.add_child(root)
 	_add_oriented_box(root, "Floor", Transform3D(basis, midpoint + Vector3(0.0, -FLOOR_THICKNESS * 0.5, 0.0)), Vector3(width, FLOOR_THICKNESS, length), material, _collisions_enabled())
+	_stats["floors"] += 1
+	var wall_offset := width * 0.5 + CORRIDOR_WALL_THICKNESS * 0.5
+	var wall_size := Vector3(CORRIDOR_WALL_THICKNESS, height, length)
+	_add_oriented_box(root, "WallLeft", Transform3D(basis, midpoint + side * wall_offset + Vector3.UP * (height * 0.5)), wall_size, material, _collisions_enabled())
+	_add_oriented_box(root, "WallRight", Transform3D(basis, midpoint - side * wall_offset + Vector3.UP * (height * 0.5)), wall_size, material, _collisions_enabled())
+	_stats["walls"] += 2
+	if _ceilings_enabled():
+		_add_oriented_box(root, "Ceiling", Transform3D(basis, midpoint + Vector3.UP * (height + FLOOR_THICKNESS * 0.5)), Vector3(width + CORRIDOR_WALL_THICKNESS * 2.0, FLOOR_THICKNESS, length), material, _collisions_enabled())
+		_stats["ceilings"] += 1
+
+
+func _build_connector_floor_segment(parent: Node3D, corridor_id: String, start: Vector2, end: Vector2, floor_y: float, width: float, material: Material) -> void:
+	var delta := end - start
+	var length := delta.length()
+	if length <= MIN_SEGMENT_LENGTH:
+		return
+	var direction := Vector3(delta.x, 0.0, delta.y).normalized()
+	var side := Vector3(direction.z, 0.0, -direction.x)
+	var basis := Basis(side, Vector3.UP, direction)
+	var midpoint := Vector3((start.x + end.x) * 0.5, floor_y, (start.y + end.y) * 0.5)
+	var root := Node3D.new()
+	root.name = _safe_name(corridor_id)
+	root.set_meta("connection_id", corridor_id)
+	root.set_meta("seam_floor", true)
+	root.set_meta("segment_length", length)
+	parent.add_child(root)
+	_add_oriented_box(root, "Floor", Transform3D(basis, midpoint + Vector3(0.0, -FLOOR_THICKNESS * 0.5, 0.0)), Vector3(width, FLOOR_THICKNESS, length), material, _collisions_enabled())
+
+
+func _segment_is_covered_by_route(start: Vector2, end: Vector2, floor_y: float) -> bool:
+	for route_value: Variant in _handoff.get("route_spaces", []):
+		var route := route_value as Dictionary
+		if not is_equal_approx(float(route["floor_y"]), floor_y):
+			continue
+		var bounds: Array = route["bounds_xz"]
+		if _point_in_or_on_bounds(start, bounds) and _point_in_or_on_bounds(end, bounds):
+			return true
+	return false
+
+
+func _point_in_or_on_bounds(point: Vector2, bounds: Array) -> bool:
+	return (
+		point.x >= float(bounds[0]) - WALL_EPSILON
+		and point.x <= float(bounds[2]) + WALL_EPSILON
+		and point.y >= float(bounds[1]) - WALL_EPSILON
+		and point.y <= float(bounds[3]) + WALL_EPSILON
+	)
 
 
 func _build_vertical_markers() -> void:

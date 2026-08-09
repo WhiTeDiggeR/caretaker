@@ -921,7 +921,9 @@ def entry_keywords(kind: str) -> list[str]:
 def select_space(sector_id: str, spaces: list[dict], kind: str) -> dict:
     special_entries = {
         ("U-CONTROL", "passenger"): "east_access",
-        ("L-SERVICE-INTERCHANGE", "controlled-transition"): "service_lobby",
+        ("L-SERVICE-INTERCHANGE", "controlled-transition"): "double_airlock",
+        ("T-OLD-ACCESS", "service"): "service_vestibule",
+        ("T-FREIGHT", "freight"): "heavy_spine",
     }
     special_name = special_entries.get((sector_id, kind))
     if special_name:
@@ -1132,16 +1134,39 @@ def route_a_neighbor_portal(edge: dict, sector_id: str, spaces: list[dict]) -> d
 
 def old_core_chamber_1_portal(edge: dict, sector_id: str, spaces: list[dict]) -> dict[str, Any]:
     old_core = sector_id == "L-OLD-CORE"
-    entry_name = "distribution_hall" if old_core else "combined_vestibule"
+    entry_name = "distribution_hall" if old_core else "control_post"
     entry = next(space for space in spaces if space["name"] == entry_name)
-    segment = [[-73.6, 15.0], [-72.4, 15.0]] if old_core else [[-88.6, -8.0], [-87.4, -8.0]]
+    segment = [[-84.0, 8.075], [-84.0, 9.275]]
     return {
         "id": f"PX-{edge['id']}-{sector_id}",
         "connection_id": edge["id"],
         "space": entry["id"],
         "neighbor": "L-CHAMBER-1" if old_core else "L-OLD-CORE",
-        "side": "south" if old_core else "north",
+        "side": "west" if old_core else "east",
         "segment_xz": segment,
+        "width": 1.2,
+        "height": 2.4,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
+def old_core_receiving_portal(edge: dict, sector_id: str, spaces: list[dict]) -> dict[str, Any]:
+    old_core = sector_id == "L-OLD-CORE"
+    entry_name = "distribution_hall" if old_core else "tunnel_landing"
+    entry = next(space for space in spaces if space["name"] == entry_name)
+    center_x = -80.0 if old_core else -91.0
+    z = 15.0 if old_core else 43.0
+    return {
+        "id": f"PX-{edge['id']}-{sector_id}",
+        "connection_id": edge["id"],
+        "space": entry["id"],
+        "neighbor": "L-OLD-RECEIVING" if old_core else "L-OLD-CORE",
+        "side": "south" if old_core else "north",
+        "segment_xz": [[center_x - 0.6, z], [center_x + 0.6, z]],
         "width": 1.2,
         "height": 2.4,
         "type": edge["kind"],
@@ -1171,6 +1196,28 @@ def workshop_service_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
     }
 
 
+def old_access_service_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
+    entry = next(space for space in spaces if space["name"] == "service_vestibule")
+    center_x = (float(entry["bounds_xz"][0]) + float(entry["bounds_xz"][2])) * 0.5
+    north_z = float(entry["bounds_xz"][1])
+    width = 1.8
+    return {
+        "id": f"PX-{edge['id']}-T-OLD-ACCESS",
+        "connection_id": edge["id"],
+        "space": entry["id"],
+        "neighbor": "T-TECH",
+        "side": "north",
+        "segment_xz": [[round(center_x - width * 0.5, 3), north_z], [round(center_x + width * 0.5, 3), north_z]],
+        "width": width,
+        "height": 2.4,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
 def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bounds: list[float]) -> dict[str, Any]:
     other = edge["to"] if edge["from"] == sector_id else edge["from"]
     if sector_id == "U-SECURITY" and edge["id"] in {"E-U08", "E-U09"}:
@@ -1181,12 +1228,16 @@ def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bound
         return route_a_neighbor_portal(edge, sector_id, spaces)
     if edge["id"] == "E-L02" and sector_id in {"L-OLD-CORE", "L-CHAMBER-1"}:
         return old_core_chamber_1_portal(edge, sector_id, spaces)
+    if edge["id"] == "E-L04" and sector_id in {"L-OLD-CORE", "L-OLD-RECEIVING"}:
+        return old_core_receiving_portal(edge, sector_id, spaces)
     if edge["id"] == "E-U02A" and sector_id in {"U-EMERGENCY", "U-MEDBAY"}:
         return personnel_medbay_portal(edge, sector_id, spaces)
     if edge["id"] == "E-U13" and sector_id == "U-FREIGHT":
         return freight_reception_portal(edge, spaces)
     if edge["id"] == "E-T02" and sector_id == "T-WORKSHOP":
         return workshop_service_portal(edge, spaces)
+    if edge["id"] == "E-T03" and sector_id == "T-OLD-ACCESS":
+        return old_access_service_portal(edge, spaces)
     if sector_id == "U-ROUTE-A" and edge["id"] in {"E-U02", "E-X01"}:
         return route_a_external_portal(edge, spaces)
     if sector_id == "U-EAST-SUPPORT" and edge["id"] == "E-U06":
@@ -1341,6 +1392,8 @@ def main() -> None:
                 for portal in related:
                     p0, p1 = portal["segment_xz"]
                     points.append([round((p0[0] + p1[0]) / 2, 3), round((p0[1] + p1[1]) / 2, 3)])
+                if edge["id"] == "E-L04":
+                    points[1:1] = [[-80.0, 20.0], [-91.0, 20.0]]
                 connection_corridors.append({
                     "id": f"C-{edge['id']}",
                     "connection_id": edge["id"],
