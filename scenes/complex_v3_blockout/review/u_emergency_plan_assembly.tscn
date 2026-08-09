@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/zones/upper/u_emergency.tscn" id="1_emergency"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/zones/upper/u_medbay.tscn" id="2_medbay"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/zones/upper/u_route_a.tscn" id="3_route_a"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/complex_v3_infrastructure.tscn" id="4_infrastructure"]
+
+[sub_resource type="Environment" id="Environment_review"]
+background_mode = 1
+background_color = Color(0.012, 0.018, 0.026, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.62, 0.68, 0.76, 1)
+ambient_light_energy = 0.95
+tonemap_mode = 2
+
+[node name="U_EMERGENCY_PLAN_ASSEMBLY" type="Node3D"]
+metadata/plan_id = "U-EMERGENCY"
+metadata/review_only = true
+
+[node name="Zones" type="Node3D" parent="."]
+
+[node name="U_EMERGENCY" parent="Zones" instance=ExtResource("1_emergency")]
+include_ceilings = false
+
+[node name="U_MEDBAY" parent="Zones" instance=ExtResource("2_medbay")]
+include_ceilings = false
+
+[node name="U_ROUTE_A" parent="Zones" instance=ExtResource("3_route_a")]
+include_ceilings = false
+
+[node name="Infrastructure" parent="." instance=ExtResource("4_infrastructure")]
+include_ceilings = false
+shared_route_space_ids = PackedStringArray("U-PAX")
+shared_connection_ids = PackedStringArray("E-U01", "E-U02", "E-U02A")
+vertical_transition_ids = PackedStringArray("VT-ROUTE-A")
+editor_preview_enabled = true
+
+[node name="ReviewEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_review")
+
+[node name="ReviewLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-58, -32, 0)
+light_color = Color(0.84, 0.9, 1, 1)
+light_energy = 1.45
+shadow_enabled = true
+
+[node name="ReviewCamera" type="Camera3D" parent="."]
+position = Vector3(-39, 100, 100)
+rotation_degrees = Vector3(-45, 0, 0)
+projection = 1
+current = true
+size = 105.0
+near = 0.15
+far = 500.0

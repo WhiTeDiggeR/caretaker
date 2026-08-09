@@ -29,6 +29,9 @@ const MIN_SEGMENT_LENGTH := 0.05
 @export var build_room_spaces := true
 @export var build_shared_infrastructure := true
 @export var sector_ids := PackedStringArray()
+@export var shared_route_space_ids := PackedStringArray()
+@export var shared_connection_ids := PackedStringArray()
+@export var vertical_transition_ids := PackedStringArray()
 @export var preview_shared_infrastructure_when_standalone := false
 @export var preview_main_core_verticals_when_standalone := false
 @export var show_vertical_debug_geometry := false
@@ -224,6 +227,8 @@ func _compile_openings() -> void:
 		_add_opening(str(portal["space"]), portal["segment_xz"], float(portal["height"]))
 	for corridor_value: Variant in _handoff.get("connection_corridors", []):
 		var corridor := corridor_value as Dictionary
+		if not _shared_connection_is_included(str(corridor["connection_id"])):
+			continue
 		for point_value: Variant in [corridor["centerline_xz"][0], corridor["centerline_xz"][-1]]:
 			var point := _vector2(point_value)
 			for route_value: Variant in _handoff.get("route_spaces", []):
@@ -266,13 +271,46 @@ func _build_spaces() -> void:
 				_build_space(space, false)
 	if build_shared_infrastructure:
 		for route_value: Variant in _handoff.get("route_spaces", []):
-			_build_space(route_value as Dictionary, true)
+			var route := route_value as Dictionary
+			if _shared_route_space_is_included(str(route["id"])):
+				_build_space(route, true)
 
 
 func _space_is_included(space: Dictionary) -> bool:
 	if not build_room_spaces:
 		return false
 	return sector_ids.is_empty() or sector_ids.has(str(space.get("sector_id", "")))
+
+
+func _shared_route_space_is_included(route_space_id: String) -> bool:
+	return shared_route_space_ids.is_empty() or shared_route_space_ids.has(route_space_id)
+
+
+func _shared_connection_is_included(connection_id: String) -> bool:
+	return shared_connection_ids.is_empty() or shared_connection_ids.has(connection_id)
+
+
+func _vertical_transition_is_included(transition_id: String) -> bool:
+	return vertical_transition_ids.is_empty() or vertical_transition_ids.has(transition_id)
+
+
+func _vertical_anchor_is_included(anchor_id: String) -> bool:
+	if vertical_transition_ids.is_empty():
+		return true
+	for transition_value: Variant in _vertical.get("transitions", []):
+		var transition := transition_value as Dictionary
+		if _vertical_transition_is_included(str(transition["id"])) and str(transition.get("anchor", "")) == anchor_id:
+			return true
+	return false
+
+
+func _controlled_transition_is_included(transition: Dictionary) -> bool:
+	if shared_connection_ids.is_empty():
+		return true
+	for connection_value: Variant in transition.get("represents_connections", []):
+		if shared_connection_ids.has(str(connection_value)):
+			return true
+	return false
 
 
 func _build_space(space: Dictionary, is_route: bool) -> void:
@@ -481,6 +519,8 @@ func _build_connection_corridors() -> void:
 	var parent := _level_nodes["Connections"]
 	for corridor_value: Variant in _handoff.get("connection_corridors", []):
 		var corridor := corridor_value as Dictionary
+		if not _shared_connection_is_included(str(corridor["connection_id"])):
+			continue
 		if str(corridor["connection_id"]) == "E-X05":
 			continue
 		var points: Array = corridor["centerline_xz"]
@@ -494,6 +534,8 @@ func _build_connection_corridors() -> void:
 		_stats["corridors"] += 1
 	for transition_value: Variant in _handoff.get("controlled_technical_transitions", []):
 		var transition := transition_value as Dictionary
+		if not _controlled_transition_is_included(transition):
+			continue
 		var points: Array = transition["centerline_xz"]
 		_build_corridor_segment(parent, str(transition["id"]), _vector2(points[0]), _vector2(points[-1]), -11.5, float(transition["width"]), float(transition["clear_height"]), _materials["service_route"])
 		_stats["corridors"] += 1
@@ -521,6 +563,8 @@ func _build_vertical_markers() -> void:
 	var anchors: Array = _vertical.get("anchors", [])
 	for anchor_value: Variant in anchors:
 		var anchor := anchor_value as Dictionary
+		if not _vertical_anchor_is_included(str(anchor["id"])):
+			continue
 		var root := Node3D.new()
 		root.name = _safe_name(str(anchor["id"]))
 		root.set_meta("anchor_id", str(anchor["id"]))
@@ -539,6 +583,8 @@ func _build_vertical_markers() -> void:
 		_stats["anchors"] += 1
 	for transition_value: Variant in _vertical.get("transitions", []):
 		var transition := transition_value as Dictionary
+		if not _vertical_transition_is_included(str(transition["id"])):
+			continue
 		_build_transition_marker(parent, transition)
 		_stats["transitions"] += 1
 
@@ -813,9 +859,19 @@ func validate_against_handoff() -> PackedStringArray:
 			expected_spaces += 1
 	if _stats["spaces"] != expected_spaces:
 		errors.append("Expected %d room spaces, built %d" % [expected_spaces, _stats["spaces"]])
-	var expected_routes := 7 if build_shared_infrastructure else 0
-	var expected_anchors := 7 if build_shared_infrastructure else 0
-	var expected_transitions := 8 if build_shared_infrastructure else 0
+	var expected_routes := 0
+	var expected_anchors := 0
+	var expected_transitions := 0
+	if build_shared_infrastructure:
+		for route_value: Variant in _handoff.get("route_spaces", []):
+			if _shared_route_space_is_included(str((route_value as Dictionary)["id"])):
+				expected_routes += 1
+		for anchor_value: Variant in _vertical.get("anchors", []):
+			if _vertical_anchor_is_included(str((anchor_value as Dictionary)["id"])):
+				expected_anchors += 1
+		for transition_value: Variant in _vertical.get("transitions", []):
+			if _vertical_transition_is_included(str((transition_value as Dictionary)["id"])):
+				expected_transitions += 1
 	if _stats["route_spaces"] != expected_routes:
 		errors.append("Expected %d route spaces, built %d" % [expected_routes, _stats["route_spaces"]])
 	if _stats["anchors"] != expected_anchors:

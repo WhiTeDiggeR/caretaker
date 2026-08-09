@@ -15,6 +15,7 @@
 - `complex_v3_blockout_check.gd` — headless runtime-проверка количества построенных сущностей.
 - `complex_v3_portal_check.gd` — физическая проверка капсулой всех открытых внутренних и внешних порталов.
 - `complex_v3_sector_check.gd` — runtime-проверка всех 30 сцен, их суммарного состава и трёх режимов просмотра.
+- `review/u_emergency_plan_assembly.tscn` — обзорная сцена фрагмента плана аварийного блока: `U-EMERGENCY`, `U-MEDBAY`, `U-ROUTE-A`, локальный участок `U-PAX`, соединители и отдельная лестница маршрута A без потолков.
 - `complex_v3_visual_check.gd` — воспроизводимые контрольные рендеры всех 30 зон в `user://complex_v3_sector_captures` при запуске с полноценным renderer.
 - `scripts/render_plan_previews.cjs`, `render_scene_topdowns.py` и `compose_scene_plan_comparisons.py` — полностью фоновые SVG/source-data сравнения без управления пользовательским экраном.
 - `complex_v3_editor_preview_check.tscn` / `.gd` — editor-only проверка временной геометрии, отсутствия collision и сохранности `AuthoredContent`.
