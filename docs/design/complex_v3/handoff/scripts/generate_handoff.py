@@ -274,6 +274,26 @@ def containment_layout(sector_id: str, names: list[str], bounds: list[float]) ->
     return result, [(control, passenger), (control, gallery), (passenger, chamber), (chamber, cargo)]
 
 
+def upper_containment_layout(sector_id: str, names: list[str], bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the serial upper containment plan without stretching the entrance over the hall."""
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    passenger = next(name for name in names if "passenger_airlock" in name)
+    chamber = next(name for name in names if "containment_chamber" in name)
+    cargo = next(name for name in names if "cargo_airlock" in name)
+    control = next(name for name in names if "control" in name)
+    gallery = next(name for name in names if "gallery" in name)
+    height = 5.0
+    result = [
+        room(sector_id, control, rect(x0, z0, x0 + 0.38 * w, z0 + 0.28 * d), height),
+        room(sector_id, passenger, rect(x0 + 0.38 * w, z0, x0 + 0.68 * w, z0 + 0.28 * d), height, True, "airlock"),
+        room(sector_id, gallery, rect(x0, z0 + 0.28 * d, x0 + 0.18 * w, z0 + 0.78 * d), height, True, "service_gallery"),
+        room(sector_id, chamber, rect(x0 + 0.18 * w, z0 + 0.28 * d, x1, z0 + 0.78 * d), height, False, "containment"),
+        room(sector_id, cargo, rect(x0 + 0.45 * w, z0 + 0.78 * d, x0 + 0.82 * w, z1), height, True, "airlock"),
+    ]
+    return result, [(control, passenger), (control, gallery), (passenger, chamber), (chamber, cargo)]
+
+
 def chamber2_layout(sector_id: str, names: list[str], bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
     x0, z0, x1, z1 = bounds
     w, d = x1 - x0, z1 - z0
@@ -289,12 +309,12 @@ def chamber2_layout(sector_id: str, names: list[str], bounds: list[float]) -> tu
 
 
 def emergency_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
-    x0, z0, x1, z1 = bounds
+    _x0, _z0, x1, _z1 = bounds
     result = [
-        room(sector_id, "capsule_hall", rect(x0, z0, -85.0, 7.0), 3.8),
-        room(sector_id, "internal_technical_room", rect(x0, 7.0, -102.0, z1), 3.4),
-        room(sector_id, "hermetic_vestibule", rect(-85.0, -4.0, -80.0, 4.0), 3.4, True, "airlock"),
-        room(sector_id, "distribution_hall", rect(-80.0, z0, x1, z1), 3.8, True, "circulation"),
+        room(sector_id, "capsule_hall", rect(-110.0, -13.0, -85.0, 6.0), 3.8),
+        room(sector_id, "internal_technical_room", rect(-110.0, 6.0, -102.0, 14.0), 3.4),
+        room(sector_id, "hermetic_vestibule", rect(-85.0, -3.5, -80.0, 1.5), 3.4, True, "airlock"),
+        room(sector_id, "distribution_hall", rect(-80.0, -8.5, x1, 15.0), 3.8, True, "circulation"),
     ]
     return result, [("capsule_hall", "hermetic_vestibule"), ("hermetic_vestibule", "distribution_hall"), ("capsule_hall", "internal_technical_room")]
 
@@ -541,6 +561,8 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
         return freight_reception_layout(sector_id, bounds)
     if sector_id == "U-SECURITY":
         return security_layout(sector_id, bounds)
+    if sector_id in {"U-CHAMBER-4", "U-CHAMBER-6"}:
+        return upper_containment_layout(sector_id, names, bounds)
     if sector_id in CENTRAL_CORE_SECTORS:
         return central_core_layout(sector_id, bounds)
     if sector_id in CONTAINMENT_SECTORS:
