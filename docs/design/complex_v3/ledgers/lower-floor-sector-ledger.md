@@ -1,6 +1,6 @@
 # Нижний этаж — перечень детализируемых секторов
 
-Источник геометрии: утверждённый `lower-floor-functional-plan-revised.html`. Источник функций и истории: `docs/world/03-complex.md` и `docs/world/07-decisions.md`.
+Источник геометрии: утверждённый `../plans/overview/lower/current/lower-floor-functional-plan-revised.html`. Источник функций и истории: `docs/world/03-complex.md` и `docs/world/07-decisions.md`.
 
 ## Фиксированные правила
 

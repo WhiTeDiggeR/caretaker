@@ -8,7 +8,7 @@ const { chromium } = require("C:/Users/rosi0/.cache/codex-runtimes/codex-primary
 
 const repo = path.resolve(__dirname, "../../..");
 const output = process.argv[2] || path.join(process.env.TEMP, "caretaker-complex-v3-visual-audit", "plans");
-const planDir = path.join(repo, "docs", "design", "complex_v3");
+const planDir = path.join(repo, "docs", "design", "complex_v3", "plans", "sectors");
 const catalog = JSON.parse(fs.readFileSync(path.join(repo, "scenes", "complex_v3_blockout", "sector_catalog.json"), "utf8"));
 
 async function main() {
@@ -22,7 +22,11 @@ async function main() {
   const page = await browser.newPage({ viewport: { width: 1500, height: 1500 }, deviceScaleFactor: 1 });
   for (const sector of catalog.sectors) {
     const slug = sector.sector_id.toLowerCase().replaceAll("-", "_");
-    const source = path.join(planDir, `${slug}.html`);
+    const levelDir = { "LV-U": "upper", "LV-L": "lower", "LV-T": "technical" }[sector.level];
+    if (!levelDir) {
+      throw new Error(`Unknown level for ${sector.sector_id}: ${sector.level}`);
+    }
+    const source = path.join(planDir, levelDir, `${slug}.html`);
     await page.goto(pathToFileURL(source).href, { waitUntil: "domcontentloaded" });
     const frame = page.frames().find((candidate) => candidate !== page.mainFrame()) || page.mainFrame();
     const svg = frame.locator("svg").first();

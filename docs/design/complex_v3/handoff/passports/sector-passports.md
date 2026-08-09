@@ -10,7 +10,7 @@
 - Detail ID: `DETAIL-U-EMERGENCY`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_emergency.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_emergency.html` (full sector geometry)
 - Parent boundary XZ: `[-110.0, -13.0] → [-62.0, 15.0] m`
 - Local origin XYZ: `[-110.0, 0.0, -13.0]`
 - Neighbors: `U-MEDBAY`, `U-PAX`, `U-ROUTE-A`
@@ -32,7 +32,7 @@ Required connections:
 - Detail ID: `DETAIL-U-MEDBAY`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_medbay.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_medbay.html` (full sector geometry)
 - Parent boundary XZ: `[-102.0, 7.0] → [-88.0, 15.0] m`
 - Local origin XYZ: `[-102.0, 0.0, 7.0]`
 - Neighbors: `U-EMERGENCY`
@@ -52,7 +52,7 @@ Required connections:
 - Detail ID: `DETAIL-U-ROUTE-A`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_route_a.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_route_a.html` (full sector geometry)
 - Parent boundary XZ: `[-64.0, -8.0] → [-45.0, 14.0] m`
 - Local origin XYZ: `[-64.0, 0.0, -8.0]`
 - Neighbors: `L-ARCHIVE-A`, `U-EMERGENCY`
@@ -74,7 +74,7 @@ Required connections:
 - Detail ID: `DETAIL-U-DOMESTIC`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_domestic.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_domestic.html` (full sector geometry)
 - Parent boundary XZ: `[-61.0, -17.0] → [-33.0, 15.0] m`
 - Local origin XYZ: `[-61.0, 0.0, -17.0]`
 - Neighbors: `U-PAX`
@@ -94,7 +94,7 @@ Required connections:
 - Detail ID: `DETAIL-U-CONTROL`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_control.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_control.html` (full sector geometry)
 - Parent boundary XZ: `[-32.0, -13.0] → [-8.0, 15.0] m`
 - Local origin XYZ: `[-32.0, 0.0, -13.0]`
 - Neighbors: `U-PAX`
@@ -114,7 +114,7 @@ Required connections:
 - Detail ID: `DETAIL-U-CENTRAL-CORE`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_central_core.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_central_core.html` (full sector geometry)
 - Parent boundary XZ: `[-7.75, -6.0] → [7.75, 15.0] m`
 - Local origin XYZ: `[-7.75, 0.0, -6.0]`
 - Neighbors: `L-CENTRAL-CORE`, `U-PAX`
@@ -136,7 +136,7 @@ Required connections:
 - Detail ID: `DETAIL-U-EAST-SUPPORT`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_east_support.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_east_support.html` (full sector geometry)
 - Parent boundary XZ: `[10.0, -13.0] → [32.0, 15.0] m`
 - Local origin XYZ: `[10.0, 0.0, -13.0]`
 - Neighbors: `L-EAST-STAIR`, `U-PAX`
@@ -158,7 +158,7 @@ Required connections:
 - Detail ID: `DETAIL-U-CHAMBER-4`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_chamber_4.html` (serial containment geometry; chamber-specific equipment excluded)
+- Source: `../../plans/sectors/upper/u_chamber_4.html` (serial containment geometry; chamber-specific equipment excluded)
 - Parent boundary XZ: `[-110.0, 37.0] → [-82.0, 64.0] m`
 - Local origin XYZ: `[-110.0, 0.0, 37.0]`
 - Neighbors: `U-FRT`, `U-PAX`
@@ -179,7 +179,7 @@ Required connections:
 - Detail ID: `DETAIL-U-SECURITY`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_security.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_security.html` (full sector geometry)
 - Parent boundary XZ: `[-32.0, 31.0] → [0.0, 52.0] m`
 - Local origin XYZ: `[-32.0, 0.0, 31.0]`
 - Neighbors: `U-FRT`, `U-PAX`
@@ -200,7 +200,7 @@ Required connections:
 - Detail ID: `DETAIL-U-CHAMBER-6`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_chamber_6.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_chamber_6.html` (full sector geometry)
 - Parent boundary XZ: `[0.0, 29.0] → [32.0, 64.0] m`
 - Local origin XYZ: `[0.0, 0.0, 29.0]`
 - Neighbors: `U-FRT`, `U-PAX`
@@ -221,7 +221,7 @@ Required connections:
 - Detail ID: `DETAIL-U-FREIGHT`
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../u_freight.html` (full sector geometry)
+- Source: `../../plans/sectors/upper/u_freight.html` (full sector geometry)
 - Parent boundary XZ: `[-16.0, 64.0] → [30.0, 82.0] m`
 - Local origin XYZ: `[-16.0, 0.0, 64.0]`
 - Neighbors: `L-FREIGHT-SERVICE`, `U-FRT`
@@ -243,7 +243,7 @@ Required connections:
 - Detail ID: `DETAIL-L-OLD-CORE`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_old_core.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_old_core.html` (full sector geometry)
 - Parent boundary XZ: `[-84.0, -14.0] → [-62.0, 21.0] m`
 - Local origin XYZ: `[-84.0, -6.0, -14.0]`
 - Neighbors: `L-ARCHIVE-A`, `L-CHAMBER-1`, `L-OLD-RECEIVING`, `L-PAX`, `T-OLD-ACCESS`
@@ -268,7 +268,7 @@ Required connections:
 - Detail ID: `DETAIL-L-CHAMBER-1`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_chamber_1.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_chamber_1.html` (full sector geometry)
 - Parent boundary XZ: `[-110.0, -8.0] → [-83.0, 17.0] m`
 - Local origin XYZ: `[-110.0, -6.0, -8.0]`
 - Neighbors: `L-OLD-CORE`
@@ -288,7 +288,7 @@ Required connections:
 - Detail ID: `DETAIL-L-ARCHIVE-A`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_archive_a.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_archive_a.html` (full sector geometry)
 - Parent boundary XZ: `[-61.0, -14.0] → [-41.0, 15.0] m`
 - Local origin XYZ: `[-61.0, -6.0, -14.0]`
 - Neighbors: `L-OLD-CORE`, `U-ROUTE-A`
@@ -310,7 +310,7 @@ Required connections:
 - Detail ID: `DETAIL-L-OLD-RECEIVING`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_old_receiving.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_old_receiving.html` (full sector geometry)
 - Parent boundary XZ: `[-110.0, 43.0] → [-72.0, 68.0] m`
 - Local origin XYZ: `[-110.0, -6.0, 43.0]`
 - Neighbors: `L-FRT`, `L-OLD-CORE`, `U-FRT`
@@ -332,7 +332,7 @@ Required connections:
 - Detail ID: `DETAIL-L-CHAMBER-2`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_chamber_2.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_chamber_2.html` (full sector geometry)
 - Parent boundary XZ: `[-74.0, 27.0] → [-48.0, 60.0] m`
 - Local origin XYZ: `[-74.0, -6.0, 27.0]`
 - Neighbors: `L-FRT`, `L-PAX`
@@ -353,7 +353,7 @@ Required connections:
 - Detail ID: `DETAIL-L-SLEEP-LAB`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_sleep_lab.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_sleep_lab.html` (full sector geometry)
 - Parent boundary XZ: `[-34.0, -12.0] → [-12.0, 10.0] m`
 - Local origin XYZ: `[-34.0, -6.0, -12.0]`
 - Neighbors: `L-PAX`
@@ -373,7 +373,7 @@ Required connections:
 - Detail ID: `DETAIL-L-CHAMBER-3`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_chamber_3.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_chamber_3.html` (full sector geometry)
 - Parent boundary XZ: `[-36.0, 27.0] → [-10.0, 60.0] m`
 - Local origin XYZ: `[-36.0, -6.0, 27.0]`
 - Neighbors: `L-FRT`, `L-PAX`
@@ -394,7 +394,7 @@ Required connections:
 - Detail ID: `DETAIL-L-SERVICE-INTERCHANGE`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_service_interchange.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_service_interchange.html` (full sector geometry)
 - Parent boundary XZ: `[-48.0, 42.0] → [-34.0, 60.0] m`
 - Local origin XYZ: `[-48.0, -6.0, 42.0]`
 - Neighbors: `L-FRT`, `L-PAX`, `T-CIRCULATION`
@@ -417,7 +417,7 @@ Required connections:
 - Detail ID: `DETAIL-L-CENTRAL-CORE`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_central_core.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_central_core.html` (full sector geometry)
 - Parent boundary XZ: `[-7.75, -6.0] → [7.75, 15.0] m`
 - Local origin XYZ: `[-7.75, -6.0, -6.0]`
 - Neighbors: `L-PAX`, `T-EAST-VERTICAL`, `U-CENTRAL-CORE`
@@ -440,7 +440,7 @@ Required connections:
 - Detail ID: `DETAIL-L-EAST-STAIR`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_east_stair.html` (east stair crop only)
+- Source: `../../plans/sectors/lower/l_east_stair.html` (east stair crop only)
 - Parent boundary XZ: `[20.0, 6.0] → [32.0, 15.0] m`
 - Local origin XYZ: `[20.0, -6.0, 6.0]`
 - Neighbors: `L-PAX`, `T-EAST-VERTICAL`, `U-EAST-SUPPORT`
@@ -463,7 +463,7 @@ Required connections:
 - Detail ID: `DETAIL-L-CHAMBER-5`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_chamber_5.html` (serial containment geometry; chamber-specific equipment excluded)
+- Source: `../../plans/sectors/lower/l_chamber_5.html` (serial containment geometry; chamber-specific equipment excluded)
 - Parent boundary XZ: `[4.0, 27.0] → [32.0, 60.0] m`
 - Local origin XYZ: `[4.0, -6.0, 27.0]`
 - Neighbors: `L-FRT`, `L-PAX`
@@ -484,7 +484,7 @@ Required connections:
 - Detail ID: `DETAIL-L-FREIGHT-SERVICE`
 - Level: `LV-L`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../l_freight_service.html` (full sector geometry)
+- Source: `../../plans/sectors/lower/l_freight_service.html` (full sector geometry)
 - Parent boundary XZ: `[-38.0, 60.0] → [30.0, 82.0] m`
 - Local origin XYZ: `[-38.0, -6.0, 60.0]`
 - Neighbors: `L-FRT`, `T-FREIGHT`, `U-FREIGHT`
@@ -507,7 +507,7 @@ Required connections:
 - Detail ID: `DETAIL-T-ENERGY`
 - Level: `LV-T`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../t_energy.html` (full sector geometry)
+- Source: `../../plans/sectors/technical/t_energy.html` (full sector geometry)
 - Parent boundary XZ: `[-110.0, -15.0] → [-65.0, 15.0] m`
 - Local origin XYZ: `[-110.0, -11.5, -15.0]`
 - Neighbors: `T-TECH`
@@ -527,7 +527,7 @@ Required connections:
 - Detail ID: `DETAIL-T-WORKSHOP`
 - Level: `LV-T`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../t_workshop.html` (full sector geometry)
+- Source: `../../plans/sectors/technical/t_workshop.html` (full sector geometry)
 - Parent boundary XZ: `[-65.0, -15.0] → [-30.0, 15.0] m`
 - Local origin XYZ: `[-65.0, -11.5, -15.0]`
 - Neighbors: `T-TECH`
@@ -547,7 +547,7 @@ Required connections:
 - Detail ID: `DETAIL-T-OLD-ACCESS`
 - Level: `LV-T`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../t_old_access.html` (full sector geometry)
+- Source: `../../plans/sectors/technical/t_old_access.html` (full sector geometry)
 - Parent boundary XZ: `[-102.0, 20.0] → [-78.0, 45.0] m`
 - Local origin XYZ: `[-102.0, -11.5, 20.0]`
 - Neighbors: `L-OLD-CORE`, `T-TECH`
@@ -569,7 +569,7 @@ Required connections:
 - Detail ID: `DETAIL-T-EAST-VERTICAL`
 - Level: `LV-T`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../t_east_vertical.html` (full sector geometry)
+- Source: `../../plans/sectors/technical/t_east_vertical.html` (full sector geometry)
 - Parent boundary XZ: `[18.0, -12.0] → [32.0, 20.0] m`
 - Local origin XYZ: `[18.0, -11.5, -12.0]`
 - Neighbors: `L-CENTRAL-CORE`, `L-EAST-STAIR`, `T-TECH`
@@ -592,7 +592,7 @@ Required connections:
 - Detail ID: `DETAIL-T-UTILITIES`
 - Level: `LV-T`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../t_utilities.html` (full sector geometry)
+- Source: `../../plans/sectors/technical/t_utilities.html` (full sector geometry)
 - Parent boundary XZ: `[-57.0, 20.0] → [18.0, 56.0] m`
 - Local origin XYZ: `[-57.0, -11.5, 20.0]`
 - Neighbors: `T-TECH`
@@ -613,7 +613,7 @@ Required connections:
 - Detail ID: `DETAIL-T-FREIGHT`
 - Level: `LV-T`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../t_freight.html` (full sector geometry)
+- Source: `../../plans/sectors/technical/t_freight.html` (full sector geometry)
 - Parent boundary XZ: `[-20.0, 60.0] → [30.0, 82.0] m`
 - Local origin XYZ: `[-20.0, -11.5, 60.0]`
 - Neighbors: `L-FREIGHT-SERVICE`, `T-FRT`
@@ -635,7 +635,7 @@ Required connections:
 - Detail ID: `DETAIL-T-CIRCULATION`
 - Level: `LV-T`
 - Plan style: `caretaker-style-b-v1`
-- Source: `../../t_circulation.html` (full sector geometry)
+- Source: `../../plans/sectors/technical/t_circulation.html` (full sector geometry)
 - Parent boundary XZ: `[-105.0, 15.0] → [32.0, 68.0] m`
 - Local origin XYZ: `[-105.0, -11.5, 15.0]`
 - Neighbors: `L-SERVICE-INTERCHANGE`, `T-FRT`, `T-TECH`

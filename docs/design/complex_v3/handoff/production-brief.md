@@ -15,7 +15,7 @@
 ## Источники по приоритету
 
 1. `docs/world/` — канон функций, истории, маршрутов и ограничений.
-2. Актуальные общие планы `upper-floor-functional-plan-v4.html`, `lower-floor-functional-plan-revised.html`, `technical-floor-functional-plan-v3.html`.
+2. Актуальные общие планы `../plans/overview/upper/current/upper-floor-functional-plan-v4.html`, `../plans/overview/lower/current/lower-floor-functional-plan-revised.html`, `../plans/overview/technical/current/technical-floor-functional-plan-v3.html`.
 3. Секторные планы, реестры и итоговые аудиты `docs/design/complex_v3/`.
 4. Концепты `01`–`65` — только объём, материалы и атмосфера; не точная геометрия.
 

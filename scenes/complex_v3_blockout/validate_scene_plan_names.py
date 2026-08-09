@@ -9,25 +9,36 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CATALOG = ROOT / "scenes/complex_v3_blockout/sector_catalog.json"
-HANDOFF = ROOT / "docs/design/complex_v3/handoff/geometry/complex-handoff.json"
+PASSPORTS = ROOT / "docs/design/complex_v3/handoff/passports/sector-passports.json"
 PLAN_ROOT = ROOT / "docs/design/complex_v3"
 
 
 def main() -> None:
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
-    handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
-    source_by_sector = {sector["id"]: Path(sector["source_detail"]).name for sector in handoff["sectors"]}
+    passports = json.loads(PASSPORTS.read_text(encoding="utf-8"))
+    source_by_sector = {
+        passport["sector_id"]: (PASSPORTS.parent / passport["source_detail"]).resolve()
+        for passport in passports["passports"]
+    }
     errors: list[str] = []
     for sector in catalog["sectors"]:
         scene_stem = Path(sector["scene"]).stem
-        plan = PLAN_ROOT / f"{scene_stem}.html"
+        plan = source_by_sector.get(sector["sector_id"])
+        if plan is None:
+            errors.append(f"missing passport source for {sector['sector_id']}")
+            continue
+        try:
+            plan.relative_to(PLAN_ROOT)
+        except ValueError:
+            errors.append(f"plan escapes package root for {sector['sector_id']}: {plan}")
+            continue
         if not plan.is_file():
-            errors.append(f"missing scene-matched plan: {scene_stem}.html")
-        if sector["sector_id"] in source_by_sector and source_by_sector[sector["sector_id"]] != plan.name:
-            errors.append(f"handoff source mismatch for {sector['sector_id']}: {source_by_sector[sector['sector_id']]} != {plan.name}")
+            errors.append(f"missing passport plan for {sector['sector_id']}: {plan}")
+        if plan.stem != scene_stem:
+            errors.append(f"scene/plan mismatch for {sector['sector_id']}: {scene_stem}.tscn != {plan.name}")
     if errors:
         raise SystemExit("Scene/plan filename validation failed:\n- " + "\n- ".join(errors))
-    print("SCENE_PLAN_NAMES_OK scenes=30 plans=30 handoff_sources=29")
+    print("SCENE_PLAN_NAMES_OK scenes=30 plans=30 passport_sources=30")
 
 
 if __name__ == "__main__":
