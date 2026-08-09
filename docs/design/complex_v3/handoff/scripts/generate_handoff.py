@@ -88,7 +88,7 @@ MEDBAY_PORTAL_CENTERS = {
     frozenset(("clean_corridor", "clean_store")): 8.231,
     frozenset(("clean_corridor", "triage")): 10.856,
     frozenset(("clean_corridor", "medical_post")): 13.831,
-    frozenset(("triage", "sanitary_airlock")): -89.032,
+    frozenset(("triage", "sanitary_airlock")): -81.032,
 }
 
 ROUTE_A_PORTAL_WIDTHS = {
@@ -546,15 +546,16 @@ def emergency_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], l
 
 def medbay_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
     """Trace all seven rooms and doors from the approved medbay SVG."""
+    x0, z0, x1, z1 = bounds
     height = height_for(sector_id)
     result = [
-        room(sector_id, "procedure_room", rect(-102.0, 7.0, -94.632, 11.205), height),
-        room(sector_id, "observation_ward", rect(-102.0, 11.205, -94.632, 15.0), height),
-        room(sector_id, "clean_corridor", rect(-94.632, 7.0, -92.298, 15.0), height, True, "circulation"),
-        room(sector_id, "clean_store", rect(-92.298, 7.0, -90.088, 9.667), height),
-        room(sector_id, "sanitary_airlock", rect(-90.088, 7.0, -88.0, 9.667), height, True, "airlock"),
-        room(sector_id, "triage", rect(-92.298, 9.667, -88.0, 12.744), height),
-        room(sector_id, "medical_post", rect(-92.298, 12.744, -88.0, 15.0), height),
+        room(sector_id, "procedure_room", rect(x0, z0, x0 + 7.368, 11.205), height),
+        room(sector_id, "observation_ward", rect(x0, 11.205, x0 + 7.368, z1), height),
+        room(sector_id, "clean_corridor", rect(x0 + 7.368, z0, x0 + 9.702, z1), height, True, "circulation"),
+        room(sector_id, "clean_store", rect(x0 + 9.702, z0, x0 + 11.912, 9.667), height),
+        room(sector_id, "sanitary_airlock", rect(x0 + 11.912, z0, x1, 9.667), height, True, "airlock"),
+        room(sector_id, "triage", rect(x0 + 9.702, 9.667, x1, 12.744), height),
+        room(sector_id, "medical_post", rect(x0 + 9.702, 12.744, x1, z1), height),
     ]
     return result, [
         ("clean_corridor", "procedure_room"),
@@ -1002,7 +1003,8 @@ def personnel_medbay_portal(edge: dict, sector_id: str, spaces: list[dict]) -> d
     entry_name = "distribution_hall" if sector_id == "U-EMERGENCY" else "triage"
     entry = next(space for space in spaces if space["name"] == entry_name)
     other = edge["to"] if edge["from"] == sector_id else edge["from"]
-    x = -80.0 if sector_id == "U-EMERGENCY" else -88.0
+    emergency_side = sector_id == "U-EMERGENCY"
+    x = float(entry["bounds_xz"][0] if emergency_side else entry["bounds_xz"][2])
     width = 1.2
     center_z = 11.65
     return {
@@ -1010,7 +1012,7 @@ def personnel_medbay_portal(edge: dict, sector_id: str, spaces: list[dict]) -> d
         "connection_id": edge["id"],
         "space": entry["id"],
         "neighbor": other,
-        "side": "west" if sector_id == "U-EMERGENCY" else "east",
+        "side": "west" if emergency_side else "east",
         "segment_xz": [[x, center_z - width * 0.5], [x, center_z + width * 0.5]],
         "width": width,
         "height": 2.4,
@@ -1323,7 +1325,11 @@ def main() -> None:
             elif len(related) == 2:
                 first_space = space_lookup[related[0]["space"]]
                 second_space = space_lookup[related[1]["space"]]
-                aligned = shared_portal_segment(first_space["bounds_xz"], second_space["bounds_xz"], min(portal["width"] for portal in related))
+                aligned = (
+                    related[0]["segment_xz"]
+                    if edge["id"] == "E-U02A"
+                    else shared_portal_segment(first_space["bounds_xz"], second_space["bounds_xz"], min(portal["width"] for portal in related))
+                )
                 if aligned:
                     aligned = [[round(value, 3) for value in point] for point in aligned]
                     aligned_width = round(math.dist(aligned[0], aligned[1]), 3)

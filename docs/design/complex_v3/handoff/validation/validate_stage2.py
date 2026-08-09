@@ -85,13 +85,13 @@ EAST_SUPPORT_CONNECTIONS = {
 }
 
 MEDBAY_BOUNDS = {
-    "U-MEDBAY/procedure_room": [-102.0, 7.0, -94.632, 11.205],
-    "U-MEDBAY/observation_ward": [-102.0, 11.205, -94.632, 15.0],
-    "U-MEDBAY/clean_corridor": [-94.632, 7.0, -92.298, 15.0],
-    "U-MEDBAY/clean_store": [-92.298, 7.0, -90.088, 9.667],
-    "U-MEDBAY/sanitary_airlock": [-90.088, 7.0, -88.0, 9.667],
-    "U-MEDBAY/triage": [-92.298, 9.667, -88.0, 12.744],
-    "U-MEDBAY/medical_post": [-92.298, 12.744, -88.0, 15.0],
+    "U-MEDBAY/procedure_room": [-94.0, 7.0, -86.632, 11.205],
+    "U-MEDBAY/observation_ward": [-94.0, 11.205, -86.632, 15.0],
+    "U-MEDBAY/clean_corridor": [-86.632, 7.0, -84.298, 15.0],
+    "U-MEDBAY/clean_store": [-84.298, 7.0, -82.088, 9.667],
+    "U-MEDBAY/sanitary_airlock": [-82.088, 7.0, -80.0, 9.667],
+    "U-MEDBAY/triage": [-84.298, 9.667, -80.0, 12.744],
+    "U-MEDBAY/medical_post": [-84.298, 12.744, -80.0, 15.0],
 }
 
 MEDBAY_CONNECTIONS = {
@@ -153,7 +153,7 @@ OLD_CORE_CONNECTIONS = {
 
 PERSONNEL_MEDBAY_SEGMENTS = {
     "PX-E-U02A-U-EMERGENCY": [[-80.0, 11.05], [-80.0, 12.25]],
-    "PX-E-U02A-U-MEDBAY": [[-88.0, 11.05], [-88.0, 12.25]],
+    "PX-E-U02A-U-MEDBAY": [[-80.0, 11.05], [-80.0, 12.25]],
 }
 
 FREIGHT_RECEPTION_BOUNDS = {

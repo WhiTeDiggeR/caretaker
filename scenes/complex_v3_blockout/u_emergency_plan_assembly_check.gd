@@ -22,7 +22,7 @@ func _initialize() -> void:
 		errors.append("Plan assembly infrastructure is missing")
 	else:
 		var stats := infrastructure.get_build_stats()
-		var expected := {"route_spaces": 1, "corridors": 2, "anchors": 1, "transitions": 1}
+		var expected := {"route_spaces": 1, "corridors": 1, "anchors": 1, "transitions": 1}
 		for key: String in expected:
 			if int(stats.get(key, -1)) != int(expected[key]):
 				errors.append("Expected %d %s, built %d" % [int(expected[key]), key, int(stats.get(key, -1))])
@@ -32,10 +32,12 @@ func _initialize() -> void:
 		var seam_mesh := seam_mesh_instance.mesh as BoxMesh if seam_mesh_instance != null else null
 		if seam_mesh == null or seam_mesh.size.x < 3.95:
 			errors.append("E-U02 connector floor does not close the full wall seam")
+		if infrastructure.get_node_or_null("Generated/Connections/C-E-U02A") != null:
+			errors.append("E-U02A must be a shared doorway, not a bridge between detached sectors")
 		if infrastructure.find_children("RouteASwitchbackStair", "", true, false).is_empty():
 			errors.append("Route A stair is missing from plan assembly")
 	if errors.is_empty():
-		print("U_EMERGENCY_PLAN_ASSEMBLY_OK zones=3 route_spaces=1 corridors=2 anchors=1 transitions=1")
+		print("U_EMERGENCY_PLAN_ASSEMBLY_OK zones=3 route_spaces=1 corridors=1 anchors=1 transitions=1")
 	else:
 		for error: String in errors:
 			push_error(error)

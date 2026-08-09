@@ -269,19 +269,22 @@ def east_support_props(spaces: dict[str, dict]) -> list[dict]:
 
 def medbay_props(spaces: dict[str, dict]) -> list[dict]:
     sector_id = "U-MEDBAY"
+    procedure = spaces[f"{sector_id}/procedure_room"]
+    offset_x = float(procedure["bounds_xz"][0]) - (-102.0)
+    x = lambda value: value + offset_x
     return [
-        planned_prop(spaces, sector_id, "procedure_room", "medical_bed", -99.20, 9.10, 0.0, "procedure_table"),
-        planned_prop(spaces, sector_id, "procedure_room", "workbench", -96.20, 8.10, 0.0, "instrument_bench"),
-        planned_prop(spaces, sector_id, "procedure_room", "loaded_cabinet", -96.20, 10.35, 0.0, "sterile_cabinet"),
-        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", -100.20, 13.10, 0.0, "bed_west"),
-        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", -98.60, 13.10, 0.0, "bed_center"),
-        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", -97.00, 13.10, 0.0, "bed_east"),
-        planned_prop(spaces, sector_id, "clean_store", "loaded_cabinet", -91.19, 9.25, 0.0, "sterile_stock"),
-        planned_prop(spaces, sector_id, "sanitary_airlock", "utility_tank", -89.04, 7.75, 0.0, "decon_unit"),
-        planned_prop(spaces, sector_id, "triage", "wall_terminal", -90.15, 12.604, math.pi, "intake_terminal", "south"),
-        planned_prop(spaces, sector_id, "medical_post", "operator_console", -90.15, 13.70, 0.0, "duty_console"),
-        planned_prop(spaces, sector_id, "medical_post", "loaded_cabinet", -90.15, 14.45, 0.0, "medicine_cabinet"),
-        planned_prop(spaces, sector_id, "clean_corridor", "wall_beacon", -94.482, 11.80, math.pi * 0.5, "clean_route", "west"),
+        planned_prop(spaces, sector_id, "procedure_room", "medical_bed", x(-99.20), 9.10, 0.0, "procedure_table"),
+        planned_prop(spaces, sector_id, "procedure_room", "workbench", x(-96.20), 8.10, 0.0, "instrument_bench"),
+        planned_prop(spaces, sector_id, "procedure_room", "loaded_cabinet", x(-96.20), 10.35, 0.0, "sterile_cabinet"),
+        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", x(-100.20), 13.10, 0.0, "bed_west"),
+        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", x(-98.60), 13.10, 0.0, "bed_center"),
+        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", x(-97.00), 13.10, 0.0, "bed_east"),
+        planned_prop(spaces, sector_id, "clean_store", "loaded_cabinet", x(-91.19), 9.25, 0.0, "sterile_stock"),
+        planned_prop(spaces, sector_id, "sanitary_airlock", "utility_tank", x(-89.04), 7.75, 0.0, "decon_unit"),
+        planned_prop(spaces, sector_id, "triage", "wall_terminal", x(-90.15), 12.604, math.pi, "intake_terminal", "south"),
+        planned_prop(spaces, sector_id, "medical_post", "operator_console", x(-90.15), 13.70, 0.0, "duty_console"),
+        planned_prop(spaces, sector_id, "medical_post", "loaded_cabinet", x(-90.15), 14.45, 0.0, "medicine_cabinet"),
+        planned_prop(spaces, sector_id, "clean_corridor", "wall_beacon", x(-94.482), 11.80, math.pi * 0.5, "clean_route", "west"),
     ]
 
 

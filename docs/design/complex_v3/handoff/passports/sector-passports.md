@@ -33,8 +33,8 @@ Required connections:
 - Level: `LV-U`
 - Plan style: `caretaker-style-b-v1`
 - Source: `../../plans/sectors/upper/u_medbay.html` (full sector geometry)
-- Parent boundary XZ: `[-102.0, 7.0] → [-88.0, 15.0] m`
-- Local origin XYZ: `[-102.0, 0.0, 7.0]`
+- Parent boundary XZ: `[-94.0, 7.0] → [-80.0, 15.0] m`
+- Local origin XYZ: `[-94.0, 0.0, 7.0]`
 - Neighbors: `U-EMERGENCY`
 - Allowed subdivisions: `triage`, `clean_corridor`, `procedure_room`, `observation_ward`, `clean_store`, `sanitary_airlock`, `medical_post`
 - Clearance profile: `passenger` — {'minimum_width': 1.2, 'minimum_height': 2.4, 'turning_envelope': 1.5}
