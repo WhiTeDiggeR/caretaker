@@ -17,7 +17,7 @@ const EXPECTED_SPACES := {
 	"U-ROUTE-A": 4,
 	"L-ARCHIVE-A": 5,
 	"L-OLD-CORE": 5,
-	"T-UTILITIES": 7,
+	"T-UTILITIES": 6,
 }
 const EXPECTED_CEILINGS := {
 	"U-CENTRAL-CORE": 4,
@@ -26,7 +26,7 @@ const EXPECTED_CEILINGS := {
 	"U-ROUTE-A": 3,
 	"L-ARCHIVE-A": 4,
 	"L-OLD-CORE": 5,
-	"T-UTILITIES": 7,
+	"T-UTILITIES": 6,
 }
 
 

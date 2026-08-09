@@ -102,6 +102,8 @@ def pick_position(space: dict, footprint: tuple[float, float], portals: list[tup
     half_z = footprint[1] * 0.5 + 0.45
     center_x = (x0 + x1) * 0.5
     center_z = (z0 + z1) * 0.5
+    if space["id"] == "T-FREIGHT/freight_lift":
+        return center_x, float(space["floor_y"]), center_z
     candidates = [
         (x0 + half_x, center_z),
         (x1 - half_x, center_z),
