@@ -1046,9 +1046,9 @@ def route_a_external_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
     entry_name = "hall_access" if edge["id"] == "E-U02" else "stair_landing"
     entry = next(space for space in spaces if space["name"] == entry_name)
     if edge["id"] == "E-U02":
-        segment = [[-61.5, 2.267], [-61.5, 4.8]]
+        segment = [[-61.5, 2.9335], [-61.5, 4.1335]]
         side = "west"
-        width = 2.533
+        width = 1.2
     else:
         segment = [[-53.25, 13.0], [-51.75, 13.0]]
         side = "south"
@@ -1096,9 +1096,9 @@ def security_external_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
 def route_a_neighbor_portal(edge: dict, sector_id: str, spaces: list[dict]) -> dict[str, Any]:
     if edge["id"] == "E-U02":
         entry_name = "distribution_hall"
-        segment = [[-62.0, 2.267], [-62.0, 4.8]]
+        segment = [[-62.0, 2.9335], [-62.0, 4.1335]]
         side = "east"
-        width = 2.533
+        width = 1.2
     elif sector_id == "L-OLD-CORE":
         entry_name = "distribution_hall"
         segment = [[-62.0, 7.0], [-62.0, 10.333]]
