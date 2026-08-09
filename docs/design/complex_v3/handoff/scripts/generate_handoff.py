@@ -497,6 +497,26 @@ def freight_reception_layout(sector_id: str, bounds: list[float]) -> tuple[list[
     ]
 
 
+def security_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the approved security post and keep its personnel checkpoint independent."""
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "armory", rect(-32.0, 31.0, -23.2, 38.3), height),
+        room(sector_id, "access_vestibule", rect(-23.2, 31.0, -13.0, 38.3), height),
+        room(sector_id, "equipment_room", rect(-32.0, 38.3, -23.2, 46.5), height),
+        room(sector_id, "duty_room", rect(-23.2, 38.3, -13.0, 46.5), height),
+        room(sector_id, "internal_circulation", rect(-13.0, 34.0, -6.8, 38.3), height, True, "circulation"),
+        room(sector_id, "two_gate_checkpoint", rect(-6.8, 31.0, -3.8, 52.0), height, True, "circulation"),
+    ]
+    return result, [
+        ("two_gate_checkpoint", "internal_circulation"),
+        ("internal_circulation", "access_vestibule"),
+        ("access_vestibule", "duty_room"),
+        ("duty_room", "equipment_room"),
+        ("equipment_room", "armory"),
+    ]
+
+
 def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, str]]]:
     sector_id = passport["sector_id"]
     names = passport["allowed_internal_subdivision"]
@@ -519,6 +539,8 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
         return east_support_layout(sector_id, bounds)
     if sector_id == "U-FREIGHT":
         return freight_reception_layout(sector_id, bounds)
+    if sector_id == "U-SECURITY":
+        return security_layout(sector_id, bounds)
     if sector_id in CENTRAL_CORE_SECTORS:
         return central_core_layout(sector_id, bounds)
     if sector_id in CONTAINMENT_SECTORS:
@@ -782,6 +804,29 @@ def route_a_external_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
     }
 
 
+def security_external_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
+    checkpoint = next(space for space in spaces if space["name"] == "two_gate_checkpoint")
+    north = edge["id"] == "E-U08"
+    z = 31.0 if north else 52.0
+    center = -5.3
+    width = 1.8
+    return {
+        "id": f"PX-{edge['id']}-U-SECURITY",
+        "connection_id": edge["id"],
+        "space": checkpoint["id"],
+        "neighbor": edge["from"] if edge["to"] == "U-SECURITY" else edge["to"],
+        "side": "north" if north else "south",
+        "segment_xz": [[round(center - width * 0.5, 3), z], [round(center + width * 0.5, 3), z]],
+        "width": width,
+        "height": 2.4,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
 def route_a_neighbor_portal(edge: dict, sector_id: str, spaces: list[dict]) -> dict[str, Any]:
     if edge["id"] == "E-U02":
         entry_name = "distribution_hall"
@@ -819,6 +864,8 @@ def route_a_neighbor_portal(edge: dict, sector_id: str, spaces: list[dict]) -> d
 
 def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bounds: list[float]) -> dict[str, Any]:
     other = edge["to"] if edge["from"] == sector_id else edge["from"]
+    if sector_id == "U-SECURITY" and edge["id"] in {"E-U08", "E-U09"}:
+        return security_external_portal(edge, spaces)
     if edge["id"] == "E-U02" and sector_id == "U-EMERGENCY":
         return route_a_neighbor_portal(edge, sector_id, spaces)
     if edge["id"] == "E-L03" and sector_id in {"L-OLD-CORE", "L-ARCHIVE-A"}:

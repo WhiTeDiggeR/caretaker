@@ -246,12 +246,12 @@
       ],
       "passport_id": "PASS-U-SECURITY",
       "space_ids": [
-        "U-SECURITY/internal_circulation",
+        "U-SECURITY/armory",
         "U-SECURITY/access_vestibule",
         "U-SECURITY/equipment_room",
-        "U-SECURITY/two_gate_checkpoint",
         "U-SECURITY/duty_room",
-        "U-SECURITY/armory"
+        "U-SECURITY/internal_circulation",
+        "U-SECURITY/two_gate_checkpoint"
       ],
       "reserved_volumes": [
         "secure_storage"
@@ -1703,19 +1703,19 @@
       "floor_y": 0.0
     },
     {
-      "id": "U-SECURITY/internal_circulation",
-      "name": "internal_circulation",
+      "id": "U-SECURITY/armory",
+      "name": "armory",
       "sector_id": "U-SECURITY",
-      "kind": "circulation",
+      "kind": "room",
       "bounds_xz": [
-        -17.92,
+        -32.0,
         31.0,
-        -14.08,
-        52.0
+        -23.2,
+        38.3
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": true,
+      "transit": false,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1726,10 +1726,10 @@
       "sector_id": "U-SECURITY",
       "kind": "room",
       "bounds_xz": [
-        -32.0,
+        -23.2,
         31.0,
-        -17.92,
-        38.0
+        -13.0,
+        38.3
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1745,27 +1745,9 @@
       "kind": "room",
       "bounds_xz": [
         -32.0,
-        38.0,
-        -17.92,
-        45.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": 0.0
-    },
-    {
-      "id": "U-SECURITY/two_gate_checkpoint",
-      "name": "two_gate_checkpoint",
-      "sector_id": "U-SECURITY",
-      "kind": "room",
-      "bounds_xz": [
-        -32.0,
-        45.0,
-        -17.92,
-        52.0
+        38.3,
+        -23.2,
+        46.5
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1780,10 +1762,10 @@
       "sector_id": "U-SECURITY",
       "kind": "room",
       "bounds_xz": [
-        -14.08,
-        31.0,
-        0.0,
-        41.5
+        -23.2,
+        38.3,
+        -13.0,
+        46.5
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -1793,19 +1775,37 @@
       "floor_y": 0.0
     },
     {
-      "id": "U-SECURITY/armory",
-      "name": "armory",
+      "id": "U-SECURITY/internal_circulation",
+      "name": "internal_circulation",
       "sector_id": "U-SECURITY",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
-        -14.08,
-        41.5,
-        0.0,
+        -13.0,
+        34.0,
+        -6.8,
+        38.3
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
+      "id": "U-SECURITY/two_gate_checkpoint",
+      "name": "two_gate_checkpoint",
+      "sector_id": "U-SECURITY",
+      "kind": "circulation",
+      "bounds_xz": [
+        -6.8,
+        31.0,
+        -3.8,
         52.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -4703,17 +4703,17 @@
     {
       "id": "P-U-SECURITY-01",
       "between": [
-        "U-SECURITY/internal_circulation",
-        "U-SECURITY/access_vestibule"
+        "U-SECURITY/two_gate_checkpoint",
+        "U-SECURITY/internal_circulation"
       ],
       "segment_xz": [
         [
-          -17.92,
-          33.6
+          -6.8,
+          35.25
         ],
         [
-          -17.92,
-          35.4
+          -6.8,
+          37.05
         ]
       ],
       "width": 1.8,
@@ -4727,16 +4727,16 @@
       "id": "P-U-SECURITY-02",
       "between": [
         "U-SECURITY/internal_circulation",
-        "U-SECURITY/equipment_room"
+        "U-SECURITY/access_vestibule"
       ],
       "segment_xz": [
         [
-          -17.92,
-          40.6
+          -13.0,
+          35.25
         ],
         [
-          -17.92,
-          42.4
+          -13.0,
+          37.05
         ]
       ],
       "width": 1.8,
@@ -4749,17 +4749,17 @@
     {
       "id": "P-U-SECURITY-03",
       "between": [
-        "U-SECURITY/internal_circulation",
-        "U-SECURITY/two_gate_checkpoint"
+        "U-SECURITY/access_vestibule",
+        "U-SECURITY/duty_room"
       ],
       "segment_xz": [
         [
-          -17.92,
-          47.6
+          -19.0,
+          38.3
         ],
         [
-          -17.92,
-          49.4
+          -17.2,
+          38.3
         ]
       ],
       "width": 1.8,
@@ -4772,17 +4772,17 @@
     {
       "id": "P-U-SECURITY-04",
       "between": [
-        "U-SECURITY/internal_circulation",
-        "U-SECURITY/duty_room"
+        "U-SECURITY/duty_room",
+        "U-SECURITY/equipment_room"
       ],
       "segment_xz": [
         [
-          -14.08,
-          35.35
+          -23.2,
+          41.5
         ],
         [
-          -14.08,
-          37.15
+          -23.2,
+          43.3
         ]
       ],
       "width": 1.8,
@@ -4795,17 +4795,17 @@
     {
       "id": "P-U-SECURITY-05",
       "between": [
-        "U-SECURITY/internal_circulation",
+        "U-SECURITY/equipment_room",
         "U-SECURITY/armory"
       ],
       "segment_xz": [
         [
-          -14.08,
-          45.85
+          -28.5,
+          38.3
         ],
         [
-          -14.08,
-          47.65
+          -26.7,
+          38.3
         ]
       ],
       "width": 1.8,
@@ -6740,20 +6740,20 @@
     {
       "id": "PX-E-U08-U-SECURITY",
       "connection_id": "E-U08",
-      "space": "U-SECURITY/internal_circulation",
+      "space": "U-SECURITY/two_gate_checkpoint",
       "neighbor": "U-PAX",
       "side": "north",
       "segment_xz": [
         [
-          -16.6,
+          -6.2,
           31.0
         ],
         [
-          -15.4,
+          -4.4,
           31.0
         ]
       ],
-      "width": 1.2,
+      "width": 1.8,
       "height": 2.4,
       "type": "service",
       "direction": "bidirectional",
@@ -6769,11 +6769,11 @@
       "side": "south",
       "segment_xz": [
         [
-          -25.86,
+          -6.2,
           52.0
         ],
         [
-          -24.06,
+          -4.4,
           52.0
         ]
       ],
@@ -7680,15 +7680,15 @@
       "connection_id": "E-U08",
       "centerline_xz": [
         [
-          -16.0,
+          -5.3,
           31.0
         ],
         [
-          -16.0,
+          -5.3,
           20.0
         ]
       ],
-      "width": 1.2,
+      "width": 1.8,
       "clear_height": 2.4,
       "traversable": true,
       "state": "openable"
@@ -7698,11 +7698,11 @@
       "connection_id": "E-U09",
       "centerline_xz": [
         [
-          -24.96,
+          -5.3,
           52.0
         ],
         [
-          -24.96,
+          -5.3,
           60.0
         ]
       ],

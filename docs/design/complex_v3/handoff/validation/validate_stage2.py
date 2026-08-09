@@ -174,6 +174,28 @@ FREIGHT_RECEPTION_CONNECTIONS = {
     frozenset(("freight_lift", "service_walkway")),
 }
 
+SECURITY_BOUNDS = {
+    "U-SECURITY/armory": [-32.0, 31.0, -23.2, 38.3],
+    "U-SECURITY/access_vestibule": [-23.2, 31.0, -13.0, 38.3],
+    "U-SECURITY/equipment_room": [-32.0, 38.3, -23.2, 46.5],
+    "U-SECURITY/duty_room": [-23.2, 38.3, -13.0, 46.5],
+    "U-SECURITY/internal_circulation": [-13.0, 34.0, -6.8, 38.3],
+    "U-SECURITY/two_gate_checkpoint": [-6.8, 31.0, -3.8, 52.0],
+}
+
+SECURITY_CONNECTIONS = {
+    frozenset(("two_gate_checkpoint", "internal_circulation")),
+    frozenset(("internal_circulation", "access_vestibule")),
+    frozenset(("access_vestibule", "duty_room")),
+    frozenset(("duty_room", "equipment_room")),
+    frozenset(("equipment_room", "armory")),
+}
+
+SECURITY_EXTERNAL_SEGMENTS = {
+    "PX-E-U08-U-SECURITY": [[-6.2, 31.0], [-4.4, 31.0]],
+    "PX-E-U09-U-SECURITY": [[-6.2, 52.0], [-4.4, 52.0]],
+}
+
 
 def load(relative: str) -> dict:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
@@ -292,6 +314,14 @@ def main() -> int:
         if lift_center != [20.0, 72.0]:
             errors.append(f"U-FREIGHT lift misses A-FREIGHT-LIFT: {lift_center}")
 
+    actual_security_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in SECURITY_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_security_bounds != SECURITY_BOUNDS:
+        errors.append(f"U-SECURITY no longer traces the approved security-post plan: {actual_security_bounds}")
+
     for a, b in itertools.combinations(spaces, 2):
         if a["floor_y"] == b["floor_y"] and positive_overlap(a["bounds_xz"], b["bounds_xz"]):
             errors.append(f"positive room overlap: {a['id']} <> {b['id']}")
@@ -349,6 +379,14 @@ def main() -> int:
     }
     if actual_route_a_connections != ROUTE_A_CONNECTIONS:
         errors.append("U-ROUTE-A internal connections differ from the approved plan")
+
+    actual_security_connections = {
+        frozenset(space_id.removeprefix("U-SECURITY/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-U-SECURITY-")
+    }
+    if actual_security_connections != SECURITY_CONNECTIONS:
+        errors.append("U-SECURITY internal connections differ from the approved plan")
 
     actual_lower_route_a_connections = {
         frozenset(space_id.removeprefix("L-ARCHIVE-A/") for space_id in portal["between"])
@@ -412,6 +450,15 @@ def main() -> int:
         errors.append("E-U13 must connect the heavy spine to the north inspection gate")
     if freight_entry.get("segment_xz") != [[-3.25, 68.0], [1.25, 68.0]]:
         errors.append("E-U13 inspection gate moved away from the approved plan")
+    security_north = external_by_id.get("PX-E-U08-U-SECURITY", {})
+    security_south = external_by_id.get("PX-E-U09-U-SECURITY", {})
+    if security_north.get("space") != "U-SECURITY/two_gate_checkpoint" or security_north.get("side") != "north":
+        errors.append("U-SECURITY passenger approach must enter the north gate of the checkpoint")
+    if security_south.get("space") != "U-SECURITY/two_gate_checkpoint" or security_south.get("side") != "south":
+        errors.append("U-SECURITY freight-side approach must leave through the south gate of the checkpoint")
+    for portal_id, expected_segment in SECURITY_EXTERNAL_SEGMENTS.items():
+        if external_by_id.get(portal_id, {}).get("segment_xz") != expected_segment:
+            errors.append(f"U-SECURITY checkpoint gate moved away from the approved plan: {portal_id}")
 
     represented: set[str] = set()
     for corridor in geometry["connection_corridors"]:
