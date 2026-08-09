@@ -297,15 +297,126 @@ def upper_containment_layout(sector_id: str, names: list[str], bounds: list[floa
 def chamber2_layout(sector_id: str, names: list[str], bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
     x0, z0, x1, z1 = bounds
     w, d = x1 - x0, z1 - z0
-    by = {name: name for name in names}
     result = [
-        room(sector_id, by["control_post"], rect(x0 + .25*w, z0, x0 + .5*w, z0 + .25*d), 4.5),
-        room(sector_id, by["passenger_airlock"], rect(x0 + .5*w, z0, x0 + .8*w, z0 + .25*d), 4.5, True, "airlock"),
-        room(sector_id, by["gas_equipment_room"], rect(x0, z0 + .25*d, x0 + .25*w, z0 + .78*d), 4.5),
-        room(sector_id, by["containment_chamber"], rect(x0 + .25*w, z0 + .25*d, x1, z0 + .78*d), 4.5, False, "containment"),
-        room(sector_id, by["cargo_vestibule"], rect(x0 + .38*w, z0 + .78*d, x0 + .78*w, z1), 4.5, True, "airlock"),
+        room(sector_id, "control_post", rect(x0 + .2*w, z0, x0 + .45*w, z0 + .25*d), 4.5),
+        room(sector_id, "passenger_airlock", rect(x0 + .45*w, z0, x0 + .75*w, z0 + .25*d), 4.5, True, "airlock"),
+        room(sector_id, "gas_equipment_room", rect(x0, z0 + .35*d, x0 + .15*w, z0 + .65*d), 4.5),
+        room(sector_id, "containment_chamber", rect(x0 + .15*w, z0 + .25*d, x0 + .85*w, z0 + .75*d), 4.5, False, "containment"),
+        room(sector_id, "cargo_vestibule", rect(x0 + .35*w, z0 + .75*d, x0 + .65*w, z1), 4.5, True, "airlock"),
     ]
-    return result, [("control_post", "passenger_airlock"), ("passenger_airlock", "containment_chamber"), ("containment_chamber", "cargo_vestibule")]
+    return result, [
+        ("control_post", "passenger_airlock"),
+        ("passenger_airlock", "containment_chamber"),
+        ("gas_equipment_room", "containment_chamber"),
+        ("containment_chamber", "cargo_vestibule"),
+    ]
+
+
+def lower_chamber1_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    result = [
+        room(sector_id, "mechanical_cage", rect(x0, z0, x0 + .68*w, z1), 5.0, False, "containment"),
+        room(sector_id, "combined_vestibule", rect(x0 + .68*w, z0, x1, z0 + .45*d), 5.0, True, "airlock"),
+        room(sector_id, "control_post", rect(x0 + .68*w, z0 + .45*d, x1, z1), 5.0),
+    ]
+    return result, [("combined_vestibule", "control_post"), ("control_post", "mechanical_cage")]
+
+
+def old_receiving_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    result = [
+        room(sector_id, "tunnel_landing", rect(x0 + .35*w, z0, x0 + .65*w, z0 + .2*d), 5.0, True, "circulation"),
+        room(sector_id, "inspection_post", rect(x0 + .65*w, z0, x1, z0 + .2*d), 5.0),
+        room(sector_id, "receiving_hall", rect(x0 + .2*w, z0 + .2*d, x1, z1), 5.0, True, "circulation"),
+    ]
+    return result, [("tunnel_landing", "receiving_hall"), ("inspection_post", "receiving_hall")]
+
+
+def sleep_lab_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    result = [
+        room(sector_id, "neuro_monitoring", rect(x0, z0, x0 + .55*w, z0 + .55*d), 3.4),
+        room(sector_id, "equipment_room", rect(x0 + .55*w, z0, x0 + .75*w, z0 + .55*d), 3.4),
+        room(sector_id, "observation_room", rect(x0 + .75*w, z0, x1, z0 + .55*d), 3.4),
+        room(sector_id, "preparation_room", rect(x0, z0 + .55*d, x0 + .4*w, z1), 3.4),
+        room(sector_id, "internal_corridor", rect(x0 + .4*w, z0 + .55*d, x1, z1), 3.4, True, "circulation"),
+    ]
+    return result, [
+        ("internal_corridor", "neuro_monitoring"),
+        ("internal_corridor", "equipment_room"),
+        ("internal_corridor", "observation_room"),
+        ("internal_corridor", "preparation_room"),
+    ]
+
+
+def lower_chamber3_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    result = [
+        room(sector_id, "operator_gallery", rect(x0 + .2*w, z0, x0 + .45*w, z0 + .22*d), 5.0),
+        room(sector_id, "passenger_airlock", rect(x0 + .45*w, z0, x0 + .7*w, z0 + .22*d), 5.0, True, "airlock"),
+        room(sector_id, "containment_chamber", rect(x0 + .15*w, z0 + .22*d, x0 + .8*w, z0 + .78*d), 5.0, False, "containment"),
+        room(sector_id, "diagnostics_room", rect(x0 + .8*w, z0 + .22*d, x1, z0 + .78*d), 5.0),
+        room(sector_id, "cargo_airlock", rect(x0 + .35*w, z0 + .78*d, x0 + .65*w, z1), 5.0, True, "airlock"),
+    ]
+    return result, [
+        ("operator_gallery", "passenger_airlock"),
+        ("passenger_airlock", "containment_chamber"),
+        ("containment_chamber", "diagnostics_room"),
+        ("containment_chamber", "cargo_airlock"),
+    ]
+
+
+def service_interchange_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    result = [
+        room(sector_id, "service_lobby", rect(x0, z0, x1, z0 + .25*d), 3.8, True, "circulation"),
+        room(sector_id, "service_stair", rect(x0, z0 + .25*d, x0 + .4*w, z1), 3.8, True, "stair"),
+        room(sector_id, "double_airlock", rect(x0 + .4*w, z0 + .25*d, x0 + .7*w, z1), 3.8, True, "airlock"),
+        room(sector_id, "electrical_room", rect(x0 + .7*w, z0 + .25*d, x1, z1), 3.8),
+    ]
+    return result, [
+        ("service_lobby", "service_stair"),
+        ("service_lobby", "double_airlock"),
+        ("service_lobby", "electrical_room"),
+        ("service_stair", "double_airlock"),
+        ("double_airlock", "electrical_room"),
+    ]
+
+
+def east_stair_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    result = [
+        room(sector_id, "fire_vestibule", rect(x0, z0, x0 + .35*w, z1), 3.8, True, "airlock"),
+        room(sector_id, "emergency_stair", rect(x0 + .35*w, z0 + .35*d, x1, z1), 3.8, True, "stair"),
+    ]
+    return result, [("fire_vestibule", "emergency_stair")]
+
+
+def lower_freight_service_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    split = z0 + .75*d
+    result = [
+        room(sector_id, "ventilation_room", rect(x0, z0, x0 + .18*w, split), 5.0),
+        room(sector_id, "electrical_room", rect(x0 + .18*w, z0, x0 + .32*w, split), 5.0),
+        room(sector_id, "freight_platform", rect(x0 + .32*w, z0, x0 + .62*w, split), 5.0, True, "circulation"),
+        room(sector_id, "freight_lift", rect(x0 + .62*w, z0, x0 + .85*w, split), 5.0, True, "elevator"),
+        room(sector_id, "shaft_bypass", rect(x0 + .85*w, z0, x1, split), 5.0, True, "circulation"),
+        room(sector_id, "service_zone", rect(x0, split, x1, z1), 5.0, True, "circulation"),
+    ]
+    return result, [
+        ("service_zone", "ventilation_room"),
+        ("service_zone", "electrical_room"),
+        ("service_zone", "freight_platform"),
+        ("service_zone", "freight_lift"),
+        ("service_zone", "shaft_bypass"),
+    ]
 
 
 def emergency_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
@@ -563,12 +674,28 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
         return security_layout(sector_id, bounds)
     if sector_id in {"U-CHAMBER-4", "U-CHAMBER-6"}:
         return upper_containment_layout(sector_id, names, bounds)
+    if sector_id == "L-CHAMBER-1":
+        return lower_chamber1_layout(sector_id, bounds)
+    if sector_id == "L-OLD-RECEIVING":
+        return old_receiving_layout(sector_id, bounds)
+    if sector_id == "L-CHAMBER-2":
+        return chamber2_layout(sector_id, names, bounds)
+    if sector_id == "L-SLEEP-LAB":
+        return sleep_lab_layout(sector_id, bounds)
+    if sector_id == "L-CHAMBER-3":
+        return lower_chamber3_layout(sector_id, bounds)
+    if sector_id == "L-SERVICE-INTERCHANGE":
+        return service_interchange_layout(sector_id, bounds)
+    if sector_id == "L-EAST-STAIR":
+        return east_stair_layout(sector_id, bounds)
+    if sector_id == "L-CHAMBER-5":
+        return upper_containment_layout(sector_id, names, bounds)
+    if sector_id == "L-FREIGHT-SERVICE":
+        return lower_freight_service_layout(sector_id, bounds)
     if sector_id in CENTRAL_CORE_SECTORS:
         return central_core_layout(sector_id, bounds)
     if sector_id in CONTAINMENT_SECTORS:
         return containment_layout(sector_id, names, bounds)
-    if sector_id == "L-CHAMBER-2":
-        return chamber2_layout(sector_id, names, bounds)
     if sector_id in SEQUENCE_SECTORS:
         return sequence_layout(sector_id, names, bounds)
     if sector_id in SPINE_SECTORS:
@@ -884,6 +1011,25 @@ def route_a_neighbor_portal(edge: dict, sector_id: str, spaces: list[dict]) -> d
     }
 
 
+def old_core_chamber_1_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
+    entry = next(space for space in spaces if space["name"] == "distribution_hall")
+    return {
+        "id": f"PX-{edge['id']}-L-OLD-CORE",
+        "connection_id": edge["id"],
+        "space": entry["id"],
+        "neighbor": "L-CHAMBER-1",
+        "side": "south",
+        "segment_xz": [[-73.6, 15.0], [-72.4, 15.0]],
+        "width": 1.2,
+        "height": 2.4,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
 def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bounds: list[float]) -> dict[str, Any]:
     other = edge["to"] if edge["from"] == sector_id else edge["from"]
     if sector_id == "U-SECURITY" and edge["id"] in {"E-U08", "E-U09"}:
@@ -892,6 +1038,8 @@ def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bound
         return route_a_neighbor_portal(edge, sector_id, spaces)
     if edge["id"] == "E-L03" and sector_id in {"L-OLD-CORE", "L-ARCHIVE-A"}:
         return route_a_neighbor_portal(edge, sector_id, spaces)
+    if edge["id"] == "E-L02" and sector_id == "L-OLD-CORE":
+        return old_core_chamber_1_portal(edge, spaces)
     if edge["id"] == "E-U02A" and sector_id in {"U-EMERGENCY", "U-MEDBAY"}:
         return personnel_medbay_portal(edge, sector_id, spaces)
     if edge["id"] == "E-U13" and sector_id == "U-FREIGHT":
@@ -1017,7 +1165,7 @@ def main() -> None:
                 external_portals.append(east_support_fire_entry(edge, spaces_by_sector[sector_id]))
         if external_portals and endpoints:
             related = [portal for portal in external_portals if portal["connection_id"] == edge["id"]]
-            if edge["id"] == "E-U06" and len(related) == 2:
+            if edge["id"] in {"E-U06", "E-L02"} and len(related) == 2:
                 points = []
                 for portal in related:
                     p0, p1 = portal["segment_xz"]

@@ -1,70 +1,65 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="PackedScene" path="res://objects/complex_v3/containment_capsule.tscn" id="1"]
 [ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="6"]
 
 [node name="L_SLEEP_LAB_SetDressing" type="Node3D"]
 metadata/sector_id = "L-SLEEP-LAB"
 metadata/material_family = "containment"
 
-[node name="001_L_SLEEP_LAB_equipment_room__containment_capsule" parent="." instance=ExtResource("1")]
-position = Vector3(-14.0500, -6.0000, 4.5000)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "L-SLEEP-LAB/equipment_room::containment_capsule"
+[node name="001_L_SLEEP_LAB_equipment_room__wall_terminal" parent="." instance=ExtResource("6")]
+position = Vector3(-19.7000, -4.8000, -11.3000)
+metadata/placement_id = "L-SLEEP-LAB/equipment_room::wall_terminal"
 
 [node name="002_L_SLEEP_LAB_internal_corridor__wall_beacon" parent="." instance=ExtResource("4")]
-position = Vector3(-24.0100, -3.6500, -1.0000)
-rotation = Vector3(0, 1.5707963, 0)
+position = Vector3(-12.7500, -3.6500, 5.0500)
+rotation = Vector3(0, -1.5707963, 0)
 metadata/placement_id = "L-SLEEP-LAB/internal_corridor::wall_beacon"
 
 [node name="003_L_SLEEP_LAB_neuro_monitoring__generator_unit" parent="." instance=ExtResource("5")]
-position = Vector3(-13.3000, -6.0000, -6.5000)
-rotation = Vector3(0, -1.5707963, 0)
+position = Vector3(-27.9500, -6.0000, -11.0000)
 metadata/placement_id = "L-SLEEP-LAB/neuro_monitoring::generator_unit"
 
 [node name="004_L_SLEEP_LAB_observation_room__operator_console" parent="." instance=ExtResource("3")]
-position = Vector3(-32.7500, -6.0000, 4.5000)
-rotation = Vector3(0, 1.5707963, 0)
+position = Vector3(-14.7500, -6.0000, -11.1000)
 metadata/placement_id = "L-SLEEP-LAB/observation_room::operator_console"
 
 [node name="005_L_SLEEP_LAB_preparation_room__containment_capsule" parent="." instance=ExtResource("1")]
-position = Vector3(-31.9500, -6.0000, -6.5000)
+position = Vector3(-31.9500, -6.0000, 5.0500)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-SLEEP-LAB/preparation_room::containment_capsule"
 
 [node name="006_P_L_SLEEP_LAB_01" parent="." instance=ExtResource("2")]
-position = Vector3(-24.7600, -6.0000, -6.5000)
-rotation = Vector3(0, 1.5707963, 0)
+position = Vector3(-23.5500, -6.0000, 0.1000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-L-SLEEP-LAB-01"
 metadata/open_passage = true
 
 [node name="007_P_L_SLEEP_LAB_02" parent="." instance=ExtResource("2")]
-position = Vector3(-24.7600, -6.0000, 4.5000)
-rotation = Vector3(0, 1.5707963, 0)
+position = Vector3(-19.7000, -6.0000, 0.1000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-L-SLEEP-LAB-02"
 metadata/open_passage = true
 
 [node name="008_P_L_SLEEP_LAB_03" parent="." instance=ExtResource("2")]
-position = Vector3(-21.2400, -6.0000, -6.5000)
-rotation = Vector3(0, 1.5707963, 0)
+position = Vector3(-14.7500, -6.0000, 0.1000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-L-SLEEP-LAB-03"
 metadata/open_passage = true
 
 [node name="009_P_L_SLEEP_LAB_04" parent="." instance=ExtResource("2")]
-position = Vector3(-21.2400, -6.0000, 4.5000)
+position = Vector3(-25.2000, -6.0000, 5.0500)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-L-SLEEP-LAB-04"
 metadata/open_passage = true
 
 [node name="010_PX_E_L06_L_SLEEP_LAB" parent="." instance=ExtResource("2")]
-position = Vector3(-23.0000, -6.0000, 10.0000)
+position = Vector3(-18.6000, -6.0000, 10.0000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "PX-E-L06-L-SLEEP-LAB"
 metadata/open_passage = true

@@ -340,9 +340,9 @@
       ],
       "passport_id": "PASS-L-CHAMBER-1",
       "space_ids": [
+        "L-CHAMBER-1/mechanical_cage",
         "L-CHAMBER-1/combined_vestibule",
-        "L-CHAMBER-1/control_post",
-        "L-CHAMBER-1/mechanical_cage"
+        "L-CHAMBER-1/control_post"
       ],
       "reserved_volumes": [
         "restraint_service_volume"
@@ -384,9 +384,9 @@
       ],
       "passport_id": "PASS-L-OLD-RECEIVING",
       "space_ids": [
-        "L-OLD-RECEIVING/receiving_hall",
+        "L-OLD-RECEIVING/tunnel_landing",
         "L-OLD-RECEIVING/inspection_post",
-        "L-OLD-RECEIVING/tunnel_landing"
+        "L-OLD-RECEIVING/receiving_hall"
       ],
       "reserved_volumes": [
         "old_tunnel_mouth"
@@ -428,11 +428,11 @@
       ],
       "passport_id": "PASS-L-SLEEP-LAB",
       "space_ids": [
-        "L-SLEEP-LAB/internal_corridor",
-        "L-SLEEP-LAB/preparation_room",
-        "L-SLEEP-LAB/observation_room",
         "L-SLEEP-LAB/neuro_monitoring",
-        "L-SLEEP-LAB/equipment_room"
+        "L-SLEEP-LAB/equipment_room",
+        "L-SLEEP-LAB/observation_room",
+        "L-SLEEP-LAB/preparation_room",
+        "L-SLEEP-LAB/internal_corridor"
       ],
       "reserved_volumes": [
         "bed_service_envelopes"
@@ -451,10 +451,10 @@
       ],
       "passport_id": "PASS-L-CHAMBER-3",
       "space_ids": [
-        "L-CHAMBER-3/diagnostics_room",
-        "L-CHAMBER-3/passenger_airlock",
         "L-CHAMBER-3/operator_gallery",
+        "L-CHAMBER-3/passenger_airlock",
         "L-CHAMBER-3/containment_chamber",
+        "L-CHAMBER-3/diagnostics_room",
         "L-CHAMBER-3/cargo_airlock"
       ],
       "reserved_volumes": [
@@ -475,9 +475,9 @@
       "passport_id": "PASS-L-SERVICE-INTERCHANGE",
       "space_ids": [
         "L-SERVICE-INTERCHANGE/service_lobby",
+        "L-SERVICE-INTERCHANGE/service_stair",
         "L-SERVICE-INTERCHANGE/double_airlock",
-        "L-SERVICE-INTERCHANGE/electrical_room",
-        "L-SERVICE-INTERCHANGE/service_stair"
+        "L-SERVICE-INTERCHANGE/electrical_room"
       ],
       "reserved_volumes": [],
       "source_detail": "../../l_service_interchange.html",
@@ -559,12 +559,12 @@
       ],
       "passport_id": "PASS-L-FREIGHT-SERVICE",
       "space_ids": [
-        "L-FREIGHT-SERVICE/service_zone",
         "L-FREIGHT-SERVICE/ventilation_room",
+        "L-FREIGHT-SERVICE/electrical_room",
         "L-FREIGHT-SERVICE/freight_platform",
         "L-FREIGHT-SERVICE/freight_lift",
-        "L-FREIGHT-SERVICE/electrical_room",
-        "L-FREIGHT-SERVICE/shaft_bypass"
+        "L-FREIGHT-SERVICE/shaft_bypass",
+        "L-FREIGHT-SERVICE/service_zone"
       ],
       "reserved_volumes": [
         "lift_shaft",
@@ -2099,15 +2099,33 @@
       "floor_y": -6.0
     },
     {
-      "id": "L-CHAMBER-1/combined_vestibule",
-      "name": "combined_vestibule",
+      "id": "L-CHAMBER-1/mechanical_cage",
+      "name": "mechanical_cage",
       "sector_id": "L-CHAMBER-1",
-      "kind": "room",
+      "kind": "containment",
       "bounds_xz": [
         -110.0,
         -8.0,
-        -101.333,
+        -92.32,
         15.0
+      ],
+      "clear_height": 5.0,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-CHAMBER-1/combined_vestibule",
+      "name": "combined_vestibule",
+      "sector_id": "L-CHAMBER-1",
+      "kind": "airlock",
+      "bounds_xz": [
+        -92.32,
+        -8.0,
+        -84.0,
+        2.35
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
@@ -2122,26 +2140,8 @@
       "sector_id": "L-CHAMBER-1",
       "kind": "room",
       "bounds_xz": [
-        -101.333,
-        -8.0,
-        -92.667,
-        15.0
-      ],
-      "clear_height": 5.0,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-CHAMBER-1/mechanical_cage",
-      "name": "mechanical_cage",
-      "sector_id": "L-CHAMBER-1",
-      "kind": "room",
-      "bounds_xz": [
-        -92.667,
-        -8.0,
+        -92.32,
+        2.35,
         -84.0,
         15.0
       ],
@@ -2243,17 +2243,17 @@
       "floor_y": -6.0
     },
     {
-      "id": "L-OLD-RECEIVING/receiving_hall",
-      "name": "receiving_hall",
+      "id": "L-OLD-RECEIVING/tunnel_landing",
+      "name": "tunnel_landing",
       "sector_id": "L-OLD-RECEIVING",
       "kind": "circulation",
       "bounds_xz": [
-        -94.04,
+        -96.7,
         43.0,
-        -87.96,
-        60.0
+        -85.3,
+        46.4
       ],
-      "clear_height": 3.4,
+      "clear_height": 5.0,
       "wall_thickness": 0.3,
       "transit": true,
       "status": "provisional-metric",
@@ -2266,12 +2266,12 @@
       "sector_id": "L-OLD-RECEIVING",
       "kind": "room",
       "bounds_xz": [
-        -110.0,
+        -85.3,
         43.0,
-        -94.04,
-        60.0
+        -72.0,
+        46.4
       ],
-      "clear_height": 3.4,
+      "clear_height": 5.0,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -2279,19 +2279,19 @@
       "floor_y": -6.0
     },
     {
-      "id": "L-OLD-RECEIVING/tunnel_landing",
-      "name": "tunnel_landing",
+      "id": "L-OLD-RECEIVING/receiving_hall",
+      "name": "receiving_hall",
       "sector_id": "L-OLD-RECEIVING",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
-        -87.96,
-        43.0,
+        -102.4,
+        46.4,
         -72.0,
         60.0
       ],
-      "clear_height": 3.4,
+      "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -6.0
@@ -2302,9 +2302,9 @@
       "sector_id": "L-CHAMBER-2",
       "kind": "room",
       "bounds_xz": [
-        -66.0,
+        -67.2,
         27.0,
-        -60.0,
+        -61.2,
         35.25
       ],
       "clear_height": 4.5,
@@ -2320,9 +2320,9 @@
       "sector_id": "L-CHAMBER-2",
       "kind": "airlock",
       "bounds_xz": [
-        -60.0,
+        -61.2,
         27.0,
-        -52.8,
+        -54.0,
         35.25
       ],
       "clear_height": 4.5,
@@ -2339,9 +2339,9 @@
       "kind": "room",
       "bounds_xz": [
         -72.0,
-        35.25,
-        -66.0,
-        52.74
+        38.55,
+        -68.4,
+        48.45
       ],
       "clear_height": 4.5,
       "wall_thickness": 0.3,
@@ -2356,10 +2356,10 @@
       "sector_id": "L-CHAMBER-2",
       "kind": "containment",
       "bounds_xz": [
-        -66.0,
+        -68.4,
         35.25,
-        -48.0,
-        52.74
+        -51.6,
+        51.75
       ],
       "clear_height": 4.5,
       "wall_thickness": 0.3,
@@ -2374,9 +2374,9 @@
       "sector_id": "L-CHAMBER-2",
       "kind": "airlock",
       "bounds_xz": [
-        -62.88,
-        52.74,
-        -53.28,
+        -63.6,
+        51.75,
+        -56.4,
         60.0
       ],
       "clear_height": 4.5,
@@ -2387,69 +2387,15 @@
       "floor_y": -6.0
     },
     {
-      "id": "L-SLEEP-LAB/internal_corridor",
-      "name": "internal_corridor",
-      "sector_id": "L-SLEEP-LAB",
-      "kind": "circulation",
-      "bounds_xz": [
-        -24.76,
-        -12.0,
-        -21.24,
-        10.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-SLEEP-LAB/preparation_room",
-      "name": "preparation_room",
-      "sector_id": "L-SLEEP-LAB",
-      "kind": "room",
-      "bounds_xz": [
-        -34.0,
-        -12.0,
-        -24.76,
-        -1.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-SLEEP-LAB/observation_room",
-      "name": "observation_room",
-      "sector_id": "L-SLEEP-LAB",
-      "kind": "room",
-      "bounds_xz": [
-        -34.0,
-        -1.0,
-        -24.76,
-        10.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
       "id": "L-SLEEP-LAB/neuro_monitoring",
       "name": "neuro_monitoring",
       "sector_id": "L-SLEEP-LAB",
       "kind": "room",
       "bounds_xz": [
-        -21.24,
+        -34.0,
         -12.0,
-        -12.0,
-        -1.0
+        -21.9,
+        0.1
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -2464,9 +2410,45 @@
       "sector_id": "L-SLEEP-LAB",
       "kind": "room",
       "bounds_xz": [
-        -21.24,
-        -1.0,
+        -21.9,
         -12.0,
+        -17.5,
+        0.1
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-SLEEP-LAB/observation_room",
+      "name": "observation_room",
+      "sector_id": "L-SLEEP-LAB",
+      "kind": "room",
+      "bounds_xz": [
+        -17.5,
+        -12.0,
+        -12.0,
+        0.1
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-SLEEP-LAB/preparation_room",
+      "name": "preparation_room",
+      "sector_id": "L-SLEEP-LAB",
+      "kind": "room",
+      "bounds_xz": [
+        -34.0,
+        0.1,
+        -25.2,
         10.0
       ],
       "clear_height": 3.4,
@@ -2477,15 +2459,33 @@
       "floor_y": -6.0
     },
     {
-      "id": "L-CHAMBER-3/diagnostics_room",
-      "name": "diagnostics_room",
+      "id": "L-SLEEP-LAB/internal_corridor",
+      "name": "internal_corridor",
+      "sector_id": "L-SLEEP-LAB",
+      "kind": "circulation",
+      "bounds_xz": [
+        -25.2,
+        0.1,
+        -12.0,
+        10.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-CHAMBER-3/operator_gallery",
+      "name": "operator_gallery",
       "sector_id": "L-CHAMBER-3",
       "kind": "room",
       "bounds_xz": [
-        -36.0,
+        -30.8,
         27.0,
-        -26.9,
-        36.24
+        -24.3,
+        34.26
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
@@ -2500,28 +2500,10 @@
       "sector_id": "L-CHAMBER-3",
       "kind": "airlock",
       "bounds_xz": [
-        -26.9,
+        -24.3,
         27.0,
-        -10.0,
-        36.24
-      ],
-      "clear_height": 5.0,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-CHAMBER-3/operator_gallery",
-      "name": "operator_gallery",
-      "sector_id": "L-CHAMBER-3",
-      "kind": "service_gallery",
-      "bounds_xz": [
-        -36.0,
-        36.24,
-        -31.32,
-        52.74
+        -17.8,
+        34.26
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
@@ -2536,8 +2518,26 @@
       "sector_id": "L-CHAMBER-3",
       "kind": "containment",
       "bounds_xz": [
-        -31.32,
-        36.24,
+        -32.1,
+        34.26,
+        -15.2,
+        52.74
+      ],
+      "clear_height": 5.0,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-CHAMBER-3/diagnostics_room",
+      "name": "diagnostics_room",
+      "sector_id": "L-CHAMBER-3",
+      "kind": "room",
+      "bounds_xz": [
+        -15.2,
+        34.26,
         -10.0,
         52.74
       ],
@@ -2554,9 +2554,9 @@
       "sector_id": "L-CHAMBER-3",
       "kind": "airlock",
       "bounds_xz": [
-        -25.08,
+        -26.9,
         52.74,
-        -14.68,
+        -19.1,
         60.0
       ],
       "clear_height": 5.0,
@@ -2572,12 +2572,30 @@
       "sector_id": "L-SERVICE-INTERCHANGE",
       "kind": "circulation",
       "bounds_xz": [
-        -42.96,
+        -48.0,
         42.0,
-        -41.04,
+        -36.0,
+        46.5
+      ],
+      "clear_height": 3.8,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-SERVICE-INTERCHANGE/service_stair",
+      "name": "service_stair",
+      "sector_id": "L-SERVICE-INTERCHANGE",
+      "kind": "stair",
+      "bounds_xz": [
+        -48.0,
+        46.5,
+        -43.2,
         60.0
       ],
-      "clear_height": 3.4,
+      "clear_height": 3.8,
       "wall_thickness": 0.3,
       "transit": true,
       "status": "provisional-metric",
@@ -2588,16 +2606,16 @@
       "id": "L-SERVICE-INTERCHANGE/double_airlock",
       "name": "double_airlock",
       "sector_id": "L-SERVICE-INTERCHANGE",
-      "kind": "room",
+      "kind": "airlock",
       "bounds_xz": [
-        -48.0,
-        42.0,
-        -42.96,
-        51.0
+        -43.2,
+        46.5,
+        -39.6,
+        60.0
       ],
-      "clear_height": 3.4,
+      "clear_height": 3.8,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -6.0
@@ -2608,30 +2626,12 @@
       "sector_id": "L-SERVICE-INTERCHANGE",
       "kind": "room",
       "bounds_xz": [
-        -48.0,
-        51.0,
-        -42.96,
-        60.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-SERVICE-INTERCHANGE/service_stair",
-      "name": "service_stair",
-      "sector_id": "L-SERVICE-INTERCHANGE",
-      "kind": "room",
-      "bounds_xz": [
-        -41.04,
-        42.0,
+        -39.6,
+        46.5,
         -36.0,
         60.0
       ],
-      "clear_height": 3.4,
+      "clear_height": 3.8,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -2750,14 +2750,14 @@
       "id": "L-EAST-STAIR/fire_vestibule",
       "name": "fire_vestibule",
       "sector_id": "L-EAST-STAIR",
-      "kind": "room",
+      "kind": "airlock",
       "bounds_xz": [
         20.0,
         6.0,
-        26.0,
+        24.2,
         15.0
       ],
-      "clear_height": 3.4,
+      "clear_height": 3.8,
       "wall_thickness": 0.3,
       "transit": true,
       "status": "provisional-metric",
@@ -2768,16 +2768,16 @@
       "id": "L-EAST-STAIR/emergency_stair",
       "name": "emergency_stair",
       "sector_id": "L-EAST-STAIR",
-      "kind": "room",
+      "kind": "stair",
       "bounds_xz": [
-        26.0,
-        6.0,
+        24.2,
+        9.15,
         32.0,
         15.0
       ],
-      "clear_height": 3.4,
+      "clear_height": 3.8,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -6.0
@@ -2790,7 +2790,7 @@
       "bounds_xz": [
         4.0,
         27.0,
-        13.8,
+        14.64,
         36.24
       ],
       "clear_height": 5.0,
@@ -2806,9 +2806,9 @@
       "sector_id": "L-CHAMBER-5",
       "kind": "airlock",
       "bounds_xz": [
-        13.8,
+        14.64,
         27.0,
-        32.0,
+        23.04,
         36.24
       ],
       "clear_height": 5.0,
@@ -2860,28 +2860,10 @@
       "sector_id": "L-CHAMBER-5",
       "kind": "airlock",
       "bounds_xz": [
-        15.76,
+        16.6,
         52.74,
         26.96,
         60.0
-      ],
-      "clear_height": 5.0,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-FREIGHT-SERVICE/service_zone",
-      "name": "service_zone",
-      "sector_id": "L-FREIGHT-SERVICE",
-      "kind": "circulation",
-      "bounds_xz": [
-        -9.44,
-        67.5,
-        1.44,
-        82.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
@@ -2898,44 +2880,8 @@
       "bounds_xz": [
         -38.0,
         67.5,
-        -9.44,
-        72.333
-      ],
-      "clear_height": 5.0,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-FREIGHT-SERVICE/freight_platform",
-      "name": "freight_platform",
-      "sector_id": "L-FREIGHT-SERVICE",
-      "kind": "room",
-      "bounds_xz": [
-        -38.0,
-        72.333,
-        -9.44,
-        77.167
-      ],
-      "clear_height": 5.0,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-FREIGHT-SERVICE/freight_lift",
-      "name": "freight_lift",
-      "sector_id": "L-FREIGHT-SERVICE",
-      "kind": "room",
-      "bounds_xz": [
-        -38.0,
-        77.167,
-        -9.44,
-        82.0
+        -25.76,
+        78.375
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
@@ -2950,10 +2896,10 @@
       "sector_id": "L-FREIGHT-SERVICE",
       "kind": "room",
       "bounds_xz": [
-        1.44,
+        -25.76,
         67.5,
-        30.0,
-        74.75
+        -16.24,
+        78.375
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
@@ -2963,19 +2909,73 @@
       "floor_y": -6.0
     },
     {
+      "id": "L-FREIGHT-SERVICE/freight_platform",
+      "name": "freight_platform",
+      "sector_id": "L-FREIGHT-SERVICE",
+      "kind": "circulation",
+      "bounds_xz": [
+        -16.24,
+        67.5,
+        4.16,
+        78.375
+      ],
+      "clear_height": 5.0,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-FREIGHT-SERVICE/freight_lift",
+      "name": "freight_lift",
+      "sector_id": "L-FREIGHT-SERVICE",
+      "kind": "elevator",
+      "bounds_xz": [
+        4.16,
+        67.5,
+        19.8,
+        78.375
+      ],
+      "clear_height": 5.0,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
       "id": "L-FREIGHT-SERVICE/shaft_bypass",
       "name": "shaft_bypass",
       "sector_id": "L-FREIGHT-SERVICE",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
-        1.44,
-        74.75,
+        19.8,
+        67.5,
+        30.0,
+        78.375
+      ],
+      "clear_height": 5.0,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-FREIGHT-SERVICE/service_zone",
+      "name": "service_zone",
+      "sector_id": "L-FREIGHT-SERVICE",
+      "kind": "circulation",
+      "bounds_xz": [
+        -38.0,
+        78.375,
         30.0,
         82.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -6.0
@@ -5145,12 +5145,12 @@
       ],
       "segment_xz": [
         [
-          -101.333,
-          1.25
+          -90.41,
+          2.35
         ],
         [
-          -101.333,
-          5.75
+          -85.91,
+          2.35
         ]
       ],
       "width": 4.5,
@@ -5168,12 +5168,12 @@
       ],
       "segment_xz": [
         [
-          -92.667,
-          1.25
+          -92.32,
+          6.425
         ],
         [
-          -92.667,
-          5.75
+          -92.32,
+          10.925
         ]
       ],
       "width": 4.5,
@@ -5232,17 +5232,17 @@
     {
       "id": "P-L-OLD-RECEIVING-01",
       "between": [
-        "L-OLD-RECEIVING/receiving_hall",
-        "L-OLD-RECEIVING/inspection_post"
+        "L-OLD-RECEIVING/tunnel_landing",
+        "L-OLD-RECEIVING/receiving_hall"
       ],
       "segment_xz": [
         [
-          -94.04,
-          49.25
+          -93.25,
+          46.4
         ],
         [
-          -94.04,
-          53.75
+          -88.75,
+          46.4
         ]
       ],
       "width": 4.5,
@@ -5255,17 +5255,17 @@
     {
       "id": "P-L-OLD-RECEIVING-02",
       "between": [
-        "L-OLD-RECEIVING/receiving_hall",
-        "L-OLD-RECEIVING/tunnel_landing"
+        "L-OLD-RECEIVING/inspection_post",
+        "L-OLD-RECEIVING/receiving_hall"
       ],
       "segment_xz": [
         [
-          -87.96,
-          49.25
+          -80.9,
+          46.4
         ],
         [
-          -87.96,
-          53.75
+          -76.4,
+          46.4
         ]
       ],
       "width": 4.5,
@@ -5283,11 +5283,11 @@
       ],
       "segment_xz": [
         [
-          -60.0,
+          -61.2,
           30.225
         ],
         [
-          -60.0,
+          -61.2,
           32.025
         ]
       ],
@@ -5306,11 +5306,11 @@
       ],
       "segment_xz": [
         [
-          -57.3,
+          -58.5,
           35.25
         ],
         [
-          -55.5,
+          -56.7,
           35.25
         ]
       ],
@@ -5324,17 +5324,40 @@
     {
       "id": "P-L-CHAMBER-2-03",
       "between": [
+        "L-CHAMBER-2/gas_equipment_room",
+        "L-CHAMBER-2/containment_chamber"
+      ],
+      "segment_xz": [
+        [
+          -68.4,
+          42.6
+        ],
+        [
+          -68.4,
+          44.4
+        ]
+      ],
+      "width": 1.8,
+      "height": 2.8,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-L-CHAMBER-2-04",
+      "between": [
         "L-CHAMBER-2/containment_chamber",
         "L-CHAMBER-2/cargo_vestibule"
       ],
       "segment_xz": [
         [
-          -60.33,
-          52.74
+          -62.25,
+          51.75
         ],
         [
-          -55.83,
-          52.74
+          -57.75,
+          51.75
         ]
       ],
       "width": 4.5,
@@ -5348,16 +5371,16 @@
       "id": "P-L-SLEEP-LAB-01",
       "between": [
         "L-SLEEP-LAB/internal_corridor",
-        "L-SLEEP-LAB/preparation_room"
+        "L-SLEEP-LAB/neuro_monitoring"
       ],
       "segment_xz": [
         [
-          -24.76,
-          -7.1
+          -24.15,
+          0.1
         ],
         [
-          -24.76,
-          -5.9
+          -22.95,
+          0.1
         ]
       ],
       "width": 1.2,
@@ -5371,16 +5394,16 @@
       "id": "P-L-SLEEP-LAB-02",
       "between": [
         "L-SLEEP-LAB/internal_corridor",
-        "L-SLEEP-LAB/observation_room"
+        "L-SLEEP-LAB/equipment_room"
       ],
       "segment_xz": [
         [
-          -24.76,
-          3.9
+          -20.3,
+          0.1
         ],
         [
-          -24.76,
-          5.1
+          -19.1,
+          0.1
         ]
       ],
       "width": 1.2,
@@ -5394,16 +5417,16 @@
       "id": "P-L-SLEEP-LAB-03",
       "between": [
         "L-SLEEP-LAB/internal_corridor",
-        "L-SLEEP-LAB/neuro_monitoring"
+        "L-SLEEP-LAB/observation_room"
       ],
       "segment_xz": [
         [
-          -21.24,
-          -7.1
+          -15.35,
+          0.1
         ],
         [
-          -21.24,
-          -5.9
+          -14.15,
+          0.1
         ]
       ],
       "width": 1.2,
@@ -5417,16 +5440,16 @@
       "id": "P-L-SLEEP-LAB-04",
       "between": [
         "L-SLEEP-LAB/internal_corridor",
-        "L-SLEEP-LAB/equipment_room"
+        "L-SLEEP-LAB/preparation_room"
       ],
       "segment_xz": [
         [
-          -21.24,
-          3.9
+          -25.2,
+          4.45
         ],
         [
-          -21.24,
-          5.1
+          -25.2,
+          5.65
         ]
       ],
       "width": 1.2,
@@ -5439,17 +5462,17 @@
     {
       "id": "P-L-CHAMBER-3-01",
       "between": [
-        "L-CHAMBER-3/diagnostics_room",
+        "L-CHAMBER-3/operator_gallery",
         "L-CHAMBER-3/passenger_airlock"
       ],
       "segment_xz": [
         [
-          -26.9,
-          30.72
+          -24.3,
+          29.73
         ],
         [
-          -26.9,
-          32.52
+          -24.3,
+          31.53
         ]
       ],
       "width": 1.8,
@@ -5462,17 +5485,17 @@
     {
       "id": "P-L-CHAMBER-3-02",
       "between": [
-        "L-CHAMBER-3/diagnostics_room",
-        "L-CHAMBER-3/operator_gallery"
+        "L-CHAMBER-3/passenger_airlock",
+        "L-CHAMBER-3/containment_chamber"
       ],
       "segment_xz": [
         [
-          -34.56,
-          36.24
+          -21.95,
+          34.26
         ],
         [
-          -32.76,
-          36.24
+          -20.15,
+          34.26
         ]
       ],
       "width": 1.8,
@@ -5485,17 +5508,17 @@
     {
       "id": "P-L-CHAMBER-3-03",
       "between": [
-        "L-CHAMBER-3/passenger_airlock",
-        "L-CHAMBER-3/containment_chamber"
+        "L-CHAMBER-3/containment_chamber",
+        "L-CHAMBER-3/diagnostics_room"
       ],
       "segment_xz": [
         [
-          -19.35,
-          36.24
+          -15.2,
+          42.6
         ],
         [
-          -17.55,
-          36.24
+          -15.2,
+          44.4
         ]
       ],
       "width": 1.8,
@@ -5513,11 +5536,11 @@
       ],
       "segment_xz": [
         [
-          -22.13,
+          -25.25,
           52.74
         ],
         [
-          -17.63,
+          -20.75,
           52.74
         ]
       ],
@@ -5532,21 +5555,21 @@
       "id": "P-L-SERVICE-INTERCHANGE-01",
       "between": [
         "L-SERVICE-INTERCHANGE/service_lobby",
-        "L-SERVICE-INTERCHANGE/double_airlock"
+        "L-SERVICE-INTERCHANGE/service_stair"
       ],
       "segment_xz": [
         [
-          -42.96,
-          45.6
+          -46.5,
+          46.5
         ],
         [
-          -42.96,
-          47.4
+          -44.7,
+          46.5
         ]
       ],
       "width": 1.8,
       "height": 2.8,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -5555,16 +5578,16 @@
       "id": "P-L-SERVICE-INTERCHANGE-02",
       "between": [
         "L-SERVICE-INTERCHANGE/service_lobby",
-        "L-SERVICE-INTERCHANGE/electrical_room"
+        "L-SERVICE-INTERCHANGE/double_airlock"
       ],
       "segment_xz": [
         [
-          -42.96,
-          54.6
+          -42.3,
+          46.5
         ],
         [
-          -42.96,
-          56.4
+          -40.5,
+          46.5
         ]
       ],
       "width": 1.8,
@@ -5578,16 +5601,62 @@
       "id": "P-L-SERVICE-INTERCHANGE-03",
       "between": [
         "L-SERVICE-INTERCHANGE/service_lobby",
-        "L-SERVICE-INTERCHANGE/service_stair"
+        "L-SERVICE-INTERCHANGE/electrical_room"
       ],
       "segment_xz": [
         [
-          -41.04,
-          50.1
+          -38.7,
+          46.5
         ],
         [
-          -41.04,
-          51.9
+          -36.9,
+          46.5
+        ]
+      ],
+      "width": 1.8,
+      "height": 2.8,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-L-SERVICE-INTERCHANGE-04",
+      "between": [
+        "L-SERVICE-INTERCHANGE/service_stair",
+        "L-SERVICE-INTERCHANGE/double_airlock"
+      ],
+      "segment_xz": [
+        [
+          -43.2,
+          52.35
+        ],
+        [
+          -43.2,
+          54.15
+        ]
+      ],
+      "width": 1.8,
+      "height": 2.8,
+      "type": "stair-threshold",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-L-SERVICE-INTERCHANGE-05",
+      "between": [
+        "L-SERVICE-INTERCHANGE/double_airlock",
+        "L-SERVICE-INTERCHANGE/electrical_room"
+      ],
+      "segment_xz": [
+        [
+          -39.6,
+          52.35
+        ],
+        [
+          -39.6,
+          54.15
         ]
       ],
       "width": 1.8,
@@ -5720,17 +5789,17 @@
       ],
       "segment_xz": [
         [
-          26.0,
-          9.6
+          24.2,
+          11.175
         ],
         [
-          26.0,
-          11.4
+          24.2,
+          12.975
         ]
       ],
       "width": 1.8,
       "height": 2.8,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -5743,11 +5812,11 @@
       ],
       "segment_xz": [
         [
-          13.8,
+          14.64,
           30.72
         ],
         [
-          13.8,
+          14.64,
           32.52
         ]
       ],
@@ -5789,11 +5858,11 @@
       ],
       "segment_xz": [
         [
-          22.0,
+          17.94,
           36.24
         ],
         [
-          23.8,
+          19.74,
           36.24
         ]
       ],
@@ -5812,11 +5881,11 @@
       ],
       "segment_xz": [
         [
-          19.11,
+          19.53,
           52.74
         ],
         [
-          23.61,
+          24.03,
           52.74
         ]
       ],
@@ -5835,15 +5904,15 @@
       ],
       "segment_xz": [
         [
-          -9.44,
-          68.467
+          -34.13,
+          78.375
         ],
         [
-          -9.44,
-          71.366
+          -29.63,
+          78.375
         ]
       ],
-      "width": 2.9,
+      "width": 4.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -5854,19 +5923,19 @@
       "id": "P-L-FREIGHT-SERVICE-02",
       "between": [
         "L-FREIGHT-SERVICE/service_zone",
-        "L-FREIGHT-SERVICE/freight_platform"
+        "L-FREIGHT-SERVICE/electrical_room"
       ],
       "segment_xz": [
         [
-          -9.44,
-          73.3
+          -23.25,
+          78.375
         ],
         [
-          -9.44,
-          76.2
+          -18.75,
+          78.375
         ]
       ],
-      "width": 2.9,
+      "width": 4.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -5877,19 +5946,19 @@
       "id": "P-L-FREIGHT-SERVICE-03",
       "between": [
         "L-FREIGHT-SERVICE/service_zone",
-        "L-FREIGHT-SERVICE/freight_lift"
+        "L-FREIGHT-SERVICE/freight_platform"
       ],
       "segment_xz": [
         [
-          -9.44,
-          78.134
+          -8.29,
+          78.375
         ],
         [
-          -9.44,
-          81.033
+          -3.79,
+          78.375
         ]
       ],
-      "width": 2.9,
+      "width": 4.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -5900,19 +5969,19 @@
       "id": "P-L-FREIGHT-SERVICE-04",
       "between": [
         "L-FREIGHT-SERVICE/service_zone",
-        "L-FREIGHT-SERVICE/electrical_room"
+        "L-FREIGHT-SERVICE/freight_lift"
       ],
       "segment_xz": [
         [
-          1.44,
-          68.95
+          9.73,
+          78.375
         ],
         [
-          1.44,
-          73.3
+          14.23,
+          78.375
         ]
       ],
-      "width": 4.35,
+      "width": 4.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -5927,15 +5996,15 @@
       ],
       "segment_xz": [
         [
-          1.44,
-          76.2
+          22.65,
+          78.375
         ],
         [
-          1.44,
-          80.55
+          27.15,
+          78.375
         ]
       ],
-      "width": 4.35,
+      "width": 4.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -6886,15 +6955,15 @@
       "connection_id": "E-X05",
       "space": "L-OLD-RECEIVING/tunnel_landing",
       "neighbor": "U-FRT",
-      "side": "south",
+      "side": "north",
       "segment_xz": [
         [
-          -80.58,
-          60.0
+          -91.6,
+          43.0
         ],
         [
-          -79.38,
-          60.0
+          -90.4,
+          43.0
         ]
       ],
       "width": 1.2,
@@ -6958,15 +7027,15 @@
       "connection_id": "E-L02",
       "space": "L-CHAMBER-1/control_post",
       "neighbor": "L-OLD-CORE",
-      "side": "north",
+      "side": "east",
       "segment_xz": [
         [
-          -97.6,
-          -8.0
+          -84.0,
+          8.075
         ],
         [
-          -96.4,
-          -8.0
+          -84.0,
+          9.275
         ]
       ],
       "width": 1.2,
@@ -7052,7 +7121,7 @@
     {
       "id": "PX-E-L04-L-OLD-RECEIVING",
       "connection_id": "E-L04",
-      "space": "L-OLD-RECEIVING/receiving_hall",
+      "space": "L-OLD-RECEIVING/tunnel_landing",
       "neighbor": "L-OLD-CORE",
       "side": "north",
       "segment_xz": [
@@ -7081,11 +7150,11 @@
       "side": "north",
       "segment_xz": [
         [
-          -57.3,
+          -58.5,
           27.0
         ],
         [
-          -55.5,
+          -56.7,
           27.0
         ]
       ],
@@ -7105,11 +7174,11 @@
       "side": "south",
       "segment_xz": [
         [
-          -23.6,
+          -19.2,
           10.0
         ],
         [
-          -22.4,
+          -18.0,
           10.0
         ]
       ],
@@ -7129,11 +7198,11 @@
       "side": "north",
       "segment_xz": [
         [
-          -19.35,
+          -21.95,
           27.0
         ],
         [
-          -17.55,
+          -20.15,
           27.0
         ]
       ],
@@ -7153,15 +7222,15 @@
       "side": "north",
       "segment_xz": [
         [
-          -42.576,
+          -42.6,
           42.0
         ],
         [
-          -41.424,
+          -41.4,
           42.0
         ]
       ],
-      "width": 1.152,
+      "width": 1.2,
       "height": 2.4,
       "type": "service",
       "direction": "bidirectional",
@@ -7201,11 +7270,11 @@
       "side": "south",
       "segment_xz": [
         [
-          22.4,
+          21.5,
           15.0
         ],
         [
-          23.6,
+          22.7,
           15.0
         ]
       ],
@@ -7225,11 +7294,11 @@
       "side": "north",
       "segment_xz": [
         [
-          22.0,
+          17.94,
           27.0
         ],
         [
-          23.8,
+          19.74,
           27.0
         ]
       ],
@@ -7249,15 +7318,15 @@
       "side": "south",
       "segment_xz": [
         [
-          -92.824,
+          -89.45,
           60.0
         ],
         [
-          -89.176,
+          -84.95,
           60.0
         ]
       ],
-      "width": 3.648,
+      "width": 4.5,
       "height": 4.5,
       "type": "freight",
       "direction": "bidirectional",
@@ -7273,15 +7342,15 @@
       "side": "south",
       "segment_xz": [
         [
-          -60.33,
+          -62.16,
           60.0
         ],
         [
-          -55.83,
+          -57.84,
           60.0
         ]
       ],
-      "width": 4.5,
+      "width": 4.32,
       "height": 4.5,
       "type": "cargo-hermetic",
       "direction": "bidirectional",
@@ -7297,11 +7366,11 @@
       "side": "south",
       "segment_xz": [
         [
-          -22.13,
+          -25.25,
           60.0
         ],
         [
-          -17.63,
+          -20.75,
           60.0
         ]
       ],
@@ -7318,18 +7387,18 @@
       "connection_id": "E-L15",
       "space": "L-SERVICE-INTERCHANGE/service_lobby",
       "neighbor": "L-FRT",
-      "side": "south",
+      "side": "north",
       "segment_xz": [
         [
-          -42.576,
-          60.0
+          -42.9,
+          42.0
         ],
         [
-          -41.424,
-          60.0
+          -41.1,
+          42.0
         ]
       ],
-      "width": 1.152,
+      "width": 1.8,
       "height": 2.4,
       "type": "controlled-transition",
       "direction": "bidirectional",
@@ -7345,11 +7414,11 @@
       "side": "south",
       "segment_xz": [
         [
-          19.11,
+          19.53,
           60.0
         ],
         [
-          23.61,
+          24.03,
           60.0
         ]
       ],
@@ -7366,15 +7435,15 @@
       "connection_id": "E-L17",
       "space": "L-FREIGHT-SERVICE/freight_lift",
       "neighbor": "L-FRT",
-      "side": "south",
+      "side": "north",
       "segment_xz": [
         [
-          -25.97,
-          82.0
+          9.73,
+          67.5
         ],
         [
-          -21.47,
-          82.0
+          14.23,
+          67.5
         ]
       ],
       "width": 4.5,
@@ -7788,11 +7857,11 @@
       "connection_id": "E-X05",
       "centerline_xz": [
         [
-          -79.98,
-          60.0
+          -91.0,
+          43.0
         ],
         [
-          -79.98,
+          -91.0,
           60.0
         ]
       ],
@@ -7828,8 +7897,8 @@
           15.0
         ],
         [
-          -97.0,
-          -8.0
+          -84.0,
+          8.675
         ]
       ],
       "width": 1.2,
@@ -7878,11 +7947,11 @@
       "connection_id": "E-L05",
       "centerline_xz": [
         [
-          -56.4,
+          -57.6,
           27.0
         ],
         [
-          -56.4,
+          -57.6,
           20.0
         ]
       ],
@@ -7896,11 +7965,11 @@
       "connection_id": "E-L06",
       "centerline_xz": [
         [
-          -23.0,
+          -18.6,
           10.0
         ],
         [
-          -23.0,
+          -18.6,
           15.0
         ]
       ],
@@ -7914,11 +7983,11 @@
       "connection_id": "E-L07",
       "centerline_xz": [
         [
-          -18.45,
+          -21.05,
           27.0
         ],
         [
-          -18.45,
+          -21.05,
           20.0
         ]
       ],
@@ -7940,7 +8009,7 @@
           20.0
         ]
       ],
-      "width": 1.152,
+      "width": 1.2,
       "clear_height": 2.4,
       "traversable": true,
       "state": "openable"
@@ -7968,11 +8037,11 @@
       "connection_id": "E-L10",
       "centerline_xz": [
         [
-          23.0,
+          22.1,
           15.0
         ],
         [
-          23.0,
+          22.1,
           15.0
         ]
       ],
@@ -7986,11 +8055,11 @@
       "connection_id": "E-L11",
       "centerline_xz": [
         [
-          22.9,
+          18.84,
           27.0
         ],
         [
-          22.9,
+          18.84,
           20.0
         ]
       ],
@@ -8004,15 +8073,15 @@
       "connection_id": "E-L12",
       "centerline_xz": [
         [
-          -91.0,
+          -87.2,
           60.0
         ],
         [
-          -91.0,
+          -87.2,
           60.0
         ]
       ],
-      "width": 3.648,
+      "width": 4.5,
       "clear_height": 4.5,
       "traversable": true,
       "state": "openable"
@@ -8022,15 +8091,15 @@
       "connection_id": "E-L13",
       "centerline_xz": [
         [
-          -58.08,
+          -60.0,
           60.0
         ],
         [
-          -58.08,
+          -60.0,
           60.0
         ]
       ],
-      "width": 4.5,
+      "width": 4.32,
       "clear_height": 4.5,
       "traversable": false,
       "state": "closed"
@@ -8040,11 +8109,11 @@
       "connection_id": "E-L14",
       "centerline_xz": [
         [
-          -19.88,
+          -23.0,
           60.0
         ],
         [
-          -19.88,
+          -23.0,
           60.0
         ]
       ],
@@ -8059,14 +8128,14 @@
       "centerline_xz": [
         [
           -42.0,
-          60.0
+          42.0
         ],
         [
           -42.0,
           60.0
         ]
       ],
-      "width": 1.152,
+      "width": 1.8,
       "clear_height": 2.4,
       "traversable": true,
       "state": "openable"
@@ -8076,11 +8145,11 @@
       "connection_id": "E-L16",
       "centerline_xz": [
         [
-          21.36,
+          21.78,
           60.0
         ],
         [
-          21.36,
+          21.78,
           60.0
         ]
       ],
@@ -8094,11 +8163,11 @@
       "connection_id": "E-L17",
       "centerline_xz": [
         [
-          -23.72,
-          82.0
+          11.98,
+          67.5
         ],
         [
-          -23.72,
+          11.98,
           67.5
         ]
       ],

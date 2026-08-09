@@ -1,82 +1,74 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://objects/industrial_crate.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/industrial_crate.tscn" id="5"]
 
 [node name="L_FREIGHT_SERVICE_SetDressing" type="Node3D"]
 metadata/sector_id = "L-FREIGHT-SERVICE"
 metadata/material_family = "freight"
 
-[node name="001_L_FREIGHT_SERVICE_electrical_room__industrial_crate" parent="." instance=ExtResource("6")]
-position = Vector3(29.0500, -6.0000, 71.1250)
-rotation = Vector3(0, -1.5707963, 0)
+[node name="001_L_FREIGHT_SERVICE_electrical_room__industrial_crate" parent="." instance=ExtResource("5")]
+position = Vector3(-21.0000, -6.0000, 68.3500)
 metadata/placement_id = "L-FREIGHT-SERVICE/electrical_room::industrial_crate"
 
-[node name="002_L_FREIGHT_SERVICE_freight_lift__emergency_barrier" parent="." instance=ExtResource("4")]
-position = Vector3(-36.6500, -6.0000, 79.5835)
+[node name="002_L_FREIGHT_SERVICE_freight_lift__emergency_barrier" parent="." instance=ExtResource("3")]
+position = Vector3(5.5100, -6.0000, 72.9375)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-FREIGHT-SERVICE/freight_lift::emergency_barrier"
 
-[node name="003_L_FREIGHT_SERVICE_freight_platform__wall_beacon" parent="." instance=ExtResource("3")]
-position = Vector3(-37.2500, -3.6500, 74.7500)
+[node name="003_L_FREIGHT_SERVICE_freight_platform__wall_beacon" parent="." instance=ExtResource("2")]
+position = Vector3(-15.4900, -3.6500, 72.9375)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-FREIGHT-SERVICE/freight_platform::wall_beacon"
 
-[node name="004_L_FREIGHT_SERVICE_service_zone__generator_unit" parent="." instance=ExtResource("5")]
-position = Vector3(-4.0000, -6.0000, 68.5000)
+[node name="004_L_FREIGHT_SERVICE_service_zone__generator_unit" parent="." instance=ExtResource("4")]
+position = Vector3(-36.7000, -6.0000, 80.1875)
+rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-FREIGHT-SERVICE/service_zone::generator_unit"
 
-[node name="005_L_FREIGHT_SERVICE_shaft_bypass__industrial_crate" parent="." instance=ExtResource("6")]
-position = Vector3(29.0500, -6.0000, 78.3750)
-rotation = Vector3(0, -1.5707963, 0)
+[node name="005_L_FREIGHT_SERVICE_shaft_bypass__industrial_crate" parent="." instance=ExtResource("5")]
+position = Vector3(24.9000, -6.0000, 68.3500)
 metadata/placement_id = "L-FREIGHT-SERVICE/shaft_bypass::industrial_crate"
 
-[node name="006_L_FREIGHT_SERVICE_ventilation_room__emergency_barrier" parent="." instance=ExtResource("4")]
-position = Vector3(-36.6500, -6.0000, 69.9165)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="006_L_FREIGHT_SERVICE_ventilation_room__emergency_barrier" parent="." instance=ExtResource("3")]
+position = Vector3(-31.8800, -6.0000, 68.3000)
 metadata/placement_id = "L-FREIGHT-SERVICE/ventilation_room::emergency_barrier"
 
-[node name="007_P_L_FREIGHT_SERVICE_01" parent="." instance=ExtResource("2")]
-position = Vector3(-9.4400, -6.0000, 69.9165)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(1.21849, 1.87500, 1.00000)
+[node name="007_P_L_FREIGHT_SERVICE_01" parent="." instance=ExtResource("1")]
+position = Vector3(-31.8800, -6.0000, 78.3750)
+scale = Vector3(1.08173, 1.50000, 1.00000)
 metadata/placement_id = "P-L-FREIGHT-SERVICE-01"
 metadata/open_passage = true
 
-[node name="008_P_L_FREIGHT_SERVICE_02" parent="." instance=ExtResource("2")]
-position = Vector3(-9.4400, -6.0000, 74.7500)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(1.21849, 1.87500, 1.00000)
+[node name="008_P_L_FREIGHT_SERVICE_02" parent="." instance=ExtResource("1")]
+position = Vector3(-21.0000, -6.0000, 78.3750)
+scale = Vector3(1.08173, 1.50000, 1.00000)
 metadata/placement_id = "P-L-FREIGHT-SERVICE-02"
 metadata/open_passage = true
 
-[node name="009_P_L_FREIGHT_SERVICE_03" parent="." instance=ExtResource("2")]
-position = Vector3(-9.4400, -6.0000, 79.5835)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(1.21849, 1.87500, 1.00000)
+[node name="009_P_L_FREIGHT_SERVICE_03" parent="." instance=ExtResource("1")]
+position = Vector3(-6.0400, -6.0000, 78.3750)
+scale = Vector3(1.08173, 1.50000, 1.00000)
 metadata/placement_id = "P-L-FREIGHT-SERVICE-03"
 metadata/open_passage = true
 
 [node name="010_P_L_FREIGHT_SERVICE_04" parent="." instance=ExtResource("1")]
-position = Vector3(1.4400, -6.0000, 71.1250)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(1.04567, 1.50000, 1.00000)
+position = Vector3(11.9800, -6.0000, 78.3750)
+scale = Vector3(1.08173, 1.50000, 1.00000)
 metadata/placement_id = "P-L-FREIGHT-SERVICE-04"
 metadata/open_passage = true
 
 [node name="011_P_L_FREIGHT_SERVICE_05" parent="." instance=ExtResource("1")]
-position = Vector3(1.4400, -6.0000, 78.3750)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(1.04567, 1.50000, 1.00000)
+position = Vector3(24.9000, -6.0000, 78.3750)
+scale = Vector3(1.08173, 1.50000, 1.00000)
 metadata/placement_id = "P-L-FREIGHT-SERVICE-05"
 metadata/open_passage = true
 
 [node name="012_PX_E_L17_L_FREIGHT_SERVICE" parent="." instance=ExtResource("1")]
-position = Vector3(-23.7200, -6.0000, 82.0000)
+position = Vector3(11.9800, -6.0000, 67.5000)
 scale = Vector3(1.08173, 1.50000, 1.00000)
 metadata/placement_id = "PX-E-L17-L-FREIGHT-SERVICE"
 metadata/open_passage = true
