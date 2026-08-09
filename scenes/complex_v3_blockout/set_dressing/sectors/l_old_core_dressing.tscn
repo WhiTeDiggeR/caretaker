@@ -1,74 +1,91 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=9 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/server_rack.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="8"]
 
 [node name="L_OLD_CORE_SetDressing" type="Node3D"]
 metadata/sector_id = "L-OLD-CORE"
 metadata/material_family = "historic"
 
-[node name="001_L_OLD_CORE_distribution_hall__wall_beacon" parent="." instance=ExtResource("2")]
-position = Vector3(-74.0100, -3.6500, 0.5000)
+[node name="001_L_OLD_CORE_distribution_hall__operator_console__navigation_island" parent="." instance=ExtResource("3")]
+position = Vector3(-73.0000, -6.0000, 12.0000)
+metadata/placement_id = "L-OLD-CORE/distribution_hall::operator_console::navigation_island"
+
+[node name="002_L_OLD_CORE_distribution_hall__wall_terminal__route_status" parent="." instance=ExtResource("7")]
+position = Vector3(-62.1400, -4.8000, 14.0000)
+rotation = Vector3(0, -1.5707963, 0)
+metadata/placement_id = "L-OLD-CORE/distribution_hall::wall_terminal::route_status"
+
+[node name="003_L_OLD_CORE_reserve_control__workbench__analog_console" parent="." instance=ExtResource("8")]
+position = Vector3(-75.0000, -6.0000, -8.0000)
+metadata/placement_id = "L-OLD-CORE/reserve_control::workbench::analog_console"
+
+[node name="004_L_OLD_CORE_relay_room__server_rack__relay_bank" parent="." instance=ExtResource("6")]
+position = Vector3(-65.0000, -6.0000, -10.0000)
+metadata/placement_id = "L-OLD-CORE/relay_room::server_rack::relay_bank"
+
+[node name="005_L_OLD_CORE_senior_room__loaded_cabinet__records" parent="." instance=ExtResource("5")]
+position = Vector3(-65.0000, -6.0000, -4.0000)
+metadata/placement_id = "L-OLD-CORE/senior_room::loaded_cabinet::records"
+
+[node name="006_L_OLD_CORE_control_access__wall_beacon__control_door" parent="." instance=ExtResource("4")]
+position = Vector3(-71.7780, -3.6500, 2.1830)
+rotation = Vector3(0, 3.1415927, 0)
+metadata/placement_id = "L-OLD-CORE/control_access::wall_beacon::control_door"
+
+[node name="007_P_L_OLD_CORE_01" parent="." instance=ExtResource("2")]
+position = Vector3(-68.1110, -6.0000, -9.6670)
 rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "L-OLD-CORE/distribution_hall::wall_beacon"
-
-[node name="002_L_OLD_CORE_relay_room__loaded_shelf" parent="." instance=ExtResource("3")]
-position = Vector3(-66.6200, -6.0000, -13.1500)
-metadata/placement_id = "L-OLD-CORE/relay_room::loaded_shelf"
-
-[node name="003_L_OLD_CORE_reserve_control__workbench" parent="." instance=ExtResource("5")]
-position = Vector3(-79.3800, -6.0000, -13.0500)
-metadata/placement_id = "L-OLD-CORE/reserve_control::workbench"
-
-[node name="004_L_OLD_CORE_senior_room__wall_terminal" parent="." instance=ExtResource("4")]
-position = Vector3(-83.1000, -4.8000, 7.7500)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "L-OLD-CORE/senior_room::wall_terminal"
-
-[node name="005_P_L_OLD_CORE_01" parent="." instance=ExtResource("1")]
-position = Vector3(-74.7600, -6.0000, -6.7500)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.50420, 1.00000, 1.00000)
+scale = Vector3(0.84034, 1.00000, 1.00000)
 metadata/placement_id = "P-L-OLD-CORE-01"
 metadata/open_passage = true
 
-[node name="006_P_L_OLD_CORE_02" parent="." instance=ExtResource("1")]
-position = Vector3(-74.7600, -6.0000, 7.7500)
+[node name="008_P_L_OLD_CORE_02" parent="." instance=ExtResource("2")]
+position = Vector3(-68.1110, -6.0000, -4.0000)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.50420, 1.00000, 1.00000)
+scale = Vector3(0.84034, 1.00000, 1.00000)
 metadata/placement_id = "P-L-OLD-CORE-02"
 metadata/open_passage = true
 
-[node name="007_P_L_OLD_CORE_03" parent="." instance=ExtResource("1")]
-position = Vector3(-71.2400, -6.0000, 0.5000)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.50420, 1.00000, 1.00000)
+[node name="009_P_L_OLD_CORE_03" parent="." instance=ExtResource("1")]
+position = Vector3(-71.7785, -6.0000, -1.6670)
+scale = Vector3(0.88149, 0.80000, 1.00000)
 metadata/placement_id = "P-L-OLD-CORE-03"
 metadata/open_passage = true
 
-[node name="008_PX_E_L01_L_OLD_CORE" parent="." instance=ExtResource("1")]
+[node name="010_P_L_OLD_CORE_04" parent="." instance=ExtResource("1")]
+position = Vector3(-71.7785, -6.0000, 2.3330)
+scale = Vector3(0.88149, 0.80000, 1.00000)
+metadata/placement_id = "P-L-OLD-CORE-04"
+metadata/open_passage = true
+
+[node name="011_PX_E_L01_L_OLD_CORE" parent="." instance=ExtResource("2")]
 position = Vector3(-73.0000, -6.0000, 15.0000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "PX-E-L01-L-OLD-CORE"
 metadata/open_passage = true
 
-[node name="009_PX_E_L02_L_OLD_CORE" parent="." instance=ExtResource("1")]
-position = Vector3(-73.0000, -6.0000, -14.0000)
+[node name="012_PX_E_L02_L_OLD_CORE" parent="." instance=ExtResource("2")]
+position = Vector3(-73.0000, -6.0000, 15.0000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "PX-E-L02-L-OLD-CORE"
 metadata/open_passage = true
 
-[node name="010_PX_E_L03_L_OLD_CORE" parent="." instance=ExtResource("1")]
-position = Vector3(-73.0000, -6.0000, -14.0000)
-scale = Vector3(0.50420, 1.00000, 1.00000)
+[node name="013_PX_E_L03_L_OLD_CORE" parent="." instance=ExtResource("1")]
+position = Vector3(-62.0000, -6.0000, 8.6665)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.80120, 0.80000, 1.00000)
 metadata/placement_id = "PX-E-L03-L-OLD-CORE"
 metadata/open_passage = true
 
-[node name="011_PX_E_L04_L_OLD_CORE" parent="." instance=ExtResource("1")]
-position = Vector3(-73.0000, -6.0000, -14.0000)
+[node name="014_PX_E_L04_L_OLD_CORE" parent="." instance=ExtResource("2")]
+position = Vector3(-73.0000, -6.0000, 15.0000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "PX-E-L04-L-OLD-CORE"
 metadata/open_passage = true

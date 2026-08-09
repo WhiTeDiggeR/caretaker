@@ -27,7 +27,12 @@ func _initialize() -> void:
 			var blocker: Node = null
 			for hit: Dictionary in hits:
 				var candidate := hit["collider"] as Node
-				if candidate != null and candidate.name != "Floor" and not str(candidate.get_path()).contains("VT-OLD-INCLINE"):
+				var stair_walking_surface := (
+					str(passage.get("type", "")) == "stair-threshold"
+					and str(candidate.get_path()).contains("RouteASwitchbackStair/Generated")
+					and (candidate.name.begins_with("UpperFlight_") or candidate.name.begins_with("LowerFlight_") or candidate.name in ["LowerThreshold", "IntermediateLanding"])
+				) if candidate != null else false
+				if candidate != null and candidate.name != "Floor" and not stair_walking_surface and not str(candidate.get_path()).contains("VT-OLD-INCLINE"):
 					blocker = candidate
 					break
 			if blocker != null:

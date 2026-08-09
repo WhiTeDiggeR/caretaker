@@ -5,6 +5,8 @@ const CONTROL_SCENES := {
 	"U-CENTRAL-CORE": "res://scenes/complex_v3_blockout/zones/upper/u_central_core.tscn",
 	"L-CENTRAL-CORE": "res://scenes/complex_v3_blockout/zones/lower/l_central_core.tscn",
 	"U-MEDBAY": "res://scenes/complex_v3_blockout/zones/upper/u_medbay.tscn",
+	"U-ROUTE-A": "res://scenes/complex_v3_blockout/zones/upper/u_route_a.tscn",
+	"L-ARCHIVE-A": "res://scenes/complex_v3_blockout/zones/lower/l_archive_a.tscn",
 	"L-OLD-CORE": "res://scenes/complex_v3_blockout/zones/lower/l_old_core.tscn",
 	"T-UTILITIES": "res://scenes/complex_v3_blockout/zones/technical/t_utilities.tscn",
 }
@@ -12,14 +14,18 @@ const EXPECTED_SPACES := {
 	"U-CENTRAL-CORE": 6,
 	"L-CENTRAL-CORE": 6,
 	"U-MEDBAY": 7,
-	"L-OLD-CORE": 4,
+	"U-ROUTE-A": 4,
+	"L-ARCHIVE-A": 5,
+	"L-OLD-CORE": 5,
 	"T-UTILITIES": 7,
 }
 const EXPECTED_CEILINGS := {
 	"U-CENTRAL-CORE": 4,
 	"L-CENTRAL-CORE": 4,
 	"U-MEDBAY": 7,
-	"L-OLD-CORE": 4,
+	"U-ROUTE-A": 3,
+	"L-ARCHIVE-A": 4,
+	"L-OLD-CORE": 5,
 	"T-UTILITIES": 7,
 }
 
@@ -74,6 +80,22 @@ func _run() -> void:
 				errors.append("%s preview must contain four floor panels around the stair opening" % sector_id)
 			if not part.find_children("Datum", "", true, false).is_empty() or not part.find_children("ShaftEnvelope", "", true, false).is_empty():
 				errors.append("%s preview exposes vertical debug geometry" % sector_id)
+		if sector_id == "U-ROUTE-A" and generated != null:
+			if not part.find_children("RouteASwitchbackStair", "", true, false).is_empty():
+				errors.append("U-ROUTE-A preview must contain only the stair opening, not the separate stair scene")
+			var landing := part.find_children("U-ROUTE-A__stair_landing", "", true, false)
+			if landing.is_empty():
+				errors.append("U-ROUTE-A preview has no stair landing space")
+			elif not (landing[0] as Node).find_children("Floor", "", true, false).is_empty():
+				errors.append("U-ROUTE-A stair landing must remain an open floor aperture")
+		if sector_id == "L-ARCHIVE-A" and generated != null:
+			if not part.find_children("RouteASwitchbackStair", "", true, false).is_empty():
+				errors.append("L-ARCHIVE-A preview must contain only the stair opening, not the separate stair scene")
+			var landing := part.find_children("L-ARCHIVE-A__route_a_stair", "", true, false)
+			if landing.is_empty():
+				errors.append("L-ARCHIVE-A preview has no Route A stair space")
+			elif not (landing[0] as Node).find_children("Floor", "", true, false).is_empty():
+				errors.append("L-ARCHIVE-A Route A stair must remain an open floor aperture")
 		if int(stats.get("ceilings", 0)) != 0 or not part.find_children("Ceiling", "", true, false).is_empty():
 			errors.append("%s editor preview shows ceilings by default" % sector_id)
 		part.editor_preview_show_ceilings = true

@@ -18,7 +18,7 @@ OUTPUT_PATH = ROOT / "geometry" / "complex-handoff.json"
 FINAL_BOUNDS_OVERRIDE = {
     "U-CONTROL": [-32.0, -13.0, -8.0, 14.5],
     "U-CENTRAL-CORE": [-7.75, -6.0, 7.75, 15.0],
-    "U-ROUTE-A": [-62.0, -6.0, -46.0, 14.0],
+    "U-ROUTE-A": [-61.5, -6.0, -47.5, 13.0],
     "U-DOMESTIC": [-57.0, -13.0, -33.0, 15.0],
     "U-CHAMBER-4": [-110.0, 37.0, -82.0, 60.0],
     "U-CHAMBER-6": [0.0, 29.0, 32.0, 60.0],
@@ -89,6 +89,42 @@ MEDBAY_PORTAL_CENTERS = {
     frozenset(("clean_corridor", "triage")): 10.856,
     frozenset(("clean_corridor", "medical_post")): 13.831,
     frozenset(("triage", "sanitary_airlock")): -89.032,
+}
+
+ROUTE_A_PORTAL_WIDTHS = {
+    frozenset(("hall_access", "service_store")): 2.533,
+    frozenset(("service_store", "ventilation_room")): 2.933,
+    frozenset(("ventilation_room", "stair_landing")): 2.267,
+}
+
+ROUTE_A_PORTAL_CENTERS = {
+    frozenset(("hall_access", "service_store")): 3.533,
+    frozenset(("service_store", "ventilation_room")): 2.0,
+    frozenset(("ventilation_room", "stair_landing")): -51.033,
+}
+
+LOWER_ROUTE_A_PORTAL_WIDTHS = {
+    frozenset(("route_a_service_passage", "route_a_stair_lobby")): 1.8,
+    frozenset(("route_a_stair_lobby", "route_a_stair")): 1.5,
+}
+
+LOWER_ROUTE_A_PORTAL_CENTERS = {
+    frozenset(("route_a_service_passage", "route_a_stair_lobby")): 3.0,
+    frozenset(("route_a_stair_lobby", "route_a_stair")): -53.6,
+}
+
+OLD_CORE_PORTAL_WIDTHS = {
+    frozenset(("reserve_control", "relay_room")): 2.0,
+    frozenset(("reserve_control", "senior_room")): 2.0,
+    frozenset(("reserve_control", "control_access")): 3.667,
+    frozenset(("control_access", "distribution_hall")): 3.667,
+}
+
+OLD_CORE_PORTAL_CENTERS = {
+    frozenset(("reserve_control", "relay_room")): -9.667,
+    frozenset(("reserve_control", "senior_room")): -4.0,
+    frozenset(("reserve_control", "control_access")): -71.778,
+    frozenset(("control_access", "distribution_hall")): -71.778,
 }
 
 FREIGHT_RECEPTION_PORTAL_WIDTHS = {
@@ -285,6 +321,56 @@ def medbay_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list
     ]
 
 
+def route_a_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the approved 15 px/m Route A plan around A-ROUTE-A."""
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "hall_access", rect(-61.5, 1.533, -59.5, 5.533), height, True, "circulation"),
+        room(sector_id, "service_store", rect(-59.5, -6.0, -53.5, 6.0), height),
+        room(sector_id, "ventilation_room", rect(-53.5, -6.0, -47.5, 6.0), height),
+        room(sector_id, "stair_landing", rect(-55.5, 6.0, -49.5, 13.0), height, True, "stair"),
+    ]
+    return result, [
+        ("hall_access", "service_store"),
+        ("service_store", "ventilation_room"),
+        ("ventilation_room", "stair_landing"),
+    ]
+
+
+def lower_route_a_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Preserve the old archive shell while keeping the late Route A partition isolated."""
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "archive_main", rect(-61.0, -14.0, -41.0, 0.5), height),
+        room(sector_id, "route_a_service_passage", rect(-61.0, 0.5, -55.5, 13.0), height, True, "circulation"),
+        room(sector_id, "route_a_stair_lobby", rect(-55.5, 0.5, -49.5, 6.0), height, True, "circulation"),
+        room(sector_id, "route_a_stair", rect(-55.5, 6.0, -49.5, 13.0), height, True, "stair"),
+        room(sector_id, "route_a_partition", rect(-49.5, 0.5, -41.0, 15.0), height),
+    ]
+    return result, [
+        ("route_a_service_passage", "route_a_stair_lobby"),
+        ("route_a_stair_lobby", "route_a_stair"),
+    ]
+
+
+def old_core_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    """Trace the approved old-core hub; service rooms remain branches, never transit."""
+    height = height_for(sector_id)
+    result = [
+        room(sector_id, "reserve_control", rect(-80.944, -14.0, -68.111, -1.667), height),
+        room(sector_id, "relay_room", rect(-68.111, -14.0, -62.611, -7.333), height),
+        room(sector_id, "senior_room", rect(-68.111, -7.333, -62.611, -1.667), height),
+        room(sector_id, "control_access", rect(-74.833, -1.667, -68.722, 2.333), height, True, "circulation"),
+        room(sector_id, "distribution_hall", rect(-84.0, 2.333, -62.0, 15.0), height, True, "circulation"),
+    ]
+    return result, [
+        ("reserve_control", "relay_room"),
+        ("reserve_control", "senior_room"),
+        ("reserve_control", "control_access"),
+        ("control_access", "distribution_hall"),
+    ]
+
+
 def central_core_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
     """Trace the approved 15.5 x 21 m passenger-core SVG at 24 px/m."""
     x0, z0, x1, z1 = bounds
@@ -419,6 +505,12 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
         return emergency_layout(sector_id, bounds)
     if sector_id == "U-MEDBAY":
         return medbay_layout(sector_id, bounds)
+    if sector_id == "U-ROUTE-A":
+        return route_a_layout(sector_id, bounds)
+    if sector_id == "L-ARCHIVE-A":
+        return lower_route_a_layout(sector_id, bounds)
+    if sector_id == "L-OLD-CORE":
+        return old_core_layout(sector_id, bounds)
     if sector_id == "U-CONTROL":
         return control_center_layout(sector_id, bounds)
     if sector_id == "U-DOMESTIC":
@@ -467,11 +559,18 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
     axis, coordinate, lo, hi = shared
     span = hi - lo
     cargo_threshold = "cargo_airlock" in a["id"] or "cargo_airlock" in b["id"] or "cargo_vestibule" in a["id"] or "cargo_vestibule" in b["id"]
+    stair_threshold = "stair" in {a.get("kind"), b.get("kind")}
     special_width = CENTRAL_CORE_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"]))) if sector_id in CENTRAL_CORE_SECTORS else None
     if sector_id == "U-CONTROL":
         special_width = CONTROL_CENTER_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
     if sector_id == "U-EAST-SUPPORT":
         special_width = EAST_SUPPORT_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
+    if sector_id == "U-ROUTE-A":
+        special_width = ROUTE_A_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
+    if sector_id == "L-ARCHIVE-A":
+        special_width = LOWER_ROUTE_A_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
+    if sector_id == "L-OLD-CORE":
+        special_width = OLD_CORE_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
     if sector_id == "U-FREIGHT":
         special_width = FREIGHT_RECEPTION_PORTAL_WIDTHS.get(frozenset((a["name"], b["name"])), special_width)
     requested_width = special_width if special_width is not None else 4.5 if cargo_threshold else width
@@ -484,6 +583,12 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
         center = DOMESTIC_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     if sector_id == "U-MEDBAY":
         center = MEDBAY_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
+    if sector_id == "U-ROUTE-A":
+        center = ROUTE_A_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
+    if sector_id == "L-ARCHIVE-A":
+        center = LOWER_ROUTE_A_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
+    if sector_id == "L-OLD-CORE":
+        center = OLD_CORE_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     if sector_id == "U-EAST-SUPPORT":
         center = EAST_SUPPORT_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     if sector_id == "U-FREIGHT":
@@ -495,7 +600,7 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
         "segment_xz": [[round(v, 3) for v in point] for point in segment],
         "width": round(actual_width, 3),
         "height": 4.5 if cargo_threshold else height,
-        "type": "cargo-hermetic" if cargo_threshold else "internal-door",
+        "type": "cargo-hermetic" if cargo_threshold else "stair-threshold" if stair_threshold else "internal-door",
         "direction": "bidirectional",
         "state": "openable",
         "status": "provisional-metric",
@@ -649,12 +754,81 @@ def freight_reception_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
     }
 
 
+def route_a_external_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
+    entry_name = "hall_access" if edge["id"] == "E-U02" else "stair_landing"
+    entry = next(space for space in spaces if space["name"] == entry_name)
+    if edge["id"] == "E-U02":
+        segment = [[-61.5, 2.267], [-61.5, 4.8]]
+        side = "west"
+        width = 2.533
+    else:
+        segment = [[-53.25, 13.0], [-51.75, 13.0]]
+        side = "south"
+        width = 1.5
+    return {
+        "id": f"PX-{edge['id']}-U-ROUTE-A",
+        "connection_id": edge["id"],
+        "space": entry["id"],
+        "neighbor": edge["to"] if edge["from"] == "U-ROUTE-A" else edge["from"],
+        "side": side,
+        "segment_xz": segment,
+        "width": width,
+        "height": 2.4,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
+def route_a_neighbor_portal(edge: dict, sector_id: str, spaces: list[dict]) -> dict[str, Any]:
+    if edge["id"] == "E-U02":
+        entry_name = "distribution_hall"
+        segment = [[-62.0, 2.267], [-62.0, 4.8]]
+        side = "east"
+        width = 2.533
+    elif sector_id == "L-OLD-CORE":
+        entry_name = "distribution_hall"
+        segment = [[-62.0, 7.0], [-62.0, 10.333]]
+        side = "east"
+        width = 3.333
+    else:
+        entry_name = "route_a_service_passage"
+        segment = [[-61.0, 7.0], [-61.0, 10.333]]
+        side = "west"
+        width = 3.333
+    entry = next(space for space in spaces if space["name"] == entry_name)
+    other = edge["to"] if edge["from"] == sector_id else edge["from"]
+    return {
+        "id": f"PX-{edge['id']}-{sector_id}",
+        "connection_id": edge["id"],
+        "space": entry["id"],
+        "neighbor": other,
+        "side": side,
+        "segment_xz": segment,
+        "width": width,
+        "height": 2.4,
+        "type": edge["kind"],
+        "direction": "bidirectional",
+        "state": edge.get("state", "openable"),
+        "traversable": edge["traversable"],
+        "status": "provisional-metric",
+    }
+
+
 def external_portal(edge: dict, sector_id: str, spaces: list[dict], sector_bounds: list[float]) -> dict[str, Any]:
     other = edge["to"] if edge["from"] == sector_id else edge["from"]
+    if edge["id"] == "E-U02" and sector_id == "U-EMERGENCY":
+        return route_a_neighbor_portal(edge, sector_id, spaces)
+    if edge["id"] == "E-L03" and sector_id in {"L-OLD-CORE", "L-ARCHIVE-A"}:
+        return route_a_neighbor_portal(edge, sector_id, spaces)
     if edge["id"] == "E-U02A" and sector_id in {"U-EMERGENCY", "U-MEDBAY"}:
         return personnel_medbay_portal(edge, sector_id, spaces)
     if edge["id"] == "E-U13" and sector_id == "U-FREIGHT":
         return freight_reception_portal(edge, spaces)
+    if sector_id == "U-ROUTE-A" and edge["id"] in {"E-U02", "E-X01"}:
+        return route_a_external_portal(edge, spaces)
     if sector_id == "U-EAST-SUPPORT" and edge["id"] == "E-U06":
         entry = next(space for space in spaces if space["name"] == "service_vestibule")
     else:

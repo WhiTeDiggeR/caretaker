@@ -26,6 +26,9 @@ def main() -> None:
     domestic_plan_prop_count = 0
     east_support_plan_prop_count = 0
     medbay_plan_prop_count = 0
+    route_a_plan_prop_count = 0
+    lower_route_a_plan_prop_count = 0
+    old_core_plan_prop_count = 0
     minimum_service_clearance = float("inf")
     for sector in manifest["sectors"]:
         scene_path = ROOT / sector["dressing_scene"].removeprefix("res://")
@@ -59,6 +62,21 @@ def main() -> None:
                         errors.append(f"U-MEDBAY prop is not plan-aligned: {placement['id']}")
                     else:
                         medbay_plan_prop_count += 1
+                if placement["space_id"].startswith("U-ROUTE-A/"):
+                    if not placement.get("plan_aligned", False):
+                        errors.append(f"U-ROUTE-A prop is not plan-aligned: {placement['id']}")
+                    else:
+                        route_a_plan_prop_count += 1
+                if placement["space_id"].startswith("L-ARCHIVE-A/"):
+                    if not placement.get("plan_aligned", False):
+                        errors.append(f"L-ARCHIVE-A prop is not plan-aligned: {placement['id']}")
+                    else:
+                        lower_route_a_plan_prop_count += 1
+                if placement["space_id"].startswith("L-OLD-CORE/"):
+                    if not placement.get("plan_aligned", False):
+                        errors.append(f"L-OLD-CORE prop is not plan-aligned: {placement['id']}")
+                    else:
+                        old_core_plan_prop_count += 1
                 is_chamber_beacon = (
                     "CHAMBER" in placement["space_id"]
                     and placement["scene"].endswith("wall_beacon.tscn")
@@ -131,12 +149,18 @@ def main() -> None:
         errors.append(f"U-EAST-SUPPORT plan-aligned prop count {east_support_plan_prop_count}, expected 6")
     if medbay_plan_prop_count != 12:
         errors.append(f"U-MEDBAY plan-aligned prop count {medbay_plan_prop_count}, expected 12")
+    if route_a_plan_prop_count != 5:
+        errors.append(f"U-ROUTE-A plan-aligned prop count {route_a_plan_prop_count}, expected 5")
+    if lower_route_a_plan_prop_count != 7:
+        errors.append(f"L-ARCHIVE-A plan-aligned prop count {lower_route_a_plan_prop_count}, expected 7")
+    if old_core_plan_prop_count != 6:
+        errors.append(f"L-OLD-CORE plan-aligned prop count {old_core_plan_prop_count}, expected 6")
     cargo_portals = [portal for portal in handoff["internal_portals"] if any("/cargo_airlock" in space_id or "/cargo_vestibule" in space_id for space_id in portal["between"])]
     if len(cargo_portals) != 5 or any(float(portal["width"]) < 4.5 or float(portal["height"]) < 4.5 for portal in cargo_portals):
         errors.append("five internal cargo thresholds must preserve 4.5 x 4.5 m clearance")
     if errors:
         raise SystemExit("Set-dressing validation failed:\n- " + "\n- ".join(errors))
-    print(f"Set-dressing validation passed: 30 sectors, {prop_count} props, {frame_count} open portal frames, {wall_mount_count} wall mounts ({chamber_wall_mount_count} chamber beacons), {control_plan_prop_count} U-CONTROL plan props, {domestic_plan_prop_count} U-DOMESTIC plan props, {east_support_plan_prop_count} U-EAST-SUPPORT plan props, {medbay_plan_prop_count} U-MEDBAY plan props, minimum service clearance {minimum_service_clearance:.2f} m")
+    print(f"Set-dressing validation passed: 30 sectors, {prop_count} props, {frame_count} open portal frames, {wall_mount_count} wall mounts ({chamber_wall_mount_count} chamber beacons), {control_plan_prop_count} U-CONTROL plan props, {domestic_plan_prop_count} U-DOMESTIC plan props, {east_support_plan_prop_count} U-EAST-SUPPORT plan props, {medbay_plan_prop_count} U-MEDBAY plan props, {route_a_plan_prop_count} U-ROUTE-A plan props, {lower_route_a_plan_prop_count} L-ARCHIVE-A plan props, {old_core_plan_prop_count} L-OLD-CORE plan props, minimum service clearance {minimum_service_clearance:.2f} m")
 
 
 if __name__ == "__main__":

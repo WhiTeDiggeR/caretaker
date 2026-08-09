@@ -11,6 +11,7 @@ const UTILITY_PANELS := preload("res://materials/complex_v3/utility_panels.tres"
 const HISTORIC_PANELS := preload("res://materials/complex_v3/historic_panels.tres")
 const MAIN_CORE_STAIR_SCENE := preload("res://objects/complex_v3/main_core_switchback_stair.tscn")
 const EAST_EMERGENCY_STAIR_SCENE := preload("res://objects/complex_v3/east_emergency_switchback_stair.tscn")
+const ROUTE_A_STAIR_SCENE := preload("res://objects/complex_v3/route_a_switchback_stair.tscn")
 
 const DEFAULT_HANDOFF_PATH := "res://docs/design/complex_v3/handoff/geometry/complex-handoff.json"
 const DEFAULT_VERTICAL_PATH := "res://docs/design/complex_v3/handoff/vertical/vertical-transitions.json"
@@ -303,6 +304,8 @@ func _build_space(space: Dictionary, is_route: bool) -> void:
 		"L-CENTRAL-CORE/passenger_elevator",
 		"L-CENTRAL-CORE/main_stair",
 		"U-EAST-SUPPORT/emergency_stair",
+		"U-ROUTE-A/stair_landing",
+		"L-ARCHIVE-A/route_a_stair",
 	]
 	if not open_vertical:
 		_build_floor(root, bounds, floor_y, material)
@@ -572,6 +575,13 @@ func _build_transition_marker(parent: Node3D, transition: Dictionary) -> void:
 			stair.position = Vector3(center_xz.x, 0.0, center_xz.y)
 			stair.build_collisions = _collisions_enabled()
 			root.add_child(stair)
+		elif str(transition["id"]) == "VT-ROUTE-A":
+			var center_xz := _vector2(transition["center_xz"])
+			var stair := ROUTE_A_STAIR_SCENE.instantiate() as RouteASwitchbackStair
+			stair.name = "RouteASwitchbackStair"
+			stair.position = Vector3(center_xz.x, 0.0, center_xz.y)
+			stair.build_collisions = _collisions_enabled()
+			root.add_child(stair)
 		else:
 			var center_xz := _vector2(transition["center_xz"])
 			var connects: Array = transition.get("connects", ["LV-U", "LV-L"])
@@ -779,6 +789,7 @@ func _portal_passage(portal: Dictionary, floor_y: float, declared_side: String) 
 		test_half_depth = minf(test_half_depth, maxf(0.2, minimum_normal_depth - 0.6))
 	return {
 		"id": str(portal["id"]),
+		"type": str(portal.get("type", "")),
 		"center": Vector3(center.x, floor_y + 1.05, center.y),
 		"direction": direction,
 		"width": float(portal["width"]),

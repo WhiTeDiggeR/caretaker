@@ -282,6 +282,42 @@ def medbay_props(spaces: dict[str, dict]) -> list[dict]:
     ]
 
 
+def route_a_props(spaces: dict[str, dict]) -> list[dict]:
+    sector_id = "U-ROUTE-A"
+    return [
+        planned_prop(spaces, sector_id, "hall_access", "wall_beacon", -60.50, 5.383, math.pi, "route_marker", "south"),
+        planned_prop(spaces, sector_id, "service_store", "loaded_shelf", -57.70, -4.50, 0.0, "shelf_west"),
+        planned_prop(spaces, sector_id, "service_store", "loaded_shelf", -55.30, -4.50, 0.0, "shelf_east"),
+        planned_prop(spaces, sector_id, "ventilation_room", "pipe_cluster", -51.50, -4.50, 0.0, "duct_bank_west"),
+        planned_prop(spaces, sector_id, "ventilation_room", "pipe_cluster", -49.00, -1.50, math.pi * 0.5, "duct_bank_east"),
+    ]
+
+
+def lower_route_a_props(spaces: dict[str, dict]) -> list[dict]:
+    sector_id = "L-ARCHIVE-A"
+    return [
+        planned_prop(spaces, sector_id, "archive_main", "loaded_shelf", -57.0, -8.0, 0.0, "archive_row_1"),
+        planned_prop(spaces, sector_id, "archive_main", "loaded_shelf", -53.0, -8.0, 0.0, "archive_row_2"),
+        planned_prop(spaces, sector_id, "archive_main", "loaded_shelf", -49.0, -8.0, 0.0, "archive_row_3"),
+        planned_prop(spaces, sector_id, "archive_main", "loaded_shelf", -45.0, -8.0, 0.0, "archive_row_4"),
+        planned_prop(spaces, sector_id, "route_a_service_passage", "wall_beacon", -60.85, 8.667, math.pi * 0.5, "old_core_exit", "west"),
+        planned_prop(spaces, sector_id, "route_a_partition", "loaded_shelf", -46.5, 5.0, math.pi * 0.5, "displaced_archive_1"),
+        planned_prop(spaces, sector_id, "route_a_partition", "loaded_shelf", -43.5, 5.0, math.pi * 0.5, "displaced_archive_2"),
+    ]
+
+
+def old_core_props(spaces: dict[str, dict]) -> list[dict]:
+    sector_id = "L-OLD-CORE"
+    return [
+        planned_prop(spaces, sector_id, "distribution_hall", "operator_console", -73.0, 12.0, 0.0, "navigation_island"),
+        planned_prop(spaces, sector_id, "distribution_hall", "wall_terminal", -62.14, 14.0, -math.pi * 0.5, "route_status", "east"),
+        planned_prop(spaces, sector_id, "reserve_control", "workbench", -75.0, -8.0, 0.0, "analog_console"),
+        planned_prop(spaces, sector_id, "relay_room", "server_rack", -65.0, -10.0, 0.0, "relay_bank"),
+        planned_prop(spaces, sector_id, "senior_room", "loaded_cabinet", -65.0, -4.0, 0.0, "records"),
+        planned_prop(spaces, sector_id, "control_access", "wall_beacon", -71.778, 2.183, math.pi, "control_door", "south"),
+    ]
+
+
 def make_manifest() -> dict:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
@@ -302,7 +338,13 @@ def make_manifest() -> dict:
             placements.extend(east_support_props(spaces))
         elif sector_id == "U-MEDBAY":
             placements.extend(medbay_props(spaces))
-        for index, space in enumerate(sector_spaces if sector_id not in {"U-CONTROL", "U-DOMESTIC", "U-EAST-SUPPORT", "U-MEDBAY"} else []):
+        elif sector_id == "U-ROUTE-A":
+            placements.extend(route_a_props(spaces))
+        elif sector_id == "L-ARCHIVE-A":
+            placements.extend(lower_route_a_props(spaces))
+        elif sector_id == "L-OLD-CORE":
+            placements.extend(old_core_props(spaces))
+        for index, space in enumerate(sector_spaces if sector_id not in {"U-CONTROL", "U-DOMESTIC", "U-EAST-SUPPORT", "U-MEDBAY", "U-ROUTE-A", "L-ARCHIVE-A", "L-OLD-CORE"} else []):
             prop = choose_prop(space, family, index)
             path, size_x, size_z = PROP_DATA[prop]
             x, y, z = pick_position(space, (size_x, size_z), centers.get(space["id"], []))

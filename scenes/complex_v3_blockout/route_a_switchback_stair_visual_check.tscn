@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/complex_v3_blockout/route_a_switchback_stair_visual_check.gd" id="1_check"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/route_a_switchback_stair.tscn" id="2_stair"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMaterial"]
+sky_top_color = Color(0.055, 0.07, 0.085, 1)
+sky_horizon_color = Color(0.20, 0.23, 0.25, 1)
+ground_bottom_color = Color(0.025, 0.03, 0.035, 1)
+ground_horizon_color = Color(0.15, 0.17, 0.18, 1)
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMaterial")
+
+[sub_resource type="Environment" id="Environment"]
+background_mode = 2
+sky = SubResource("Sky")
+ambient_light_source = 3
+ambient_light_color = Color(0.68, 0.74, 0.78, 1)
+ambient_light_energy = 0.85
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="FloorMaterial"]
+albedo_color = Color(0.055, 0.065, 0.07, 1)
+metallic = 0.15
+roughness = 0.82
+
+[sub_resource type="PlaneMesh" id="FloorMesh"]
+material = SubResource("FloorMaterial")
+size = Vector2(30, 30)
+
+[node name="RouteASwitchbackStairVisualCheck" type="Node3D"]
+script = ExtResource("1_check")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment")
+
+[node name="KeyLight" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-48, -32, 0)
+light_color = Color(0.82, 0.9, 1, 1)
+light_energy = 1.6
+shadow_enabled = true
+
+[node name="FillLight" type="OmniLight3D" parent="."]
+position = Vector3(0, 2, 4)
+light_color = Color(0.25, 0.62, 0.9, 1)
+light_energy = 3.5
+omni_range = 18.0
+shadow_enabled = false
+
+[node name="LowerReferenceFloor" type="MeshInstance3D" parent="."]
+position = Vector3(0, -6.13, 0)
+mesh = SubResource("FloorMesh")
+
+[node name="RouteASwitchbackStair" parent="." instance=ExtResource("2_stair")]
+build_collisions = false
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true
+fov = 47.0
+near = 0.1
+far = 80.0

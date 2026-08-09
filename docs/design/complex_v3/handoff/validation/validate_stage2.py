@@ -103,6 +103,54 @@ MEDBAY_CONNECTIONS = {
     frozenset(("triage", "sanitary_airlock")),
 }
 
+ROUTE_A_BOUNDS = {
+    "U-ROUTE-A/hall_access": [-61.5, 1.533, -59.5, 5.533],
+    "U-ROUTE-A/service_store": [-59.5, -6.0, -53.5, 6.0],
+    "U-ROUTE-A/ventilation_room": [-53.5, -6.0, -47.5, 6.0],
+    "U-ROUTE-A/stair_landing": [-55.5, 6.0, -49.5, 13.0],
+}
+
+ROUTE_A_CONNECTIONS = {
+    frozenset(("hall_access", "service_store")),
+    frozenset(("service_store", "ventilation_room")),
+    frozenset(("ventilation_room", "stair_landing")),
+}
+
+ROUTE_A_EXTERNAL_SEGMENTS = {
+    "PX-E-U02-U-EMERGENCY": [[-62.0, 2.267], [-62.0, 4.8]],
+    "PX-E-U02-U-ROUTE-A": [[-61.5, 2.267], [-61.5, 4.8]],
+    "PX-E-L03-L-OLD-CORE": [[-62.0, 7.0], [-62.0, 10.333]],
+    "PX-E-L03-L-ARCHIVE-A": [[-61.0, 7.0], [-61.0, 10.333]],
+}
+
+LOWER_ROUTE_A_BOUNDS = {
+    "L-ARCHIVE-A/archive_main": [-61.0, -14.0, -41.0, 0.5],
+    "L-ARCHIVE-A/route_a_service_passage": [-61.0, 0.5, -55.5, 13.0],
+    "L-ARCHIVE-A/route_a_stair_lobby": [-55.5, 0.5, -49.5, 6.0],
+    "L-ARCHIVE-A/route_a_stair": [-55.5, 6.0, -49.5, 13.0],
+    "L-ARCHIVE-A/route_a_partition": [-49.5, 0.5, -41.0, 15.0],
+}
+
+LOWER_ROUTE_A_CONNECTIONS = {
+    frozenset(("route_a_service_passage", "route_a_stair_lobby")),
+    frozenset(("route_a_stair_lobby", "route_a_stair")),
+}
+
+OLD_CORE_BOUNDS = {
+    "L-OLD-CORE/reserve_control": [-80.944, -14.0, -68.111, -1.667],
+    "L-OLD-CORE/relay_room": [-68.111, -14.0, -62.611, -7.333],
+    "L-OLD-CORE/senior_room": [-68.111, -7.333, -62.611, -1.667],
+    "L-OLD-CORE/control_access": [-74.833, -1.667, -68.722, 2.333],
+    "L-OLD-CORE/distribution_hall": [-84.0, 2.333, -62.0, 15.0],
+}
+
+OLD_CORE_CONNECTIONS = {
+    frozenset(("reserve_control", "relay_room")),
+    frozenset(("reserve_control", "senior_room")),
+    frozenset(("reserve_control", "control_access")),
+    frozenset(("control_access", "distribution_hall")),
+}
+
 PERSONNEL_MEDBAY_SEGMENTS = {
     "PX-E-U02A-U-EMERGENCY": [[-80.0, 11.05], [-80.0, 12.25]],
     "PX-E-U02A-U-MEDBAY": [[-88.0, 11.05], [-88.0, 12.25]],
@@ -207,6 +255,30 @@ def main() -> int:
     if actual_medbay_bounds != MEDBAY_BOUNDS:
         errors.append(f"U-MEDBAY no longer preserves the approved room bands: {actual_medbay_bounds}")
 
+    actual_route_a_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in ROUTE_A_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_route_a_bounds != ROUTE_A_BOUNDS:
+        errors.append(f"U-ROUTE-A no longer traces the approved 15 px/m plan: {actual_route_a_bounds}")
+
+    actual_lower_route_a_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in LOWER_ROUTE_A_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_lower_route_a_bounds != LOWER_ROUTE_A_BOUNDS:
+        errors.append(f"L-ARCHIVE-A no longer preserves the archive shell and anchor-aligned Route A stair: {actual_lower_route_a_bounds}")
+
+    actual_old_core_bounds = {
+        space_id: space_by_id[space_id]["bounds_xz"]
+        for space_id in OLD_CORE_BOUNDS
+        if space_id in space_by_id
+    }
+    if actual_old_core_bounds != OLD_CORE_BOUNDS:
+        errors.append(f"L-OLD-CORE no longer traces the approved old-core hub plan: {actual_old_core_bounds}")
+
     actual_freight_bounds = {
         space_id: space_by_id[space_id]["bounds_xz"]
         for space_id in FREIGHT_RECEPTION_BOUNDS
@@ -270,6 +342,30 @@ def main() -> int:
     if actual_medbay_connections != MEDBAY_CONNECTIONS:
         errors.append("U-MEDBAY internal connections differ from the approved plan")
 
+    actual_route_a_connections = {
+        frozenset(space_id.removeprefix("U-ROUTE-A/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-U-ROUTE-A-")
+    }
+    if actual_route_a_connections != ROUTE_A_CONNECTIONS:
+        errors.append("U-ROUTE-A internal connections differ from the approved plan")
+
+    actual_lower_route_a_connections = {
+        frozenset(space_id.removeprefix("L-ARCHIVE-A/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-L-ARCHIVE-A-")
+    }
+    if actual_lower_route_a_connections != LOWER_ROUTE_A_CONNECTIONS:
+        errors.append("L-ARCHIVE-A must keep the old archive isolated and connect only the Route A passage to its stair")
+
+    actual_old_core_connections = {
+        frozenset(space_id.removeprefix("L-OLD-CORE/") for space_id in portal["between"])
+        for portal in geometry["internal_portals"]
+        if portal["id"].startswith("P-L-OLD-CORE-")
+    }
+    if actual_old_core_connections != OLD_CORE_CONNECTIONS:
+        errors.append("L-OLD-CORE service rooms must remain branches off the distribution hall")
+
     actual_freight_connections = {
         frozenset(space_id.removeprefix("U-FREIGHT/") for space_id in portal["between"])
         for portal in geometry["internal_portals"]
@@ -305,6 +401,12 @@ def main() -> int:
     for portal_id, expected_segment in PERSONNEL_MEDBAY_SEGMENTS.items():
         if external_by_id.get(portal_id, {}).get("segment_xz") != expected_segment:
             errors.append(f"E-U02A portal segment moved away from the approved plan: {portal_id}")
+    route_a_hall_entry = external_by_id.get("PX-E-U02-U-ROUTE-A", {})
+    if route_a_hall_entry.get("space") != "U-ROUTE-A/hall_access" or route_a_hall_entry.get("side") != "west":
+        errors.append("Route A must enter through the hall access passage")
+    for portal_id, expected_segment in ROUTE_A_EXTERNAL_SEGMENTS.items():
+        if external_by_id.get(portal_id, {}).get("segment_xz") != expected_segment:
+            errors.append(f"Route A external portal moved away from the approved plan: {portal_id}")
     freight_entry = external_by_id.get("PX-E-U13-U-FREIGHT", {})
     if freight_entry.get("space") != "U-FREIGHT/inspection_lane" or freight_entry.get("side") != "north":
         errors.append("E-U13 must connect the heavy spine to the north inspection gate")

@@ -90,13 +90,14 @@
       "id": "U-ROUTE-A",
       "level": "LV-U",
       "bounds_xz": [
-        -62.0,
+        -61.5,
         -6.0,
-        -46.0,
-        14.0
+        -47.5,
+        13.0
       ],
       "passport_id": "PASS-U-ROUTE-A",
       "space_ids": [
+        "U-ROUTE-A/hall_access",
         "U-ROUTE-A/service_store",
         "U-ROUTE-A/ventilation_room",
         "U-ROUTE-A/stair_landing"
@@ -318,10 +319,11 @@
       ],
       "passport_id": "PASS-L-OLD-CORE",
       "space_ids": [
-        "L-OLD-CORE/distribution_hall",
         "L-OLD-CORE/reserve_control",
+        "L-OLD-CORE/relay_room",
         "L-OLD-CORE/senior_room",
-        "L-OLD-CORE/relay_room"
+        "L-OLD-CORE/control_access",
+        "L-OLD-CORE/distribution_hall"
       ],
       "reserved_volumes": [],
       "source_detail": "../../l_old_core.html",
@@ -359,8 +361,9 @@
       ],
       "passport_id": "PASS-L-ARCHIVE-A",
       "space_ids": [
-        "L-ARCHIVE-A/route_a_service_passage",
         "L-ARCHIVE-A/archive_main",
+        "L-ARCHIVE-A/route_a_service_passage",
+        "L-ARCHIVE-A/route_a_stair_lobby",
         "L-ARCHIVE-A/route_a_stair",
         "L-ARCHIVE-A/route_a_partition"
       ],
@@ -908,19 +911,37 @@
       "floor_y": 0.0
     },
     {
+      "id": "U-ROUTE-A/hall_access",
+      "name": "hall_access",
+      "sector_id": "U-ROUTE-A",
+      "kind": "circulation",
+      "bounds_xz": [
+        -61.5,
+        1.533,
+        -59.5,
+        5.533
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": 0.0
+    },
+    {
       "id": "U-ROUTE-A/service_store",
       "name": "service_store",
       "sector_id": "U-ROUTE-A",
       "kind": "room",
       "bounds_xz": [
-        -62.0,
+        -59.5,
         -6.0,
-        -56.667,
-        14.0
+        -53.5,
+        6.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": true,
+      "transit": false,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -931,14 +952,14 @@
       "sector_id": "U-ROUTE-A",
       "kind": "room",
       "bounds_xz": [
-        -56.667,
+        -53.5,
         -6.0,
-        -51.333,
-        14.0
+        -47.5,
+        6.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": true,
+      "transit": false,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -947,16 +968,16 @@
       "id": "U-ROUTE-A/stair_landing",
       "name": "stair_landing",
       "sector_id": "U-ROUTE-A",
-      "kind": "room",
+      "kind": "stair",
       "bounds_xz": [
-        -51.333,
-        -6.0,
-        -46.0,
-        14.0
+        -55.5,
+        6.0,
+        -49.5,
+        13.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": 0.0
@@ -1988,51 +2009,15 @@
       "floor_y": 0.0
     },
     {
-      "id": "L-OLD-CORE/distribution_hall",
-      "name": "distribution_hall",
-      "sector_id": "L-OLD-CORE",
-      "kind": "circulation",
-      "bounds_xz": [
-        -74.76,
-        -14.0,
-        -71.24,
-        15.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
       "id": "L-OLD-CORE/reserve_control",
       "name": "reserve_control",
       "sector_id": "L-OLD-CORE",
       "kind": "room",
       "bounds_xz": [
-        -84.0,
+        -80.944,
         -14.0,
-        -74.76,
-        0.5
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
-      "id": "L-OLD-CORE/senior_room",
-      "name": "senior_room",
-      "sector_id": "L-OLD-CORE",
-      "kind": "room",
-      "bounds_xz": [
-        -84.0,
-        0.5,
-        -74.76,
-        15.0
+        -68.111,
+        -1.667
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
@@ -2047,14 +2032,68 @@
       "sector_id": "L-OLD-CORE",
       "kind": "room",
       "bounds_xz": [
-        -71.24,
+        -68.111,
         -14.0,
+        -62.611,
+        -7.333
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-OLD-CORE/senior_room",
+      "name": "senior_room",
+      "sector_id": "L-OLD-CORE",
+      "kind": "room",
+      "bounds_xz": [
+        -68.111,
+        -7.333,
+        -62.611,
+        -1.667
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-OLD-CORE/control_access",
+      "name": "control_access",
+      "sector_id": "L-OLD-CORE",
+      "kind": "circulation",
+      "bounds_xz": [
+        -74.833,
+        -1.667,
+        -68.722,
+        2.333
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-OLD-CORE/distribution_hall",
+      "name": "distribution_hall",
+      "sector_id": "L-OLD-CORE",
+      "kind": "circulation",
+      "bounds_xz": [
+        -84.0,
+        2.333,
         -62.0,
         15.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -6.0
@@ -2114,24 +2153,6 @@
       "floor_y": -6.0
     },
     {
-      "id": "L-ARCHIVE-A/route_a_service_passage",
-      "name": "route_a_service_passage",
-      "sector_id": "L-ARCHIVE-A",
-      "kind": "circulation",
-      "bounds_xz": [
-        -52.6,
-        -14.0,
-        -49.4,
-        15.0
-      ],
-      "clear_height": 3.4,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -6.0
-    },
-    {
       "id": "L-ARCHIVE-A/archive_main",
       "name": "archive_main",
       "sector_id": "L-ARCHIVE-A",
@@ -2139,7 +2160,7 @@
       "bounds_xz": [
         -61.0,
         -14.0,
-        -52.6,
+        -41.0,
         0.5
       ],
       "clear_height": 3.4,
@@ -2150,19 +2171,55 @@
       "floor_y": -6.0
     },
     {
-      "id": "L-ARCHIVE-A/route_a_stair",
-      "name": "route_a_stair",
+      "id": "L-ARCHIVE-A/route_a_service_passage",
+      "name": "route_a_service_passage",
       "sector_id": "L-ARCHIVE-A",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
         -61.0,
         0.5,
-        -52.6,
-        15.0
+        -55.5,
+        13.0
       ],
       "clear_height": 3.4,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-ARCHIVE-A/route_a_stair_lobby",
+      "name": "route_a_stair_lobby",
+      "sector_id": "L-ARCHIVE-A",
+      "kind": "circulation",
+      "bounds_xz": [
+        -55.5,
+        0.5,
+        -49.5,
+        6.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -6.0
+    },
+    {
+      "id": "L-ARCHIVE-A/route_a_stair",
+      "name": "route_a_stair",
+      "sector_id": "L-ARCHIVE-A",
+      "kind": "stair",
+      "bounds_xz": [
+        -55.5,
+        6.0,
+        -49.5,
+        13.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -6.0
@@ -2173,8 +2230,8 @@
       "sector_id": "L-ARCHIVE-A",
       "kind": "room",
       "bounds_xz": [
-        -49.4,
-        -14.0,
+        -49.5,
+        0.5,
         -41.0,
         15.0
       ],
@@ -3772,20 +3829,20 @@
     {
       "id": "P-U-ROUTE-A-01",
       "between": [
-        "U-ROUTE-A/service_store",
-        "U-ROUTE-A/ventilation_room"
+        "U-ROUTE-A/hall_access",
+        "U-ROUTE-A/service_store"
       ],
       "segment_xz": [
         [
-          -56.667,
-          3.1
+          -59.5,
+          2.266
         ],
         [
-          -56.667,
-          4.9
+          -59.5,
+          4.8
         ]
       ],
-      "width": 1.8,
+      "width": 2.533,
       "height": 2.8,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -3795,22 +3852,45 @@
     {
       "id": "P-U-ROUTE-A-02",
       "between": [
+        "U-ROUTE-A/service_store",
+        "U-ROUTE-A/ventilation_room"
+      ],
+      "segment_xz": [
+        [
+          -53.5,
+          0.534
+        ],
+        [
+          -53.5,
+          3.466
+        ]
+      ],
+      "width": 2.933,
+      "height": 2.8,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-U-ROUTE-A-03",
+      "between": [
         "U-ROUTE-A/ventilation_room",
         "U-ROUTE-A/stair_landing"
       ],
       "segment_xz": [
         [
-          -51.333,
-          3.1
+          -52.166,
+          6.0
         ],
         [
-          -51.333,
-          4.9
+          -49.9,
+          6.0
         ]
       ],
-      "width": 1.8,
+      "width": 2.267,
       "height": 2.8,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -4408,7 +4488,7 @@
       ],
       "width": 2.33,
       "height": 2.4,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -4523,7 +4603,7 @@
       ],
       "width": 1.8,
       "height": 2.8,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -4968,20 +5048,20 @@
     {
       "id": "P-L-OLD-CORE-01",
       "between": [
-        "L-OLD-CORE/distribution_hall",
-        "L-OLD-CORE/reserve_control"
+        "L-OLD-CORE/reserve_control",
+        "L-OLD-CORE/relay_room"
       ],
       "segment_xz": [
         [
-          -74.76,
-          -7.35
+          -68.111,
+          -10.667
         ],
         [
-          -74.76,
-          -6.15
+          -68.111,
+          -8.667
         ]
       ],
-      "width": 1.2,
+      "width": 2.0,
       "height": 2.4,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -4991,20 +5071,20 @@
     {
       "id": "P-L-OLD-CORE-02",
       "between": [
-        "L-OLD-CORE/distribution_hall",
+        "L-OLD-CORE/reserve_control",
         "L-OLD-CORE/senior_room"
       ],
       "segment_xz": [
         [
-          -74.76,
-          7.15
+          -68.111,
+          -5.0
         ],
         [
-          -74.76,
-          8.35
+          -68.111,
+          -3.0
         ]
       ],
-      "width": 1.2,
+      "width": 2.0,
       "height": 2.4,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -5014,20 +5094,43 @@
     {
       "id": "P-L-OLD-CORE-03",
       "between": [
-        "L-OLD-CORE/distribution_hall",
-        "L-OLD-CORE/relay_room"
+        "L-OLD-CORE/reserve_control",
+        "L-OLD-CORE/control_access"
       ],
       "segment_xz": [
         [
-          -71.24,
-          -0.1
+          -73.612,
+          -1.667
         ],
         [
-          -71.24,
-          1.1
+          -69.945,
+          -1.667
         ]
       ],
-      "width": 1.2,
+      "width": 3.667,
+      "height": 2.4,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-L-OLD-CORE-04",
+      "between": [
+        "L-OLD-CORE/control_access",
+        "L-OLD-CORE/distribution_hall"
+      ],
+      "segment_xz": [
+        [
+          -73.612,
+          2.333
+        ],
+        [
+          -69.945,
+          2.333
+        ]
+      ],
+      "width": 3.667,
       "height": 2.4,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -5084,16 +5187,16 @@
       "id": "P-L-ARCHIVE-A-01",
       "between": [
         "L-ARCHIVE-A/route_a_service_passage",
-        "L-ARCHIVE-A/archive_main"
+        "L-ARCHIVE-A/route_a_stair_lobby"
       ],
       "segment_xz": [
         [
-          -52.6,
-          -7.65
+          -55.5,
+          2.1
         ],
         [
-          -52.6,
-          -5.85
+          -55.5,
+          3.9
         ]
       ],
       "width": 1.8,
@@ -5106,45 +5209,22 @@
     {
       "id": "P-L-ARCHIVE-A-02",
       "between": [
-        "L-ARCHIVE-A/route_a_service_passage",
+        "L-ARCHIVE-A/route_a_stair_lobby",
         "L-ARCHIVE-A/route_a_stair"
       ],
       "segment_xz": [
         [
-          -52.6,
-          6.85
+          -54.35,
+          6.0
         ],
         [
-          -52.6,
-          8.65
+          -52.85,
+          6.0
         ]
       ],
-      "width": 1.8,
+      "width": 1.5,
       "height": 2.8,
-      "type": "internal-door",
-      "direction": "bidirectional",
-      "state": "openable",
-      "status": "provisional-metric"
-    },
-    {
-      "id": "P-L-ARCHIVE-A-03",
-      "between": [
-        "L-ARCHIVE-A/route_a_service_passage",
-        "L-ARCHIVE-A/route_a_partition"
-      ],
-      "segment_xz": [
-        [
-          -49.4,
-          -0.4
-        ],
-        [
-          -49.4,
-          1.4
-        ]
-      ],
-      "width": 1.8,
-      "height": 2.8,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -5627,7 +5707,7 @@
       ],
       "width": 2.33,
       "height": 2.4,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -6426,14 +6506,14 @@
       "segment_xz": [
         [
           -62.0,
-          3.4
+          2.267
         ],
         [
           -62.0,
-          4.6
+          4.8
         ]
       ],
-      "width": 1.2,
+      "width": 2.533,
       "height": 2.4,
       "type": "service",
       "direction": "bidirectional",
@@ -6444,20 +6524,20 @@
     {
       "id": "PX-E-U02-U-ROUTE-A",
       "connection_id": "E-U02",
-      "space": "U-ROUTE-A/service_store",
+      "space": "U-ROUTE-A/hall_access",
       "neighbor": "U-EMERGENCY",
       "side": "west",
       "segment_xz": [
         [
-          -62.0,
-          3.4
+          -61.5,
+          2.267
         ],
         [
-          -62.0,
-          4.6
+          -61.5,
+          4.8
         ]
       ],
-      "width": 1.2,
+      "width": 2.533,
       "height": 2.4,
       "type": "service",
       "direction": "bidirectional",
@@ -6854,15 +6934,15 @@
       "connection_id": "E-L02",
       "space": "L-OLD-CORE/distribution_hall",
       "neighbor": "L-CHAMBER-1",
-      "side": "north",
+      "side": "south",
       "segment_xz": [
         [
           -73.6,
-          -14.0
+          15.0
         ],
         [
           -72.4,
-          -14.0
+          15.0
         ]
       ],
       "width": 1.2,
@@ -6902,18 +6982,18 @@
       "connection_id": "E-L03",
       "space": "L-OLD-CORE/distribution_hall",
       "neighbor": "L-ARCHIVE-A",
-      "side": "north",
+      "side": "east",
       "segment_xz": [
         [
-          -73.6,
-          -14.0
+          -62.0,
+          7.0
         ],
         [
-          -72.4,
-          -14.0
+          -62.0,
+          10.333
         ]
       ],
-      "width": 1.2,
+      "width": 3.333,
       "height": 2.4,
       "type": "passenger",
       "direction": "bidirectional",
@@ -6926,18 +7006,18 @@
       "connection_id": "E-L03",
       "space": "L-ARCHIVE-A/route_a_service_passage",
       "neighbor": "L-OLD-CORE",
-      "side": "north",
+      "side": "west",
       "segment_xz": [
         [
-          -51.6,
-          -14.0
+          -61.0,
+          7.0
         ],
         [
-          -50.4,
-          -14.0
+          -61.0,
+          10.333
         ]
       ],
-      "width": 1.2,
+      "width": 3.333,
       "height": 2.4,
       "type": "passenger",
       "direction": "bidirectional",
@@ -6950,15 +7030,15 @@
       "connection_id": "E-L04",
       "space": "L-OLD-CORE/distribution_hall",
       "neighbor": "L-OLD-RECEIVING",
-      "side": "north",
+      "side": "south",
       "segment_xz": [
         [
           -73.6,
-          -14.0
+          15.0
         ],
         [
           -72.4,
-          -14.0
+          15.0
         ]
       ],
       "width": 1.2,
@@ -7475,14 +7555,14 @@
       "centerline_xz": [
         [
           -62.0,
-          4.0
+          3.534
         ],
         [
-          -62.0,
-          4.0
+          -61.5,
+          3.534
         ]
       ],
-      "width": 1.2,
+      "width": 2.533,
       "clear_height": 2.4,
       "traversable": true,
       "state": "openable"
@@ -7745,7 +7825,7 @@
       "centerline_xz": [
         [
           -73.0,
-          -14.0
+          15.0
         ],
         [
           -97.0,
@@ -7762,15 +7842,15 @@
       "connection_id": "E-L03",
       "centerline_xz": [
         [
-          -73.0,
-          -14.0
+          -62.0,
+          8.666
         ],
         [
-          -51.0,
-          -14.0
+          -61.0,
+          8.666
         ]
       ],
-      "width": 1.2,
+      "width": 3.333,
       "clear_height": 2.4,
       "traversable": true,
       "state": "openable"
@@ -7781,7 +7861,7 @@
       "centerline_xz": [
         [
           -73.0,
-          -14.0
+          15.0
         ],
         [
           -91.0,

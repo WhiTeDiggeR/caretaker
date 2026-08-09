@@ -1,43 +1,59 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
 
 [node name="U_ROUTE_A_SetDressing" type="Node3D"]
 metadata/sector_id = "U-ROUTE-A"
 metadata/material_family = "historic"
 
-[node name="001_U_ROUTE_A_service_store__debris_pile" parent="." instance=ExtResource("2")]
-position = Vector3(-59.3335, 0.0000, -5.0000)
-metadata/placement_id = "U-ROUTE-A/service_store::debris_pile"
+[node name="001_U_ROUTE_A_hall_access__wall_beacon__route_marker" parent="." instance=ExtResource("3")]
+position = Vector3(-60.5000, 2.3500, 5.3830)
+rotation = Vector3(0, 3.1415927, 0)
+metadata/placement_id = "U-ROUTE-A/hall_access::wall_beacon::route_marker"
 
-[node name="002_U_ROUTE_A_stair_landing__loaded_shelf" parent="." instance=ExtResource("3")]
-position = Vector3(-48.6665, 0.0000, -5.1500)
-metadata/placement_id = "U-ROUTE-A/stair_landing::loaded_shelf"
+[node name="002_U_ROUTE_A_service_store__loaded_shelf__shelf_west" parent="." instance=ExtResource("4")]
+position = Vector3(-57.7000, 0.0000, -4.5000)
+metadata/placement_id = "U-ROUTE-A/service_store::loaded_shelf::shelf_west"
 
-[node name="003_U_ROUTE_A_ventilation_room__workbench" parent="." instance=ExtResource("4")]
-position = Vector3(-54.0000, 0.0000, -5.0500)
-metadata/placement_id = "U-ROUTE-A/ventilation_room::workbench"
+[node name="003_U_ROUTE_A_service_store__loaded_shelf__shelf_east" parent="." instance=ExtResource("4")]
+position = Vector3(-55.3000, 0.0000, -4.5000)
+metadata/placement_id = "U-ROUTE-A/service_store::loaded_shelf::shelf_east"
 
-[node name="004_P_U_ROUTE_A_01" parent="." instance=ExtResource("1")]
-position = Vector3(-56.6670, 0.0000, 4.0000)
+[node name="004_U_ROUTE_A_ventilation_room__pipe_cluster__duct_bank_west" parent="." instance=ExtResource("2")]
+position = Vector3(-51.5000, 0.0000, -4.5000)
+metadata/placement_id = "U-ROUTE-A/ventilation_room::pipe_cluster::duct_bank_west"
+
+[node name="005_U_ROUTE_A_ventilation_room__pipe_cluster__duct_bank_east" parent="." instance=ExtResource("2")]
+position = Vector3(-49.0000, 0.0000, -1.5000)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
+metadata/placement_id = "U-ROUTE-A/ventilation_room::pipe_cluster::duct_bank_east"
+
+[node name="006_P_U_ROUTE_A_01" parent="." instance=ExtResource("1")]
+position = Vector3(-59.5000, 0.0000, 3.5330)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(1.06429, 1.16667, 1.00000)
 metadata/placement_id = "P-U-ROUTE-A-01"
 metadata/open_passage = true
 
-[node name="005_P_U_ROUTE_A_02" parent="." instance=ExtResource("1")]
-position = Vector3(-51.3330, 0.0000, 4.0000)
+[node name="007_P_U_ROUTE_A_02" parent="." instance=ExtResource("1")]
+position = Vector3(-53.5000, 0.0000, 2.0000)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
+scale = Vector3(1.23235, 1.16667, 1.00000)
 metadata/placement_id = "P-U-ROUTE-A-02"
 metadata/open_passage = true
 
-[node name="006_PX_E_U02_U_ROUTE_A" parent="." instance=ExtResource("1")]
-position = Vector3(-62.0000, 0.0000, 4.0000)
+[node name="008_P_U_ROUTE_A_03" parent="." instance=ExtResource("1")]
+position = Vector3(-51.0330, 0.0000, 6.0000)
+scale = Vector3(0.95252, 1.16667, 1.00000)
+metadata/placement_id = "P-U-ROUTE-A-03"
+metadata/open_passage = true
+
+[node name="009_PX_E_U02_U_ROUTE_A" parent="." instance=ExtResource("1")]
+position = Vector3(-61.5000, 0.0000, 3.5335)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.50420, 1.00000, 1.00000)
+scale = Vector3(1.06429, 1.00000, 1.00000)
 metadata/placement_id = "PX-E-U02-U-ROUTE-A"
 metadata/open_passage = true

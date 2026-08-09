@@ -1,56 +1,61 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
 
 [node name="L_ARCHIVE_A_SetDressing" type="Node3D"]
 metadata/sector_id = "L-ARCHIVE-A"
 metadata/material_family = "historic"
 
-[node name="001_L_ARCHIVE_A_archive_main__debris_pile" parent="." instance=ExtResource("2")]
-position = Vector3(-56.8000, -6.0000, -13.0000)
-metadata/placement_id = "L-ARCHIVE-A/archive_main::debris_pile"
+[node name="001_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_1" parent="." instance=ExtResource("4")]
+position = Vector3(-57.0000, -6.0000, -8.0000)
+metadata/placement_id = "L-ARCHIVE-A/archive_main::loaded_shelf::archive_row_1"
 
-[node name="002_L_ARCHIVE_A_route_a_partition__loaded_shelf" parent="." instance=ExtResource("3")]
-position = Vector3(-45.2000, -6.0000, -13.1500)
-metadata/placement_id = "L-ARCHIVE-A/route_a_partition::loaded_shelf"
+[node name="002_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_2" parent="." instance=ExtResource("4")]
+position = Vector3(-53.0000, -6.0000, -8.0000)
+metadata/placement_id = "L-ARCHIVE-A/archive_main::loaded_shelf::archive_row_2"
 
-[node name="003_L_ARCHIVE_A_route_a_service_passage__workbench" parent="." instance=ExtResource("5")]
-position = Vector3(-51.0000, -6.0000, 14.0500)
-rotation = Vector3(0, 3.1415927, 0)
-metadata/placement_id = "L-ARCHIVE-A/route_a_service_passage::workbench"
+[node name="003_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_3" parent="." instance=ExtResource("4")]
+position = Vector3(-49.0000, -6.0000, -8.0000)
+metadata/placement_id = "L-ARCHIVE-A/archive_main::loaded_shelf::archive_row_3"
 
-[node name="004_L_ARCHIVE_A_route_a_stair__wall_terminal" parent="." instance=ExtResource("4")]
-position = Vector3(-56.8000, -4.8000, 14.3000)
-rotation = Vector3(0, 3.1415927, 0)
-metadata/placement_id = "L-ARCHIVE-A/route_a_stair::wall_terminal"
+[node name="004_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_4" parent="." instance=ExtResource("4")]
+position = Vector3(-45.0000, -6.0000, -8.0000)
+metadata/placement_id = "L-ARCHIVE-A/archive_main::loaded_shelf::archive_row_4"
 
-[node name="005_P_L_ARCHIVE_A_01" parent="." instance=ExtResource("1")]
-position = Vector3(-52.6000, -6.0000, -6.7500)
+[node name="005_L_ARCHIVE_A_route_a_service_passage__wall_beacon__old_core_exit" parent="." instance=ExtResource("3")]
+position = Vector3(-60.8500, -3.6500, 8.6670)
+rotation = Vector3(0, 1.5707963, 0)
+metadata/placement_id = "L-ARCHIVE-A/route_a_service_passage::wall_beacon::old_core_exit"
+
+[node name="006_L_ARCHIVE_A_route_a_partition__loaded_shelf__displaced_archive_1" parent="." instance=ExtResource("4")]
+position = Vector3(-46.5000, -6.0000, 5.0000)
+rotation = Vector3(0, 1.5707963, 0)
+metadata/placement_id = "L-ARCHIVE-A/route_a_partition::loaded_shelf::displaced_archive_1"
+
+[node name="007_L_ARCHIVE_A_route_a_partition__loaded_shelf__displaced_archive_2" parent="." instance=ExtResource("4")]
+position = Vector3(-43.5000, -6.0000, 5.0000)
+rotation = Vector3(0, 1.5707963, 0)
+metadata/placement_id = "L-ARCHIVE-A/route_a_partition::loaded_shelf::displaced_archive_2"
+
+[node name="008_P_L_ARCHIVE_A_01" parent="." instance=ExtResource("2")]
+position = Vector3(-55.5000, -6.0000, 3.0000)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
 metadata/placement_id = "P-L-ARCHIVE-A-01"
 metadata/open_passage = true
 
-[node name="006_P_L_ARCHIVE_A_02" parent="." instance=ExtResource("1")]
-position = Vector3(-52.6000, -6.0000, 7.7500)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
+[node name="009_P_L_ARCHIVE_A_02" parent="." instance=ExtResource("2")]
+position = Vector3(-53.6000, -6.0000, 6.0000)
+scale = Vector3(0.63025, 1.16667, 1.00000)
 metadata/placement_id = "P-L-ARCHIVE-A-02"
 metadata/open_passage = true
 
-[node name="007_P_L_ARCHIVE_A_03" parent="." instance=ExtResource("1")]
-position = Vector3(-49.4000, -6.0000, 0.5000)
+[node name="010_PX_E_L03_L_ARCHIVE_A" parent="." instance=ExtResource("1")]
+position = Vector3(-61.0000, -6.0000, 8.6665)
 rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
-metadata/placement_id = "P-L-ARCHIVE-A-03"
-metadata/open_passage = true
-
-[node name="008_PX_E_L03_L_ARCHIVE_A" parent="." instance=ExtResource("1")]
-position = Vector3(-51.0000, -6.0000, -14.0000)
-scale = Vector3(0.50420, 1.00000, 1.00000)
+scale = Vector3(0.80120, 0.80000, 1.00000)
 metadata/placement_id = "PX-E-L03-L-ARCHIVE-A"
 metadata/open_passage = true

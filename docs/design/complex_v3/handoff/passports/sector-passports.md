@@ -56,7 +56,7 @@ Required connections:
 - Parent boundary XZ: `[-64.0, -8.0] → [-45.0, 14.0] m`
 - Local origin XYZ: `[-64.0, 0.0, -8.0]`
 - Neighbors: `L-ARCHIVE-A`, `U-EMERGENCY`
-- Allowed subdivisions: `service_store`, `ventilation_room`, `stair_landing`
+- Allowed subdivisions: `hall_access`, `service_store`, `ventilation_room`, `stair_landing`
 - Clearance profile: `service` — {'minimum_width': 1.5, 'minimum_height': 2.5, 'turning_envelope': 1.8}
 - Reserved volumes: `ventilation_plant`
 - Anchors: `A-ROUTE-A`
@@ -247,7 +247,7 @@ Required connections:
 - Parent boundary XZ: `[-84.0, -14.0] → [-62.0, 21.0] m`
 - Local origin XYZ: `[-84.0, -6.0, -14.0]`
 - Neighbors: `L-ARCHIVE-A`, `L-CHAMBER-1`, `L-OLD-RECEIVING`, `L-PAX`, `T-OLD-ACCESS`
-- Allowed subdivisions: `distribution_hall`, `reserve_control`, `relay_room`, `senior_room`
+- Allowed subdivisions: `distribution_hall`, `control_access`, `reserve_control`, `relay_room`, `senior_room`
 - Clearance profile: `passenger` — {'minimum_width': 1.2, 'minimum_height': 2.4, 'turning_envelope': 1.5}
 - Reserved volumes: нет
 - Anchors: `A-OLD-STAIR`
@@ -292,7 +292,7 @@ Required connections:
 - Parent boundary XZ: `[-61.0, -14.0] → [-41.0, 15.0] m`
 - Local origin XYZ: `[-61.0, -6.0, -14.0]`
 - Neighbors: `L-OLD-CORE`, `U-ROUTE-A`
-- Allowed subdivisions: `archive_main`, `route_a_partition`, `route_a_service_passage`, `route_a_stair`
+- Allowed subdivisions: `archive_main`, `route_a_partition`, `route_a_service_passage`, `route_a_stair_lobby`, `route_a_stair`
 - Clearance profile: `service` — {'minimum_width': 1.5, 'minimum_height': 2.5, 'turning_envelope': 1.8}
 - Reserved volumes: `archive_shelving`
 - Anchors: `A-ROUTE-A`
