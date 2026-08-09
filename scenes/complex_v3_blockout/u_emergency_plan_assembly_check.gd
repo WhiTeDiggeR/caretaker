@@ -28,6 +28,10 @@ func _initialize() -> void:
 				errors.append("Expected %d %s, built %d" % [int(expected[key]), key, int(stats.get(key, -1))])
 		for error: String in infrastructure.validate_against_handoff():
 			errors.append("Infrastructure: %s" % error)
+		var seam_mesh_instance := infrastructure.get_node_or_null("Generated/Connections/C-E-U02/Floor/Mesh") as MeshInstance3D
+		var seam_mesh := seam_mesh_instance.mesh as BoxMesh if seam_mesh_instance != null else null
+		if seam_mesh == null or seam_mesh.size.x < 3.95:
+			errors.append("E-U02 connector floor does not close the full wall seam")
 		if infrastructure.find_children("RouteASwitchbackStair", "", true, false).is_empty():
 			errors.append("Route A stair is missing from plan assembly")
 	if errors.is_empty():
