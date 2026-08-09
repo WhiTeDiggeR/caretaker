@@ -9,7 +9,7 @@ BLOCKOUT_DIR = ROOT / "scenes" / "complex_v3_blockout"
 PASSPORTS_PATH = ROOT / "docs" / "design" / "complex_v3" / "handoff" / "passports" / "sector-passports.json"
 GEOMETRY_PATH = ROOT / "docs" / "design" / "complex_v3" / "handoff" / "geometry" / "complex-handoff.json"
 LEVEL_FOLDERS = {"LV-U": "upper", "LV-L": "lower", "LV-T": "technical"}
-PLAN_ALIGNED_FOCUS_SECTORS = {"U-CONTROL", "U-DOMESTIC", "U-EAST-SUPPORT", "U-FREIGHT"}
+PLAN_ALIGNED_FOCUS_SECTORS = {"U-CONTROL", "U-DOMESTIC", "U-EAST-SUPPORT", "U-FREIGHT", "U-MEDBAY"}
 
 
 def scene_slug(sector_id: str) -> str:

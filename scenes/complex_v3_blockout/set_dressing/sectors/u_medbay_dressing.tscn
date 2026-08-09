@@ -1,69 +1,110 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/medical_bed.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/medical_bed.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="8"]
 
 [node name="U_MEDBAY_SetDressing" type="Node3D"]
 metadata/sector_id = "U-MEDBAY"
 metadata/material_family = "medical"
 
-[node name="001_U_MEDBAY_clean_corridor__wall_beacon" parent="." instance=ExtResource("2")]
-position = Vector3(-93.8820, 2.3500, 11.0000)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-MEDBAY/clean_corridor::wall_beacon"
+[node name="001_U_MEDBAY_procedure_room__medical_bed__procedure_table" parent="." instance=ExtResource("6")]
+position = Vector3(-99.2000, 0.0000, 9.1000)
+metadata/placement_id = "U-MEDBAY/procedure_room::medical_bed::procedure_table"
 
-[node name="002_U_MEDBAY_medical_utility__loaded_cabinet" parent="." instance=ExtResource("3")]
-position = Vector3(-89.0500, 0.0000, 8.3335)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "U-MEDBAY/medical_utility::loaded_cabinet"
+[node name="002_U_MEDBAY_procedure_room__workbench__instrument_bench" parent="." instance=ExtResource("8")]
+position = Vector3(-96.2000, 0.0000, 8.1000)
+metadata/placement_id = "U-MEDBAY/procedure_room::workbench::instrument_bench"
 
-[node name="003_U_MEDBAY_observation_ward__wall_terminal" parent="." instance=ExtResource("5")]
-position = Vector3(-101.1000, 1.2000, 13.1025)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-MEDBAY/observation_ward::wall_terminal"
+[node name="003_U_MEDBAY_procedure_room__loaded_cabinet__sterile_cabinet" parent="." instance=ExtResource("5")]
+position = Vector3(-96.2000, 0.0000, 10.3500)
+metadata/placement_id = "U-MEDBAY/procedure_room::loaded_cabinet::sterile_cabinet"
 
-[node name="004_U_MEDBAY_procedure_room__medical_bed" parent="." instance=ExtResource("4")]
-position = Vector3(-101.0000, 0.0000, 9.1025)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "U-MEDBAY/procedure_room::medical_bed"
+[node name="004_U_MEDBAY_observation_ward__medical_bed__bed_west" parent="." instance=ExtResource("6")]
+position = Vector3(-100.2000, 0.0000, 13.1000)
+metadata/placement_id = "U-MEDBAY/observation_ward::medical_bed::bed_west"
 
-[node name="005_U_MEDBAY_triage__loaded_cabinet" parent="." instance=ExtResource("3")]
-position = Vector3(-90.1490, 0.0000, 14.2000)
+[node name="005_U_MEDBAY_observation_ward__medical_bed__bed_center" parent="." instance=ExtResource("6")]
+position = Vector3(-98.6000, 0.0000, 13.1000)
+metadata/placement_id = "U-MEDBAY/observation_ward::medical_bed::bed_center"
+
+[node name="006_U_MEDBAY_observation_ward__medical_bed__bed_east" parent="." instance=ExtResource("6")]
+position = Vector3(-97.0000, 0.0000, 13.1000)
+metadata/placement_id = "U-MEDBAY/observation_ward::medical_bed::bed_east"
+
+[node name="007_U_MEDBAY_clean_store__loaded_cabinet__sterile_stock" parent="." instance=ExtResource("5")]
+position = Vector3(-91.1900, 0.0000, 9.2500)
+metadata/placement_id = "U-MEDBAY/clean_store::loaded_cabinet::sterile_stock"
+
+[node name="008_U_MEDBAY_sanitary_airlock__utility_tank__decon_unit" parent="." instance=ExtResource("3")]
+position = Vector3(-89.0400, 0.0000, 7.7500)
+metadata/placement_id = "U-MEDBAY/sanitary_airlock::utility_tank::decon_unit"
+
+[node name="009_U_MEDBAY_triage__wall_terminal__intake_terminal" parent="." instance=ExtResource("7")]
+position = Vector3(-90.1500, 1.2000, 12.6040)
 rotation = Vector3(0, 3.1415927, 0)
-metadata/placement_id = "U-MEDBAY/triage::loaded_cabinet"
+metadata/placement_id = "U-MEDBAY/triage::wall_terminal::intake_terminal"
 
-[node name="006_P_U_MEDBAY_01" parent="." instance=ExtResource("1")]
-position = Vector3(-94.6320, 0.0000, 9.1020)
+[node name="010_U_MEDBAY_medical_post__operator_console__duty_console" parent="." instance=ExtResource("2")]
+position = Vector3(-90.1500, 0.0000, 13.7000)
+metadata/placement_id = "U-MEDBAY/medical_post::operator_console::duty_console"
+
+[node name="011_U_MEDBAY_medical_post__loaded_cabinet__medicine_cabinet" parent="." instance=ExtResource("5")]
+position = Vector3(-90.1500, 0.0000, 14.4500)
+metadata/placement_id = "U-MEDBAY/medical_post::loaded_cabinet::medicine_cabinet"
+
+[node name="012_U_MEDBAY_clean_corridor__wall_beacon__clean_route" parent="." instance=ExtResource("4")]
+position = Vector3(-94.4820, 2.3500, 11.8000)
+rotation = Vector3(0, 1.5707963, 0)
+metadata/placement_id = "U-MEDBAY/clean_corridor::wall_beacon::clean_route"
+
+[node name="013_P_U_MEDBAY_01" parent="." instance=ExtResource("1")]
+position = Vector3(-94.6320, 0.0000, 9.2150)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-MEDBAY-01"
 metadata/open_passage = true
 
-[node name="007_P_U_MEDBAY_02" parent="." instance=ExtResource("1")]
-position = Vector3(-94.6320, 0.0000, 13.1020)
+[node name="014_P_U_MEDBAY_02" parent="." instance=ExtResource("1")]
+position = Vector3(-94.6320, 0.0000, 13.0310)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-MEDBAY-02"
 metadata/open_passage = true
 
-[node name="008_P_U_MEDBAY_03" parent="." instance=ExtResource("1")]
-position = Vector3(-92.2980, 0.0000, 8.3340)
+[node name="015_P_U_MEDBAY_03" parent="." instance=ExtResource("1")]
+position = Vector3(-92.2980, 0.0000, 8.2310)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-MEDBAY-03"
 metadata/open_passage = true
 
-[node name="009_P_U_MEDBAY_04" parent="." instance=ExtResource("1")]
-position = Vector3(-92.2980, 0.0000, 12.3340)
+[node name="016_P_U_MEDBAY_04" parent="." instance=ExtResource("1")]
+position = Vector3(-92.2980, 0.0000, 10.8560)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "P-U-MEDBAY-04"
 metadata/open_passage = true
 
-[node name="010_PX_E_U02A_U_MEDBAY" parent="." instance=ExtResource("1")]
+[node name="017_P_U_MEDBAY_05" parent="." instance=ExtResource("1")]
+position = Vector3(-92.2980, 0.0000, 13.8310)
+rotation = Vector3(0, 1.5707963, 0)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-MEDBAY-05"
+metadata/open_passage = true
+
+[node name="018_P_U_MEDBAY_06" parent="." instance=ExtResource("1")]
+position = Vector3(-89.0320, 0.0000, 9.6670)
+scale = Vector3(0.50420, 1.00000, 1.00000)
+metadata/placement_id = "P-U-MEDBAY-06"
+metadata/open_passage = true
+
+[node name="019_PX_E_U02A_U_MEDBAY" parent="." instance=ExtResource("1")]
 position = Vector3(-88.0000, 0.0000, 11.6500)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)

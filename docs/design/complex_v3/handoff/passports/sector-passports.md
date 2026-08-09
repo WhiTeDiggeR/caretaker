@@ -36,7 +36,7 @@ Required connections:
 - Parent boundary XZ: `[-102.0, 7.0] → [-88.0, 15.0] m`
 - Local origin XYZ: `[-102.0, 0.0, 7.0]`
 - Neighbors: `U-EMERGENCY`
-- Allowed subdivisions: `triage`, `clean_corridor`, `procedure_room`, `observation_ward`, `medical_utility`
+- Allowed subdivisions: `triage`, `clean_corridor`, `procedure_room`, `observation_ward`, `clean_store`, `sanitary_airlock`, `medical_post`
 - Clearance profile: `passenger` — {'minimum_width': 1.2, 'minimum_height': 2.4, 'turning_envelope': 1.5}
 - Reserved volumes: нет
 

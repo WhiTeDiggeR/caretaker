@@ -88,15 +88,19 @@ MEDBAY_BOUNDS = {
     "U-MEDBAY/procedure_room": [-102.0, 7.0, -94.632, 11.205],
     "U-MEDBAY/observation_ward": [-102.0, 11.205, -94.632, 15.0],
     "U-MEDBAY/clean_corridor": [-94.632, 7.0, -92.298, 15.0],
-    "U-MEDBAY/medical_utility": [-92.298, 7.0, -88.0, 9.667],
-    "U-MEDBAY/triage": [-92.298, 9.667, -88.0, 15.0],
+    "U-MEDBAY/clean_store": [-92.298, 7.0, -90.088, 9.667],
+    "U-MEDBAY/sanitary_airlock": [-90.088, 7.0, -88.0, 9.667],
+    "U-MEDBAY/triage": [-92.298, 9.667, -88.0, 12.744],
+    "U-MEDBAY/medical_post": [-92.298, 12.744, -88.0, 15.0],
 }
 
 MEDBAY_CONNECTIONS = {
     frozenset(("clean_corridor", "procedure_room")),
     frozenset(("clean_corridor", "observation_ward")),
-    frozenset(("clean_corridor", "medical_utility")),
+    frozenset(("clean_corridor", "clean_store")),
     frozenset(("clean_corridor", "triage")),
+    frozenset(("clean_corridor", "medical_post")),
+    frozenset(("triage", "sanitary_airlock")),
 }
 
 PERSONNEL_MEDBAY_SEGMENTS = {

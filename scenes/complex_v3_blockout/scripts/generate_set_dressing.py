@@ -264,6 +264,24 @@ def east_support_props(spaces: dict[str, dict]) -> list[dict]:
     ]
 
 
+def medbay_props(spaces: dict[str, dict]) -> list[dict]:
+    sector_id = "U-MEDBAY"
+    return [
+        planned_prop(spaces, sector_id, "procedure_room", "medical_bed", -99.20, 9.10, 0.0, "procedure_table"),
+        planned_prop(spaces, sector_id, "procedure_room", "workbench", -96.20, 8.10, 0.0, "instrument_bench"),
+        planned_prop(spaces, sector_id, "procedure_room", "loaded_cabinet", -96.20, 10.35, 0.0, "sterile_cabinet"),
+        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", -100.20, 13.10, 0.0, "bed_west"),
+        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", -98.60, 13.10, 0.0, "bed_center"),
+        planned_prop(spaces, sector_id, "observation_ward", "medical_bed", -97.00, 13.10, 0.0, "bed_east"),
+        planned_prop(spaces, sector_id, "clean_store", "loaded_cabinet", -91.19, 9.25, 0.0, "sterile_stock"),
+        planned_prop(spaces, sector_id, "sanitary_airlock", "utility_tank", -89.04, 7.75, 0.0, "decon_unit"),
+        planned_prop(spaces, sector_id, "triage", "wall_terminal", -90.15, 12.604, math.pi, "intake_terminal", "south"),
+        planned_prop(spaces, sector_id, "medical_post", "operator_console", -90.15, 13.70, 0.0, "duty_console"),
+        planned_prop(spaces, sector_id, "medical_post", "loaded_cabinet", -90.15, 14.45, 0.0, "medicine_cabinet"),
+        planned_prop(spaces, sector_id, "clean_corridor", "wall_beacon", -94.482, 11.80, math.pi * 0.5, "clean_route", "west"),
+    ]
+
+
 def make_manifest() -> dict:
     handoff = json.loads(HANDOFF.read_text(encoding="utf-8"))
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
@@ -282,7 +300,9 @@ def make_manifest() -> dict:
             placements.extend(domestic_props(spaces))
         elif sector_id == "U-EAST-SUPPORT":
             placements.extend(east_support_props(spaces))
-        for index, space in enumerate(sector_spaces if sector_id not in {"U-CONTROL", "U-DOMESTIC", "U-EAST-SUPPORT"} else []):
+        elif sector_id == "U-MEDBAY":
+            placements.extend(medbay_props(spaces))
+        for index, space in enumerate(sector_spaces if sector_id not in {"U-CONTROL", "U-DOMESTIC", "U-EAST-SUPPORT", "U-MEDBAY"} else []):
             prop = choose_prop(space, family, index)
             path, size_x, size_z = PROP_DATA[prop]
             x, y, z = pick_position(space, (size_x, size_z), centers.get(space["id"], []))

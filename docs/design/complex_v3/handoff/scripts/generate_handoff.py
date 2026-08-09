@@ -82,6 +82,15 @@ EAST_SUPPORT_PORTAL_CENTERS = {
     frozenset(("emergency_stair", "fire_vestibule")): 30.5,
 }
 
+MEDBAY_PORTAL_CENTERS = {
+    frozenset(("clean_corridor", "procedure_room")): 9.215,
+    frozenset(("clean_corridor", "observation_ward")): 13.031,
+    frozenset(("clean_corridor", "clean_store")): 8.231,
+    frozenset(("clean_corridor", "triage")): 10.856,
+    frozenset(("clean_corridor", "medical_post")): 13.831,
+    frozenset(("triage", "sanitary_airlock")): -89.032,
+}
+
 FREIGHT_RECEPTION_PORTAL_WIDTHS = {
     frozenset(("isolation_bay", "inspection_lane")): 2.8,
     frozenset(("inspection_lane", "unloading_bay")): 4.5,
@@ -255,20 +264,24 @@ def emergency_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], l
 
 
 def medbay_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
-    """Trace the approved medbay bands while preserving the existing passport IDs."""
+    """Trace all seven rooms and doors from the approved medbay SVG."""
     height = height_for(sector_id)
     result = [
         room(sector_id, "procedure_room", rect(-102.0, 7.0, -94.632, 11.205), height),
         room(sector_id, "observation_ward", rect(-102.0, 11.205, -94.632, 15.0), height),
         room(sector_id, "clean_corridor", rect(-94.632, 7.0, -92.298, 15.0), height, True, "circulation"),
-        room(sector_id, "medical_utility", rect(-92.298, 7.0, -88.0, 9.667), height),
-        room(sector_id, "triage", rect(-92.298, 9.667, -88.0, 15.0), height),
+        room(sector_id, "clean_store", rect(-92.298, 7.0, -90.088, 9.667), height),
+        room(sector_id, "sanitary_airlock", rect(-90.088, 7.0, -88.0, 9.667), height, True, "airlock"),
+        room(sector_id, "triage", rect(-92.298, 9.667, -88.0, 12.744), height),
+        room(sector_id, "medical_post", rect(-92.298, 12.744, -88.0, 15.0), height),
     ]
     return result, [
         ("clean_corridor", "procedure_room"),
         ("clean_corridor", "observation_ward"),
-        ("clean_corridor", "medical_utility"),
+        ("clean_corridor", "clean_store"),
         ("clean_corridor", "triage"),
+        ("clean_corridor", "medical_post"),
+        ("triage", "sanitary_airlock"),
     ]
 
 
@@ -469,6 +482,8 @@ def internal_portal(sector_id: str, index: int, a: dict, b: dict, width: float, 
     center = (lo + hi) / 2
     if sector_id == "U-DOMESTIC":
         center = DOMESTIC_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
+    if sector_id == "U-MEDBAY":
+        center = MEDBAY_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     if sector_id == "U-EAST-SUPPORT":
         center = EAST_SUPPORT_PORTAL_CENTERS.get(frozenset((a["name"], b["name"])), center)
     if sector_id == "U-FREIGHT":
