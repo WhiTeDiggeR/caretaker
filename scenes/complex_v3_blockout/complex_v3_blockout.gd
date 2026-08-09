@@ -18,9 +18,9 @@ const DEFAULT_VERTICAL_PATH := "res://docs/design/complex_v3/handoff/vertical/ve
 const FLOOR_THICKNESS := 0.2
 const CORRIDOR_WALL_THICKNESS := 0.3
 const ENCLOSED_CORRIDOR_MIN_LENGTH := 1.05
+const ENCLOSED_SHORT_CONNECTION_IDS := ["E-U02"]
 const WALL_EPSILON := 0.01
 const MIN_SEGMENT_LENGTH := 0.05
-const FULL_SEAM_FLOOR_CONNECTION_IDS := ["E-U02"]
 
 @export_file("*.json") var handoff_path: String = DEFAULT_HANDOFF_PATH
 @export_file("*.json") var vertical_path: String = DEFAULT_VERTICAL_PATH
@@ -537,9 +537,9 @@ func _build_connection_corridors() -> void:
 			var length := delta.length()
 			if length <= MIN_SEGMENT_LENGTH or _segment_is_covered_by_route(start, end, floor_y):
 				continue
-			var floor_width := _connection_floor_width(connection_id, delta, float(corridor["width"]))
+			var floor_width := float(corridor["width"])
 			var segment_name := str(corridor["id"]) if points.size() == 2 else "%s_%02d" % [str(corridor["id"]), index + 1]
-			if length <= ENCLOSED_CORRIDOR_MIN_LENGTH:
+			if length <= ENCLOSED_CORRIDOR_MIN_LENGTH and not ENCLOSED_SHORT_CONNECTION_IDS.has(connection_id):
 				_build_connector_floor_segment(parent, segment_name, start, end, floor_y, floor_width, _materials["service_route"])
 			else:
 				_build_corridor_segment(parent, segment_name, start, end, floor_y, floor_width, float(corridor["clear_height"]), _materials["service_route"])
@@ -799,29 +799,6 @@ func _floor_for_connection(connection_id: String) -> float:
 			if space != null:
 				return float(space["floor_y"])
 	return 0.0
-
-
-func _connection_floor_width(connection_id: String, delta: Vector2, fallback_width: float) -> float:
-	if not FULL_SEAM_FLOOR_CONNECTION_IDS.has(connection_id):
-		return fallback_width
-	var bounds_by_space: Array[Array] = []
-	for portal_value: Variant in _handoff.get("external_portals", []):
-		var portal := portal_value as Dictionary
-		if str(portal["connection_id"]) != connection_id:
-			continue
-		var space := _spaces_by_id.get(str(portal["space"])) as Dictionary
-		if space != null:
-			bounds_by_space.append(space["bounds_xz"] as Array)
-	if bounds_by_space.size() != 2:
-		return fallback_width
-	var first := bounds_by_space[0]
-	var second := bounds_by_space[1]
-	var overlap: float
-	if absf(delta.x) >= absf(delta.y):
-		overlap = minf(float(first[3]), float(second[3])) - maxf(float(first[1]), float(second[1]))
-	else:
-		overlap = minf(float(first[2]), float(second[2])) - maxf(float(first[0]), float(second[0]))
-	return maxf(fallback_width, overlap)
 
 
 func _level_for_floor(floor_y: float) -> String:
