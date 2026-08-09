@@ -104,7 +104,7 @@ MEDBAY_CONNECTIONS = {
 }
 
 ROUTE_A_BOUNDS = {
-    "U-ROUTE-A/hall_access": [-61.5, 1.533, -59.5, 5.533],
+    "U-ROUTE-A/hall_access": [-61.75, 1.533, -59.5, 5.533],
     "U-ROUTE-A/service_store": [-59.5, -6.0, -53.5, 6.0],
     "U-ROUTE-A/ventilation_room": [-53.5, -6.0, -47.5, 6.0],
     "U-ROUTE-A/stair_landing": [-55.5, 6.0, -49.5, 13.0],
@@ -117,8 +117,8 @@ ROUTE_A_CONNECTIONS = {
 }
 
 ROUTE_A_EXTERNAL_SEGMENTS = {
-    "PX-E-U02-U-EMERGENCY": [[-62.0, 2.9335], [-62.0, 4.1335]],
-    "PX-E-U02-U-ROUTE-A": [[-61.5, 2.9335], [-61.5, 4.1335]],
+    "PX-E-U02-U-EMERGENCY": [[-61.75, 2.933], [-61.75, 4.133]],
+    "PX-E-U02-U-ROUTE-A": [[-61.75, 2.933], [-61.75, 4.133]],
     "PX-E-L03-L-OLD-CORE": [[-62.0, 7.0], [-62.0, 10.333]],
     "PX-E-L03-L-ARCHIVE-A": [[-61.0, 7.0], [-61.0, 10.333]],
 }
@@ -445,6 +445,9 @@ def main() -> int:
     for portal_id, expected_segment in ROUTE_A_EXTERNAL_SEGMENTS.items():
         if external_by_id.get(portal_id, {}).get("segment_xz") != expected_segment:
             errors.append(f"Route A external portal moved away from the approved plan: {portal_id}")
+    route_a_corridor = next((item for item in geometry["connection_corridors"] if item["connection_id"] == "E-U02"), {})
+    if route_a_corridor.get("centerline_xz") != [[-61.75, 3.533], [-61.75, 3.533]]:
+        errors.append("E-U02 must be a shared wall doorway, not a separate connector box")
     freight_entry = external_by_id.get("PX-E-U13-U-FREIGHT", {})
     if freight_entry.get("space") != "U-FREIGHT/inspection_lane" or freight_entry.get("side") != "north":
         errors.append("E-U13 must connect the heavy spine to the north inspection gate")

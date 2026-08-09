@@ -18,7 +18,6 @@ const DEFAULT_VERTICAL_PATH := "res://docs/design/complex_v3/handoff/vertical/ve
 const FLOOR_THICKNESS := 0.2
 const CORRIDOR_WALL_THICKNESS := 0.3
 const ENCLOSED_CORRIDOR_MIN_LENGTH := 1.05
-const ENCLOSED_SHORT_CONNECTION_IDS := ["E-U02"]
 const WALL_EPSILON := 0.01
 const MIN_SEGMENT_LENGTH := 0.05
 
@@ -539,7 +538,7 @@ func _build_connection_corridors() -> void:
 				continue
 			var floor_width := float(corridor["width"])
 			var segment_name := str(corridor["id"]) if points.size() == 2 else "%s_%02d" % [str(corridor["id"]), index + 1]
-			if length <= ENCLOSED_CORRIDOR_MIN_LENGTH and not ENCLOSED_SHORT_CONNECTION_IDS.has(connection_id):
+			if length <= ENCLOSED_CORRIDOR_MIN_LENGTH:
 				_build_connector_floor_segment(parent, segment_name, start, end, floor_y, floor_width, _materials["service_route"])
 			else:
 				_build_corridor_segment(parent, segment_name, start, end, floor_y, floor_width, float(corridor["clear_height"]), _materials["service_route"])

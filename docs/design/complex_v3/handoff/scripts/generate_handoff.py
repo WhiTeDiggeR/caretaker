@@ -16,9 +16,10 @@ PASSPORTS_PATH = ROOT / "passports" / "sector-passports.json"
 OUTPUT_PATH = ROOT / "geometry" / "complex-handoff.json"
 
 FINAL_BOUNDS_OVERRIDE = {
+    "U-EMERGENCY": [-110.0, -13.0, -61.75, 15.0],
     "U-CONTROL": [-32.0, -13.0, -8.0, 14.5],
     "U-CENTRAL-CORE": [-7.75, -6.0, 7.75, 15.0],
-    "U-ROUTE-A": [-61.5, -6.0, -47.5, 13.0],
+    "U-ROUTE-A": [-61.75, -6.0, -47.5, 13.0],
     "U-DOMESTIC": [-57.0, -13.0, -33.0, 15.0],
     "U-CHAMBER-4": [-110.0, 37.0, -82.0, 60.0],
     "U-CHAMBER-6": [0.0, 29.0, 32.0, 60.0],
@@ -571,7 +572,7 @@ def route_a_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], lis
     """Trace the approved 15 px/m Route A plan around A-ROUTE-A."""
     height = height_for(sector_id)
     result = [
-        room(sector_id, "hall_access", rect(-61.5, 1.533, -59.5, 5.533), height, True, "circulation"),
+        room(sector_id, "hall_access", rect(-61.75, 1.533, -59.5, 5.533), height, True, "circulation"),
         room(sector_id, "service_store", rect(-59.5, -6.0, -53.5, 6.0), height),
         room(sector_id, "ventilation_room", rect(-53.5, -6.0, -47.5, 6.0), height),
         room(sector_id, "stair_landing", rect(-55.5, 6.0, -49.5, 13.0), height, True, "stair"),
@@ -1050,7 +1051,7 @@ def route_a_external_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
     entry_name = "hall_access" if edge["id"] == "E-U02" else "stair_landing"
     entry = next(space for space in spaces if space["name"] == entry_name)
     if edge["id"] == "E-U02":
-        segment = [[-61.5, 2.9335], [-61.5, 4.1335]]
+        segment = [[-61.75, 2.9335], [-61.75, 4.1335]]
         side = "west"
         width = 1.2
     else:
@@ -1100,7 +1101,7 @@ def security_external_portal(edge: dict, spaces: list[dict]) -> dict[str, Any]:
 def route_a_neighbor_portal(edge: dict, sector_id: str, spaces: list[dict]) -> dict[str, Any]:
     if edge["id"] == "E-U02":
         entry_name = "distribution_hall"
-        segment = [[-62.0, 2.9335], [-62.0, 4.1335]]
+        segment = [[-61.75, 2.9335], [-61.75, 4.1335]]
         side = "east"
         width = 1.2
     elif sector_id == "L-OLD-CORE":

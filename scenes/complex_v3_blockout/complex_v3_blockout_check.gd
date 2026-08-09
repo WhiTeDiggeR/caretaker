@@ -34,19 +34,13 @@ func _initialize() -> void:
 				for required_node: String in ["Floor", "WallLeft", "WallRight", "Ceiling"]:
 					if connection.get_node_or_null(required_node) == null:
 						errors.append("Enclosed connector %s is missing %s" % [connection.name, required_node])
-		for forbidden_bridge: String in ["C-E-U06", "C-E-X05", "C-E-L02", "C-E-L15", "C-E-T03", "C-E-T08"]:
+		for forbidden_bridge: String in ["C-E-U02", "C-E-U06", "C-E-X05", "C-E-L02", "C-E-L15", "C-E-T03", "C-E-T08"]:
 			if not connections.find_children("%s*" % forbidden_bridge, "", false, false).is_empty():
 				errors.append("Redundant bridge geometry remains for %s" % forbidden_bridge)
-		for enclosed_connection: String in ["C-E-U02", "C-E-U07", "C-E-U08", "C-E-U09", "C-E-U10", "C-E-L04", "C-E-L05", "C-E-L06", "C-E-L07", "C-E-L08", "C-E-L11", "T-TRANS-WEST", "T-TRANS-EAST"]:
+		for enclosed_connection: String in ["C-E-U07", "C-E-U08", "C-E-U09", "C-E-U10", "C-E-L04", "C-E-L05", "C-E-L06", "C-E-L07", "C-E-L08", "C-E-L11", "T-TRANS-WEST", "T-TRANS-EAST"]:
 			var matches := connections.find_children("%s*" % enclosed_connection, "", false, false)
 			if matches.is_empty() or not bool(matches[0].get_meta("enclosed", false)):
 				errors.append("Required enclosed connector is missing: %s" % enclosed_connection)
-		var hall_store_connector := connections.get_node_or_null("C-E-U02")
-		if hall_store_connector != null:
-			var floor_mesh_instance := hall_store_connector.get_node_or_null("Floor/Mesh") as MeshInstance3D
-			var floor_mesh := floor_mesh_instance.mesh as BoxMesh if floor_mesh_instance != null else null
-			if floor_mesh == null or not is_equal_approx(floor_mesh.size.x, 1.2) or not is_equal_approx(floor_mesh.size.z, 0.5):
-				errors.append("Hall-to-store connector must be a 1.2 x 0.5 m enclosed doorway")
 	if int(stats.get("ceilings", 0)) != int(stats.get("floors", 0)):
 		errors.append("Runtime blockout must preserve one ceiling per generated floor")
 	if errors.is_empty():

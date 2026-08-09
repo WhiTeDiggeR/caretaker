@@ -167,6 +167,10 @@ def collect_frames(handoff: dict, spaces: dict[str, dict]) -> dict[str, list[dic
         owner = spaces[portal["between"][0]]["sector_id"]
         result.setdefault(owner, []).append(portal)
     for portal in handoff["external_portals"]:
+        if portal["id"] == "PX-E-U02-U-EMERGENCY":
+            # E-U02 is a shared-wall doorway. Its Route A side owns the single
+            # frame so the full assembly matches ordinary internal doors.
+            continue
         owner = spaces[portal["space"]]["sector_id"]
         result.setdefault(owner, []).append(portal)
     return result

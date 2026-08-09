@@ -20,6 +20,7 @@ def main() -> None:
     errors = []
     prop_count = 0
     frame_count = 0
+    frame_ids: set[str] = set()
     wall_mount_count = 0
     chamber_wall_mount_count = 0
     control_plan_prop_count = 0
@@ -132,11 +133,14 @@ def main() -> None:
                             errors.append(f"central service corridor blocked by terminal: {placement['id']} clear_width={clear_width:.3f}")
             else:
                 frame_count += 1
+                frame_ids.add(str(placement["id"]))
                 if placement.get("scale", [1])[0] <= 0:
                     errors.append(f"invalid frame scale: {placement['id']}")
-    expected_frames = len(handoff["internal_portals"]) + len(handoff["external_portals"])
+    expected_frames = len(handoff["internal_portals"]) + len(handoff["external_portals"]) - 1
     if frame_count != expected_frames:
         errors.append(f"portal frame count {frame_count}, expected {expected_frames}")
+    if "PX-E-U02-U-ROUTE-A" not in frame_ids or "PX-E-U02-U-EMERGENCY" in frame_ids:
+        errors.append("shared-wall E-U02 doorway must have exactly one frame owned by U-ROUTE-A")
     if len(manifest["sectors"]) != 30:
         errors.append(f"sector count {len(manifest['sectors'])}, expected 30")
     if chamber_wall_mount_count != 15:
