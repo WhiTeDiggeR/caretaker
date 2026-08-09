@@ -419,6 +419,120 @@ def lower_freight_service_layout(sector_id: str, bounds: list[float]) -> tuple[l
     ]
 
 
+def technical_energy_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    lower = z0 + .82*d
+    split = x0 + .58*w
+    result = [
+        room(sector_id, "generator_hall", rect(x0, z0, split, lower), 5.0, True, "circulation"),
+        room(sector_id, "switchgear_room", rect(split, z0, x1, z0 + .38*d), 4.2),
+        room(sector_id, "cooling_room", rect(split, z0 + .38*d, x1, lower), 4.2),
+        room(sector_id, "fire_vestibule", rect(x0, lower, x0 + .18*w, z1), 3.4, True, "airlock"),
+        room(sector_id, "service_approach", rect(x0 + .18*w, lower, x1, z1), 4.2, True, "circulation"),
+    ]
+    return result, [
+        ("generator_hall", "switchgear_room"),
+        ("generator_hall", "cooling_room"),
+        ("generator_hall", "service_approach"),
+        ("cooling_room", "service_approach"),
+        ("fire_vestibule", "service_approach"),
+    ]
+
+
+def technical_workshop_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    lower = z0 + .84*d
+    result = [
+        room(sector_id, "workshop", rect(x0, z0, x0 + .64*w, lower), 4.2, True, "circulation"),
+        room(sector_id, "parts_store", rect(x0 + .64*w, z0, x1, lower), 4.2),
+        room(sector_id, "internal_cargo_opening", rect(x0, lower, x1, z1), 4.5, True, "circulation"),
+    ]
+    return result, [
+        ("workshop", "parts_store"),
+        ("workshop", "internal_cargo_opening"),
+        ("parts_store", "internal_cargo_opening"),
+    ]
+
+
+def technical_old_access_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    result = [
+        room(sector_id, "old_stair", rect(x0, z0, x0 + .58*w, z0 + .66*d), 4.2, True, "stair"),
+        room(sector_id, "service_vestibule", rect(x0 + .58*w, z0, x1, z0 + .66*d), 3.4, True, "airlock"),
+        room(sector_id, "old_core_substation", rect(x0, z0 + .66*d, x0 + .58*w, z1), 4.2),
+    ]
+    return result, [
+        ("old_stair", "service_vestibule"),
+        ("old_stair", "old_core_substation"),
+    ]
+
+
+def technical_east_vertical_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    shaft_x = x0 + .28*w
+    split_z = z0 + .45*d
+    result = [
+        room(sector_id, "passenger_shaft_no_stop", rect(x0, z0, shaft_x, z1), 5.0, False, "elevator"),
+        room(sector_id, "new_substation", rect(shaft_x, z0, x1, split_z), 4.2),
+        room(sector_id, "closed_cable_pit", rect(shaft_x, split_z, x0 + .5*w, z1), 3.4),
+        room(sector_id, "fire_vestibule", rect(x0 + .5*w, split_z, x0 + .72*w, z1), 3.4, True, "airlock"),
+        room(sector_id, "east_emergency_stair", rect(x0 + .72*w, split_z, x1, z1), 4.2, True, "stair"),
+    ]
+    return result, [
+        ("passenger_shaft_no_stop", "new_substation"),
+        ("new_substation", "closed_cable_pit"),
+        ("new_substation", "fire_vestibule"),
+        ("new_substation", "east_emergency_stair"),
+        ("closed_cable_pit", "fire_vestibule"),
+        ("fire_vestibule", "east_emergency_stair"),
+    ]
+
+
+def technical_utilities_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    split_z = z0 + .22*d
+    cuts = [x0, x0 + .24*w, x0 + .46*w, x0 + .65*w, x0 + .84*w, x1]
+    result = [
+        room(sector_id, "cable_gallery", rect(x0, z0, x1, split_z), 3.4, True, "circulation"),
+        room(sector_id, "late_block_substation", rect(cuts[0], split_z, cuts[1], z1), 4.2),
+        room(sector_id, "ventilation_room", rect(cuts[1], split_z, cuts[2], z1), 4.2),
+        room(sector_id, "reagent_room", rect(cuts[2], split_z, cuts[3], z1), 3.4),
+        room(sector_id, "drainage_room", rect(cuts[3], split_z, cuts[4], z1), 3.4),
+        room(sector_id, "fire_vestibule", rect(cuts[4], split_z, cuts[5], z1), 3.4, True, "airlock"),
+    ]
+    return result, [
+        ("cable_gallery", "late_block_substation"),
+        ("cable_gallery", "ventilation_room"),
+        ("cable_gallery", "reagent_room"),
+        ("cable_gallery", "drainage_room"),
+        ("cable_gallery", "fire_vestibule"),
+    ]
+
+
+def technical_freight_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
+    x0, z0, x1, z1 = bounds
+    w, d = x1 - x0, z1 - z0
+    split_z = z0 + .25*d
+    result = [
+        room(sector_id, "heavy_spine", rect(x0, z0, x1, split_z), 5.0, True, "circulation"),
+        room(sector_id, "service_reception", rect(x0, split_z, x0 + .62*w, z1), 5.0, True, "circulation"),
+        room(sector_id, "freight_lift", rect(x0 + .62*w, split_z, x0 + .86*w, z1), 5.0, True, "elevator"),
+        room(sector_id, "service_bypass", rect(x0 + .86*w, split_z, x1, z1), 5.0, True, "circulation"),
+    ]
+    return result, [
+        ("heavy_spine", "service_reception"),
+        ("heavy_spine", "freight_lift"),
+        ("heavy_spine", "service_bypass"),
+        ("service_reception", "freight_lift"),
+        ("freight_lift", "service_bypass"),
+    ]
+
+
 def emergency_layout(sector_id: str, bounds: list[float]) -> tuple[list[dict], list[tuple[str, str]]]:
     _x0, _z0, x1, _z1 = bounds
     result = [
@@ -692,6 +806,18 @@ def make_layout(passport: dict[str, Any]) -> tuple[list[dict], list[tuple[str, s
         return upper_containment_layout(sector_id, names, bounds)
     if sector_id == "L-FREIGHT-SERVICE":
         return lower_freight_service_layout(sector_id, bounds)
+    if sector_id == "T-ENERGY":
+        return technical_energy_layout(sector_id, bounds)
+    if sector_id == "T-WORKSHOP":
+        return technical_workshop_layout(sector_id, bounds)
+    if sector_id == "T-OLD-ACCESS":
+        return technical_old_access_layout(sector_id, bounds)
+    if sector_id == "T-EAST-VERTICAL":
+        return technical_east_vertical_layout(sector_id, bounds)
+    if sector_id == "T-UTILITIES":
+        return technical_utilities_layout(sector_id, bounds)
+    if sector_id == "T-FREIGHT":
+        return technical_freight_layout(sector_id, bounds)
     if sector_id in CENTRAL_CORE_SECTORS:
         return central_core_layout(sector_id, bounds)
     if sector_id in CONTAINMENT_SECTORS:

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import re
@@ -431,18 +432,48 @@ def attach_to_zone(zone_path: Path, dressing_res: str) -> None:
     zone_path.write_text(text, encoding="utf-8", newline="\n")
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate complex-v3 set dressing.")
+    parser.add_argument(
+        "--sector-id",
+        action="append",
+        dest="sector_ids",
+        help="Regenerate only this sector; may be repeated. The existing manifest entries for all other sectors are preserved.",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
-    manifest = make_manifest()
+    args = parse_args()
+    generated_manifest = make_manifest()
+    selected = set(args.sector_ids or [])
+    if selected:
+        known = {sector["sector_id"] for sector in generated_manifest["sectors"]}
+        unknown = sorted(selected - known)
+        if unknown:
+            raise SystemExit(f"Unknown sector ids: {', '.join(unknown)}")
+        existing = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        replacements = {
+            sector["sector_id"]: sector
+            for sector in generated_manifest["sectors"]
+            if sector["sector_id"] in selected
+        }
+        manifest = existing
+        manifest["sectors"] = [replacements.get(sector["sector_id"], sector) for sector in existing["sectors"]]
+        sectors_to_write = [sector for sector in manifest["sectors"] if sector["sector_id"] in selected]
+    else:
+        manifest = generated_manifest
+        sectors_to_write = manifest["sectors"]
     sector_dir = OUTPUT / "sectors"
     sector_dir.mkdir(parents=True, exist_ok=True)
-    for sector in manifest["sectors"]:
+    for sector in sectors_to_write:
         scene_path = ROOT / sector["dressing_scene"].removeprefix("res://")
         scene_path.write_text(render_scene(sector), encoding="utf-8", newline="\n")
         attach_to_zone(ROOT / sector["zone_scene"].removeprefix("res://"), sector["dressing_scene"])
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     prop_count = sum(sum(p["kind"] == "prop" for p in s["placements"]) for s in manifest["sectors"])
     frame_count = sum(sum(p["kind"] == "open_portal_frame" for p in s["placements"]) for s in manifest["sectors"])
-    print(f"Generated {len(manifest['sectors'])} sector dressing scenes: {prop_count} props, {frame_count} open portal frames")
+    print(f"Generated {len(sectors_to_write)} sector dressing scenes; manifest totals: {prop_count} props, {frame_count} open portal frames")
 
 
 if __name__ == "__main__":

@@ -584,11 +584,11 @@
       ],
       "passport_id": "PASS-T-ENERGY",
       "space_ids": [
-        "T-ENERGY/service_approach",
         "T-ENERGY/generator_hall",
         "T-ENERGY/switchgear_room",
+        "T-ENERGY/cooling_room",
         "T-ENERGY/fire_vestibule",
-        "T-ENERGY/cooling_room"
+        "T-ENERGY/service_approach"
       ],
       "reserved_volumes": [
         "generator_service_envelope"
@@ -607,10 +607,9 @@
       ],
       "passport_id": "PASS-T-WORKSHOP",
       "space_ids": [
-        "T-WORKSHOP/internal_circulation",
         "T-WORKSHOP/workshop",
-        "T-WORKSHOP/internal_cargo_opening",
-        "T-WORKSHOP/parts_store"
+        "T-WORKSHOP/parts_store",
+        "T-WORKSHOP/internal_cargo_opening"
       ],
       "reserved_volumes": [
         "cart_turning_envelope"
@@ -629,8 +628,8 @@
       ],
       "passport_id": "PASS-T-OLD-ACCESS",
       "space_ids": [
-        "T-OLD-ACCESS/service_vestibule",
         "T-OLD-ACCESS/old_stair",
+        "T-OLD-ACCESS/service_vestibule",
         "T-OLD-ACCESS/old_core_substation"
       ],
       "reserved_volumes": [],
@@ -648,11 +647,10 @@
       ],
       "passport_id": "PASS-T-EAST-VERTICAL",
       "space_ids": [
-        "T-EAST-VERTICAL/internal_circulation",
         "T-EAST-VERTICAL/passenger_shaft_no_stop",
-        "T-EAST-VERTICAL/fire_vestibule",
-        "T-EAST-VERTICAL/closed_cable_pit",
         "T-EAST-VERTICAL/new_substation",
+        "T-EAST-VERTICAL/closed_cable_pit",
+        "T-EAST-VERTICAL/fire_vestibule",
         "T-EAST-VERTICAL/east_emergency_stair"
       ],
       "reserved_volumes": [
@@ -673,11 +671,10 @@
       ],
       "passport_id": "PASS-T-UTILITIES",
       "space_ids": [
-        "T-UTILITIES/internal_circulation",
-        "T-UTILITIES/late_block_substation",
-        "T-UTILITIES/reagent_room",
         "T-UTILITIES/cable_gallery",
+        "T-UTILITIES/late_block_substation",
         "T-UTILITIES/ventilation_room",
+        "T-UTILITIES/reagent_room",
         "T-UTILITIES/drainage_room",
         "T-UTILITIES/fire_vestibule"
       ],
@@ -698,10 +695,10 @@
       ],
       "passport_id": "PASS-T-FREIGHT",
       "space_ids": [
-        "T-FREIGHT/service_reception",
         "T-FREIGHT/heavy_spine",
-        "T-FREIGHT/service_bypass",
-        "T-FREIGHT/freight_lift"
+        "T-FREIGHT/service_reception",
+        "T-FREIGHT/freight_lift",
+        "T-FREIGHT/service_bypass"
       ],
       "reserved_volumes": [
         "lift_shaft",
@@ -2981,37 +2978,19 @@
       "floor_y": -6.0
     },
     {
-      "id": "T-ENERGY/service_approach",
-      "name": "service_approach",
-      "sector_id": "T-ENERGY",
-      "kind": "circulation",
-      "bounds_xz": [
-        -91.1,
-        -15.0,
-        -83.9,
-        15.0
-      ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": true,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
       "id": "T-ENERGY/generator_hall",
       "name": "generator_hall",
       "sector_id": "T-ENERGY",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
         -110.0,
         -15.0,
-        -91.1,
-        0.0
+        -83.9,
+        9.6
       ],
-      "clear_height": 4.0,
+      "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
@@ -3022,30 +3001,12 @@
       "sector_id": "T-ENERGY",
       "kind": "room",
       "bounds_xz": [
-        -110.0,
-        0.0,
-        -91.1,
-        15.0
-      ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
-      "id": "T-ENERGY/fire_vestibule",
-      "name": "fire_vestibule",
-      "sector_id": "T-ENERGY",
-      "kind": "room",
-      "bounds_xz": [
         -83.9,
         -15.0,
         -65.0,
-        0.0
+        -3.6
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -3059,11 +3020,11 @@
       "kind": "room",
       "bounds_xz": [
         -83.9,
-        0.0,
+        -3.6,
         -65.0,
-        15.0
+        9.6
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -3071,17 +3032,35 @@
       "floor_y": -11.5
     },
     {
-      "id": "T-WORKSHOP/internal_circulation",
-      "name": "internal_circulation",
-      "sector_id": "T-WORKSHOP",
-      "kind": "circulation",
+      "id": "T-ENERGY/fire_vestibule",
+      "name": "fire_vestibule",
+      "sector_id": "T-ENERGY",
+      "kind": "airlock",
       "bounds_xz": [
-        -49.6,
-        -15.0,
-        -45.4,
+        -110.0,
+        9.6,
+        -101.9,
         15.0
       ],
-      "clear_height": 4.0,
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -11.5
+    },
+    {
+      "id": "T-ENERGY/service_approach",
+      "name": "service_approach",
+      "sector_id": "T-ENERGY",
+      "kind": "circulation",
+      "bounds_xz": [
+        -101.9,
+        9.6,
+        -65.0,
+        15.0
+      ],
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
       "transit": true,
       "status": "provisional-metric",
@@ -3092,34 +3071,16 @@
       "id": "T-WORKSHOP/workshop",
       "name": "workshop",
       "sector_id": "T-WORKSHOP",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
         -65.0,
         -15.0,
-        -49.6,
-        0.0
+        -42.6,
+        10.2
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
-      "id": "T-WORKSHOP/internal_cargo_opening",
-      "name": "internal_cargo_opening",
-      "sector_id": "T-WORKSHOP",
-      "kind": "room",
-      "bounds_xz": [
-        -65.0,
-        0.0,
-        -49.6,
-        15.0
-      ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
@@ -3130,12 +3091,12 @@
       "sector_id": "T-WORKSHOP",
       "kind": "room",
       "bounds_xz": [
-        -45.4,
+        -42.6,
         -15.0,
         -30.0,
-        15.0
+        10.2
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -3143,17 +3104,17 @@
       "floor_y": -11.5
     },
     {
-      "id": "T-OLD-ACCESS/service_vestibule",
-      "name": "service_vestibule",
-      "sector_id": "T-OLD-ACCESS",
+      "id": "T-WORKSHOP/internal_cargo_opening",
+      "name": "internal_cargo_opening",
+      "sector_id": "T-WORKSHOP",
       "kind": "circulation",
       "bounds_xz": [
-        -91.92,
-        20.5,
-        -88.08,
-        45.0
+        -65.0,
+        10.2,
+        -30.0,
+        15.0
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.5,
       "wall_thickness": 0.3,
       "transit": true,
       "status": "provisional-metric",
@@ -3164,16 +3125,34 @@
       "id": "T-OLD-ACCESS/old_stair",
       "name": "old_stair",
       "sector_id": "T-OLD-ACCESS",
-      "kind": "room",
+      "kind": "stair",
       "bounds_xz": [
         -102.0,
         20.5,
-        -91.92,
-        45.0
+        -88.08,
+        36.67
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -11.5
+    },
+    {
+      "id": "T-OLD-ACCESS/service_vestibule",
+      "name": "service_vestibule",
+      "sector_id": "T-OLD-ACCESS",
+      "kind": "airlock",
+      "bounds_xz": [
+        -88.08,
+        20.5,
+        -78.0,
+        36.67
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
@@ -3184,32 +3163,14 @@
       "sector_id": "T-OLD-ACCESS",
       "kind": "room",
       "bounds_xz": [
+        -102.0,
+        36.67,
         -88.08,
-        20.5,
-        -78.0,
         45.0
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
       "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
-      "id": "T-EAST-VERTICAL/internal_circulation",
-      "name": "internal_circulation",
-      "sector_id": "T-EAST-VERTICAL",
-      "kind": "circulation",
-      "bounds_xz": [
-        24.16,
-        -12.0,
-        25.84,
-        15.0
-      ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
@@ -3218,50 +3179,14 @@
       "id": "T-EAST-VERTICAL/passenger_shaft_no_stop",
       "name": "passenger_shaft_no_stop",
       "sector_id": "T-EAST-VERTICAL",
-      "kind": "room",
+      "kind": "elevator",
       "bounds_xz": [
         18.0,
         -12.0,
-        24.16,
-        -3.0
-      ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
-      "id": "T-EAST-VERTICAL/fire_vestibule",
-      "name": "fire_vestibule",
-      "sector_id": "T-EAST-VERTICAL",
-      "kind": "room",
-      "bounds_xz": [
-        18.0,
-        -3.0,
-        24.16,
-        6.0
-      ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
-      "id": "T-EAST-VERTICAL/closed_cable_pit",
-      "name": "closed_cable_pit",
-      "sector_id": "T-EAST-VERTICAL",
-      "kind": "room",
-      "bounds_xz": [
-        18.0,
-        6.0,
-        24.16,
+        21.92,
         15.0
       ],
-      "clear_height": 4.0,
+      "clear_height": 5.0,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -3274,14 +3199,50 @@
       "sector_id": "T-EAST-VERTICAL",
       "kind": "room",
       "bounds_xz": [
-        25.84,
+        21.92,
         -12.0,
         32.0,
-        1.5
+        0.15
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
       "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -11.5
+    },
+    {
+      "id": "T-EAST-VERTICAL/closed_cable_pit",
+      "name": "closed_cable_pit",
+      "sector_id": "T-EAST-VERTICAL",
+      "kind": "room",
+      "bounds_xz": [
+        21.92,
+        0.15,
+        25.0,
+        15.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -11.5
+    },
+    {
+      "id": "T-EAST-VERTICAL/fire_vestibule",
+      "name": "fire_vestibule",
+      "sector_id": "T-EAST-VERTICAL",
+      "kind": "airlock",
+      "bounds_xz": [
+        25.0,
+        0.15,
+        28.08,
+        15.0
+      ],
+      "clear_height": 3.4,
+      "wall_thickness": 0.3,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
@@ -3290,32 +3251,32 @@
       "id": "T-EAST-VERTICAL/east_emergency_stair",
       "name": "east_emergency_stair",
       "sector_id": "T-EAST-VERTICAL",
-      "kind": "room",
+      "kind": "stair",
       "bounds_xz": [
-        25.84,
-        1.5,
+        28.08,
+        0.15,
         32.0,
         15.0
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
     },
     {
-      "id": "T-UTILITIES/internal_circulation",
-      "name": "internal_circulation",
+      "id": "T-UTILITIES/cable_gallery",
+      "name": "cable_gallery",
       "sector_id": "T-UTILITIES",
       "kind": "circulation",
       "bounds_xz": [
-        -24.0,
+        -57.0,
         20.5,
-        -15.0,
-        56.0
+        18.0,
+        28.31
       ],
-      "clear_height": 4.0,
+      "clear_height": 3.4,
       "wall_thickness": 0.3,
       "transit": true,
       "status": "provisional-metric",
@@ -3329,47 +3290,11 @@
       "kind": "room",
       "bounds_xz": [
         -57.0,
-        20.5,
-        -24.0,
-        32.333
-      ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
-      "id": "T-UTILITIES/reagent_room",
-      "name": "reagent_room",
-      "sector_id": "T-UTILITIES",
-      "kind": "room",
-      "bounds_xz": [
-        -57.0,
-        32.333,
-        -24.0,
-        44.167
-      ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
-      "id": "T-UTILITIES/cable_gallery",
-      "name": "cable_gallery",
-      "sector_id": "T-UTILITIES",
-      "kind": "room",
-      "bounds_xz": [
-        -57.0,
-        44.167,
-        -24.0,
+        28.31,
+        -39.0,
         56.0
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -3382,12 +3307,30 @@
       "sector_id": "T-UTILITIES",
       "kind": "room",
       "bounds_xz": [
-        -15.0,
-        20.5,
-        18.0,
-        32.333
+        -39.0,
+        28.31,
+        -22.5,
+        56.0
       ],
-      "clear_height": 4.0,
+      "clear_height": 4.2,
+      "wall_thickness": 0.3,
+      "transit": false,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -11.5
+    },
+    {
+      "id": "T-UTILITIES/reagent_room",
+      "name": "reagent_room",
+      "sector_id": "T-UTILITIES",
+      "kind": "room",
+      "bounds_xz": [
+        -22.5,
+        28.31,
+        -8.25,
+        56.0
+      ],
+      "clear_height": 3.4,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -3400,12 +3343,12 @@
       "sector_id": "T-UTILITIES",
       "kind": "room",
       "bounds_xz": [
-        -15.0,
-        32.333,
-        18.0,
-        44.167
+        -8.25,
+        28.31,
+        6.0,
+        56.0
       ],
-      "clear_height": 4.0,
+      "clear_height": 3.4,
       "wall_thickness": 0.3,
       "transit": false,
       "status": "provisional-metric",
@@ -3416,32 +3359,14 @@
       "id": "T-UTILITIES/fire_vestibule",
       "name": "fire_vestibule",
       "sector_id": "T-UTILITIES",
-      "kind": "room",
+      "kind": "airlock",
       "bounds_xz": [
-        -15.0,
-        44.167,
+        6.0,
+        28.31,
         18.0,
         56.0
       ],
-      "clear_height": 4.0,
-      "wall_thickness": 0.3,
-      "transit": false,
-      "status": "provisional-metric",
-      "adjustment_tolerance": 0.25,
-      "floor_y": -11.5
-    },
-    {
-      "id": "T-FREIGHT/service_reception",
-      "name": "service_reception",
-      "sector_id": "T-FREIGHT",
-      "kind": "circulation",
-      "bounds_xz": [
-        1.0,
-        67.5,
-        9.0,
-        82.0
-      ],
-      "clear_height": 5.0,
+      "clear_height": 3.4,
       "wall_thickness": 0.3,
       "transit": true,
       "status": "provisional-metric",
@@ -3452,34 +3377,34 @@
       "id": "T-FREIGHT/heavy_spine",
       "name": "heavy_spine",
       "sector_id": "T-FREIGHT",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
         -20.0,
         67.5,
-        1.0,
-        74.75
+        30.0,
+        71.125
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
     },
     {
-      "id": "T-FREIGHT/service_bypass",
-      "name": "service_bypass",
+      "id": "T-FREIGHT/service_reception",
+      "name": "service_reception",
       "sector_id": "T-FREIGHT",
-      "kind": "room",
+      "kind": "circulation",
       "bounds_xz": [
         -20.0,
-        74.75,
-        1.0,
+        71.125,
+        11.0,
         82.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
@@ -3488,16 +3413,34 @@
       "id": "T-FREIGHT/freight_lift",
       "name": "freight_lift",
       "sector_id": "T-FREIGHT",
-      "kind": "room",
+      "kind": "elevator",
       "bounds_xz": [
-        9.0,
-        67.5,
+        11.0,
+        71.125,
+        23.0,
+        82.0
+      ],
+      "clear_height": 5.0,
+      "wall_thickness": 0.3,
+      "transit": true,
+      "status": "provisional-metric",
+      "adjustment_tolerance": 0.25,
+      "floor_y": -11.5
+    },
+    {
+      "id": "T-FREIGHT/service_bypass",
+      "name": "service_bypass",
+      "sector_id": "T-FREIGHT",
+      "kind": "circulation",
+      "bounds_xz": [
+        23.0,
+        71.125,
         30.0,
         82.0
       ],
       "clear_height": 5.0,
       "wall_thickness": 0.3,
-      "transit": false,
+      "transit": true,
       "status": "provisional-metric",
       "adjustment_tolerance": 0.25,
       "floor_y": -11.5
@@ -6014,17 +5957,17 @@
     {
       "id": "P-T-ENERGY-01",
       "between": [
-        "T-ENERGY/service_approach",
-        "T-ENERGY/generator_hall"
+        "T-ENERGY/generator_hall",
+        "T-ENERGY/switchgear_room"
       ],
       "segment_xz": [
         [
-          -91.1,
-          -8.4
+          -83.9,
+          -10.2
         ],
         [
-          -91.1,
-          -6.6
+          -83.9,
+          -8.4
         ]
       ],
       "width": 1.8,
@@ -6037,17 +5980,17 @@
     {
       "id": "P-T-ENERGY-02",
       "between": [
-        "T-ENERGY/service_approach",
-        "T-ENERGY/switchgear_room"
+        "T-ENERGY/generator_hall",
+        "T-ENERGY/cooling_room"
       ],
       "segment_xz": [
         [
-          -91.1,
-          6.6
+          -83.9,
+          2.1
         ],
         [
-          -91.1,
-          8.4
+          -83.9,
+          3.9
         ]
       ],
       "width": 1.8,
@@ -6060,17 +6003,17 @@
     {
       "id": "P-T-ENERGY-03",
       "between": [
-        "T-ENERGY/service_approach",
-        "T-ENERGY/fire_vestibule"
+        "T-ENERGY/generator_hall",
+        "T-ENERGY/service_approach"
       ],
       "segment_xz": [
         [
-          -83.9,
-          -8.4
+          -93.8,
+          9.6
         ],
         [
-          -83.9,
-          -6.6
+          -92.0,
+          9.6
         ]
       ],
       "width": 1.8,
@@ -6083,17 +6026,40 @@
     {
       "id": "P-T-ENERGY-04",
       "between": [
-        "T-ENERGY/service_approach",
-        "T-ENERGY/cooling_room"
+        "T-ENERGY/cooling_room",
+        "T-ENERGY/service_approach"
       ],
       "segment_xz": [
         [
-          -83.9,
-          6.6
+          -75.35,
+          9.6
         ],
         [
-          -83.9,
-          8.4
+          -73.55,
+          9.6
+        ]
+      ],
+      "width": 1.8,
+      "height": 2.8,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-T-ENERGY-05",
+      "between": [
+        "T-ENERGY/fire_vestibule",
+        "T-ENERGY/service_approach"
+      ],
+      "segment_xz": [
+        [
+          -101.9,
+          11.4
+        ],
+        [
+          -101.9,
+          13.2
         ]
       ],
       "width": 1.8,
@@ -6106,17 +6072,17 @@
     {
       "id": "P-T-WORKSHOP-01",
       "between": [
-        "T-WORKSHOP/internal_circulation",
-        "T-WORKSHOP/workshop"
+        "T-WORKSHOP/workshop",
+        "T-WORKSHOP/parts_store"
       ],
       "segment_xz": [
         [
-          -49.6,
-          -8.4
+          -42.6,
+          -3.3
         ],
         [
-          -49.6,
-          -6.6
+          -42.6,
+          -1.5
         ]
       ],
       "width": 1.8,
@@ -6129,17 +6095,17 @@
     {
       "id": "P-T-WORKSHOP-02",
       "between": [
-        "T-WORKSHOP/internal_circulation",
+        "T-WORKSHOP/workshop",
         "T-WORKSHOP/internal_cargo_opening"
       ],
       "segment_xz": [
         [
-          -49.6,
-          6.6
+          -54.7,
+          10.2
         ],
         [
-          -49.6,
-          8.4
+          -52.9,
+          10.2
         ]
       ],
       "width": 1.8,
@@ -6152,17 +6118,17 @@
     {
       "id": "P-T-WORKSHOP-03",
       "between": [
-        "T-WORKSHOP/internal_circulation",
-        "T-WORKSHOP/parts_store"
+        "T-WORKSHOP/parts_store",
+        "T-WORKSHOP/internal_cargo_opening"
       ],
       "segment_xz": [
         [
-          -45.4,
-          -0.9
+          -37.2,
+          10.2
         ],
         [
-          -45.4,
-          0.9
+          -35.4,
+          10.2
         ]
       ],
       "width": 1.8,
@@ -6175,22 +6141,22 @@
     {
       "id": "P-T-OLD-ACCESS-01",
       "between": [
-        "T-OLD-ACCESS/service_vestibule",
-        "T-OLD-ACCESS/old_stair"
+        "T-OLD-ACCESS/old_stair",
+        "T-OLD-ACCESS/service_vestibule"
       ],
       "segment_xz": [
         [
-          -91.92,
-          31.85
+          -88.08,
+          27.685
         ],
         [
-          -91.92,
-          33.65
+          -88.08,
+          29.485
         ]
       ],
       "width": 1.8,
       "height": 2.8,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -6198,22 +6164,22 @@
     {
       "id": "P-T-OLD-ACCESS-02",
       "between": [
-        "T-OLD-ACCESS/service_vestibule",
+        "T-OLD-ACCESS/old_stair",
         "T-OLD-ACCESS/old_core_substation"
       ],
       "segment_xz": [
         [
-          -88.08,
-          31.85
+          -95.94,
+          36.67
         ],
         [
-          -88.08,
-          33.65
+          -94.14,
+          36.67
         ]
       ],
       "width": 1.8,
       "height": 2.8,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -6221,17 +6187,17 @@
     {
       "id": "P-T-EAST-VERTICAL-01",
       "between": [
-        "T-EAST-VERTICAL/internal_circulation",
-        "T-EAST-VERTICAL/passenger_shaft_no_stop"
+        "T-EAST-VERTICAL/passenger_shaft_no_stop",
+        "T-EAST-VERTICAL/new_substation"
       ],
       "segment_xz": [
         [
-          24.16,
-          -8.4
+          21.92,
+          -6.825
         ],
         [
-          24.16,
-          -6.6
+          21.92,
+          -5.025
         ]
       ],
       "width": 1.8,
@@ -6244,17 +6210,17 @@
     {
       "id": "P-T-EAST-VERTICAL-02",
       "between": [
-        "T-EAST-VERTICAL/internal_circulation",
-        "T-EAST-VERTICAL/fire_vestibule"
+        "T-EAST-VERTICAL/new_substation",
+        "T-EAST-VERTICAL/closed_cable_pit"
       ],
       "segment_xz": [
         [
-          24.16,
-          0.6
+          22.56,
+          0.15
         ],
         [
-          24.16,
-          2.4
+          24.36,
+          0.15
         ]
       ],
       "width": 1.8,
@@ -6267,17 +6233,17 @@
     {
       "id": "P-T-EAST-VERTICAL-03",
       "between": [
-        "T-EAST-VERTICAL/internal_circulation",
-        "T-EAST-VERTICAL/closed_cable_pit"
+        "T-EAST-VERTICAL/new_substation",
+        "T-EAST-VERTICAL/fire_vestibule"
       ],
       "segment_xz": [
         [
-          24.16,
-          9.6
+          25.64,
+          0.15
         ],
         [
-          24.16,
-          11.4
+          27.44,
+          0.15
         ]
       ],
       "width": 1.8,
@@ -6290,22 +6256,22 @@
     {
       "id": "P-T-EAST-VERTICAL-04",
       "between": [
-        "T-EAST-VERTICAL/internal_circulation",
-        "T-EAST-VERTICAL/new_substation"
+        "T-EAST-VERTICAL/new_substation",
+        "T-EAST-VERTICAL/east_emergency_stair"
       ],
       "segment_xz": [
         [
-          25.84,
-          -6.15
+          29.14,
+          0.15
         ],
         [
-          25.84,
-          -4.35
+          30.94,
+          0.15
         ]
       ],
       "width": 1.8,
       "height": 2.8,
-      "type": "internal-door",
+      "type": "stair-threshold",
       "direction": "bidirectional",
       "state": "openable",
       "status": "provisional-metric"
@@ -6313,17 +6279,17 @@
     {
       "id": "P-T-EAST-VERTICAL-05",
       "between": [
-        "T-EAST-VERTICAL/internal_circulation",
-        "T-EAST-VERTICAL/east_emergency_stair"
+        "T-EAST-VERTICAL/closed_cable_pit",
+        "T-EAST-VERTICAL/fire_vestibule"
       ],
       "segment_xz": [
         [
-          25.84,
-          7.35
+          25.0,
+          6.675
         ],
         [
-          25.84,
-          9.15
+          25.0,
+          8.475
         ]
       ],
       "width": 1.8,
@@ -6334,19 +6300,42 @@
       "status": "provisional-metric"
     },
     {
+      "id": "P-T-EAST-VERTICAL-06",
+      "between": [
+        "T-EAST-VERTICAL/fire_vestibule",
+        "T-EAST-VERTICAL/east_emergency_stair"
+      ],
+      "segment_xz": [
+        [
+          28.08,
+          6.675
+        ],
+        [
+          28.08,
+          8.475
+        ]
+      ],
+      "width": 1.8,
+      "height": 2.8,
+      "type": "stair-threshold",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
       "id": "P-T-UTILITIES-01",
       "between": [
-        "T-UTILITIES/internal_circulation",
+        "T-UTILITIES/cable_gallery",
         "T-UTILITIES/late_block_substation"
       ],
       "segment_xz": [
         [
-          -24.0,
-          25.517
+          -48.9,
+          28.31
         ],
         [
-          -24.0,
-          27.316
+          -47.1,
+          28.31
         ]
       ],
       "width": 1.8,
@@ -6359,17 +6348,17 @@
     {
       "id": "P-T-UTILITIES-02",
       "between": [
-        "T-UTILITIES/internal_circulation",
-        "T-UTILITIES/reagent_room"
+        "T-UTILITIES/cable_gallery",
+        "T-UTILITIES/ventilation_room"
       ],
       "segment_xz": [
         [
-          -24.0,
-          37.35
+          -31.65,
+          28.31
         ],
         [
-          -24.0,
-          39.15
+          -29.85,
+          28.31
         ]
       ],
       "width": 1.8,
@@ -6382,17 +6371,17 @@
     {
       "id": "P-T-UTILITIES-03",
       "between": [
-        "T-UTILITIES/internal_circulation",
-        "T-UTILITIES/cable_gallery"
+        "T-UTILITIES/cable_gallery",
+        "T-UTILITIES/reagent_room"
       ],
       "segment_xz": [
         [
-          -24.0,
-          49.184
+          -16.275,
+          28.31
         ],
         [
-          -24.0,
-          50.983
+          -14.475,
+          28.31
         ]
       ],
       "width": 1.8,
@@ -6405,17 +6394,17 @@
     {
       "id": "P-T-UTILITIES-04",
       "between": [
-        "T-UTILITIES/internal_circulation",
-        "T-UTILITIES/ventilation_room"
+        "T-UTILITIES/cable_gallery",
+        "T-UTILITIES/drainage_room"
       ],
       "segment_xz": [
         [
-          -15.0,
-          25.517
+          -2.025,
+          28.31
         ],
         [
-          -15.0,
-          27.316
+          -0.225,
+          28.31
         ]
       ],
       "width": 1.8,
@@ -6428,40 +6417,17 @@
     {
       "id": "P-T-UTILITIES-05",
       "between": [
-        "T-UTILITIES/internal_circulation",
-        "T-UTILITIES/drainage_room"
-      ],
-      "segment_xz": [
-        [
-          -15.0,
-          37.35
-        ],
-        [
-          -15.0,
-          39.15
-        ]
-      ],
-      "width": 1.8,
-      "height": 2.8,
-      "type": "internal-door",
-      "direction": "bidirectional",
-      "state": "openable",
-      "status": "provisional-metric"
-    },
-    {
-      "id": "P-T-UTILITIES-06",
-      "between": [
-        "T-UTILITIES/internal_circulation",
+        "T-UTILITIES/cable_gallery",
         "T-UTILITIES/fire_vestibule"
       ],
       "segment_xz": [
         [
-          -15.0,
-          49.184
+          11.1,
+          28.31
         ],
         [
-          -15.0,
-          50.983
+          12.9,
+          28.31
         ]
       ],
       "width": 1.8,
@@ -6474,20 +6440,20 @@
     {
       "id": "P-T-FREIGHT-01",
       "between": [
-        "T-FREIGHT/service_reception",
-        "T-FREIGHT/heavy_spine"
+        "T-FREIGHT/heavy_spine",
+        "T-FREIGHT/service_reception"
       ],
       "segment_xz": [
         [
-          1.0,
-          68.95
+          -6.75,
+          71.125
         ],
         [
-          1.0,
-          73.3
+          -2.25,
+          71.125
         ]
       ],
-      "width": 4.35,
+      "width": 4.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -6497,20 +6463,20 @@
     {
       "id": "P-T-FREIGHT-02",
       "between": [
-        "T-FREIGHT/service_reception",
-        "T-FREIGHT/service_bypass"
+        "T-FREIGHT/heavy_spine",
+        "T-FREIGHT/freight_lift"
       ],
       "segment_xz": [
         [
-          1.0,
-          76.2
+          14.75,
+          71.125
         ],
         [
-          1.0,
-          80.55
+          19.25,
+          71.125
         ]
       ],
-      "width": 4.35,
+      "width": 4.5,
       "height": 4.5,
       "type": "internal-door",
       "direction": "bidirectional",
@@ -6520,17 +6486,63 @@
     {
       "id": "P-T-FREIGHT-03",
       "between": [
+        "T-FREIGHT/heavy_spine",
+        "T-FREIGHT/service_bypass"
+      ],
+      "segment_xz": [
+        [
+          24.4,
+          71.125
+        ],
+        [
+          28.6,
+          71.125
+        ]
+      ],
+      "width": 4.2,
+      "height": 4.5,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-T-FREIGHT-04",
+      "between": [
         "T-FREIGHT/service_reception",
         "T-FREIGHT/freight_lift"
       ],
       "segment_xz": [
         [
-          9.0,
-          72.5
+          11.0,
+          74.312
         ],
         [
-          9.0,
-          77.0
+          11.0,
+          78.812
+        ]
+      ],
+      "width": 4.5,
+      "height": 4.5,
+      "type": "internal-door",
+      "direction": "bidirectional",
+      "state": "openable",
+      "status": "provisional-metric"
+    },
+    {
+      "id": "P-T-FREIGHT-05",
+      "between": [
+        "T-FREIGHT/freight_lift",
+        "T-FREIGHT/service_bypass"
+      ],
+      "segment_xz": [
+        [
+          23.0,
+          74.312
+        ],
+        [
+          23.0,
+          78.812
         ]
       ],
       "width": 4.5,
@@ -7459,15 +7471,15 @@
       "connection_id": "E-T01",
       "space": "T-ENERGY/service_approach",
       "neighbor": "T-TECH",
-      "side": "north",
+      "side": "south",
       "segment_xz": [
         [
-          -88.1,
-          -15.0
+          -84.05,
+          15.0
         ],
         [
-          -86.9,
-          -15.0
+          -82.85,
+          15.0
         ]
       ],
       "width": 1.2,
@@ -7481,17 +7493,17 @@
     {
       "id": "PX-E-T02-T-WORKSHOP",
       "connection_id": "E-T02",
-      "space": "T-WORKSHOP/internal_circulation",
+      "space": "T-WORKSHOP/workshop",
       "neighbor": "T-TECH",
-      "side": "north",
+      "side": "west",
       "segment_xz": [
         [
-          -48.1,
-          -15.0
+          -65.0,
+          -3.0
         ],
         [
-          -46.9,
-          -15.0
+          -65.0,
+          -1.8
         ]
       ],
       "width": 1.2,
@@ -7505,17 +7517,17 @@
     {
       "id": "PX-E-T03-T-OLD-ACCESS",
       "connection_id": "E-T03",
-      "space": "T-OLD-ACCESS/service_vestibule",
+      "space": "T-OLD-ACCESS/old_stair",
       "neighbor": "T-TECH",
-      "side": "north",
+      "side": "west",
       "segment_xz": [
         [
-          -90.6,
-          20.5
+          -102.0,
+          27.985
         ],
         [
-          -89.4,
-          20.5
+          -102.0,
+          29.185
         ]
       ],
       "width": 1.2,
@@ -7529,20 +7541,20 @@
     {
       "id": "PX-E-T04-T-EAST-VERTICAL",
       "connection_id": "E-T04",
-      "space": "T-EAST-VERTICAL/internal_circulation",
+      "space": "T-EAST-VERTICAL/fire_vestibule",
       "neighbor": "T-TECH",
-      "side": "north",
+      "side": "south",
       "segment_xz": [
         [
-          24.496,
-          -12.0
+          25.94,
+          15.0
         ],
         [
-          25.504,
-          -12.0
+          27.14,
+          15.0
         ]
       ],
-      "width": 1.008,
+      "width": 1.2,
       "height": 2.4,
       "type": "service",
       "direction": "bidirectional",
@@ -7553,7 +7565,7 @@
     {
       "id": "PX-E-T05-T-UTILITIES",
       "connection_id": "E-T05",
-      "space": "T-UTILITIES/internal_circulation",
+      "space": "T-UTILITIES/cable_gallery",
       "neighbor": "T-TECH",
       "side": "north",
       "segment_xz": [
@@ -7579,15 +7591,15 @@
       "connection_id": "E-T08",
       "space": "T-FREIGHT/freight_lift",
       "neighbor": "T-FRT",
-      "side": "north",
+      "side": "south",
       "segment_xz": [
         [
-          17.25,
-          67.5
+          14.75,
+          82.0
         ],
         [
-          21.75,
-          67.5
+          19.25,
+          82.0
         ]
       ],
       "width": 4.5,
@@ -8181,11 +8193,11 @@
       "connection_id": "E-T01",
       "centerline_xz": [
         [
-          -87.5,
-          -15.0
+          -83.45,
+          15.0
         ],
         [
-          -87.5,
+          -83.45,
           15.0
         ]
       ],
@@ -8199,11 +8211,11 @@
       "connection_id": "E-T02",
       "centerline_xz": [
         [
-          -47.5,
-          -15.0
+          -65.0,
+          -2.4
         ],
         [
-          -47.5,
+          -65.0,
           15.0
         ]
       ],
@@ -8217,11 +8229,11 @@
       "connection_id": "E-T03",
       "centerline_xz": [
         [
-          -90.0,
-          20.5
+          -102.0,
+          28.585
         ],
         [
-          -90.0,
+          -102.0,
           20.5
         ]
       ],
@@ -8235,15 +8247,15 @@
       "connection_id": "E-T04",
       "centerline_xz": [
         [
-          25.0,
-          -12.0
+          26.54,
+          15.0
         ],
         [
-          25.0,
+          26.54,
           15.0
         ]
       ],
-      "width": 1.008,
+      "width": 1.2,
       "clear_height": 2.4,
       "traversable": true,
       "state": "openable"
@@ -8271,11 +8283,11 @@
       "connection_id": "E-T08",
       "centerline_xz": [
         [
-          19.5,
-          67.5
+          17.0,
+          82.0
         ],
         [
-          19.5,
+          17.0,
           67.5
         ]
       ],

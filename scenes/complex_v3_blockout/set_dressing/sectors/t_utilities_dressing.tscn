@@ -4,90 +4,73 @@
 [ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
 
 [node name="T_UTILITIES_SetDressing" type="Node3D"]
 metadata/sector_id = "T-UTILITIES"
 metadata/material_family = "utility"
 
 [node name="001_T_UTILITIES_cable_gallery__wall_beacon" parent="." instance=ExtResource("4")]
-position = Vector3(-56.2500, -9.1500, 50.0835)
+position = Vector3(-56.2500, -9.1500, 24.4050)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "T-UTILITIES/cable_gallery::wall_beacon"
 
 [node name="002_T_UTILITIES_drainage_room__utility_tank" parent="." instance=ExtResource("3")]
-position = Vector3(16.8500, -11.5000, 38.2500)
-rotation = Vector3(0, -1.5707963, 0)
+position = Vector3(-1.1250, -11.5000, 54.8500)
+rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-UTILITIES/drainage_room::utility_tank"
 
 [node name="003_T_UTILITIES_fire_vestibule__wall_beacon" parent="." instance=ExtResource("4")]
-position = Vector3(17.2500, -9.1500, 50.0835)
-rotation = Vector3(0, -1.5707963, 0)
+position = Vector3(12.0000, -9.1500, 55.4250)
+rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-UTILITIES/fire_vestibule::wall_beacon"
 
-[node name="004_T_UTILITIES_internal_circulation__wall_beacon" parent="." instance=ExtResource("4")]
-position = Vector3(-19.5000, -9.1500, 55.4250)
+[node name="004_T_UTILITIES_late_block_substation__workbench" parent="." instance=ExtResource("5")]
+position = Vector3(-48.0000, -11.5000, 55.0500)
 rotation = Vector3(0, 3.1415927, 0)
-metadata/placement_id = "T-UTILITIES/internal_circulation::wall_beacon"
+metadata/placement_id = "T-UTILITIES/late_block_substation::workbench"
 
-[node name="005_T_UTILITIES_late_block_substation__pipe_cluster" parent="." instance=ExtResource("2")]
-position = Vector3(-55.2500, -11.5000, 26.4165)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "T-UTILITIES/late_block_substation::pipe_cluster"
+[node name="005_T_UTILITIES_reagent_room__pipe_cluster" parent="." instance=ExtResource("2")]
+position = Vector3(-15.3750, -11.5000, 55.1500)
+rotation = Vector3(0, 3.1415927, 0)
+metadata/placement_id = "T-UTILITIES/reagent_room::pipe_cluster"
 
-[node name="006_T_UTILITIES_reagent_room__utility_tank" parent="." instance=ExtResource("3")]
-position = Vector3(-55.8500, -11.5000, 38.2500)
-rotation = Vector3(0, 1.5707963, 0)
-metadata/placement_id = "T-UTILITIES/reagent_room::utility_tank"
+[node name="006_T_UTILITIES_ventilation_room__utility_tank" parent="." instance=ExtResource("3")]
+position = Vector3(-30.7500, -11.5000, 54.8500)
+rotation = Vector3(0, 3.1415927, 0)
+metadata/placement_id = "T-UTILITIES/ventilation_room::utility_tank"
 
-[node name="007_T_UTILITIES_ventilation_room__generator_unit" parent="." instance=ExtResource("5")]
-position = Vector3(16.7000, -11.5000, 26.4165)
-rotation = Vector3(0, -1.5707963, 0)
-metadata/placement_id = "T-UTILITIES/ventilation_room::generator_unit"
-
-[node name="008_P_T_UTILITIES_01" parent="." instance=ExtResource("1")]
-position = Vector3(-24.0000, -11.5000, 26.4165)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="007_P_T_UTILITIES_01" parent="." instance=ExtResource("1")]
+position = Vector3(-48.0000, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
 metadata/placement_id = "P-T-UTILITIES-01"
 metadata/open_passage = true
 
-[node name="009_P_T_UTILITIES_02" parent="." instance=ExtResource("1")]
-position = Vector3(-24.0000, -11.5000, 38.2500)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="008_P_T_UTILITIES_02" parent="." instance=ExtResource("1")]
+position = Vector3(-30.7500, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
 metadata/placement_id = "P-T-UTILITIES-02"
 metadata/open_passage = true
 
-[node name="010_P_T_UTILITIES_03" parent="." instance=ExtResource("1")]
-position = Vector3(-24.0000, -11.5000, 50.0835)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="009_P_T_UTILITIES_03" parent="." instance=ExtResource("1")]
+position = Vector3(-15.3750, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
 metadata/placement_id = "P-T-UTILITIES-03"
 metadata/open_passage = true
 
-[node name="011_P_T_UTILITIES_04" parent="." instance=ExtResource("1")]
-position = Vector3(-15.0000, -11.5000, 26.4165)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="010_P_T_UTILITIES_04" parent="." instance=ExtResource("1")]
+position = Vector3(-1.1250, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
 metadata/placement_id = "P-T-UTILITIES-04"
 metadata/open_passage = true
 
-[node name="012_P_T_UTILITIES_05" parent="." instance=ExtResource("1")]
-position = Vector3(-15.0000, -11.5000, 38.2500)
-rotation = Vector3(0, 1.5707963, 0)
+[node name="011_P_T_UTILITIES_05" parent="." instance=ExtResource("1")]
+position = Vector3(12.0000, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
 metadata/placement_id = "P-T-UTILITIES-05"
 metadata/open_passage = true
 
-[node name="013_P_T_UTILITIES_06" parent="." instance=ExtResource("1")]
-position = Vector3(-15.0000, -11.5000, 50.0835)
-rotation = Vector3(0, 1.5707963, 0)
-scale = Vector3(0.75630, 1.16667, 1.00000)
-metadata/placement_id = "P-T-UTILITIES-06"
-metadata/open_passage = true
-
-[node name="014_PX_E_T05_T_UTILITIES" parent="." instance=ExtResource("1")]
+[node name="012_PX_E_T05_T_UTILITIES" parent="." instance=ExtResource("1")]
 position = Vector3(-19.5000, -11.5000, 20.5000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
 metadata/placement_id = "PX-E-T05-T-UTILITIES"
