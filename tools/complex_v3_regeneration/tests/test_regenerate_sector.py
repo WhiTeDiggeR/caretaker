@@ -1,0 +1,162 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location("regenerate_sector", ROOT / "regenerate_sector.py")
+assert SPEC and SPEC.loader
+BACKEND = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(BACKEND)
+
+
+SVG_FRAME = {
+    "anchor_id": "svg:wall-main:center",
+    "kind": "wall",
+    "origin": [1.0, 0.0, 2.0],
+    "forward": [1.0, 0.0, 0.0],
+    "normal": [0.0, 0.0, 1.0],
+    "up": [0.0, 1.0, 0.0],
+    "bounds": {"polygon_xz_m": [[0.0, 0.0], [2.0, 0.0], [2.0, 1.0]], "elevation_m": 0.0},
+}
+
+
+INSPECTOR = r'''import argparse, json
+p=argparse.ArgumentParser(add_help=False)
+p.add_argument("source"); p.add_argument("--output-json"); p.add_argument("--json", action="store_true")
+a,_=p.parse_known_args()
+frame=%s
+handoff={"anchor_frames":[frame],"anchor_frame_issues":[]}
+if "mismatch" in a.source: handoff["fixture_side"]="inspector"
+report={"unrecognized":[],"invalid":[],"spatial_handoff":handoff}
+open(a.output_json,"w",encoding="utf-8").write(json.dumps(report))
+''' % repr(SVG_FRAME)
+
+
+CONVERTER = r'''import json, os, sys
+source=sys.argv[1]; output=sys.argv[2]
+os.makedirs(output,exist_ok=True)
+scene_name=sys.argv[sys.argv.index("--scene-name")+1]
+frame=%s
+handoff={"anchor_frames":[frame],"anchor_frame_issues":[]}
+report={"generator_version":"1.19.0","errors":[],"spatial_handoff":handoff,"files":[scene_name+".tscn"]}
+open(os.path.join(output,scene_name+".tscn"),"w",encoding="utf-8").write("[gd_scene format=3]\n")
+open(os.path.join(output,"conversion_report.json"),"w",encoding="utf-8").write(json.dumps(report))
+''' % repr(SVG_FRAME)
+
+
+STAIRS = r'''import json, os, sys
+output=sys.argv[1]; os.makedirs(output,exist_ok=True)
+frame={"anchor_id":"stairs:fixture:lower_entry","kind":"stair_entry","origin":[0.0,0.0,0.0],"forward":[0.0,0.0,1.0],"normal":[0.0,0.0,1.0],"up":[0.0,1.0,0.0],"bounds":{"clear_bounds_xz":[-1.0,-2.0,1.0,2.0],"bottom_y":0.0,"top_y":3.0}}
+report={"schema_id":"caretaker.godot_stairs.generation_report","schema_version":"1.1.0","generator_version":"2.9.0","status":"ok","errors":[],"geometry_validation":{"ok":True,"compiled":{"ok":True},"shaft":{"ok":True}},"anchor_frames":[frame],"files":["stairs.tscn"]}
+open(os.path.join(output,"stairs.tscn"),"w",encoding="utf-8").write("[gd_scene format=3]\n")
+open(os.path.join(output,"generation_report.json"),"w",encoding="utf-8").write(json.dumps(report))
+'''
+
+
+class SectorRegenerationTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        self.svg_root = self.root / "svg_tool" / "scripts"
+        self.stair_root = self.root / "stair_tool" / "scripts"
+        self.svg_root.mkdir(parents=True)
+        self.stair_root.mkdir(parents=True)
+        (self.svg_root / "inspect_svg_plan.py").write_text(INSPECTOR, encoding="utf-8")
+        (self.svg_root / "svg_to_godot3d.py").write_text(CONVERTER, encoding="utf-8")
+        (self.stair_root / "generate_godot_stairs.py").write_text(STAIRS, encoding="utf-8")
+        (self.root / "ordinary.svg").write_text("<svg/>", encoding="utf-8")
+
+    def tearDown(self) -> None:
+        self.temp.cleanup()
+
+    def manifest(self, *, source: str = "ordinary.svg", vertical: bool = False, transform: dict | None = None) -> Path:
+        identity = transform or {
+            "origin": [10.0, 4.0, 20.0],
+            "basis_x": [0.0, 0.0, -1.0], "basis_y": [0.0, 1.0, 0.0], "basis_z": [1.0, 0.0, 0.0],
+        }
+        generators = []
+        if vertical:
+            generators.append({"generator_id": "main", "args": ["--fixture"], "local_to_world": identity})
+        value = {
+            "map_id": "fixture-map", "project_root": ".",
+            "sectors": [{
+                "sector_id": "FIXTURE", "status": "ready", "blockers": [], "source_svg": source,
+                "profile": "generic", "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": 0.0},
+                "shared_args": [], "semantic_mappings": ["wall=wall"], "material_mappings": {},
+                "scene_name": "fixture", "output_resource_dir": "res://generated/fixture",
+                "local_to_world": identity, "vertical_generators": generators,
+            }],
+        }
+        path = self.root / "manifest.json"
+        path.write_text(json.dumps(value), encoding="utf-8")
+        return path
+
+    def run_backend(self, staging: Path, manifest: Path, sector: str = "FIXTURE") -> int:
+        return BACKEND.main([
+            "--sector", sector, "--staging", str(staging), "--manifest", str(manifest),
+            "--svg-tool-root", str(self.svg_root.parent), "--stair-tool-root", str(self.stair_root.parent),
+            "--python", sys.executable,
+        ])
+
+    def test_production_manifest_enumerates_30_unique_blocked_sectors(self) -> None:
+        manifest = json.loads((ROOT / "sector_generation_manifest.json").read_text(encoding="utf-8"))
+        ids = [sector["sector_id"] for sector in manifest["sectors"]]
+        self.assertEqual(len(ids), 30)
+        self.assertEqual(len(set(ids)), 30)
+        self.assertTrue(all(sector["status"] == "blocked" and sector["blockers"] for sector in manifest["sectors"]))
+
+    def test_unknown_sector_is_code_2_without_staging(self) -> None:
+        staging = self.root / "unknown"
+        self.assertEqual(self.run_backend(staging, self.manifest(), "NOPE"), 2)
+        self.assertFalse(staging.exists())
+
+    def test_blocked_production_sector_is_code_2_without_staging(self) -> None:
+        staging = self.root / "production"
+        self.assertEqual(self.run_backend(staging, ROOT / "sector_generation_manifest.json", "U-MEDBAY"), 2)
+        self.assertFalse(staging.exists())
+
+    def test_nonempty_staging_is_rejected_without_overwrite(self) -> None:
+        staging = self.root / "occupied"
+        staging.mkdir()
+        marker = staging / "authored.txt"
+        marker.write_text("preserve", encoding="utf-8")
+        self.assertEqual(self.run_backend(staging, self.manifest()), 2)
+        self.assertEqual(marker.read_text(encoding="utf-8"), "preserve")
+
+    def test_ready_sector_is_deterministic_and_transforms_frames(self) -> None:
+        manifest = self.manifest()
+        first, second = self.root / "first", self.root / "second"
+        self.assertEqual(self.run_backend(first, manifest), 0)
+        self.assertEqual(self.run_backend(second, manifest), 0)
+        anchors = json.loads((first / "anchor_frames.json").read_text(encoding="utf-8"))
+        frame = anchors["anchors"][0]
+        self.assertEqual(frame["origin"], [12.0, 4.0, 19.0])
+        self.assertEqual(frame["bounds"]["polygon_xz"], [[10.0, 20.0], [10.0, 18.0], [11.0, 18.0]])
+        self.assertEqual((first / "anchor_frames.json").read_bytes(), (second / "anchor_frames.json").read_bytes())
+        self.assertEqual((first / "generation_manifest.json").read_bytes(), (second / "generation_manifest.json").read_bytes())
+
+    def test_vertical_sector_merges_stair_frames_and_bounds(self) -> None:
+        staging = self.root / "vertical"
+        self.assertEqual(self.run_backend(staging, self.manifest(vertical=True)), 0)
+        anchors = json.loads((staging / "anchor_frames.json").read_text(encoding="utf-8"))["anchors"]
+        stair = next(frame for frame in anchors if frame["kind"] == "stair_entry")
+        self.assertEqual(stair["origin"], [10.0, 4.0, 20.0])
+        self.assertEqual(stair["bounds"]["clear_bounds_xz"], [8.0, 19.0, 12.0, 21.0])
+        self.assertEqual(stair["bounds"]["bottom_y"], 4.0)
+        self.assertEqual(stair["bounds"]["top_y"], 7.0)
+
+    def test_incomplete_transform_and_inspector_mismatch_are_blocking(self) -> None:
+        bad_transform = {"origin": [0, 0, 0], "basis_x": [1, 0, 0], "basis_y": [0, 1, 0]}
+        self.assertEqual(self.run_backend(self.root / "bad", self.manifest(transform=bad_transform)), 2)
+        (self.root / "mismatch.svg").write_text("<svg/>", encoding="utf-8")
+        self.assertEqual(self.run_backend(self.root / "mismatch", self.manifest(source="mismatch.svg")), 2)
+
+
+if __name__ == "__main__":
+    unittest.main()
