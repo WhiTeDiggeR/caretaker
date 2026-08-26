@@ -17,12 +17,17 @@ SPEC.loader.exec_module(BACKEND)
 
 SVG_FRAME = {
     "anchor_id": "svg:wall-main:center",
-    "kind": "wall",
+    "type": "floor",
+    "role": "surface",
+    "status": "active",
+    "source_ref": {"artifact_id": "geometry-handoff", "source_id": "wall-main"},
     "origin": [1.0, 0.0, 2.0],
     "forward": [1.0, 0.0, 0.0],
-    "normal": [0.0, 0.0, 1.0],
+    "normal": [0.0, 1.0, 0.0],
     "up": [0.0, 1.0, 0.0],
+    "geometry_hash": "sha256:fixture-svg",
     "bounds": {"polygon_xz_m": [[0.0, 0.0], [2.0, 0.0], [2.0, 1.0]], "elevation_m": 0.0},
+    "placement_limits": {"normal_offset_m": [0.0, 0.0], "height_m": [0.0, 0.0]},
 }
 
 
@@ -52,7 +57,7 @@ open(os.path.join(output,"conversion_report.json"),"w",encoding="utf-8").write(j
 
 STAIRS = r'''import json, os, sys
 output=sys.argv[1]; os.makedirs(output,exist_ok=True)
-frame={"anchor_id":"stairs:fixture:lower_entry","kind":"stair_entry","origin":[0.0,0.0,0.0],"forward":[0.0,0.0,1.0],"normal":[0.0,0.0,1.0],"up":[0.0,1.0,0.0],"bounds":{"clear_bounds_xz":[-1.0,-2.0,1.0,2.0],"bottom_y":0.0,"top_y":3.0}}
+frame={"anchor_id":"stairs:fixture:lower_entry","type":"stair_entry","role":"lower_entry","status":"active","source_ref":{"artifact_id":"generation-report","source_id":"fixture:lower_entry"},"origin":[0.0,0.0,0.0],"forward":[0.0,0.0,1.0],"normal":[-1.0,0.0,0.0],"up":[0.0,1.0,0.0],"geometry_hash":"sha256:fixture-stairs","bounds":{"clear_bounds_xz":[-1.0,-2.0,1.0,2.0],"bottom_y":0.0,"top_y":3.0},"placement_limits":{"normal_offset_m":[-1.0,1.0],"height_m":[0.0,3.0]}}
 report={"schema_id":"caretaker.godot_stairs.generation_report","schema_version":"1.1.0","generator_version":"2.9.0","status":"ok","errors":[],"geometry_validation":{"ok":True,"compiled":{"ok":True},"shaft":{"ok":True}},"anchor_frames":[frame],"files":["stairs.tscn"]}
 open(os.path.join(output,"stairs.tscn"),"w",encoding="utf-8").write("[gd_scene format=3]\n")
 open(os.path.join(output,"generation_report.json"),"w",encoding="utf-8").write(json.dumps(report))
@@ -136,6 +141,8 @@ class SectorRegenerationTests(unittest.TestCase):
         self.assertEqual(self.run_backend(second, manifest), 0)
         anchors = json.loads((first / "anchor_frames.json").read_text(encoding="utf-8"))
         frame = anchors["anchors"][0]
+        self.assertEqual(frame["type"], "floor")
+        self.assertNotIn("kind", frame)
         self.assertEqual(frame["origin"], [12.0, 4.0, 19.0])
         self.assertEqual(frame["bounds"]["polygon_xz"], [[10.0, 20.0], [10.0, 18.0], [11.0, 18.0]])
         self.assertEqual((first / "anchor_frames.json").read_bytes(), (second / "anchor_frames.json").read_bytes())
@@ -145,11 +152,24 @@ class SectorRegenerationTests(unittest.TestCase):
         staging = self.root / "vertical"
         self.assertEqual(self.run_backend(staging, self.manifest(vertical=True)), 0)
         anchors = json.loads((staging / "anchor_frames.json").read_text(encoding="utf-8"))["anchors"]
-        stair = next(frame for frame in anchors if frame["kind"] == "stair_entry")
+        stair = next(frame for frame in anchors if frame["type"] == "stair_entry")
+        self.assertNotIn("kind", stair)
         self.assertEqual(stair["origin"], [10.0, 4.0, 20.0])
         self.assertEqual(stair["bounds"]["clear_bounds_xz"], [8.0, 19.0, 12.0, 21.0])
         self.assertEqual(stair["bounds"]["bottom_y"], 4.0)
         self.assertEqual(stair["bounds"]["top_y"], 7.0)
+
+    def test_legacy_kind_cannot_escape_as_contract_type(self) -> None:
+        legacy = dict(SVG_FRAME)
+        legacy["kind"] = legacy.pop("type")
+        transform = {
+            "origin": [0.0, 0.0, 0.0],
+            "basis_x": [1.0, 0.0, 0.0],
+            "basis_y": [0.0, 1.0, 0.0],
+            "basis_z": [0.0, 0.0, 1.0],
+        }
+        with self.assertRaisesRegex(BACKEND.RegenerationError, "legacy kind=.*not accepted"):
+            BACKEND.transform_frame(legacy, transform)
 
     def test_incomplete_transform_and_inspector_mismatch_are_blocking(self) -> None:
         bad_transform = {"origin": [0, 0, 0], "basis_x": [1, 0, 0], "basis_y": [0, 1, 0]}

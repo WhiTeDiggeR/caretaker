@@ -17,6 +17,7 @@ from typing import Any, Sequence
 VERSION = "1.0.0"
 CONTRACT_VERSION = "1.0.0"
 EPS = 1.0e-6
+ANCHOR_TYPES = {"point", "wall", "door", "floor", "ceiling", "shaft", "stair_entry", "stair_exit"}
 MIN_SVG_VERSION = (1, 19, 0)
 MIN_STAIR_VERSION = (2, 9, 0)
 
@@ -126,6 +127,21 @@ def transform_point(point: Sequence[float], transform: dict[str, list[float]]) -
 
 
 def transform_frame(frame: dict[str, Any], transform: dict[str, list[float]]) -> dict[str, Any]:
+    anchor_id = frame.get("anchor_id")
+    if not isinstance(anchor_id, str) or not anchor_id:
+        raise RegenerationError("Anchor frame has no stable anchor_id")
+    anchor_type = frame.get("type")
+    if anchor_type not in ANCHOR_TYPES:
+        legacy_kind = frame.get("kind")
+        detail = f"; legacy kind={legacy_kind!r} is not accepted" if legacy_kind is not None else ""
+        raise RegenerationError(f"Anchor {anchor_id} has invalid contract type{detail}")
+    if frame.get("status") != "active":
+        raise RegenerationError(f"Anchor {anchor_id} is not active")
+    source_ref = frame.get("source_ref")
+    if not isinstance(source_ref, dict) or not source_ref.get("artifact_id") or not source_ref.get("source_id"):
+        raise RegenerationError(f"Anchor {anchor_id} has invalid source_ref")
+    if not isinstance(frame.get("bounds"), dict) or not isinstance(frame.get("placement_limits"), dict):
+        raise RegenerationError(f"Anchor {anchor_id} must declare bounds and placement_limits")
     required_vectors = ("origin", "forward", "normal", "up")
     for key in required_vectors:
         vector = frame.get(key)
