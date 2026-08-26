@@ -1,5 +1,5 @@
 @tool
-extends Node3D
+extends "res://scenes/complex_v3_blockout/complex_v3_sector_wrapper.gd"
 class_name ComplexV3BlockoutPart
 
 const MEDICAL_PANELS := preload("res://materials/complex_v3/medical_panels.tres")

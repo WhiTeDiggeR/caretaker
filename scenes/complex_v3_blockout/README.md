@@ -7,6 +7,7 @@
 - `complex_v3_blockout.tscn` — переиспользуемая подсцена без игрока, света и UI.
 - `complex_v3_assembly.gd` — собирает 30 секторных сцен и единственную общую infrastructure-сцену.
 - `complex_v3_blockout.gd` — детерминированный построитель отдельного сектора или общей инфраструктуры.
+- `complex_v3_sector_wrapper.gd` — контракт владельцев: заменяемый `Generated` с внешними слоями `Architecture`/`Stairs`, отдельный persistent `AuthoredContent` и transient `EditorPreview` без physics.
 - `complex_v3_zone.tscn` и `zones/{upper,lower,technical}/` — общая база и 30 тонких сцен по stable sector ID.
 - `complex_v3_infrastructure.tscn` — магистрали, межзонные соединители и вертикальные переходы без дублирования по зонам.
 - `res://objects/complex_v3/main_core_switchback_stair.tscn` — самостоятельная редактируемая лестница главного ядра; зональные сцены содержат только совпадающий с ней монтажный проём.
@@ -22,12 +23,15 @@
 - `main_core_switchback_stair_check.gd` и `main_core_switchback_stair_visual_check.tscn` — отдельная проверка размеров, коллизий и четырёх воспроизводимых ракурсов лестницы.
 - `validate_blockout_source.py` — статическая сверка источников и границ задачи.
 - `validate_sector_scenes.py` — сверка секторных сцен с паспортами и полной сборкой.
+- `fixtures/sector_wrapper_fixture.tscn`, `sector_wrapper_contract_check.gd` и `validate_sector_wrapper_contract.py` — fixture-only доказательство сохранности ручного ресурса при удалении и перестройке generated-слоя; production-зоны этим этапом не мигрируются.
 
 В test scene `F1` переключает первое лицо и общий вид, `F2` циклически меняет уровень, `F3` — режим `FULL / SECTOR / NEIGHBORS`, `F4` и `Shift+F4` — следующую и предыдущую зону.
 
 `T-CIRCULATION` — паспорт общей технической циркуляции без собственных room spaces. В полной сборке его геометрией владеет только `complex_v3_infrastructure.tscn`; отдельный запуск сцены `T-CIRCULATION` включает эту инфраструктуру как диагностический preview.
 
 Ручные объекты конкретной зоны следует добавлять только в её узел `AuthoredContent`. Генератор создаёт отсутствующие секторные сцены, но не перезаписывает существующие, поэтому ручное наполнение сохраняется; процедурный узел `Generated` пересоздаётся при каждом запуске.
+
+Новый regeneration wrapper принимает `PackedScene` для generated-архитектуры, generated-лестниц и ручного слоя. `AuthoredContent` обязан быть корнем отдельной сцены; rebuild собирает `GeneratedStaging`, заменяет только прежний `Generated` и валидирует прямые sibling-корни. Этот путь пока включён только в fixture, а старый runtime blockout остаётся контрольным путём до пилотной миграции.
 
 При открытии отдельной сцены из `zones/` её `editor_preview_enabled` строит временный узел `Generated` прямо в 3D-вьюпорте. Потолки по умолчанию скрыты для обзора сверху; `editor_preview_show_ceilings` в Inspector показывает их обратно. Preview не сохраняется в `.tscn`, не содержит physics collision и может быть полностью отключён в Inspector; `AuthoredContent` при перестроении не изменяется. В полной сборке дочерние preview автоматически отключены.
 
