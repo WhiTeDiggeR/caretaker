@@ -243,6 +243,59 @@ func refresh_registered_objects() -> PackedStringArray:
 	return errors
 
 
+func get_anchor_frame(anchor_id: String) -> Dictionary:
+	if not _anchors.has(anchor_id):
+		return {}
+	return (_anchors[anchor_id] as Dictionary).duplicate(true)
+
+
+func find_compatible_candidates(expected_type: String, world_position: Vector3, tolerance_m: float) -> Array[Dictionary]:
+	var candidates: Array[Dictionary] = []
+	if expected_type not in LINEAR_TYPES or tolerance_m < 0.0:
+		return candidates
+	for anchor_id: String in _anchors.keys():
+		var frame := _anchors[anchor_id] as Dictionary
+		if str(frame.get("type", "")) != expected_type:
+			continue
+		var origin := _vector_from_frame(frame, "origin")
+		var forward := _vector_from_frame(frame, "forward")
+		var up := _vector_from_frame(frame, "up")
+		var bounds := frame.get("bounds", {}) as Dictionary
+		var length_m := float(bounds.get("length_m", bounds.get("width_m", bounds.get("clear_width_m", -1.0))))
+		if length_m < 0.0:
+			continue
+		var along_m := clampf((world_position - origin).dot(forward), 0.0, length_m)
+		var height_extent_m := maxf(float(bounds.get("height_m", 0.0)), 0.0)
+		var height_m := clampf((world_position - origin).dot(up), 0.0, height_extent_m)
+		var closest := origin + forward * along_m + up * height_m
+		var distance_m := world_position.distance_to(closest)
+		if distance_m <= tolerance_m + EPS:
+			candidates.append({
+				"anchor_id": anchor_id,
+				"type": expected_type,
+				"distance_m": distance_m,
+				"along_m": along_m,
+				"height_m": height_m,
+				"closest_point": closest,
+			})
+	candidates.sort_custom(_candidate_less)
+	return candidates
+
+
+func _candidate_less(left: Dictionary, right: Dictionary) -> bool:
+	var distance_delta := float(left["distance_m"]) - float(right["distance_m"])
+	if absf(distance_delta) > EPS:
+		return distance_delta < 0.0
+	return str(left["anchor_id"]) < str(right["anchor_id"])
+
+
+func can_register_object_id(object_id: String, object: Node) -> bool:
+	if object_id.is_empty() or not _objects.has(object_id):
+		return not object_id.is_empty()
+	var existing := (_objects[object_id] as WeakRef).get_ref() as Node
+	return existing == null or existing == object
+
+
 func get_last_errors() -> PackedStringArray:
 	return _last_errors.duplicate()
 

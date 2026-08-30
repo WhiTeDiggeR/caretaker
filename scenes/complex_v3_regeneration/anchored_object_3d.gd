@@ -52,3 +52,23 @@ func apply_anchor_transform() -> PackedStringArray:
 
 func get_anchor_errors() -> PackedStringArray:
 	return _last_errors.duplicate()
+
+
+func apply_editor_binding_state(state: Dictionary) -> void:
+	if anchor_registry != null:
+		anchor_registry.unregister_object(self)
+	object_id = str(state.get("object_id", object_id))
+	anchor_id = str(state.get("anchor_id", ""))
+	expected_anchor_type = str(state.get("expected_anchor_type", expected_anchor_type))
+	placement = state.get("placement") as ComplexV3AnchorPlacement
+	author_correction = state.get("author_correction", Transform3D.IDENTITY) as Transform3D
+	anchor_registry = state.get("anchor_registry") as ComplexV3AnchorRegistry
+	apply_on_ready = bool(state.get("apply_on_ready", apply_on_ready))
+	if anchor_registry != null:
+		_last_errors = anchor_registry.register_object(self)
+	else:
+		_last_errors = PackedStringArray()
+	if bool(state.get("resolve", false)) and _last_errors.is_empty():
+		apply_anchor_transform()
+	else:
+		global_transform = state.get("world_transform", global_transform) as Transform3D
