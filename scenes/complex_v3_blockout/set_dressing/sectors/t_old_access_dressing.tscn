@@ -1,43 +1,83 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/debris_pile.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="5"]
 
 [node name="T_OLD_ACCESS_SetDressing" type="Node3D"]
 metadata/sector_id = "T-OLD-ACCESS"
 metadata/material_family = "historic"
 
-[node name="001_T_OLD_ACCESS_old_core_substation__debris_pile" parent="." instance=ExtResource("3")]
+[node name="001_T_OLD_ACCESS_old_core_substation__debris_pile" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-7AD363B4A4F373BCF1DE"
+apply_on_ready = false
 position = Vector3(-95.0400, -11.5000, 44.0000)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-OLD-ACCESS/old_core_substation::debris_pile"
+metadata/binding_mode = "free"
 
-[node name="002_T_OLD_ACCESS_old_stair__loaded_shelf" parent="." instance=ExtResource("4")]
+[node name="Content" parent="001_T_OLD_ACCESS_old_core_substation__debris_pile" instance=ExtResource("4")]
+
+[node name="002_T_OLD_ACCESS_old_stair__loaded_shelf" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-C42CEBB6A2FC84965CBB"
+apply_on_ready = false
 position = Vector3(-95.0400, -11.5000, 21.3500)
 metadata/placement_id = "T-OLD-ACCESS/old_stair::loaded_shelf"
+metadata/binding_mode = "free"
 
-[node name="003_T_OLD_ACCESS_service_vestibule__wall_beacon" parent="." instance=ExtResource("2")]
+[node name="Content" parent="002_T_OLD_ACCESS_old_stair__loaded_shelf" instance=ExtResource("5")]
+
+[node name="003_T_OLD_ACCESS_service_vestibule__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-41406F5240A42D35D6D0"
+apply_on_ready = false
 position = Vector3(-78.7500, -9.1500, 28.5850)
 rotation = Vector3(0, -1.5707963, 0)
 metadata/placement_id = "T-OLD-ACCESS/service_vestibule::wall_beacon"
+metadata/binding_mode = "free"
 
-[node name="004_P_T_OLD_ACCESS_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="003_T_OLD_ACCESS_service_vestibule__wall_beacon" instance=ExtResource("3")]
+
+[node name="004_P_T_OLD_ACCESS_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-31798B1D032BDB6DDF32"
+apply_on_ready = false
 position = Vector3(-88.0800, -11.5000, 28.5850)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-OLD-ACCESS-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="005_P_T_OLD_ACCESS_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="004_P_T_OLD_ACCESS_01" instance=ExtResource("2")]
+
+[node name="005_P_T_OLD_ACCESS_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-938F8B918F1919813165"
+apply_on_ready = false
 position = Vector3(-95.0400, -11.5000, 36.6700)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-OLD-ACCESS-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="006_PX_E_T03_T_OLD_ACCESS" parent="." instance=ExtResource("1")]
+[node name="Content" parent="005_P_T_OLD_ACCESS_02" instance=ExtResource("2")]
+
+[node name="006_PX_E_T03_T_OLD_ACCESS" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-FF396D00482277227A07"
+apply_on_ready = false
 position = Vector3(-83.0400, -11.5000, 20.5000)
 scale = Vector3(0.75630, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-T03-T-OLD-ACCESS"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="006_PX_E_T03_T_OLD_ACCESS" instance=ExtResource("2")]

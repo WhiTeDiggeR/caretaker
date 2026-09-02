@@ -1,112 +1,234 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://objects/medical_bed.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="7"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="8"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://objects/medical_bed.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="9"]
 
 [node name="U_MEDBAY_SetDressing" type="Node3D"]
 metadata/sector_id = "U-MEDBAY"
 metadata/material_family = "medical"
 
-[node name="001_U_MEDBAY_procedure_room__medical_bed__procedure_table" parent="." instance=ExtResource("6")]
+[node name="001_U_MEDBAY_procedure_room__medical_bed__procedure_table" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D3A27B3BA9106B79CDF4"
+apply_on_ready = false
 position = Vector3(-91.2000, 0.0000, 9.1000)
 metadata/placement_id = "U-MEDBAY/procedure_room::medical_bed::procedure_table"
+metadata/binding_mode = "free"
 
-[node name="002_U_MEDBAY_procedure_room__workbench__instrument_bench" parent="." instance=ExtResource("8")]
+[node name="Content" parent="001_U_MEDBAY_procedure_room__medical_bed__procedure_table" instance=ExtResource("7")]
+
+[node name="002_U_MEDBAY_procedure_room__workbench__instrument_bench" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-9C2CB956D10E456CAACB"
+apply_on_ready = false
 position = Vector3(-88.2000, 0.0000, 8.1000)
 metadata/placement_id = "U-MEDBAY/procedure_room::workbench::instrument_bench"
+metadata/binding_mode = "free"
 
-[node name="003_U_MEDBAY_procedure_room__loaded_cabinet__sterile_cabinet" parent="." instance=ExtResource("5")]
+[node name="Content" parent="002_U_MEDBAY_procedure_room__workbench__instrument_bench" instance=ExtResource("9")]
+
+[node name="003_U_MEDBAY_procedure_room__loaded_cabinet__sterile_cabinet" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-0255404FA79A4D368314"
+apply_on_ready = false
 position = Vector3(-88.2000, 0.0000, 10.3500)
 metadata/placement_id = "U-MEDBAY/procedure_room::loaded_cabinet::sterile_cabinet"
+metadata/binding_mode = "free"
 
-[node name="004_U_MEDBAY_observation_ward__medical_bed__bed_west" parent="." instance=ExtResource("6")]
+[node name="Content" parent="003_U_MEDBAY_procedure_room__loaded_cabinet__sterile_cabinet" instance=ExtResource("6")]
+
+[node name="004_U_MEDBAY_observation_ward__medical_bed__bed_west" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-468E21E072A7DCCF19F5"
+apply_on_ready = false
 position = Vector3(-92.2000, 0.0000, 13.1000)
 metadata/placement_id = "U-MEDBAY/observation_ward::medical_bed::bed_west"
+metadata/binding_mode = "free"
 
-[node name="005_U_MEDBAY_observation_ward__medical_bed__bed_center" parent="." instance=ExtResource("6")]
+[node name="Content" parent="004_U_MEDBAY_observation_ward__medical_bed__bed_west" instance=ExtResource("7")]
+
+[node name="005_U_MEDBAY_observation_ward__medical_bed__bed_center" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-A13EC8527C9F6467A0E6"
+apply_on_ready = false
 position = Vector3(-90.6000, 0.0000, 13.1000)
 metadata/placement_id = "U-MEDBAY/observation_ward::medical_bed::bed_center"
+metadata/binding_mode = "free"
 
-[node name="006_U_MEDBAY_observation_ward__medical_bed__bed_east" parent="." instance=ExtResource("6")]
+[node name="Content" parent="005_U_MEDBAY_observation_ward__medical_bed__bed_center" instance=ExtResource("7")]
+
+[node name="006_U_MEDBAY_observation_ward__medical_bed__bed_east" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-7564897F0D6328084F29"
+apply_on_ready = false
 position = Vector3(-89.0000, 0.0000, 13.1000)
 metadata/placement_id = "U-MEDBAY/observation_ward::medical_bed::bed_east"
+metadata/binding_mode = "free"
 
-[node name="007_U_MEDBAY_clean_store__loaded_cabinet__sterile_stock" parent="." instance=ExtResource("5")]
+[node name="Content" parent="006_U_MEDBAY_observation_ward__medical_bed__bed_east" instance=ExtResource("7")]
+
+[node name="007_U_MEDBAY_clean_store__loaded_cabinet__sterile_stock" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E031AAE6419666034BBB"
+apply_on_ready = false
 position = Vector3(-83.1900, 0.0000, 9.2500)
 metadata/placement_id = "U-MEDBAY/clean_store::loaded_cabinet::sterile_stock"
+metadata/binding_mode = "free"
 
-[node name="008_U_MEDBAY_sanitary_airlock__utility_tank__decon_unit" parent="." instance=ExtResource("3")]
+[node name="Content" parent="007_U_MEDBAY_clean_store__loaded_cabinet__sterile_stock" instance=ExtResource("6")]
+
+[node name="008_U_MEDBAY_sanitary_airlock__utility_tank__decon_unit" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-9559F4A4CA3F8D7C648F"
+apply_on_ready = false
 position = Vector3(-81.0400, 0.0000, 7.7500)
 metadata/placement_id = "U-MEDBAY/sanitary_airlock::utility_tank::decon_unit"
+metadata/binding_mode = "free"
 
-[node name="009_U_MEDBAY_triage__wall_terminal__intake_terminal" parent="." instance=ExtResource("7")]
+[node name="Content" parent="008_U_MEDBAY_sanitary_airlock__utility_tank__decon_unit" instance=ExtResource("4")]
+
+[node name="009_U_MEDBAY_triage__wall_terminal__intake_terminal" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-7BEBC36D01B646DFB77A"
+apply_on_ready = false
 position = Vector3(-82.1500, 1.2000, 12.6040)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "U-MEDBAY/triage::wall_terminal::intake_terminal"
+metadata/binding_mode = "unresolved"
 
-[node name="010_U_MEDBAY_medical_post__operator_console__duty_console" parent="." instance=ExtResource("2")]
+[node name="Content" parent="009_U_MEDBAY_triage__wall_terminal__intake_terminal" instance=ExtResource("8")]
+
+[node name="010_U_MEDBAY_medical_post__operator_console__duty_console" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-CC70BBAFBDD9C814FA10"
+apply_on_ready = false
 position = Vector3(-82.1500, 0.0000, 13.7000)
 metadata/placement_id = "U-MEDBAY/medical_post::operator_console::duty_console"
+metadata/binding_mode = "free"
 
-[node name="011_U_MEDBAY_medical_post__loaded_cabinet__medicine_cabinet" parent="." instance=ExtResource("5")]
+[node name="Content" parent="010_U_MEDBAY_medical_post__operator_console__duty_console" instance=ExtResource("3")]
+
+[node name="011_U_MEDBAY_medical_post__loaded_cabinet__medicine_cabinet" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-28EF236423FCB110356E"
+apply_on_ready = false
 position = Vector3(-82.1500, 0.0000, 14.4500)
 metadata/placement_id = "U-MEDBAY/medical_post::loaded_cabinet::medicine_cabinet"
+metadata/binding_mode = "free"
 
-[node name="012_U_MEDBAY_clean_corridor__wall_beacon__clean_route" parent="." instance=ExtResource("4")]
+[node name="Content" parent="011_U_MEDBAY_medical_post__loaded_cabinet__medicine_cabinet" instance=ExtResource("6")]
+
+[node name="012_U_MEDBAY_clean_corridor__wall_beacon__clean_route" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-80E05E729FE819E3D805"
+apply_on_ready = false
 position = Vector3(-86.4820, 2.3500, 11.8000)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "U-MEDBAY/clean_corridor::wall_beacon::clean_route"
+metadata/binding_mode = "unresolved"
 
-[node name="013_P_U_MEDBAY_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="012_U_MEDBAY_clean_corridor__wall_beacon__clean_route" instance=ExtResource("5")]
+
+[node name="013_P_U_MEDBAY_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E7405AED6BE2288A11AD"
+apply_on_ready = false
 position = Vector3(-86.6320, 0.0000, 9.2150)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-MEDBAY-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="014_P_U_MEDBAY_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="013_P_U_MEDBAY_01" instance=ExtResource("2")]
+
+[node name="014_P_U_MEDBAY_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-5E22D69F45891F7CFF52"
+apply_on_ready = false
 position = Vector3(-86.6320, 0.0000, 13.0310)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-MEDBAY-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="015_P_U_MEDBAY_03" parent="." instance=ExtResource("1")]
+[node name="Content" parent="014_P_U_MEDBAY_02" instance=ExtResource("2")]
+
+[node name="015_P_U_MEDBAY_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-FEBE2575851C3AE0BC5B"
+apply_on_ready = false
 position = Vector3(-84.2980, 0.0000, 8.2310)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-MEDBAY-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="016_P_U_MEDBAY_04" parent="." instance=ExtResource("1")]
+[node name="Content" parent="015_P_U_MEDBAY_03" instance=ExtResource("2")]
+
+[node name="016_P_U_MEDBAY_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-2DCB59102A48AF176EFD"
+apply_on_ready = false
 position = Vector3(-84.2980, 0.0000, 10.8560)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-MEDBAY-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="017_P_U_MEDBAY_05" parent="." instance=ExtResource("1")]
+[node name="Content" parent="016_P_U_MEDBAY_04" instance=ExtResource("2")]
+
+[node name="017_P_U_MEDBAY_05" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E5BFACADDEC5126F87F2"
+apply_on_ready = false
 position = Vector3(-84.2980, 0.0000, 13.8310)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-MEDBAY-05"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="018_P_U_MEDBAY_06" parent="." instance=ExtResource("1")]
+[node name="Content" parent="017_P_U_MEDBAY_05" instance=ExtResource("2")]
+
+[node name="018_P_U_MEDBAY_06" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-25166604264447DED683"
+apply_on_ready = false
 position = Vector3(-81.0320, 0.0000, 9.6670)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-MEDBAY-06"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="019_PX_E_U02A_U_MEDBAY" parent="." instance=ExtResource("1")]
+[node name="Content" parent="018_P_U_MEDBAY_06" instance=ExtResource("2")]
+
+[node name="019_PX_E_U02A_U_MEDBAY" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-3F7009057B61713FA509"
+apply_on_ready = false
 position = Vector3(-80.0000, 0.0000, 11.6500)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-U02A-U-MEDBAY"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="019_PX_E_U02A_U_MEDBAY" instance=ExtResource("2")]

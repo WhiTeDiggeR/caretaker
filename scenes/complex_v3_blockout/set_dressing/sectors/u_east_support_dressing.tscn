@@ -1,80 +1,166 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="6"]
 
 [node name="U_EAST_SUPPORT_SetDressing" type="Node3D"]
 metadata/sector_id = "U-EAST-SUPPORT"
 metadata/material_family = "domestic"
 
-[node name="001_U_EAST_SUPPORT_supply_store__loaded_shelf__linen" parent="." instance=ExtResource("4")]
+[node name="001_U_EAST_SUPPORT_supply_store__loaded_shelf__linen" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-AA059F7CCFB8FEBF6B6C"
+apply_on_ready = false
 position = Vector3(12.5000, 0.0000, -8.0000)
 metadata/placement_id = "U-EAST-SUPPORT/supply_store::loaded_shelf::linen"
+metadata/binding_mode = "free"
 
-[node name="002_U_EAST_SUPPORT_supply_store__loaded_cabinet__chemicals" parent="." instance=ExtResource("3")]
+[node name="Content" parent="001_U_EAST_SUPPORT_supply_store__loaded_shelf__linen" instance=ExtResource("5")]
+
+[node name="002_U_EAST_SUPPORT_supply_store__loaded_cabinet__chemicals" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-8726E88ABAD9556B97A9"
+apply_on_ready = false
 position = Vector3(15.5000, 0.0000, -8.0000)
 metadata/placement_id = "U-EAST-SUPPORT/supply_store::loaded_cabinet::chemicals"
+metadata/binding_mode = "free"
 
-[node name="003_U_EAST_SUPPORT_cleaning_room__utility_tank__wash_sink" parent="." instance=ExtResource("2")]
+[node name="Content" parent="002_U_EAST_SUPPORT_supply_store__loaded_cabinet__chemicals" instance=ExtResource("4")]
+
+[node name="003_U_EAST_SUPPORT_cleaning_room__utility_tank__wash_sink" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-279CAE1E0BB3F3613C27"
+apply_on_ready = false
 position = Vector3(12.5000, 0.0000, -2.5000)
 metadata/placement_id = "U-EAST-SUPPORT/cleaning_room::utility_tank::wash_sink"
+metadata/binding_mode = "free"
 
-[node name="004_U_EAST_SUPPORT_cleaning_room__workbench__equipment" parent="." instance=ExtResource("5")]
+[node name="Content" parent="003_U_EAST_SUPPORT_cleaning_room__utility_tank__wash_sink" instance=ExtResource("3")]
+
+[node name="004_U_EAST_SUPPORT_cleaning_room__workbench__equipment" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-8583679111DB20A70C94"
+apply_on_ready = false
 position = Vector3(15.2000, 0.0000, -2.5000)
 metadata/placement_id = "U-EAST-SUPPORT/cleaning_room::workbench::equipment"
+metadata/binding_mode = "free"
 
-[node name="005_U_EAST_SUPPORT_duty_room__workbench__desk" parent="." instance=ExtResource("5")]
+[node name="Content" parent="004_U_EAST_SUPPORT_cleaning_room__workbench__equipment" instance=ExtResource("6")]
+
+[node name="005_U_EAST_SUPPORT_duty_room__workbench__desk" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-A16489A143E7FA18E333"
+apply_on_ready = false
 position = Vector3(14.0000, 0.0000, 3.8000)
 metadata/placement_id = "U-EAST-SUPPORT/duty_room::workbench::desk"
+metadata/binding_mode = "free"
 
-[node name="006_U_EAST_SUPPORT_duty_room__loaded_cabinet__cabinet" parent="." instance=ExtResource("3")]
+[node name="Content" parent="005_U_EAST_SUPPORT_duty_room__workbench__desk" instance=ExtResource("6")]
+
+[node name="006_U_EAST_SUPPORT_duty_room__loaded_cabinet__cabinet" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-5202A50FB4AF32F9232D"
+apply_on_ready = false
 position = Vector3(12.5000, 0.0000, 5.6000)
 metadata/placement_id = "U-EAST-SUPPORT/duty_room::loaded_cabinet::cabinet"
+metadata/binding_mode = "free"
 
-[node name="007_P_U_EAST_SUPPORT_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="006_U_EAST_SUPPORT_duty_room__loaded_cabinet__cabinet" instance=ExtResource("4")]
+
+[node name="007_P_U_EAST_SUPPORT_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-065A7B80E40691D37C39"
+apply_on_ready = false
 position = Vector3(18.0000, 0.0000, -8.9000)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.63025, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-EAST-SUPPORT-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="008_P_U_EAST_SUPPORT_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="007_P_U_EAST_SUPPORT_01" instance=ExtResource("2")]
+
+[node name="008_P_U_EAST_SUPPORT_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-C0BE68BCE8EC0B7964F7"
+apply_on_ready = false
 position = Vector3(18.0000, 0.0000, -3.0000)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.63025, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-EAST-SUPPORT-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="009_P_U_EAST_SUPPORT_03" parent="." instance=ExtResource("1")]
+[node name="Content" parent="008_P_U_EAST_SUPPORT_02" instance=ExtResource("2")]
+
+[node name="009_P_U_EAST_SUPPORT_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-1284CDC2D7EBB80809B0"
+apply_on_ready = false
 position = Vector3(18.0000, 0.0000, 3.4500)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.63025, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-EAST-SUPPORT-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="010_P_U_EAST_SUPPORT_04" parent="." instance=ExtResource("1")]
+[node name="Content" parent="009_P_U_EAST_SUPPORT_03" instance=ExtResource("2")]
+
+[node name="010_P_U_EAST_SUPPORT_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-2B3899A2464FA1D93FC7"
+apply_on_ready = false
 position = Vector3(18.7500, 0.0000, 7.0000)
 scale = Vector3(0.59874, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-EAST-SUPPORT-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="011_P_U_EAST_SUPPORT_05" parent="." instance=ExtResource("1")]
+[node name="Content" parent="010_P_U_EAST_SUPPORT_04" instance=ExtResource("2")]
+
+[node name="011_P_U_EAST_SUPPORT_05" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-7224EC72952814074E4D"
+apply_on_ready = false
 position = Vector3(30.5000, 0.0000, 11.0000)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-EAST-SUPPORT-05"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="012_PX_E_U06_U_EAST_SUPPORT" parent="." instance=ExtResource("1")]
+[node name="Content" parent="011_P_U_EAST_SUPPORT_05" instance=ExtResource("2")]
+
+[node name="012_PX_E_U06_U_EAST_SUPPORT" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-5B3D74B1E576928B085D"
+apply_on_ready = false
 position = Vector3(16.7500, 0.0000, 15.0000)
 scale = Vector3(0.84034, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-U06-U-EAST-SUPPORT"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="013_PX_E_U06_U_EAST_SUPPORT_FIRE" parent="." instance=ExtResource("1")]
+[node name="Content" parent="012_PX_E_U06_U_EAST_SUPPORT" instance=ExtResource("2")]
+
+[node name="013_PX_E_U06_U_EAST_SUPPORT_FIRE" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-1D991D9CE8A8A1D48181"
+apply_on_ready = false
 position = Vector3(27.0000, 0.0000, 15.0000)
 scale = Vector3(1.21849, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-U06-U-EAST-SUPPORT-FIRE"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="013_PX_E_U06_U_EAST_SUPPORT_FIRE" instance=ExtResource("2")]

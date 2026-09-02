@@ -1,77 +1,156 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="6"]
 
 [node name="T_UTILITIES_SetDressing" type="Node3D"]
 metadata/sector_id = "T-UTILITIES"
 metadata/material_family = "utility"
 
-[node name="001_T_UTILITIES_cable_gallery__wall_beacon" parent="." instance=ExtResource("4")]
+[node name="001_T_UTILITIES_cable_gallery__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-10F3E3E8C58453A45D01"
+apply_on_ready = false
 position = Vector3(-56.2500, -9.1500, 24.4050)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "T-UTILITIES/cable_gallery::wall_beacon"
+metadata/binding_mode = "free"
 
-[node name="002_T_UTILITIES_drainage_room__utility_tank" parent="." instance=ExtResource("3")]
+[node name="Content" parent="001_T_UTILITIES_cable_gallery__wall_beacon" instance=ExtResource("5")]
+
+[node name="002_T_UTILITIES_drainage_room__utility_tank" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-C02AFC584ABF370A10C6"
+apply_on_ready = false
 position = Vector3(-1.1250, -11.5000, 54.8500)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-UTILITIES/drainage_room::utility_tank"
+metadata/binding_mode = "free"
 
-[node name="003_T_UTILITIES_fire_vestibule__wall_beacon" parent="." instance=ExtResource("4")]
+[node name="Content" parent="002_T_UTILITIES_drainage_room__utility_tank" instance=ExtResource("4")]
+
+[node name="003_T_UTILITIES_fire_vestibule__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-0685F4371C3355121AC7"
+apply_on_ready = false
 position = Vector3(12.0000, -9.1500, 55.4250)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-UTILITIES/fire_vestibule::wall_beacon"
+metadata/binding_mode = "free"
 
-[node name="004_T_UTILITIES_late_block_substation__workbench" parent="." instance=ExtResource("5")]
+[node name="Content" parent="003_T_UTILITIES_fire_vestibule__wall_beacon" instance=ExtResource("5")]
+
+[node name="004_T_UTILITIES_late_block_substation__workbench" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-046567D3C267D6C4CF6C"
+apply_on_ready = false
 position = Vector3(-48.0000, -11.5000, 55.0500)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-UTILITIES/late_block_substation::workbench"
+metadata/binding_mode = "free"
 
-[node name="005_T_UTILITIES_reagent_room__pipe_cluster" parent="." instance=ExtResource("2")]
+[node name="Content" parent="004_T_UTILITIES_late_block_substation__workbench" instance=ExtResource("6")]
+
+[node name="005_T_UTILITIES_reagent_room__pipe_cluster" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-6B82B5EE57B104F33B25"
+apply_on_ready = false
 position = Vector3(-15.3750, -11.5000, 55.1500)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-UTILITIES/reagent_room::pipe_cluster"
+metadata/binding_mode = "free"
 
-[node name="006_T_UTILITIES_ventilation_room__utility_tank" parent="." instance=ExtResource("3")]
+[node name="Content" parent="005_T_UTILITIES_reagent_room__pipe_cluster" instance=ExtResource("3")]
+
+[node name="006_T_UTILITIES_ventilation_room__utility_tank" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-C5587E53EB152C5FA1FE"
+apply_on_ready = false
 position = Vector3(-30.7500, -11.5000, 54.8500)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-UTILITIES/ventilation_room::utility_tank"
+metadata/binding_mode = "free"
 
-[node name="007_P_T_UTILITIES_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="006_T_UTILITIES_ventilation_room__utility_tank" instance=ExtResource("4")]
+
+[node name="007_P_T_UTILITIES_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-EC9D237342E75E0186BE"
+apply_on_ready = false
 position = Vector3(-48.0000, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-UTILITIES-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="008_P_T_UTILITIES_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="007_P_T_UTILITIES_01" instance=ExtResource("2")]
+
+[node name="008_P_T_UTILITIES_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-232CD143AFDD4BE66238"
+apply_on_ready = false
 position = Vector3(-30.7500, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-UTILITIES-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="009_P_T_UTILITIES_03" parent="." instance=ExtResource("1")]
+[node name="Content" parent="008_P_T_UTILITIES_02" instance=ExtResource("2")]
+
+[node name="009_P_T_UTILITIES_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-443C47F6D523A5BFD6A7"
+apply_on_ready = false
 position = Vector3(-15.3750, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-UTILITIES-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="010_P_T_UTILITIES_04" parent="." instance=ExtResource("1")]
+[node name="Content" parent="009_P_T_UTILITIES_03" instance=ExtResource("2")]
+
+[node name="010_P_T_UTILITIES_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E2B61428ED45E9958241"
+apply_on_ready = false
 position = Vector3(-1.1250, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-UTILITIES-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="011_P_T_UTILITIES_05" parent="." instance=ExtResource("1")]
+[node name="Content" parent="010_P_T_UTILITIES_04" instance=ExtResource("2")]
+
+[node name="011_P_T_UTILITIES_05" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-9C470917101A82803DE3"
+apply_on_ready = false
 position = Vector3(12.0000, -11.5000, 28.3100)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-UTILITIES-05"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="012_PX_E_T05_T_UTILITIES" parent="." instance=ExtResource("1")]
+[node name="Content" parent="011_P_T_UTILITIES_05" instance=ExtResource("2")]
+
+[node name="012_PX_E_T05_T_UTILITIES" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-9BB6CA04DF813C94ABC7"
+apply_on_ready = false
 position = Vector3(-19.5000, -11.5000, 20.5000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-T05-T-UTILITIES"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="012_PX_E_T05_T_UTILITIES" instance=ExtResource("2")]

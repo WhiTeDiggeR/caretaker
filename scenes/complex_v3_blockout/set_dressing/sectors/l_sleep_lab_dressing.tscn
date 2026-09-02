@@ -1,65 +1,131 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/containment_capsule.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="6"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/containment_capsule.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/operator_console.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="7"]
 
 [node name="L_SLEEP_LAB_SetDressing" type="Node3D"]
 metadata/sector_id = "L-SLEEP-LAB"
 metadata/material_family = "containment"
 
-[node name="001_L_SLEEP_LAB_equipment_room__wall_terminal" parent="." instance=ExtResource("6")]
+[node name="001_L_SLEEP_LAB_equipment_room__wall_terminal" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-70560806E6A43D4D3866"
+apply_on_ready = false
 position = Vector3(-19.7000, -4.8000, -11.3000)
 metadata/placement_id = "L-SLEEP-LAB/equipment_room::wall_terminal"
+metadata/binding_mode = "free"
 
-[node name="002_L_SLEEP_LAB_internal_corridor__wall_beacon" parent="." instance=ExtResource("4")]
+[node name="Content" parent="001_L_SLEEP_LAB_equipment_room__wall_terminal" instance=ExtResource("7")]
+
+[node name="002_L_SLEEP_LAB_internal_corridor__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E638C5294E9C554D952B"
+apply_on_ready = false
 position = Vector3(-12.7500, -3.6500, 5.0500)
 rotation = Vector3(0, -1.5707963, 0)
 metadata/placement_id = "L-SLEEP-LAB/internal_corridor::wall_beacon"
+metadata/binding_mode = "free"
 
-[node name="003_L_SLEEP_LAB_neuro_monitoring__generator_unit" parent="." instance=ExtResource("5")]
+[node name="Content" parent="002_L_SLEEP_LAB_internal_corridor__wall_beacon" instance=ExtResource("5")]
+
+[node name="003_L_SLEEP_LAB_neuro_monitoring__generator_unit" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-EDEDEC917FE614A94D0A"
+apply_on_ready = false
 position = Vector3(-27.9500, -6.0000, -11.0000)
 metadata/placement_id = "L-SLEEP-LAB/neuro_monitoring::generator_unit"
+metadata/binding_mode = "free"
 
-[node name="004_L_SLEEP_LAB_observation_room__operator_console" parent="." instance=ExtResource("3")]
+[node name="Content" parent="003_L_SLEEP_LAB_neuro_monitoring__generator_unit" instance=ExtResource("6")]
+
+[node name="004_L_SLEEP_LAB_observation_room__operator_console" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-C97507FCCA1078E1F833"
+apply_on_ready = false
 position = Vector3(-14.7500, -6.0000, -11.1000)
 metadata/placement_id = "L-SLEEP-LAB/observation_room::operator_console"
+metadata/binding_mode = "free"
 
-[node name="005_L_SLEEP_LAB_preparation_room__containment_capsule" parent="." instance=ExtResource("1")]
+[node name="Content" parent="004_L_SLEEP_LAB_observation_room__operator_console" instance=ExtResource("4")]
+
+[node name="005_L_SLEEP_LAB_preparation_room__containment_capsule" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-DB95CB570189AEC350F5"
+apply_on_ready = false
 position = Vector3(-31.9500, -6.0000, 5.0500)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-SLEEP-LAB/preparation_room::containment_capsule"
+metadata/binding_mode = "free"
 
-[node name="006_P_L_SLEEP_LAB_01" parent="." instance=ExtResource("2")]
+[node name="Content" parent="005_L_SLEEP_LAB_preparation_room__containment_capsule" instance=ExtResource("2")]
+
+[node name="006_P_L_SLEEP_LAB_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-245902E0DCB091BE7F67"
+apply_on_ready = false
 position = Vector3(-23.5500, -6.0000, 0.1000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SLEEP-LAB-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="007_P_L_SLEEP_LAB_02" parent="." instance=ExtResource("2")]
+[node name="Content" parent="006_P_L_SLEEP_LAB_01" instance=ExtResource("3")]
+
+[node name="007_P_L_SLEEP_LAB_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-FA33602BF671A1EF98A8"
+apply_on_ready = false
 position = Vector3(-19.7000, -6.0000, 0.1000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SLEEP-LAB-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="008_P_L_SLEEP_LAB_03" parent="." instance=ExtResource("2")]
+[node name="Content" parent="007_P_L_SLEEP_LAB_02" instance=ExtResource("3")]
+
+[node name="008_P_L_SLEEP_LAB_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-2894978BDAF9C8FD4C06"
+apply_on_ready = false
 position = Vector3(-14.7500, -6.0000, 0.1000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SLEEP-LAB-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="009_P_L_SLEEP_LAB_04" parent="." instance=ExtResource("2")]
+[node name="Content" parent="008_P_L_SLEEP_LAB_03" instance=ExtResource("3")]
+
+[node name="009_P_L_SLEEP_LAB_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-127ED94B2D5F1198658B"
+apply_on_ready = false
 position = Vector3(-25.2000, -6.0000, 5.0500)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SLEEP-LAB-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="010_PX_E_L06_L_SLEEP_LAB" parent="." instance=ExtResource("2")]
+[node name="Content" parent="009_P_L_SLEEP_LAB_04" instance=ExtResource("3")]
+
+[node name="010_PX_E_L06_L_SLEEP_LAB" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-27AFB4D0A998D20A8510"
+apply_on_ready = false
 position = Vector3(-18.6000, -6.0000, 10.0000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-L06-L-SLEEP-LAB"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="010_PX_E_L06_L_SLEEP_LAB" instance=ExtResource("3")]

@@ -1,74 +1,148 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="4"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
 
 [node name="L_SERVICE_INTERCHANGE_SetDressing" type="Node3D"]
 metadata/sector_id = "L-SERVICE-INTERCHANGE"
 metadata/material_family = "utility"
 
-[node name="001_L_SERVICE_INTERCHANGE_double_airlock__wall_beacon" parent="." instance=ExtResource("3")]
+[node name="001_L_SERVICE_INTERCHANGE_double_airlock__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E53A24C0585B3EF72877"
+apply_on_ready = false
 position = Vector3(-42.4500, -3.6500, 53.2500)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-SERVICE-INTERCHANGE/double_airlock::wall_beacon"
+metadata/binding_mode = "free"
 
-[node name="002_L_SERVICE_INTERCHANGE_electrical_room__utility_tank" parent="." instance=ExtResource("2")]
+[node name="Content" parent="001_L_SERVICE_INTERCHANGE_double_airlock__wall_beacon" instance=ExtResource("4")]
+
+[node name="002_L_SERVICE_INTERCHANGE_electrical_room__utility_tank" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-7A1C662845E07F0DCEA5"
+apply_on_ready = false
 position = Vector3(-37.8000, -6.0000, 58.8500)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "L-SERVICE-INTERCHANGE/electrical_room::utility_tank"
+metadata/binding_mode = "free"
 
-[node name="003_L_SERVICE_INTERCHANGE_service_lobby__wall_beacon" parent="." instance=ExtResource("3")]
+[node name="Content" parent="002_L_SERVICE_INTERCHANGE_electrical_room__utility_tank" instance=ExtResource("3")]
+
+[node name="003_L_SERVICE_INTERCHANGE_service_lobby__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-C6ED6E7EFB7D064141B2"
+apply_on_ready = false
 position = Vector3(-47.2500, -3.6500, 44.2500)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-SERVICE-INTERCHANGE/service_lobby::wall_beacon"
+metadata/binding_mode = "free"
 
-[node name="004_L_SERVICE_INTERCHANGE_service_stair__workbench" parent="." instance=ExtResource("4")]
+[node name="Content" parent="003_L_SERVICE_INTERCHANGE_service_lobby__wall_beacon" instance=ExtResource("4")]
+
+[node name="004_L_SERVICE_INTERCHANGE_service_stair__workbench" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-012ADA27736D678C05D1"
+apply_on_ready = false
 position = Vector3(-45.6000, -6.0000, 59.0500)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "L-SERVICE-INTERCHANGE/service_stair::workbench"
+metadata/binding_mode = "free"
 
-[node name="005_P_L_SERVICE_INTERCHANGE_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="004_L_SERVICE_INTERCHANGE_service_stair__workbench" instance=ExtResource("5")]
+
+[node name="005_P_L_SERVICE_INTERCHANGE_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E20AB7FE6B6D2F90EA25"
+apply_on_ready = false
 position = Vector3(-45.6000, -6.0000, 46.5000)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SERVICE-INTERCHANGE-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="006_P_L_SERVICE_INTERCHANGE_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="005_P_L_SERVICE_INTERCHANGE_01" instance=ExtResource("2")]
+
+[node name="006_P_L_SERVICE_INTERCHANGE_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-54606897772543EA08D1"
+apply_on_ready = false
 position = Vector3(-41.4000, -6.0000, 46.5000)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SERVICE-INTERCHANGE-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="007_P_L_SERVICE_INTERCHANGE_03" parent="." instance=ExtResource("1")]
+[node name="Content" parent="006_P_L_SERVICE_INTERCHANGE_02" instance=ExtResource("2")]
+
+[node name="007_P_L_SERVICE_INTERCHANGE_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-8C87AFF322370B6B8C50"
+apply_on_ready = false
 position = Vector3(-37.8000, -6.0000, 46.5000)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SERVICE-INTERCHANGE-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="008_P_L_SERVICE_INTERCHANGE_04" parent="." instance=ExtResource("1")]
+[node name="Content" parent="007_P_L_SERVICE_INTERCHANGE_03" instance=ExtResource("2")]
+
+[node name="008_P_L_SERVICE_INTERCHANGE_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E99356EE9DDB3E474B79"
+apply_on_ready = false
 position = Vector3(-43.2000, -6.0000, 53.2500)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SERVICE-INTERCHANGE-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="009_P_L_SERVICE_INTERCHANGE_05" parent="." instance=ExtResource("1")]
+[node name="Content" parent="008_P_L_SERVICE_INTERCHANGE_04" instance=ExtResource("2")]
+
+[node name="009_P_L_SERVICE_INTERCHANGE_05" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-B91C50B7B115EFDDD1F9"
+apply_on_ready = false
 position = Vector3(-39.6000, -6.0000, 53.2500)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-SERVICE-INTERCHANGE-05"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="010_PX_E_L08_L_SERVICE_INTERCHANGE" parent="." instance=ExtResource("1")]
+[node name="Content" parent="009_P_L_SERVICE_INTERCHANGE_05" instance=ExtResource("2")]
+
+[node name="010_PX_E_L08_L_SERVICE_INTERCHANGE" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-DF360EB2CAA869120371"
+apply_on_ready = false
 position = Vector3(-42.0000, -6.0000, 42.0000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-L08-L-SERVICE-INTERCHANGE"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="011_PX_E_L15_L_SERVICE_INTERCHANGE" parent="." instance=ExtResource("1")]
+[node name="Content" parent="010_PX_E_L08_L_SERVICE_INTERCHANGE" instance=ExtResource("2")]
+
+[node name="011_PX_E_L15_L_SERVICE_INTERCHANGE" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-7E40D14CAC050E0B9534"
+apply_on_ready = false
 position = Vector3(-41.4000, -6.0000, 60.0000)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-L15-L-SERVICE-INTERCHANGE"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="011_PX_E_L15_L_SERVICE_INTERCHANGE" instance=ExtResource("2")]

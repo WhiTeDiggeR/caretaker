@@ -1,44 +1,84 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="5"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="6"]
 
 [node name="L_CHAMBER_1_SetDressing" type="Node3D"]
 metadata/sector_id = "L-CHAMBER-1"
 metadata/material_family = "containment"
 
-[node name="001_L_CHAMBER_1_combined_vestibule__wall_beacon" parent="." instance=ExtResource("3")]
+[node name="001_L_CHAMBER_1_combined_vestibule__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-6C823937D4380719AF8E"
+apply_on_ready = false
 position = Vector3(-88.1600, -3.6500, -7.8500)
 metadata/placement_id = "L-CHAMBER-1/combined_vestibule::wall_beacon"
+metadata/binding_mode = "unresolved"
 
-[node name="002_L_CHAMBER_1_control_post__wall_terminal" parent="." instance=ExtResource("5")]
+[node name="Content" parent="001_L_CHAMBER_1_combined_vestibule__wall_beacon" instance=ExtResource("4")]
+
+[node name="002_L_CHAMBER_1_control_post__wall_terminal" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-5CAA223FA0BBA48340F6"
+apply_on_ready = false
 position = Vector3(-88.1600, -4.8000, 14.3000)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "L-CHAMBER-1/control_post::wall_terminal"
+metadata/binding_mode = "free"
 
-[node name="003_L_CHAMBER_1_mechanical_cage__generator_unit" parent="." instance=ExtResource("4")]
+[node name="Content" parent="002_L_CHAMBER_1_control_post__wall_terminal" instance=ExtResource("6")]
+
+[node name="003_L_CHAMBER_1_mechanical_cage__generator_unit" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-0AF786A37452DDCEAF77"
+apply_on_ready = false
 position = Vector3(-101.1600, -6.0000, -7.0000)
 metadata/placement_id = "L-CHAMBER-1/mechanical_cage::generator_unit"
+metadata/binding_mode = "free"
 
-[node name="004_P_L_CHAMBER_1_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="003_L_CHAMBER_1_mechanical_cage__generator_unit" instance=ExtResource("5")]
+
+[node name="004_P_L_CHAMBER_1_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-20FE0325B45F3E11F65B"
+apply_on_ready = false
 position = Vector3(-88.1600, -6.0000, 2.3500)
 scale = Vector3(1.08173, 1.50000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-CHAMBER-1-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="005_P_L_CHAMBER_1_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="004_P_L_CHAMBER_1_01" instance=ExtResource("2")]
+
+[node name="005_P_L_CHAMBER_1_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-90EE5EEC04395304416E"
+apply_on_ready = false
 position = Vector3(-92.3200, -6.0000, 8.6750)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(1.08173, 1.50000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-CHAMBER-1-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="006_PX_E_L02_L_CHAMBER_1" parent="." instance=ExtResource("2")]
+[node name="Content" parent="005_P_L_CHAMBER_1_02" instance=ExtResource("2")]
+
+[node name="006_PX_E_L02_L_CHAMBER_1" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D887C1152F6DD4A76E8A"
+apply_on_ready = false
 position = Vector3(-84.0000, -6.0000, 8.6750)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-L02-L-CHAMBER-1"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="006_PX_E_L02_L_CHAMBER_1" instance=ExtResource("3")]

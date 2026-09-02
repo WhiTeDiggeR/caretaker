@@ -1,61 +1,125 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="5"]
 
 [node name="L_ARCHIVE_A_SetDressing" type="Node3D"]
 metadata/sector_id = "L-ARCHIVE-A"
 metadata/material_family = "historic"
 
-[node name="001_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_1" parent="." instance=ExtResource("4")]
+[node name="001_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_1" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-44268BED35FBE6A77A19"
+apply_on_ready = false
 position = Vector3(-57.0000, -6.0000, -8.0000)
 metadata/placement_id = "L-ARCHIVE-A/archive_main::loaded_shelf::archive_row_1"
+metadata/binding_mode = "free"
 
-[node name="002_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_2" parent="." instance=ExtResource("4")]
+[node name="Content" parent="001_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_1" instance=ExtResource("5")]
+
+[node name="002_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_2" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-CC47C2088700051846AA"
+apply_on_ready = false
 position = Vector3(-53.0000, -6.0000, -8.0000)
 metadata/placement_id = "L-ARCHIVE-A/archive_main::loaded_shelf::archive_row_2"
+metadata/binding_mode = "free"
 
-[node name="003_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_3" parent="." instance=ExtResource("4")]
+[node name="Content" parent="002_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_2" instance=ExtResource("5")]
+
+[node name="003_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_3" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-72CE5BF15165CDA05869"
+apply_on_ready = false
 position = Vector3(-49.0000, -6.0000, -8.0000)
 metadata/placement_id = "L-ARCHIVE-A/archive_main::loaded_shelf::archive_row_3"
+metadata/binding_mode = "free"
 
-[node name="004_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_4" parent="." instance=ExtResource("4")]
+[node name="Content" parent="003_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_3" instance=ExtResource("5")]
+
+[node name="004_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_4" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-9086174DF62C6F6879AC"
+apply_on_ready = false
 position = Vector3(-45.0000, -6.0000, -8.0000)
 metadata/placement_id = "L-ARCHIVE-A/archive_main::loaded_shelf::archive_row_4"
+metadata/binding_mode = "free"
 
-[node name="005_L_ARCHIVE_A_route_a_service_passage__wall_beacon__old_core_exit" parent="." instance=ExtResource("3")]
+[node name="Content" parent="004_L_ARCHIVE_A_archive_main__loaded_shelf__archive_row_4" instance=ExtResource("5")]
+
+[node name="005_L_ARCHIVE_A_route_a_service_passage__wall_beacon__old_core_exit" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-7C48B48127CD82CE29AD"
+apply_on_ready = false
 position = Vector3(-60.8500, -3.6500, 8.6670)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-ARCHIVE-A/route_a_service_passage::wall_beacon::old_core_exit"
+metadata/binding_mode = "unresolved"
 
-[node name="006_L_ARCHIVE_A_route_a_partition__loaded_shelf__displaced_archive_1" parent="." instance=ExtResource("4")]
+[node name="Content" parent="005_L_ARCHIVE_A_route_a_service_passage__wall_beacon__old_core_exit" instance=ExtResource("4")]
+
+[node name="006_L_ARCHIVE_A_route_a_partition__loaded_shelf__displaced_archive_1" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-1AF00E2ACD64FAA77110"
+apply_on_ready = false
 position = Vector3(-46.5000, -6.0000, 5.0000)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-ARCHIVE-A/route_a_partition::loaded_shelf::displaced_archive_1"
+metadata/binding_mode = "free"
 
-[node name="007_L_ARCHIVE_A_route_a_partition__loaded_shelf__displaced_archive_2" parent="." instance=ExtResource("4")]
+[node name="Content" parent="006_L_ARCHIVE_A_route_a_partition__loaded_shelf__displaced_archive_1" instance=ExtResource("5")]
+
+[node name="007_L_ARCHIVE_A_route_a_partition__loaded_shelf__displaced_archive_2" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-3144F118505CA847F75E"
+apply_on_ready = false
 position = Vector3(-43.5000, -6.0000, 5.0000)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-ARCHIVE-A/route_a_partition::loaded_shelf::displaced_archive_2"
+metadata/binding_mode = "free"
 
-[node name="008_P_L_ARCHIVE_A_01" parent="." instance=ExtResource("2")]
+[node name="Content" parent="007_L_ARCHIVE_A_route_a_partition__loaded_shelf__displaced_archive_2" instance=ExtResource("5")]
+
+[node name="008_P_L_ARCHIVE_A_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-F9D8A948E7906300569E"
+apply_on_ready = false
 position = Vector3(-55.5000, -6.0000, 3.0000)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-ARCHIVE-A-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="009_P_L_ARCHIVE_A_02" parent="." instance=ExtResource("2")]
+[node name="Content" parent="008_P_L_ARCHIVE_A_01" instance=ExtResource("3")]
+
+[node name="009_P_L_ARCHIVE_A_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-007D9909296A2C395525"
+apply_on_ready = false
 position = Vector3(-53.6000, -6.0000, 6.0000)
 scale = Vector3(0.63025, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-ARCHIVE-A-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="010_PX_E_L03_L_ARCHIVE_A" parent="." instance=ExtResource("1")]
+[node name="Content" parent="009_P_L_ARCHIVE_A_02" instance=ExtResource("3")]
+
+[node name="010_PX_E_L03_L_ARCHIVE_A" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E1F62F571E51042D30D4"
+apply_on_ready = false
 position = Vector3(-61.0000, -6.0000, 8.6665)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.80120, 0.80000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-L03-L-ARCHIVE-A"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="010_PX_E_L03_L_ARCHIVE_A" instance=ExtResource("2")]

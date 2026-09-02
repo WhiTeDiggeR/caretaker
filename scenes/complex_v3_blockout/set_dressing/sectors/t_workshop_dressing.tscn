@@ -1,49 +1,96 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="5"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/utility_tank.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="6"]
 
 [node name="T_WORKSHOP_SetDressing" type="Node3D"]
 metadata/sector_id = "T-WORKSHOP"
 metadata/material_family = "utility"
 
-[node name="001_T_WORKSHOP_internal_cargo_opening__pipe_cluster" parent="." instance=ExtResource("3")]
+[node name="001_T_WORKSHOP_internal_cargo_opening__pipe_cluster" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-93556947B522F93410ED"
+apply_on_ready = false
 position = Vector3(-63.2500, -11.5000, 12.6000)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "T-WORKSHOP/internal_cargo_opening::pipe_cluster"
+metadata/binding_mode = "free"
 
-[node name="002_T_WORKSHOP_parts_store__utility_tank" parent="." instance=ExtResource("4")]
+[node name="Content" parent="001_T_WORKSHOP_internal_cargo_opening__pipe_cluster" instance=ExtResource("4")]
+
+[node name="002_T_WORKSHOP_parts_store__utility_tank" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-B9D09C0FD50B9165A551"
+apply_on_ready = false
 position = Vector3(-36.3000, -11.5000, -13.8500)
 metadata/placement_id = "T-WORKSHOP/parts_store::utility_tank"
+metadata/binding_mode = "free"
 
-[node name="003_T_WORKSHOP_workshop__generator_unit" parent="." instance=ExtResource("5")]
+[node name="Content" parent="002_T_WORKSHOP_parts_store__utility_tank" instance=ExtResource("5")]
+
+[node name="003_T_WORKSHOP_workshop__generator_unit" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-43628BF7106D3DBA46F4"
+apply_on_ready = false
 position = Vector3(-53.8000, -11.5000, -14.0000)
 metadata/placement_id = "T-WORKSHOP/workshop::generator_unit"
+metadata/binding_mode = "free"
 
-[node name="004_P_T_WORKSHOP_01" parent="." instance=ExtResource("2")]
+[node name="Content" parent="003_T_WORKSHOP_workshop__generator_unit" instance=ExtResource("6")]
+
+[node name="004_P_T_WORKSHOP_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-911D370166587CD156B3"
+apply_on_ready = false
 position = Vector3(-42.6000, -11.5000, -2.4000)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-WORKSHOP-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="005_P_T_WORKSHOP_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="004_P_T_WORKSHOP_01" instance=ExtResource("3")]
+
+[node name="005_P_T_WORKSHOP_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-12B3036EEC1C9025B06F"
+apply_on_ready = false
 position = Vector3(-53.8000, -11.5000, 10.2000)
 scale = Vector3(0.43269, 0.93333, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-WORKSHOP-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="006_P_T_WORKSHOP_03" parent="." instance=ExtResource("1")]
+[node name="Content" parent="005_P_T_WORKSHOP_02" instance=ExtResource("2")]
+
+[node name="006_P_T_WORKSHOP_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-1D15D9FC83D5651AD8DE"
+apply_on_ready = false
 position = Vector3(-36.3000, -11.5000, 10.2000)
 scale = Vector3(0.43269, 0.93333, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-WORKSHOP-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="007_PX_E_T02_T_WORKSHOP" parent="." instance=ExtResource("1")]
+[node name="Content" parent="006_P_T_WORKSHOP_03" instance=ExtResource("2")]
+
+[node name="007_PX_E_T02_T_WORKSHOP" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-19AC71F80FD8512ABC02"
+apply_on_ready = false
 position = Vector3(-47.5000, -11.5000, 15.0000)
 scale = Vector3(0.28846, 0.80000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-T02-T-WORKSHOP"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="007_PX_E_T02_T_WORKSHOP" instance=ExtResource("2")]

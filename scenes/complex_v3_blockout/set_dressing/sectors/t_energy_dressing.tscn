@@ -1,74 +1,147 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="6"]
 
 [node name="T_ENERGY_SetDressing" type="Node3D"]
 metadata/sector_id = "T-ENERGY"
 metadata/material_family = "utility"
 
-[node name="001_T_ENERGY_cooling_room__pipe_cluster" parent="." instance=ExtResource("2")]
+[node name="001_T_ENERGY_cooling_room__pipe_cluster" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-CE0C2EF1BD0E4EB418A1"
+apply_on_ready = false
 position = Vector3(-74.4500, -11.5000, -2.7500)
 metadata/placement_id = "T-ENERGY/cooling_room::pipe_cluster"
+metadata/binding_mode = "free"
 
-[node name="002_T_ENERGY_fire_vestibule__wall_beacon" parent="." instance=ExtResource("3")]
+[node name="Content" parent="001_T_ENERGY_cooling_room__pipe_cluster" instance=ExtResource("3")]
+
+[node name="002_T_ENERGY_fire_vestibule__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-DF31CC6F0ADCF2CBDBA6"
+apply_on_ready = false
 position = Vector3(-109.2500, -9.1500, 12.3000)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "T-ENERGY/fire_vestibule::wall_beacon"
+metadata/binding_mode = "free"
 
-[node name="003_T_ENERGY_generator_hall__generator_unit" parent="." instance=ExtResource("4")]
+[node name="Content" parent="002_T_ENERGY_fire_vestibule__wall_beacon" instance=ExtResource("4")]
+
+[node name="003_T_ENERGY_generator_hall__generator_unit" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-4530C4B6C0EB947ABC39"
+apply_on_ready = false
 position = Vector3(-108.7000, -11.5000, -2.7000)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "T-ENERGY/generator_hall::generator_unit"
+metadata/binding_mode = "free"
 
-[node name="004_T_ENERGY_service_approach__workbench" parent="." instance=ExtResource("5")]
+[node name="Content" parent="003_T_ENERGY_generator_hall__generator_unit" instance=ExtResource("5")]
+
+[node name="004_T_ENERGY_service_approach__workbench" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-189B8909CC13B05616F2"
+apply_on_ready = false
 position = Vector3(-66.4500, -11.5000, 12.3000)
 rotation = Vector3(0, -1.5707963, 0)
 metadata/placement_id = "T-ENERGY/service_approach::workbench"
+metadata/binding_mode = "free"
 
-[node name="005_T_ENERGY_switchgear_room__pipe_cluster" parent="." instance=ExtResource("2")]
+[node name="Content" parent="004_T_ENERGY_service_approach__workbench" instance=ExtResource("6")]
+
+[node name="005_T_ENERGY_switchgear_room__pipe_cluster" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-0D03D344F0337AABB96C"
+apply_on_ready = false
 position = Vector3(-66.7500, -11.5000, -9.3000)
 rotation = Vector3(0, -1.5707963, 0)
 metadata/placement_id = "T-ENERGY/switchgear_room::pipe_cluster"
+metadata/binding_mode = "free"
 
-[node name="006_P_T_ENERGY_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="005_T_ENERGY_switchgear_room__pipe_cluster" instance=ExtResource("3")]
+
+[node name="006_P_T_ENERGY_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-1314A51E7D799FFAB5AA"
+apply_on_ready = false
 position = Vector3(-83.9000, -11.5000, -9.3000)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-ENERGY-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="007_P_T_ENERGY_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="006_P_T_ENERGY_01" instance=ExtResource("2")]
+
+[node name="007_P_T_ENERGY_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-511E561DA54B38368D71"
+apply_on_ready = false
 position = Vector3(-83.9000, -11.5000, 3.0000)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-ENERGY-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="008_P_T_ENERGY_03" parent="." instance=ExtResource("1")]
+[node name="Content" parent="007_P_T_ENERGY_02" instance=ExtResource("2")]
+
+[node name="008_P_T_ENERGY_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E141A599E49731069178"
+apply_on_ready = false
 position = Vector3(-92.9000, -11.5000, 9.6000)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-ENERGY-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="009_P_T_ENERGY_04" parent="." instance=ExtResource("1")]
+[node name="Content" parent="008_P_T_ENERGY_03" instance=ExtResource("2")]
+
+[node name="009_P_T_ENERGY_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-641D560A9B611E2BAE7B"
+apply_on_ready = false
 position = Vector3(-74.4500, -11.5000, 9.6000)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-ENERGY-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="010_P_T_ENERGY_05" parent="." instance=ExtResource("1")]
+[node name="Content" parent="009_P_T_ENERGY_04" instance=ExtResource("2")]
+
+[node name="010_P_T_ENERGY_05" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-5AE2536FDECD9B5C973E"
+apply_on_ready = false
 position = Vector3(-101.9000, -11.5000, 12.3000)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.75630, 1.16667, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-ENERGY-05"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="011_PX_E_T01_T_ENERGY" parent="." instance=ExtResource("1")]
+[node name="Content" parent="010_P_T_ENERGY_05" instance=ExtResource("2")]
+
+[node name="011_PX_E_T01_T_ENERGY" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-917F244C53FCCFCC30BD"
+apply_on_ready = false
 position = Vector3(-83.4500, -11.5000, 15.0000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-T01-T-ENERGY"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="011_PX_E_T01_T_ENERGY" instance=ExtResource("2")]

@@ -1,76 +1,155 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="5"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/generator_unit.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/wall_terminal.tscn" id="6"]
 
 [node name="L_CENTRAL_CORE_SetDressing" type="Node3D"]
 metadata/sector_id = "L-CENTRAL-CORE"
 metadata/material_family = "utility"
 
-[node name="001_L_CENTRAL_CORE_access_lobby__wall_beacon" parent="." instance=ExtResource("3")]
+[node name="001_L_CENTRAL_CORE_access_lobby__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-0829EA0B9DE7BD702FD6"
+apply_on_ready = false
 position = Vector3(-7.1000, -3.6500, 12.2500)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-CENTRAL-CORE/access_lobby::wall_beacon"
+metadata/binding_mode = "unresolved"
 
-[node name="002_L_CENTRAL_CORE_electrical_room__generator_unit" parent="." instance=ExtResource("4")]
+[node name="Content" parent="001_L_CENTRAL_CORE_access_lobby__wall_beacon" instance=ExtResource("4")]
+
+[node name="002_L_CENTRAL_CORE_electrical_room__generator_unit" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-754DFC766BD850584AEE"
+apply_on_ready = false
 position = Vector3(-5.6000, -6.0000, -2.6250)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-CENTRAL-CORE/electrical_room::generator_unit"
+metadata/binding_mode = "free"
 
-[node name="003_L_CENTRAL_CORE_lift_lobby__wall_beacon" parent="." instance=ExtResource("3")]
+[node name="Content" parent="002_L_CENTRAL_CORE_electrical_room__generator_unit" instance=ExtResource("5")]
+
+[node name="003_L_CENTRAL_CORE_lift_lobby__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-2391469774F631C91D52"
+apply_on_ready = false
 position = Vector3(-6.7500, -3.6500, 7.2500)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "L-CENTRAL-CORE/lift_lobby::wall_beacon"
+metadata/binding_mode = "unresolved"
 
-[node name="004_L_CENTRAL_CORE_main_stair__wall_beacon" parent="." instance=ExtResource("3")]
+[node name="Content" parent="003_L_CENTRAL_CORE_lift_lobby__wall_beacon" instance=ExtResource("4")]
+
+[node name="004_L_CENTRAL_CORE_main_stair__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-A0F8B1E879C2D254AF36"
+apply_on_ready = false
 position = Vector3(3.5500, -3.6500, -4.8500)
 metadata/placement_id = "L-CENTRAL-CORE/main_stair::wall_beacon"
+metadata/binding_mode = "unresolved"
 
-[node name="005_L_CENTRAL_CORE_passenger_elevator__wall_beacon" parent="." instance=ExtResource("3")]
+[node name="Content" parent="004_L_CENTRAL_CORE_main_stair__wall_beacon" instance=ExtResource("4")]
+
+[node name="005_L_CENTRAL_CORE_passenger_elevator__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-811EED4FA0C1F7B97339"
+apply_on_ready = false
 position = Vector3(-4.5000, -3.6500, -0.1000)
 metadata/placement_id = "L-CENTRAL-CORE/passenger_elevator::wall_beacon"
+metadata/binding_mode = "unresolved"
 
-[node name="006_L_CENTRAL_CORE_service_access__wall_terminal" parent="." instance=ExtResource("5")]
+[node name="Content" parent="005_L_CENTRAL_CORE_passenger_elevator__wall_beacon" instance=ExtResource("4")]
+
+[node name="006_L_CENTRAL_CORE_service_access__wall_terminal" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-EDE020C170FBDE66EEED"
+apply_on_ready = false
 position = Vector3(-0.3400, -4.8000, 0.0000)
 rotation = Vector3(0, -1.5707963, 0)
 metadata/placement_id = "L-CENTRAL-CORE/service_access::wall_terminal"
+metadata/binding_mode = "unresolved"
 
-[node name="007_P_L_CENTRAL_CORE_01" parent="." instance=ExtResource("2")]
+[node name="Content" parent="006_L_CENTRAL_CORE_service_access__wall_terminal" instance=ExtResource("6")]
+
+[node name="007_P_L_CENTRAL_CORE_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-AAFDD5CDB1E9F055389E"
+apply_on_ready = false
 position = Vector3(-2.1000, -6.0000, -2.6250)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.63025, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-CENTRAL-CORE-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="008_P_L_CENTRAL_CORE_02" parent="." instance=ExtResource("2")]
+[node name="Content" parent="007_P_L_CENTRAL_CORE_01" instance=ExtResource("3")]
+
+[node name="008_P_L_CENTRAL_CORE_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-148D800E62AA38DEFC28"
+apply_on_ready = false
 position = Vector3(-1.1500, -6.0000, 5.0000)
 scale = Vector3(0.63025, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-CENTRAL-CORE-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="009_P_L_CENTRAL_CORE_03" parent="." instance=ExtResource("2")]
+[node name="Content" parent="008_P_L_CENTRAL_CORE_02" instance=ExtResource("3")]
+
+[node name="009_P_L_CENTRAL_CORE_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-AE911AB8B92BC606BFCA"
+apply_on_ready = false
 position = Vector3(-4.5000, -6.0000, 5.0000)
 scale = Vector3(0.84034, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-CENTRAL-CORE-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="010_P_L_CENTRAL_CORE_04" parent="." instance=ExtResource("2")]
+[node name="Content" parent="009_P_L_CENTRAL_CORE_03" instance=ExtResource("3")]
+
+[node name="010_P_L_CENTRAL_CORE_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-41AEED09865233CCC03F"
+apply_on_ready = false
 position = Vector3(-3.5500, -6.0000, 9.5000)
 scale = Vector3(2.67437, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-CENTRAL-CORE-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="011_P_L_CENTRAL_CORE_05" parent="." instance=ExtResource("2")]
+[node name="Content" parent="010_P_L_CENTRAL_CORE_04" instance=ExtResource("3")]
+
+[node name="011_P_L_CENTRAL_CORE_05" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-06FE3746045639DF6B6A"
+apply_on_ready = false
 position = Vector3(3.5500, -6.0000, 9.5000)
 scale = Vector3(0.97899, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-L-CENTRAL-CORE-05"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="012_PX_E_L09_L_CENTRAL_CORE" parent="." instance=ExtResource("1")]
+[node name="Content" parent="011_P_L_CENTRAL_CORE_05" instance=ExtResource("3")]
+
+[node name="012_PX_E_L09_L_CENTRAL_CORE" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-02BDC533A3DBB1F52254"
+apply_on_ready = false
 position = Vector3(0.0000, -6.0000, 15.0000)
 scale = Vector3(1.08173, 0.93333, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-L09-L-CENTRAL-CORE"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="012_PX_E_L09_L_CENTRAL_CORE" instance=ExtResource("2")]

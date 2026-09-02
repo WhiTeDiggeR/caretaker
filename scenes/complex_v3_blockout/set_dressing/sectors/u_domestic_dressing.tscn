@@ -1,169 +1,378 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/loaded_locker.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/staff_table.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="6"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_door_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/loaded_cabinet.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/loaded_locker.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/loaded_shelf.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/staff_table.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="7"]
 
 [node name="U_DOMESTIC_SetDressing" type="Node3D"]
 metadata/sector_id = "U-DOMESTIC"
 metadata/material_family = "domestic"
 
-[node name="001_U_DOMESTIC_canteen__staff_table__table_nw" parent="." instance=ExtResource("5")]
+[node name="001_U_DOMESTIC_canteen__staff_table__table_nw" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D41E5A5BFFAB86B76F45"
+apply_on_ready = false
 position = Vector3(-54.1600, 0.0000, -9.2400)
 metadata/placement_id = "U-DOMESTIC/canteen::staff_table::table_nw"
+metadata/binding_mode = "free"
 
-[node name="002_U_DOMESTIC_canteen__staff_table__table_ne" parent="." instance=ExtResource("5")]
+[node name="Content" parent="001_U_DOMESTIC_canteen__staff_table__table_nw" instance=ExtResource("6")]
+
+[node name="002_U_DOMESTIC_canteen__staff_table__table_ne" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-7F6A195D42AD9943CAA2"
+apply_on_ready = false
 position = Vector3(-50.0000, 0.0000, -9.2400)
 metadata/placement_id = "U-DOMESTIC/canteen::staff_table::table_ne"
+metadata/binding_mode = "free"
 
-[node name="003_U_DOMESTIC_canteen__staff_table__table_sw" parent="." instance=ExtResource("5")]
+[node name="Content" parent="002_U_DOMESTIC_canteen__staff_table__table_ne" instance=ExtResource("6")]
+
+[node name="003_U_DOMESTIC_canteen__staff_table__table_sw" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E8744EA4BCB243A087C7"
+apply_on_ready = false
 position = Vector3(-54.1600, 0.0000, -7.3200)
 metadata/placement_id = "U-DOMESTIC/canteen::staff_table::table_sw"
+metadata/binding_mode = "free"
 
-[node name="004_U_DOMESTIC_canteen__staff_table__table_se" parent="." instance=ExtResource("5")]
+[node name="Content" parent="003_U_DOMESTIC_canteen__staff_table__table_sw" instance=ExtResource("6")]
+
+[node name="004_U_DOMESTIC_canteen__staff_table__table_se" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D76B0FAE25127FE2721E"
+apply_on_ready = false
 position = Vector3(-50.0000, 0.0000, -7.3200)
 metadata/placement_id = "U-DOMESTIC/canteen::staff_table::table_se"
+metadata/binding_mode = "free"
 
-[node name="005_U_DOMESTIC_canteen__loaded_cabinet__serving_counter" parent="." instance=ExtResource("2")]
+[node name="Content" parent="004_U_DOMESTIC_canteen__staff_table__table_se" instance=ExtResource("6")]
+
+[node name="005_U_DOMESTIC_canteen__loaded_cabinet__serving_counter" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-DA29D85CC471A89400EA"
+apply_on_ready = false
 position = Vector3(-46.5000, 0.0000, -8.0000)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "U-DOMESTIC/canteen::loaded_cabinet::serving_counter"
+metadata/binding_mode = "free"
 
-[node name="006_U_DOMESTIC_kitchen__workbench__prep" parent="." instance=ExtResource("6")]
+[node name="Content" parent="005_U_DOMESTIC_canteen__loaded_cabinet__serving_counter" instance=ExtResource("3")]
+
+[node name="006_U_DOMESTIC_kitchen__workbench__prep" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-893AFCC96BCAFE919C53"
+apply_on_ready = false
 position = Vector3(-39.4000, 0.0000, -9.3600)
 metadata/placement_id = "U-DOMESTIC/kitchen::workbench::prep"
+metadata/binding_mode = "free"
 
-[node name="007_U_DOMESTIC_kitchen__workbench__hot_line" parent="." instance=ExtResource("6")]
+[node name="Content" parent="006_U_DOMESTIC_kitchen__workbench__prep" instance=ExtResource("7")]
+
+[node name="007_U_DOMESTIC_kitchen__workbench__hot_line" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-5E98E05D703EC43E07C3"
+apply_on_ready = false
 position = Vector3(-35.5600, 0.0000, -9.3600)
 metadata/placement_id = "U-DOMESTIC/kitchen::workbench::hot_line"
+metadata/binding_mode = "free"
 
-[node name="008_U_DOMESTIC_kitchen__workbench__island_w" parent="." instance=ExtResource("6")]
+[node name="Content" parent="007_U_DOMESTIC_kitchen__workbench__hot_line" instance=ExtResource("7")]
+
+[node name="008_U_DOMESTIC_kitchen__workbench__island_w" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-E4EF9151B98FFB08E3DE"
+apply_on_ready = false
 position = Vector3(-39.8000, 0.0000, -6.8000)
 metadata/placement_id = "U-DOMESTIC/kitchen::workbench::island_w"
+metadata/binding_mode = "free"
 
-[node name="009_U_DOMESTIC_kitchen__workbench__island_c" parent="." instance=ExtResource("6")]
+[node name="Content" parent="008_U_DOMESTIC_kitchen__workbench__island_w" instance=ExtResource("7")]
+
+[node name="009_U_DOMESTIC_kitchen__workbench__island_c" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-B6F256B8347E7085E7C7"
+apply_on_ready = false
 position = Vector3(-37.4800, 0.0000, -6.8000)
 metadata/placement_id = "U-DOMESTIC/kitchen::workbench::island_c"
+metadata/binding_mode = "free"
 
-[node name="010_U_DOMESTIC_kitchen__workbench__island_e" parent="." instance=ExtResource("6")]
+[node name="Content" parent="009_U_DOMESTIC_kitchen__workbench__island_c" instance=ExtResource("7")]
+
+[node name="010_U_DOMESTIC_kitchen__workbench__island_e" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-2FF2E95385C8C90B6203"
+apply_on_ready = false
 position = Vector3(-35.1600, 0.0000, -6.8000)
 metadata/placement_id = "U-DOMESTIC/kitchen::workbench::island_e"
+metadata/binding_mode = "free"
 
-[node name="011_U_DOMESTIC_kitchen__loaded_cabinet__wash_return" parent="." instance=ExtResource("2")]
+[node name="Content" parent="010_U_DOMESTIC_kitchen__workbench__island_e" instance=ExtResource("7")]
+
+[node name="011_U_DOMESTIC_kitchen__loaded_cabinet__wash_return" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D4D2A9980EF24D6E2A02"
+apply_on_ready = false
 position = Vector3(-35.5600, 0.0000, -4.3200)
 metadata/placement_id = "U-DOMESTIC/kitchen::loaded_cabinet::wash_return"
+metadata/binding_mode = "free"
 
-[node name="012_U_DOMESTIC_dry_store__loaded_shelf__shelf_n" parent="." instance=ExtResource("4")]
+[node name="Content" parent="011_U_DOMESTIC_kitchen__loaded_cabinet__wash_return" instance=ExtResource("3")]
+
+[node name="012_U_DOMESTIC_dry_store__loaded_shelf__shelf_n" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-B7E2B8EA1D4E95FBDDDB"
+apply_on_ready = false
 position = Vector3(-40.2000, 0.0000, 1.6000)
 metadata/placement_id = "U-DOMESTIC/dry_store::loaded_shelf::shelf_n"
+metadata/binding_mode = "free"
 
-[node name="013_U_DOMESTIC_dry_store__loaded_shelf__shelf_s" parent="." instance=ExtResource("4")]
+[node name="Content" parent="012_U_DOMESTIC_dry_store__loaded_shelf__shelf_n" instance=ExtResource("5")]
+
+[node name="013_U_DOMESTIC_dry_store__loaded_shelf__shelf_s" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-256869131E294B2C2859"
+apply_on_ready = false
 position = Vector3(-40.2000, 0.0000, 3.4000)
 metadata/placement_id = "U-DOMESTIC/dry_store::loaded_shelf::shelf_s"
+metadata/binding_mode = "free"
 
-[node name="014_U_DOMESTIC_cold_store__loaded_shelf__cold_rack_n" parent="." instance=ExtResource("4")]
+[node name="Content" parent="013_U_DOMESTIC_dry_store__loaded_shelf__shelf_s" instance=ExtResource("5")]
+
+[node name="014_U_DOMESTIC_cold_store__loaded_shelf__cold_rack_n" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-8A92EAC9A7B61361DC0A"
+apply_on_ready = false
 position = Vector3(-35.2000, 0.0000, 1.6000)
 metadata/placement_id = "U-DOMESTIC/cold_store::loaded_shelf::cold_rack_n"
+metadata/binding_mode = "free"
 
-[node name="015_U_DOMESTIC_cold_store__loaded_shelf__cold_rack_s" parent="." instance=ExtResource("4")]
+[node name="Content" parent="014_U_DOMESTIC_cold_store__loaded_shelf__cold_rack_n" instance=ExtResource("5")]
+
+[node name="015_U_DOMESTIC_cold_store__loaded_shelf__cold_rack_s" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-DD057983447398D4EF07"
+apply_on_ready = false
 position = Vector3(-35.2000, 0.0000, 3.4000)
 metadata/placement_id = "U-DOMESTIC/cold_store::loaded_shelf::cold_rack_s"
+metadata/binding_mode = "free"
 
-[node name="016_U_DOMESTIC_locker_room__loaded_locker__west_n" parent="." instance=ExtResource("3")]
+[node name="Content" parent="015_U_DOMESTIC_cold_store__loaded_shelf__cold_rack_s" instance=ExtResource("5")]
+
+[node name="016_U_DOMESTIC_locker_room__loaded_locker__west_n" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D7C52622DD68A908C3FA"
+apply_on_ready = false
 position = Vector3(-41.2000, 0.0000, 8.2000)
 metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::west_n"
+metadata/binding_mode = "free"
 
-[node name="017_U_DOMESTIC_locker_room__loaded_locker__west_c" parent="." instance=ExtResource("3")]
+[node name="Content" parent="016_U_DOMESTIC_locker_room__loaded_locker__west_n" instance=ExtResource("4")]
+
+[node name="017_U_DOMESTIC_locker_room__loaded_locker__west_c" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-1A238EB5ED60F704E6C5"
+apply_on_ready = false
 position = Vector3(-41.2000, 0.0000, 9.8000)
 metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::west_c"
+metadata/binding_mode = "free"
 
-[node name="018_U_DOMESTIC_locker_room__loaded_locker__west_s" parent="." instance=ExtResource("3")]
+[node name="Content" parent="017_U_DOMESTIC_locker_room__loaded_locker__west_c" instance=ExtResource("4")]
+
+[node name="018_U_DOMESTIC_locker_room__loaded_locker__west_s" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-9F03506CC9DF20577C4C"
+apply_on_ready = false
 position = Vector3(-41.2000, 0.0000, 11.4000)
 metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::west_s"
+metadata/binding_mode = "free"
 
-[node name="019_U_DOMESTIC_locker_room__loaded_locker__east_n" parent="." instance=ExtResource("3")]
+[node name="Content" parent="018_U_DOMESTIC_locker_room__loaded_locker__west_s" instance=ExtResource("4")]
+
+[node name="019_U_DOMESTIC_locker_room__loaded_locker__east_n" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-F5D49ABE5C0554E39B78"
+apply_on_ready = false
 position = Vector3(-39.8000, 0.0000, 8.2000)
 metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::east_n"
+metadata/binding_mode = "free"
 
-[node name="020_U_DOMESTIC_locker_room__loaded_locker__east_c" parent="." instance=ExtResource("3")]
+[node name="Content" parent="019_U_DOMESTIC_locker_room__loaded_locker__east_n" instance=ExtResource("4")]
+
+[node name="020_U_DOMESTIC_locker_room__loaded_locker__east_c" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-28D159D52D6A7DEF548A"
+apply_on_ready = false
 position = Vector3(-39.8000, 0.0000, 9.8000)
 metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::east_c"
+metadata/binding_mode = "free"
 
-[node name="021_U_DOMESTIC_locker_room__loaded_locker__east_s" parent="." instance=ExtResource("3")]
+[node name="Content" parent="020_U_DOMESTIC_locker_room__loaded_locker__east_c" instance=ExtResource("4")]
+
+[node name="021_U_DOMESTIC_locker_room__loaded_locker__east_s" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-398EE39AA200A0952031"
+apply_on_ready = false
 position = Vector3(-39.8000, 0.0000, 11.4000)
 metadata/placement_id = "U-DOMESTIC/locker_room::loaded_locker::east_s"
+metadata/binding_mode = "free"
 
-[node name="022_U_DOMESTIC_rest_room__staff_table__table_n" parent="." instance=ExtResource("5")]
+[node name="Content" parent="021_U_DOMESTIC_locker_room__loaded_locker__east_s" instance=ExtResource("4")]
+
+[node name="022_U_DOMESTIC_rest_room__staff_table__table_n" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-9B816F838CDAE30228F7"
+apply_on_ready = false
 position = Vector3(-34.6000, 0.0000, 9.2000)
 metadata/placement_id = "U-DOMESTIC/rest_room::staff_table::table_n"
+metadata/binding_mode = "free"
 
-[node name="023_U_DOMESTIC_rest_room__staff_table__table_s" parent="." instance=ExtResource("5")]
+[node name="Content" parent="022_U_DOMESTIC_rest_room__staff_table__table_n" instance=ExtResource("6")]
+
+[node name="023_U_DOMESTIC_rest_room__staff_table__table_s" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-1F9102F9CE7501898D82"
+apply_on_ready = false
 position = Vector3(-34.6000, 0.0000, 11.5000)
 metadata/placement_id = "U-DOMESTIC/rest_room::staff_table::table_s"
+metadata/binding_mode = "free"
 
-[node name="024_P_U_DOMESTIC_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="023_U_DOMESTIC_rest_room__staff_table__table_s" instance=ExtResource("6")]
+
+[node name="024_P_U_DOMESTIC_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-4DA59E321E10FB36A6D5"
+apply_on_ready = false
 position = Vector3(-45.0000, 0.0000, -6.7200)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="025_P_U_DOMESTIC_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="024_P_U_DOMESTIC_01" instance=ExtResource("2")]
+
+[node name="025_P_U_DOMESTIC_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-C762FB575A59F5C51CA2"
+apply_on_ready = false
 position = Vector3(-42.0000, 0.0000, -4.0800)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="026_P_U_DOMESTIC_03" parent="." instance=ExtResource("1")]
+[node name="Content" parent="025_P_U_DOMESTIC_02" instance=ExtResource("2")]
+
+[node name="026_P_U_DOMESTIC_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-982D6AEAE8254231BBDD"
+apply_on_ready = false
 position = Vector3(-39.2400, 0.0000, -2.4800)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="027_P_U_DOMESTIC_04" parent="." instance=ExtResource("1")]
+[node name="Content" parent="026_P_U_DOMESTIC_03" instance=ExtResource("2")]
+
+[node name="027_P_U_DOMESTIC_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-49FC8CD302EE967FD0B2"
+apply_on_ready = false
 position = Vector3(-35.3600, 0.0000, -2.4800)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="028_P_U_DOMESTIC_05" parent="." instance=ExtResource("1")]
+[node name="Content" parent="027_P_U_DOMESTIC_04" instance=ExtResource("2")]
+
+[node name="028_P_U_DOMESTIC_05" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-DFEE9349068C7C60CF22"
+apply_on_ready = false
 position = Vector3(-42.0000, 0.0000, -0.1600)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-05"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="029_P_U_DOMESTIC_06" parent="." instance=ExtResource("1")]
+[node name="Content" parent="028_P_U_DOMESTIC_05" instance=ExtResource("2")]
+
+[node name="029_P_U_DOMESTIC_06" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D623B720CDC89C6D8C16"
+apply_on_ready = false
 position = Vector3(-42.0000, 0.0000, 6.0800)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(0.44370, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-06"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="030_P_U_DOMESTIC_07" parent="." instance=ExtResource("1")]
+[node name="Content" parent="029_P_U_DOMESTIC_06" instance=ExtResource("2")]
+
+[node name="030_P_U_DOMESTIC_07" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-95C91F69EC557057E29B"
+apply_on_ready = false
 position = Vector3(-40.6400, 0.0000, 6.8000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-07"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="031_P_U_DOMESTIC_08" parent="." instance=ExtResource("1")]
+[node name="Content" parent="030_P_U_DOMESTIC_07" instance=ExtResource("2")]
+
+[node name="031_P_U_DOMESTIC_08" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-0EF8EE2B2CE671535B94"
+apply_on_ready = false
 position = Vector3(-37.6800, 0.0000, 6.8000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-08"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="032_P_U_DOMESTIC_09" parent="." instance=ExtResource("1")]
+[node name="Content" parent="031_P_U_DOMESTIC_08" instance=ExtResource("2")]
+
+[node name="032_P_U_DOMESTIC_09" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-B4BBDE6E1EDD83F8AFEA"
+apply_on_ready = false
 position = Vector3(-34.6400, 0.0000, 6.8000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-U-DOMESTIC-09"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="033_PX_E_U03_U_DOMESTIC" parent="." instance=ExtResource("1")]
+[node name="Content" parent="032_P_U_DOMESTIC_09" instance=ExtResource("2")]
+
+[node name="033_PX_E_U03_U_DOMESTIC" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-F75B797565EC0B3270BD"
+apply_on_ready = false
 position = Vector3(-43.5000, 0.0000, 15.0000)
 scale = Vector3(0.50420, 1.00000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-U03-U-DOMESTIC"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="033_PX_E_U03_U_DOMESTIC" instance=ExtResource("2")]

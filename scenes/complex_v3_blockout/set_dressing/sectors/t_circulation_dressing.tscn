@@ -1,11 +1,18 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="1"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/pipe_cluster.tscn" id="2"]
 
 [node name="T_CIRCULATION_SetDressing" type="Node3D"]
 metadata/sector_id = "T-CIRCULATION"
 metadata/material_family = "utility"
 
-[node name="001_T_CIRCULATION__pipe_cluster" parent="." instance=ExtResource("1")]
+[node name="001_T_CIRCULATION__pipe_cluster" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-B93BEAB6B07FB6B63DFD"
+apply_on_ready = false
 position = Vector3(-32.5000, -10.4000, 45.5000)
 metadata/placement_id = "T-CIRCULATION::pipe_cluster"
+metadata/binding_mode = "free"
+
+[node name="Content" parent="001_T_CIRCULATION__pipe_cluster" instance=ExtResource("2")]

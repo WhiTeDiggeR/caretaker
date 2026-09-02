@@ -1,68 +1,135 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="3"]
-[ext_resource type="PackedScene" path="res://objects/industrial_crate.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="5"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/open_cargo_gate_frame.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/complex_v3/wall_beacon.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://objects/emergency_barrier.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://objects/industrial_crate.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/workbench.tscn" id="6"]
 
 [node name="T_FREIGHT_SetDressing" type="Node3D"]
 metadata/sector_id = "T-FREIGHT"
 metadata/material_family = "freight"
 
-[node name="001_T_FREIGHT_freight_lift__industrial_crate" parent="." instance=ExtResource("4")]
+[node name="001_T_FREIGHT_freight_lift__industrial_crate" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-25ECEB76699B27E76103"
+apply_on_ready = false
 position = Vector3(17.0000, -11.5000, 76.5625)
 metadata/placement_id = "T-FREIGHT/freight_lift::industrial_crate"
+metadata/binding_mode = "free"
 
-[node name="002_T_FREIGHT_heavy_spine__emergency_barrier" parent="." instance=ExtResource("3")]
+[node name="Content" parent="001_T_FREIGHT_freight_lift__industrial_crate" instance=ExtResource("5")]
+
+[node name="002_T_FREIGHT_heavy_spine__emergency_barrier" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-2787BAA2CF307E5D7B35"
+apply_on_ready = false
 position = Vector3(-18.6500, -11.5000, 69.3125)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "T-FREIGHT/heavy_spine::emergency_barrier"
+metadata/binding_mode = "free"
 
-[node name="003_T_FREIGHT_service_bypass__workbench" parent="." instance=ExtResource("5")]
+[node name="Content" parent="002_T_FREIGHT_heavy_spine__emergency_barrier" instance=ExtResource("4")]
+
+[node name="003_T_FREIGHT_service_bypass__workbench" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-61303B79F77CE22B8554"
+apply_on_ready = false
 position = Vector3(26.5000, -11.5000, 81.0500)
 rotation = Vector3(0, 3.1415927, 0)
 metadata/placement_id = "T-FREIGHT/service_bypass::workbench"
+metadata/binding_mode = "free"
 
-[node name="004_T_FREIGHT_service_reception__wall_beacon" parent="." instance=ExtResource("2")]
+[node name="Content" parent="003_T_FREIGHT_service_bypass__workbench" instance=ExtResource("6")]
+
+[node name="004_T_FREIGHT_service_reception__wall_beacon" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-8EEFD8C7CACE477EF3F1"
+apply_on_ready = false
 position = Vector3(-19.2500, -9.1500, 76.5625)
 rotation = Vector3(0, 1.5707963, 0)
 metadata/placement_id = "T-FREIGHT/service_reception::wall_beacon"
+metadata/binding_mode = "free"
 
-[node name="005_P_T_FREIGHT_01" parent="." instance=ExtResource("1")]
+[node name="Content" parent="004_T_FREIGHT_service_reception__wall_beacon" instance=ExtResource("3")]
+
+[node name="005_P_T_FREIGHT_01" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D6EEAEC6A0CC6EB63943"
+apply_on_ready = false
 position = Vector3(-4.5000, -11.5000, 71.1250)
 scale = Vector3(1.08173, 1.50000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-FREIGHT-01"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="006_P_T_FREIGHT_02" parent="." instance=ExtResource("1")]
+[node name="Content" parent="005_P_T_FREIGHT_01" instance=ExtResource("2")]
+
+[node name="006_P_T_FREIGHT_02" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-8F432A6058CDD6AD5291"
+apply_on_ready = false
 position = Vector3(17.0000, -11.5000, 71.1250)
 scale = Vector3(1.08173, 1.50000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-FREIGHT-02"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="007_P_T_FREIGHT_03" parent="." instance=ExtResource("1")]
+[node name="Content" parent="006_P_T_FREIGHT_02" instance=ExtResource("2")]
+
+[node name="007_P_T_FREIGHT_03" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-55F7A9F3DE01813046E9"
+apply_on_ready = false
 position = Vector3(26.5000, -11.5000, 71.1250)
 scale = Vector3(1.00962, 1.50000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-FREIGHT-03"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="008_P_T_FREIGHT_04" parent="." instance=ExtResource("1")]
+[node name="Content" parent="007_P_T_FREIGHT_03" instance=ExtResource("2")]
+
+[node name="008_P_T_FREIGHT_04" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-D9208C39DAF5FBE4DB50"
+apply_on_ready = false
 position = Vector3(11.0000, -11.5000, 76.5620)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(1.08173, 1.50000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-FREIGHT-04"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="009_P_T_FREIGHT_05" parent="." instance=ExtResource("1")]
+[node name="Content" parent="008_P_T_FREIGHT_04" instance=ExtResource("2")]
+
+[node name="009_P_T_FREIGHT_05" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-16E8D1F719178EB1A5F4"
+apply_on_ready = false
 position = Vector3(23.0000, -11.5000, 76.5620)
 rotation = Vector3(0, 1.5707963, 0)
 scale = Vector3(1.08173, 1.50000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "P-T-FREIGHT-05"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
 
-[node name="010_PX_E_T08_T_FREIGHT" parent="." instance=ExtResource("1")]
+[node name="Content" parent="009_P_T_FREIGHT_05" instance=ExtResource("2")]
+
+[node name="010_PX_E_T08_T_FREIGHT" type="Node3D" parent="."]
+script = ExtResource("1_anchored")
+object_id = "OBJ-SET-C24850A351302FA03584"
+apply_on_ready = false
 position = Vector3(5.0000, -11.5000, 67.5000)
 scale = Vector3(1.08173, 1.50000, 1.00000)
+expected_anchor_type = "door"
 metadata/placement_id = "PX-E-T08-T-FREIGHT"
+metadata/binding_mode = "unresolved"
 metadata/open_passage = true
+
+[node name="Content" parent="010_PX_E_T08_T_FREIGHT" instance=ExtResource("2")]
