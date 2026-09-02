@@ -66,9 +66,15 @@ def main() -> int:
     if assembly.count("complex_v3_infrastructure.tscn") != 1:
         errors.append("assembly must instance shared infrastructure exactly once")
     builder = (SCENE_DIR / "complex_v3_blockout.gd").read_text(encoding="utf-8")
+    wrapper = (SCENE_DIR / "complex_v3_sector_wrapper.gd").read_text(encoding="utf-8")
+    zone_template = (SCENE_DIR / "complex_v3_zone.tscn").read_text(encoding="utf-8")
     assembly_script = (SCENE_DIR / "complex_v3_assembly.gd").read_text(encoding="utf-8")
     if not builder.startswith("@tool\n"):
         errors.append("sector builder must run as an editor tool")
+    if 'extends "res://scenes/complex_v3_blockout/complex_v3_sector_wrapper.gd"' not in builder or "class_name ComplexV3SectorWrapper" not in wrapper:
+        errors.append("legacy sector builder must retain the generated/authored wrapper contract")
+    if 'metadata/regeneration_contract_version = "1.0.0"' not in zone_template:
+        errors.append("common zone base must publish regeneration contract version 1.0.0")
     if "return build_collisions and not Engine.is_editor_hint()" not in builder:
         errors.append("editor preview must not build physics collisions")
     if "editor_preview_show_ceilings := false" not in builder or "not Engine.is_editor_hint() or editor_preview_show_ceilings" not in builder:

@@ -1,0 +1,236 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from unittest import mock
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location("safe_regenerate", ROOT / "safe_regenerate.py")
+assert SPEC and SPEC.loader
+SAFE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(SAFE)
+VALIDATOR = ROOT.parent / "complex_v3_composition_validator" / "validate_composition.py"
+
+
+FAKE_BACKEND = r'''import argparse, hashlib, json, os, sys
+from pathlib import Path
+p=argparse.ArgumentParser(add_help=False)
+p.add_argument("--sector"); p.add_argument("--staging"); p.add_argument("--manifest")
+a,_=p.parse_known_args()
+manifest=json.loads(Path(a.manifest).read_text(encoding="utf-8"))
+sector=next(item for item in manifest["sectors"] if item["sector_id"]==a.sector)
+mode=sector.get("fixture_mode","ok")
+failures={"inspector":"SVG inspection failed", "converter":"SVG conversion failed", "stairs":"Stair generator main failed"}
+if mode in failures:
+    print("ERROR: "+failures[mode],file=sys.stderr); raise SystemExit(2)
+root=Path(a.staging); generated=root/"Generated"/"Architecture"; generated.mkdir(parents=True)
+scene='[gd_scene format=3]\n\n[node name="Fixture" type="Node3D"]\n'
+if mode=="combined": scene='[gd_scene load_steps=2 format=3]\n\n[ext_resource path="res://missing_resource.tres" type="Resource" id="1"]\n[node name="Fixture" type="Node3D"]\n'
+(generated/"fixture.tscn").write_text(scene,encoding="utf-8")
+generation_id="sha256:"+hashlib.sha256(json.dumps(sector,sort_keys=True).encode()).hexdigest()
+anchor={"anchor_id":"AF-WALL-A","type":"wall","status":"active","source_ref":{"artifact_id":"fixture","source_id":"wall-a"},"origin":[0,1,0],"forward":[1,0,0],"normal":[0,0,1],"up":[0,1,0],"bounds":{"length_m":10,"height_m":3},"placement_limits":{"normal_offset_m":[-1,1],"height_m":[0,3]}}
+anchors={"schema_id":"caretaker.anchor_frames","schema_version":"1.0.0","map_id":manifest["map_id"],"sector_id":a.sector,"generation_id":generation_id,"anchors":[anchor]}
+generation={"schema_id":"caretaker.sector_generation_result","schema_version":"1.0.0","map_id":manifest["map_id"],"sector_id":a.sector,"generation_id":generation_id}
+report={"schema_id":"caretaker.sector_regeneration_report","schema_version":"1.0.0","sector_id":a.sector,"generation_id":generation_id,"status":"ok","staging_path":str(root)}
+for name,value in (("anchor_frames.json",anchors),("generation_manifest.json",generation),("regeneration_report.json",report)):
+    (root/name).write_text(json.dumps(value,ensure_ascii=False,sort_keys=True)+"\n",encoding="utf-8")
+'''
+
+
+class SafeRegenerationTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name) / "Проект с пробелами"
+        self.root.mkdir()
+        (self.root / "project.godot").write_text(
+            '[application]\nconfig/name="Safe Regeneration Fixture"\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n',
+            encoding="utf-8",
+        )
+        self.source = self.root / "план.svg"
+        self.source.write_text("<svg/>", encoding="utf-8")
+        self.backend = self.root / "fake_backend.py"
+        self.backend.write_text(FAKE_BACKEND, encoding="utf-8")
+        self.live = self.root / "sectors" / "fixture"
+        self.composition = self.root / "composition.json"
+        self.write_composition()
+        self.manifest = self.root / "manifest.json"
+        self.write_manifest()
+
+    def tearDown(self) -> None:
+        self.temp.cleanup()
+
+    def write_composition(self, *, missing_anchor: bool = False) -> None:
+        value = {
+            "schema_id": "caretaker.composition_validation_input", "schema_version": "1.0.0",
+            "map_id": "fixture-map", "sector_id": "FIXTURE", "generation_id": "old",
+            "sector_bounds": {"min": [0, -1, 0], "max": [10, 4, 10]},
+            "spaces": [{"space_id": "SPACE-A", "sector_id": "FIXTURE", "bounds": {"min": [0, 0, 0], "max": [10, 3, 10]}}],
+            "anchors": [], "infrastructure": [{
+                "infrastructure_id": "INFRA-FLOOR", "owner": "generated", "kind": "floor",
+                "bounds": {"min": [0, -0.2, 0], "max": [10, 0, 10]},
+            }],
+            "objects": [{
+                "object_id": "OBJ-A", "binding_id": "BIND-A", "owner": "authored", "sector_id": "FIXTURE", "space_id": "SPACE-A",
+                "anchor_id": "AF-MISSING" if missing_anchor else "AF-WALL-A", "expected_anchor_type": "wall", "placement_mode": "floor",
+                "support_tolerance_m": 0.02, "bounds": {"min": [1, 0, 1], "max": [2, 1, 2]},
+            }],
+        }
+        self.composition.write_text(json.dumps(value), encoding="utf-8")
+
+    def write_manifest(self, mode: str = "ok") -> None:
+        value = {
+            "schema_id": "caretaker.sector_generation_manifest", "schema_version": "1.0.0", "map_id": "fixture-map", "project_root": ".",
+            "sectors": [{
+                "sector_id": "FIXTURE", "status": "ready", "blockers": [], "source_svg": self.source.name,
+                "output_resource_dir": "res://sectors/fixture", "fixture_mode": mode,
+                "safe_regeneration": {"composition_input": self.composition.name},
+            }],
+        }
+        self.manifest.write_text(json.dumps(value), encoding="utf-8")
+
+    def args(self, *extra: str) -> list[str]:
+        return [
+            "--sector", "FIXTURE", "--manifest", str(self.manifest), "--backend", str(self.backend),
+            "--composition-validator", str(VALIDATOR), "--python", sys.executable,
+            "--report", str(self.root / "report.json"), *extra,
+        ]
+
+    def run_safe(self, *extra: str) -> tuple[int, dict]:
+        code = SAFE.main(self.args(*extra))
+        report = json.loads((self.root / "report.json").read_text(encoding="utf-8"))
+        return code, report
+
+    def seed_live(self) -> None:
+        self.assertEqual(self.run_safe()[0], 0)
+        (self.live / "Materials").mkdir()
+        (self.live / "Materials" / "authored.tres").write_text("preserve", encoding="utf-8")
+        (self.live / "notes.txt").write_text("user file", encoding="utf-8")
+
+    def test_success_promotes_and_preserves_unmanaged_files(self) -> None:
+        self.live.mkdir(parents=True)
+        (self.live / "Materials").mkdir()
+        (self.live / "Materials" / "authored.tres").write_text("preserve", encoding="utf-8")
+        (self.live / "notes.txt").write_text("user file", encoding="utf-8")
+        code, report = self.run_safe()
+        self.assertEqual(code, 0)
+        self.assertEqual(report["status"], "success")
+        self.assertTrue(report["ready"])
+        self.assertFalse(report["agent_invoked"])
+        self.assertTrue((self.live / "Generated" / "Architecture" / "fixture.tscn").is_file())
+        self.assertEqual((self.live / "Materials" / "authored.tres").read_text(encoding="utf-8"), "preserve")
+        self.assertEqual((self.live / "notes.txt").read_text(encoding="utf-8"), "user file")
+
+    def test_authored_composition_inside_live_is_validated_from_candidate(self) -> None:
+        authored = self.live / "AuthoredContent"
+        authored.mkdir(parents=True)
+        target = authored / "composition.json"
+        target.write_bytes(self.composition.read_bytes())
+        manifest = json.loads(self.manifest.read_text(encoding="utf-8"))
+        manifest["sectors"][0]["safe_regeneration"]["composition_input"] = "sectors/fixture/AuthoredContent/composition.json"
+        self.manifest.write_text(json.dumps(manifest), encoding="utf-8")
+        before = target.read_bytes()
+        code, report = self.run_safe()
+        self.assertEqual((code, report["status"]), (0, "success"))
+        self.assertEqual(target.read_bytes(), before)
+
+    def test_report_inside_live_is_blocked_without_mutation(self) -> None:
+        self.live.mkdir(parents=True)
+        marker = self.live / "authored.txt"
+        marker.write_text("preserve", encoding="utf-8")
+        code = SAFE.main([
+            "--sector", "FIXTURE", "--manifest", str(self.manifest), "--backend", str(self.backend),
+            "--composition-validator", str(VALIDATOR), "--python", sys.executable,
+            "--report", str(self.live / "report.json"),
+        ])
+        self.assertEqual(code, 2)
+        self.assertEqual(marker.read_text(encoding="utf-8"), "preserve")
+
+    def test_backend_failures_leave_live_unchanged_and_report_exact_stage(self) -> None:
+        self.seed_live()
+        before = SAFE.path_hash(self.live)
+        for mode, stage in (("inspector", "source_validation"), ("converter", "staging_generation"), ("stairs", "stair_generation")):
+            with self.subTest(mode=mode):
+                self.write_manifest(mode)
+                code, report = self.run_safe()
+                self.assertEqual(code, 2)
+                self.assertEqual(report["errors"][0]["stage"], stage)
+                self.assertFalse(report["ready"])
+                self.assertEqual(SAFE.path_hash(self.live), before)
+
+    def test_combined_and_composition_failures_leave_live_unchanged(self) -> None:
+        self.seed_live()
+        before = SAFE.path_hash(self.live)
+        self.write_manifest("combined")
+        code, report = self.run_safe()
+        self.assertEqual((code, report["errors"][0]["stage"]), (2, "combined_validation"))
+        self.assertEqual(SAFE.path_hash(self.live), before)
+        self.write_manifest()
+        self.write_composition(missing_anchor=True)
+        code, report = self.run_safe()
+        self.assertEqual((code, report["errors"][0]["stage"]), (2, "composition_validation"))
+        self.assertEqual(SAFE.path_hash(self.live), before)
+
+    def test_noop_does_not_replace_live_directory(self) -> None:
+        self.assertEqual(self.run_safe()[0], 0)
+        marker = self.live.stat().st_mtime_ns
+        code, report = self.run_safe()
+        self.assertEqual(code, 0)
+        self.assertEqual(report["status"], "noop")
+        self.assertEqual(self.live.stat().st_mtime_ns, marker)
+
+    def test_dry_run_and_validate_only_do_not_mutate_live(self) -> None:
+        code, report = self.run_safe("--dry-run")
+        self.assertEqual((code, report["status"], self.live.exists()), (0, "dry_run", False))
+        self.assertFalse(report["ready"])
+        self.assertTrue(report["candidate_validated"])
+        self.assertEqual(self.run_safe()[0], 0)
+        before = SAFE.path_hash(self.live)
+        code, report = self.run_safe("--validate-only")
+        self.assertEqual((code, report["status"]), (0, "validated"))
+        self.assertEqual(SAFE.path_hash(self.live), before)
+
+    def test_cli_supports_windows_unicode_and_spaces(self) -> None:
+        process = subprocess.run([sys.executable, str(ROOT / "safe_regenerate.py"), *self.args("--dry-run")], text=True, capture_output=True, check=False)
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertEqual(json.loads((self.root / "report.json").read_text(encoding="utf-8"))["status"], "dry_run")
+
+    def test_atomic_promotion_restores_live_when_second_replace_fails(self) -> None:
+        live, candidate, backup = self.root / "live", self.root / "candidate", self.root / "backup"
+        live.mkdir(); candidate.mkdir()
+        (live / "old.txt").write_text("old", encoding="utf-8")
+        real_replace = os.replace
+        calls = 0
+
+        def fail_second(source: Path, destination: Path) -> None:
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise OSError("fixture failure")
+            real_replace(source, destination)
+
+        with mock.patch.object(SAFE.os, "replace", side_effect=fail_second):
+            with self.assertRaisesRegex(SAFE.OrchestrationError, "rolled back"):
+                SAFE.promote(candidate, live, backup)
+        self.assertEqual((live / "old.txt").read_text(encoding="utf-8"), "old")
+        self.assertFalse(backup.exists())
+
+    @unittest.skipUnless(os.environ.get("GODOT_BIN"), "GODOT_BIN is not configured")
+    def test_promoted_scene_loads_in_godot_headless(self) -> None:
+        self.assertEqual(self.run_safe()[0], 0)
+        process = subprocess.run([
+            os.environ["GODOT_BIN"], "--headless", "--disable-crash-handler",
+            "--log-file", str(self.root / "godot-safe-regeneration.log"),
+            "--editor", "--path", str(self.root), "--quit",
+        ], text=True, capture_output=True, check=False)
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
+
+
+if __name__ == "__main__":
+    unittest.main()

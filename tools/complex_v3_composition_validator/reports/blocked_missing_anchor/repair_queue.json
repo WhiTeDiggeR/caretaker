@@ -1,0 +1,61 @@
+{
+  "schema_id": "caretaker.repair_queue",
+  "schema_version": "1.0.0",
+  "contract_version": "1.0.0",
+  "map_id": "fixture-map",
+  "sector_id": "FIXTURE",
+  "generation_id": "sha256:missing",
+  "blocking_count": 1,
+  "items": [
+    {
+      "repair_id": "RQ-DEDBE7C6C1CAA294DDF8",
+      "severity": "blocking",
+      "status": "open",
+      "reason": "anchor_missing",
+      "code": "missing_anchor",
+      "related_codes": [
+        "missing_anchor"
+      ],
+      "binding_id": "BIND-MISSING",
+      "object_id": "OBJ-MISSING",
+      "previous_anchor_ref": {
+        "anchor_id": "AF-REMOVED",
+        "expected_type": "wall",
+        "geometry_hash": null
+      },
+      "evidence": {
+        "source_generation_id": null,
+        "target_generation_id": "sha256:missing",
+        "proof_kind": "static_geometry",
+        "message": "Referenced stable anchor ID is absent.",
+        "measurement": {
+          "actual": "missing",
+          "limit": "active anchor exists",
+          "units": "state",
+          "relation": "must_equal"
+        },
+        "responsible_owner": "authored_bindings",
+        "diagnostics": [
+          {
+            "code": "missing_anchor",
+            "proof_kind": "static_geometry",
+            "message": "Referenced stable anchor ID is absent.",
+            "measurement": {
+              "actual": "missing",
+              "limit": "active anchor exists",
+              "units": "state",
+              "relation": "must_equal"
+            }
+          }
+        ]
+      },
+      "candidate_anchor_ids": [],
+      "allowed_actions": [
+        "restore_anchor",
+        "rebind_explicit",
+        "remove_binding"
+      ],
+      "resolution": null
+    }
+  ]
+}

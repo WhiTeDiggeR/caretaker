@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/complex_v3_blockout/complex_v3_sector_wrapper.gd" id="1_wrapper"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/fixtures/generated_architecture_fixture.tscn" id="2_architecture"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/fixtures/generated_stairs_fixture.tscn" id="3_stairs"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/fixtures/authored_content_fixture.tscn" id="4_authored"]
+
+[node name="SectorWrapperFixture" type="Node3D"]
+script = ExtResource("1_wrapper")
+generated_architecture_scene = ExtResource("2_architecture")
+generated_stairs_scene = ExtResource("3_stairs")
+authored_content_scene = ExtResource("4_authored")
+assemble_contract_on_ready = true
+metadata/sector_id = "FIXTURE-CONTRACT"
