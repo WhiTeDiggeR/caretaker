@@ -63,6 +63,9 @@ func record_local_correction(undo_redo: Variant, object: AnchoredObject3D) -> Pa
 	var old_state := _capture_state(object)
 	var new_state := old_state.duplicate()
 	new_state["author_correction"] = (base["transform"] as Transform3D).affine_inverse() * object.global_transform
+	var corrected := object.anchor_registry.resolve_transform(object.anchor_id, object.expected_anchor_type, object.placement, new_state["author_correction"])
+	if not bool(corrected.get("ok", false)):
+		return corrected.get("errors", PackedStringArray(["corrected anchor resolution failed"])) as PackedStringArray
 	new_state["resolve"] = true
 	_commit_state_action(undo_redo, "Record complex_v3 local correction", object, new_state, old_state)
 	return PackedStringArray()
@@ -102,13 +105,17 @@ func _bind_or_rebind(
 	if not bool(base.get("ok", false)):
 		return base.get("errors", PackedStringArray(["anchor resolution failed"])) as PackedStringArray
 	var world_transform := object.global_transform
+	var correction := (base["transform"] as Transform3D).affine_inverse() * world_transform
+	var corrected := registry.resolve_transform(anchor_id, object.expected_anchor_type, placement_copy, correction)
+	if not bool(corrected.get("ok", false)):
+		return corrected.get("errors", PackedStringArray(["corrected anchor resolution failed"])) as PackedStringArray
 	var old_state := _capture_state(object)
 	var new_state := {
 		"object_id": object_id,
 		"anchor_id": anchor_id,
 		"expected_anchor_type": object.expected_anchor_type,
 		"placement": placement_copy,
-		"author_correction": (base["transform"] as Transform3D).affine_inverse() * world_transform,
+		"author_correction": correction,
 		"anchor_registry": registry,
 		"apply_on_ready": true,
 		"resolve": true,

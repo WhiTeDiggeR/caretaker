@@ -14,20 +14,16 @@ const POLICIES := [POLICY_NORMALIZED, POLICY_FROM_START, POLICY_FROM_END, POLICY
 @export var normal_offset_m := 0.0
 @export var height_m := 0.0
 @export var yaw_pitch_roll_deg := Vector3.ZERO
+@export_enum("linear", "surface") var mode := "linear"
+@export var surface_u: ComplexV3AnchorAxisPlacement
+@export var surface_v: ComplexV3AnchorAxisPlacement
+## Explicit local box dimensions and pivot-relative center. Zero means unknown.
+@export var footprint_m := Vector3.ZERO
+@export var footprint_center_m := Vector3.ZERO
 
 
 func along_distance(length_m: float) -> Dictionary:
-	match policy:
-		POLICY_NORMALIZED:
-			return {"ok": true, "distance_m": normalized_value * length_m}
-		POLICY_FROM_START:
-			return {"ok": true, "distance_m": distance_m}
-		POLICY_FROM_END:
-			return {"ok": true, "distance_m": length_m - distance_m}
-		POLICY_CENTERED:
-			return {"ok": true, "distance_m": length_m * 0.5 + centered_offset_m}
-		_:
-			return {"ok": false, "error": "unknown placement policy: %s" % policy}
+	return ComplexV3AnchorAxisPlacement.resolve_policy(policy, normalized_value, distance_m, centered_offset_m, 0.0, length_m)
 
 
 func rotation_basis() -> Basis:

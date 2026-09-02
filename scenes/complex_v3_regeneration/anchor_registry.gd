@@ -118,6 +118,12 @@ func _validate_frame(frame: Dictionary, anchor_id: String, errors: PackedStringA
 		errors.append("%s basis vectors must be normalized" % anchor_id)
 	if absf(forward.dot(up)) > EPS or absf(normal.dot(forward)) > EPS:
 		errors.append("%s basis vectors are not orthogonal" % anchor_id)
+	if not up.is_equal_approx(Vector3.UP):
+		errors.append("%s up must be world +Y" % anchor_id)
+	if anchor_type in ["floor", "ceiling"]:
+		var expected_normal := up if anchor_type == "floor" else -up
+		if not normal.is_equal_approx(expected_normal):
+			errors.append("%s surface normal has the wrong direction" % anchor_id)
 	if anchor_type in LINEAR_TYPES and not forward.cross(up).is_equal_approx(normal):
 		errors.append("%s linear basis must satisfy forward cross up = normal" % anchor_id)
 	if not frame.get("bounds") is Dictionary or not frame.get("placement_limits") is Dictionary:
@@ -149,8 +155,14 @@ func resolve_transform(anchor_id: String, expected_type: String, placement: Comp
 		return {"ok": false, "errors": PackedStringArray(["anchor %s has type %s, expected %s" % [anchor_id, anchor_type, expected_type]])}
 	if placement == null:
 		return {"ok": false, "errors": PackedStringArray(["placement resource is missing"])}
+	if not is_finite(placement.normal_offset_m) or not is_finite(placement.height_m) or not placement.yaw_pitch_roll_deg.is_finite() or not author_correction.is_finite():
+		return {"ok": false, "errors": PackedStringArray(["placement and author correction must be finite"])}
+	if anchor_type in ["floor", "ceiling"]:
+		return _resolve_surface(frame, placement, author_correction)
 	if anchor_type not in LINEAR_TYPES:
 		return {"ok": false, "errors": PackedStringArray(["anchor type %s has no linear placement in contract v1" % anchor_type])}
+	if placement.mode != "linear":
+		return {"ok": false, "errors": PackedStringArray(["linear anchor requires linear placement"])}
 	var bounds := frame["bounds"] as Dictionary
 	var length_m := float(bounds.get("length_m", -1.0))
 	if length_m < 0.0:
@@ -178,8 +190,151 @@ func resolve_transform(anchor_id: String, expected_type: String, placement: Comp
 	return {"ok": true, "transform": resolved, "anchor_id": anchor_id, "generation_id": _generation_id}
 
 
+func _resolve_surface(frame: Dictionary, placement: ComplexV3AnchorPlacement, correction: Transform3D) -> Dictionary:
+	var errors := PackedStringArray()
+	if placement.mode != "surface" or placement.surface_u == null or placement.surface_v == null:
+		return {"ok": false, "errors": PackedStringArray(["surface placement requires explicit U and V policies"])}
+	var bounds := frame["bounds"] as Dictionary
+	var ranges: Dictionary = {}
+	for key: String in ["u_range_m", "v_range_m"]:
+		var raw: Variant = bounds.get(key)
+		if not _valid_range(raw):
+			errors.append("surface bounds.%s must be an explicit finite range" % key)
+		else:
+			ranges[key] = raw
+	if not errors.is_empty():
+		return {"ok": false, "errors": errors}
+	var u := placement.surface_u.resolve_range(float(ranges["u_range_m"][0]), float(ranges["u_range_m"][1]))
+	var v := placement.surface_v.resolve_range(float(ranges["v_range_m"][0]), float(ranges["v_range_m"][1]))
+	for axis: Dictionary in [u, v]:
+		if not axis["ok"]:
+			errors.append(str(axis["error"]))
+	var limits := frame["placement_limits"] as Dictionary
+	_validate_scalar_limit(placement.normal_offset_m, limits.get("normal_offset_m"), "normal_offset_m", errors)
+	_validate_scalar_limit(placement.height_m, limits.get("height_m"), "height_m", errors)
+	_validate_rotation_limits(placement.yaw_pitch_roll_deg, limits.get("rotation_deg"), errors)
+	if not errors.is_empty():
+		return {"ok": false, "errors": errors}
+	var origin := _vector_from_frame(frame, "origin")
+	var forward := _vector_from_frame(frame, "forward")
+	var up := _vector_from_frame(frame, "up")
+	var normal := _vector_from_frame(frame, "normal")
+	# Physical normal is vertical here, not the object's local Z axis.
+	var axis_v := forward.cross(up)
+	var position := origin + forward * float(u["distance_m"]) + axis_v * float(v["distance_m"]) + normal * placement.normal_offset_m + up * placement.height_m
+	var resolved := Transform3D(Basis(forward, up, axis_v) * placement.rotation_basis(), position) * correction
+	if not resolved.is_finite() or not is_finite(resolved.basis.determinant()) or absf(resolved.basis.determinant()) <= EPS:
+		return {"ok": false, "errors": PackedStringArray(["surface transform must be finite and nonsingular"])}
+	_validate_surface_footprint(bounds, placement, resolved, origin, forward, axis_v, errors)
+	if not errors.is_empty():
+		return {"ok": false, "errors": errors}
+	return {"ok": true, "transform": resolved, "anchor_id": str(frame["anchor_id"]), "generation_id": _generation_id}
+
+
+func _valid_range(raw: Variant) -> bool:
+	if not raw is Array or (raw as Array).size() != 2:
+		return false
+	for item: Variant in raw:
+		if (not item is int and not item is float) or not is_finite(float(item)):
+			return false
+	return float(raw[0]) <= float(raw[1])
+
+
+func _surface_polygon(raw: Variant, label: String, errors: PackedStringArray) -> PackedVector2Array:
+	var result := PackedVector2Array()
+	if raw is Array:
+		for point: Variant in raw:
+			if not point is Array or (point as Array).size() != 2:
+				errors.append("%s must contain XZ pairs" % label)
+				return result
+			for coordinate: Variant in point:
+				if (not coordinate is int and not coordinate is float) or not is_finite(float(coordinate)):
+					errors.append("%s coordinates must be finite numbers" % label)
+					return result
+			result.append(Vector2(float(point[0]), float(point[1])))
+	if result.size() > 1 and result[0].is_equal_approx(result[-1]):
+		result.resize(result.size() - 1)
+	if result.size() < 3:
+		errors.append("%s must have at least three vertices" % label)
+		return result
+	for index: int in result.size():
+		var next := (index + 1) % result.size()
+		if result[index].is_equal_approx(result[next]):
+			errors.append("%s has a zero-length edge" % label)
+			return result
+		for other: int in range(index + 1, result.size()):
+			var other_next := (other + 1) % result.size()
+			if other == next or other_next == index:
+				continue
+			if _segments_intersect(result[index], result[next], result[other], result[other_next]):
+				errors.append("%s has intersecting nonadjacent edges" % label)
+				return result
+	if Geometry2D.triangulate_polygon(result).is_empty():
+		errors.append("%s must be a valid simple polygon" % label)
+	return result
+
+
+func _segments_intersect(a: Vector2, b: Vector2, c: Vector2, d: Vector2) -> bool:
+	var ab := b - a
+	var cd := d - c
+	var denominator := ab.cross(cd)
+	if absf(denominator) <= EPS:
+		if absf((c - a).cross(ab)) > EPS:
+			return false
+		return minf(maxf(a.x, b.x), maxf(c.x, d.x)) >= maxf(minf(a.x, b.x), minf(c.x, d.x)) - EPS and minf(maxf(a.y, b.y), maxf(c.y, d.y)) >= maxf(minf(a.y, b.y), minf(c.y, d.y)) - EPS
+	var t := (c - a).cross(cd) / denominator
+	var u := (c - a).cross(ab) / denominator
+	return t >= -EPS and t <= 1.0 + EPS and u >= -EPS and u <= 1.0 + EPS
+
+
+func _polygon_area(polygon: PackedVector2Array) -> float:
+	var twice_area := 0.0
+	for index: int in polygon.size():
+		twice_area += polygon[index].cross(polygon[(index + 1) % polygon.size()])
+	return absf(twice_area) * 0.5
+
+
+func _validate_surface_footprint(bounds: Dictionary, placement: ComplexV3AnchorPlacement, resolved: Transform3D, origin: Vector3, axis_u: Vector3, axis_v: Vector3, errors: PackedStringArray) -> void:
+	var size := placement.footprint_m
+	if not size.is_finite() or minf(size.x, minf(size.y, size.z)) <= 0.0 or not placement.footprint_center_m.is_finite():
+		errors.append("surface placement requires explicit positive footprint dimensions and finite center")
+		return
+	var polygon := _surface_polygon(bounds.get("polygon_xz"), "polygon_xz", errors)
+	var holes: Array[PackedVector2Array] = []
+	var raw_holes: Variant = bounds.get("holes_xz", [])
+	if not raw_holes is Array:
+		errors.append("holes_xz must be an array")
+	else:
+		for hole: Variant in raw_holes:
+			holes.append(_surface_polygon(hole, "hole", errors))
+	if not errors.is_empty():
+		return
+	var corners := PackedVector2Array()
+	for x: float in [-0.5, 0.5]:
+		for y: float in [-0.5, 0.5]:
+			for z: float in [-0.5, 0.5]:
+				var world := resolved * (placement.footprint_center_m + size * Vector3(x, y, z))
+				if not world.is_finite():
+					errors.append("transformed footprint must be finite")
+					return
+				corners.append(Vector2(world.x, world.z))
+				_validate_scalar_limit((world - origin).dot(axis_u), bounds["u_range_m"], "footprint U", errors)
+				_validate_scalar_limit((world - origin).dot(axis_v), bounds["v_range_m"], "footprint V", errors)
+	var hull := Geometry2D.convex_hull(corners)
+	var area := _polygon_area(hull)
+	var contained_area := 0.0
+	for part: PackedVector2Array in Geometry2D.intersect_polygons(hull, polygon):
+		contained_area += _polygon_area(part)
+	if area <= EPS or absf(area - contained_area) > EPS:
+		errors.append("surface footprint extends outside polygon")
+	for hole: PackedVector2Array in holes:
+		for part: PackedVector2Array in Geometry2D.intersect_polygons(hull, hole):
+			if _polygon_area(part) > EPS:
+				errors.append("surface footprint overlaps an opening")
+
+
 func _validate_scalar_limit(value: float, raw_limit: Variant, label: String, errors: PackedStringArray) -> void:
-	if not raw_limit is Array or (raw_limit as Array).size() != 2:
+	if not _valid_range(raw_limit):
 		errors.append("placement_limits.%s is missing" % label)
 		return
 	var limit := raw_limit as Array
@@ -198,7 +353,7 @@ func _validate_rotation_limits(value: Vector3, raw_limits: Variant, errors: Pack
 		{"name": "roll", "value": value.z},
 	]:
 		var raw: Variant = limits.get(item["name"])
-		if not raw is Array or (raw as Array).size() != 2:
+		if not _valid_range(raw):
 			errors.append("rotation limit %s is missing" % item["name"])
 		elif float(item["value"]) < float(raw[0]) - EPS or float(item["value"]) > float(raw[1]) + EPS:
 			errors.append("rotation %s is outside placement limits" % item["name"])
