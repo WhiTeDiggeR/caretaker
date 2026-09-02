@@ -185,6 +185,57 @@ class SafeRegenerationTests(unittest.TestCase):
         self.assertEqual(report["status"], "noop")
         self.assertEqual(self.live.stat().st_mtime_ns, marker)
 
+    def test_removed_anchor_keeps_repair_queue_after_staging_cleanup(self) -> None:
+        self.seed_live()
+        self.write_composition(missing_anchor=True)
+        before = SAFE.path_hash(self.live)
+        authored_before = self.composition.read_bytes()
+        code, report = self.run_safe()
+        self.assertEqual(code, 2)
+        self.assertFalse(report["ready"])
+        self.assertEqual(report["live_hash_before"], before)
+        self.assertEqual(report["live_hash_after"], before)
+        self.assertEqual(self.composition.read_bytes(), authored_before)
+        artifact = report["validation_artifacts"]["repair_queue.json"]
+        path = Path(artifact["path"])
+        self.assertTrue(path.is_file())
+        self.assertFalse(path.is_relative_to(self.live))
+        self.assertEqual(artifact["sha256"], SAFE.digest_bytes(path.read_bytes()))
+        queue = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(queue["schema_id"], "caretaker.repair_queue")
+        missing = [item for item in queue["items"] if item["code"] == "missing_anchor"]
+        self.assertEqual(len(missing), 1)
+        self.assertEqual(missing[0]["previous_anchor_ref"]["anchor_id"], "AF-MISSING")
+        self.assertEqual(missing[0]["candidate_anchor_ids"], [])
+        self.assertEqual(list(self.live.parent.glob(".*.regeneration-*")), [])
+
+    def test_current_report_never_reuses_stale_repair_queue(self) -> None:
+        self.seed_live()
+        self.write_composition(missing_anchor=True)
+        _, blocked = self.run_safe()
+        previous = Path(blocked["validation_artifacts"]["repair_queue.json"]["path"])
+        previous_bytes = previous.read_bytes()
+        self.write_composition()
+        code, clean = self.run_safe()
+        self.assertEqual(code, 0)
+        current = Path(clean["validation_artifacts"]["repair_queue.json"]["path"])
+        self.assertNotEqual(previous, current)
+        self.assertEqual(json.loads(current.read_text(encoding="utf-8"))["blocking_count"], 0)
+        self.assertEqual(previous.read_bytes(), previous_bytes)
+        self.write_manifest("converter")
+        code, failed = self.run_safe()
+        self.assertEqual(code, 2)
+        self.assertEqual(failed["validation_artifacts"], {})
+
+    def test_validate_only_failure_retains_diagnostics_without_live_mutation(self) -> None:
+        self.seed_live()
+        self.write_composition(missing_anchor=True)
+        before = SAFE.path_hash(self.live)
+        code, report = self.run_safe("--validate-only")
+        self.assertEqual(code, 2)
+        self.assertEqual(SAFE.path_hash(self.live), before)
+        self.assertTrue(Path(report["validation_artifacts"]["repair_queue.json"]["path"]).is_file())
+
     def test_dry_run_and_validate_only_do_not_mutate_live(self) -> None:
         code, report = self.run_safe("--dry-run")
         self.assertEqual((code, report["status"], self.live.exists()), (0, "dry_run", False))
@@ -200,6 +251,17 @@ class SafeRegenerationTests(unittest.TestCase):
         process = subprocess.run([sys.executable, str(ROOT / "safe_regenerate.py"), *self.args("--dry-run")], text=True, capture_output=True, check=False)
         self.assertEqual(process.returncode, 0, process.stderr)
         self.assertEqual(json.loads((self.root / "report.json").read_text(encoding="utf-8"))["status"], "dry_run")
+
+    def test_evidence_write_failure_blocks_promotion(self) -> None:
+        self.seed_live()
+        self.write_manifest("changed")
+        before = SAFE.path_hash(self.live)
+        with mock.patch.object(SAFE.tempfile, "mkdtemp", side_effect=OSError("read-only evidence directory")):
+            code, report = self.run_safe()
+        self.assertEqual(code, 2)
+        self.assertEqual(report["errors"][0]["stage"], "diagnostic_persistence")
+        self.assertEqual(SAFE.path_hash(self.live), before)
+        self.assertFalse(report["ready"])
 
     def test_atomic_promotion_restores_live_when_second_replace_fails(self) -> None:
         live, candidate, backup = self.root / "live", self.root / "candidate", self.root / "backup"

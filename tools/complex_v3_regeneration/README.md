@@ -60,6 +60,29 @@ The validations logically associated with bindings and composition run against t
 
 Semantic equality covers `Generated/`, `anchor_frames.json`, and `generation_manifest.json`. The backend diagnostic report is excluded because it contains ephemeral staging paths. When semantic output is unchanged, status is `noop` and the live directory is not renamed or overwritten. Files outside the generator-owned set—including `AuthoredContent`, `Materials`, and arbitrary user files—are preserved byte-for-byte in the candidate.
 
+### Durable diagnostics (T13 integration correction)
+
+Orchestrator 1.0.1 adds the optional `validation_artifacts` report field without
+changing schema 1.0.0. Once composition validation runs, both its JSON report and
+`repair_queue.json` are retained in a fresh `<report-stem>.evidence-*` directory
+beside the requested machine report, outside live and transaction staging.
+Each entry records the absolute path and SHA-256. This also happens when the
+validator exits 2; transaction cleanup must not erase removed-anchor evidence.
+Failure to preserve diagnostics blocks promotion. Failure reports record the
+post-attempt live hash as well as the original hash.
+
+The current machine report points only to evidence from that attempt. A clean
+attempt points to a new empty repair queue; an earlier-stage failure has an empty
+`validation_artifacts` object. Older evidence is retained for audit and is not
+implicitly overwritten or deleted. Consumers must follow the current report,
+not search neighboring directories for a queue. Authored bindings are unchanged,
+and no candidate anchor IDs are invented for a deleted reference.
+
+This correction does not yet implement recalculation of authored bounds from
+placement policies: the existing composition adapter still replaces only anchor
+data. Full moving-object resolution and planar placement remain required before
+the U-MEDBAY pilot can be accepted.
+
 ## Verification fixtures
 
 `tests/fixtures/fixture_generation_manifest.json` contains one ordinary sector and one vertical sector with exact transforms. They are deliberately separate from the blocked production inventory. Run the unit suite with:

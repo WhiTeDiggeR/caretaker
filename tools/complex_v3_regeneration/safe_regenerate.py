@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 SCHEMA_ID = "caretaker.safe_regeneration_report"
 SCHEMA_VERSION = "1.0.0"
 MANAGED_NAMES = ("Generated", "anchor_frames.json", "generation_manifest.json", "regeneration_report.json")
@@ -236,12 +236,45 @@ def resolve_composition(
     return output
 
 
-def validate_composition(args: argparse.Namespace, project_root: Path, input_path: Path, output: Path) -> None:
+def preserve_validation_evidence(output: Path, report_path: Path, report: dict[str, Any]) -> None:
+    """Keep this attempt's diagnostics outside the disposable transaction and live.
+
+    A fresh directory prevents stale repair items from an earlier attempt from
+    masquerading as current evidence. The report is the sole current pointer;
+    previous attempts are retained for audit, never deleted implicitly.
+    """
+    names = ("validation_report.json", "repair_queue.json")
+    available = [name for name in names if (output / name).is_file()]
+    if not available:
+        return
+    try:
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        evidence = Path(tempfile.mkdtemp(prefix=f"{report_path.stem}.evidence-", dir=report_path.parent))
+        for name in available:
+            document = load_object(output / name, "diagnostic_persistence")
+            destination = evidence / name
+            atomic_write_json(destination, document)
+            report["validation_artifacts"][name] = {
+                "path": str(destination), "sha256": digest_bytes(destination.read_bytes()),
+            }
+    except OSError as exc:
+        raise OrchestrationError("diagnostic_persistence", f"Cannot retain validation evidence: {exc}") from exc
+
+
+def validate_composition(
+    args: argparse.Namespace, project_root: Path, input_path: Path, output: Path,
+    report_path: Path, report: dict[str, Any],
+) -> None:
     validator = Path(args.composition_validator).resolve()
     if not validator.is_file():
         raise OrchestrationError("composition_validation", f"Composition validator is missing: {validator}")
     command = [args.python, str(validator), "--input", str(input_path), "--output", str(output)]
-    run_process(command, project_root, "composition_validation")
+    try:
+        run_process(command, project_root, "composition_validation")
+    finally:
+        # The validator intentionally exits 2 for blocked compositions, but its
+        # repair queue is still the useful result and must survive cleanup.
+        preserve_validation_evidence(output, report_path, report)
     result = load_object(output / "validation_report.json", "composition_validation")
     if result.get("status") != "clean":
         raise OrchestrationError("composition_validation", "Composition validator did not report clean")
@@ -269,7 +302,7 @@ def execute(args: argparse.Namespace) -> int:
         "schema_id": SCHEMA_ID, "schema_version": SCHEMA_VERSION, "orchestrator_version": VERSION,
         "sector_id": args.sector, "status": "failed", "ready": False, "mode": "validate_only" if args.validate_only else "dry_run" if args.dry_run else "regenerate",
         "stages": [], "input_hashes": {}, "output_hashes": {}, "live_hash_before": None, "live_hash_after": None,
-        "agent_invoked": False, "errors": [],
+        "agent_invoked": False, "errors": [], "validation_artifacts": {},
     }
     work_root: Path | None = None
     try:
@@ -302,7 +335,7 @@ def execute(args: argparse.Namespace) -> int:
             mark(report, "combined_validation", "passed")
             resolved = resolve_composition(sector, project_root, live, live, anchors, validation / "resolved_composition.json")
             mark(report, "binding_resolution", "passed")
-            validate_composition(args, project_root, resolved, validation / "composition")
+            validate_composition(args, project_root, resolved, validation / "composition", report_path, report)
             mark(report, "composition_validation", "passed")
             report["output_hashes"] = {"managed": path_hash(live, EQUIVALENCE_NAMES), "generation_id": generation.get("generation_id")}
             report["status"], report["ready"] = "validated", True
@@ -327,7 +360,7 @@ def execute(args: argparse.Namespace) -> int:
             mark(report, "combined_validation", "passed")
             resolved = resolve_composition(sector, project_root, live, candidate, anchors, validation / "resolved_composition.json")
             mark(report, "binding_resolution", "passed")
-            validate_composition(args, project_root, resolved, validation / "composition")
+            validate_composition(args, project_root, resolved, validation / "composition", report_path, report)
             mark(report, "composition_validation", "passed")
             # regeneration_report.json embeds ephemeral command/staging paths and is
             # deliberately excluded from semantic equality.
@@ -352,6 +385,8 @@ def execute(args: argparse.Namespace) -> int:
     except OrchestrationError as exc:
         report["errors"].append({"stage": exc.stage, "message": str(exc)})
         mark(report, exc.stage, "failed", str(exc))
+        if "live" in locals():
+            report["live_hash_after"] = path_hash(live) if live.exists() else None
         if report_allowed:
             try:
                 atomic_write_json(report_path, report)
