@@ -1,0 +1,136 @@
+<svg viewBox="0 0 1100 820" role="img" aria-labelledby="t7title t7desc" xmlns="http://www.w3.org/2000/svg" id="plan-t_circulation" class="plan-root" data-plan-style-id="caretaker-style-b-v1" data-scale="relative" data-scale-policy="legacy-local; metric-handoff-authoritative" data-grid-size="1" data-grid-unit="svg-unit" data-plan-id="t_circulation" data-sector-id="T-CIRCULATION" data-level="LV-T" data-parent-bounds-xz="-105.0,15.0,32.0,68.0" data-local-origin-xyz="-105.0,-11.5,15.0" data-anchor-ids="A-OLD-STAIR,A-SERVICE-STAIR,A-MAIN-CORE,A-EAST-STAIR,A-FREIGHT-LIFT,A-HEAVY-SPINE" data-transition-ids="VT-SERVICE-STAIR" data-semantic-layer-contract="per-object-v1">
+  <g id="t_circulation-source-layer" class="layer source-geometry" data-layer="source-geometry">
+  <metadata id="t_circulation-metadata">{&quot;schema&quot;:&quot;complex-v3-svg-plan-metadata-v1&quot;,&quot;plan_id&quot;:&quot;t_circulation&quot;,&quot;style_id&quot;:&quot;caretaker-style-b-v1&quot;,&quot;geometry_policy&quot;:&quot;preserve-approved-plan; metric-handoff-is-authoritative&quot;,&quot;sector_id&quot;:&quot;T-CIRCULATION&quot;,&quot;level&quot;:&quot;LV-T&quot;,&quot;parent_boundary_xz&quot;:[-105.0,15.0,32.0,68.0],&quot;local_origin_xyz&quot;:[-105.0,-11.5,15.0],&quot;anchors&quot;:[{&quot;id&quot;:&quot;A-OLD-STAIR&quot;,&quot;tolerance&quot;:0.25,&quot;position_xz&quot;:[-90.0,30.0]},{&quot;id&quot;:&quot;A-SERVICE-STAIR&quot;,&quot;tolerance&quot;:0.25,&quot;position_xz&quot;:[-42.0,50.0]},{&quot;id&quot;:&quot;A-MAIN-CORE&quot;,&quot;tolerance&quot;:0.25,&quot;position_xz&quot;:[0.0,0.0]},{&quot;id&quot;:&quot;A-EAST-STAIR&quot;,&quot;tolerance&quot;:0.25,&quot;position_xz&quot;:[27.0,10.5]},{&quot;id&quot;:&quot;A-FREIGHT-LIFT&quot;,&quot;tolerance&quot;:0.25,&quot;position_xz&quot;:[20.0,72.0]},{&quot;id&quot;:&quot;A-HEAVY-SPINE&quot;,&quot;tolerance&quot;:0.5,&quot;centerline_z&quot;:64.0}],&quot;neighbors&quot;:[&quot;L-SERVICE-INTERCHANGE&quot;,&quot;T-FRT&quot;,&quot;T-TECH&quot;],&quot;source_detail&quot;:&quot;../../plans/sectors/technical/t_circulation.svg&quot;,&quot;vertical_transitions&quot;:[{&quot;id&quot;:&quot;VT-SERVICE-STAIR&quot;,&quot;anchor&quot;:&quot;A-SERVICE-STAIR&quot;,&quot;kind&quot;:&quot;service_stair&quot;,&quot;shaft_bounds_xz&quot;:[-45.09,45.91,-38.91,54.09],&quot;clear_opening_bounds_xz&quot;:[-45.0,46.0,-39.0,54.0],&quot;connects&quot;:[&quot;LV-L&quot;,&quot;LV-T&quot;]}]}</metadata>
+  <defs id="t_circulation-style-defs"><style><![CDATA[
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f4f3ef, #181a1d);
+  --fg: light-dark(#202429, #eef1f4);
+  --muted: light-dark(#626971, #aeb5bd);
+  --line: light-dark(#252a30, #e5e9ed);
+  --corridor: light-dark(#d5d9dc, #353b41);
+  --energy: light-dark(#9eb8ca, #294e69);
+  --utility: light-dark(#a9c5b7, #315d4e);
+  --work: light-dark(#c7ad89, #705033);
+  --shaft: light-dark(#e8e8e4, #25292e);
+  --equipment: light-dark(#55616b, #9ca7b0);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: "Segoe UI", Arial, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 18px; }
+h1 { margin: 0 0 6px; font-size: 22px; font-weight: 500; }
+p { margin: 0 0 14px; color: var(--muted); }
+svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: var(--bg); }
+.canvas { fill: var(--bg); }
+.room, .corridor, .shaft, .work, .utility, .energy { stroke: var(--line); stroke-width: 3; }
+.room { fill: var(--shaft); }
+.corridor { fill: var(--corridor); }
+.energy { fill: var(--energy); }
+.utility { fill: var(--utility); }
+.work { fill: var(--work); }
+.shaft { fill: var(--shaft); stroke-dasharray: 8 6; }
+.equipment { fill: none; stroke: var(--equipment); stroke-width: 2; }
+.wall { stroke: var(--line); stroke-width: 5; }
+.door-gap { stroke: var(--corridor); stroke-width: 12; }
+.room-gap { stroke: var(--shaft); stroke-width: 12; }
+.energy-gap { stroke: var(--energy); stroke-width: 12; }
+.utility-gap { stroke: var(--utility); stroke-width: 12; }
+.work-gap { stroke: var(--work); stroke-width: 12; }
+.door { fill: none; stroke: var(--line); stroke-width: 2; }
+.window { stroke: var(--line); stroke-width: 7; }
+text { fill: var(--fg); text-anchor: middle; dominant-baseline: middle; font-size: 16px; font-weight: 500; }
+.minor { font-size: 13px; font-weight: 400; }
+.tiny { font-size: 11px; font-weight: 400; fill: var(--muted); }
+.flow { fill: none; stroke: var(--equipment); stroke-width: 3; marker-end: url(#arrow); }
+@media (max-width: 600px) { main { padding: 8px; } h1 { font-size: 18px; } }
+]]></style>
+<style id="plan-render-fallback"><![CDATA[
+/* Renderer-independent Caretaker style B fallback. Geometry is untouched. */
+.plan-root { background: #191c1f !important; font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; }
+.plan-root text {
+  fill: #f1f3f5 !important;
+  font-family: "Segoe UI", Arial, sans-serif !important;
+  font-size: 14px;
+}
+.plan-root .tiny, .plan-root .small, .plan-root .minor,
+.plan-root .context, .plan-root .dimtext { fill: #aeb4ba !important; }
+.plan-root .shell { fill: #202428 !important; stroke: #d9dde0 !important; }
+.plan-root .room, .plan-root .lab, .plan-root .late,
+.plan-root .equipment-room, .plan-root .containment { fill: #3b4147 !important; stroke: #d9dde0 !important; }
+.plan-root .old { fill: #51493f !important; stroke: #d9dde0 !important; }
+.plan-root .personnel { fill: #3b4650 !important; stroke: #d9dde0 !important; }
+.plan-root .research { fill: #51486a !important; stroke: #d9dde0 !important; }
+.plan-root .support { fill: #3f4a4f !important; stroke: #d9dde0 !important; }
+.plan-root .medical, .plan-root .utility, .plan-root .service { fill: #356352 !important; stroke: #d9dde0 !important; }
+.plan-root .domestic { fill: #4c533d !important; stroke: #d9dde0 !important; }
+.plan-root .security { fill: #5b3f43 !important; stroke: #d9dde0 !important; }
+.plan-root .command { fill: #3c4d63 !important; stroke: #d9dde0 !important; }
+.plan-root .heavy, .plan-root .work, .plan-root .cargo { fill: #6b5235 !important; stroke: #d9dde0 !important; }
+.plan-root .energy { fill: #2e5778 !important; stroke: #d9dde0 !important; }
+.plan-root .corridor, .plan-root .passenger, .plan-root .mixed,
+.plan-root .controlled { fill: #3a4045 !important; stroke: #d9dde0 !important; }
+.plan-root .shaft, .plan-root .vertical, .plan-root .stair,
+.plan-root .lift { fill: #2b2e33 !important; stroke: #d9dde0 !important; }
+.plan-root .airlock, .plan-root .checkpoint { fill: #42484e !important; stroke: #d9dde0 !important; }
+.plan-root .gallery, .plan-root .cable { fill: #185d68 !important; stroke: #d9dde0 !important; }
+.plan-root .context-zone { fill: #2b3035 !important; stroke: #8e969d !important; }
+.plan-root .void { fill: #17191b !important; stroke: #8e969d !important; }
+.plan-root .canvas { fill: #191c1f !important; stroke: none !important; }
+.plan-root .outer { fill: none !important; stroke: #d9dde0 !important; }
+.plan-root .walkway { fill: #2f353a !important; stroke: #d9dde0 !important; }
+.plan-root .store { fill: #5b3f43 !important; stroke: #d9dde0 !important; }
+.plan-root .counter { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .screen { fill: #17222c !important; stroke: #aeb4ba !important; }
+.plan-root .opening { fill: #3a4045 !important; stroke: none !important; }
+.plan-root .equipment, .plan-root .door, .plan-root .gate,
+.plan-root .gate-thin, .plan-root .window, .plan-root .wall,
+.plan-root .partition, .plan-root .dimension, .plan-root .scale,
+.plan-root .steps, .plan-root .stairs, .plan-root .flow,
+.plan-root .barrier, .plan-root .reinforce { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .thin, .plan-root .step { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .down { fill: #aeb4ba !important; stroke: none !important; }
+.plan-root .door { stroke: #d9dde0 !important; }
+.plan-root .door-gap { stroke: #3a4045 !important; }
+.plan-root .room-gap { stroke: #3b4147 !important; }
+.plan-root .support-gap { stroke: #3f4a4f !important; }
+.plan-root .energy-gap { stroke: #2e5778 !important; }
+.plan-root .utility-gap { stroke: #356352 !important; }
+.plan-root .work-gap, .plan-root .cargo-gap { stroke: #6b5235 !important; }
+.plan-root .equip-gap { stroke: #3b4147 !important; }
+.plan-root .stair-gap { stroke: #2b2e33 !important; }
+.plan-root .floor-opening, .plan-root .ceiling-opening {
+  fill: none !important; stroke: #f2c14e !important; stroke-width: 2 !important; stroke-dasharray: 8 5 !important;
+}
+.plan-root .damaged, .plan-root .rubble { fill: #6b6158 !important; stroke: #d9dde0 !important; }
+.plan-root .blocked { fill: none !important; stroke: #d9dde0 !important; }
+]]></style>
+</defs>
+<title id="t7title">Детальный план циркуляции технического этажа</title><desc id="t7desc">Главный коридор, кабельная галерея и тяжёлая магистраль остаются различимыми путями. Два боковых доступа обслуживают только галерею; два контролируемых поперечных перехода связывают персональный и грузовой контуры. Показаны все принятые вертикальные опорные точки, включая лестницу служебной развязки.</desc>
+<g id="layer-for-t_circulation-space-001" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-001"><rect class="corridor" x="70" y="100" width="960" height="100" id="t_circulation-space-001" data-kind="space" /></g><g id="layer-for-t_circulation-label-001" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-001"><text x="550" y="150" id="t_circulation-label-001" class="label" data-kind="label">ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР</text></g>
+<g id="layer-for-t_circulation-space-002" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-002"><rect class="corridor" x="150" y="340" width="800" height="80" id="t_circulation-space-002" data-kind="space" /></g><g id="layer-for-t_circulation-label-002" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-002"><text x="550" y="380" id="t_circulation-label-002" class="label" data-kind="label">КАБЕЛЬНО-ТРУБОПРОВОДНАЯ ГАЛЕРЕЯ</text></g>
+<g id="layer-for-t_circulation-space-003" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-003"><rect class="corridor" x="70" y="600" width="960" height="115" id="t_circulation-space-003" data-kind="space" /></g><g id="layer-for-t_circulation-label-003" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-003"><text x="550" y="645" id="t_circulation-label-003" class="label" data-kind="label">ТЯЖЁЛАЯ ГРУЗОВАЯ МАГИСТРАЛЬ</text></g><g id="layer-for-t_circulation-label-004" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-004"><text class="minor" x="550" y="680" id="t_circulation-label-004" data-kind="label">связь с персональным контуром только через два контролируемых перехода</text></g>
+
+<g id="layer-for-t_circulation-space-004" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-004"><rect class="corridor" x="95" y="200" width="90" height="140" id="t_circulation-space-004" data-kind="space" /></g><g id="layer-for-t_circulation-label-005" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-005"><text class="tiny" transform="translate(140 270) rotate(-90)" id="t_circulation-label-005" data-kind="label">ДОСТУП В ГАЛЕРЕЮ 1</text></g><g id="layer-for-t_circulation-space-005" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-005"><rect class="corridor" x="915" y="200" width="90" height="140" id="t_circulation-space-005" data-kind="space" /></g><g id="layer-for-t_circulation-label-006" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-006"><text class="tiny" transform="translate(960 270) rotate(-90)" id="t_circulation-label-006" data-kind="label">ДОСТУП В ГАЛЕРЕЮ 2</text></g>
+<g id="layer-for-t_circulation-space-006" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-006"><rect class="corridor" x="240" y="200" width="90" height="140" id="t_circulation-space-006" data-kind="space" /></g><g id="layer-for-t_circulation-space-007" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-007"><rect class="room" x="220" y="420" width="130" height="80" id="t_circulation-space-007" data-kind="space" /></g><g id="layer-for-t_circulation-space-008" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-008"><rect class="corridor" x="240" y="500" width="90" height="100" id="t_circulation-space-008" data-kind="space" /></g><g id="layer-for-t_circulation-label-007" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-007"><text class="tiny" x="285" y="450" id="t_circulation-label-007" data-kind="label">КОНТРОЛИРУЕМЫЙ</text></g><g id="layer-for-t_circulation-label-008" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-008"><text class="tiny" x="285" y="475" id="t_circulation-label-008" data-kind="label">ПЕРЕХОД ЗАПАД</text></g>
+<g id="layer-for-t_circulation-space-009" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-009"><rect class="corridor" x="780" y="200" width="90" height="140" id="t_circulation-space-009" data-kind="space" /></g><g id="layer-for-t_circulation-space-010" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-010"><rect class="room" x="760" y="420" width="130" height="80" id="t_circulation-space-010" data-kind="space" /></g><g id="layer-for-t_circulation-space-011" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-011"><rect class="corridor" x="780" y="500" width="90" height="100" id="t_circulation-space-011" data-kind="space" /></g><g id="layer-for-t_circulation-label-009" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-009"><text class="tiny" x="825" y="450" id="t_circulation-label-009" data-kind="label">КОНТРОЛИРУЕМЫЙ</text></g><g id="layer-for-t_circulation-label-010" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-010"><text class="tiny" x="825" y="475" id="t_circulation-label-010" data-kind="label">ПЕРЕХОД ВОСТОК</text></g>
+<g id="layer-for-t_circulation-space-012" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-012"><rect class="room" x="350" y="420" width="410" height="180" id="t_circulation-space-012" data-kind="space" /></g><g id="layer-for-t_circulation-label-011" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-011"><text class="minor" x="555" y="500" id="t_circulation-label-011" data-kind="label">ИНЖЕНЕРНЫЕ ПОМЕЩЕНИЯ ВНЕ СХЕМЫ ЦИРКУЛЯЦИИ</text></g><g id="layer-for-t_circulation-label-012" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-012"><text class="tiny" x="555" y="528" id="t_circulation-label-012" data-kind="label">не являются проходом между галереей и грузовой магистралью</text></g>
+
+<g id="layer-for-t_circulation-space-013" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-013"><rect class="shaft" x="85" y="20" width="150" height="80" id="t_circulation-space-013" data-kind="space" /></g><g id="layer-for-t_circulation-label-013" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-013"><text class="minor" x="160" y="60" id="t_circulation-label-013" data-kind="label">СТАРАЯ ЛЕСТНИЦА</text></g>
+<g id="layer-for-t_circulation-space-014" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-014"><rect class="shaft" x="465" y="20" width="135" height="80" id="t_circulation-space-014" data-kind="space" /></g><g id="layer-for-t_circulation-label-014" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-014"><text class="tiny" x="533" y="52" id="t_circulation-label-014" data-kind="label">ЛЕСТНИЦА</text></g><g id="layer-for-t_circulation-label-015" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-015"><text class="tiny" x="533" y="69" id="t_circulation-label-015" data-kind="label">СЛУЖ. РАЗВЯЗКИ</text></g>
+<g id="layer-for-t_circulation-space-015" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-015"><rect class="shaft" x="790" y="20" width="115" height="70" id="t_circulation-space-015" data-kind="space" /></g><g id="layer-for-t_circulation-label-016" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-016"><text class="tiny" x="848" y="47" id="t_circulation-label-016" data-kind="label">ГЛАВНЫЙ ЛИФТ</text></g><g id="layer-for-t_circulation-label-017" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-017"><text class="tiny" x="848" y="65" id="t_circulation-label-017" data-kind="label">ОСТАНОВКИ НЕТ</text></g>
+<g id="layer-for-t_circulation-space-016" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-016"><rect class="shaft" x="980" y="20" width="70" height="80" id="t_circulation-space-016" data-kind="space" /></g><g id="layer-for-t_circulation-label-018" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-018"><text class="tiny" x="1015" y="52" id="t_circulation-label-018" data-kind="label">АВАР.</text></g><g id="layer-for-t_circulation-label-019" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-019"><text class="tiny" x="1015" y="69" id="t_circulation-label-019" data-kind="label">ЛЕСТНИЦА</text></g>
+
+<g id="layer-for-t_circulation-space-017" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-017"><rect class="room" x="360" y="200" width="130" height="85" id="t_circulation-space-017" data-kind="space" /></g><g id="layer-for-t_circulation-label-020" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-020"><text class="tiny" x="425" y="242" id="t_circulation-label-020" data-kind="label">T1 / T2</text></g><g id="layer-for-t_circulation-space-018" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-018"><rect class="room" x="540" y="200" width="130" height="85" id="t_circulation-space-018" data-kind="space" /></g><g id="layer-for-t_circulation-label-021" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-021"><text class="tiny" x="605" y="242" id="t_circulation-label-021" data-kind="label">T5</text></g><g id="layer-for-t_circulation-space-019" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-019"><rect class="room" x="690" y="200" width="90" height="85" id="t_circulation-space-019" data-kind="space" /></g><g id="layer-for-t_circulation-label-022" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-022"><text class="tiny" x="735" y="242" id="t_circulation-label-022" data-kind="label">T4</text></g>
+<g id="layer-for-t_circulation-label-023" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-023"><text class="tiny" x="550" y="307" id="t_circulation-label-023" data-kind="label">прочие помещения этажа показаны только как контекст</text></g><g id="layer-for-t_circulation-label-024" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-024"><text class="tiny" x="550" y="323" id="t_circulation-label-024" data-kind="label">и не входят в схему циркуляции</text></g>
+<g id="layer-for-t_circulation-equipment-001" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_circulation-equipment-001"><rect class="work" x="760" y="715" width="170" height="85" id="t_circulation-equipment-001" data-kind="equipment" /></g><g id="layer-for-t_circulation-label-025" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-025"><text class="tiny" x="845" y="757" id="t_circulation-label-025" data-kind="label">T6 · ПРИЁМКА</text></g><g id="layer-for-t_circulation-space-020" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_circulation-space-020"><rect class="shaft" x="930" y="715" width="100" height="85" id="t_circulation-space-020" data-kind="space" /></g><g id="layer-for-t_circulation-label-026" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-026"><text class="tiny" x="980" y="748" id="t_circulation-label-026" data-kind="label">ГРУЗОВОЙ</text></g><g id="layer-for-t_circulation-label-027" class="layer layer-labels" data-layer="labels" data-object-ref="t_circulation-label-027"><text class="tiny" x="980" y="765" id="t_circulation-label-027" data-kind="label">ЛИФТ</text></g>
+
+<g id="layer-for-t_circulation-opening-001" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-001"><line class="door-gap" x1="130" y1="100" x2="190" y2="100" id="t_circulation-opening-001" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-002" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-002"><line class="door-gap" x1="500" y1="100" x2="565" y2="100" id="t_circulation-opening-002" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-003" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-003"><line class="door-gap" x1="995" y1="100" x2="1030" y2="100" id="t_circulation-opening-003" data-kind="opening" /></g>
+<g id="layer-for-t_circulation-opening-004" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-004"><line class="door-gap" x1="400" y1="200" x2="450" y2="200" id="t_circulation-opening-004" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-005" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-005"><line class="door-gap" x1="580" y1="200" x2="630" y2="200" id="t_circulation-opening-005" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-006" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-006"><line class="door-gap" x1="710" y1="200" x2="760" y2="200" id="t_circulation-opening-006" data-kind="opening" /></g>
+<g id="layer-for-t_circulation-opening-007" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-007"><line class="door-gap" x1="125" y1="200" x2="155" y2="200" id="t_circulation-opening-007" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-008" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-008"><line class="door-gap" x1="945" y1="200" x2="975" y2="200" id="t_circulation-opening-008" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-009" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-009"><line class="door-gap" x1="152" y1="340" x2="180" y2="340" id="t_circulation-opening-009" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-010" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-010"><line class="door-gap" x1="920" y1="340" x2="948" y2="340" id="t_circulation-opening-010" data-kind="opening" /></g>
+<g id="layer-for-t_circulation-opening-011" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-011"><line class="door-gap" x1="255" y1="200" x2="315" y2="200" id="t_circulation-opening-011" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-012" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-012"><line class="door-gap" x1="795" y1="200" x2="855" y2="200" id="t_circulation-opening-012" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-013" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-013"><line class="door-gap" x1="255" y1="340" x2="315" y2="340" id="t_circulation-opening-013" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-014" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-014"><line class="door-gap" x1="795" y1="340" x2="855" y2="340" id="t_circulation-opening-014" data-kind="opening" /></g>
+<g id="layer-for-t_circulation-opening-015" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-015"><line class="door-gap" x1="250" y1="420" x2="320" y2="420" id="t_circulation-opening-015" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-016" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-016"><line class="door-gap" x1="790" y1="420" x2="860" y2="420" id="t_circulation-opening-016" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-017" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-017"><line class="door-gap" x1="250" y1="500" x2="320" y2="500" id="t_circulation-opening-017" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-018" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-018"><line class="door-gap" x1="790" y1="500" x2="860" y2="500" id="t_circulation-opening-018" data-kind="opening" /></g>
+<g id="layer-for-t_circulation-opening-019" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-019"><line class="door-gap" x1="255" y1="600" x2="315" y2="600" id="t_circulation-opening-019" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-020" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-020"><line class="door-gap" x1="795" y1="600" x2="855" y2="600" id="t_circulation-opening-020" data-kind="opening" /></g>
+<g id="layer-for-t_circulation-opening-021" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-021"><line class="work-gap" x1="820" y1="715" x2="880" y2="715" id="t_circulation-opening-021" data-kind="opening" /></g><g id="layer-for-t_circulation-opening-022" class="layer layer-openings" data-layer="openings" data-object-ref="t_circulation-opening-022"><line class="room-gap" x1="930" y1="740" x2="930" y2="780" id="t_circulation-opening-022" data-kind="opening" /></g>
+
+  </g>
+</svg>

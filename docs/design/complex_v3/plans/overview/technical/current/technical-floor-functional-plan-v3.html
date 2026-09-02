@@ -1,66 +1,22 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Технический этаж — функциональный план v3</title>
-<style>
-:root{color-scheme:dark;--bg:#17191b;--fg:#f1f3f5;--muted:#aeb4ba;--line:#d9dde0;--corr:#3a4045;--energy:#2e5778;--utility:#356352;--work:#775637;--shaft:#25282b;--gallery:#185d68}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font-family:"Segoe UI",Arial,sans-serif}main{width:1000px;margin:0 auto;padding:18px}h1{margin:0 0 4px;font-size:26px;font-weight:500}p{margin:0 0 14px;color:var(--muted);font-size:15px}svg{display:block;width:100%;height:auto;border:1px solid #566069;border-radius:12px;background:#191c1f}.energy,.utility,.work,.corridor,.shaft,.gallery{stroke:var(--line);stroke-width:2}.energy{fill:var(--energy)}.utility{fill:var(--utility)}.work{fill:var(--work)}.corridor{fill:var(--corr)}.shaft{fill:var(--shaft);stroke-dasharray:7 5}.gallery{fill:var(--gallery)}.opening{fill:var(--corr);stroke:none}text{fill:var(--fg);text-anchor:middle;dominant-baseline:middle;font-size:13px;font-weight:500}.small{font-size:10px;font-weight:400}.tiny{font-size:9px;font-weight:400;fill:var(--muted)}.scale{stroke:var(--fg);stroke-width:2}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; frame-src 'self';">
+  <meta name="map-viewer-source" content="technical-floor-functional-plan-v3.svg">
+  <title>Technical Floor Functional Plan V3</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { display: grid; grid-template-rows: auto 1fr; background: #171a1f; color: #e8ebef; font: 14px/1.4 system-ui, sans-serif; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .6rem .85rem; background: #22262d; border-bottom: 1px solid #3a404a; }
+    h1 { margin: 0; font-size: 1rem; font-weight: 600; }
+    a { color: #9ecbff; }
+    iframe { width: 100%; height: 100%; border: 0; background: white; }
+  </style>
 </head>
-<body><main>
-<h1>Технический этаж — функциональный план v3</h1>
-<p>Стиль B · помещения и коридоры без маршрутов · актуальная межэтажная привязка</p>
-<svg viewBox="0 0 1000 700" role="img" aria-labelledby="title desc">
-<title id="title">Актуальный общий план технического этажа</title>
-<desc id="desc">Главный генератор расположен на западе, инженерные системы в центре, грузовая магистраль на юге. Старая лестница выходит в отдельный вестибюль с независимыми дверями к главному коридору и подстанции старого ядра. Два контролируемых поперечных перехода связывают главный коридор с тяжёлой грузовой магистралью. Лестница служебной развязки нижнего этажа имеет отдельный тамбур у главного коридора.</desc>
-
-<rect class="energy" x="35" y="45" width="185" height="165"/><text x="128" y="115">ГЕНЕРАТОРНЫЙ</text><text x="128" y="134">ЗАЛ</text>
-<rect class="energy" x="235" y="45" width="150" height="78"/><text class="small" x="310" y="80">ЩИТОВАЯ / ОПЕРАТОРСКАЯ</text>
-<rect class="utility" x="235" y="132" width="150" height="78"/><text class="small" x="310" y="164">ОХЛАЖДЕНИЕ</text><text class="tiny" x="310" y="182">насосы · теплообмен</text>
-<rect class="work" x="410" y="45" width="155" height="125"/><text x="488" y="106">МАСТЕРСКАЯ</text>
-<rect class="work" x="580" y="45" width="135" height="125"/><text x="648" y="96">СКЛАД</text><text class="small" x="648" y="116">ЗАПЧАСТЕЙ</text>
-<rect class="shaft" x="730" y="52" width="80" height="112"/><text class="small" x="770" y="94">ШАХТА</text><text class="small" x="770" y="110">ГЛАВНОГО</text><text class="small" x="770" y="126">ЛИФТА</text><text class="tiny" x="770" y="148">остановки нет</text>
-<rect class="energy" x="825" y="45" width="130" height="125"/><text class="small" x="890" y="94">ПОДСТАНЦИЯ</text><text class="small" x="890" y="112">НОВОГО СЕКТОРА</text>
-<rect class="shaft" x="905" y="175" width="50" height="45"/><text class="tiny" x="930" y="194">АВАР.</text><text class="tiny" x="930" y="207">ЛЕСТ.</text>
-
-<rect class="corridor" x="205" y="230" width="750" height="48"/><text x="580" y="254">ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР · 5–6 М</text>
-<rect class="corridor" x="220" y="170" width="20" height="60"/><rect class="corridor" x="380" y="95" width="30" height="135"/><rect class="corridor" x="555" y="170" width="25" height="60"/><rect class="corridor" x="705" y="170" width="25" height="60"/><rect class="corridor" x="810" y="165" width="20" height="65"/><rect class="corridor" x="895" y="220" width="60" height="10"/>
-
-<rect class="shaft" x="105" y="315" width="85" height="100"/><text class="small" x="148" y="344">СТАРАЯ</text><text class="small" x="148" y="361">ЛЕСТНИЦА</text><text class="tiny" x="148" y="386">↑ В ХОЛЛ</text><text class="tiny" x="148" y="399">СТАРОГО ЯДРА</text>
-<rect class="corridor" x="190" y="278" width="70" height="152"/><text class="tiny" transform="translate(225 354) rotate(-90)">СТАРЫЙ СЛУЖЕБНЫЙ ВЕСТИБЮЛЬ</text>
-<rect class="corridor" x="160" y="430" width="100" height="40"/><text class="tiny" x="210" y="450">БОКОВОЙ ДОСТУП</text>
-<rect class="energy" x="35" y="430" width="125" height="102"/><text class="small" x="98" y="468">ПОДСТАНЦИЯ</text><text class="small" x="98" y="486">СТАРОГО ЯДРА</text><text class="tiny" x="98" y="510">ТУПИКОВАЯ</text>
-
-<rect class="energy" x="315" y="365" width="120" height="105"/><text class="small" x="375" y="404">ПОДСТАНЦИЯ</text><text class="small" x="375" y="422">ПОЗДНЕГО БЛОКА</text>
-<rect class="corridor" x="315" y="278" width="24" height="87"/>
-
-<rect class="shaft" x="455" y="332" width="58" height="138"/><line class="scale" x1="468" y1="390" x2="500" y2="390"/><line class="scale" x1="468" y1="407" x2="500" y2="407"/><line class="scale" x1="468" y1="424" x2="500" y2="424"/><line class="scale" x1="468" y1="441" x2="500" y2="441"/><text class="tiny" x="484" y="365">ЛЕСТНИЦА</text><text class="tiny" x="484" y="378">СЛУЖ. РАЗВЯЗКИ</text>
-<rect class="corridor" x="447" y="278" width="74" height="54"/><text class="tiny" x="484" y="296">ПРОТИВОПОЖАРНЫЙ</text><text class="tiny" x="484" y="310">ТАМБУР</text>
-
-<rect class="utility" x="530" y="365" width="130" height="105"/><text class="small" x="595" y="404">ВЕНТИЛЯЦИЯ</text><text class="small" x="595" y="422">НАСОСЫ · ТЕПЛООБМЕН</text>
-<rect class="corridor" x="570" y="278" width="24" height="87"/>
-<rect class="utility" x="675" y="365" width="100" height="105"/><text class="small" x="725" y="410">ГАЗЫ И</text><text class="small" x="725" y="428">РЕАГЕНТЫ</text>
-<rect class="corridor" x="710" y="278" width="24" height="87"/>
-<rect class="utility" x="835" y="365" width="120" height="105"/><text class="small" x="895" y="410">ДРЕНАЖ И</text><text class="small" x="895" y="428">НЕЙТРАЛИЗАЦИЯ</text>
-<rect class="corridor" x="875" y="278" width="24" height="87"/>
-
-<rect class="corridor" x="275" y="278" width="30" height="270"/><text class="tiny" transform="translate(290 410) rotate(-90)">КОНТРОЛИРУЕМЫЙ ГРУЗОВОЙ ПЕРЕХОД</text>
-<rect class="corridor" x="790" y="278" width="35" height="270"/><text class="tiny" transform="translate(808 410) rotate(-90)">КОНТРОЛИРУЕМЫЙ ГРУЗОВОЙ ПЕРЕХОД</text>
-
-<rect class="gallery" x="250" y="500" width="665" height="22"/><text class="small" x="583" y="511">КАБЕЛЬНО-ТРУБОПРОВОДНАЯ ГАЛЕРЕЯ</text>
-<rect class="corridor" x="325" y="470" width="22" height="30"/><rect class="corridor" x="475" y="470" width="22" height="30"/><rect class="corridor" x="580" y="470" width="22" height="30"/><rect class="corridor" x="715" y="470" width="22" height="30"/><rect class="corridor" x="880" y="470" width="22" height="30"/>
-
-<rect class="work" x="170" y="548" width="785" height="58"/><text x="563" y="577">ТЯЖЁЛАЯ ГРУЗОВАЯ МАГИСТРАЛЬ · 7–8 М</text>
-<rect class="work" x="690" y="606" width="155" height="70"/><text class="small" x="768" y="635">СЕРВИСНАЯ</text><text class="small" x="768" y="652">ПРИЁМКА</text>
-<rect class="work" x="845" y="606" width="110" height="70"/><text class="small" x="900" y="635">ГРУЗОВОЙ</text><text class="small" x="900" y="652">ЛИФТ</text>
-
-<rect class="opening" x="378" y="76" width="12" height="22"/><rect class="opening" x="378" y="151" width="12" height="22"/><rect class="opening" x="404" y="111" width="12" height="24"/>
-<rect class="opening" x="184" y="345" width="12" height="30"/><rect class="opening" x="152" y="440" width="16" height="24"/><rect class="opening" x="214" y="272" width="32" height="12"/>
-<rect class="opening" x="280" y="542" width="20" height="12"/><rect class="opening" x="797" y="542" width="22" height="12"/>
-<rect class="opening" x="740" y="600" width="50" height="12"/><rect class="opening" x="839" y="628" width="12" height="26"/>
-
-<line class="scale" x1="35" y1="665" x2="115" y2="665"/><line class="scale" x1="35" y1="660" x2="35" y2="670"/><line class="scale" x1="115" y1="660" x2="115" y2="670"/><text class="tiny" x="75" y="683">≈ 10 м</text>
-</svg>
-</main></body></html>
+<body>
+  <header><h1>Technical Floor Functional Plan V3</h1><a href="technical-floor-functional-plan-v3.svg">Open SVG source</a></header>
+  <iframe src="technical-floor-functional-plan-v3.svg" sandbox title="Technical Floor Functional Plan V3"></iframe>
+</body>
+</html>

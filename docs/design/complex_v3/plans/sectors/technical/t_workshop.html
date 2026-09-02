@@ -1,11 +1,22 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Технический этаж — мастерская и склад</title><link rel="stylesheet" href="technical-sector-plan.css"></head><body><main>
-<h1>T2 · Мастерская и склад запчастей</h1><p>Два тупиковых помещения с отдельными входами и внутренней грузовой дверью.</p>
-<svg viewBox="0 0 900 700" role="img" aria-labelledby="t2title t2desc"><title id="t2title">Детальный план мастерской и склада</title><desc id="t2desc">Мастерская и склад имеют двери из главного коридора и широкую внутреннюю дверь для тележек.</desc>
-<rect class="work" x="75" y="90" width="450" height="450"/><text x="300" y="125">МАСТЕРСКАЯ</text><text class="minor" x="300" y="150">ремонт оборудования · грязные работы</text>
-<rect class="equipment" x="120" y="210" width="130" height="55"/><rect class="equipment" x="120" y="315" width="130" height="55"/><rect class="equipment" x="330" y="190" width="145" height="185"/><text class="tiny" x="402" y="285">ремонтный стенд</text><rect class="equipment" x="120" y="425" width="355" height="55"/><text class="tiny" x="297" y="452">свободный маневровый проход</text>
-<rect class="work" x="525" y="90" width="300" height="450"/><text x="675" y="125">СКЛАД ЗАПЧАСТЕЙ</text><rect class="equipment" x="565" y="180" width="75" height="270"/><rect class="equipment" x="710" y="180" width="75" height="270"/><text class="tiny" x="675" y="470">центральный проход для тележки</text>
-<rect class="corridor" x="75" y="540" width="750" height="90"/><text x="450" y="585">ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР</text>
-<line class="work-gap" x1="525" y1="300" x2="525" y2="405"/>
-<line class="work-gap" x1="230" y1="540" x2="305" y2="540"/><line class="door-gap" x1="230" y1="540" x2="305" y2="540"/>
-<line class="work-gap" x1="635" y1="540" x2="710" y2="540"/><line class="door-gap" x1="635" y1="540" x2="710" y2="540"/>
-</svg></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; frame-src 'self';">
+  <meta name="map-viewer-source" content="t_workshop.svg">
+  <title>T Workshop</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { display: grid; grid-template-rows: auto 1fr; background: #171a1f; color: #e8ebef; font: 14px/1.4 system-ui, sans-serif; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .6rem .85rem; background: #22262d; border-bottom: 1px solid #3a404a; }
+    h1 { margin: 0; font-size: 1rem; font-weight: 600; }
+    a { color: #9ecbff; }
+    iframe { width: 100%; height: 100%; border: 0; background: white; }
+  </style>
+</head>
+<body>
+  <header><h1>T Workshop</h1><a href="t_workshop.svg">Open SVG source</a></header>
+  <iframe src="t_workshop.svg" sandbox title="T Workshop"></iframe>
+</body>
+</html>

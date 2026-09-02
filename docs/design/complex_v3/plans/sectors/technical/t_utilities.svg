@@ -1,0 +1,198 @@
+<svg viewBox="0 0 1000 700" role="img" aria-labelledby="t5title t5desc" xmlns="http://www.w3.org/2000/svg" id="plan-t_utilities" class="plan-root" data-plan-style-id="caretaker-style-b-v1" data-scale="relative" data-scale-policy="legacy-local; metric-handoff-authoritative" data-grid-size="1" data-grid-unit="svg-unit" data-plan-id="t_utilities" data-sector-id="T-UTILITIES" data-level="LV-T" data-parent-bounds-xz="-57.0,20.0,18.0,56.0" data-local-origin-xyz="-57.0,-11.5,20.0" data-anchor-ids="A-SERVICE-STAIR" data-transition-ids="" data-semantic-layer-contract="per-object-v1">
+  <g id="t_utilities-source-layer" class="layer source-geometry" data-layer="source-geometry">
+  <metadata id="t_utilities-metadata">{&quot;schema&quot;:&quot;complex-v3-svg-plan-metadata-v1&quot;,&quot;plan_id&quot;:&quot;t_utilities&quot;,&quot;style_id&quot;:&quot;caretaker-style-b-v1&quot;,&quot;geometry_policy&quot;:&quot;preserve-approved-plan; metric-handoff-is-authoritative&quot;,&quot;sector_id&quot;:&quot;T-UTILITIES&quot;,&quot;level&quot;:&quot;LV-T&quot;,&quot;parent_boundary_xz&quot;:[-57.0,20.0,18.0,56.0],&quot;local_origin_xyz&quot;:[-57.0,-11.5,20.0],&quot;anchors&quot;:[{&quot;id&quot;:&quot;A-SERVICE-STAIR&quot;,&quot;tolerance&quot;:0.25,&quot;position_xz&quot;:[-42.0,50.0]}],&quot;neighbors&quot;:[&quot;T-TECH&quot;],&quot;source_detail&quot;:&quot;../../plans/sectors/technical/t_utilities.svg&quot;,&quot;vertical_transitions&quot;:[]}</metadata>
+  <defs id="t_utilities-style-defs"><style><![CDATA[
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f4f3ef, #181a1d);
+  --fg: light-dark(#202429, #eef1f4);
+  --muted: light-dark(#626971, #aeb5bd);
+  --line: light-dark(#252a30, #e5e9ed);
+  --corridor: light-dark(#d5d9dc, #353b41);
+  --energy: light-dark(#9eb8ca, #294e69);
+  --utility: light-dark(#a9c5b7, #315d4e);
+  --work: light-dark(#c7ad89, #705033);
+  --shaft: light-dark(#e8e8e4, #25292e);
+  --equipment: light-dark(#55616b, #9ca7b0);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: "Segoe UI", Arial, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 18px; }
+h1 { margin: 0 0 6px; font-size: 22px; font-weight: 500; }
+p { margin: 0 0 14px; color: var(--muted); }
+svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: var(--bg); }
+.canvas { fill: var(--bg); }
+.room, .corridor, .shaft, .work, .utility, .energy { stroke: var(--line); stroke-width: 3; }
+.room { fill: var(--shaft); }
+.corridor { fill: var(--corridor); }
+.energy { fill: var(--energy); }
+.utility { fill: var(--utility); }
+.work { fill: var(--work); }
+.shaft { fill: var(--shaft); stroke-dasharray: 8 6; }
+.equipment { fill: none; stroke: var(--equipment); stroke-width: 2; }
+.wall { stroke: var(--line); stroke-width: 5; }
+.door-gap { stroke: var(--corridor); stroke-width: 12; }
+.room-gap { stroke: var(--shaft); stroke-width: 12; }
+.energy-gap { stroke: var(--energy); stroke-width: 12; }
+.utility-gap { stroke: var(--utility); stroke-width: 12; }
+.work-gap { stroke: var(--work); stroke-width: 12; }
+.door { fill: none; stroke: var(--line); stroke-width: 2; }
+.window { stroke: var(--line); stroke-width: 7; }
+text { fill: var(--fg); text-anchor: middle; dominant-baseline: middle; font-size: 16px; font-weight: 500; }
+.minor { font-size: 13px; font-weight: 400; }
+.tiny { font-size: 11px; font-weight: 400; fill: var(--muted); }
+.flow { fill: none; stroke: var(--equipment); stroke-width: 3; marker-end: url(#arrow); }
+@media (max-width: 600px) { main { padding: 8px; } h1 { font-size: 18px; } }
+]]></style>
+<style id="plan-render-fallback"><![CDATA[
+/* Renderer-independent Caretaker style B fallback. Geometry is untouched. */
+.plan-root { background: #191c1f !important; font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; }
+.plan-root text {
+  fill: #f1f3f5 !important;
+  font-family: "Segoe UI", Arial, sans-serif !important;
+  font-size: 14px;
+}
+.plan-root .tiny, .plan-root .small, .plan-root .minor,
+.plan-root .context, .plan-root .dimtext { fill: #aeb4ba !important; }
+.plan-root .shell { fill: #202428 !important; stroke: #d9dde0 !important; }
+.plan-root .room, .plan-root .lab, .plan-root .late,
+.plan-root .equipment-room, .plan-root .containment { fill: #3b4147 !important; stroke: #d9dde0 !important; }
+.plan-root .old { fill: #51493f !important; stroke: #d9dde0 !important; }
+.plan-root .personnel { fill: #3b4650 !important; stroke: #d9dde0 !important; }
+.plan-root .research { fill: #51486a !important; stroke: #d9dde0 !important; }
+.plan-root .support { fill: #3f4a4f !important; stroke: #d9dde0 !important; }
+.plan-root .medical, .plan-root .utility, .plan-root .service { fill: #356352 !important; stroke: #d9dde0 !important; }
+.plan-root .domestic { fill: #4c533d !important; stroke: #d9dde0 !important; }
+.plan-root .security { fill: #5b3f43 !important; stroke: #d9dde0 !important; }
+.plan-root .command { fill: #3c4d63 !important; stroke: #d9dde0 !important; }
+.plan-root .heavy, .plan-root .work, .plan-root .cargo { fill: #6b5235 !important; stroke: #d9dde0 !important; }
+.plan-root .energy { fill: #2e5778 !important; stroke: #d9dde0 !important; }
+.plan-root .corridor, .plan-root .passenger, .plan-root .mixed,
+.plan-root .controlled { fill: #3a4045 !important; stroke: #d9dde0 !important; }
+.plan-root .shaft, .plan-root .vertical, .plan-root .stair,
+.plan-root .lift { fill: #2b2e33 !important; stroke: #d9dde0 !important; }
+.plan-root .airlock, .plan-root .checkpoint { fill: #42484e !important; stroke: #d9dde0 !important; }
+.plan-root .gallery, .plan-root .cable { fill: #185d68 !important; stroke: #d9dde0 !important; }
+.plan-root .context-zone { fill: #2b3035 !important; stroke: #8e969d !important; }
+.plan-root .void { fill: #17191b !important; stroke: #8e969d !important; }
+.plan-root .canvas { fill: #191c1f !important; stroke: none !important; }
+.plan-root .outer { fill: none !important; stroke: #d9dde0 !important; }
+.plan-root .walkway { fill: #2f353a !important; stroke: #d9dde0 !important; }
+.plan-root .store { fill: #5b3f43 !important; stroke: #d9dde0 !important; }
+.plan-root .counter { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .screen { fill: #17222c !important; stroke: #aeb4ba !important; }
+.plan-root .opening { fill: #3a4045 !important; stroke: none !important; }
+.plan-root .equipment, .plan-root .door, .plan-root .gate,
+.plan-root .gate-thin, .plan-root .window, .plan-root .wall,
+.plan-root .partition, .plan-root .dimension, .plan-root .scale,
+.plan-root .steps, .plan-root .stairs, .plan-root .flow,
+.plan-root .barrier, .plan-root .reinforce { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .thin, .plan-root .step { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .down { fill: #aeb4ba !important; stroke: none !important; }
+.plan-root .door { stroke: #d9dde0 !important; }
+.plan-root .door-gap { stroke: #3a4045 !important; }
+.plan-root .room-gap { stroke: #3b4147 !important; }
+.plan-root .support-gap { stroke: #3f4a4f !important; }
+.plan-root .energy-gap { stroke: #2e5778 !important; }
+.plan-root .utility-gap { stroke: #356352 !important; }
+.plan-root .work-gap, .plan-root .cargo-gap { stroke: #6b5235 !important; }
+.plan-root .equip-gap { stroke: #3b4147 !important; }
+.plan-root .stair-gap { stroke: #2b2e33 !important; }
+.plan-root .floor-opening, .plan-root .ceiling-opening {
+  fill: none !important; stroke: #f2c14e !important; stroke-width: 2 !important; stroke-dasharray: 8 5 !important;
+}
+.plan-root .damaged, .plan-root .rubble { fill: #6b6158 !important; stroke: #d9dde0 !important; }
+.plan-root .blocked { fill: none !important; stroke: #d9dde0 !important; }
+]]></style>
+</defs>
+
+    <title id="t5title">Детальный план центральных инженерных систем</title>
+    <desc id="t5desc">Четыре независимые инженерные комнаты подключены к главному коридору отдельными служебными ветвями. Между подстанцией и вентиляцией расположена лестница служебной развязки с противопожарным тамбуром. Между реагентной и дренажом проходит контролируемый переход к тяжёлой грузовой магистрали.</desc>
+    <g id="layer-for-t_utilities-geometry-001" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-geometry-001"><rect class="canvas" x="0" y="0" width="1000" height="700" id="t_utilities-geometry-001" data-kind="geometry" /></g>
+
+    <g id="layer-for-t_utilities-space-001" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-001"><rect class="corridor" x="30" y="40" width="940" height="80" id="t_utilities-space-001" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-label-001" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-001"><text x="500" y="80" id="t_utilities-label-001" class="label" data-kind="label">ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР · 5–6 М</text></g>
+
+    <g id="layer-for-t_utilities-space-002" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-002"><rect class="corridor" x="60" y="120" width="34" height="109" id="t_utilities-space-002" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-geometry-002" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-geometry-002"><rect class="energy" x="60" y="229" width="162" height="131" id="t_utilities-geometry-002" data-kind="geometry" /></g>
+    <g id="layer-for-t_utilities-label-002" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-002"><text x="141" y="255" id="t_utilities-label-002" class="label" data-kind="label">ПОДСТАНЦИЯ</text></g>
+    <g id="layer-for-t_utilities-label-003" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-003"><text class="minor" x="141" y="278" id="t_utilities-label-003" data-kind="label">позднего блока</text></g>
+    <g id="layer-for-t_utilities-equipment-001" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-001"><rect class="equipment" x="85" y="302" width="54" height="34" id="t_utilities-equipment-001" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-002" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-002"><rect class="equipment" x="150" y="302" width="47" height="34" id="t_utilities-equipment-002" data-kind="equipment" /></g>
+
+    <g id="layer-for-t_utilities-space-003" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-003"><rect class="room" x="238" y="120" width="100" height="68" id="t_utilities-space-003" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-label-004" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-004"><text class="tiny" x="288" y="137" id="t_utilities-label-004" data-kind="label">ПРОТИВО-</text></g>
+    <g id="layer-for-t_utilities-label-005" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-005"><text class="tiny" x="288" y="153" id="t_utilities-label-005" data-kind="label">ПОЖАРНЫЙ</text></g>
+    <g id="layer-for-t_utilities-label-006" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-006"><text class="tiny" x="288" y="170" id="t_utilities-label-006" data-kind="label">ТАМБУР</text></g>
+    <g id="layer-for-t_utilities-space-004" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-004"><rect class="shaft" x="249" y="188" width="79" height="172" id="t_utilities-space-004" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-label-007" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-007"><text class="minor" x="288" y="210" id="t_utilities-label-007" data-kind="label">ЛЕСТНИЦА</text></g>
+    <g id="layer-for-t_utilities-label-008" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-008"><text class="tiny" x="288" y="230" id="t_utilities-label-008" data-kind="label">СЛУЖЕБНОЙ</text></g>
+    <g id="layer-for-t_utilities-label-009" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-009"><text class="tiny" x="288" y="246" id="t_utilities-label-009" data-kind="label">РАЗВЯЗКИ</text></g>
+    <g id="layer-for-t_utilities-equipment-003" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-003"><line class="equipment" x1="263" y1="258" x2="314" y2="258" id="t_utilities-equipment-003" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-004" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-004"><line class="equipment" x1="263" y1="276" x2="314" y2="276" id="t_utilities-equipment-004" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-005" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-005"><line class="equipment" x1="263" y1="294" x2="314" y2="294" id="t_utilities-equipment-005" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-006" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-006"><line class="equipment" x1="263" y1="312" x2="314" y2="312" id="t_utilities-equipment-006" data-kind="equipment" /></g>
+
+    <g id="layer-for-t_utilities-space-005" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-005"><rect class="corridor" x="404" y="120" width="33" height="109" id="t_utilities-space-005" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-geometry-003" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-geometry-003"><rect class="utility" x="350" y="229" width="176" height="131" id="t_utilities-geometry-003" data-kind="geometry" /></g>
+    <g id="layer-for-t_utilities-label-010" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-010"><text x="438" y="255" id="t_utilities-label-010" class="label" data-kind="label">ВЕНТИЛЯЦИЯ</text></g>
+    <g id="layer-for-t_utilities-label-011" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-011"><text class="minor" x="438" y="278" id="t_utilities-label-011" data-kind="label">насосы · теплообмен</text></g>
+    <g id="layer-for-t_utilities-equipment-007" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-007"><circle class="equipment" cx="397" cy="319" r="24" id="t_utilities-equipment-007" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-008" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-008"><circle class="equipment" cx="463" cy="319" r="24" id="t_utilities-equipment-008" data-kind="equipment" /></g>
+
+    <g id="layer-for-t_utilities-space-006" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-006"><rect class="corridor" x="593" y="120" width="33" height="109" id="t_utilities-space-006" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-geometry-004" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-geometry-004"><rect class="utility" x="546" y="229" width="135" height="131" id="t_utilities-geometry-004" data-kind="geometry" /></g>
+    <g id="layer-for-t_utilities-label-012" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-012"><text x="614" y="255" id="t_utilities-label-012" class="label" data-kind="label">ГАЗЫ</text></g>
+    <g id="layer-for-t_utilities-label-013" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-013"><text class="minor" x="614" y="278" id="t_utilities-label-013" data-kind="label">и реагенты</text></g>
+    <g id="layer-for-t_utilities-equipment-009" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-009"><rect class="equipment" x="569" y="302" width="27" height="42" rx="12" id="t_utilities-equipment-009" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-010" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-010"><rect class="equipment" x="632" y="302" width="27" height="42" rx="12" id="t_utilities-equipment-010" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-wall-001" class="layer layer-walls" data-layer="walls" data-object-ref="t_utilities-wall-001"><line class="wall" x1="614" y1="294" x2="614" y2="350" id="t_utilities-wall-001" data-kind="wall" /></g>
+
+    <g id="layer-for-t_utilities-space-007" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-007"><rect class="corridor" x="701" y="120" width="48" height="428" id="t_utilities-space-007" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-label-014" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-014"><text class="minor" x="725" y="255" transform="rotate(-90 725 255)" id="t_utilities-label-014" data-kind="label">КОНТРОЛИРУЕМЫЙ ГРУЗОВОЙ ПЕРЕХОД</text></g>
+
+    <g id="layer-for-t_utilities-space-008" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-008"><rect class="corridor" x="816" y="120" width="33" height="109" id="t_utilities-space-008" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-geometry-005" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-geometry-005"><rect class="utility" x="762" y="229" width="162" height="131" id="t_utilities-geometry-005" data-kind="geometry" /></g>
+    <g id="layer-for-t_utilities-label-015" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-015"><text x="843" y="255" id="t_utilities-label-015" class="label" data-kind="label">ДРЕНАЖ</text></g>
+    <g id="layer-for-t_utilities-label-016" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-016"><text class="minor" x="843" y="278" id="t_utilities-label-016" data-kind="label">нейтрализация</text></g>
+    <g id="layer-for-t_utilities-equipment-011" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-011"><circle class="equipment" cx="808" cy="320" r="25" id="t_utilities-equipment-011" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-012" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-012"><rect class="equipment" x="858" y="297" width="31" height="48" id="t_utilities-equipment-012" data-kind="equipment" /></g>
+
+    <g id="layer-for-t_utilities-space-009" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-009"><rect class="room" x="75" y="360" width="25" height="38" id="t_utilities-space-009" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-space-010" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-010"><rect class="room" x="417" y="360" width="25" height="38" id="t_utilities-space-010" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-space-011" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-011"><rect class="room" x="600" y="360" width="25" height="38" id="t_utilities-space-011" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-space-012" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-012"><rect class="room" x="823" y="360" width="25" height="38" id="t_utilities-space-012" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-label-017" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-017"><text class="tiny" x="500" y="382" id="t_utilities-label-017" data-kind="label">ГЕРМЕТИЧНЫЕ ВВОДЫ · НЕПРОХОДНЫЕ</text></g>
+
+    <g id="layer-for-t_utilities-space-013" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_utilities-space-013"><rect class="corridor" x="30" y="398" width="870" height="35" id="t_utilities-space-013" data-kind="space" /></g>
+    <g id="layer-for-t_utilities-label-018" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-018"><text class="minor" x="465" y="416" id="t_utilities-label-018" data-kind="label">КАБЕЛЬНО-ТРУБОПРОВОДНАЯ ГАЛЕРЕЯ</text></g>
+    <g id="layer-for-t_utilities-label-019" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-019"><text class="tiny" x="465" y="486" id="t_utilities-label-019" data-kind="label">КОНСТРУКТИВНЫЙ ТЕХНИЧЕСКИЙ ОБЪЁМ · НЕПРОХОДНОЙ</text></g>
+
+    <g id="layer-for-t_utilities-equipment-013" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-013"><rect class="work" x="30" y="548" width="940" height="75" id="t_utilities-equipment-013" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-label-020" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-020"><text x="500" y="586" id="t_utilities-label-020" class="label" data-kind="label">ТЯЖЁЛАЯ ГРУЗОВАЯ МАГИСТРАЛЬ · 7–8 М</text></g>
+
+    <g id="layer-for-t_utilities-opening-001" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-001"><line class="door-gap" x1="66" y1="120" x2="88" y2="120" id="t_utilities-opening-001" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-002" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-002"><line class="door-gap" x1="410" y1="120" x2="432" y2="120" id="t_utilities-opening-002" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-003" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-003"><line class="door-gap" x1="599" y1="120" x2="621" y2="120" id="t_utilities-opening-003" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-004" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-004"><line class="door-gap" x1="822" y1="120" x2="844" y2="120" id="t_utilities-opening-004" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-005" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-005"><line class="room-gap" x1="264" y1="120" x2="312" y2="120" id="t_utilities-opening-005" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-006" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-006"><line class="door-gap" x1="264" y1="188" x2="312" y2="188" id="t_utilities-opening-006" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-007" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-007"><line class="door-gap" x1="710" y1="120" x2="740" y2="120" id="t_utilities-opening-007" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-008" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-008"><line class="work-gap" x1="710" y1="548" x2="740" y2="548" id="t_utilities-opening-008" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-009" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-009"><line class="energy-gap" x1="66" y1="229" x2="88" y2="229" id="t_utilities-opening-009" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-010" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-010"><line class="utility-gap" x1="410" y1="229" x2="432" y2="229" id="t_utilities-opening-010" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-011" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-011"><line class="utility-gap" x1="599" y1="229" x2="621" y2="229" id="t_utilities-opening-011" data-kind="opening" /></g>
+    <g id="layer-for-t_utilities-opening-012" class="layer layer-openings" data-layer="openings" data-object-ref="t_utilities-opening-012"><line class="utility-gap" x1="822" y1="229" x2="844" y2="229" id="t_utilities-opening-012" data-kind="opening" /></g>
+
+    <g id="layer-for-t_utilities-equipment-014" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-014"><line class="equipment" x1="87" y1="360" x2="87" y2="398" id="t_utilities-equipment-014" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-015" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-015"><line class="equipment" x1="429" y1="360" x2="429" y2="398" id="t_utilities-equipment-015" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-016" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-016"><line class="equipment" x1="612" y1="360" x2="612" y2="398" id="t_utilities-equipment-016" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-017" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-017"><line class="equipment" x1="835" y1="360" x2="835" y2="398" id="t_utilities-equipment-017" data-kind="equipment" /></g>
+
+    <g id="layer-for-t_utilities-equipment-018" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-018"><line class="equipment" x1="60" y1="660" x2="168" y2="660" id="t_utilities-equipment-018" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-019" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-019"><line class="equipment" x1="60" y1="653" x2="60" y2="667" id="t_utilities-equipment-019" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-equipment-020" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_utilities-equipment-020"><line class="equipment" x1="168" y1="653" x2="168" y2="667" id="t_utilities-equipment-020" data-kind="equipment" /></g>
+    <g id="layer-for-t_utilities-label-021" class="layer layer-labels" data-layer="labels" data-object-ref="t_utilities-label-021"><text class="tiny" x="114" y="682" id="t_utilities-label-021" data-kind="label">≈ 10 М</text></g>
+
+  </g>
+</svg>

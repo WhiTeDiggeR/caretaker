@@ -77,7 +77,7 @@ def main() -> None:
             "detail_id": f"DETAIL-{sector_id}",
             "parent_artifact": "OVERVIEW-DATA-01",
             "plan_style_id": metadata["plan_style_id"],
-            "source_detail": item["source"],
+            "source_detail": str(Path(item["source"]).with_suffix(".svg")).replace("\\", "/"),
             "source_use": item.get("source_use", "full sector geometry"),
             "parent_boundary_xz": bounds,
             "local_origin_xyz": [bounds[0], level["floor_y"], bounds[1]],

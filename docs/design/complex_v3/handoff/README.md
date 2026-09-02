@@ -22,12 +22,13 @@
 
 - `passports/sector-passports.md` — читаемые паспорта всех 30 секторов.
 - `passports/sector-passports.json` — структурированные паспорта и родительские границы.
-- `geometry/complex-handoff.json` — 139 точных прямоугольных пространств, стены, порталы, коридорные соединители и допуски.
-- `vertical/vertical-transitions.json` — лестницы, лифты, проходящая шахта и старый наклонный тоннель.
+- `geometry/complex-handoff.json` — 152 точных прямоугольных пространства, стены, порталы, коридорные соединители и допуски.
+- `vertical/vertical-transitions.json` — лестницы, лифты, проходящая шахта и старый наклонный тоннель; для семи вертикальных шахт зафиксированы единые внешние и чистые XZ-контуры.
 - `vertical/vertical-section.svg` / `.png` — редактируемый разрез и review-preview.
 - `map-package.json` — переносимый manifest пакета с зависимостями, покрытием и статусами.
 - `validation/validate_stage2.py` — геометрическая, портальная и межартефактная проверка.
 - `validation/stage-2-report.md` — сводный отчёт этапа.
 - `scripts/generate_passports.py`, `scripts/generate_handoff.py`, `scripts/generate_manifest.py` — детерминированное воспроизведение структурированных материалов.
+- `../validation/validate_plan_set.py` — проверка всех SVG/HTML-пар, соседних деталей и одинаковых межэтажных шахтных привязок.
 
 Статус этапа 2: `approved / ready-for-godot-blockout` с 29 июля 2026 года. Godot blockout выполняется отдельной задачей этапа 3.

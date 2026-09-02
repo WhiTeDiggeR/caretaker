@@ -25,7 +25,7 @@ FINAL_BOUNDS_OVERRIDE = {
     "U-CHAMBER-6": [0.0, 29.0, 32.0, 60.0],
     "U-FREIGHT": [-16.0, 67.5, 30.0, 82.0],
     "L-CHAMBER-1": [-110.0, -8.0, -84.0, 15.0],
-    "L-OLD-CORE": [-84.0, -14.0, -62.0, 15.0],
+    "L-OLD-CORE": [-102.0, -14.0, -62.0, 43.0],
     "L-OLD-RECEIVING": [-110.0, 43.0, -72.0, 60.0],
     "L-CHAMBER-2": [-72.0, 27.0, -48.0, 60.0],
     "L-SERVICE-INTERCHANGE": [-48.0, 42.0, -36.0, 60.0],
@@ -1423,7 +1423,11 @@ def main() -> None:
                     })
     for route in route_spaces:
         route["floor_y"] = levels[route["level"]]["floor_y"]
-        route["wall_thickness"] = 0.35
+        # Physical route areas share long wall centerlines with adjacent rooms.
+        # Keep one effective thickness on every common boundary; heavier walls
+        # must be expressed as explicit trimmed wall segments, not as a second
+        # area default overlapping the standard room wall.
+        route["wall_thickness"] = 0.3
         route["status"] = "provisional-metric"
 
     output = {
@@ -1435,7 +1439,14 @@ def main() -> None:
         "units": "m",
         "coordinate_system": overview["coordinate_system"],
         "levels": overview["levels"],
-        "wall_defaults": {"standard": 0.3, "containment": 0.45, "heavy": 0.5, "derive_from_space_boundaries": True},
+        "wall_defaults": {
+            "standard": 0.3,
+            "containment": 0.45,
+            "heavy": 0.5,
+            "derive_from_space_boundaries": True,
+            "shared_boundary_policy": "canonical-centerline-single-thickness",
+            "junction_policy": "butt-no-positive-overlap",
+        },
         "sectors": sector_records,
         "spaces": all_spaces,
         "route_spaces": route_spaces,

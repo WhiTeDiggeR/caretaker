@@ -672,6 +672,7 @@
       "id": "overview-metric",
       "type": "overview",
       "path": "overview/metric-overview.svg",
+      "viewer": "overview/metric-overview.html",
       "preview": "overview/metric-overview.png",
       "status": "approved",
       "style_id": "caretaker-style-b-v1",
@@ -717,7 +718,7 @@
     },
     {
       "id": "topology-graph",
-      "type": "graph",
+      "type": "handoff",
       "path": "overview/topology.json",
       "status": "approved",
       "depends_on": [
@@ -764,10 +765,9 @@
     },
     {
       "id": "sector-passports",
-      "type": "detail",
+      "type": "handoff",
       "path": "passports/sector-passports.json",
       "status": "verified",
-      "style_id": "caretaker-style-b-v1",
       "depends_on": [
         "overview-metric",
         "topology-graph"
@@ -815,6 +815,7 @@
       "id": "vertical-section",
       "type": "section",
       "path": "vertical/vertical-section.svg",
+      "viewer": "vertical/vertical-section.html",
       "preview": "vertical/vertical-section.png",
       "status": "verified",
       "style_id": "caretaker-style-b-v1",
@@ -1048,6 +1049,534 @@
         "T-EAST-VERTICAL",
         "T-UTILITIES",
         "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "overview-upper",
+      "type": "overview",
+      "path": "../plans/overview/upper/current/upper-floor-functional-plan-v4.svg",
+      "viewer": "../plans/overview/upper/current/upper-floor-functional-plan-v4.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-metric",
+        "topology-graph"
+      ],
+      "covers": [
+        "U-PAX",
+        "U-FRT",
+        "U-EMERGENCY",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-DOMESTIC",
+        "U-CONTROL",
+        "U-CENTRAL-CORE",
+        "U-EAST-SUPPORT",
+        "U-CHAMBER-4",
+        "U-SECURITY",
+        "U-CHAMBER-6",
+        "U-FREIGHT"
+      ]
+    },
+    {
+      "id": "overview-lower",
+      "type": "overview",
+      "path": "../plans/overview/lower/current/lower-floor-functional-plan-revised.svg",
+      "viewer": "../plans/overview/lower/current/lower-floor-functional-plan-revised.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-metric",
+        "topology-graph"
+      ],
+      "covers": [
+        "L-PAX",
+        "L-FRT",
+        "L-OLD-CORE",
+        "L-CHAMBER-1",
+        "L-ARCHIVE-A",
+        "L-OLD-RECEIVING",
+        "L-CHAMBER-2",
+        "L-SLEEP-LAB",
+        "L-CHAMBER-3",
+        "L-SERVICE-INTERCHANGE",
+        "L-FREIGHT-SERVICE",
+        "L-CENTRAL-CORE",
+        "L-EAST-STAIR",
+        "L-CHAMBER-5"
+      ]
+    },
+    {
+      "id": "overview-technical",
+      "type": "overview",
+      "path": "../plans/overview/technical/current/technical-floor-functional-plan-v3.svg",
+      "viewer": "../plans/overview/technical/current/technical-floor-functional-plan-v3.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-metric",
+        "topology-graph"
+      ],
+      "covers": [
+        "T-TECH",
+        "T-FRT",
+        "T-ENERGY",
+        "T-WORKSHOP",
+        "T-OLD-ACCESS",
+        "T-EAST-VERTICAL",
+        "T-UTILITIES",
+        "T-FREIGHT",
+        "T-CIRCULATION"
+      ]
+    },
+    {
+      "id": "detail-u-emergency",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_emergency.svg",
+      "viewer": "../plans/sectors/upper/u_emergency.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-EMERGENCY"
+      ]
+    },
+    {
+      "id": "detail-u-medbay",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_medbay.svg",
+      "viewer": "../plans/sectors/upper/u_medbay.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-MEDBAY"
+      ]
+    },
+    {
+      "id": "detail-u-route-a",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_route_a.svg",
+      "viewer": "../plans/sectors/upper/u_route_a.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-ROUTE-A"
+      ]
+    },
+    {
+      "id": "detail-u-domestic",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_domestic.svg",
+      "viewer": "../plans/sectors/upper/u_domestic.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-DOMESTIC"
+      ]
+    },
+    {
+      "id": "detail-u-control",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_control.svg",
+      "viewer": "../plans/sectors/upper/u_control.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-CONTROL"
+      ]
+    },
+    {
+      "id": "detail-u-central-core",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_central_core.svg",
+      "viewer": "../plans/sectors/upper/u_central_core.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-CENTRAL-CORE"
+      ]
+    },
+    {
+      "id": "detail-u-east-support",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_east_support.svg",
+      "viewer": "../plans/sectors/upper/u_east_support.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-EAST-SUPPORT"
+      ]
+    },
+    {
+      "id": "detail-u-chamber-4",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_chamber_4.svg",
+      "viewer": "../plans/sectors/upper/u_chamber_4.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-CHAMBER-4"
+      ]
+    },
+    {
+      "id": "detail-u-security",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_security.svg",
+      "viewer": "../plans/sectors/upper/u_security.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-SECURITY"
+      ]
+    },
+    {
+      "id": "detail-u-chamber-6",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_chamber_6.svg",
+      "viewer": "../plans/sectors/upper/u_chamber_6.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-CHAMBER-6"
+      ]
+    },
+    {
+      "id": "detail-u-freight",
+      "type": "detail",
+      "path": "../plans/sectors/upper/u_freight.svg",
+      "viewer": "../plans/sectors/upper/u_freight.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-upper",
+        "sector-passports"
+      ],
+      "covers": [
+        "U-FREIGHT"
+      ]
+    },
+    {
+      "id": "detail-l-old-core",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_old_core.svg",
+      "viewer": "../plans/sectors/lower/l_old_core.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-OLD-CORE"
+      ]
+    },
+    {
+      "id": "detail-l-chamber-1",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_chamber_1.svg",
+      "viewer": "../plans/sectors/lower/l_chamber_1.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-CHAMBER-1"
+      ]
+    },
+    {
+      "id": "detail-l-archive-a",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_archive_a.svg",
+      "viewer": "../plans/sectors/lower/l_archive_a.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-ARCHIVE-A"
+      ]
+    },
+    {
+      "id": "detail-l-old-receiving",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_old_receiving.svg",
+      "viewer": "../plans/sectors/lower/l_old_receiving.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-OLD-RECEIVING"
+      ]
+    },
+    {
+      "id": "detail-l-chamber-2",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_chamber_2.svg",
+      "viewer": "../plans/sectors/lower/l_chamber_2.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-CHAMBER-2"
+      ]
+    },
+    {
+      "id": "detail-l-sleep-lab",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_sleep_lab.svg",
+      "viewer": "../plans/sectors/lower/l_sleep_lab.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-SLEEP-LAB"
+      ]
+    },
+    {
+      "id": "detail-l-chamber-3",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_chamber_3.svg",
+      "viewer": "../plans/sectors/lower/l_chamber_3.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-CHAMBER-3"
+      ]
+    },
+    {
+      "id": "detail-l-service-interchange",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_service_interchange.svg",
+      "viewer": "../plans/sectors/lower/l_service_interchange.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-SERVICE-INTERCHANGE"
+      ]
+    },
+    {
+      "id": "detail-l-central-core",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_central_core.svg",
+      "viewer": "../plans/sectors/lower/l_central_core.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-CENTRAL-CORE"
+      ]
+    },
+    {
+      "id": "detail-l-east-stair",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_east_stair.svg",
+      "viewer": "../plans/sectors/lower/l_east_stair.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-EAST-STAIR"
+      ]
+    },
+    {
+      "id": "detail-l-chamber-5",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_chamber_5.svg",
+      "viewer": "../plans/sectors/lower/l_chamber_5.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-CHAMBER-5"
+      ]
+    },
+    {
+      "id": "detail-l-freight-service",
+      "type": "detail",
+      "path": "../plans/sectors/lower/l_freight_service.svg",
+      "viewer": "../plans/sectors/lower/l_freight_service.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-lower",
+        "sector-passports"
+      ],
+      "covers": [
+        "L-FREIGHT-SERVICE"
+      ]
+    },
+    {
+      "id": "detail-t-energy",
+      "type": "detail",
+      "path": "../plans/sectors/technical/t_energy.svg",
+      "viewer": "../plans/sectors/technical/t_energy.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-technical",
+        "sector-passports"
+      ],
+      "covers": [
+        "T-ENERGY"
+      ]
+    },
+    {
+      "id": "detail-t-workshop",
+      "type": "detail",
+      "path": "../plans/sectors/technical/t_workshop.svg",
+      "viewer": "../plans/sectors/technical/t_workshop.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-technical",
+        "sector-passports"
+      ],
+      "covers": [
+        "T-WORKSHOP"
+      ]
+    },
+    {
+      "id": "detail-t-old-access",
+      "type": "detail",
+      "path": "../plans/sectors/technical/t_old_access.svg",
+      "viewer": "../plans/sectors/technical/t_old_access.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-technical",
+        "sector-passports"
+      ],
+      "covers": [
+        "T-OLD-ACCESS"
+      ]
+    },
+    {
+      "id": "detail-t-east-vertical",
+      "type": "detail",
+      "path": "../plans/sectors/technical/t_east_vertical.svg",
+      "viewer": "../plans/sectors/technical/t_east_vertical.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-technical",
+        "sector-passports"
+      ],
+      "covers": [
+        "T-EAST-VERTICAL"
+      ]
+    },
+    {
+      "id": "detail-t-utilities",
+      "type": "detail",
+      "path": "../plans/sectors/technical/t_utilities.svg",
+      "viewer": "../plans/sectors/technical/t_utilities.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-technical",
+        "sector-passports"
+      ],
+      "covers": [
+        "T-UTILITIES"
+      ]
+    },
+    {
+      "id": "detail-t-freight",
+      "type": "detail",
+      "path": "../plans/sectors/technical/t_freight.svg",
+      "viewer": "../plans/sectors/technical/t_freight.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-technical",
+        "sector-passports"
+      ],
+      "covers": [
+        "T-FREIGHT"
+      ]
+    },
+    {
+      "id": "detail-t-circulation",
+      "type": "detail",
+      "path": "../plans/sectors/technical/t_circulation.svg",
+      "viewer": "../plans/sectors/technical/t_circulation.html",
+      "status": "verified",
+      "style_id": "caretaker-style-b-v1",
+      "depends_on": [
+        "overview-technical",
+        "sector-passports"
+      ],
+      "covers": [
         "T-CIRCULATION"
       ]
     }

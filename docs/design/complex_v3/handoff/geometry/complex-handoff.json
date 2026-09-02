@@ -38,7 +38,9 @@
     "standard": 0.3,
     "containment": 0.45,
     "heavy": 0.5,
-    "derive_from_space_boundaries": true
+    "derive_from_space_boundaries": true,
+    "shared_boundary_policy": "canonical-centerline-single-thickness",
+    "junction_policy": "butt-no-positive-overlap"
   },
   "sectors": [
     {
@@ -60,7 +62,7 @@
       "reserved_volumes": [
         "capsule_service_bays"
       ],
-      "source_detail": "../../plans/sectors/upper/u_emergency.html",
+      "source_detail": "../../plans/sectors/upper/u_emergency.svg",
       "status": "provisional-metric"
     },
     {
@@ -83,7 +85,7 @@
         "U-MEDBAY/medical_post"
       ],
       "reserved_volumes": [],
-      "source_detail": "../../plans/sectors/upper/u_medbay.html",
+      "source_detail": "../../plans/sectors/upper/u_medbay.svg",
       "status": "provisional-metric"
     },
     {
@@ -105,7 +107,7 @@
       "reserved_volumes": [
         "ventilation_plant"
       ],
-      "source_detail": "../../plans/sectors/upper/u_route_a.html",
+      "source_detail": "../../plans/sectors/upper/u_route_a.svg",
       "status": "provisional-metric"
     },
     {
@@ -130,7 +132,7 @@
         "U-DOMESTIC/rest_room"
       ],
       "reserved_volumes": [],
-      "source_detail": "../../plans/sectors/upper/u_domestic.html",
+      "source_detail": "../../plans/sectors/upper/u_domestic.svg",
       "status": "provisional-metric"
     },
     {
@@ -162,7 +164,7 @@
         "access_buffer",
         "server_cooling"
       ],
-      "source_detail": "../../plans/sectors/upper/u_control.html",
+      "source_detail": "../../plans/sectors/upper/u_control.svg",
       "status": "provisional-metric"
     },
     {
@@ -186,7 +188,7 @@
       "reserved_volumes": [
         "lift_shaft"
       ],
-      "source_detail": "../../plans/sectors/upper/u_central_core.html",
+      "source_detail": "../../plans/sectors/upper/u_central_core.svg",
       "status": "provisional-metric"
     },
     {
@@ -209,7 +211,7 @@
         "U-EAST-SUPPORT/fire_vestibule"
       ],
       "reserved_volumes": [],
-      "source_detail": "../../plans/sectors/upper/u_east_support.html",
+      "source_detail": "../../plans/sectors/upper/u_east_support.svg",
       "status": "provisional-metric"
     },
     {
@@ -232,7 +234,7 @@
       "reserved_volumes": [
         "capsule_service_volume"
       ],
-      "source_detail": "../../plans/sectors/upper/u_chamber_4.html",
+      "source_detail": "../../plans/sectors/upper/u_chamber_4.svg",
       "status": "provisional-metric"
     },
     {
@@ -256,7 +258,7 @@
       "reserved_volumes": [
         "secure_storage"
       ],
-      "source_detail": "../../plans/sectors/upper/u_security.html",
+      "source_detail": "../../plans/sectors/upper/u_security.svg",
       "status": "provisional-metric"
     },
     {
@@ -280,7 +282,7 @@
         "capsule_service_volume",
         "sleep_entry_device_volume"
       ],
-      "source_detail": "../../plans/sectors/upper/u_chamber_6.html",
+      "source_detail": "../../plans/sectors/upper/u_chamber_6.svg",
       "status": "provisional-metric"
     },
     {
@@ -305,17 +307,17 @@
         "lift_shaft",
         "platform_turning_envelope"
       ],
-      "source_detail": "../../plans/sectors/upper/u_freight.html",
+      "source_detail": "../../plans/sectors/upper/u_freight.svg",
       "status": "provisional-metric"
     },
     {
       "id": "L-OLD-CORE",
       "level": "LV-L",
       "bounds_xz": [
-        -84.0,
+        -102.0,
         -14.0,
         -62.0,
-        15.0
+        43.0
       ],
       "passport_id": "PASS-L-OLD-CORE",
       "space_ids": [
@@ -325,8 +327,10 @@
         "L-OLD-CORE/control_access",
         "L-OLD-CORE/distribution_hall"
       ],
-      "reserved_volumes": [],
-      "source_detail": "../../plans/sectors/lower/l_old_core.html",
+      "reserved_volumes": [
+        "attached_old_stair_and_service_link"
+      ],
+      "source_detail": "../../plans/sectors/lower/l_old_core.svg",
       "status": "provisional-metric"
     },
     {
@@ -347,7 +351,7 @@
       "reserved_volumes": [
         "restraint_service_volume"
       ],
-      "source_detail": "../../plans/sectors/lower/l_chamber_1.html",
+      "source_detail": "../../plans/sectors/lower/l_chamber_1.svg",
       "status": "provisional-metric"
     },
     {
@@ -370,7 +374,7 @@
       "reserved_volumes": [
         "archive_shelving"
       ],
-      "source_detail": "../../plans/sectors/lower/l_archive_a.html",
+      "source_detail": "../../plans/sectors/lower/l_archive_a.svg",
       "status": "provisional-metric"
     },
     {
@@ -391,7 +395,7 @@
       "reserved_volumes": [
         "old_tunnel_mouth"
       ],
-      "source_detail": "../../plans/sectors/lower/l_old_receiving.html",
+      "source_detail": "../../plans/sectors/lower/l_old_receiving.svg",
       "status": "provisional-metric"
     },
     {
@@ -414,7 +418,7 @@
       "reserved_volumes": [
         "restraint_platform_volume"
       ],
-      "source_detail": "../../plans/sectors/lower/l_chamber_2.html",
+      "source_detail": "../../plans/sectors/lower/l_chamber_2.svg",
       "status": "provisional-metric"
     },
     {
@@ -437,7 +441,7 @@
       "reserved_volumes": [
         "bed_service_envelopes"
       ],
-      "source_detail": "../../plans/sectors/lower/l_sleep_lab.html",
+      "source_detail": "../../plans/sectors/lower/l_sleep_lab.svg",
       "status": "provisional-metric"
     },
     {
@@ -460,7 +464,7 @@
       "reserved_volumes": [
         "capsule_service_volume"
       ],
-      "source_detail": "../../plans/sectors/lower/l_chamber_3.html",
+      "source_detail": "../../plans/sectors/lower/l_chamber_3.svg",
       "status": "provisional-metric"
     },
     {
@@ -480,7 +484,7 @@
         "L-SERVICE-INTERCHANGE/electrical_room"
       ],
       "reserved_volumes": [],
-      "source_detail": "../../plans/sectors/lower/l_service_interchange.html",
+      "source_detail": "../../plans/sectors/lower/l_service_interchange.svg",
       "status": "provisional-metric"
     },
     {
@@ -504,7 +508,7 @@
       "reserved_volumes": [
         "lift_shaft"
       ],
-      "source_detail": "../../plans/sectors/lower/l_central_core.html",
+      "source_detail": "../../plans/sectors/lower/l_central_core.svg",
       "status": "provisional-metric"
     },
     {
@@ -522,7 +526,7 @@
         "L-EAST-STAIR/emergency_stair"
       ],
       "reserved_volumes": [],
-      "source_detail": "../../plans/sectors/lower/l_east_stair.html",
+      "source_detail": "../../plans/sectors/lower/l_east_stair.svg",
       "status": "provisional-metric"
     },
     {
@@ -545,7 +549,7 @@
       "reserved_volumes": [
         "capsule_service_volume"
       ],
-      "source_detail": "../../plans/sectors/lower/l_chamber_5.html",
+      "source_detail": "../../plans/sectors/lower/l_chamber_5.svg",
       "status": "provisional-metric"
     },
     {
@@ -570,7 +574,7 @@
         "lift_shaft",
         "platform_turning_envelope"
       ],
-      "source_detail": "../../plans/sectors/lower/l_freight_service.html",
+      "source_detail": "../../plans/sectors/lower/l_freight_service.svg",
       "status": "provisional-metric"
     },
     {
@@ -593,7 +597,7 @@
       "reserved_volumes": [
         "generator_service_envelope"
       ],
-      "source_detail": "../../plans/sectors/technical/t_energy.html",
+      "source_detail": "../../plans/sectors/technical/t_energy.svg",
       "status": "provisional-metric"
     },
     {
@@ -614,7 +618,7 @@
       "reserved_volumes": [
         "cart_turning_envelope"
       ],
-      "source_detail": "../../plans/sectors/technical/t_workshop.html",
+      "source_detail": "../../plans/sectors/technical/t_workshop.svg",
       "status": "provisional-metric"
     },
     {
@@ -633,7 +637,7 @@
         "T-OLD-ACCESS/old_core_substation"
       ],
       "reserved_volumes": [],
-      "source_detail": "../../plans/sectors/technical/t_old_access.html",
+      "source_detail": "../../plans/sectors/technical/t_old_access.svg",
       "status": "provisional-metric"
     },
     {
@@ -657,7 +661,7 @@
         "passenger_lift_shaft",
         "closed_cable_pit"
       ],
-      "source_detail": "../../plans/sectors/technical/t_east_vertical.html",
+      "source_detail": "../../plans/sectors/technical/t_east_vertical.svg",
       "status": "provisional-metric"
     },
     {
@@ -681,7 +685,7 @@
       "reserved_volumes": [
         "sealed_service_ducts"
       ],
-      "source_detail": "../../plans/sectors/technical/t_utilities.html",
+      "source_detail": "../../plans/sectors/technical/t_utilities.svg",
       "status": "provisional-metric"
     },
     {
@@ -704,7 +708,7 @@
         "lift_shaft",
         "platform_turning_envelope"
       ],
-      "source_detail": "../../plans/sectors/technical/t_freight.html",
+      "source_detail": "../../plans/sectors/technical/t_freight.svg",
       "status": "provisional-metric"
     }
   ],
@@ -3460,7 +3464,7 @@
       "clear_height": 3.4,
       "width": 4.0,
       "floor_y": 0.0,
-      "wall_thickness": 0.35,
+      "wall_thickness": 0.3,
       "status": "provisional-metric"
     },
     {
@@ -3476,7 +3480,7 @@
       "clear_height": 3.4,
       "width": 4.0,
       "floor_y": -6.0,
-      "wall_thickness": 0.35,
+      "wall_thickness": 0.3,
       "status": "provisional-metric"
     },
     {
@@ -3492,7 +3496,7 @@
       "clear_height": 4.0,
       "width": 5.5,
       "floor_y": -11.5,
-      "wall_thickness": 0.35,
+      "wall_thickness": 0.3,
       "status": "provisional-metric"
     },
     {
@@ -3508,7 +3512,7 @@
       "clear_height": 5.0,
       "width": 7.5,
       "floor_y": 0.0,
-      "wall_thickness": 0.35,
+      "wall_thickness": 0.3,
       "status": "provisional-metric"
     },
     {
@@ -3524,7 +3528,7 @@
       "clear_height": 5.0,
       "width": 7.5,
       "floor_y": -6.0,
-      "wall_thickness": 0.35,
+      "wall_thickness": 0.3,
       "status": "provisional-metric"
     },
     {
@@ -3540,7 +3544,7 @@
       "clear_height": 5.0,
       "width": 7.5,
       "floor_y": -11.5,
-      "wall_thickness": 0.35,
+      "wall_thickness": 0.3,
       "status": "provisional-metric"
     },
     {
@@ -3557,7 +3561,7 @@
       "width": 3.0,
       "transit": "service-only",
       "floor_y": -11.5,
-      "wall_thickness": 0.35,
+      "wall_thickness": 0.3,
       "status": "provisional-metric"
     }
   ],
@@ -6991,15 +6995,15 @@
       "connection_id": "E-L01",
       "space": "L-OLD-CORE/distribution_hall",
       "neighbor": "L-PAX",
-      "side": "south",
+      "side": "east",
       "segment_xz": [
         [
-          -73.6,
-          15.0
+          -62.0,
+          8.066
         ],
         [
-          -72.4,
-          15.0
+          -62.0,
+          9.266
         ]
       ],
       "width": 1.2,
@@ -7887,11 +7891,11 @@
       "connection_id": "E-L01",
       "centerline_xz": [
         [
-          -73.0,
-          15.0
+          -62.0,
+          8.666
         ],
         [
-          -73.0,
+          -62.0,
           15.0
         ]
       ],

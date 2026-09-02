@@ -217,6 +217,53 @@ def shared_boundary_segment(segment: list[list[float]], a: list[float], b: list[
     return all(point_on_boundary(point, a) and point_on_boundary(point, b) for point in segment)
 
 
+def shared_boundary_overlap(a: list[float], b: list[float], epsilon: float = 1e-6) -> tuple[str, float, float, float] | None:
+    """Return axis, fixed coordinate and overlap interval for one exact common centerline."""
+    x_overlap = min(a[2], b[2]) - max(a[0], b[0])
+    z_overlap = min(a[3], b[3]) - max(a[1], b[1])
+    if z_overlap > epsilon:
+        if math.isclose(a[2], b[0], abs_tol=epsilon):
+            return ("vertical", a[2], max(a[1], b[1]), min(a[3], b[3]))
+        if math.isclose(b[2], a[0], abs_tol=epsilon):
+            return ("vertical", b[2], max(a[1], b[1]), min(a[3], b[3]))
+    if x_overlap > epsilon:
+        if math.isclose(a[3], b[1], abs_tol=epsilon):
+            return ("horizontal", a[3], max(a[0], b[0]), min(a[2], b[2]))
+        if math.isclose(b[3], a[1], abs_tol=epsilon):
+            return ("horizontal", b[3], max(a[0], b[0]), min(a[2], b[2]))
+    return None
+
+
+def wall_edges(area: dict) -> list[tuple[str, float, float, float, float, str]]:
+    x0, z0, x1, z1 = area["bounds_xz"]
+    thickness = float(area["wall_thickness"])
+    owner = str(area["id"])
+    return [
+        ("horizontal", z0, x0, x1, thickness, owner),
+        ("horizontal", z1, x0, x1, thickness, owner),
+        ("vertical", x0, z0, z1, thickness, owner),
+        ("vertical", x1, z0, z1, thickness, owner),
+    ]
+
+
+def mixed_thickness_wall_overlap(a: tuple, b: tuple, epsilon: float = 1e-6) -> bool:
+    """Detect positive 2D overlap of axis-aligned wall solids with unequal thickness."""
+    axis_a, fixed_a, start_a, end_a, thickness_a, _ = a
+    axis_b, fixed_b, start_b, end_b, thickness_b, _ = b
+    if math.isclose(thickness_a, thickness_b, abs_tol=epsilon):
+        return False
+    if axis_a == axis_b:
+        longitudinal = min(end_a, end_b) - max(start_a, start_b)
+        transverse = (thickness_a + thickness_b) * 0.5 - abs(fixed_a - fixed_b)
+        return longitudinal > epsilon and transverse > epsilon
+    horizontal, vertical = (a, b) if axis_a == "horizontal" else (b, a)
+    _, horizontal_z, horizontal_x0, horizontal_x1, horizontal_thickness, _ = horizontal
+    _, vertical_x, vertical_z0, vertical_z1, vertical_thickness, _ = vertical
+    x_overlap = min(horizontal_x1, vertical_x + vertical_thickness * 0.5) - max(horizontal_x0, vertical_x - vertical_thickness * 0.5)
+    z_overlap = min(horizontal_z + horizontal_thickness * 0.5, vertical_z1) - max(horizontal_z - horizontal_thickness * 0.5, vertical_z0)
+    return x_overlap > epsilon and z_overlap > epsilon
+
+
 def main() -> int:
     overview = load("overview/metric-overview.json")
     topology = load("overview/topology.json")
@@ -331,6 +378,37 @@ def main() -> int:
         for route in physical_routes:
             if space["floor_y"] == route["floor_y"] and positive_overlap(space["bounds_xz"], route["bounds_xz"]):
                 errors.append(f"room overlaps physical route: {space['id']} <> {route['id']}")
+
+    wall_defaults = geometry.get("wall_defaults", {})
+    if wall_defaults.get("shared_boundary_policy") != "canonical-centerline-single-thickness":
+        errors.append("wall_defaults must require one centerline and one thickness per shared area boundary")
+    if wall_defaults.get("junction_policy") != "butt-no-positive-overlap":
+        errors.append("wall_defaults must require trimmed butt joints without positive wall overlap")
+
+    physical_areas = spaces + physical_routes
+    for a, b in itertools.combinations(physical_areas, 2):
+        if a["floor_y"] != b["floor_y"]:
+            continue
+        shared = shared_boundary_overlap(a["bounds_xz"], b["bounds_xz"])
+        if shared and not math.isclose(float(a["wall_thickness"]), float(b["wall_thickness"]), abs_tol=1e-6):
+            errors.append(
+                f"shared area wall thickness mismatch on {shared}: "
+                f"{a['id']}={a['wall_thickness']} <> {b['id']}={b['wall_thickness']}"
+            )
+
+    edges_by_floor: dict[float, list[tuple]] = {}
+    for area in physical_areas:
+        edges_by_floor.setdefault(float(area["floor_y"]), []).extend(wall_edges(area))
+    reported_wall_pairs: set[tuple[str, str]] = set()
+    for edges in edges_by_floor.values():
+        for edge_a, edge_b in itertools.combinations(edges, 2):
+            owner_a, owner_b = edge_a[5], edge_b[5]
+            pair = tuple(sorted((owner_a, owner_b)))
+            if owner_a == owner_b or pair in reported_wall_pairs:
+                continue
+            if mixed_thickness_wall_overlap(edge_a, edge_b):
+                reported_wall_pairs.add(pair)
+                errors.append(f"mixed-thickness wall solids overlap: {owner_a} <> {owner_b}")
 
     for portal in geometry["internal_portals"]:
         a_id, b_id = portal["between"]

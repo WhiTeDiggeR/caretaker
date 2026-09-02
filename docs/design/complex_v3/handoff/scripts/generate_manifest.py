@@ -48,15 +48,45 @@ def main() -> None:
     ]
     all_nodes = topology["nodes"]
     artifacts = [
-        {"id": "overview-metric", "type": "overview", "path": "overview/metric-overview.svg", "preview": "overview/metric-overview.png", "status": "approved", "style_id": "caretaker-style-b-v1", "depends_on": [], "covers": all_nodes},
-        {"id": "topology-graph", "type": "graph", "path": "overview/topology.json", "status": "approved", "depends_on": ["overview-metric"], "covers": all_nodes},
-        {"id": "sector-passports", "type": "detail", "path": "passports/sector-passports.json", "status": "verified", "style_id": "caretaker-style-b-v1", "depends_on": ["overview-metric", "topology-graph"], "covers": all_nodes},
-        {"id": "vertical-section", "type": "section", "path": "vertical/vertical-section.svg", "preview": "vertical/vertical-section.png", "status": "verified", "style_id": "caretaker-style-b-v1", "depends_on": ["overview-metric", "topology-graph"], "covers": all_nodes},
+        {"id": "overview-metric", "type": "overview", "path": "overview/metric-overview.svg", "viewer": "overview/metric-overview.html", "preview": "overview/metric-overview.png", "status": "approved", "style_id": "caretaker-style-b-v1", "depends_on": [], "covers": all_nodes},
+        {"id": "topology-graph", "type": "handoff", "path": "overview/topology.json", "status": "approved", "depends_on": ["overview-metric"], "covers": all_nodes},
+        {"id": "sector-passports", "type": "handoff", "path": "passports/sector-passports.json", "status": "verified", "depends_on": ["overview-metric", "topology-graph"], "covers": all_nodes},
+        {"id": "vertical-section", "type": "section", "path": "vertical/vertical-section.svg", "viewer": "vertical/vertical-section.html", "preview": "vertical/vertical-section.png", "status": "verified", "style_id": "caretaker-style-b-v1", "depends_on": ["overview-metric", "topology-graph"], "covers": all_nodes},
         {"id": "vertical-handoff", "type": "handoff", "path": "vertical/vertical-transitions.json", "status": "verified", "depends_on": ["vertical-section", "topology-graph"], "covers": all_nodes},
         {"id": "geometry-handoff", "type": "handoff", "path": "geometry/complex-handoff.json", "status": "verified", "depends_on": ["sector-passports", "vertical-handoff"], "covers": all_nodes},
         {"id": "validation-stage-2", "type": "validation", "path": "validation/stage-2-report.md", "status": "verified", "depends_on": ["geometry-handoff"], "covers": all_nodes},
         {"id": "package-index", "type": "index", "path": "README.md", "status": "verified", "depends_on": ["validation-stage-2"], "covers": all_nodes},
     ]
+    level_overviews = {
+        "upper": ("LV-U", "../plans/overview/upper/current/upper-floor-functional-plan-v4.svg"),
+        "lower": ("LV-L", "../plans/overview/lower/current/lower-floor-functional-plan-revised.svg"),
+        "technical": ("LV-T", "../plans/overview/technical/current/technical-floor-functional-plan-v3.svg"),
+    }
+    for level_name, (level_id, source_path) in level_overviews.items():
+        artifacts.append({
+            "id": f"overview-{level_name}",
+            "type": "overview",
+            "path": source_path,
+            "viewer": str(Path(source_path).with_suffix(".html")).replace("\\", "/"),
+            "status": "verified",
+            "style_id": "caretaker-style-b-v1",
+            "depends_on": ["overview-metric", "topology-graph"],
+            "covers": [node_id for node_id in all_nodes if node_id.startswith(level_id[-1] + "-")],
+        })
+    passports = load("passports/sector-passports.json")["passports"]
+    overview_by_level = {"LV-U": "overview-upper", "LV-L": "overview-lower", "LV-T": "overview-technical"}
+    for passport in passports:
+        source_path = "../" + passport["source_detail"].removeprefix("../../")
+        artifacts.append({
+            "id": f"detail-{passport['sector_id'].lower()}",
+            "type": "detail",
+            "path": source_path,
+            "viewer": str(Path(source_path).with_suffix(".html")).replace("\\", "/"),
+            "status": "verified",
+            "style_id": "caretaker-style-b-v1",
+            "depends_on": [overview_by_level[passport["level"]], "sector-passports"],
+            "covers": [passport["sector_id"]],
+        })
     anchors = []
     for anchor in overview["anchors"]:
         position = anchor["position_xz"] if "position_xz" in anchor else [anchor["centerline_z"]]

@@ -1,0 +1,129 @@
+<svg viewBox="0 0 1000 600" role="img" aria-labelledby="t6title t6desc" xmlns="http://www.w3.org/2000/svg" id="plan-t_freight" class="plan-root" data-plan-style-id="caretaker-style-b-v1" data-scale="relative" data-scale-policy="legacy-local; metric-handoff-authoritative" data-grid-size="1" data-grid-unit="svg-unit" data-plan-id="t_freight" data-sector-id="T-FREIGHT" data-level="LV-T" data-parent-bounds-xz="-20.0,60.0,30.0,82.0" data-local-origin-xyz="-20.0,-11.5,60.0" data-anchor-ids="A-FREIGHT-LIFT,A-HEAVY-SPINE" data-transition-ids="VT-FREIGHT-LIFT" data-semantic-layer-contract="per-object-v1">
+  <g id="t_freight-source-layer" class="layer source-geometry" data-layer="source-geometry">
+  <metadata id="t_freight-metadata">{&quot;schema&quot;:&quot;complex-v3-svg-plan-metadata-v1&quot;,&quot;plan_id&quot;:&quot;t_freight&quot;,&quot;style_id&quot;:&quot;caretaker-style-b-v1&quot;,&quot;geometry_policy&quot;:&quot;preserve-approved-plan; metric-handoff-is-authoritative&quot;,&quot;sector_id&quot;:&quot;T-FREIGHT&quot;,&quot;level&quot;:&quot;LV-T&quot;,&quot;parent_boundary_xz&quot;:[-20.0,60.0,30.0,82.0],&quot;local_origin_xyz&quot;:[-20.0,-11.5,60.0],&quot;anchors&quot;:[{&quot;id&quot;:&quot;A-FREIGHT-LIFT&quot;,&quot;tolerance&quot;:0.25,&quot;position_xz&quot;:[20.0,72.0]},{&quot;id&quot;:&quot;A-HEAVY-SPINE&quot;,&quot;tolerance&quot;:0.5,&quot;centerline_z&quot;:64.0}],&quot;neighbors&quot;:[&quot;L-FREIGHT-SERVICE&quot;,&quot;T-FRT&quot;],&quot;source_detail&quot;:&quot;../../plans/sectors/technical/t_freight.svg&quot;,&quot;vertical_transitions&quot;:[{&quot;id&quot;:&quot;VT-FREIGHT-LIFT&quot;,&quot;anchor&quot;:&quot;A-FREIGHT-LIFT&quot;,&quot;kind&quot;:&quot;freight_elevator&quot;,&quot;shaft_bounds_xz&quot;:[16.5,67.5,23.5,76.5],&quot;clear_opening_bounds_xz&quot;:[16.68,67.68,23.32,76.32],&quot;stops&quot;:[&quot;LV-U&quot;,&quot;LV-L&quot;,&quot;LV-T&quot;]}]}</metadata>
+  <defs id="t_freight-style-defs"><style><![CDATA[
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f4f3ef, #181a1d);
+  --fg: light-dark(#202429, #eef1f4);
+  --muted: light-dark(#626971, #aeb5bd);
+  --line: light-dark(#252a30, #e5e9ed);
+  --corridor: light-dark(#d5d9dc, #353b41);
+  --energy: light-dark(#9eb8ca, #294e69);
+  --utility: light-dark(#a9c5b7, #315d4e);
+  --work: light-dark(#c7ad89, #705033);
+  --shaft: light-dark(#e8e8e4, #25292e);
+  --equipment: light-dark(#55616b, #9ca7b0);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--fg); font-family: "Segoe UI", Arial, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 18px; }
+h1 { margin: 0 0 6px; font-size: 22px; font-weight: 500; }
+p { margin: 0 0 14px; color: var(--muted); }
+svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: var(--bg); }
+.canvas { fill: var(--bg); }
+.room, .corridor, .shaft, .work, .utility, .energy { stroke: var(--line); stroke-width: 3; }
+.room { fill: var(--shaft); }
+.corridor { fill: var(--corridor); }
+.energy { fill: var(--energy); }
+.utility { fill: var(--utility); }
+.work { fill: var(--work); }
+.shaft { fill: var(--shaft); stroke-dasharray: 8 6; }
+.equipment { fill: none; stroke: var(--equipment); stroke-width: 2; }
+.wall { stroke: var(--line); stroke-width: 5; }
+.door-gap { stroke: var(--corridor); stroke-width: 12; }
+.room-gap { stroke: var(--shaft); stroke-width: 12; }
+.energy-gap { stroke: var(--energy); stroke-width: 12; }
+.utility-gap { stroke: var(--utility); stroke-width: 12; }
+.work-gap { stroke: var(--work); stroke-width: 12; }
+.door { fill: none; stroke: var(--line); stroke-width: 2; }
+.window { stroke: var(--line); stroke-width: 7; }
+text { fill: var(--fg); text-anchor: middle; dominant-baseline: middle; font-size: 16px; font-weight: 500; }
+.minor { font-size: 13px; font-weight: 400; }
+.tiny { font-size: 11px; font-weight: 400; fill: var(--muted); }
+.flow { fill: none; stroke: var(--equipment); stroke-width: 3; marker-end: url(#arrow); }
+@media (max-width: 600px) { main { padding: 8px; } h1 { font-size: 18px; } }
+]]></style>
+<style id="plan-render-fallback"><![CDATA[
+/* Renderer-independent Caretaker style B fallback. Geometry is untouched. */
+.plan-root { background: #191c1f !important; font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; }
+.plan-root text {
+  fill: #f1f3f5 !important;
+  font-family: "Segoe UI", Arial, sans-serif !important;
+  font-size: 14px;
+}
+.plan-root .tiny, .plan-root .small, .plan-root .minor,
+.plan-root .context, .plan-root .dimtext { fill: #aeb4ba !important; }
+.plan-root .shell { fill: #202428 !important; stroke: #d9dde0 !important; }
+.plan-root .room, .plan-root .lab, .plan-root .late,
+.plan-root .equipment-room, .plan-root .containment { fill: #3b4147 !important; stroke: #d9dde0 !important; }
+.plan-root .old { fill: #51493f !important; stroke: #d9dde0 !important; }
+.plan-root .personnel { fill: #3b4650 !important; stroke: #d9dde0 !important; }
+.plan-root .research { fill: #51486a !important; stroke: #d9dde0 !important; }
+.plan-root .support { fill: #3f4a4f !important; stroke: #d9dde0 !important; }
+.plan-root .medical, .plan-root .utility, .plan-root .service { fill: #356352 !important; stroke: #d9dde0 !important; }
+.plan-root .domestic { fill: #4c533d !important; stroke: #d9dde0 !important; }
+.plan-root .security { fill: #5b3f43 !important; stroke: #d9dde0 !important; }
+.plan-root .command { fill: #3c4d63 !important; stroke: #d9dde0 !important; }
+.plan-root .heavy, .plan-root .work, .plan-root .cargo { fill: #6b5235 !important; stroke: #d9dde0 !important; }
+.plan-root .energy { fill: #2e5778 !important; stroke: #d9dde0 !important; }
+.plan-root .corridor, .plan-root .passenger, .plan-root .mixed,
+.plan-root .controlled { fill: #3a4045 !important; stroke: #d9dde0 !important; }
+.plan-root .shaft, .plan-root .vertical, .plan-root .stair,
+.plan-root .lift { fill: #2b2e33 !important; stroke: #d9dde0 !important; }
+.plan-root .airlock, .plan-root .checkpoint { fill: #42484e !important; stroke: #d9dde0 !important; }
+.plan-root .gallery, .plan-root .cable { fill: #185d68 !important; stroke: #d9dde0 !important; }
+.plan-root .context-zone { fill: #2b3035 !important; stroke: #8e969d !important; }
+.plan-root .void { fill: #17191b !important; stroke: #8e969d !important; }
+.plan-root .canvas { fill: #191c1f !important; stroke: none !important; }
+.plan-root .outer { fill: none !important; stroke: #d9dde0 !important; }
+.plan-root .walkway { fill: #2f353a !important; stroke: #d9dde0 !important; }
+.plan-root .store { fill: #5b3f43 !important; stroke: #d9dde0 !important; }
+.plan-root .counter { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .screen { fill: #17222c !important; stroke: #aeb4ba !important; }
+.plan-root .opening { fill: #3a4045 !important; stroke: none !important; }
+.plan-root .equipment, .plan-root .door, .plan-root .gate,
+.plan-root .gate-thin, .plan-root .window, .plan-root .wall,
+.plan-root .partition, .plan-root .dimension, .plan-root .scale,
+.plan-root .steps, .plan-root .stairs, .plan-root .flow,
+.plan-root .barrier, .plan-root .reinforce { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .thin, .plan-root .step { fill: none !important; stroke: #aeb4ba !important; }
+.plan-root .down { fill: #aeb4ba !important; stroke: none !important; }
+.plan-root .door { stroke: #d9dde0 !important; }
+.plan-root .door-gap { stroke: #3a4045 !important; }
+.plan-root .room-gap { stroke: #3b4147 !important; }
+.plan-root .support-gap { stroke: #3f4a4f !important; }
+.plan-root .energy-gap { stroke: #2e5778 !important; }
+.plan-root .utility-gap { stroke: #356352 !important; }
+.plan-root .work-gap, .plan-root .cargo-gap { stroke: #6b5235 !important; }
+.plan-root .equip-gap { stroke: #3b4147 !important; }
+.plan-root .stair-gap { stroke: #2b2e33 !important; }
+.plan-root .floor-opening, .plan-root .ceiling-opening {
+  fill: none !important; stroke: #f2c14e !important; stroke-width: 2 !important; stroke-dasharray: 8 5 !important;
+}
+.plan-root .damaged, .plan-root .rubble { fill: #6b6158 !important; stroke: #d9dde0 !important; }
+.plan-root .blocked { fill: none !important; stroke: #d9dde0 !important; }
+]]></style>
+</defs>
+<title id="t6title">Детальный план нижней грузовой зоны</title><desc id="t6desc">Внешний контур тяжёлой магистрали, технической приёмки, грузового лифта, обхода и правого сервисного блока совпадает с грузовыми секторами верхнего и нижнего этажей. Магистраль открывается только в приёмку; главные ворота лифта находятся на общей стене с приёмкой. Прямого грузового входа из магистрали в шахту нет.</desc>
+<g id="layer-for-t_freight-space-001" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_freight-space-001"><rect class="corridor" x="70" y="80" width="860" height="170" id="t_freight-space-001" data-kind="space" /></g><g id="layer-for-t_freight-label-001" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-001"><text x="500" y="150" id="t_freight-label-001" class="label" data-kind="label">ТЯЖЁЛАЯ ГРУЗОВАЯ МАГИСТРАЛЬ</text></g><g id="layer-for-t_freight-label-002" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-002"><text class="minor" x="500" y="178" id="t_freight-label-002" data-kind="label">чистая ширина 7–8 м · тот же контур, что на двух основных этажах</text></g>
+
+<g id="layer-for-t_freight-equipment-001" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-001"><rect class="work" x="70" y="250" width="530" height="160" id="t_freight-equipment-001" data-kind="equipment" /></g><g id="layer-for-t_freight-label-003" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-003"><text x="335" y="288" id="t_freight-label-003" class="label" data-kind="label">ТЕХНИЧЕСКАЯ СЕРВИСНАЯ ПРИЁМКА</text></g><g id="layer-for-t_freight-label-004" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-004"><text class="minor" x="335" y="315" id="t_freight-label-004" data-kind="label">разгрузка узлов · ремонтная постановка · без постоянного хранения</text></g><g id="layer-for-t_freight-equipment-002" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-002"><rect class="equipment" x="125" y="345" width="100" height="40" id="t_freight-equipment-002" data-kind="equipment" /></g><g id="layer-for-t_freight-equipment-003" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-003"><rect class="equipment" x="270" y="345" width="100" height="40" id="t_freight-equipment-003" data-kind="equipment" /></g><g id="layer-for-t_freight-equipment-004" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-004"><rect class="equipment" x="415" y="345" width="130" height="40" id="t_freight-equipment-004" data-kind="equipment" /></g>
+<g id="layer-for-t_freight-space-002" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_freight-space-002"><rect class="corridor" x="70" y="410" width="530" height="40" id="t_freight-space-002" data-kind="space" /></g><g id="layer-for-t_freight-label-005" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-005"><text class="tiny" x="335" y="431" id="t_freight-label-005" data-kind="label">защищённый служебный обход технической приёмки</text></g>
+
+<g id="layer-for-t_freight-space-003" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_freight-space-003"><rect class="shaft" x="600" y="250" width="260" height="160" id="t_freight-space-003" data-kind="space" /></g><g id="layer-for-t_freight-label-006" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-006"><text x="730" y="308" id="t_freight-label-006" class="label" data-kind="label">ГРУЗОВОЙ ЛИФТ</text></g><g id="layer-for-t_freight-label-007" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-007"><text class="minor" x="730" y="334" id="t_freight-label-007" data-kind="label">тот же шахтный контур на всех этажах</text></g><g id="layer-for-t_freight-label-008" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-008"><text class="tiny" x="730" y="360" id="t_freight-label-008" data-kind="label">верхний этаж ↑ · нижний этаж ↑ · техуровень</text></g>
+<g id="layer-for-t_freight-space-004" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_freight-space-004"><rect class="room" x="860" y="250" width="70" height="80" id="t_freight-space-004" data-kind="space" /></g><g id="layer-for-t_freight-label-009" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-009"><text class="tiny" x="895" y="281" id="t_freight-label-009" data-kind="label">привод</text></g><g id="layer-for-t_freight-label-010" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-010"><text class="tiny" x="895" y="303" id="t_freight-label-010" data-kind="label">контроль</text></g>
+<g id="layer-for-t_freight-space-005" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_freight-space-005"><rect class="room" x="860" y="330" width="70" height="80" id="t_freight-space-005" data-kind="space" /></g><g id="layer-for-t_freight-label-011" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-011"><text class="tiny" x="895" y="361" id="t_freight-label-011" data-kind="label">служебный</text></g><g id="layer-for-t_freight-label-012" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-012"><text class="tiny" x="895" y="383" id="t_freight-label-012" data-kind="label">тамбур</text></g>
+<g id="layer-for-t_freight-space-006" class="layer layer-rooms" data-layer="rooms" data-object-ref="t_freight-space-006"><rect class="corridor" x="600" y="410" width="330" height="40" id="t_freight-space-006" data-kind="space" /></g><g id="layer-for-t_freight-label-013" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-013"><text class="tiny" x="765" y="431" id="t_freight-label-013" data-kind="label">обход шахты · аварийная связь</text></g>
+
+<g id="layer-for-t_freight-opening-001" class="layer layer-openings" data-layer="openings" data-object-ref="t_freight-opening-001"><line class="work-gap" x1="245" y1="250" x2="375" y2="250" id="t_freight-opening-001" data-kind="opening" /></g><g id="layer-for-t_freight-opening-002" class="layer layer-openings" data-layer="openings" data-object-ref="t_freight-opening-002"><line class="door-gap" x1="245" y1="250" x2="375" y2="250" id="t_freight-opening-002" data-kind="opening" /></g>
+<g id="layer-for-t_freight-opening-003" class="layer layer-openings" data-layer="openings" data-object-ref="t_freight-opening-003"><line class="room-gap" x1="600" y1="278" x2="600" y2="392" id="t_freight-opening-003" data-kind="opening" /></g>
+<g id="layer-for-t_freight-opening-004" class="layer layer-openings" data-layer="openings" data-object-ref="t_freight-opening-004"><line class="door-gap" x1="265" y1="410" x2="335" y2="410" id="t_freight-opening-004" data-kind="opening" /></g><g id="layer-for-t_freight-opening-005" class="layer layer-openings" data-layer="openings" data-object-ref="t_freight-opening-005"><line class="door-gap" x1="700" y1="410" x2="760" y2="410" id="t_freight-opening-005" data-kind="opening" /></g>
+<g id="layer-for-t_freight-opening-006" class="layer layer-openings" data-layer="openings" data-object-ref="t_freight-opening-006"><line class="room-gap" x1="880" y1="330" x2="910" y2="330" id="t_freight-opening-006" data-kind="opening" /></g><g id="layer-for-t_freight-opening-007" class="layer layer-openings" data-layer="openings" data-object-ref="t_freight-opening-007"><line class="door-gap" x1="880" y1="410" x2="910" y2="410" id="t_freight-opening-007" data-kind="opening" /></g>
+<g id="layer-for-t_freight-annotation-001" class="layer layer-annotations" data-layer="annotations" data-object-ref="t_freight-annotation-001"><line class="window" x1="860" y1="278" x2="860" y2="315" id="t_freight-annotation-001" data-kind="annotation" /></g>
+
+<g id="layer-for-t_freight-equipment-005" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-005"><line class="equipment" x1="70" y1="490" x2="600" y2="490" id="t_freight-equipment-005" data-kind="equipment" /></g><g id="layer-for-t_freight-equipment-006" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-006"><line class="equipment" x1="70" y1="482" x2="70" y2="498" id="t_freight-equipment-006" data-kind="equipment" /></g><g id="layer-for-t_freight-equipment-007" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-007"><line class="equipment" x1="600" y1="482" x2="600" y2="498" id="t_freight-equipment-007" data-kind="equipment" /></g><g id="layer-for-t_freight-label-014" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-014"><text class="tiny" x="335" y="515" id="t_freight-label-014" data-kind="label">≈ 27 × 10 м — тот же западный грузовой блок</text></g>
+<g id="layer-for-t_freight-equipment-008" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-008"><line class="equipment" x1="600" y1="490" x2="930" y2="490" id="t_freight-equipment-008" data-kind="equipment" /></g><g id="layer-for-t_freight-equipment-009" class="layer layer-equipment" data-layer="equipment" data-object-ref="t_freight-equipment-009"><line class="equipment" x1="930" y1="482" x2="930" y2="498" id="t_freight-equipment-009" data-kind="equipment" /></g><g id="layer-for-t_freight-label-015" class="layer layer-labels" data-layer="labels" data-object-ref="t_freight-label-015"><text class="tiny" x="765" y="515" id="t_freight-label-015" data-kind="label">≈ 17 × 10 м — неизменный шахтный блок</text></g>
+
+  </g>
+</svg>
