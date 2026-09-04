@@ -58,11 +58,11 @@ The validations logically associated with bindings and composition run against t
 
 `--dry-run` executes generation and every validation but skips promotion. `--validate-only` validates the current live package without running a generator. The machine report uses `caretaker.safe_regeneration_report` version `1.0.0` and records stage results, input/output SHA-256 hashes, live hashes, mode, status, readiness, and errors.
 
-Semantic equality covers `Generated/`, `anchor_frames.json`, and `generation_manifest.json`. The backend diagnostic report is excluded because it contains ephemeral staging paths. When semantic output is unchanged, status is `noop` and the live directory is not renamed or overwritten. Files outside the generator-owned set—including `AuthoredContent`, `Materials`, and arbitrary user files—are preserved byte-for-byte in the candidate.
+Semantic equality covers `Generated/`, `anchor_frames.json`, and `generation_manifest.json`. The backend diagnostic report is excluded because operational evidence does not define geometry. When semantic output is unchanged, status is `noop` and the live directory is not renamed or overwritten. Files outside the generator-owned set—including `AuthoredContent`, `Materials`, and arbitrary user files—are preserved byte-for-byte in the candidate.
 
 ### Durable diagnostics (T13 integration correction)
 
-Orchestrator 1.0.1 adds the optional `validation_artifacts` report field without
+Orchestrator 1.1.0 includes the optional `validation_artifacts` report field without
 changing schema 1.0.0. Once composition validation runs, both its JSON report and
 `repair_queue.json` are retained in a fresh `<report-stem>.evidence-*` directory
 beside the requested machine report, outside live and transaction staging.
@@ -78,10 +78,12 @@ implicitly overwritten or deleted. Consumers must follow the current report,
 not search neighboring directories for a queue. Authored bindings are unchanged,
 and no candidate anchor IDs are invented for a deleted reference.
 
-This correction does not yet implement recalculation of authored bounds from
-placement policies: the existing composition adapter still replaces only anchor
-data. Full moving-object resolution and planar placement remain required before
-the U-MEDBAY pilot can be accepted.
+When a ready sector declares project-relative `bindings_input` beside
+`composition_input`, `resolve_bindings.py` applies the T01 policies to staged
+frames, recalculates authored transforms/bounds and generated infrastructure,
+and sends that exact candidate document to validation. Missing IDs retain their
+original reference and old bounds so the validator emits a repair item; no nearby
+anchor is selected.
 
 ## Verification fixtures
 
@@ -91,4 +93,4 @@ the U-MEDBAY pilot can be accepted.
 python -m unittest discover -s tools/complex_v3_regeneration/tests -v
 ```
 
-For an integration check, invoke `regenerate_sector.py` with that fixture manifest, `--sector FIXTURE-ORDINARY` or `FIXTURE-VERTICAL`, and explicit canonical roots. Run the ordinary fixture twice into different empty staging directories and compare `anchor_frames.json` plus `generation_manifest.json` byte-for-byte; `regeneration_report.json` intentionally records staging-specific command paths.
+For an integration check, invoke `regenerate_sector.py` with that fixture manifest, `--sector FIXTURE-ORDINARY` or `FIXTURE-VERTICAL`, and explicit canonical roots. Run the ordinary fixture twice into different empty staging directories and compare the package byte-for-byte. Backend, converter, preflight, and scene metadata paths are normalized to `$PROJECT_ROOT`, `$STAGING`, `$SVG_TOOL_ROOT`, `$STAIR_TOOL_ROOT`, and `$PYTHON`, so reports do not retain a developer's worktree path.

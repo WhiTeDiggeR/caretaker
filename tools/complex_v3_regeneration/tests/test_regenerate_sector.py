@@ -147,6 +147,11 @@ class SectorRegenerationTests(unittest.TestCase):
         self.assertEqual(frame["bounds"]["polygon_xz"], [[10.0, 20.0], [10.0, 18.0], [11.0, 18.0]])
         self.assertEqual((first / "anchor_frames.json").read_bytes(), (second / "anchor_frames.json").read_bytes())
         self.assertEqual((first / "generation_manifest.json").read_bytes(), (second / "generation_manifest.json").read_bytes())
+        self.assertEqual((first / "regeneration_report.json").read_bytes(), (second / "regeneration_report.json").read_bytes())
+        for relative in ("preflight_report.json", "Generated/Architecture/conversion_report.json", "Generated/Architecture/fixture.tscn"):
+            content = (first / relative).read_text(encoding="utf-8")
+            self.assertNotIn(str(self.root), content)
+            self.assertEqual(content, (second / relative).read_text(encoding="utf-8"))
 
     def test_vertical_sector_merges_stair_frames_and_bounds(self) -> None:
         staging = self.root / "vertical"
@@ -176,6 +181,30 @@ class SectorRegenerationTests(unittest.TestCase):
         self.assertEqual(self.run_backend(self.root / "bad", self.manifest(transform=bad_transform)), 2)
         (self.root / "mismatch.svg").write_text("<svg/>", encoding="utf-8")
         self.assertEqual(self.run_backend(self.root / "mismatch", self.manifest(source="mismatch.svg")), 2)
+
+    def test_parameterization_derives_surface_ranges_and_exact_holes(self) -> None:
+        frame = BACKEND.transform_frame(SVG_FRAME, {
+            "origin": [0.0, 0.0, 0.0], "basis_x": [1.0, 0.0, 0.0],
+            "basis_y": [0.0, 1.0, 0.0], "basis_z": [0.0, 0.0, 1.0],
+        })
+        limits = {"normal_offset_m": [0, 0], "height_m": [0, 0], "rotation_deg": {"yaw": [-180, 180], "pitch": [0, 0], "roll": [0, 0]}}
+        sector = {"anchor_parameterization": {"defaults_by_type": {"floor": {"placement_limits": limits}}}}
+        opening = {"surface": "floor", "applied": True, "polygon_xz_m": [[1.2, 0.1], [1.4, 0.1], [1.4, 0.2], [1.2, 0.2]]}
+        result = BACKEND.parameterize_frames([frame], sector, {"surface_openings": [opening]})[0]
+        self.assertEqual(result["bounds"]["u_range_m"], [-1.0, 1.0])
+        self.assertEqual(result["bounds"]["v_range_m"], [-2.0, -1.0])
+        self.assertEqual(result["bounds"]["holes_xz"], [opening["polygon_xz_m"]])
+
+    def test_parameterization_blocks_boundary_clipped_opening(self) -> None:
+        frame = BACKEND.transform_frame(SVG_FRAME, {
+            "origin": [0.0, 0.0, 0.0], "basis_x": [1.0, 0.0, 0.0],
+            "basis_y": [0.0, 1.0, 0.0], "basis_z": [0.0, 0.0, 1.0],
+        })
+        limits = {"normal_offset_m": [0, 0], "height_m": [0, 0], "rotation_deg": {"yaw": [-180, 180], "pitch": [0, 0], "roll": [0, 0]}}
+        sector = {"anchor_parameterization": {"defaults_by_type": {"floor": {"placement_limits": limits}}}}
+        opening = {"surface": "floor", "applied": True, "polygon_xz_m": [[0.5, 0.3], [1.5, 0.3], [1.5, 0.7], [0.5, 0.7]]}
+        with self.assertRaisesRegex(BACKEND.RegenerationError, "crosses the boundary"):
+            BACKEND.parameterize_frames([frame], sector, {"surface_openings": [opening]})
 
 
 if __name__ == "__main__":

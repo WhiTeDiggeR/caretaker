@@ -1,0 +1,133 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/complex_v3_regeneration/pilots/u_medbay/live/Generated/Architecture/u_medbay_pilot_generated.tscn" id="1_architecture"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_registry.gd" id="2_registry"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="3_anchored"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_placement.gd" id="4_placement"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_axis_placement.gd" id="5_axis"]
+
+[sub_resource type="StandardMaterial3D" id="Material_terminal"]
+albedo_color = Color(0.08, 0.68, 0.88, 1)
+emission_enabled = true
+emission = Color(0.02, 0.25, 0.4, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_terminal"]
+material = SubResource("Material_terminal")
+size = Vector3(0.5, 0.4, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="Material_beacon"]
+albedo_color = Color(1, 0.35, 0.08, 1)
+emission_enabled = true
+emission = Color(0.55, 0.08, 0.01, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_beacon"]
+material = SubResource("Material_beacon")
+size = Vector3(0.2, 0.5, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="Material_cart"]
+albedo_color = Color(0.18, 0.58, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_cart"]
+material = SubResource("Material_cart")
+size = Vector3(0.8, 0.8, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="Material_free"]
+albedo_color = Color(0.62, 0.43, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_free"]
+material = SubResource("Material_free")
+size = Vector3(0.6, 0.8, 0.6)
+
+[sub_resource type="Resource" id="Placement_wall"]
+script = ExtResource("4_placement")
+policy = "normalized"
+normalized_value = 0.48
+normal_offset_m = 0.1
+height_m = 1.4
+footprint_m = Vector3(0.5, 0.4, 0.1)
+
+[sub_resource type="Resource" id="Placement_door"]
+script = ExtResource("4_placement")
+policy = "centered"
+normal_offset_m = 0.75
+height_m = 1.2
+footprint_m = Vector3(0.2, 0.5, 0.2)
+
+[sub_resource type="Resource" id="Axis_floor_u"]
+script = ExtResource("5_axis")
+policy = "normalized"
+normalized_value = 0.3
+
+[sub_resource type="Resource" id="Axis_floor_v"]
+script = ExtResource("5_axis")
+policy = "normalized"
+normalized_value = 0.5
+
+[sub_resource type="Resource" id="Placement_floor"]
+script = ExtResource("4_placement")
+mode = "surface"
+surface_u = SubResource("Axis_floor_u")
+surface_v = SubResource("Axis_floor_v")
+footprint_m = Vector3(0.8, 0.8, 0.8)
+footprint_center_m = Vector3(0, 0.4, 0)
+
+[node name="UMedbayRegenerationPilot" type="Node3D"]
+
+[node name="Generated" parent="." instance=ExtResource("1_architecture")]
+
+[node name="AnchorRegistry" type="Node" parent="."]
+script = ExtResource("2_registry")
+anchor_frames_path = "res://scenes/complex_v3_regeneration/pilots/u_medbay/live/anchor_frames.json"
+
+[node name="AuthoredContent" type="Node3D" parent="."]
+
+[node name="WallTerminal" type="Node3D" parent="AuthoredContent" node_paths=PackedStringArray("anchor_registry")]
+script = ExtResource("3_anchored")
+object_id = "OBJ-U-MEDBAY-WALL-TERMINAL-01"
+anchor_id = "svg:u-medbay-wall-west-corridor:wall"
+expected_anchor_type = "wall"
+placement = SubResource("Placement_wall")
+anchor_registry = NodePath("../../AnchorRegistry")
+
+[node name="Visual" type="MeshInstance3D" parent="AuthoredContent/WallTerminal"]
+mesh = SubResource("Mesh_terminal")
+
+[node name="DoorBeacon" type="Node3D" parent="AuthoredContent" node_paths=PackedStringArray("anchor_registry")]
+script = ExtResource("3_anchored")
+object_id = "OBJ-U-MEDBAY-DOOR-BEACON-01"
+anchor_id = "svg:u-medbay-door-external-east:door:threshold_inside"
+expected_anchor_type = "door"
+placement = SubResource("Placement_door")
+anchor_registry = NodePath("../../AnchorRegistry")
+
+[node name="Visual" type="MeshInstance3D" parent="AuthoredContent/DoorBeacon"]
+mesh = SubResource("Mesh_beacon")
+
+[node name="FloorCart" type="Node3D" parent="AuthoredContent" node_paths=PackedStringArray("anchor_registry")]
+script = ExtResource("3_anchored")
+object_id = "OBJ-U-MEDBAY-FLOOR-CART-01"
+anchor_id = "svg:u-medbay-floor-procedure-room:floor"
+expected_anchor_type = "floor"
+placement = SubResource("Placement_floor")
+anchor_registry = NodePath("../../AnchorRegistry")
+
+[node name="Visual" type="MeshInstance3D" parent="AuthoredContent/FloorCart"]
+position = Vector3(0, 0.4, 0)
+mesh = SubResource("Mesh_cart")
+
+[node name="FreeCrate" type="Node3D" parent="AuthoredContent"]
+position = Vector3(-82, 0.4, 11)
+
+[node name="Visual" type="MeshInstance3D" parent="AuthoredContent/FreeCrate"]
+mesh = SubResource("Mesh_free")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-55, -35, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(-87, 18, 11)
+rotation_degrees = Vector3(-90, 0, 0)
+projection = 1
+size = 18.0
+current = true

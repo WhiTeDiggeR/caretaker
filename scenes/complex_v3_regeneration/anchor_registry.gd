@@ -164,16 +164,22 @@ func resolve_transform(anchor_id: String, expected_type: String, placement: Comp
 	if placement.mode != "linear":
 		return {"ok": false, "errors": PackedStringArray(["linear anchor requires linear placement"])}
 	var bounds := frame["bounds"] as Dictionary
-	var length_m := float(bounds.get("length_m", -1.0))
-	if length_m < 0.0:
-		return {"ok": false, "errors": PackedStringArray(["anchor %s has no valid length_m" % anchor_id])}
-	var along := placement.along_distance(length_m)
+	var raw_range: Variant = bounds.get("along_range_m")
+	var along_range := [0.0, float(bounds.get("length_m", -1.0))]
+	if raw_range != null:
+		if not _valid_range(raw_range):
+			return {"ok": false, "errors": PackedStringArray(["anchor %s has invalid along_range_m" % anchor_id])}
+		along_range = [float(raw_range[0]), float(raw_range[1])]
+	elif along_range[1] < 0.0:
+		return {"ok": false, "errors": PackedStringArray(["anchor %s has no explicit linear range" % anchor_id])}
+	var along := ComplexV3AnchorAxisPlacement.resolve_policy(
+		placement.policy, placement.normalized_value, placement.distance_m,
+		placement.centered_offset_m, along_range[0], along_range[1]
+	)
 	if not bool(along.get("ok", false)):
 		return {"ok": false, "errors": PackedStringArray([str(along.get("error", "invalid placement"))])}
 	var distance := float(along["distance_m"])
 	var errors := PackedStringArray()
-	if distance < -EPS or distance > length_m + EPS:
-		errors.append("placement is outside anchor length")
 	var limits := frame["placement_limits"] as Dictionary
 	_validate_scalar_limit(placement.normal_offset_m, limits.get("normal_offset_m"), "normal_offset_m", errors)
 	_validate_scalar_limit(placement.height_m, limits.get("height_m"), "height_m", errors)
@@ -321,16 +327,66 @@ func _validate_surface_footprint(bounds: Dictionary, placement: ComplexV3AnchorP
 				_validate_scalar_limit((world - origin).dot(axis_u), bounds["u_range_m"], "footprint U", errors)
 				_validate_scalar_limit((world - origin).dot(axis_v), bounds["v_range_m"], "footprint V", errors)
 	var hull := Geometry2D.convex_hull(corners)
-	var area := _polygon_area(hull)
-	var contained_area := 0.0
-	for part: PackedVector2Array in Geometry2D.intersect_polygons(hull, polygon):
-		contained_area += _polygon_area(part)
-	if area <= EPS or absf(area - contained_area) > EPS:
+	if hull.size() > 1 and hull[0].is_equal_approx(hull[-1]):
+		hull.resize(hull.size() - 1)
+	if _polygon_area(hull) <= EPS or not _polygon_contains_polygon(polygon, hull):
 		errors.append("surface footprint extends outside polygon")
 	for hole: PackedVector2Array in holes:
-		for part: PackedVector2Array in Geometry2D.intersect_polygons(hull, hole):
-			if _polygon_area(part) > EPS:
-				errors.append("surface footprint overlaps an opening")
+		if _polygons_overlap(hull, hole):
+			errors.append("surface footprint overlaps an opening")
+
+
+func _point_on_segment(point: Vector2, first: Vector2, second: Vector2) -> bool:
+	if absf((point - first).cross(second - first)) > EPS:
+		return false
+	return point.x >= minf(first.x, second.x) - EPS and point.x <= maxf(first.x, second.x) + EPS and point.y >= minf(first.y, second.y) - EPS and point.y <= maxf(first.y, second.y) + EPS
+
+
+func _point_in_polygon_inclusive(point: Vector2, polygon: PackedVector2Array) -> bool:
+	var inside := false
+	for index: int in polygon.size():
+		var first := polygon[index]
+		var second := polygon[(index + 1) % polygon.size()]
+		if _point_on_segment(point, first, second):
+			return true
+		if (first.y > point.y) != (second.y > point.y):
+			var x_at_y := (second.x - first.x) * (point.y - first.y) / (second.y - first.y) + first.x
+			if point.x < x_at_y:
+				inside = not inside
+	return inside
+
+
+func _segments_cross_strict(a: Vector2, b: Vector2, c: Vector2, d: Vector2) -> bool:
+	var ab_c := (b - a).cross(c - a)
+	var ab_d := (b - a).cross(d - a)
+	var cd_a := (d - c).cross(a - c)
+	var cd_b := (d - c).cross(b - c)
+	return ab_c * ab_d < -EPS and cd_a * cd_b < -EPS
+
+
+func _polygon_contains_polygon(container: PackedVector2Array, subject: PackedVector2Array) -> bool:
+	for point: Vector2 in subject:
+		if not _point_in_polygon_inclusive(point, container):
+			return false
+	for subject_index: int in subject.size():
+		for container_index: int in container.size():
+			if _segments_cross_strict(subject[subject_index], subject[(subject_index + 1) % subject.size()], container[container_index], container[(container_index + 1) % container.size()]):
+				return false
+	return true
+
+
+func _polygons_overlap(first: PackedVector2Array, second: PackedVector2Array) -> bool:
+	for point: Vector2 in first:
+		if _point_in_polygon_inclusive(point, second):
+			return true
+	for point: Vector2 in second:
+		if _point_in_polygon_inclusive(point, first):
+			return true
+	for first_index: int in first.size():
+		for second_index: int in second.size():
+			if _segments_intersect(first[first_index], first[(first_index + 1) % first.size()], second[second_index], second[(second_index + 1) % second.size()]):
+				return true
+	return false
 
 
 func _validate_scalar_limit(value: float, raw_limit: Variant, label: String, errors: PackedStringArray) -> void:
@@ -416,10 +472,15 @@ func find_compatible_candidates(expected_type: String, world_position: Vector3, 
 		var forward := _vector_from_frame(frame, "forward")
 		var up := _vector_from_frame(frame, "up")
 		var bounds := frame.get("bounds", {}) as Dictionary
-		var length_m := float(bounds.get("length_m", bounds.get("width_m", bounds.get("clear_width_m", -1.0))))
-		if length_m < 0.0:
+		var along_range: Array = [0.0, float(bounds.get("length_m", bounds.get("width_m", bounds.get("clear_width_m", -1.0))))]
+		if bounds.has("along_range_m"):
+			var raw_range: Variant = bounds["along_range_m"]
+			if not _valid_range(raw_range):
+				continue
+			along_range = [float(raw_range[0]), float(raw_range[1])]
+		if along_range[1] < along_range[0]:
 			continue
-		var along_m := clampf((world_position - origin).dot(forward), 0.0, length_m)
+		var along_m := clampf((world_position - origin).dot(forward), along_range[0], along_range[1])
 		var height_extent_m := maxf(float(bounds.get("height_m", 0.0)), 0.0)
 		var height_m := clampf((world_position - origin).dot(up), 0.0, height_extent_m)
 		var closest := origin + forward * along_m + up * height_m

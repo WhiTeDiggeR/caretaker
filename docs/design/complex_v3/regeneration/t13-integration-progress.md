@@ -1,6 +1,6 @@
-# T13 / #54 — промежуточные исправления интеграции
+# T13 / #54 — пилот регенерации U-MEDBAY
 
-Дата: 2026-09-02. Статус: **in-progress**, не приёмка пилота U-MEDBAY.
+Дата завершения: 2026-09-04. Статус: **verified**.
 
 ## Завершённый срез
 
@@ -22,7 +22,7 @@
 
 | Проверка | Результат |
 |---|---|
-| `python -m unittest discover -s tools/complex_v3_regeneration/tests -q`, с `GODOT_BIN` | 22/22, без skips |
+| `python -m unittest discover -s tools/complex_v3_regeneration/tests -v`, с canonical tool roots | 33/33, без skips |
 | `anchor_surface_check.gd` | 39 checks, 0 failures |
 | `anchor_runtime_check.gd` | прежние linear policies/move/rotate/resize/missing/duplicate проходят |
 | `addons/complex_v3_anchor_editor/editor_operations_check.gd` | прежние операции + отказ invalid surface bind/rebind/correction проходят |
@@ -36,20 +36,29 @@ worktree повторил прежние ошибки JPEG/FBX/EXR сторон�
 не менялись. Финальный cached import прошёл без ошибок. Проверки намеренных
 отказов Python печатают `ERROR`, но unittest подтверждает ожидаемые exit/status.
 
-## Что ещё требуется для #54
+## Завершение пилота
 
-1. Точный изолированный SVG U-MEDBAY и источник соответствия его стабильных IDs
-   метрическому handoff; контрольный сектор и startup не менять.
-2. Adapter converter frames: объявленные допустимые rotation/offset ranges и
-   U/V bounds; происхождение и применённые floor/ceiling openings не терять.
-   Runtime намеренно не угадывает отсутствующие значения converter 1.19.
-3. Реальное вычисление transform/bounds объектов и generated infrastructure
-   для **нового** candidate. Сейчас Safe Regenerate обновляет anchors в копии
-   composition input, но не пересчитывает старые bounds; это ещё не полноценный
-   binding-resolution этап и не доказательство безопасности moving-object сцены.
-4. Четыре pilot-объекта (wall terminal, door beacon, floor object, free object),
-   сценарии move wall/door, resize wall, remove anchor, forced failure;
-   полный editor workflow и before/after изображения в Godot.
+- Изолированный метрический SVG повторяет семь bounds помещений и семь portal
+  segments из `complex-handoff.json`; `verify_pilot.py` фиксирует соответствие.
+  У дверей явно задана inside-side, hinge не угадывается.
+- Adapter добавляет объявленные limits, точные U/V ranges и holes, finished-face
+  origin стен и симметричный диапазон door center. Частично пересекающий границу
+  surface opening блокируется как неоднозначный.
+- `resolve_bindings.py` пересчитывает transforms/bounds трёх anchored объектов и
+  32 infrastructure records внутри candidate. Свободный объект не меняется.
+- Сквозной тест выполняет move wall, resize wall, move door, remove anchor и
+  forced generation failure. Последние два сценария сохраняют live hash; deleted
+  anchor остаётся с точным старым ID и без кандидатов.
+- Отдельная `pilot_scene.tscn` загружает generated architecture и четыре authored
+  объекта. Строгий runtime smoke проверяет непустые imported meshes/collision
+  shapes и поведение привязок после нового editor import.
+- Before/after: `reports/visuals/baseline.png` и
+  `reports/visuals/anchors-moved.png`. Машинная сводка и чистые composition
+  evidence лежат в `reports/verification-summary.json` и `reports/baseline/`.
 
-Ни один существующий сектор, authored dressing или startup `.tscn` этим срезом
-не изменён. #54 и зависимые rollout-задачи не помечаются done.
+Финальная проверка: 33 regeneration Python tests и 7 composition-validator tests;
+39 surface runtime checks; anchor, editor, regeneration-editor и pilot runtime
+suites; clean Safe Regenerate и следующий deterministic no-op без Agent Fix.
+
+Контрольный `docs/design/complex_v3/plans/sectors/upper/u_medbay.svg`, соседние
+сектора, Route A и startup scene не изменены.

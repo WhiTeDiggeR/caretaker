@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -17,7 +18,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.0.1"
+VERSION = "1.1.0"
 SCHEMA_ID = "caretaker.safe_regeneration_report"
 SCHEMA_VERSION = "1.0.0"
 MANAGED_NAMES = ("Generated", "anchor_frames.json", "generation_manifest.json", "regeneration_report.json")
@@ -231,6 +232,26 @@ def resolve_composition(
     document["sector_id"] = anchors.get("sector_id")
     document["generation_id"] = anchors.get("generation_id")
     document["anchors"] = anchors.get("anchors")
+    bindings_input = config.get("bindings_input")
+    if bindings_input is not None:
+        if not isinstance(bindings_input, str):
+            raise OrchestrationError("binding_resolution", "safe_regeneration.bindings_input must be a path")
+        bindings_path = resolve_under(project_root, bindings_input, "binding_resolution")
+        try:
+            bindings_path = candidate / bindings_path.relative_to(live)
+        except ValueError:
+            pass
+        bindings = load_object(bindings_path, "binding_resolution")
+        module_path = Path(__file__).with_name("resolve_bindings.py")
+        spec = importlib.util.spec_from_file_location("complex_v3_resolve_bindings", module_path)
+        if spec is None or spec.loader is None:
+            raise OrchestrationError("binding_resolution", "Cannot load binding resolver")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        try:
+            document = module.resolve_document(document, bindings, anchors)
+        except ValueError as exc:
+            raise OrchestrationError("binding_resolution", str(exc)) from exc
     output.parent.mkdir(parents=True, exist_ok=True)
     atomic_write_json(output, document)
     return output
@@ -243,7 +264,7 @@ def preserve_validation_evidence(output: Path, report_path: Path, report: dict[s
     masquerading as current evidence. The report is the sole current pointer;
     previous attempts are retained for audit, never deleted implicitly.
     """
-    names = ("validation_report.json", "repair_queue.json")
+    names = ("resolved_composition.json", "validation_report.json", "repair_queue.json")
     available = [name for name in names if (output / name).is_file()]
     if not available:
         return
@@ -269,6 +290,8 @@ def validate_composition(
     if not validator.is_file():
         raise OrchestrationError("composition_validation", f"Composition validator is missing: {validator}")
     command = [args.python, str(validator), "--input", str(input_path), "--output", str(output)]
+    output.mkdir(parents=True, exist_ok=True)
+    atomic_write_json(output / "resolved_composition.json", load_object(input_path, "binding_resolution"))
     try:
         run_process(command, project_root, "composition_validation")
     finally:

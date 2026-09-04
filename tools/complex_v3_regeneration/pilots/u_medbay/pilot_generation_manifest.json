@@ -1,0 +1,63 @@
+{
+  "schema_id": "caretaker.sector_generation_manifest",
+  "schema_version": "1.0.0",
+  "contract_version": "1.0.0",
+  "map_id": "caretaker-complex-v3",
+  "project_root": "../../../..",
+  "sectors": [{
+    "sector_id": "U-MEDBAY",
+    "level": "LV-U",
+    "status": "ready",
+    "blockers": [],
+    "source_svg": "scenes/complex_v3_regeneration/pilots/u_medbay/source/u_medbay_pilot.svg",
+    "profile": "generic",
+    "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": 0.0},
+    "shared_args": [
+      "--wall-height", "3.4", "--wall-thickness", "0.3",
+      "--floor-thickness", "0.2", "--ceiling-thickness", "0.2",
+      "--strict-wall-overlaps", "--strict-ceiling-alignment"
+    ],
+    "semantic_mappings": [],
+    "material_mappings": {},
+    "scene_name": "u_medbay_pilot_generated",
+    "output_resource_dir": "res://scenes/complex_v3_regeneration/pilots/u_medbay/live",
+    "local_to_world": {
+      "origin": [0.0, 0.0, 0.0],
+      "basis_x": [1.0, 0.0, 0.0], "basis_y": [0.0, 1.0, 0.0], "basis_z": [0.0, 0.0, 1.0]
+    },
+    "anchor_parameterization": {
+      "defaults_by_type": {
+        "wall": {
+          "origin": "finished_face",
+          "placement_limits": {
+            "normal_offset_m": [0.0, 1.0], "height_m": [0.0, 3.4],
+            "rotation_deg": {"yaw": [0.0, 0.0], "pitch": [0.0, 0.0], "roll": [0.0, 0.0]}
+          }
+        },
+        "door": {
+          "placement_limits": {
+            "normal_offset_m": [0.0, 1.0], "height_m": [0.0, 2.4],
+            "rotation_deg": {"yaw": [0.0, 0.0], "pitch": [0.0, 0.0], "roll": [0.0, 0.0]}
+          }
+        },
+        "floor": {
+          "placement_limits": {
+            "normal_offset_m": [0.0, 0.0], "height_m": [0.0, 0.0],
+            "rotation_deg": {"yaw": [-180.0, 180.0], "pitch": [0.0, 0.0], "roll": [0.0, 0.0]}
+          }
+        },
+        "ceiling": {
+          "placement_limits": {
+            "normal_offset_m": [0.0, 0.0], "height_m": [0.0, 0.0],
+            "rotation_deg": {"yaw": [-180.0, 180.0], "pitch": [0.0, 0.0], "roll": [0.0, 0.0]}
+          }
+        }
+      }
+    },
+    "vertical_generators": [],
+    "safe_regeneration": {
+      "composition_input": "scenes/complex_v3_regeneration/pilots/u_medbay/AuthoredContent/composition.json",
+      "bindings_input": "scenes/complex_v3_regeneration/pilots/u_medbay/AuthoredContent/object_bindings.json"
+    }
+  }]
+}

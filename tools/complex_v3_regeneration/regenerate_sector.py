@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 CONTRACT_VERSION = "1.0.0"
 EPS = 1.0e-6
 ANCHOR_TYPES = {"point", "wall", "door", "floor", "ceiling", "shaft", "stair_entry", "stair_exit"}
@@ -61,6 +61,36 @@ def load_json(path: Path) -> dict[str, Any]:
 
 def write_json(path: Path, value: dict[str, Any]) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def _portable_value(value: Any, replacements: Sequence[tuple[str, str]]) -> Any:
+    if isinstance(value, str):
+        result = value
+        for original, replacement in replacements:
+            result = result.replace(original, replacement)
+        return result.replace("\\", "/") if "$" in result else result
+    if isinstance(value, list):
+        return [_portable_value(item, replacements) for item in value]
+    if isinstance(value, dict):
+        return {key: _portable_value(item, replacements) for key, item in value.items()}
+    return value
+
+
+def sanitize_generated_metadata(staging: Path, replacements: Sequence[tuple[str, str]]) -> None:
+    """Remove machine/worktree paths from committed JSON and scene metadata."""
+    expanded: list[tuple[str, str]] = []
+    for original, replacement in replacements:
+        if not original:
+            continue
+        expanded.extend(((original, replacement), (original.replace("\\", "/"), replacement)))
+    expanded.sort(key=lambda item: len(item[0]), reverse=True)
+    for path in sorted(staging.rglob("*.json")):
+        write_json(path, _portable_value(load_json(path), expanded))
+    for path in sorted(staging.rglob("*.tscn")):
+        text = path.read_text(encoding="utf-8")
+        for original, replacement in expanded:
+            text = text.replace(original.replace("\\", "\\\\"), replacement).replace(original, replacement)
+        path.write_text(text, encoding="utf-8")
 
 
 def require_empty_staging(path: Path) -> None:
@@ -179,6 +209,154 @@ def transform_frame(frame: dict[str, Any], transform: dict[str, list[float]]) ->
             bounds[key] = round(float(bounds[key]) + transform["origin"][1], 6)
     result["geometry_hash"] = sha256_bytes(canonical_json({key: value for key, value in result.items() if key != "geometry_hash"}))
     return result
+
+
+def _finite_range(value: Any, label: str) -> list[float]:
+    if (
+        not isinstance(value, list) or len(value) != 2
+        or not all(isinstance(item, (int, float)) and not isinstance(item, bool) and math.isfinite(float(item)) for item in value)
+        or float(value[0]) > float(value[1])
+    ):
+        raise RegenerationError(f"{label} must be a finite [min, max] range")
+    return [float(value[0]), float(value[1])]
+
+
+def _dot_xz(point: Sequence[float], origin: Sequence[float], axis: Sequence[float]) -> float:
+    return (float(point[0]) - float(origin[0])) * float(axis[0]) + (float(point[1]) - float(origin[2])) * float(axis[2])
+
+
+def _segments_intersect_xz(a: Sequence[float], b: Sequence[float], c: Sequence[float], d: Sequence[float]) -> bool:
+    def orientation(first: Sequence[float], second: Sequence[float], third: Sequence[float]) -> float:
+        return (float(second[0]) - float(first[0])) * (float(third[1]) - float(first[1])) - (float(second[1]) - float(first[1])) * (float(third[0]) - float(first[0]))
+
+    values = orientation(a, b, c), orientation(a, b, d), orientation(c, d, a), orientation(c, d, b)
+    if values[0] * values[1] < -EPS and values[2] * values[3] < -EPS:
+        return True
+    return any(abs(value) <= EPS and _point_on_segment_xz(point, first, second) for value, point, first, second in (
+        (values[0], c, a, b), (values[1], d, a, b), (values[2], a, c, d), (values[3], b, c, d),
+    ))
+
+
+def _point_on_segment_xz(point: Sequence[float], first: Sequence[float], second: Sequence[float]) -> bool:
+    x, z = float(point[0]), float(point[1])
+    return min(float(first[0]), float(second[0])) - EPS <= x <= max(float(first[0]), float(second[0])) + EPS and min(float(first[1]), float(second[1])) - EPS <= z <= max(float(first[1]), float(second[1])) + EPS
+
+
+def _polygons_overlap_xz(first: Sequence[Sequence[float]], second: Sequence[Sequence[float]]) -> bool:
+    if any(_point_in_polygon_xz(point, first) for point in second) or any(_point_in_polygon_xz(point, second) for point in first):
+        return True
+    return any(
+        _segments_intersect_xz(first[index], first[(index + 1) % len(first)], second[other], second[(other + 1) % len(second)])
+        for index in range(len(first)) for other in range(len(second))
+    )
+
+
+def parameterize_frames(
+    frames: list[dict[str, Any]], sector: dict[str, Any], handoff: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Apply explicit sector policy and exact geometric surface parameterization.
+
+    Converter 1.19 deliberately cannot choose project-specific placement ranges.
+    The adapter derives only UV extents from exact polygons; all behavioral
+    limits and wall-face selection must be declared by the manifest.
+    """
+    policy = sector.get("anchor_parameterization")
+    if policy is None:
+        return frames
+    if not isinstance(policy, dict):
+        raise RegenerationError("anchor_parameterization must be an object")
+    defaults = policy.get("defaults_by_type")
+    if not isinstance(defaults, dict):
+        raise RegenerationError("anchor_parameterization.defaults_by_type must be an object")
+    unexpected = sorted(set(defaults) - ANCHOR_TYPES)
+    if unexpected:
+        raise RegenerationError("Unknown parameterization anchor types: " + ", ".join(unexpected))
+    opening_records = handoff.get("surface_openings", [])
+    if not isinstance(opening_records, list):
+        raise RegenerationError("spatial_handoff.surface_openings must be an array")
+    result: list[dict[str, Any]] = []
+    for raw in frames:
+        frame = copy.deepcopy(raw)
+        anchor_type = str(frame["type"])
+        declared = defaults.get(anchor_type)
+        if not isinstance(declared, dict):
+            raise RegenerationError(f"No explicit anchor_parameterization policy for {anchor_type}")
+        limits = declared.get("placement_limits")
+        if not isinstance(limits, dict):
+            raise RegenerationError(f"{anchor_type} placement_limits are missing")
+        for name in ("normal_offset_m", "height_m"):
+            _finite_range(limits.get(name), f"{anchor_type}.placement_limits.{name}")
+        rotations = limits.get("rotation_deg")
+        if not isinstance(rotations, dict):
+            raise RegenerationError(f"{anchor_type}.placement_limits.rotation_deg is missing")
+        for name in ("yaw", "pitch", "roll"):
+            _finite_range(rotations.get(name), f"{anchor_type}.placement_limits.rotation_deg.{name}")
+        frame["placement_limits"] = copy.deepcopy(limits)
+        bounds = frame["bounds"]
+        if anchor_type in {"floor", "ceiling"}:
+            polygon = bounds.get("polygon_xz")
+            if not isinstance(polygon, list) or len(polygon) < 3:
+                raise RegenerationError(f"{frame['anchor_id']} has no exact polygon_xz")
+            origin, axis_u = frame["origin"], frame["forward"]
+            axis_v = [-float(axis_u[2]), 0.0, float(axis_u[0])]
+            u_values = [_dot_xz(point, origin, axis_u) for point in polygon]
+            v_values = [_dot_xz(point, origin, axis_v) for point in polygon]
+            bounds["u_range_m"] = [round(min(u_values), 6), round(max(u_values), 6)]
+            bounds["v_range_m"] = [round(min(v_values), 6), round(max(v_values), 6)]
+            holes: list[list[list[float]]] = []
+            for opening in opening_records:
+                if not isinstance(opening, dict) or opening.get("surface") != anchor_type or not opening.get("applied"):
+                    continue
+                opening_polygon = opening.get("polygon_xz_m")
+                if not isinstance(opening_polygon, list) or not opening_polygon:
+                    raise RegenerationError("Applied surface opening has no exact polygon")
+                # An opening belongs to this frame only when every point is in
+                # its exact polygon. Boundary-clipped ambiguity is blocked.
+                contained = all(_point_in_polygon_xz(point, polygon) for point in opening_polygon)
+                if contained:
+                    holes.append([[float(point[0]), float(point[1])] for point in opening_polygon])
+                elif _polygons_overlap_xz(polygon, opening_polygon):
+                    raise RegenerationError(f"Surface opening overlaps multiple frames or crosses the boundary of {frame['anchor_id']}")
+            bounds["holes_xz"] = holes
+        elif anchor_type == "wall":
+            if declared.get("origin") != "finished_face":
+                raise RegenerationError("Wall parameterization must explicitly select origin=finished_face")
+            thickness = bounds.get("thickness_m")
+            if not isinstance(thickness, (int, float)) or not math.isfinite(float(thickness)) or float(thickness) <= 0:
+                raise RegenerationError(f"{frame['anchor_id']} has no valid wall thickness")
+            centerline_origin = list(frame["origin"])
+            frame["origin"] = [
+                round(float(centerline_origin[index]) + float(frame["normal"][index]) * float(thickness) * 0.5, 6)
+                for index in range(3)
+            ]
+            bounds["centerline_origin"] = centerline_origin
+            bounds["along_range_m"] = [0.0, float(bounds["length_m"])]
+        elif anchor_type in {"door", "stair_entry", "stair_exit"}:
+            length = bounds.get("width_m", bounds.get("clear_width_m"))
+            if not isinstance(length, (int, float)) or not math.isfinite(float(length)) or float(length) < 0:
+                raise RegenerationError(f"{frame['anchor_id']} has no valid linear width")
+            role = str(frame.get("role", ""))
+            bounds["along_range_m"] = [-float(length) * 0.5, float(length) * 0.5] if anchor_type == "door" else [0.0, float(length)]
+            bounds["origin_semantics"] = "line_center" if anchor_type == "door" else role
+        frame["geometry_hash"] = sha256_bytes(canonical_json({key: value for key, value in frame.items() if key != "geometry_hash"}))
+        result.append(frame)
+    return result
+
+
+def _point_in_polygon_xz(point: Sequence[float], polygon: Sequence[Sequence[float]]) -> bool:
+    x, z = float(point[0]), float(point[1])
+    inside = False
+    for index, first in enumerate(polygon):
+        second = polygon[(index + 1) % len(polygon)]
+        ax, az, bx, bz = float(first[0]), float(first[1]), float(second[0]), float(second[1])
+        cross = (x - ax) * (bz - az) - (z - az) * (bx - ax)
+        if abs(cross) <= EPS and min(ax, bx) - EPS <= x <= max(ax, bx) + EPS and min(az, bz) - EPS <= z <= max(az, bz) + EPS:
+            return True
+        if (az > z) != (bz > z):
+            crossing_x = ax + (z - az) * (bx - ax) / (bz - az)
+            if x < crossing_x:
+                inside = not inside
+    return inside
 
 
 def run_command(command: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
@@ -375,7 +553,7 @@ def execute(args: argparse.Namespace) -> int:
         project_root, staging, sector,
     )
     commands.extend(stair_commands)
-    frames = svg_frames + stair_frames
+    frames = parameterize_frames(svg_frames + stair_frames, sector, conversion_report.get("spatial_handoff", {}))
     anchor_document = normalized_anchor_document(
         manifest["map_id"], args.sector, generation_id,
         {"sector_backend": VERSION, "svg_converter": conversion_report.get("generator_version", "unknown"), "stair_generator": stair_reports[0].get("generator_version", "none") if stair_reports else "none"},
@@ -419,6 +597,13 @@ def execute(args: argparse.Namespace) -> int:
         ],
     }
     write_json(staging / "regeneration_report.json", report)
+    replacements = [
+        (str(staging), "$STAGING"), (str(project_root), "$PROJECT_ROOT"),
+        (str(Path(args.svg_tool_root).resolve()), "$SVG_TOOL_ROOT"),
+        (str(Path(args.stair_tool_root).resolve()), "$STAIR_TOOL_ROOT") if args.stair_tool_root else ("", ""),
+        (str(Path(args.python).resolve()), "$PYTHON"),
+    ]
+    sanitize_generated_metadata(staging, replacements)
     return 0
 
 

@@ -1,0 +1,54 @@
+{
+  "schema_id": "caretaker.composition_validation_input",
+  "schema_version": "1.0.0",
+  "map_id": "caretaker-complex-v3",
+  "sector_id": "U-MEDBAY",
+  "generation_id": "bootstrap-before-first-regeneration",
+  "sector_bounds": {"min": [-94.15, -0.2, 6.85], "max": [-79.85, 3.6, 15.15]},
+  "spaces": [
+    {"space_id": "U-MEDBAY/procedure_room", "sector_id": "U-MEDBAY", "bounds": {"min": [-94, 0, 7], "max": [-86.632, 3.4, 11.205]}},
+    {"space_id": "U-MEDBAY/observation_ward", "sector_id": "U-MEDBAY", "bounds": {"min": [-94, 0, 11.205], "max": [-86.632, 3.4, 15]}},
+    {"space_id": "U-MEDBAY/clean_corridor", "sector_id": "U-MEDBAY", "bounds": {"min": [-86.632, 0, 7], "max": [-84.298, 3.4, 15]}},
+    {"space_id": "U-MEDBAY/clean_store", "sector_id": "U-MEDBAY", "bounds": {"min": [-84.298, 0, 7], "max": [-82.088, 3.4, 9.667]}},
+    {"space_id": "U-MEDBAY/sanitary_airlock", "sector_id": "U-MEDBAY", "bounds": {"min": [-82.088, 0, 7], "max": [-80, 3.4, 9.667]}},
+    {"space_id": "U-MEDBAY/triage", "sector_id": "U-MEDBAY", "bounds": {"min": [-84.298, 0, 9.667], "max": [-80, 3.4, 12.744]}},
+    {"space_id": "U-MEDBAY/medical_post", "sector_id": "U-MEDBAY", "bounds": {"min": [-84.298, 0, 12.744], "max": [-80, 3.4, 15]}}
+  ],
+  "anchors": [],
+  "infrastructure": [
+    {"infrastructure_id": "INFRA-U-MEDBAY-FLOOR-PROCEDURE", "owner": "generated", "kind": "floor", "source_anchor_id": "svg:u-medbay-floor-procedure-room:floor", "derivation": "floor_prism", "bounds": {"min": [-94,-0.2,7], "max": [-86.632,0,11.205]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-FLOOR-OBSERVATION", "owner": "generated", "kind": "floor", "source_anchor_id": "svg:u-medbay-floor-observation-ward:floor", "derivation": "floor_prism", "bounds": {"min": [-94,-0.2,11.205], "max": [-86.632,0,15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-FLOOR-CORRIDOR", "owner": "generated", "kind": "floor", "source_anchor_id": "svg:u-medbay-floor-clean-corridor:floor", "derivation": "floor_prism", "bounds": {"min": [-86.632,-0.2,7], "max": [-84.298,0,15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-FLOOR-STORE", "owner": "generated", "kind": "floor", "source_anchor_id": "svg:u-medbay-floor-clean-store:floor", "derivation": "floor_prism", "bounds": {"min": [-84.298,-0.2,7], "max": [-82.088,0,9.667]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-FLOOR-AIRLOCK", "owner": "generated", "kind": "floor", "source_anchor_id": "svg:u-medbay-floor-sanitary-airlock:floor", "derivation": "floor_prism", "bounds": {"min": [-82.088,-0.2,7], "max": [-80,0,9.667]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-FLOOR-TRIAGE", "owner": "generated", "kind": "floor", "source_anchor_id": "svg:u-medbay-floor-triage:floor", "derivation": "floor_prism", "bounds": {"min": [-84.298,-0.2,9.667], "max": [-80,0,12.744]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-FLOOR-POST", "owner": "generated", "kind": "floor", "source_anchor_id": "svg:u-medbay-floor-medical-post:floor", "derivation": "floor_prism", "bounds": {"min": [-84.298,-0.2,12.744], "max": [-80,0,15]}},
+
+    {"infrastructure_id": "INFRA-U-MEDBAY-CEILING-PROCEDURE", "owner": "generated", "kind": "ceiling", "source_anchor_id": "svg:u-medbay-ceiling-procedure-room:ceiling", "derivation": "ceiling_prism", "bounds": {"min": [-94,3.4,7], "max": [-86.632,3.6,11.205]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-CEILING-OBSERVATION", "owner": "generated", "kind": "ceiling", "source_anchor_id": "svg:u-medbay-ceiling-observation-ward:ceiling", "derivation": "ceiling_prism", "bounds": {"min": [-94,3.4,11.205], "max": [-86.632,3.6,15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-CEILING-CORRIDOR", "owner": "generated", "kind": "ceiling", "source_anchor_id": "svg:u-medbay-ceiling-clean-corridor:ceiling", "derivation": "ceiling_prism", "bounds": {"min": [-86.632,3.4,7], "max": [-84.298,3.6,15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-CEILING-STORE", "owner": "generated", "kind": "ceiling", "source_anchor_id": "svg:u-medbay-ceiling-clean-store:ceiling", "derivation": "ceiling_prism", "bounds": {"min": [-84.298,3.4,7], "max": [-82.088,3.6,9.667]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-CEILING-AIRLOCK", "owner": "generated", "kind": "ceiling", "source_anchor_id": "svg:u-medbay-ceiling-sanitary-airlock:ceiling", "derivation": "ceiling_prism", "bounds": {"min": [-82.088,3.4,7], "max": [-80,3.6,9.667]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-CEILING-TRIAGE", "owner": "generated", "kind": "ceiling", "source_anchor_id": "svg:u-medbay-ceiling-triage:ceiling", "derivation": "ceiling_prism", "bounds": {"min": [-84.298,3.4,9.667], "max": [-80,3.6,12.744]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-CEILING-POST", "owner": "generated", "kind": "ceiling", "source_anchor_id": "svg:u-medbay-ceiling-medical-post:ceiling", "derivation": "ceiling_prism", "bounds": {"min": [-84.298,3.4,12.744], "max": [-80,3.6,15]}},
+
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-WEST", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-west:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": [], "bounds": {"min": [-94.15,0,7], "max": [-93.85,3.4,15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-EAST", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-east:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": ["svg:u-medbay-door-external-east:door:center"], "bounds": {"min": [-80.15,0,7], "max": [-79.85,3.4,15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-NORTH", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-north:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": [], "bounds": {"min": [-94,0,6.85], "max": [-80,3.4,7.15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-SOUTH", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-south:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": [], "bounds": {"min": [-94,0,14.85], "max": [-80,3.4,15.15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-WEST-CORRIDOR", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-west-corridor:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": ["svg:u-medbay-door-procedure-corridor:door:center", "svg:u-medbay-door-observation-corridor:door:center"], "bounds": {"min": [-86.782,0,7], "max": [-86.482,3.4,15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-EAST-CORRIDOR", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-east-corridor:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": ["svg:u-medbay-door-corridor-store:door:center", "svg:u-medbay-door-corridor-triage:door:center", "svg:u-medbay-door-corridor-medical-post:door:center"], "bounds": {"min": [-84.448,0,7], "max": [-84.148,3.4,15]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-PROCEDURE-OBSERVATION", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-procedure-observation:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": [], "bounds": {"min": [-94,0,11.055], "max": [-86.632,3.4,11.355]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-STORE-AIRLOCK", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-store-airlock:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": [], "bounds": {"min": [-82.238,0,7], "max": [-81.938,3.4,9.667]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-NORTH-TRIAGE", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-north-triage:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": ["svg:u-medbay-door-triage-airlock:door:center"], "bounds": {"min": [-84.298,0,9.517], "max": [-80,3.4,9.817]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-WALL-NORTH-POST", "owner": "generated", "kind": "wall", "source_anchor_id": "svg:u-medbay-wall-north-medical-post:wall", "derivation": "wall_prism_segments", "opening_anchor_ids": [], "bounds": {"min": [-84.298,0,12.594], "max": [-80,3.4,12.894]}},
+    {"infrastructure_id": "INFRA-U-MEDBAY-DOOR-EAST-CLEARANCE", "owner": "generated", "kind": "door_clearance", "source_anchor_id": "svg:u-medbay-door-external-east:door:center", "derivation": "door_clearance", "clearance_depth_m": 1.2, "bounds": {"min": [-80.6,0,11.05], "max": [-79.4,2.4,12.25]}}
+  ],
+  "objects": [
+    {"object_id": "OBJ-U-MEDBAY-WALL-TERMINAL-01", "owner": "authored", "sector_id": "U-MEDBAY", "space_id": "U-MEDBAY/clean_corridor", "placement_mode": "wall", "bounds": {"min": [-86.432,1.2,10.91], "max": [-86.332,1.6,11.41]}},
+    {"object_id": "OBJ-U-MEDBAY-DOOR-BEACON-01", "owner": "authored", "sector_id": "U-MEDBAY", "space_id": "U-MEDBAY/triage", "placement_mode": "free", "bounds": {"min": [-81,0.95,11.55], "max": [-80.8,1.45,11.75]}},
+    {"object_id": "OBJ-U-MEDBAY-FLOOR-CART-01", "owner": "authored", "sector_id": "U-MEDBAY", "space_id": "U-MEDBAY/procedure_room", "placement_mode": "floor", "support_tolerance_m": 0.02, "bounds": {"min": [-92.1896,0,8.7025], "max": [-91.3896,0.8,9.5025]}},
+    {"object_id": "OBJ-U-MEDBAY-FREE-CRATE-01", "owner": "authored", "sector_id": "U-MEDBAY", "space_id": "U-MEDBAY/triage", "placement_mode": "floor", "support_tolerance_m": 0.02, "bounds": {"min": [-82.3,0,10.7], "max": [-81.7,0.8,11.3]}}
+  ],
+  "declared_warnings": []
+}
