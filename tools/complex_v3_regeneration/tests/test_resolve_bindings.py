@@ -134,6 +134,18 @@ class ResolveBindingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "rotation limits"):
             RESOLVER.resolve_binding(item, frame)
 
+    def test_document_error_names_the_failing_binding(self) -> None:
+        item = binding("OBJ-W", "AF-WALL", "wall", "linear", [1, 1, 1])
+        item["placement"]["linear"]["along"] = {"policy": "unknown"}
+        bindings = {
+            "schema_id": "caretaker.object_bindings", "schema_version": "1.0.0",
+            "map_id": "map", "sector_id": "sector", "bindings": [item],
+        }
+        anchors = {"map_id": "map", "sector_id": "sector", "generation_id": "new", "anchors": [wall()]}
+        composition = {"objects": [{"object_id": "OBJ-W", "bounds": {"min": [0, 0, 0], "max": [1, 1, 1]}}]}
+        with self.assertRaisesRegex(ValueError, "BIND-OBJ-W: .*unknown policy"):
+            RESOLVER.resolve_document(composition, bindings, anchors)
+
 
 if __name__ == "__main__":
     unittest.main()

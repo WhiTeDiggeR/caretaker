@@ -1,0 +1,83 @@
+{
+  "schema_id": "caretaker.sector_regeneration_report",
+  "schema_version": "1.0.0",
+  "contract_version": "1.0.0",
+  "status": "ok",
+  "sector_id": "U-CHAMBER-4",
+  "generation_id": "sha256:121ac50a4a520a0e99807498a4023394af93db698d528d443d713df44151c9a9",
+  "commands": [
+    {
+      "stage": "inspect",
+      "argv": [
+        "$PYTHON",
+        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
+        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/upper/source/u_chamber_4.svg",
+        "--profile",
+        "generic",
+        "--scale",
+        "1.0",
+        "--origin",
+        "none",
+        "--elevation",
+        "0.0",
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment",
+        "--json",
+        "--output-json",
+        "$STAGING/preflight_report.json",
+        "--strict"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "convert",
+      "argv": [
+        "$PYTHON",
+        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
+        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/upper/source/u_chamber_4.svg",
+        "$STAGING/Generated/Architecture",
+        "--profile",
+        "generic",
+        "--scale",
+        "1.0",
+        "--origin",
+        "none",
+        "--elevation",
+        "0.0",
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment",
+        "--resource-dir",
+        "res://gen/u/u_chamber_4/Generated/Architecture",
+        "--scene-name",
+        "u_chamber_4_generated",
+        "--strict"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "anchor_count": 44,
+  "errors": [],
+  "warnings": [],
+  "files": [
+    "anchor_frames.json",
+    "generation_manifest.json",
+    "preflight_report.json",
+    "Generated/Architecture/conversion_report.json"
+  ]
+}

@@ -85,6 +85,29 @@ and sends that exact candidate document to validation. Missing IDs retain their
 original reference and old bounds so the validator emits a repair item; no nearby
 anchor is selected.
 
+An authored object may intersect a generated wall only through an explicit
+`wall_integration` declaration. `mode: mounted` is limited to the same wall
+anchor referenced by the binding; `mode: door_frame` additionally requires a
+door binding. Both modes require a finite, non-negative `max_depth_m`, and the
+validator checks the actual overlap along the source wall normal. This is a
+bounded exception for a physical mount or jamb/lintel, not permission to ignore
+collisions with another wall. Missing or malformed declarations remain blocking.
+
+## Floor rollout materializer
+
+`build_floor_rollout.py --level upper|lower|technical` derives metric generator
+sources from the reviewed handoff, never from presentation SVG coordinates. It
+retains those presentation drawings as visual controls, uses semantic hashes of
+handoff space/portal IDs for stable SVG IDs, and emits authored composition and
+binding inputs without changing existing dressing scenes. Ambiguous portal side,
+missing footprint, missing portal, duplicate wall-face demand, or a mount that
+cannot select one authored wall face raises `BuildError` before output is usable.
+
+The upper rollout intentionally omits `--strict-ceiling-alignment` only for
+`U-EMERGENCY`: that sector has reviewed 3.4 m and 3.8 m adjacent clear heights,
+while the converter's nearest-wall diagnostic cannot model the step boundary.
+Per-wall heights and composition collision checks remain strict.
+
 ## Verification fixtures
 
 `tests/fixtures/fixture_generation_manifest.json` contains one ordinary sector and one vertical sector with exact transforms. They are deliberately separate from the blocked production inventory. Run the unit suite with:

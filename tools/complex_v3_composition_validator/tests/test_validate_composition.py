@@ -133,6 +133,39 @@ class CompositionValidatorTests(unittest.TestCase):
             self.assertEqual(report["summary"]["static_count"], 0)
             self.assertEqual(report["summary"]["runtime_physics_count"], 1)
 
+    def test_explicit_wall_integration_is_bounded_and_anchor_specific(self) -> None:
+        anchors = {
+            "AF-WALL": {"anchor_id": "AF-WALL", "normal": [0, 0, 1]},
+            "AF-OTHER": {"anchor_id": "AF-OTHER", "normal": [1, 0, 0]},
+        }
+        wall = {"source_anchor_id": "AF-WALL"}
+        mounted = {
+            "object_id": "OBJ-MOUNTED", "anchor_id": "AF-WALL",
+            "wall_integration": {"mode": "mounted", "max_depth_m": 0.2},
+        }
+        self.assertTrue(VALIDATOR.wall_integration_allows(mounted, wall, anchors, (0.5, 0.5, 0.2)))
+        self.assertFalse(VALIDATOR.wall_integration_allows(mounted, wall, anchors, (0.5, 0.5, 0.21)))
+        self.assertFalse(VALIDATOR.wall_integration_allows(mounted, {"source_anchor_id": "AF-OTHER"}, anchors, (0.1, 0.1, 0.1)))
+
+        door_frame = {
+            "object_id": "OBJ-FRAME", "anchor_id": "AF-DOOR", "expected_anchor_type": "door",
+            "wall_integration": {"mode": "door_frame", "max_depth_m": 0.3},
+        }
+        self.assertTrue(VALIDATOR.wall_integration_allows(door_frame, wall, anchors, (0.1, 0.1, 0.3)))
+        door_frame["expected_anchor_type"] = "wall"
+        self.assertFalse(VALIDATOR.wall_integration_allows(door_frame, wall, anchors, (0.1, 0.1, 0.1)))
+
+    def test_invalid_wall_integration_depth_blocks_input(self) -> None:
+        item = {
+            "object_id": "OBJ-MOUNTED", "anchor_id": "AF-WALL",
+            "wall_integration": {"mode": "mounted", "max_depth_m": -0.1},
+        }
+        with self.assertRaisesRegex(ValueError, "max_depth_m"):
+            VALIDATOR.wall_integration_allows(
+                item, {"source_anchor_id": "AF-WALL"},
+                {"AF-WALL": {"normal": [0, 0, 1]}}, (0.1, 0.1, 0.1),
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

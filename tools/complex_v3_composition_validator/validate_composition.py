@@ -295,6 +295,8 @@ def validate_object(
                 "door_clearance": "door_blockage", "required_passage": "passage_blockage",
                 "stair": "stair_conflict", "shaft": "shaft_conflict",
             }.get(kind)
+            if code == "wall_penetration" and wall_integration_allows(item, infra, anchors, penetration):
+                code = None
             if code:
                 issues.append(diagnostic(
                     code=code, object_id=object_id, anchor_id=anchor_id,
@@ -316,6 +318,29 @@ def validate_object(
             message="No generated floor support exists below the floor-mounted object.", binding_id=binding_id,
         ))
     return issues
+
+
+def wall_integration_allows(
+    item: dict[str, Any], wall: dict[str, Any], anchors: dict[str, dict[str, Any]],
+    penetration: tuple[float, float, float],
+) -> bool:
+    """Allow only an explicit, bounded mount or door-frame/wall integration."""
+    integration = item.get("wall_integration")
+    if not isinstance(integration, dict) or integration.get("mode") not in {"mounted", "door_frame"}:
+        return False
+    maximum = integration.get("max_depth_m")
+    if not isinstance(maximum, (int, float)) or not math.isfinite(float(maximum)) or float(maximum) < 0.0:
+        raise ValidationInputError(f"object {item['object_id']} has invalid wall_integration.max_depth_m")
+    if integration["mode"] == "mounted" and wall.get("source_anchor_id") != item.get("anchor_id"):
+        return False
+    if integration["mode"] == "door_frame" and item.get("expected_anchor_type") != "door":
+        return False
+    wall_anchor = anchors.get(str(wall.get("source_anchor_id", "")))
+    if wall_anchor is None:
+        return False
+    normal = read_vector(wall_anchor.get("normal"), f"wall anchor {wall.get('source_anchor_id')}.normal")
+    horizontal_axis = 0 if abs(normal[0]) >= abs(normal[2]) else 2
+    return penetration[horizontal_axis] <= float(maximum) + EPS
 
 
 def validate_wall_mount(item: dict[str, Any], anchor: dict[str, Any], _object_bounds: Bounds) -> list[dict[str, Any]]:

@@ -320,7 +320,10 @@ def resolve_document(composition: dict[str, Any], bindings: dict[str, Any], anch
             # Preserve the old bounds and exact absent ID so the validator emits
             # a repair item. Never select a geometrically nearby replacement.
             continue
-        resolved = resolve_binding(binding, frame)
+        try:
+            resolved = resolve_binding(binding, frame)
+        except BindingResolutionError as error:
+            raise BindingResolutionError(f"{binding['binding_id']}: {error}") from error
         item["bounds"] = resolved["bounds"]
         item["resolved_transform"] = {key: value for key, value in resolved.items() if key.startswith("basis_") or key == "origin"}
         if item.get("placement_mode") == "wall":
