@@ -1,0 +1,20 @@
+{
+  "schema_id": "caretaker.composition_validation_input", "schema_version": "1.0.0",
+  "map_id": "caretaker-complex-v3", "sector_id": "U-ROUTE-A", "generation_id": "bootstrap",
+  "sector_bounds": {"min": [-61.9,-6.2,-6.2], "max": [-47.35,3.6,13.2]},
+  "spaces": [
+    {"space_id": "U-ROUTE-A/vertical_shaft", "sector_id": "U-ROUTE-A", "bounds": {"min": [-55.7,-6.1,5.8], "max": [-49.3,0.1,13.2]}},
+    {"space_id": "U-ROUTE-A/hall_access", "sector_id": "U-ROUTE-A", "bounds": {"min": [-61.75,0,1.533], "max": [-59.5,3.4,5.533]}},
+    {"space_id": "U-ROUTE-A/ventilation_room", "sector_id": "U-ROUTE-A", "bounds": {"min": [-53.5,0,-6], "max": [-47.5,3.4,6]}}
+  ],
+  "anchors": [], "infrastructure": [
+    {"infrastructure_id": "INFRA-ROUTE-A-LANDING", "owner": "generated", "kind": "floor", "source_anchor_id": "AF-STAIRS-ROUTE-A-STAIR-LANDING-01", "derivation": "floor_prism", "bounds": {"min": [-54.35,-3.15,11], "max": [-50.65,-3,13]}},
+    {"infrastructure_id": "INFRA-ROUTE-A-HALL-FLOOR", "owner": "generated", "kind": "floor", "source_anchor_id": "svg:u-route-a-floor-hall:floor", "derivation": "floor_prism", "bounds": {"min": [-61.75,-0.2,1.533], "max": [-59.5,0,5.533]}}
+  ],
+  "objects": [
+    {"object_id": "OBJ-ROUTE-A-SHAFT-BEACON", "owner": "authored", "sector_id": "U-ROUTE-A", "space_id": "U-ROUTE-A/ventilation_room", "placement_mode": "wall", "bounds": {"min": [-47.79,1.3,3.3], "max": [-47.69,1.7,3.7]}},
+    {"object_id": "OBJ-ROUTE-A-LANDING-KIT", "owner": "authored", "sector_id": "U-ROUTE-A", "space_id": "U-ROUTE-A/vertical_shaft", "placement_mode": "floor", "support_tolerance_m": 0.02, "bounds": {"min": [-52.7,-3,6.7], "max": [-52.3,-2.6,7.1]}},
+    {"object_id": "OBJ-ROUTE-A-FREE-CRATE", "owner": "authored", "sector_id": "U-ROUTE-A", "space_id": "U-ROUTE-A/hall_access", "placement_mode": "floor", "support_tolerance_m": 0.02, "bounds": {"min": [-60.9,0,2.3], "max": [-60.3,0.6,2.9]}}
+  ],
+  "declared_warnings": []
+}

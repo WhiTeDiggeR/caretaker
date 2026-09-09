@@ -1,0 +1,767 @@
+[gd_scene load_steps=81 format=3]
+
+[ext_resource type="Material" path="res://scenes/cv3_route_a/u/Generated/Architecture/floor_material.tres" id="1_floor_material"]
+
+[ext_resource type="Material" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_material.tres" id="7_ceiling_material"]
+
+[ext_resource type="Material" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_material.tres" id="3_wall_material"]
+
+[ext_resource type="Material" path="res://scenes/cv3_route_a/u/Generated/Architecture/obstacle_material.tres" id="5_obstacle_material"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/floor_001_u_route_a_floor_hall.obj" id="floor_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/floor_002_u_route_a_floor_hall.obj" id="floor_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/floor_003_u_route_a_floor_store.obj" id="floor_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/floor_004_u_route_a_floor_store.obj" id="floor_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/floor_005_u_route_a_floor_store.obj" id="floor_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/floor_006_u_route_a_floor_store.obj" id="floor_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/floor_007_u_route_a_floor_ventilation.obj" id="floor_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_001_u_route_a_ceiling_hall.obj" id="ceiling_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_002_u_route_a_ceiling_hall.obj" id="ceiling_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_003_u_route_a_ceiling_store.obj" id="ceiling_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_004_u_route_a_ceiling_store.obj" id="ceiling_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_005_u_route_a_ceiling_store.obj" id="ceiling_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_006_u_route_a_ceiling_store.obj" id="ceiling_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_007_u_route_a_ceiling_stair_landing.obj" id="ceiling_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/ceiling_008_u_route_a_ceiling_ventilation.obj" id="ceiling_part_8_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_001_u_route_a_wall_west.obj" id="box_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_002_u_route_a_wall_west.obj" id="box_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_003_u_route_a_wall_west.obj" id="box_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_004_u_route_a_wall_east.obj" id="box_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_005_u_route_a_wall_north.obj" id="box_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_006_u_route_a_wall_north.obj" id="box_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_007_u_route_a_wall_hall_north.obj" id="box_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_008_u_route_a_wall_hall_south.obj" id="box_part_8_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_009_u_route_a_wall_store_west.obj" id="box_part_9_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_010_u_route_a_wall_store_west.obj" id="box_part_10_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_011_u_route_a_wall_store_west.obj" id="box_part_11_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_012_u_route_a_wall_store_west.obj" id="box_part_12_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_013_u_route_a_wall_store_west.obj" id="box_part_13_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_014_u_route_a_wall_store_east.obj" id="box_part_14_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_015_u_route_a_wall_store_east.obj" id="box_part_15_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_016_u_route_a_wall_store_east.obj" id="box_part_16_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_017_u_route_a_wall_stair_threshold.obj" id="box_part_17_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_018_u_route_a_wall_stair_threshold.obj" id="box_part_18_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_019_u_route_a_wall_stair_threshold.obj" id="box_part_19_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_020_u_route_a_wall_stair_threshold.obj" id="box_part_20_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_021_u_route_a_wall_shaft_west.obj" id="box_part_21_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_022_u_route_a_wall_shaft_east.obj" id="box_part_22_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/u/Generated/Architecture/wall_023_u_route_a_wall_shaft_south.obj" id="box_part_23_mesh"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_1"]
+data = PackedVector3Array(-61.75, 0, 5.533, -61.75, 0, 1.533, -59.65, 0, 1.533, -59.65, 0, 1.533, -59.65, 0, 5.533, -61.75, 0, 5.533)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_2"]
+data = PackedVector3Array(-59.65, 0, 5.533, -59.65, 0, 1.533, -59.5, 0, 1.533, -59.5, 0, 1.533, -59.5, 0, 5.533, -59.65, 0, 5.533)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_3"]
+data = PackedVector3Array(-59.5, 0, 1.533, -59.5, 0, -6, -59.35, 0, -6, -59.35, 0, -6, -59.35, 0, 1.533, -59.5, 0, 1.533)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_4"]
+data = PackedVector3Array(-59.5, 0, 5.533, -59.5, 0, 1.533, -59.35, 0, 1.533, -59.35, 0, 1.533, -59.35, 0, 5.533, -59.5, 0, 5.533)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_5"]
+data = PackedVector3Array(-59.5, 0, 6, -59.5, 0, 5.533, -59.35, 0, 5.533, -59.35, 0, 5.533, -59.35, 0, 6, -59.5, 0, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_6"]
+data = PackedVector3Array(-59.35, 0, 6, -59.35, 0, -6, -53.5, 0, -6, -53.5, 0, -6, -53.5, 0, 6, -59.35, 0, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_7"]
+data = PackedVector3Array(-53.5, 0, 6, -53.5, 0, -6, -47.5, 0, -6, -47.5, 0, -6, -47.5, 0, 6, -53.5, 0, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_1"]
+data = PackedVector3Array(-61.75, 3.4, 5.533, -59.65, 3.4, 1.533, -61.75, 3.4, 1.533, -59.65, 3.4, 1.533, -61.75, 3.4, 5.533, -59.65, 3.4, 5.533)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_2"]
+data = PackedVector3Array(-59.65, 3.4, 5.533, -59.5, 3.4, 1.533, -59.65, 3.4, 1.533, -59.5, 3.4, 1.533, -59.65, 3.4, 5.533, -59.5, 3.4, 5.533)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_3"]
+data = PackedVector3Array(-59.5, 3.4, 1.533, -59.35, 3.4, -6, -59.5, 3.4, -6, -59.35, 3.4, -6, -59.5, 3.4, 1.533, -59.35, 3.4, 1.533)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_4"]
+data = PackedVector3Array(-59.5, 3.4, 5.533, -59.35, 3.4, 1.533, -59.5, 3.4, 1.533, -59.35, 3.4, 1.533, -59.5, 3.4, 5.533, -59.35, 3.4, 5.533)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_5"]
+data = PackedVector3Array(-59.5, 3.4, 6, -59.35, 3.4, 5.533, -59.5, 3.4, 5.533, -59.35, 3.4, 5.533, -59.5, 3.4, 6, -59.35, 3.4, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_6"]
+data = PackedVector3Array(-59.35, 3.4, 6, -53.5, 3.4, -6, -59.35, 3.4, -6, -53.5, 3.4, -6, -59.35, 3.4, 6, -53.5, 3.4, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_7"]
+data = PackedVector3Array(-55.5, 3.4, 13, -49.5, 3.4, 6, -55.5, 3.4, 6, -49.5, 3.4, 6, -55.5, 3.4, 13, -49.5, 3.4, 13)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_8"]
+data = PackedVector3Array(-53.5, 3.4, 6, -47.5, 3.4, -6, -53.5, 3.4, -6, -47.5, 3.4, -6, -53.5, 3.4, 6, -47.5, 3.4, 6)
+
+[sub_resource type="BoxShape3D" id="Box_1"]
+size = Vector3(1.2495, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_2"]
+size = Vector3(1.2495, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_3"]
+size = Vector3(1.2, 1, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_4"]
+size = Vector3(12.3, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_5"]
+size = Vector3(5.8495, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_6"]
+size = Vector3(5.8495, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_7"]
+size = Vector3(2.2495, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_8"]
+size = Vector3(2.2495, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_9"]
+size = Vector3(7.683, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_10"]
+size = Vector3(0.733, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_11"]
+size = Vector3(0.733, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_12"]
+size = Vector3(0.3165, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_13"]
+size = Vector3(2.534, 0.6, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_14"]
+size = Vector3(6.3835, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_15"]
+size = Vector3(2.3835, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_16"]
+size = Vector3(2.932, 0.6, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_17"]
+size = Vector3(6.15, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_18"]
+size = Vector3(1.334, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_19"]
+size = Vector3(2.2495, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_20"]
+size = Vector3(2.266, 0.6, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_21"]
+size = Vector3(6.85, 3.4, 0.09)
+
+[sub_resource type="BoxShape3D" id="Box_22"]
+size = Vector3(6.85, 3.4, 0.09)
+
+[sub_resource type="BoxShape3D" id="Box_23"]
+size = Vector3(6.18, 3.4, 0.09)
+
+[node name="u_route_a_pilot_generated" type="Node3D"]
+
+metadata/source_file = "$PROJECT_ROOT\\scenes\\complex_v3_regeneration\\pilots\\route_a_vertical\\source\\u_route_a_pilot.svg"
+
+metadata/generator = "svg_to_godot3d 1.19.0"
+
+[node name="Floors" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Floors"]
+
+[node name="Ceilings" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Ceilings"]
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Walls"]
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Obstacles"]
+
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Floors"]
+
+[node name="Visual" type="Node3D" parent="Ceilings"]
+
+[node name="Visual" type="Node3D" parent="Walls"]
+
+[node name="Visual" type="Node3D" parent="Obstacles"]
+
+[node name="Floor_001_u_route_a_floor_hall" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_1_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "u-route-a-floor-hall"
+
+[node name="Floor_002_u_route_a_floor_hall" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_2_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "u-route-a-floor-hall"
+
+[node name="Floor_003_u_route_a_floor_store" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_3_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "u-route-a-floor-store"
+
+[node name="Floor_004_u_route_a_floor_store" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_4_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "u-route-a-floor-store"
+
+[node name="Floor_005_u_route_a_floor_store" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_5_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "u-route-a-floor-store"
+
+[node name="Floor_006_u_route_a_floor_store" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_6_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "u-route-a-floor-store"
+
+[node name="Floor_007_u_route_a_floor_ventilation" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_7_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "u-route-a-floor-ventilation"
+
+[node name="Ceiling_001_u_route_a_ceiling_hall" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_1_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "u-route-a-ceiling-hall"
+
+[node name="Ceiling_002_u_route_a_ceiling_hall" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_2_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "u-route-a-ceiling-hall"
+
+[node name="Ceiling_003_u_route_a_ceiling_store" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_3_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "u-route-a-ceiling-store"
+
+[node name="Ceiling_004_u_route_a_ceiling_store" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_4_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "u-route-a-ceiling-store"
+
+[node name="Ceiling_005_u_route_a_ceiling_store" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_5_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "u-route-a-ceiling-store"
+
+[node name="Ceiling_006_u_route_a_ceiling_store" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_6_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "u-route-a-ceiling-store"
+
+[node name="Ceiling_007_u_route_a_ceiling_stair_landing" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_7_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "u-route-a-ceiling-stair-landing"
+
+[node name="Ceiling_008_u_route_a_ceiling_ventilation" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_8_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "u-route-a-ceiling-ventilation"
+
+[node name="Wall_001_u_route_a_wall_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_1_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-west"
+
+[node name="Wall_002_u_route_a_wall_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_2_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-west"
+
+[node name="Wall_003_u_route_a_wall_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_3_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-west"
+
+[node name="Wall_004_u_route_a_wall_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_4_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-east"
+
+[node name="Wall_005_u_route_a_wall_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_5_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-north"
+
+[node name="Wall_006_u_route_a_wall_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_6_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-north"
+
+[node name="Wall_007_u_route_a_wall_hall_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_7_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-hall-north"
+
+[node name="Wall_008_u_route_a_wall_hall_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_8_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-hall-south"
+
+[node name="Wall_009_u_route_a_wall_store_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_9_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-store-west"
+
+[node name="Wall_010_u_route_a_wall_store_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_10_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-store-west"
+
+[node name="Wall_011_u_route_a_wall_store_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_11_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-store-west"
+
+[node name="Wall_012_u_route_a_wall_store_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_12_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-store-west"
+
+[node name="Wall_013_u_route_a_wall_store_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_13_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-store-west"
+
+[node name="Wall_014_u_route_a_wall_store_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_14_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-store-east"
+
+[node name="Wall_015_u_route_a_wall_store_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_15_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-store-east"
+
+[node name="Wall_016_u_route_a_wall_store_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_16_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-store-east"
+
+[node name="Wall_017_u_route_a_wall_stair_threshold" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_17_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-stair-threshold"
+
+[node name="Wall_018_u_route_a_wall_stair_threshold" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_18_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-stair-threshold"
+
+[node name="Wall_019_u_route_a_wall_stair_threshold" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_19_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-stair-threshold"
+
+[node name="Wall_020_u_route_a_wall_stair_threshold" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_20_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-stair-threshold"
+
+[node name="Wall_021_u_route_a_wall_shaft_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_21_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-shaft-west"
+
+[node name="Wall_022_u_route_a_wall_shaft_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_22_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-shaft-east"
+
+[node name="Wall_023_u_route_a_wall_shaft_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_23_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "u-route-a-wall-shaft-south"
+
+[node name="Floor_001_u_route_a_floor_hall" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-floor-hall"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_001_u_route_a_floor_hall"]
+shape = SubResource("ConcaveFloor_1")
+
+[node name="Floor_002_u_route_a_floor_hall" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-floor-hall"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_002_u_route_a_floor_hall"]
+shape = SubResource("ConcaveFloor_2")
+
+[node name="Floor_003_u_route_a_floor_store" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-floor-store"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_003_u_route_a_floor_store"]
+shape = SubResource("ConcaveFloor_3")
+
+[node name="Floor_004_u_route_a_floor_store" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-floor-store"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_004_u_route_a_floor_store"]
+shape = SubResource("ConcaveFloor_4")
+
+[node name="Floor_005_u_route_a_floor_store" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-floor-store"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_005_u_route_a_floor_store"]
+shape = SubResource("ConcaveFloor_5")
+
+[node name="Floor_006_u_route_a_floor_store" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-floor-store"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_006_u_route_a_floor_store"]
+shape = SubResource("ConcaveFloor_6")
+
+[node name="Floor_007_u_route_a_floor_ventilation" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-floor-ventilation"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_007_u_route_a_floor_ventilation"]
+shape = SubResource("ConcaveFloor_7")
+
+[node name="Ceiling_001_u_route_a_ceiling_hall" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-ceiling-hall"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_001_u_route_a_ceiling_hall"]
+shape = SubResource("ConcaveCeiling_1")
+
+[node name="Ceiling_002_u_route_a_ceiling_hall" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-ceiling-hall"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_002_u_route_a_ceiling_hall"]
+shape = SubResource("ConcaveCeiling_2")
+
+[node name="Ceiling_003_u_route_a_ceiling_store" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-ceiling-store"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_003_u_route_a_ceiling_store"]
+shape = SubResource("ConcaveCeiling_3")
+
+[node name="Ceiling_004_u_route_a_ceiling_store" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-ceiling-store"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_004_u_route_a_ceiling_store"]
+shape = SubResource("ConcaveCeiling_4")
+
+[node name="Ceiling_005_u_route_a_ceiling_store" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-ceiling-store"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_005_u_route_a_ceiling_store"]
+shape = SubResource("ConcaveCeiling_5")
+
+[node name="Ceiling_006_u_route_a_ceiling_store" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-ceiling-store"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_006_u_route_a_ceiling_store"]
+shape = SubResource("ConcaveCeiling_6")
+
+[node name="Ceiling_007_u_route_a_ceiling_stair_landing" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-ceiling-stair-landing"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_007_u_route_a_ceiling_stair_landing"]
+shape = SubResource("ConcaveCeiling_7")
+
+[node name="Ceiling_008_u_route_a_ceiling_ventilation" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-ceiling-ventilation"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_008_u_route_a_ceiling_ventilation"]
+shape = SubResource("ConcaveCeiling_8")
+
+[node name="Wall_001_u_route_a_wall_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-61.75, 1.7, 2.30825)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_001_u_route_a_wall_west"]
+shape = SubResource("Box_1")
+
+[node name="Wall_002_u_route_a_wall_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-61.75, 1.7, 4.75775)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_002_u_route_a_wall_west"]
+shape = SubResource("Box_2")
+
+[node name="Wall_003_u_route_a_wall_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-61.75, 2.9, 3.533)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_003_u_route_a_wall_west"]
+shape = SubResource("Box_3")
+
+[node name="Wall_004_u_route_a_wall_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-47.5, 1.7, 0)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_004_u_route_a_wall_east"]
+shape = SubResource("Box_4")
+
+[node name="Wall_005_u_route_a_wall_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-56.4248, 1.7, -6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_005_u_route_a_wall_north"]
+shape = SubResource("Box_5")
+
+[node name="Wall_006_u_route_a_wall_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-50.5752, 1.7, -6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_006_u_route_a_wall_north"]
+shape = SubResource("Box_6")
+
+[node name="Wall_007_u_route_a_wall_hall_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-60.7752, 1.7, 1.533)
+rotation = Vector3(0, 4.9354213e-16, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-hall-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_007_u_route_a_wall_hall_north"]
+shape = SubResource("Box_7")
+
+[node name="Wall_008_u_route_a_wall_hall_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-60.7752, 1.7, 5.533)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-hall-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_008_u_route_a_wall_hall_south"]
+shape = SubResource("Box_8")
+
+[node name="Wall_009_u_route_a_wall_store_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-59.5, 1.7, -2.3085)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-store-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_009_u_route_a_wall_store_west"]
+shape = SubResource("Box_9")
+
+[node name="Wall_010_u_route_a_wall_store_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-59.5, 1.7, 1.8995)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-store-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_010_u_route_a_wall_store_west"]
+shape = SubResource("Box_10")
+
+[node name="Wall_011_u_route_a_wall_store_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-59.5, 1.7, 5.1665)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-store-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_011_u_route_a_wall_store_west"]
+shape = SubResource("Box_11")
+
+[node name="Wall_012_u_route_a_wall_store_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-59.5, 1.7, 5.69125)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-store-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_012_u_route_a_wall_store_west"]
+shape = SubResource("Box_12")
+
+[node name="Wall_013_u_route_a_wall_store_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-59.5, 3.1, 3.533)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-store-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_013_u_route_a_wall_store_west"]
+shape = SubResource("Box_13")
+
+[node name="Wall_014_u_route_a_wall_store_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-53.5, 1.7, -2.65775)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-store-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_014_u_route_a_wall_store_east"]
+shape = SubResource("Box_14")
+
+[node name="Wall_015_u_route_a_wall_store_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-53.5, 1.7, 4.65775)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-store-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_015_u_route_a_wall_store_east"]
+shape = SubResource("Box_15")
+
+[node name="Wall_016_u_route_a_wall_store_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-53.5, 3.1, 2)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-store-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_016_u_route_a_wall_store_east"]
+shape = SubResource("Box_16")
+
+[node name="Wall_017_u_route_a_wall_stair_threshold" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-56.575, 1.7, 6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-stair-threshold"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_017_u_route_a_wall_stair_threshold"]
+shape = SubResource("Box_17")
+
+[node name="Wall_018_u_route_a_wall_stair_threshold" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-52.833, 1.7, 6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-stair-threshold"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_018_u_route_a_wall_stair_threshold"]
+shape = SubResource("Box_18")
+
+[node name="Wall_019_u_route_a_wall_stair_threshold" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-48.7752, 1.7, 6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-stair-threshold"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_019_u_route_a_wall_stair_threshold"]
+shape = SubResource("Box_19")
+
+[node name="Wall_020_u_route_a_wall_stair_threshold" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-51.033, 3.1, 6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-stair-threshold"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_020_u_route_a_wall_stair_threshold"]
+shape = SubResource("Box_20")
+
+[node name="Wall_021_u_route_a_wall_shaft_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-55.545, 1.7, 9.575)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-shaft-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_021_u_route_a_wall_shaft_west"]
+shape = SubResource("Box_21")
+
+[node name="Wall_022_u_route_a_wall_shaft_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-49.455, 1.7, 9.575)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-shaft-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_022_u_route_a_wall_shaft_east"]
+shape = SubResource("Box_22")
+
+[node name="Wall_023_u_route_a_wall_shaft_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-52.5, 1.7, 13.045)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "u-route-a-wall-shaft-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_023_u_route_a_wall_shaft_south"]
+shape = SubResource("Box_23")
+
+[node name="Door_u_route_a_door_hall_store" type="Marker3D" parent="Markers"]
+position = Vector3(-59.5, 1.4, 3.533)
+metadata/type = "door"
+metadata/source_id = "u-route-a-door-hall-store"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "2.8"
+
+[node name="Door_u_route_a_door_store_ventilation" type="Marker3D" parent="Markers"]
+position = Vector3(-53.5, 1.4, 2)
+metadata/type = "door"
+metadata/source_id = "u-route-a-door-store-ventilation"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "2.8"
+
+[node name="Door_u_route_a_door_stair" type="Marker3D" parent="Markers"]
+position = Vector3(-51.033, 1.4, 6)
+metadata/type = "door"
+metadata/source_id = "u-route-a-door-stair"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "2.8"
+
+[node name="Door_u_route_a_door_external" type="Marker3D" parent="Markers"]
+position = Vector3(-61.75, 1.2, 3.533)
+metadata/type = "door"
+metadata/source_id = "u-route-a-door-external"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "2.4"
+
+[node name="Marker_u_route_a_marker_shaft" type="Marker3D" parent="Markers"]
+position = Vector3(-52.5, 0, 9.5)
+metadata/type = "marker"
+metadata/source_id = "u-route-a-marker-shaft"
+metadata/anchor_role = "shaft_reference"

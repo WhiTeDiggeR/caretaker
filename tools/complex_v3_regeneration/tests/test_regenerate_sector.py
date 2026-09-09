@@ -206,6 +206,28 @@ class SectorRegenerationTests(unittest.TestCase):
         with self.assertRaisesRegex(BACKEND.RegenerationError, "crosses the boundary"):
             BACKEND.parameterize_frames([frame], sector, {"surface_openings": [opening]})
 
+    def test_parameterization_allows_opening_touching_adjacent_surface_edge(self) -> None:
+        frame = BACKEND.transform_frame(SVG_FRAME, {
+            "origin": [0.0, 0.0, 0.0], "basis_x": [1.0, 0.0, 0.0],
+            "basis_y": [0.0, 1.0, 0.0], "basis_z": [0.0, 0.0, 1.0],
+        })
+        limits = {"normal_offset_m": [0, 0], "height_m": [0, 0], "rotation_deg": {"yaw": [-180, 180], "pitch": [0, 0], "roll": [0, 0]}}
+        sector = {"anchor_parameterization": {"defaults_by_type": {"floor": {"placement_limits": limits}}}}
+        opening = {"surface": "floor", "applied": True, "polygon_xz_m": [[0.0, 1.0], [2.0, 1.0], [2.0, 2.0], [0.0, 2.0]]}
+        result = BACKEND.parameterize_frames([frame], sector, {"surface_openings": [opening]})[0]
+        self.assertEqual(result["bounds"]["holes_xz"], [])
+
+    def test_parameterization_ignores_opening_on_different_elevation(self) -> None:
+        frame = BACKEND.transform_frame(SVG_FRAME, {
+            "origin": [0.0, 0.0, 0.0], "basis_x": [1.0, 0.0, 0.0],
+            "basis_y": [0.0, 1.0, 0.0], "basis_z": [0.0, 0.0, 1.0],
+        })
+        limits = {"normal_offset_m": [0, 0], "height_m": [0, 0], "rotation_deg": {"yaw": [-180, 180], "pitch": [0, 0], "roll": [0, 0]}}
+        sector = {"anchor_parameterization": {"defaults_by_type": {"floor": {"placement_limits": limits}}}}
+        opening = {"surface": "floor", "elevation_m": 3.0, "applied": True, "polygon_xz_m": [[0.5, 0.3], [1.5, 0.3], [1.5, 0.7], [0.5, 0.7]]}
+        result = BACKEND.parameterize_frames([frame], sector, {"surface_openings": [opening]})[0]
+        self.assertEqual(result["bounds"]["holes_xz"], [])
+
 
 if __name__ == "__main__":
     unittest.main()

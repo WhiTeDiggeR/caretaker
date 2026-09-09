@@ -1,0 +1,20 @@
+{
+  "schema_id": "caretaker.object_bindings", "schema_version": "1.0.0",
+  "map_id": "caretaker-complex-v3", "sector_id": "U-ROUTE-A",
+  "bindings": [
+    {
+      "binding_id": "BIND-ROUTE-A-SHAFT-BEACON",
+      "object_ref": {"object_id": "OBJ-ROUTE-A-SHAFT-BEACON", "scene": "res://scenes/complex_v3_regeneration/pilots/route_a_vertical/pilot_scene.tscn", "node_path_hint": "AuthoredContent/ShaftBeacon"},
+      "anchor_ref": {"anchor_id": "svg:u-route-a-wall-east:wall", "expected_type": "wall"},
+      "placement": {"mode": "linear", "linear": {"along": {"policy": "centered", "offset_m": 0}}, "normal_offset_m": 0.09, "height_m": 1.5, "rotation": {"representation": "euler_deg", "order": "YXZ", "yaw_pitch_roll": [0,0,0]}},
+      "footprint_m": [0.4,0.4,0.1], "footprint_center_m": [0,0,0], "constraints": {"inside_anchor_bounds": true, "collision_free": true}, "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-ROUTE-A-LANDING-KIT",
+      "object_ref": {"object_id": "OBJ-ROUTE-A-LANDING-KIT", "scene": "res://scenes/complex_v3_regeneration/pilots/route_a_vertical/pilot_scene.tscn", "node_path_hint": "AuthoredContent/LandingKit"},
+      "anchor_ref": {"anchor_id": "AF-STAIRS-ROUTE-A-STAIR-LANDING-01", "expected_type": "floor"},
+      "placement": {"mode": "surface", "surface": {"u": {"policy": "centered", "offset_m": 0}, "v": {"policy": "centered", "offset_m": 0}}, "normal_offset_m": 0, "height_m": 0, "rotation": {"representation": "euler_deg", "order": "YXZ", "yaw_pitch_roll": [0,0,0]}},
+      "footprint_m": [0.4,0.4,0.4], "footprint_center_m": [0,0.2,0], "constraints": {"inside_anchor_bounds": true, "collision_free": true}, "on_missing_anchor": "block"
+    }
+  ]
+}

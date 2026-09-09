@@ -1,0 +1,70 @@
+{
+  "schema_id": "caretaker.sector_generation_manifest",
+  "schema_version": "1.0.0",
+  "contract_version": "1.0.0",
+  "map_id": "caretaker-complex-v3",
+  "project_root": "../../../..",
+  "sectors": [
+    {
+      "sector_id": "U-ROUTE-A",
+      "level": "LV-U",
+      "status": "ready",
+      "blockers": [],
+      "source_svg": "scenes/complex_v3_regeneration/pilots/route_a_vertical/source/u_route_a_pilot.svg",
+      "profile": "generic",
+      "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": 0.0},
+      "shared_args": ["--wall-height", "3.4", "--wall-thickness", "0.3", "--floor-thickness", "0.2", "--ceiling-thickness", "0.2", "--strict-wall-overlaps", "--strict-ceiling-alignment"],
+      "semantic_mappings": [],
+      "material_mappings": {},
+      "scene_name": "u_route_a_pilot_generated",
+      "output_resource_dir": "res://scenes/cv3_route_a/u",
+      "local_to_world": {"origin": [0,0,0], "basis_x": [1,0,0], "basis_y": [0,1,0], "basis_z": [0,0,1]},
+      "anchor_parameterization": {"defaults_by_type": {
+        "door": {"placement_limits": {"normal_offset_m": [0,1], "height_m": [0,2.4], "rotation_deg": {"yaw": [0,0], "pitch": [0,0], "roll": [0,0]}}},
+        "point": {"placement_limits": {"normal_offset_m": [0,0], "height_m": [0,0], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}},
+        "wall": {"origin": "finished_face", "placement_limits": {"normal_offset_m": [0,1], "height_m": [0,3.4], "rotation_deg": {"yaw": [0,0], "pitch": [0,0], "roll": [0,0]}}},
+        "floor": {"placement_limits": {"normal_offset_m": [0,0], "height_m": [0,0], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}},
+        "ceiling": {"placement_limits": {"normal_offset_m": [0,0], "height_m": [0,0], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}},
+        "shaft": {"placement_limits": {"normal_offset_m": [0,0], "height_m": [0,6], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}},
+        "stair_entry": {"placement_limits": {"normal_offset_m": [-0.75,0.75], "height_m": [0,0], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}},
+        "stair_exit": {"placement_limits": {"normal_offset_m": [-0.75,0.75], "height_m": [0,0], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}}
+      }},
+      "vertical_generators": [{
+        "generator_id": "route_a_stair",
+        "args": ["--shaft-width","6","--shaft-length","7","--floor-height","6","--layout","u-turn","--stair-width","1.5","--target-riser","0.15","--max-riser","0.15","--target-tread","0.25","--min-tread","0.25","--minimum-headroom","2.4","--landing-depth","2","--flight-gap","0.7","--railings","auto","--wall-thickness","0.09","--shaft-wall-bottom","3.6","--shaft-wall-top","5.8","--lower-entry-side","north","--upper-exit-side","north","--scene-name","route_a_stair"],
+        "local_to_world": {"origin": [-52.5,-6,9.5], "basis_x": [-1,0,0], "basis_y": [0,1,0], "basis_z": [0,0,-1]}
+      }],
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/pilots/route_a_vertical/upper/AuthoredContent/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/pilots/route_a_vertical/upper/AuthoredContent/object_bindings.json"
+      }
+    },
+    {
+      "sector_id": "L-ARCHIVE-A",
+      "level": "LV-L",
+      "status": "ready",
+      "blockers": [],
+      "source_svg": "scenes/complex_v3_regeneration/pilots/route_a_vertical/source/l_archive_a_pilot.svg",
+      "profile": "generic",
+      "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": -6.0},
+      "shared_args": ["--wall-height", "3.4", "--wall-thickness", "0.3", "--floor-thickness", "0.2", "--ceiling-thickness", "0.2", "--strict-wall-overlaps", "--strict-ceiling-alignment"],
+      "semantic_mappings": [],
+      "material_mappings": {},
+      "scene_name": "l_archive_a_pilot_generated",
+      "output_resource_dir": "res://scenes/cv3_route_a/l",
+      "local_to_world": {"origin": [0,0,0], "basis_x": [1,0,0], "basis_y": [0,1,0], "basis_z": [0,0,1]},
+      "anchor_parameterization": {"defaults_by_type": {
+        "door": {"placement_limits": {"normal_offset_m": [0,1], "height_m": [0,2.4], "rotation_deg": {"yaw": [0,0], "pitch": [0,0], "roll": [0,0]}}},
+        "point": {"placement_limits": {"normal_offset_m": [0,0], "height_m": [0,0], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}},
+        "wall": {"origin": "finished_face", "placement_limits": {"normal_offset_m": [0,1], "height_m": [0,3.4], "rotation_deg": {"yaw": [0,0], "pitch": [0,0], "roll": [0,0]}}},
+        "floor": {"placement_limits": {"normal_offset_m": [0,0], "height_m": [0,0], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}},
+        "ceiling": {"placement_limits": {"normal_offset_m": [0,0], "height_m": [0,0], "rotation_deg": {"yaw": [-180,180], "pitch": [0,0], "roll": [0,0]}}}
+      }},
+      "vertical_generators": [],
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/pilots/route_a_vertical/lower/AuthoredContent/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/pilots/route_a_vertical/lower/AuthoredContent/object_bindings.json"
+      }
+    }
+  ]
+}

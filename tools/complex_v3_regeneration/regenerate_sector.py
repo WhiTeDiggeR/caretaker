@@ -8,13 +8,14 @@ import copy
 import hashlib
 import json
 import math
+import re
 import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 CONTRACT_VERSION = "1.0.0"
 EPS = 1.0e-6
 ANCHOR_TYPES = {"point", "wall", "door", "floor", "ceiling", "shaft", "stair_entry", "stair_exit"}
@@ -243,16 +244,41 @@ def _point_on_segment_xz(point: Sequence[float], first: Sequence[float], second:
 
 
 def _polygons_overlap_xz(first: Sequence[Sequence[float]], second: Sequence[Sequence[float]]) -> bool:
-    if any(_point_in_polygon_xz(point, first) for point in second) or any(_point_in_polygon_xz(point, second) for point in first):
+    # Shared edges and corner contacts are valid between adjacent floor/ceiling
+    # frames. Only positive-area overlap makes opening ownership ambiguous.
+    if any(_point_strictly_in_polygon_xz(point, first) for point in second) or any(_point_strictly_in_polygon_xz(point, second) for point in first):
         return True
-    return any(
-        _segments_intersect_xz(first[index], first[(index + 1) % len(first)], second[other], second[(other + 1) % len(second)])
+    if any(
+        _segments_cross_strictly_xz(first[index], first[(index + 1) % len(first)], second[other], second[(other + 1) % len(second)])
         for index in range(len(first)) for other in range(len(second))
-    )
+    ):
+        return True
+    first_center = [sum(float(point[0]) for point in first) / len(first), sum(float(point[1]) for point in first) / len(first)]
+    second_center = [sum(float(point[0]) for point in second) / len(second), sum(float(point[1]) for point in second) / len(second)]
+    return _point_strictly_in_polygon_xz(first_center, second) or _point_strictly_in_polygon_xz(second_center, first)
+
+
+def _point_strictly_in_polygon_xz(point: Sequence[float], polygon: Sequence[Sequence[float]]) -> bool:
+    x, z = float(point[0]), float(point[1])
+    for index, first in enumerate(polygon):
+        second = polygon[(index + 1) % len(polygon)]
+        ax, az, bx, bz = float(first[0]), float(first[1]), float(second[0]), float(second[1])
+        cross = (x - ax) * (bz - az) - (z - az) * (bx - ax)
+        if abs(cross) <= EPS and min(ax, bx) - EPS <= x <= max(ax, bx) + EPS and min(az, bz) - EPS <= z <= max(az, bz) + EPS:
+            return False
+    return _point_in_polygon_xz(point, polygon)
+
+
+def _segments_cross_strictly_xz(a: Sequence[float], b: Sequence[float], c: Sequence[float], d: Sequence[float]) -> bool:
+    def orientation(p: Sequence[float], q: Sequence[float], r: Sequence[float]) -> float:
+        return (float(q[0]) - float(p[0])) * (float(r[1]) - float(p[1])) - (float(q[1]) - float(p[1])) * (float(r[0]) - float(p[0]))
+    values = orientation(a, b, c), orientation(a, b, d), orientation(c, d, a), orientation(c, d, b)
+    return values[0] * values[1] < -EPS and values[2] * values[3] < -EPS
 
 
 def parameterize_frames(
     frames: list[dict[str, Any]], sector: dict[str, Any], handoff: dict[str, Any],
+    *, producer: str = "svg",
 ) -> list[dict[str, Any]]:
     """Apply explicit sector policy and exact geometric surface parameterization.
 
@@ -278,6 +304,25 @@ def parameterize_frames(
     for raw in frames:
         frame = copy.deepcopy(raw)
         anchor_type = str(frame["type"])
+        if producer == "stairs":
+            # Stair frames already describe physical faces and passage axes.
+            # SVG defaults must not relocate them or enlarge producer limits.
+            bounds = frame["bounds"]
+            if anchor_type == "floor":
+                polygon = bounds.get("polygon_xz")
+                if not isinstance(polygon, list) or len(polygon) < 3:
+                    raise RegenerationError(f"{frame['anchor_id']} has no exact landing polygon")
+                origin, axis_u = frame["origin"], frame["forward"]
+                axis_v = [-float(axis_u[2]), 0.0, float(axis_u[0])]
+                for key, axis in (("u_range_m", axis_u), ("v_range_m", axis_v)):
+                    distances = [_dot_xz(point, origin, axis) for point in polygon]
+                    bounds[key] = [round(min(distances), 6), round(max(distances), 6)]
+                bounds["holes_xz"] = []
+            elif anchor_type == "wall":
+                bounds["along_range_m"] = [0.0, float(bounds["length_m"])]
+            frame["geometry_hash"] = sha256_bytes(canonical_json({key: value for key, value in frame.items() if key != "geometry_hash"}))
+            result.append(frame)
+            continue
         declared = defaults.get(anchor_type)
         if not isinstance(declared, dict):
             raise RegenerationError(f"No explicit anchor_parameterization policy for {anchor_type}")
@@ -306,6 +351,10 @@ def parameterize_frames(
             holes: list[list[list[float]]] = []
             for opening in opening_records:
                 if not isinstance(opening, dict) or opening.get("surface") != anchor_type or not opening.get("applied"):
+                    continue
+                opening_elevation = opening.get("elevation_m")
+                frame_elevation = bounds.get("elevation_m")
+                if isinstance(opening_elevation, (int, float)) and isinstance(frame_elevation, (int, float)) and not math.isclose(float(opening_elevation), float(frame_elevation), abs_tol=EPS):
                     continue
                 opening_polygon = opening.get("polygon_xz_m")
                 if not isinstance(opening_polygon, list) or not opening_polygon:
@@ -464,6 +513,7 @@ def generate_svg(
     if issues:
         raise RegenerationError("SVG handoff contains blocking anchor_frame_issues")
     validate_generated_files(architecture, conversion_report.get("files", []), "SVG conversion")
+    normalize_surface_collision_winding(architecture / (sector["scene_name"] + ".tscn"))
     transform = validate_transform(sector.get("local_to_world"), "SVG")
     frames = [transform_frame(frame, transform) for frame in handoff.get("anchor_frames", [])]
     commands = [
@@ -471,6 +521,35 @@ def generate_svg(
         {"stage": "convert", "argv": conversion_command, "exit_code": conversion.returncode},
     ]
     return conversion_report, frames, commands
+
+
+def normalize_surface_collision_winding(scene: Path) -> None:
+    """Adapt converter 1.19 planar collision faces to Godot clockwise fronts.
+
+    Floor fronts must face +Y and ceiling fronts -Y. Preserve every vertex,
+    resource identity and transform; only reverse triangles facing away.
+    """
+    pattern = re.compile(r'(\[sub_resource type="ConcavePolygonShape3D" id="Concave(Floor|Ceiling)_[^"]+"\]\s*data = PackedVector3Array\()([^)]*)(\))')
+
+    def correct(match: re.Match[str]) -> str:
+        values = [float(value.strip()) for value in match[3].split(",")]
+        if not values or len(values) % 9 or not all(math.isfinite(value) for value in values):
+            raise RegenerationError("Malformed generated planar collision triangles")
+        for index in range(0, len(values), 9):
+            a, b, c = values[index:index + 3], values[index + 3:index + 6], values[index + 6:index + 9]
+            if max(a[1], b[1], c[1]) - min(a[1], b[1], c[1]) > EPS:
+                raise RegenerationError("Generated surface collision is not horizontal")
+            cross_y = (b[2] - a[2]) * (c[0] - a[0]) - (b[0] - a[0]) * (c[2] - a[2])
+            if abs(cross_y) <= EPS:
+                raise RegenerationError("Degenerate generated surface collision triangle")
+            if (match[2] == "Floor" and cross_y > 0) or (match[2] == "Ceiling" and cross_y < 0):
+                values[index + 3:index + 9] = c + b
+        return match[1] + ", ".join(format(value, ".12g") for value in values) + match[4]
+
+    original = scene.read_text(encoding="utf-8")
+    corrected = pattern.sub(correct, original)
+    if corrected != original:
+        scene.write_text(corrected, encoding="utf-8")
 
 
 def generate_stairs(
@@ -510,7 +589,14 @@ def generate_stairs(
         anchor_frames = report.get("anchor_frames")
         if report.get("schema_id") != "caretaker.godot_stairs.generation_report" or report.get("schema_version") != "1.1.0" or not isinstance(anchor_frames, list) or not anchor_frames:
             raise RegenerationError(f"Stair generator {generator_id} did not emit the T03 anchor frame contract")
-        frames.extend(transform_frame(frame, transform) for frame in anchor_frames)
+        for frame in anchor_frames:
+            transformed = transform_frame(frame, transform)
+            if transformed.get("role") == "landing":
+                thickness = report.get("settings", {}).get("step_thickness")
+                if not isinstance(thickness, (int, float)) or thickness <= 0:
+                    raise RegenerationError("Stair landing support requires explicit step_thickness")
+                transformed["bounds"]["thickness_m"] = float(thickness)
+            frames.append(transformed)
         reports.append(report)
         commands.append({"stage": "stairs", "generator_id": generator_id, "argv": command, "exit_code": process.returncode})
     return reports, frames, commands
@@ -553,7 +639,8 @@ def execute(args: argparse.Namespace) -> int:
         project_root, staging, sector,
     )
     commands.extend(stair_commands)
-    frames = parameterize_frames(svg_frames + stair_frames, sector, conversion_report.get("spatial_handoff", {}))
+    frames = parameterize_frames(svg_frames, sector, conversion_report.get("spatial_handoff", {}))
+    frames.extend(parameterize_frames(stair_frames, sector, {}, producer="stairs"))
     anchor_document = normalized_anchor_document(
         manifest["map_id"], args.sector, generation_id,
         {"sector_backend": VERSION, "svg_converter": conversion_report.get("generator_version", "unknown"), "stair_generator": stair_reports[0].get("generator_version", "none") if stair_reports else "none"},
