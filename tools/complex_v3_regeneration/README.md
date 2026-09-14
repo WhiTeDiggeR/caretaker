@@ -108,6 +108,12 @@ The upper rollout intentionally omits `--strict-ceiling-alignment` only for
 while the converter's nearest-wall diagnostic cannot model the step boundary.
 Per-wall heights and composition collision checks remain strict.
 
+Portal topology is also explicit. A portal is an opening only when its handoff
+state is not `closed` and `traversable` is not `false`. A closed transition emits
+a stable `sealed_portal` marker for audit, keeps the generated wall solid, and
+binds any existing authored frame as a bounded mount to that exact wall. It must
+not appear in `opening_anchor_ids` or produce door anchor frames.
+
 ## Verification fixtures
 
 `tests/fixtures/fixture_generation_manifest.json` contains one ordinary sector and one vertical sector with exact transforms. They are deliberately separate from the blocked production inventory. Run the unit suite with:

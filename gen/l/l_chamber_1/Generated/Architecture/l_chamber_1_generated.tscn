@@ -1,0 +1,468 @@
+[gd_scene load_steps=49 format=3]
+
+[ext_resource type="Material" path="res://gen/l/l_chamber_1/Generated/Architecture/floor_material.tres" id="1_floor_material"]
+
+[ext_resource type="Material" path="res://gen/l/l_chamber_1/Generated/Architecture/ceiling_material.tres" id="7_ceiling_material"]
+
+[ext_resource type="Material" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_material.tres" id="3_wall_material"]
+
+[ext_resource type="Material" path="res://gen/l/l_chamber_1/Generated/Architecture/obstacle_material.tres" id="5_obstacle_material"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/floor_001_f_ab45724127.obj" id="floor_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/floor_002_f_a279f46b87.obj" id="floor_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/floor_003_f_9cb64ad9f6.obj" id="floor_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/ceiling_001_c_ab45724127.obj" id="ceiling_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/ceiling_002_c_a279f46b87.obj" id="ceiling_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/ceiling_003_c_9cb64ad9f6.obj" id="ceiling_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_001_w_13368377db.obj" id="box_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_002_w_13368377db.obj" id="box_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_003_w_391c03b6e5.obj" id="box_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_004_w_391c03b6e5.obj" id="box_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_005_w_24a2259206.obj" id="box_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_006_w_e0ffe5307a_w_f6a9491326.obj" id="box_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_007_w_e0ffe5307a_w_f6a9491326.obj" id="box_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_008_w_e0ffe5307a.obj" id="box_part_8_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_009_w_e0ffe5307a.obj" id="box_part_9_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_010_w_1cc690fb57.obj" id="box_part_10_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_011_w_1cc690fb57.obj" id="box_part_11_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_012_w_1cc690fb57.obj" id="box_part_12_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_013_w_d39306d0f8.obj" id="box_part_13_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_014_w_d39306d0f8.obj" id="box_part_14_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_015_w_d39306d0f8.obj" id="box_part_15_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/l/l_chamber_1/Generated/Architecture/wall_016_w_d39306d0f8.obj" id="box_part_16_mesh"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_1"]
+data = PackedVector3Array(-110, -6, 15, -110, -6, -8, -92.47, -6, -8, -92.47, -6, -8, -92.47, -6, 15, -110, -6, 15, -92.47, -6, 2.35, -92.47, -6, -8, -92.32, -6, -8, -92.32, -6, -8, -92.32, -6, 2.35, -92.47, -6, 2.35, -92.47, -6, 15, -92.47, -6, 2.35, -92.32, -6, 2.35, -92.32, -6, 2.35, -92.32, -6, 15, -92.47, -6, 15)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_2"]
+data = PackedVector3Array(-92.32, -6, 2.35, -92.32, -6, -8, -84, -6, -8, -84, -6, -8, -84, -6, 2.35, -92.32, -6, 2.35)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_3"]
+data = PackedVector3Array(-92.32, -6, 15, -92.32, -6, 2.35, -84, -6, 2.35, -84, -6, 2.35, -84, -6, 15, -92.32, -6, 15)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_1"]
+data = PackedVector3Array(-110, -1, 15, -92.47, -1, -8, -110, -1, -8, -92.47, -1, -8, -110, -1, 15, -92.47, -1, 15, -92.47, -1, 2.35, -92.32, -1, -8, -92.47, -1, -8, -92.32, -1, -8, -92.47, -1, 2.35, -92.32, -1, 2.35, -92.47, -1, 15, -92.32, -1, 2.35, -92.47, -1, 2.35, -92.32, -1, 2.35, -92.47, -1, 15, -92.32, -1, 15)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_2"]
+data = PackedVector3Array(-92.32, -1, 2.35, -84, -1, -8, -92.32, -1, -8, -84, -1, -8, -92.32, -1, 2.35, -84, -1, 2.35)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_3"]
+data = PackedVector3Array(-92.32, -1, 15, -84, -1, 2.35, -92.32, -1, 2.35, -84, -1, 2.35, -92.32, -1, 15, -84, -1, 15)
+
+[sub_resource type="BoxShape3D" id="Box_1"]
+size = Vector3(17.5295, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_2"]
+size = Vector3(8.1695, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_3"]
+size = Vector3(17.5295, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_4"]
+size = Vector3(8.47, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_5"]
+size = Vector3(23.3, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_6"]
+size = Vector3(10.1995, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_7"]
+size = Vector3(4.075, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_8"]
+size = Vector3(3.9245, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_9"]
+size = Vector3(4.5, 0.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_10"]
+size = Vector3(1.7595, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_11"]
+size = Vector3(1.7595, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_12"]
+size = Vector3(4.5, 0.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_13"]
+size = Vector3(10.5, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_14"]
+size = Vector3(5.725, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_15"]
+size = Vector3(5.5745, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_16"]
+size = Vector3(1.2, 2.6, 0.3)
+
+[node name="l_chamber_1_generated" type="Node3D"]
+
+metadata/source_file = "$PROJECT_ROOT\\scenes\\complex_v3_regeneration\\rollout\\lower\\source\\l_chamber_1.svg"
+
+metadata/generator = "svg_to_godot3d 1.19.0"
+
+[node name="Floors" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Floors"]
+
+[node name="Ceilings" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Ceilings"]
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Walls"]
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Obstacles"]
+
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Floors"]
+
+[node name="Visual" type="Node3D" parent="Ceilings"]
+
+[node name="Visual" type="Node3D" parent="Walls"]
+
+[node name="Visual" type="Node3D" parent="Obstacles"]
+
+[node name="Floor_001_f_ab45724127" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_1_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "f-ab45724127"
+
+[node name="Floor_002_f_a279f46b87" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_2_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "f-a279f46b87"
+
+[node name="Floor_003_f_9cb64ad9f6" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_3_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "f-9cb64ad9f6"
+
+[node name="Ceiling_001_c_ab45724127" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_1_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "c-ab45724127"
+
+[node name="Ceiling_002_c_a279f46b87" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_2_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "c-a279f46b87"
+
+[node name="Ceiling_003_c_9cb64ad9f6" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_3_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "c-9cb64ad9f6"
+
+[node name="Wall_001_w_13368377db" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_1_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-13368377db"
+
+[node name="Wall_002_w_13368377db" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_2_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-13368377db"
+
+[node name="Wall_003_w_391c03b6e5" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_3_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-391c03b6e5"
+
+[node name="Wall_004_w_391c03b6e5" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_4_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-391c03b6e5"
+
+[node name="Wall_005_w_24a2259206" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_5_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-24a2259206"
+
+[node name="Wall_006_w_e0ffe5307a_w_f6a9491326" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_6_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-e0ffe5307a|w-f6a9491326"
+
+[node name="Wall_007_w_e0ffe5307a_w_f6a9491326" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_7_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-e0ffe5307a|w-f6a9491326"
+
+[node name="Wall_008_w_e0ffe5307a" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_8_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-e0ffe5307a"
+
+[node name="Wall_009_w_e0ffe5307a" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_9_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-e0ffe5307a"
+
+[node name="Wall_010_w_1cc690fb57" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_10_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-1cc690fb57"
+
+[node name="Wall_011_w_1cc690fb57" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_11_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-1cc690fb57"
+
+[node name="Wall_012_w_1cc690fb57" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_12_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-1cc690fb57"
+
+[node name="Wall_013_w_d39306d0f8" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_13_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-d39306d0f8"
+
+[node name="Wall_014_w_d39306d0f8" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_14_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-d39306d0f8"
+
+[node name="Wall_015_w_d39306d0f8" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_15_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-d39306d0f8"
+
+[node name="Wall_016_w_d39306d0f8" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_16_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "w-d39306d0f8"
+
+[node name="Floor_001_f_ab45724127" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "f-ab45724127"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_001_f_ab45724127"]
+shape = SubResource("ConcaveFloor_1")
+
+[node name="Floor_002_f_a279f46b87" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "f-a279f46b87"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_002_f_a279f46b87"]
+shape = SubResource("ConcaveFloor_2")
+
+[node name="Floor_003_f_9cb64ad9f6" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "f-9cb64ad9f6"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_003_f_9cb64ad9f6"]
+shape = SubResource("ConcaveFloor_3")
+
+[node name="Ceiling_001_c_ab45724127" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "c-ab45724127"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_001_c_ab45724127"]
+shape = SubResource("ConcaveCeiling_1")
+
+[node name="Ceiling_002_c_a279f46b87" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "c-a279f46b87"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_002_c_a279f46b87"]
+shape = SubResource("ConcaveCeiling_2")
+
+[node name="Ceiling_003_c_9cb64ad9f6" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "c-9cb64ad9f6"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_003_c_9cb64ad9f6"]
+shape = SubResource("ConcaveCeiling_3")
+
+[node name="Wall_001_w_13368377db" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-101.085, -3.5, -8)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-13368377db"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_001_w_13368377db"]
+shape = SubResource("Box_1")
+
+[node name="Wall_002_w_13368377db" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-88.2352, -3.5, -8)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-13368377db"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_002_w_13368377db"]
+shape = SubResource("Box_2")
+
+[node name="Wall_003_w_391c03b6e5" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-101.085, -3.5, 15)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-391c03b6e5"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_003_w_391c03b6e5"]
+shape = SubResource("Box_3")
+
+[node name="Wall_004_w_391c03b6e5" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-88.085, -3.5, 15)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-391c03b6e5"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_004_w_391c03b6e5"]
+shape = SubResource("Box_4")
+
+[node name="Wall_005_w_24a2259206" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-110, -3.5, 3.5)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-24a2259206"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_005_w_24a2259206"]
+shape = SubResource("Box_5")
+
+[node name="Wall_006_w_e0ffe5307a_w_f6a9491326" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-92.32, -3.5, -2.74975)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-e0ffe5307a|w-f6a9491326"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_006_w_e0ffe5307a_w_f6a9491326"]
+shape = SubResource("Box_6")
+
+[node name="Wall_007_w_e0ffe5307a_w_f6a9491326" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-92.32, -3.5, 4.3875)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-e0ffe5307a|w-f6a9491326"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_007_w_e0ffe5307a_w_f6a9491326"]
+shape = SubResource("Box_7")
+
+[node name="Wall_008_w_e0ffe5307a" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-92.32, -3.5, 12.8873)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-e0ffe5307a"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_008_w_e0ffe5307a"]
+shape = SubResource("Box_8")
+
+[node name="Wall_009_w_e0ffe5307a" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-92.32, -1.25, 8.675)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-e0ffe5307a"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_009_w_e0ffe5307a"]
+shape = SubResource("Box_9")
+
+[node name="Wall_010_w_1cc690fb57" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-91.2897, -3.5, 2.35)
+rotation = Vector3(0, -2.5239512e-16, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-1cc690fb57"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_010_w_1cc690fb57"]
+shape = SubResource("Box_10")
+
+[node name="Wall_011_w_1cc690fb57" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-85.0302, -3.5, 2.35)
+rotation = Vector3(0, 2.5239512e-16, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-1cc690fb57"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_011_w_1cc690fb57"]
+shape = SubResource("Box_11")
+
+[node name="Wall_012_w_1cc690fb57" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-88.16, -1.25, 2.35)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-1cc690fb57"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_012_w_1cc690fb57"]
+shape = SubResource("Box_12")
+
+[node name="Wall_013_w_d39306d0f8" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-84, -3.5, -2.9)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-d39306d0f8"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_013_w_d39306d0f8"]
+shape = SubResource("Box_13")
+
+[node name="Wall_014_w_d39306d0f8" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-84, -3.5, 5.2125)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-d39306d0f8"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_014_w_d39306d0f8"]
+shape = SubResource("Box_14")
+
+[node name="Wall_015_w_d39306d0f8" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-84, -3.5, 12.0622)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-d39306d0f8"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_015_w_d39306d0f8"]
+shape = SubResource("Box_15")
+
+[node name="Wall_016_w_d39306d0f8" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-84, -2.3, 8.675)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "w-d39306d0f8"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_016_w_d39306d0f8"]
+shape = SubResource("Box_16")
+
+[node name="Door_d_20fe0325b4" type="Marker3D" parent="Markers"]
+position = Vector3(-88.16, -3.75, 2.35)
+metadata/type = "door"
+metadata/source_id = "d-20fe0325b4"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "4.5"
+
+[node name="Door_d_90ee5eec04" type="Marker3D" parent="Markers"]
+position = Vector3(-92.32, -3.75, 8.675)
+metadata/type = "door"
+metadata/source_id = "d-90ee5eec04"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "4.5"
+
+[node name="Door_d_d887c1152f" type="Marker3D" parent="Markers"]
+position = Vector3(-84, -4.8, 8.675)
+metadata/type = "door"
+metadata/source_id = "d-d887c1152f"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "2.4"

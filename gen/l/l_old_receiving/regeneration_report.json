@@ -1,0 +1,83 @@
+{
+  "schema_id": "caretaker.sector_regeneration_report",
+  "schema_version": "1.0.0",
+  "contract_version": "1.0.0",
+  "status": "ok",
+  "sector_id": "L-OLD-RECEIVING",
+  "generation_id": "sha256:77c7bee951e19442f9e6aa0dc8ae5cf3a6a4ff3b0ebb4999df618afedd69dbf5",
+  "commands": [
+    {
+      "stage": "inspect",
+      "argv": [
+        "$PYTHON",
+        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
+        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/lower/source/l_old_receiving.svg",
+        "--profile",
+        "generic",
+        "--scale",
+        "1.0",
+        "--origin",
+        "none",
+        "--elevation",
+        "-6.0",
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment",
+        "--json",
+        "--output-json",
+        "$STAGING/preflight_report.json",
+        "--strict"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "convert",
+      "argv": [
+        "$PYTHON",
+        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
+        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/lower/source/l_old_receiving.svg",
+        "$STAGING/Generated/Architecture",
+        "--profile",
+        "generic",
+        "--scale",
+        "1.0",
+        "--origin",
+        "none",
+        "--elevation",
+        "-6.0",
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment",
+        "--resource-dir",
+        "res://gen/l/l_old_receiving/Generated/Architecture",
+        "--scene-name",
+        "l_old_receiving_generated",
+        "--strict"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "anchor_count": 30,
+  "errors": [],
+  "warnings": [],
+  "files": [
+    "anchor_frames.json",
+    "generation_manifest.json",
+    "preflight_report.json",
+    "Generated/Architecture/conversion_report.json"
+  ]
+}
