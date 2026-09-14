@@ -25,3 +25,20 @@ Status: audit only. Shared generated geometry, atomic regeneration, complete
 cross-floor frames, combined test assembly, collision/runtime proof and visual
 review are not yet implemented/verified. The audit deliberately reports
 `not_ready_for_combined_assembly` and `combined_collision_verification: not_run`.
+
+## Explicit portal mapping result
+
+`map_vertical_ports.py` now compares source portal segments against declared
+shaft boundaries without moving/projecting either source. It records 19 portal
+candidates and 17 blocking diagnostics (boundary conflicts, missing explicit
+level-space mappings and multiple valid portals needing role selection).
+For example P-U-FREIGHT-03 is on X=13.5 while VT-FREIGHT-LIFT's shaft starts at
+X=16.5. A same-name room is not proof that its door is a valid shaft threshold.
+No anchor frames or stair/lift geometry are emitted for conflicting candidates.
+Passenger LV-T remains pass-through without a threshold/stop. Route A continues
+to reuse its integrated pilot. Tests cover line reversal, rejection of interior
+and out-of-bounds segments, source ordering invariance and no invented stop.
+
+Resolving these conflicts requires reviewed reconciliation of the geometry and
+vertical handoffs, outside T18's generated/config/report ownership. Do not change
+approved sector geometry or shaft dimensions silently to obtain a passing build.
