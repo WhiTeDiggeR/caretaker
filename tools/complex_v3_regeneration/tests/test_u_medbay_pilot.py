@@ -27,7 +27,7 @@ class UMedbayPilotPipelineTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix=".u-medbay-pilot-scenario-", dir=PROJECT)
         self.root = Path(self.temp.name)
         self.source = self.root / "source.svg"
-        shutil.copy2(PILOT / "source" / "u_medbay_pilot.svg", self.source)
+        shutil.copy2(PROJECT / "docs/design/complex_v3/plans/generation/upper/u_medbay.svg", self.source)
         authored = self.root / "AuthoredContent"
         authored.mkdir()
         shutil.copy2(PILOT / "AuthoredContent" / "composition.json", authored / "composition.json")

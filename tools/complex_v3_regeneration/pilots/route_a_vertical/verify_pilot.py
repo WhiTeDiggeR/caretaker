@@ -24,7 +24,8 @@ def main() -> int:
     counts = {}
     all_ids = []
     for sector, stem, output in [("U-ROUTE-A", "u_route_a", "u"), ("L-ARCHIVE-A", "l_archive_a", "l")]:
-        elements = list(ET.parse(PILOT / f"source/{stem}_pilot.svg").getroot().iter())
+        level = "upper" if stem == "u_route_a" else "lower"
+        elements = list(ET.parse(PROJECT / f"docs/design/complex_v3/plans/generation/{level}/{stem}.svg").getroot().iter())
         svg_ids = [item.get("id") for item in elements if item.get("id")]
         if len(svg_ids) != len(set(svg_ids)):
             errors.append(f"{sector}: duplicate SVG IDs")

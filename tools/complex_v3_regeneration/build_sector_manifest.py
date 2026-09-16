@@ -27,7 +27,7 @@ def main() -> int:
                 "canonical_svg_not_integrated",
                 "exact_svg_to_world_transform_missing"
             ],
-            "source_svg": f"docs/design/complex_v3/plans/sectors/{level_dir}/{slug}.svg",
+            "source_svg": f"docs/design/complex_v3/plans/generation/{level_dir}/{slug}.svg",
             "profile": "codex-plan",
             "metric_settings": {
                 "scale_m_per_svg_unit": None,

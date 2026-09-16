@@ -20,7 +20,17 @@ The backend runs strict SVG inspection and conversion with one shared argument l
 - `generation_manifest.json` with input hashes and effective geometry settings;
 - `regeneration_report.json` with commands and exit codes.
 
-`sector_generation_manifest.json` inventories all 30 production sector sources. Its entries intentionally remain `blocked` while the current canonical SVGs and exact SVG-to-world transforms are not integrated. `data-scale="relative"` is not accepted as a metric transform. Remove a blocker only after filling `metric_settings` (scale, origin, elevation), exact `local_to_world`, reviewed semantic and material mappings, and every related vertical generator. Non-empty material overrides are currently blocked because converter 1.19 has no explicit material-override input; the backend never guesses them.
+`sector_generation_manifest.json` inventories all 30 production sector sources. Every
+`source_svg` points to the single metric input under
+`docs/design/complex_v3/plans/generation/`; SVGs under `plans/sectors` and
+`plans/overview` are presentation-only. Entries remain `blocked` until T20 fills
+and validates the exact SVG-to-world transforms and the rest of the production
+configuration. `data-scale="relative"` is not accepted as a metric transform.
+Remove a blocker only after filling `metric_settings` (scale, origin, elevation),
+exact `local_to_world`, reviewed semantic and material mappings, and every related
+vertical generator. Non-empty material overrides are currently blocked because
+converter 1.19 has no explicit material-override input; the backend never guesses
+them.
 
 Exit code `0` means the staging package passed this backend's checks. Exit code `2` means no usable package was produced; a caller must not promote it.
 

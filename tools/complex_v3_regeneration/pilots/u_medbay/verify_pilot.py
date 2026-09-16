@@ -44,7 +44,7 @@ def main() -> int:
     anchors = load_json(pilot / "live/anchor_frames.json")
     bindings = load_json(pilot / "AuthoredContent/object_bindings.json")
     composition = load_json(pilot / "AuthoredContent/composition.json")
-    root = ET.parse(pilot / "source/u_medbay_pilot.svg").getroot()
+    root = ET.parse(project / "docs/design/complex_v3/plans/generation/upper/u_medbay.svg").getroot()
     elements = {element.attrib["id"]: element for element in root.iter() if "id" in element.attrib}
     errors: list[str] = []
     checks: list[str] = []

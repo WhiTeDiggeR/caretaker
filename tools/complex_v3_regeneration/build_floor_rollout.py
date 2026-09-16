@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Materialize metric SVG and authored binding inputs for a floor rollout."""
+"""Materialize authored binding inputs around immutable canonical metric SVGs."""
 from __future__ import annotations
 
 import argparse
@@ -198,9 +198,9 @@ def build_sector(sector: dict[str, Any], handoff: dict[str, Any], dressing: dict
     if sealed_portals:
         lines.append('  </g>')
     lines.append('</svg>')
-    source = root / f"source/{sector_slug}.svg"
-    source.parent.mkdir(parents=True, exist_ok=True)
-    source.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    source = ROOT / f"docs/design/complex_v3/plans/generation/{level_name}/{sector_slug}.svg"
+    if not source.is_file():
+        raise BuildError(f"canonical SVG is missing: {source.relative_to(ROOT)}")
 
     infrastructure = []
     for space in spaces:
