@@ -14,6 +14,14 @@ import sys
 from pathlib import Path
 from typing import Any, Sequence
 
+try:
+    from .manifest_contract import validate_manifest_document
+except ImportError:
+    try:
+        from tools.complex_v3_regeneration.manifest_contract import validate_manifest_document
+    except ImportError:
+        from manifest_contract import validate_manifest_document
+
 
 VERSION = "1.1.1"
 CONTRACT_VERSION = "1.0.0"
@@ -30,7 +38,8 @@ class RegenerationError(Exception):
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="Generate one complex_v3 sector into staging.")
     result.add_argument("--sector", required=True)
-    result.add_argument("--staging", required=True)
+    result.add_argument("--staging")
+    result.add_argument("--preflight-only", action="store_true")
     result.add_argument("--manifest", default=str(Path(__file__).with_name("sector_generation_manifest.json")))
     result.add_argument("--svg-tool-root", required=True, help="Canonical svg-plan-to-godot package/source root")
     result.add_argument("--stair-tool-root", help="Canonical generate-godot-stairs root when vertical generators are configured")
@@ -143,6 +152,26 @@ def require_version(value: Any, minimum: tuple[int, int, int], label: str) -> st
         expected = ".".join(str(part) for part in minimum)
         raise RegenerationError(f"{label} {value} is older than required {expected}")
     return value
+
+
+def probe_tool_version(python: str, script: Path, minimum: tuple[int, int, int], label: str) -> str:
+    process = run_command([python, str(script), "--version"], script.parent)
+    if process.returncode != 0:
+        raise RegenerationError(f"Cannot query {label} version before staging")
+    match = re.search(r"\b(\d+\.\d+\.\d+)\b", "\n".join((process.stdout, process.stderr)))
+    if match is None:
+        raise RegenerationError(f"{label} did not report a semantic version before staging")
+    return require_version(match.group(1), minimum, label)
+
+
+def preflight_toolchain(args: argparse.Namespace, sector: dict[str, Any]) -> None:
+    svg_root = Path(args.svg_tool_root).resolve()
+    probe_tool_version(args.python, find_script(svg_root, "inspect_svg_plan.py"), MIN_SVG_VERSION, "svg-plan-to-godot")
+    if sector.get("vertical_generators"):
+        if not args.stair_tool_root:
+            raise RegenerationError("Sector requires vertical generators but --stair-tool-root was not supplied")
+        stair_root = Path(args.stair_tool_root).resolve()
+        probe_tool_version(args.python, find_script(stair_root, "generate_godot_stairs.py"), MIN_STAIR_VERSION, "generate-godot-stairs")
 
 
 def transform_vector(vector: Sequence[float], transform: dict[str, list[float]]) -> list[float]:
@@ -606,6 +635,11 @@ def execute(args: argparse.Namespace) -> int:
     manifest_path = Path(args.manifest).resolve()
     manifest = load_json(manifest_path)
     project_root = (manifest_path.parent / manifest.get("project_root", ".")).resolve()
+    production_path = Path(__file__).with_name("sector_generation_manifest.json").resolve()
+    is_production = manifest_path == production_path or manifest.get("schema_version") == "1.1.0"
+    manifest_errors = validate_manifest_document(manifest, project_root, production=is_production)
+    if manifest_errors:
+        raise RegenerationError("Manifest validation failed: " + "; ".join(manifest_errors))
     sectors = manifest.get("sectors")
     if not isinstance(sectors, list):
         raise RegenerationError("Manifest sectors must be an array")
@@ -627,6 +661,11 @@ def execute(args: argparse.Namespace) -> int:
     output_resource_dir = sector["output_resource_dir"]
     if not isinstance(output_resource_dir, str) or not output_resource_dir.startswith("res://") or "AuthoredContent" in output_resource_dir or ".." in output_resource_dir:
         raise RegenerationError("output_resource_dir must be a safe res:// Generated package path")
+    preflight_toolchain(args, sector)
+    if args.preflight_only:
+        return 0
+    if not args.staging:
+        raise RegenerationError("--staging is required unless --preflight-only is used")
     staging = Path(args.staging).resolve()
     require_empty_staging(staging)
     source = (project_root / sector["source_svg"]).resolve()

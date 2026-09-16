@@ -22,12 +22,15 @@ VALIDATOR = ROOT.parent / "complex_v3_composition_validator" / "validate_composi
 FAKE_BACKEND = r'''import argparse, hashlib, json, os, sys
 from pathlib import Path
 p=argparse.ArgumentParser(add_help=False)
-p.add_argument("--sector"); p.add_argument("--staging"); p.add_argument("--manifest")
+p.add_argument("--sector"); p.add_argument("--staging"); p.add_argument("--manifest"); p.add_argument("--preflight-only",action="store_true")
 a,_=p.parse_known_args()
 manifest=json.loads(Path(a.manifest).read_text(encoding="utf-8"))
 sector=next(item for item in manifest["sectors"] if item["sector_id"]==a.sector)
 mode=sector.get("fixture_mode","ok")
 failures={"inspector":"SVG inspection failed", "converter":"SVG conversion failed", "stairs":"Stair generator main failed"}
+if a.preflight_only and mode=="toolchain":
+    print("ERROR: svg-plan-to-godot 1.18.9 is older than required 1.19.0",file=sys.stderr); raise SystemExit(2)
+if a.preflight_only: raise SystemExit(0)
 if mode in failures:
     print("ERROR: "+failures[mode],file=sys.stderr); raise SystemExit(2)
 root=Path(a.staging); generated=root/"Generated"/"Architecture"; generated.mkdir(parents=True)
@@ -126,6 +129,13 @@ class SafeRegenerationTests(unittest.TestCase):
         self.assertTrue((self.live / "Generated" / "Architecture" / "fixture.tscn").is_file())
         self.assertEqual((self.live / "Materials" / "authored.tres").read_text(encoding="utf-8"), "preserve")
         self.assertEqual((self.live / "notes.txt").read_text(encoding="utf-8"), "user file")
+
+    def test_incompatible_toolchain_fails_before_staging_is_created(self) -> None:
+        self.write_manifest("toolchain")
+        code, report = self.run_safe()
+        self.assertEqual(code, 2)
+        self.assertEqual(report["errors"][-1]["stage"], "toolchain_validation")
+        self.assertEqual(list(self.live.parent.glob(".*.regeneration-*")), [])
 
     def test_authored_composition_inside_live_is_validated_from_candidate(self) -> None:
         authored = self.live / "AuthoredContent"

@@ -32,6 +32,9 @@ SVG_FRAME = {
 
 
 INSPECTOR = r'''import argparse, json
+import sys
+if "--version" in sys.argv:
+ print("svg-plan-to-godot 1.19.0"); raise SystemExit(0)
 p=argparse.ArgumentParser(add_help=False)
 p.add_argument("source"); p.add_argument("--output-json"); p.add_argument("--json", action="store_true")
 a,_=p.parse_known_args()
@@ -56,6 +59,8 @@ open(os.path.join(output,"conversion_report.json"),"w",encoding="utf-8").write(j
 
 
 STAIRS = r'''import json, os, sys
+if "--version" in sys.argv:
+ print("generate-godot-stairs 2.9.0"); raise SystemExit(0)
 output=sys.argv[1]; os.makedirs(output,exist_ok=True)
 frame={"anchor_id":"stairs:fixture:lower_entry","type":"stair_entry","role":"lower_entry","status":"active","source_ref":{"artifact_id":"generation-report","source_id":"fixture:lower_entry"},"origin":[0.0,0.0,0.0],"forward":[0.0,0.0,1.0],"normal":[-1.0,0.0,0.0],"up":[0.0,1.0,0.0],"geometry_hash":"sha256:fixture-stairs","bounds":{"clear_bounds_xz":[-1.0,-2.0,1.0,2.0],"bottom_y":0.0,"top_y":3.0},"placement_limits":{"normal_offset_m":[-1.0,1.0],"height_m":[0.0,3.0]}}
 report={"schema_id":"caretaker.godot_stairs.generation_report","schema_version":"1.1.0","generator_version":"2.9.0","status":"ok","errors":[],"geometry_validation":{"ok":True,"compiled":{"ok":True},"shaft":{"ok":True}},"anchor_frames":[frame],"files":["stairs.tscn"]}
@@ -89,7 +94,8 @@ class SectorRegenerationTests(unittest.TestCase):
         if vertical:
             generators.append({"generator_id": "main", "args": ["--fixture"], "local_to_world": identity})
         value = {
-            "map_id": "fixture-map", "project_root": ".",
+            "schema_id": "caretaker.sector_generation_manifest", "schema_version": "1.0.0",
+            "map_id": "fixture-map", "project_root": ".", "sector_count": 1,
             "sectors": [{
                 "sector_id": "FIXTURE", "status": "ready", "blockers": [], "source_svg": source,
                 "profile": "generic", "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": 0.0},
@@ -109,20 +115,21 @@ class SectorRegenerationTests(unittest.TestCase):
             "--python", sys.executable,
         ])
 
-    def test_production_manifest_enumerates_30_unique_blocked_sectors(self) -> None:
+    def test_production_manifest_enumerates_30_unique_ready_sectors(self) -> None:
         manifest = json.loads((ROOT / "sector_generation_manifest.json").read_text(encoding="utf-8"))
         ids = [sector["sector_id"] for sector in manifest["sectors"]]
         self.assertEqual(len(ids), 30)
         self.assertEqual(len(set(ids)), 30)
-        self.assertTrue(all(sector["status"] == "blocked" and sector["blockers"] for sector in manifest["sectors"]))
+        self.assertTrue(all(sector["status"] == "ready" and not sector["blockers"] for sector in manifest["sectors"]))
 
     def test_unknown_sector_is_code_2_without_staging(self) -> None:
         staging = self.root / "unknown"
         self.assertEqual(self.run_backend(staging, self.manifest(), "NOPE"), 2)
         self.assertFalse(staging.exists())
 
-    def test_blocked_production_sector_is_code_2_without_staging(self) -> None:
+    def test_incompatible_production_tool_is_code_2_without_staging(self) -> None:
         staging = self.root / "production"
+        (self.svg_root / "inspect_svg_plan.py").write_text('print("svg-plan-to-godot 1.18.9")', encoding="utf-8")
         self.assertEqual(self.run_backend(staging, ROOT / "sector_generation_manifest.json", "U-MEDBAY"), 2)
         self.assertFalse(staging.exists())
 

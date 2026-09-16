@@ -346,6 +346,17 @@ def execute(args: argparse.Namespace) -> int:
         }
         report["live_hash_before"] = path_hash(live) if live.exists() else None
         mark(report, "source_validation", "passed")
+        if not args.validate_only:
+            preflight_command = [
+                args.python, str(Path(args.backend).resolve()), "--sector", args.sector,
+                "--manifest", str(Path(args.manifest).resolve()), "--preflight-only", "--python", args.python,
+            ]
+            if args.svg_tool_root:
+                preflight_command.extend(["--svg-tool-root", str(Path(args.svg_tool_root).resolve())])
+            if args.stair_tool_root:
+                preflight_command.extend(["--stair-tool-root", str(Path(args.stair_tool_root).resolve())])
+            run_process(preflight_command, project_root, "toolchain_validation")
+            mark(report, "toolchain_validation", "passed")
         work_root = live.parent / f".{live.name}.regeneration-{uuid.uuid4().hex}"
         staging, candidate, validation = work_root / "staging", work_root / "candidate", work_root / "validation"
         work_root.mkdir(parents=True)

@@ -20,17 +20,16 @@ The backend runs strict SVG inspection and conversion with one shared argument l
 - `generation_manifest.json` with input hashes and effective geometry settings;
 - `regeneration_report.json` with commands and exit codes.
 
-`sector_generation_manifest.json` inventories all 30 production sector sources. Every
+`sector_generation_manifest.json` is the single production manifest for all 30 sectors. Every
 `source_svg` points to the single metric input under
 `docs/design/complex_v3/plans/generation/`; SVGs under `plans/sectors` and
-`plans/overview` are presentation-only. Entries remain `blocked` until T20 fills
-and validates the exact SVG-to-world transforms and the rest of the production
-configuration. `data-scale="relative"` is not accepted as a metric transform.
-Remove a blocker only after filling `metric_settings` (scale, origin, elevation),
-exact `local_to_world`, reviewed semantic and material mappings, and every related
-vertical generator. Non-empty material overrides are currently blocked because
-converter 1.19 has no explicit material-override input; the backend never guesses
-them.
+`plans/overview` are presentation-only. The split manifests under `rollouts/` remain
+regression inputs, but neither the editor nor production CLI selects them. Before
+creating staging, the backend validates the complete manifest contract and checks
+`svg_to_godot3d >= 1.19.0`; sectors with vertical generators also require
+`generate_godot_stairs >= 2.9.0`. `data-scale="relative"` is not accepted as a
+metric transform. Non-empty material overrides remain blocked because converter
+1.19 has no explicit material-override input; the backend never guesses them.
 
 Exit code `0` means the staging package passed this backend's checks. Exit code `2` means no usable package was produced; a caller must not promote it.
 
@@ -57,7 +56,7 @@ python tools/complex_v3_regeneration/safe_regenerate.py `
 
 The transaction is:
 
-1. validate the selected source and manifest entry;
+1. validate the complete production manifest and tool versions before staging exists;
 2. invoke the T04 backend into an empty sibling staging directory;
 3. validate generated manifests, anchor IDs, and stair reports;
 4. copy the live package to a sibling candidate, replacing only generator-owned `Generated/`, `anchor_frames.json`, `generation_manifest.json`, and `regeneration_report.json`;

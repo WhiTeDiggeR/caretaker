@@ -5,6 +5,9 @@ const OPERATIONS_SCRIPT := preload("res://addons/complex_v3_regeneration_editor/
 
 func _init() -> void:
 	var operations: RefCounted = OPERATIONS_SCRIPT.new()
+	if not OS.get_environment("COMPLEX_V3_SVG_TOOL_ROOT").is_empty():
+		var toolchain: Dictionary = operations.resolve_toolchain({})
+		_assert(bool(toolchain.get("ok", false)), "configured toolchain was not resolved: %s" % "; ".join(toolchain.get("errors", PackedStringArray()) as PackedStringArray))
 	var manifest := "res://addons/complex_v3_regeneration_editor/fixtures/editor_manifest.json"
 	var fixture_scene := load("res://addons/complex_v3_regeneration_editor/fixtures/fixture_scene.tscn") as PackedScene
 	var fixture_root := fixture_scene.instantiate()

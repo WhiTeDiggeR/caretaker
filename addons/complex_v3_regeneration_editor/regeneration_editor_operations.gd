@@ -5,6 +5,14 @@ class_name ComplexV3RegenerationEditorOperations
 const REPORT_SCHEMA_ID := "caretaker.safe_regeneration_report"
 const REPORT_SCHEMA_VERSION := "1.0.0"
 const CLEAN_STATUSES := ["success", "noop", "validated"]
+const MIN_SVG_VERSION := [1, 19, 0]
+const MIN_STAIR_VERSION := [2, 9, 0]
+const ENVIRONMENT_KEYS := {
+	"python_executable": "COMPLEX_V3_PYTHON_EXECUTABLE",
+	"svg_tool_root": "COMPLEX_V3_SVG_TOOL_ROOT",
+	"stair_tool_root": "COMPLEX_V3_STAIR_TOOL_ROOT",
+	"agent_launcher": "COMPLEX_V3_AGENT_LAUNCHER",
+}
 
 
 func load_json_object(path: String) -> Dictionary:
@@ -95,6 +103,99 @@ func build_cli_invocation(context: Dictionary, settings: Dictionary, validate_on
 	if validate_only:
 		arguments.append("--validate-only")
 	return {"ok": true, "errors": PackedStringArray(), "executable": python, "arguments": arguments, "report": _globalize(report)}
+
+
+func resolve_toolchain(configured: Dictionary) -> Dictionary:
+	var result := {}
+	var sources := {}
+	for key: String in ENVIRONMENT_KEYS:
+		var value := str(configured.get(key, "")).strip_edges()
+		var source := "EditorSettings"
+		if value.is_empty():
+			value = OS.get_environment(str(ENVIRONMENT_KEYS[key])).strip_edges()
+			source = "environment"
+		if value.is_empty():
+			value = _installed_default(key)
+			source = "installed"
+		result[key] = value
+		sources[key] = source if not value.is_empty() else "missing"
+	var errors := PackedStringArray()
+	if str(result["python_executable"]).is_empty():
+		errors.append("Python is not configured")
+	if str(result["svg_tool_root"]).is_empty():
+		errors.append("svg-plan-to-godot is not configured")
+	if str(result["stair_tool_root"]).is_empty():
+		errors.append("generate-godot-stairs is not configured")
+	var versions := {}
+	if errors.is_empty():
+		var python := str(result["python_executable"])
+		var svg_script := _find_tool_script(str(result["svg_tool_root"]), "inspect_svg_plan.py")
+		var stair_script := _find_tool_script(str(result["stair_tool_root"]), "generate_godot_stairs.py")
+		if svg_script.is_empty():
+			errors.append("inspect_svg_plan.py is missing under configured SVG tool root")
+		else:
+			_probe_version(python, svg_script, MIN_SVG_VERSION, "svg_to_godot3d", versions, errors)
+		if stair_script.is_empty():
+			errors.append("generate_godot_stairs.py is missing under configured stair tool root")
+		else:
+			_probe_version(python, stair_script, MIN_STAIR_VERSION, "generate_godot_stairs", versions, errors)
+	result["sources"] = sources
+	result["versions"] = versions
+	result["errors"] = errors
+	result["ok"] = errors.is_empty()
+	return result
+
+
+func _installed_default(key: String) -> String:
+	if key == "python_executable":
+		return "python"
+	var homes := PackedStringArray()
+	var codex_home := OS.get_environment("CODEX_HOME").strip_edges()
+	if not codex_home.is_empty():
+		homes.append(codex_home)
+	var profile := OS.get_environment("USERPROFILE").strip_edges()
+	if not profile.is_empty():
+		homes.append(profile.path_join(".codex"))
+	var skill := "svg-plan-to-godot" if key == "svg_tool_root" else ("generate-godot-stairs" if key == "stair_tool_root" else "")
+	if skill.is_empty():
+		return ""
+	for home: String in homes:
+		var candidate := home.path_join("skills").path_join(skill)
+		if DirAccess.dir_exists_absolute(candidate):
+			return candidate
+	return ""
+
+
+func _find_tool_script(root: String, script_name: String) -> String:
+	for candidate: String in [root.path_join("scripts").path_join(script_name), root.path_join(script_name)]:
+		if FileAccess.file_exists(candidate):
+			return candidate
+	return ""
+
+
+func _probe_version(python: String, script: String, minimum: Array, label: String, versions: Dictionary, errors: PackedStringArray) -> void:
+	var output := []
+	var exit_code := OS.execute(python, PackedStringArray([script, "--version"]), output, true)
+	if exit_code != 0:
+		errors.append("%s version probe failed" % label)
+		return
+	var regex := RegEx.new()
+	regex.compile("(\\d+)\\.(\\d+)\\.(\\d+)")
+	var match := regex.search("\n".join(output))
+	if match == null:
+		errors.append("%s did not report a semantic version" % label)
+		return
+	var parsed := [int(match.get_string(1)), int(match.get_string(2)), int(match.get_string(3))]
+	versions[label] = match.get_string(0)
+	if _version_less(parsed, minimum):
+		errors.append("%s %s is older than required %s.%s.%s" % [label, match.get_string(0), minimum[0], minimum[1], minimum[2]])
+
+
+func _version_less(left: Array, right: Array) -> bool:
+	for index: int in range(3):
+		if int(left[index]) != int(right[index]):
+			return int(left[index]) < int(right[index])
+	return false
 
 
 func read_report(path: String) -> Dictionary:

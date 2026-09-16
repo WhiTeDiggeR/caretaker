@@ -1,6 +1,6 @@
 {
   "schema_id": "caretaker.sector_generation_manifest",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "project_root": "../..",
@@ -13,692 +13,5383 @@
     {
       "sector_id": "L-ARCHIVE-A",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_archive_a.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_archive_a_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_archive_a",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_archive_a_generated",
+      "output_resource_dir": "res://gen/l/l_archive_a",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                2.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "point": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/pilots/route_a_vertical/lower/AuthoredContent/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/pilots/route_a_vertical/lower/AuthoredContent/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_archive_a.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_archive_a_dressing.tscn"
     },
     {
       "sector_id": "L-CENTRAL-CORE",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_central_core.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_central_core_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_central_core",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_central_core_generated",
+      "output_resource_dir": "res://gen/l/l_central_core",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_central_core/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_central_core/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_central_core.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_central_core_dressing.tscn"
     },
     {
       "sector_id": "L-CHAMBER-1",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_chamber_1.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_chamber_1_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_chamber_1",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_chamber_1_generated",
+      "output_resource_dir": "res://gen/l/l_chamber_1",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_chamber_1/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_chamber_1/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_chamber_1.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_chamber_1_dressing.tscn"
     },
     {
       "sector_id": "L-CHAMBER-2",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_chamber_2.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_chamber_2_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_chamber_2",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "4.5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_chamber_2_generated",
+      "output_resource_dir": "res://gen/l/l_chamber_2",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                4.5
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                4.5
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "point": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_chamber_2/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_chamber_2/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_chamber_2.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_chamber_2_dressing.tscn"
     },
     {
       "sector_id": "L-CHAMBER-3",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_chamber_3.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_chamber_3_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_chamber_3",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_chamber_3_generated",
+      "output_resource_dir": "res://gen/l/l_chamber_3",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "point": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_chamber_3/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_chamber_3/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_chamber_3.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_chamber_3_dressing.tscn"
     },
     {
       "sector_id": "L-CHAMBER-5",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_chamber_5.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_chamber_5_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_chamber_5",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_chamber_5_generated",
+      "output_resource_dir": "res://gen/l/l_chamber_5",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "point": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_chamber_5/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_chamber_5/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_chamber_5.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_chamber_5_dressing.tscn"
     },
     {
       "sector_id": "L-EAST-STAIR",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_east_stair.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_east_stair_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_east_stair",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.8",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_east_stair_generated",
+      "output_resource_dir": "res://gen/l/l_east_stair",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.8
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.8
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_east_stair/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_east_stair/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_east_stair.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_east_stair_dressing.tscn"
     },
     {
       "sector_id": "L-FREIGHT-SERVICE",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_freight_service.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_freight_service_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_freight_service",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_freight_service_generated",
+      "output_resource_dir": "res://gen/l/l_freight_service",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_freight_service/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_freight_service/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_freight_service.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_freight_service_dressing.tscn"
     },
     {
       "sector_id": "L-OLD-CORE",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_old_core.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_old_core_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_old_core",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_old_core_generated",
+      "output_resource_dir": "res://gen/l/l_old_core",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_old_core/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_old_core/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_old_core.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_old_core_dressing.tscn"
     },
     {
       "sector_id": "L-OLD-RECEIVING",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_old_receiving.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_old_receiving_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_old_receiving",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_old_receiving_generated",
+      "output_resource_dir": "res://gen/l/l_old_receiving",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_old_receiving/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_old_receiving/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_old_receiving.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_old_receiving_dressing.tscn"
     },
     {
       "sector_id": "L-SERVICE-INTERCHANGE",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_service_interchange.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_service_interchange_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_service_interchange",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.8",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_service_interchange_generated",
+      "output_resource_dir": "res://gen/l/l_service_interchange",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.8
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.8
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_service_interchange/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_service_interchange/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_service_interchange.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_service_interchange_dressing.tscn"
     },
     {
       "sector_id": "L-SLEEP-LAB",
       "level": "LV-L",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/lower/l_sleep_lab.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
       },
-      "shared_args": [],
-      "scene_name": "l_sleep_lab_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/lower/l_sleep_lab",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "l_sleep_lab_generated",
+      "output_resource_dir": "res://gen/l/l_sleep_lab",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_sleep_lab/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_sleep_lab/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_sleep_lab.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_sleep_lab_dressing.tscn"
     },
     {
       "sector_id": "T-CIRCULATION",
       "level": "LV-T",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/technical/t_circulation.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -11.5
       },
-      "shared_args": [],
-      "scene_name": "t_circulation_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/technical/t_circulation",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "2.8",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "t_circulation_generated",
+      "output_resource_dir": "res://gen/t/t_circulation",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                2.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "point": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "shaft": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                6
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "stair_entry": {
+            "placement_limits": {
+              "normal_offset_m": [
+                -0.75,
+                0.75
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "stair_exit": {
+            "placement_limits": {
+              "normal_offset_m": [
+                -0.75,
+                0.75
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_circulation/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_circulation/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/technical/t_circulation.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/t_circulation_dressing.tscn"
     },
     {
       "sector_id": "T-EAST-VERTICAL",
       "level": "LV-T",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/technical/t_east_vertical.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -11.5
       },
-      "shared_args": [],
-      "scene_name": "t_east_vertical_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/technical/t_east_vertical",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "t_east_vertical_generated",
+      "output_resource_dir": "res://gen/t/t_east_vertical",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_east_vertical/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_east_vertical/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/technical/t_east_vertical.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/t_east_vertical_dressing.tscn"
     },
     {
       "sector_id": "T-ENERGY",
       "level": "LV-T",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/technical/t_energy.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -11.5
       },
-      "shared_args": [],
-      "scene_name": "t_energy_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/technical/t_energy",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "t_energy_generated",
+      "output_resource_dir": "res://gen/t/t_energy",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_energy/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_energy/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/technical/t_energy.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/t_energy_dressing.tscn"
     },
     {
       "sector_id": "T-FREIGHT",
       "level": "LV-T",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/technical/t_freight.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -11.5
       },
-      "shared_args": [],
-      "scene_name": "t_freight_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/technical/t_freight",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "t_freight_generated",
+      "output_resource_dir": "res://gen/t/t_freight",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_freight/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_freight/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/technical/t_freight.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/t_freight_dressing.tscn"
     },
     {
       "sector_id": "T-OLD-ACCESS",
       "level": "LV-T",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/technical/t_old_access.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -11.5
       },
-      "shared_args": [],
-      "scene_name": "t_old_access_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/technical/t_old_access",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "4.2",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "t_old_access_generated",
+      "output_resource_dir": "res://gen/t/t_old_access",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                4.2
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                4.2
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_old_access/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_old_access/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/technical/t_old_access.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/t_old_access_dressing.tscn"
     },
     {
       "sector_id": "T-UTILITIES",
       "level": "LV-T",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/technical/t_utilities.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -11.5
       },
-      "shared_args": [],
-      "scene_name": "t_utilities_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/technical/t_utilities",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "4.2",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "t_utilities_generated",
+      "output_resource_dir": "res://gen/t/t_utilities",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                4.2
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                4.2
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_utilities/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_utilities/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/technical/t_utilities.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/t_utilities_dressing.tscn"
     },
     {
       "sector_id": "T-WORKSHOP",
       "level": "LV-T",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/technical/t_workshop.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -11.5
       },
-      "shared_args": [],
-      "scene_name": "t_workshop_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/technical/t_workshop",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "4.5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "t_workshop_generated",
+      "output_resource_dir": "res://gen/t/t_workshop",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                4.5
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                4.5
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_workshop/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_workshop/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/technical/t_workshop.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/t_workshop_dressing.tscn"
     },
     {
       "sector_id": "U-CENTRAL-CORE",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_central_core.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_central_core_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_central_core",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_central_core_generated",
+      "output_resource_dir": "res://gen/u/u_central_core",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_central_core/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_central_core/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_central_core.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_central_core_dressing.tscn"
     },
     {
       "sector_id": "U-CHAMBER-4",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_chamber_4.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_chamber_4_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_chamber_4",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_chamber_4_generated",
+      "output_resource_dir": "res://gen/u/u_chamber_4",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_chamber_4/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_chamber_4/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_chamber_4.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_chamber_4_dressing.tscn"
     },
     {
       "sector_id": "U-CHAMBER-6",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_chamber_6.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_chamber_6_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_chamber_6",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_chamber_6_generated",
+      "output_resource_dir": "res://gen/u/u_chamber_6",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_chamber_6/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_chamber_6/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_chamber_6.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_chamber_6_dressing.tscn"
     },
     {
       "sector_id": "U-CONTROL",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_control.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_control_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_control",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_control_generated",
+      "output_resource_dir": "res://gen/u/u_control",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_control/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_control/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_control.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_control_dressing.tscn"
     },
     {
       "sector_id": "U-DOMESTIC",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_domestic.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_domestic_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_domestic",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_domestic_generated",
+      "output_resource_dir": "res://gen/u/u_domestic",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_domestic/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_domestic/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_domestic.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_domestic_dressing.tscn"
     },
     {
       "sector_id": "U-EAST-SUPPORT",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_east_support.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_east_support_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_east_support",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_east_support_generated",
+      "output_resource_dir": "res://gen/u/u_east_support",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_east_support/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_east_support/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_east_support.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_east_support_dressing.tscn"
     },
     {
       "sector_id": "U-EMERGENCY",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_emergency.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_emergency_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_emergency",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.8",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_emergency_generated",
+      "output_resource_dir": "res://gen/u/u_emergency",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.8
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.8
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_emergency/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_emergency/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_emergency.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_emergency_dressing.tscn"
     },
     {
       "sector_id": "U-FREIGHT",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_freight.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_freight_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_freight",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "5",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_freight_generated",
+      "output_resource_dir": "res://gen/u/u_freight",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                5.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_freight/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_freight/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_freight.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_freight_dressing.tscn"
     },
     {
       "sector_id": "U-MEDBAY",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_medbay.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_medbay_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_medbay",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_medbay_generated",
+      "output_resource_dir": "res://gen/u/u_medbay",
+      "local_to_world": {
+        "origin": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "basis_x": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "basis_y": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "basis_z": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0.0,
+                1.0
+              ],
+              "height_m": [
+                0.0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0.0,
+                  0.0
+                ],
+                "pitch": [
+                  0.0,
+                  0.0
+                ],
+                "roll": [
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0.0,
+                1.0
+              ],
+              "height_m": [
+                0.0,
+                2.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0.0,
+                  0.0
+                ],
+                "pitch": [
+                  0.0,
+                  0.0
+                ],
+                "roll": [
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0.0,
+                0.0
+              ],
+              "height_m": [
+                0.0,
+                0.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180.0,
+                  180.0
+                ],
+                "pitch": [
+                  0.0,
+                  0.0
+                ],
+                "roll": [
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0.0,
+                0.0
+              ],
+              "height_m": [
+                0.0,
+                0.0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180.0,
+                  180.0
+                ],
+                "pitch": [
+                  0.0,
+                  0.0
+                ],
+                "roll": [
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/pilots/u_medbay/AuthoredContent/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/pilots/u_medbay/AuthoredContent/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_medbay.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_medbay_dressing.tscn"
     },
     {
       "sector_id": "U-ROUTE-A",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_route_a.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_route_a_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_route_a",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
-      "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "scene_name": "u_route_a_generated",
+      "output_resource_dir": "res://gen/u/u_route_a",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                2.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "point": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "shaft": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                6
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "stair_entry": {
+            "placement_limits": {
+              "normal_offset_m": [
+                -0.75,
+                0.75
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "stair_exit": {
+            "placement_limits": {
+              "normal_offset_m": [
+                -0.75,
+                0.75
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
+      "vertical_generators": [
+        {
+          "generator_id": "route_a_stair",
+          "args": [
+            "--shaft-width",
+            "6",
+            "--shaft-length",
+            "7",
+            "--floor-height",
+            "6",
+            "--layout",
+            "u-turn",
+            "--stair-width",
+            "1.5",
+            "--target-riser",
+            "0.15",
+            "--max-riser",
+            "0.15",
+            "--target-tread",
+            "0.25",
+            "--min-tread",
+            "0.25",
+            "--minimum-headroom",
+            "2.4",
+            "--landing-depth",
+            "2",
+            "--flight-gap",
+            "0.7",
+            "--railings",
+            "auto",
+            "--wall-thickness",
+            "0.09",
+            "--shaft-wall-bottom",
+            "3.6",
+            "--shaft-wall-top",
+            "5.8",
+            "--lower-entry-side",
+            "north",
+            "--upper-exit-side",
+            "north",
+            "--scene-name",
+            "route_a_stair"
+          ],
+          "local_to_world": {
+            "origin": [
+              -52.5,
+              -6,
+              9.5
+            ],
+            "basis_x": [
+              -1,
+              0,
+              0
+            ],
+            "basis_y": [
+              0,
+              1,
+              0
+            ],
+            "basis_z": [
+              0,
+              0,
+              -1
+            ]
+          }
+        }
+      ],
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/pilots/route_a_vertical/upper/AuthoredContent/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/pilots/route_a_vertical/upper/AuthoredContent/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_route_a.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_route_a_dressing.tscn"
     },
     {
       "sector_id": "U-SECURITY",
       "level": "LV-U",
-      "status": "blocked",
-      "blockers": [
-        "exact_svg_to_world_transform_missing"
-      ],
+      "status": "ready",
+      "blockers": [],
       "source_svg": "docs/design/complex_v3/plans/generation/upper/u_security.svg",
-      "profile": "codex-plan",
+      "profile": "generic",
       "metric_settings": {
-        "scale_m_per_svg_unit": null,
-        "origin": null,
-        "elevation_m": null
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
       },
-      "shared_args": [],
-      "scene_name": "u_security_generated",
-      "output_resource_dir": "res://scenes/complex_v3_regenerated/upper/u_security",
-      "local_to_world": null,
+      "shared_args": [
+        "--wall-height",
+        "3.4",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--strict-ceiling-alignment"
+      ],
       "semantic_mappings": [],
       "material_mappings": {},
+      "scene_name": "u_security_generated",
+      "output_resource_dir": "res://gen/u/u_security",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
       "vertical_generators": [],
-      "vertical_generator_status": "requires_explicit_handoff_mapping"
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_security/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_security/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_security.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_security_dressing.tscn"
     }
   ]
 }

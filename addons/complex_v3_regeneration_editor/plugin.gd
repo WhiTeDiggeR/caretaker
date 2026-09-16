@@ -3,6 +3,7 @@ extends EditorPlugin
 
 const OPERATIONS_SCRIPT := preload("res://addons/complex_v3_regeneration_editor/regeneration_editor_operations.gd")
 const ANCHOR_OPERATIONS_SCRIPT := preload("res://addons/complex_v3_anchor_editor/anchor_editor_operations.gd")
+const SETTINGS_PREFIX := "complex_v3_regeneration/"
 
 var _operations: ComplexV3RegenerationEditorOperations
 var _anchor_operations: ComplexV3AnchorEditorOperations
@@ -11,10 +12,12 @@ var _sector_label: Label
 var _stage_label: Label
 var _exit_label: Label
 var _status: Label
+var _toolchain_label: Label
 var _manifest: LineEdit
 var _python: LineEdit
 var _svg_root: LineEdit
 var _stair_root: LineEdit
+var _agent_launcher: LineEdit
 var _anchor_id: LineEdit
 var _report_path := ""
 var _source_svg := ""
@@ -25,11 +28,13 @@ var _thread_result: Dictionary = {}
 var _mutex := Mutex.new()
 var _running := false
 var _buttons: Array[Button] = []
+var _resolved_toolchain: Dictionary = {}
 
 
 func _enter_tree() -> void:
 	_operations = OPERATIONS_SCRIPT.new()
 	_anchor_operations = ANCHOR_OPERATIONS_SCRIPT.new()
+	_ensure_editor_settings()
 	_build_panel()
 	add_control_to_dock(DOCK_SLOT_RIGHT_UL, _panel)
 	scene_changed.connect(_on_scene_changed)
@@ -76,10 +81,12 @@ func _build_panel() -> void:
 	_exit_label = _add_label("Exit code: —")
 	_status = _add_label("Open a sector scene or select a sector root.")
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_toolchain_label = _add_label("Toolchain: checking...")
 	_manifest = _add_path("Manifest", "res://tools/complex_v3_regeneration/sector_generation_manifest.json")
-	_python = _add_path("Python", "python")
-	_svg_root = _add_path("SVG tool root", "")
-	_stair_root = _add_path("Stair tool root", "")
+	_python = _add_persistent_path("Python", "python_executable")
+	_svg_root = _add_persistent_path("SVG tool root", "svg_tool_root")
+	_stair_root = _add_persistent_path("Stair tool root", "stair_tool_root")
+	_agent_launcher = _add_persistent_path("Agent launcher", "agent_launcher")
 	_add_button("Regenerate Sector", func() -> void: _start_cli(false))
 	_add_button("Validate Sector", func() -> void: _start_cli(true))
 	_add_button("Open Source SVG", _open_source)
@@ -90,6 +97,7 @@ func _build_panel() -> void:
 	_add_button("Bind selected", func() -> void: _binding_action("bind"))
 	_add_button("Rebind selected", func() -> void: _binding_action("rebind"))
 	_add_button("Unbind selected", func() -> void: _binding_action("unbind"))
+	_refresh_toolchain()
 
 
 func _add_label(text: String) -> Label:
@@ -107,6 +115,41 @@ func _add_path(label_text: String, initial: String) -> LineEdit:
 	edit.text = initial
 	_panel.add_child(edit)
 	return edit
+
+
+func _add_persistent_path(label_text: String, key: String) -> LineEdit:
+	var edit := _add_path(label_text, str(get_editor_interface().get_editor_settings().get_setting(SETTINGS_PREFIX + key)))
+	edit.text_submitted.connect(func(_value: String) -> void: _save_setting(key, edit.text))
+	edit.focus_exited.connect(func() -> void: _save_setting(key, edit.text))
+	return edit
+
+
+func _ensure_editor_settings() -> void:
+	var settings := get_editor_interface().get_editor_settings()
+	for key: String in ["python_executable", "svg_tool_root", "stair_tool_root", "agent_launcher"]:
+		var full_key := SETTINGS_PREFIX + key
+		if not settings.has_setting(full_key):
+			settings.set_setting(full_key, "")
+		settings.add_property_info({"name": full_key, "type": TYPE_STRING, "hint": PROPERTY_HINT_GLOBAL_FILE if key in ["python_executable", "agent_launcher"] else PROPERTY_HINT_GLOBAL_DIR})
+
+
+func _save_setting(key: String, value: String) -> void:
+	get_editor_interface().get_editor_settings().set_setting(SETTINGS_PREFIX + key, value.strip_edges())
+	_refresh_toolchain()
+
+
+func _refresh_toolchain() -> void:
+	if _operations == null or _toolchain_label == null:
+		return
+	_resolved_toolchain = _operations.resolve_toolchain({
+		"python_executable": _python.text, "svg_tool_root": _svg_root.text,
+		"stair_tool_root": _stair_root.text, "agent_launcher": _agent_launcher.text,
+	})
+	if bool(_resolved_toolchain.get("ok", false)):
+		var versions := _resolved_toolchain.get("versions", {}) as Dictionary
+		_toolchain_label.text = "Toolchain: Ready · SVG %s · Stairs %s" % [versions.get("svg_to_godot3d", "?"), versions.get("generate_godot_stairs", "?")]
+	else:
+		_toolchain_label.text = "Toolchain: Not configured · %s" % "; ".join(_resolved_toolchain.get("errors", PackedStringArray()) as PackedStringArray)
 
 
 func _add_button(text: String, callback: Callable) -> Button:
@@ -170,6 +213,10 @@ func _refresh_context() -> void:
 func _start_cli(validate_only: bool) -> void:
 	if _running:
 		return
+	_refresh_toolchain()
+	if not bool(_resolved_toolchain.get("ok", false)):
+		_show_errors(_resolved_toolchain.get("errors", PackedStringArray()) as PackedStringArray)
+		return
 	var root := get_editor_interface().get_edited_scene_root()
 	if root == null:
 		_show_errors(PackedStringArray(["no edited scene"]))
@@ -186,8 +233,8 @@ func _start_cli(validate_only: bool) -> void:
 	_report_path = "user://complex_v3_regeneration_reports/%s-last.json" % str(context["sector_id"]).to_lower().replace("/", "-")
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(_report_path).get_base_dir())
 	var invocation := _operations.build_cli_invocation(context, {
-		"python": _python.text, "manifest": _manifest.text, "report": _report_path,
-		"svg_tool_root": _svg_root.text, "stair_tool_root": _stair_root.text,
+		"python": str(_resolved_toolchain["python_executable"]), "manifest": _manifest.text, "report": _report_path,
+		"svg_tool_root": str(_resolved_toolchain["svg_tool_root"]), "stair_tool_root": str(_resolved_toolchain["stair_tool_root"]),
 	}, validate_only)
 	if not bool(invocation.get("ok", false)):
 		_show_errors(invocation.get("errors", PackedStringArray()) as PackedStringArray)
