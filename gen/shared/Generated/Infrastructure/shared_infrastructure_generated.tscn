@@ -1,0 +1,16 @@
+[gd_scene format=3]
+
+[node name="SharedInfrastructureGenerated" type="Node3D"]
+metadata/content_owner = "complex_v3_shared_rollout"
+metadata/contract_version = "1.0.0"
+metadata/geometry_policy = "external_single_owner"
+metadata/external_geometry_owners = {
+"VT-ROUTE-A": "route_a_vertical_pilot",
+"connectors": "sector_rollouts",
+"horizontal_routes": "sector_rollouts"
+}
+metadata/blocked_vertical_geometry = PackedStringArray("VT-MAIN-ELEVATOR", "VT-MAIN-STAIR", "VT-OLD-INCLINE", "VT-OLD-STAIR", "VT-SERVICE-STAIR", "VT-EAST-STAIR", "VT-FREIGHT-LIFT")
+metadata/anchor_frames = "res://gen/shared/anchor_frames.json"
+
+[node name="Generated" type="Node3D" parent="."]
+metadata/contains_collision_geometry = false

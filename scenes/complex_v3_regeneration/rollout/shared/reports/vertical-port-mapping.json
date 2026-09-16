@@ -33,7 +33,7 @@
           "width_m": 1.8,
           "height_m": 2.8,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-L-EAST-STAIR-01",
@@ -57,7 +57,7 @@
           "width_m": 1.8,
           "height_m": 2.8,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-T-EAST-VERTICAL-04",
@@ -81,7 +81,7 @@
           "width_m": 1.8,
           "height_m": 2.8,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-T-EAST-VERTICAL-06",
@@ -105,7 +105,7 @@
           "width_m": 1.8,
           "height_m": 2.8,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         }
       ]
     },
@@ -136,7 +136,7 @@
           "width_m": 5.4,
           "height_m": 4.5,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-U-FREIGHT-06",
@@ -160,7 +160,7 @@
           "width_m": 1.5,
           "height_m": 4.5,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-L-FREIGHT-SERVICE-04",
@@ -184,7 +184,7 @@
           "width_m": 4.5,
           "height_m": 4.5,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "PX-E-L17-L-FREIGHT-SERVICE",
@@ -208,7 +208,7 @@
           "width_m": 4.5,
           "height_m": 4.5,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-T-FREIGHT-02",
@@ -232,7 +232,7 @@
           "width_m": 4.5,
           "height_m": 4.5,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-T-FREIGHT-04",
@@ -256,7 +256,7 @@
           "width_m": 4.5,
           "height_m": 4.5,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-T-FREIGHT-05",
@@ -280,7 +280,7 @@
           "width_m": 4.5,
           "height_m": 4.5,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         }
       ]
     },
@@ -313,7 +313,7 @@
           "width_m": 2.0,
           "height_m": 2.4,
           "shaft_side": "south",
-          "status": "boundary_candidate"
+          "status": "generator_boundary_port"
         },
         {
           "portal_source_id": "P-L-CENTRAL-CORE-03",
@@ -337,7 +337,7 @@
           "width_m": 2.0,
           "height_m": 2.4,
           "shaft_side": "south",
-          "status": "boundary_candidate"
+          "status": "generator_boundary_port"
         }
       ]
     },
@@ -368,7 +368,7 @@
           "width_m": 2.33,
           "height_m": 2.4,
           "shaft_side": "south",
-          "status": "boundary_candidate"
+          "status": "generator_boundary_port"
         },
         {
           "portal_source_id": "P-L-CENTRAL-CORE-05",
@@ -392,7 +392,7 @@
           "width_m": 2.33,
           "height_m": 2.4,
           "shaft_side": "south",
-          "status": "boundary_candidate"
+          "status": "generator_boundary_port"
         }
       ]
     },
@@ -428,7 +428,7 @@
           "width_m": 1.8,
           "height_m": 2.8,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-T-OLD-ACCESS-02",
@@ -452,7 +452,7 @@
           "width_m": 1.8,
           "height_m": 2.8,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         }
       ]
     },
@@ -488,7 +488,7 @@
           "width_m": 1.8,
           "height_m": 2.8,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-L-SERVICE-INTERCHANGE-04",
@@ -512,7 +512,7 @@
           "width_m": 1.8,
           "height_m": 2.8,
           "shaft_side": null,
-          "status": "blocked_outside_shaft_boundary"
+          "status": "external_threshold"
         }
       ]
     }
@@ -527,98 +527,24 @@
     {
       "transition_id": "VT-OLD-STAIR",
       "level": "LV-T",
-      "portal_source_id": "P-T-OLD-ACCESS-01",
-      "code": "portal_not_on_declared_shaft_boundary",
+      "code": "generator_boundary_port_missing",
       "severity": "blocking",
-      "segment_xz": [
-        [
-          -88.08,
-          27.685
-        ],
-        [
-          -88.08,
-          29.485
-        ]
+      "portal_source_ids": [
+        "P-T-OLD-ACCESS-01",
+        "P-T-OLD-ACCESS-02"
       ],
-      "shaft_bounds_xz": [
-        -93.09,
-        25.91,
-        -86.91,
-        34.09
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-OLD-STAIR",
-      "level": "LV-T",
-      "portal_source_id": "P-T-OLD-ACCESS-02",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          -95.94,
-          36.67
-        ],
-        [
-          -94.14,
-          36.67
-        ]
-      ],
-      "shaft_bounds_xz": [
-        -93.09,
-        25.91,
-        -86.91,
-        34.09
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
+      "action": "keep threshold frames active; do not infer stair generator orientation"
     },
     {
       "transition_id": "VT-SERVICE-STAIR",
       "level": "LV-L",
-      "portal_source_id": "P-L-SERVICE-INTERCHANGE-01",
-      "code": "portal_not_on_declared_shaft_boundary",
+      "code": "generator_boundary_port_missing",
       "severity": "blocking",
-      "segment_xz": [
-        [
-          -46.5,
-          46.5
-        ],
-        [
-          -44.7,
-          46.5
-        ]
+      "portal_source_ids": [
+        "P-L-SERVICE-INTERCHANGE-01",
+        "P-L-SERVICE-INTERCHANGE-04"
       ],
-      "shaft_bounds_xz": [
-        -45.09,
-        45.91,
-        -38.91,
-        54.09
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-SERVICE-STAIR",
-      "level": "LV-L",
-      "portal_source_id": "P-L-SERVICE-INTERCHANGE-04",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          -43.2,
-          52.35
-        ],
-        [
-          -43.2,
-          54.15
-        ]
-      ],
-      "shaft_bounds_xz": [
-        -45.09,
-        45.91,
-        -38.91,
-        54.09
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
+      "action": "keep threshold frames active; do not infer stair generator orientation"
     },
     {
       "transition_id": "VT-SERVICE-STAIR",
@@ -629,266 +555,33 @@
     {
       "transition_id": "VT-EAST-STAIR",
       "level": "LV-U",
-      "portal_source_id": "P-U-EAST-SUPPORT-05",
-      "code": "portal_not_on_declared_shaft_boundary",
+      "code": "generator_boundary_port_missing",
       "severity": "blocking",
-      "segment_xz": [
-        [
-          29.6,
-          11.0
-        ],
-        [
-          31.4,
-          11.0
-        ]
+      "portal_source_ids": [
+        "P-U-EAST-SUPPORT-05"
       ],
-      "shaft_bounds_xz": [
-        23.91,
-        6.41,
-        30.09,
-        14.59
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
+      "action": "keep threshold frames active; do not infer stair generator orientation"
     },
     {
       "transition_id": "VT-EAST-STAIR",
       "level": "LV-L",
-      "portal_source_id": "P-L-EAST-STAIR-01",
-      "code": "portal_not_on_declared_shaft_boundary",
+      "code": "generator_boundary_port_missing",
       "severity": "blocking",
-      "segment_xz": [
-        [
-          24.2,
-          11.175
-        ],
-        [
-          24.2,
-          12.975
-        ]
+      "portal_source_ids": [
+        "P-L-EAST-STAIR-01"
       ],
-      "shaft_bounds_xz": [
-        23.91,
-        6.41,
-        30.09,
-        14.59
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
+      "action": "keep threshold frames active; do not infer stair generator orientation"
     },
     {
       "transition_id": "VT-EAST-STAIR",
       "level": "LV-T",
-      "portal_source_id": "P-T-EAST-VERTICAL-04",
-      "code": "portal_not_on_declared_shaft_boundary",
+      "code": "generator_boundary_port_missing",
       "severity": "blocking",
-      "segment_xz": [
-        [
-          29.14,
-          0.15
-        ],
-        [
-          30.94,
-          0.15
-        ]
+      "portal_source_ids": [
+        "P-T-EAST-VERTICAL-04",
+        "P-T-EAST-VERTICAL-06"
       ],
-      "shaft_bounds_xz": [
-        23.91,
-        6.41,
-        30.09,
-        14.59
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-EAST-STAIR",
-      "level": "LV-T",
-      "portal_source_id": "P-T-EAST-VERTICAL-06",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          28.08,
-          6.675
-        ],
-        [
-          28.08,
-          8.475
-        ]
-      ],
-      "shaft_bounds_xz": [
-        23.91,
-        6.41,
-        30.09,
-        14.59
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-FREIGHT-LIFT",
-      "level": "LV-U",
-      "portal_source_id": "P-U-FREIGHT-03",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          13.5,
-          69.3
-        ],
-        [
-          13.5,
-          74.7
-        ]
-      ],
-      "shaft_bounds_xz": [
-        16.5,
-        67.5,
-        23.5,
-        76.5
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-FREIGHT-LIFT",
-      "level": "LV-U",
-      "portal_source_id": "P-U-FREIGHT-06",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          19.25,
-          76.0
-        ],
-        [
-          20.75,
-          76.0
-        ]
-      ],
-      "shaft_bounds_xz": [
-        16.5,
-        67.5,
-        23.5,
-        76.5
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-FREIGHT-LIFT",
-      "level": "LV-L",
-      "portal_source_id": "P-L-FREIGHT-SERVICE-04",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          9.73,
-          78.375
-        ],
-        [
-          14.23,
-          78.375
-        ]
-      ],
-      "shaft_bounds_xz": [
-        16.5,
-        67.5,
-        23.5,
-        76.5
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-FREIGHT-LIFT",
-      "level": "LV-L",
-      "portal_source_id": "PX-E-L17-L-FREIGHT-SERVICE",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          9.73,
-          67.5
-        ],
-        [
-          14.23,
-          67.5
-        ]
-      ],
-      "shaft_bounds_xz": [
-        16.5,
-        67.5,
-        23.5,
-        76.5
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-FREIGHT-LIFT",
-      "level": "LV-T",
-      "portal_source_id": "P-T-FREIGHT-02",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          14.75,
-          71.125
-        ],
-        [
-          19.25,
-          71.125
-        ]
-      ],
-      "shaft_bounds_xz": [
-        16.5,
-        67.5,
-        23.5,
-        76.5
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-FREIGHT-LIFT",
-      "level": "LV-T",
-      "portal_source_id": "P-T-FREIGHT-04",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          11.0,
-          74.312
-        ],
-        [
-          11.0,
-          78.812
-        ]
-      ],
-      "shaft_bounds_xz": [
-        16.5,
-        67.5,
-        23.5,
-        76.5
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
-    },
-    {
-      "transition_id": "VT-FREIGHT-LIFT",
-      "level": "LV-T",
-      "portal_source_id": "P-T-FREIGHT-05",
-      "code": "portal_not_on_declared_shaft_boundary",
-      "severity": "blocking",
-      "segment_xz": [
-        [
-          23.0,
-          74.312
-        ],
-        [
-          23.0,
-          78.812
-        ]
-      ],
-      "shaft_bounds_xz": [
-        16.5,
-        67.5,
-        23.5,
-        76.5
-      ],
-      "action": "review_source_geometry; never_project_portal_or_move_shaft_silently"
+      "action": "keep threshold frames active; do not infer stair generator orientation"
     }
   ]
 }

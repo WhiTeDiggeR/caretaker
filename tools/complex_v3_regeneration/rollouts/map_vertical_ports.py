@@ -57,12 +57,10 @@ def map_ports(handoff: dict, vertical: dict) -> dict:
             for portal in candidates:
                 a,b = portal["segment_xz"]
                 side = shaft_side(portal["segment_xz"], transition["shaft_bounds_xz"])
-                ports.append({"portal_source_id":portal["id"],"space_source_id":space_id,"level":level,"origin":[(a[0]+b[0])/2,datums[level],(a[1]+b[1])/2],"segment_xz":portal["segment_xz"],"width_m":portal["width"],"height_m":portal["height"],"shaft_side":side,"status":"boundary_candidate" if side else "blocked_outside_shaft_boundary"})
-                if side is None:
-                    diagnostics.append({"transition_id":tid,"level":level,"portal_source_id":portal["id"],"code":"portal_not_on_declared_shaft_boundary","severity":"blocking","segment_xz":portal["segment_xz"],"shaft_bounds_xz":transition["shaft_bounds_xz"],"action":"review_source_geometry; never_project_portal_or_move_shaft_silently"})
+                ports.append({"portal_source_id":portal["id"],"space_source_id":space_id,"level":level,"origin":[(a[0]+b[0])/2,datums[level],(a[1]+b[1])/2],"segment_xz":portal["segment_xz"],"width_m":portal["width"],"height_m":portal["height"],"shaft_side":side,"status":"generator_boundary_port" if side else "external_threshold"})
             valid = [p for p in ports if p["level"] == level and p["shaft_side"]]
-            if len(valid) > 1:
-                diagnostics.append({"transition_id":tid,"level":level,"code":"multiple_valid_portals_require_explicit_role_mapping","severity":"blocking","portal_source_ids":[p["portal_source_id"] for p in valid]})
+            if "stair" in transition["kind"] and not valid:
+                diagnostics.append({"transition_id":tid,"level":level,"code":"generator_boundary_port_missing","severity":"blocking","portal_source_ids":[p["portal_source_id"] for p in ports if p["level"] == level],"action":"keep threshold frames active; do not infer stair generator orientation"})
         entries.append({"transition_id":tid,"policy":"explicit_candidates_only","pass_through_without_stop":transition.get("pass_through",[]),"ports":ports})
     return {"schema_id":"caretaker.vertical_port_mapping_audit","schema_version":"1.0.0","map_id":handoff["map_id"],"status":"blocked" if diagnostics else "mapped_pending_runtime", "anchor_frames_emitted":False,"boundary_tolerance_m":.25,"transitions":sorted(entries,key=lambda x:x["transition_id"]),"diagnostics":diagnostics}
 

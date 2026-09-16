@@ -1,0 +1,295 @@
+{
+  "schema_id": "caretaker.shared_generation_report",
+  "schema_version": "1.0.0",
+  "status": "ready_with_blocking_vertical_diagnostics",
+  "map_id": "caretaker-complex-v3",
+  "generated_scene": "Generated/Infrastructure/shared_infrastructure_generated.tscn",
+  "geometry_policy": "external_single_owner",
+  "geometry_owners": {
+    "horizontal_routes": "sector_rollouts",
+    "connectors": "sector_rollouts",
+    "VT-ROUTE-A": "route_a_vertical_pilot"
+  },
+  "generated_vertical_geometry": [],
+  "unresolved_vertical_geometry": [
+    "VT-MAIN-ELEVATOR",
+    "VT-MAIN-STAIR",
+    "VT-OLD-INCLINE",
+    "VT-OLD-STAIR",
+    "VT-SERVICE-STAIR",
+    "VT-EAST-STAIR",
+    "VT-FREIGHT-LIFT"
+  ],
+  "blocking_reason": "No vertical may be emitted until its sector-owned floors and walls expose a non-overlapping shaft/opening boundary.",
+  "connector_aliases": [
+    {
+      "source_id": "C-E-L02",
+      "connection_id": "E-L02",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L02-L-CHAMBER-1",
+        "PX-E-L02-L-OLD-CORE"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-L09",
+      "connection_id": "E-L09",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L09-L-CENTRAL-CORE"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-L10",
+      "connection_id": "E-L10",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L10-L-EAST-STAIR"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-L12",
+      "connection_id": "E-L12",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L12-L-OLD-RECEIVING"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-L13",
+      "connection_id": "E-L13",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L13-L-CHAMBER-2"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "closed",
+      "traversable": false
+    },
+    {
+      "source_id": "C-E-L14",
+      "connection_id": "E-L14",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L14-L-CHAMBER-3"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "closed",
+      "traversable": false
+    },
+    {
+      "source_id": "C-E-L15",
+      "connection_id": "E-L15",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L15-L-SERVICE-INTERCHANGE"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-L16",
+      "connection_id": "E-L16",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L16-L-CHAMBER-5"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "closed",
+      "traversable": false
+    },
+    {
+      "source_id": "C-E-L17",
+      "connection_id": "E-L17",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-L17-L-FREIGHT-SERVICE"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-T01",
+      "connection_id": "E-T01",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-T01-T-ENERGY"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-T02",
+      "connection_id": "E-T02",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-T02-T-WORKSHOP"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-T03",
+      "connection_id": "E-T03",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-T03-T-OLD-ACCESS"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-T04",
+      "connection_id": "E-T04",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-T04-T-EAST-VERTICAL"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-T05",
+      "connection_id": "E-T05",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-T05-T-UTILITIES"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-T08",
+      "connection_id": "E-T08",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-T08-T-FREIGHT"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-U01",
+      "connection_id": "E-U01",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-U01-U-EMERGENCY"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-U02",
+      "connection_id": "E-U02",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-U02-U-EMERGENCY",
+        "PX-E-U02-U-ROUTE-A"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-U02A",
+      "connection_id": "E-U02A",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-U02A-U-EMERGENCY",
+        "PX-E-U02A-U-MEDBAY"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-U03",
+      "connection_id": "E-U03",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-U03-U-DOMESTIC"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-U05",
+      "connection_id": "E-U05",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-U05-U-CENTRAL-CORE"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "openable",
+      "traversable": true
+    },
+    {
+      "source_id": "C-E-U11",
+      "connection_id": "E-U11",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-U11-U-CHAMBER-4"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "closed",
+      "traversable": false
+    },
+    {
+      "source_id": "C-E-U12",
+      "connection_id": "E-U12",
+      "zero_length": true,
+      "portal_source_refs": [
+        "PX-E-U12-U-CHAMBER-6"
+      ],
+      "frame_policy": "alias_explicit_portal_frames",
+      "geometry_policy": "no_corridor_prism",
+      "state": "closed",
+      "traversable": false
+    }
+  ],
+  "vertical_mapping_report": "res://scenes/complex_v3_regeneration/rollout/shared/reports/vertical-port-mapping.json",
+  "startup_modified": false
+}
