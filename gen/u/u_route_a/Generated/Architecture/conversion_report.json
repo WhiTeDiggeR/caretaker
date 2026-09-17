@@ -1,0 +1,2278 @@
+{
+  "generator_version": "1.19.0",
+  "source": "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_route_a.svg",
+  "scene": "$STAGING/Generated/Architecture/u_route_a_generated.tscn",
+  "settings": {
+    "scale": 1.0,
+    "wall_height": 3.4,
+    "wall_thickness": 0.3,
+    "floor_thickness": 0.2,
+    "floor_anchor": "top",
+    "floor_mesh": "slab",
+    "floor_extent": "wall-outer",
+    "floor_edge_offset": null,
+    "generate_ceilings": true,
+    "ceiling_height": 3.4,
+    "ceiling_thickness": 0.2,
+    "ceiling_mesh": "slab",
+    "ceiling_extent": "wall-outer",
+    "ceiling_edge_offset": null,
+    "wall_embed": 0.0,
+    "wall_joint_mode": "butt",
+    "wall_joint_gap": 0.0005,
+    "obstacle_height": 1.2,
+    "default_elevation": 0.0,
+    "opening_snap": 0.1,
+    "door_height": 2.1,
+    "door_bottom": 0.0,
+    "window_height": 1.2,
+    "window_bottom": 1.0,
+    "wall_merge_tolerance": 0.02,
+    "strict_wall_overlaps": true,
+    "ceiling_alignment_tolerance": 0.01,
+    "strict_ceiling_alignment": true,
+    "origin": "none",
+    "invert_z": false,
+    "collision_layer": 1,
+    "include_preview": false,
+    "strict": true
+  },
+  "view_box": [
+    -63.0,
+    -7.0,
+    17.0,
+    22.0
+  ],
+  "profile": "generic",
+  "spatial_handoff": {
+    "coordinate_space": {
+      "name": "generated_scene_local",
+      "units": "meters",
+      "horizontal_axes": [
+        "x",
+        "z"
+      ],
+      "vertical_axis": "y",
+      "origin_mode": "none",
+      "invert_z": false
+    },
+    "surface_openings": [
+      {
+        "opening_id": "u-route-a-opening-floor-route-a",
+        "source_id": "u-route-a-opening-floor-route-a",
+        "surface": "floor",
+        "elevation_m": 0.0,
+        "applied": true,
+        "polygon_xz_m": [
+          [
+            -55.5,
+            6.0
+          ],
+          [
+            -49.5,
+            6.0
+          ],
+          [
+            -49.5,
+            13.0
+          ],
+          [
+            -55.5,
+            13.0
+          ]
+        ],
+        "area_m2": 42.0,
+        "bounds_m": {
+          "min_x": -55.5,
+          "max_x": -49.5,
+          "min_z": 6.0,
+          "max_z": 13.0,
+          "width_x": 6.0,
+          "length_z": 7.0
+        },
+        "local_center_m": [
+          -52.5,
+          0.0,
+          9.5
+        ],
+        "centroid_m": [
+          -52.5,
+          0.0,
+          9.5
+        ],
+        "contained_markers": [
+          {
+            "source_id": "u-route-a-door-stair",
+            "type": "door"
+          },
+          {
+            "source_id": "u-route-a-marker-shaft",
+            "type": "marker"
+          }
+        ],
+        "is_stair_shaft_candidate": false,
+        "space_id": "U-ROUTE-A/stair_landing"
+      }
+    ],
+    "wall_construction": [
+      {
+        "source_id": "u-route-a-wall-east",
+        "thickness_m": 0.3,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-hall-north",
+        "thickness_m": 0.3,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-hall-south",
+        "thickness_m": 0.3,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-north",
+        "thickness_m": 0.3,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-shaft-east",
+        "thickness_m": 0.09,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-shaft-south",
+        "thickness_m": 0.09,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-shaft-west",
+        "thickness_m": 0.09,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-stair-threshold",
+        "thickness_m": 0.3,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-store-east",
+        "thickness_m": 0.3,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-store-west",
+        "thickness_m": 0.3,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      },
+      {
+        "source_id": "u-route-a-wall-west",
+        "thickness_m": 0.3,
+        "height_m": 3.4,
+        "base_elevation_m": 0.0
+      }
+    ],
+    "ceiling_construction": [
+      {
+        "source_id": "u-route-a-ceiling-hall",
+        "underside_elevation_m": 3.4,
+        "top_elevation_m": 3.6,
+        "thickness_m": 0.2
+      },
+      {
+        "source_id": "u-route-a-ceiling-store",
+        "underside_elevation_m": 3.4,
+        "top_elevation_m": 3.6,
+        "thickness_m": 0.2
+      },
+      {
+        "source_id": "u-route-a-ceiling-ventilation",
+        "underside_elevation_m": 3.4,
+        "top_elevation_m": 3.6,
+        "thickness_m": 0.2
+      },
+      {
+        "source_id": "u-route-a-ceiling-stair-landing",
+        "underside_elevation_m": 3.4,
+        "top_elevation_m": 3.6,
+        "thickness_m": 0.2
+      }
+    ],
+    "floor_levels_m": [
+      0.0
+    ],
+    "reference_points": [
+      {
+        "source_id": "u-route-a-door-hall-store",
+        "type": "door",
+        "position_m": [
+          -59.5,
+          1.4,
+          3.533
+        ]
+      },
+      {
+        "source_id": "u-route-a-door-store-ventilation",
+        "type": "door",
+        "position_m": [
+          -53.5,
+          1.4,
+          2.0
+        ]
+      },
+      {
+        "source_id": "u-route-a-door-stair",
+        "type": "door",
+        "position_m": [
+          -51.033,
+          1.4,
+          6.0
+        ]
+      },
+      {
+        "source_id": "u-route-a-door-external",
+        "type": "door",
+        "position_m": [
+          -61.75,
+          1.2,
+          3.533
+        ]
+      },
+      {
+        "source_id": "u-route-a-marker-shaft",
+        "type": "marker",
+        "position_m": [
+          -52.5,
+          0.0,
+          9.5
+        ],
+        "anchor_id": "U-ROUTE-A/shaft/route-a",
+        "anchor_role": "shaft_reference"
+      }
+    ],
+    "anchors": [
+      {
+        "source_id": "u-route-a-marker-shaft",
+        "type": "marker",
+        "position_m": [
+          -52.5,
+          0.0,
+          9.5
+        ],
+        "anchor_id": "U-ROUTE-A/shaft/route-a",
+        "anchor_role": "shaft_reference"
+      }
+    ],
+    "anchor_frames": [
+      {
+        "anchor_id": "svg:u-route-a-ceiling-hall:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-ceiling-hall"
+        },
+        "origin": [
+          -61.75,
+          3.4,
+          1.533
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -61.75,
+              1.533
+            ],
+            [
+              -59.5,
+              1.533
+            ],
+            [
+              -59.5,
+              5.533
+            ],
+            [
+              -61.75,
+              5.533
+            ]
+          ],
+          "elevation_m": 3.4,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:d24f2bd5d7cc76274ddc8b0c42dd86a66837977be024b0479252999cfbc50b9a"
+      },
+      {
+        "anchor_id": "svg:u-route-a-ceiling-stair-landing:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-ceiling-stair-landing"
+        },
+        "origin": [
+          -55.5,
+          3.4,
+          6.0
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -55.5,
+              6.0
+            ],
+            [
+              -49.5,
+              6.0
+            ],
+            [
+              -49.5,
+              13.0
+            ],
+            [
+              -55.5,
+              13.0
+            ]
+          ],
+          "elevation_m": 3.4,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:2f02998d3411073d8f6513078ebadf93665417ef7739114389625d2ac92536bc"
+      },
+      {
+        "anchor_id": "svg:u-route-a-ceiling-store:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-ceiling-store"
+        },
+        "origin": [
+          -59.5,
+          3.4,
+          -6.0
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -59.5,
+              -6.0
+            ],
+            [
+              -53.5,
+              -6.0
+            ],
+            [
+              -53.5,
+              6.0
+            ],
+            [
+              -59.5,
+              6.0
+            ]
+          ],
+          "elevation_m": 3.4,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:bb3aa2115dfe32d8955687cea36132fe2f53849cd7cf05ae63b565b47cc0ffcb"
+      },
+      {
+        "anchor_id": "svg:u-route-a-ceiling-ventilation:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-ceiling-ventilation"
+        },
+        "origin": [
+          -53.5,
+          3.4,
+          -6.0
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -53.5,
+              -6.0
+            ],
+            [
+              -47.5,
+              -6.0
+            ],
+            [
+              -47.5,
+              6.0
+            ],
+            [
+              -53.5,
+              6.0
+            ]
+          ],
+          "elevation_m": 3.4,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:1886349b2d3b0f3b4c2fdc7f6f1dc750119bdf90fb1df10026415c102bf04375"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-external:door:center",
+        "type": "door",
+        "role": "center",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-external"
+        },
+        "origin": [
+          -61.75,
+          0.0,
+          3.533
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.2,
+          "height_m": 2.4,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.4
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:6def37fd45508facee3ba91de6d2eb7879dae96dce046192762646bdf9f044f1"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-external:door:threshold_inside",
+        "type": "door",
+        "role": "threshold_inside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-external"
+        },
+        "origin": [
+          -61.6,
+          0.0,
+          3.533
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.2,
+          "height_m": 2.4,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.4
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:a2fec1e2f04d020451875f3145e5536a90ba0011e50ad5f51b7343d24994dd38"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-external:door:threshold_outside",
+        "type": "door",
+        "role": "threshold_outside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-external"
+        },
+        "origin": [
+          -61.9,
+          0.0,
+          3.533
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.2,
+          "height_m": 2.4,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.4
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:5017a902789864ca3b202327f49c4eb43a7deca925a538c346255947cda69401"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-hall-store:door:center",
+        "type": "door",
+        "role": "center",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-hall-store"
+        },
+        "origin": [
+          -59.5,
+          0.0,
+          3.533
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.534,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:7e11a11c0cce9953c7a2e2b2347321d62e72380c80563a388c2eda3019c9e347"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-hall-store:door:threshold_inside",
+        "type": "door",
+        "role": "threshold_inside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-hall-store"
+        },
+        "origin": [
+          -59.35,
+          0.0,
+          3.533
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.534,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:4b13c598fb6ae0630a9b3e7447025c55cccaa6267da4174f4b5e274d1c03d32d"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-hall-store:door:threshold_outside",
+        "type": "door",
+        "role": "threshold_outside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-hall-store"
+        },
+        "origin": [
+          -59.65,
+          0.0,
+          3.533
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.534,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:afcdb6a1da7f6b2709899d06f49e774eab77c4584c1e87d74429093132289232"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-stair:door:center",
+        "type": "door",
+        "role": "center",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-stair"
+        },
+        "origin": [
+          -51.033,
+          0.0,
+          6.0
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.266,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:b03157ac8157ba0ffded3b4a51b870fbea0034f1f69eb6f1c253545697a05c18"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-stair:door:threshold_inside",
+        "type": "door",
+        "role": "threshold_inside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-stair"
+        },
+        "origin": [
+          -51.033,
+          0.0,
+          5.85
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.266,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:96f4af39d81fb7ba2a5dcbca05c86e41e47af9f288808e7dc7da0b2209e76947"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-stair:door:threshold_outside",
+        "type": "door",
+        "role": "threshold_outside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-stair"
+        },
+        "origin": [
+          -51.033,
+          0.0,
+          6.15
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.266,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:b7474b1e9228856ee92f932b46824a1f6eb86908bf9d9e81da10c78fc504a6c1"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-store-ventilation:door:center",
+        "type": "door",
+        "role": "center",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-store-ventilation"
+        },
+        "origin": [
+          -53.5,
+          0.0,
+          2.0
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.932,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:500c2267392259d676370a9181117bb0fb29db6ba598b470ff74e8d30e384177"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-store-ventilation:door:threshold_inside",
+        "type": "door",
+        "role": "threshold_inside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-store-ventilation"
+        },
+        "origin": [
+          -53.35,
+          0.0,
+          2.0
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.932,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:f81d316135a6b3c3e79ff68a71528c7a2564ccafc8d295bdbf1258aefa192ddc"
+      },
+      {
+        "anchor_id": "svg:u-route-a-door-store-ventilation:door:threshold_outside",
+        "type": "door",
+        "role": "threshold_outside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-door-store-ventilation"
+        },
+        "origin": [
+          -53.65,
+          0.0,
+          2.0
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 2.932,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:7ebc2ed6201f07490642353447b798d90e03e52b8bc11de1942785df20890800"
+      },
+      {
+        "anchor_id": "svg:u-route-a-floor-hall:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-floor-hall"
+        },
+        "origin": [
+          -61.75,
+          0.0,
+          1.533
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -61.75,
+              1.533
+            ],
+            [
+              -59.5,
+              1.533
+            ],
+            [
+              -59.5,
+              5.533
+            ],
+            [
+              -61.75,
+              5.533
+            ]
+          ],
+          "elevation_m": 0.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:0cb5a288b4072bab65870d842b15f16babf6296da006174613f732c2564fdd94"
+      },
+      {
+        "anchor_id": "svg:u-route-a-floor-stair-landing:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-floor-stair-landing"
+        },
+        "origin": [
+          -55.5,
+          0.0,
+          6.0
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -55.5,
+              6.0
+            ],
+            [
+              -49.5,
+              6.0
+            ],
+            [
+              -49.5,
+              13.0
+            ],
+            [
+              -55.5,
+              13.0
+            ]
+          ],
+          "elevation_m": 0.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:32098876b982e2c8b3b6a393721efb77a323064cd315d2e9cc413fb38317b62f"
+      },
+      {
+        "anchor_id": "svg:u-route-a-floor-store:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-floor-store"
+        },
+        "origin": [
+          -59.5,
+          0.0,
+          -6.0
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -59.5,
+              -6.0
+            ],
+            [
+              -53.5,
+              -6.0
+            ],
+            [
+              -53.5,
+              6.0
+            ],
+            [
+              -59.5,
+              6.0
+            ]
+          ],
+          "elevation_m": 0.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:7ec751109c3f940a7af98c552ff887f8a15090bf7710a306737b14edbbc84de3"
+      },
+      {
+        "anchor_id": "svg:u-route-a-floor-ventilation:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-floor-ventilation"
+        },
+        "origin": [
+          -53.5,
+          0.0,
+          -6.0
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -53.5,
+              -6.0
+            ],
+            [
+              -47.5,
+              -6.0
+            ],
+            [
+              -47.5,
+              6.0
+            ],
+            [
+              -53.5,
+              6.0
+            ]
+          ],
+          "elevation_m": 0.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:5008f274f8f77cdb49a366c8b15df271037dadfa46a8076cc5cbe2c11f2a0321"
+      },
+      {
+        "anchor_id": "svg:u-route-a-marker-shaft:point",
+        "type": "point",
+        "role": "shaft_reference",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-marker-shaft"
+        },
+        "origin": [
+          -52.5,
+          0.0,
+          9.5
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "point",
+          "radius_m": 0.0
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "metadata": {
+          "declared_anchor_id": "U-ROUTE-A/shaft/route-a",
+          "declared_anchor_role": "shaft_reference"
+        },
+        "geometry_hash": "sha256:fe43d9074646179051f579020e045774ed07ac5c654c32604230d0dc98ac62c3"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-east"
+        },
+        "origin": [
+          -47.5,
+          0.0,
+          -6.0
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 12.0,
+          "height_m": 3.4,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/interior-east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:c70ce2ae2b527baeb50104c611d6d365f5cce62826281ab030a84928097ba358"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-hall-north:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-hall-north"
+        },
+        "origin": [
+          -61.75,
+          0.0,
+          1.533
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 2.25,
+          "height_m": 3.4,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/hall-north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:6d388c25ddef669694ac223aae0b1d11f9371f311bd37448411380f132148c4e"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-hall-south:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-hall-south"
+        },
+        "origin": [
+          -59.5,
+          0.0,
+          5.533
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 2.25,
+          "height_m": 3.4,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/hall-south",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:5eed6bacdfc47e398da80db91a12e5977d6dcc44e79cb5b2b2e6fd188ea30f36"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-north:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-north"
+        },
+        "origin": [
+          -59.5,
+          0.0,
+          -6.0
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 12.0,
+          "height_m": 3.4,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/interior-north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:356cc029c0d406bfc95b845fe94651031af802a40c1450b62b6b55e90abe6a25"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-shaft-east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-shaft-east"
+        },
+        "origin": [
+          -49.455,
+          0.0,
+          6.15
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 6.85,
+          "height_m": 3.4,
+          "thickness_m": 0.09,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/shaft-east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:e79aa80cedd976416b2e81e20da8061c1afa48b5d37d8b4aa71bef09ab8435d5"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-shaft-south:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-shaft-south"
+        },
+        "origin": [
+          -49.41,
+          0.0,
+          13.045
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 6.18,
+          "height_m": 3.4,
+          "thickness_m": 0.09,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/shaft-south",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:752cb8a359997b36e5e54012d43b5fb58f2d8e9f47bf62f41713c93841daf767"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-shaft-west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-shaft-west"
+        },
+        "origin": [
+          -55.545,
+          0.0,
+          13.0
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 6.85,
+          "height_m": 3.4,
+          "thickness_m": 0.09,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/shaft-west",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:94414f32ee09f5f7a01e4755dd96d73da87fd76154f2a276988aa1063318d135"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-stair-threshold:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-stair-threshold"
+        },
+        "origin": [
+          -47.5,
+          0.0,
+          6.0
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 12.0,
+          "height_m": 3.4,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/stair-threshold",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:8126984ef05adcc360698dae3d89f0c1e0ccae0aac693b0ffc87fe6863c4f600"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-store-east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-store-east"
+        },
+        "origin": [
+          -53.5,
+          0.0,
+          -6.0
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 12.0,
+          "height_m": 3.4,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/store-east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:31046f8558487d69c7ef29bff613c07f61d35a5cc8f40ec3415464f98d1df6e3"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-store-west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-store-west"
+        },
+        "origin": [
+          -59.5,
+          0.0,
+          6.0
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 12.0,
+          "height_m": 3.4,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/store-west",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:905d326487ae2a986be2634f9f537d882bbeac9412dde9be8dbd164f0ef7852b"
+      },
+      {
+        "anchor_id": "svg:u-route-a-wall-west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "u-route-a-wall-west"
+        },
+        "origin": [
+          -61.75,
+          0.0,
+          5.533
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.0,
+          "height_m": 3.4,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "U-ROUTE-A/interior-west",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.4
+          ]
+        },
+        "geometry_hash": "sha256:d0ea76d757d2bc50fb77df5dc76c899714c0ba605b4281f0a17cc8241a6d61e7"
+      }
+    ],
+    "space_ids": [
+      "U-ROUTE-A/stair_landing"
+    ]
+  },
+  "counts": {
+    "input_floor": 4,
+    "input_floor_opening": 1,
+    "input_ceiling": 4,
+    "input_wall": 11,
+    "input_door": 4,
+    "input_marker": 1,
+    "ceiling_wall_alignment_issues": 0,
+    "area_floors_expanded_to_wall_outer": 0,
+    "area_ceilings_expanded_to_wall_outer": 0,
+    "wall_segments_before_normalization": 19,
+    "wall_segments_after_merge": 19,
+    "wall_segments_after_normalization": 23,
+    "wall_joints_resolved": 10,
+    "wall_volume_overlaps": 0,
+    "floor_polygons_before_normalization": 4,
+    "floor_cells_after_normalization": 7,
+    "floor_openings_requested": 1,
+    "floor_openings_applied": 1,
+    "ceiling_polygons_before_normalization": 4,
+    "ceiling_cells_after_normalization": 8,
+    "ceiling_openings_requested": 0,
+    "ceiling_openings_applied": 0,
+    "removed_stale_generated_parts": 0,
+    "material_files_created": 4,
+    "material_files_preserved": 0,
+    "generated_floors": 7,
+    "generated_ceilings": 8,
+    "generated_walls": 23,
+    "generated_obstacles": 0,
+    "generated_markers": 5,
+    "generated_floor_visual_nodes": 7,
+    "generated_ceiling_visual_nodes": 8,
+    "generated_wall_visual_nodes": 23,
+    "generated_obstacle_visual_nodes": 0
+  },
+  "assumptions": [
+    "Wall joint normalization converted 10 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
+    "Floor openings removed 42 m2 from visible and collision geometry"
+  ],
+  "warnings": [],
+  "errors": [],
+  "ignored": [],
+  "materials": {
+    "Floors": "res://gen/u/u_route_a/Generated/Architecture/floor_material.tres",
+    "Ceilings": "res://gen/u/u_route_a/Generated/Architecture/ceiling_material.tres",
+    "Walls": "res://gen/u/u_route_a/Generated/Architecture/wall_material.tres",
+    "Obstacles": "res://gen/u/u_route_a/Generated/Architecture/obstacle_material.tres"
+  },
+  "created_materials": [
+    "floor_material.tres",
+    "ceiling_material.tres",
+    "wall_material.tres",
+    "obstacle_material.tres"
+  ],
+  "preserved_materials": [],
+  "files": [
+    "u_route_a_generated.tscn",
+    "geometry.mtl",
+    "floor_material.tres",
+    "ceiling_material.tres",
+    "wall_material.tres",
+    "obstacle_material.tres",
+    "floor_geometry.obj",
+    "ceiling_geometry.obj",
+    "wall_geometry.obj",
+    "floor_001_u_route_a_floor_hall.obj",
+    "floor_002_u_route_a_floor_hall.obj",
+    "floor_003_u_route_a_floor_store.obj",
+    "floor_004_u_route_a_floor_store.obj",
+    "floor_005_u_route_a_floor_store.obj",
+    "floor_006_u_route_a_floor_store.obj",
+    "floor_007_u_route_a_floor_ventilation.obj",
+    "ceiling_001_u_route_a_ceiling_hall.obj",
+    "ceiling_002_u_route_a_ceiling_hall.obj",
+    "ceiling_003_u_route_a_ceiling_store.obj",
+    "ceiling_004_u_route_a_ceiling_store.obj",
+    "ceiling_005_u_route_a_ceiling_store.obj",
+    "ceiling_006_u_route_a_ceiling_store.obj",
+    "ceiling_007_u_route_a_ceiling_stair_landing.obj",
+    "ceiling_008_u_route_a_ceiling_ventilation.obj",
+    "wall_001_u_route_a_wall_west.obj",
+    "wall_002_u_route_a_wall_west.obj",
+    "wall_003_u_route_a_wall_west.obj",
+    "wall_004_u_route_a_wall_east.obj",
+    "wall_005_u_route_a_wall_north.obj",
+    "wall_006_u_route_a_wall_north.obj",
+    "wall_007_u_route_a_wall_hall_north.obj",
+    "wall_008_u_route_a_wall_hall_south.obj",
+    "wall_009_u_route_a_wall_store_west.obj",
+    "wall_010_u_route_a_wall_store_west.obj",
+    "wall_011_u_route_a_wall_store_west.obj",
+    "wall_012_u_route_a_wall_store_west.obj",
+    "wall_013_u_route_a_wall_store_west.obj",
+    "wall_014_u_route_a_wall_store_east.obj",
+    "wall_015_u_route_a_wall_store_east.obj",
+    "wall_016_u_route_a_wall_store_east.obj",
+    "wall_017_u_route_a_wall_stair_threshold.obj",
+    "wall_018_u_route_a_wall_stair_threshold.obj",
+    "wall_019_u_route_a_wall_stair_threshold.obj",
+    "wall_020_u_route_a_wall_stair_threshold.obj",
+    "wall_021_u_route_a_wall_shaft_west.obj",
+    "wall_022_u_route_a_wall_shaft_east.obj",
+    "wall_023_u_route_a_wall_shaft_south.obj",
+    "conversion_report.json"
+  ]
+}

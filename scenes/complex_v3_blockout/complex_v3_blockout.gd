@@ -2,6 +2,11 @@
 extends "res://scenes/complex_v3_blockout/complex_v3_sector_wrapper.gd"
 class_name ComplexV3BlockoutPart
 
+enum GeometrySource {
+	HANDOFF_PREVIEW,
+	REGENERATED_PACKAGE,
+}
+
 const MEDICAL_PANELS := preload("res://materials/complex_v3/medical_panels.tres")
 const COMMAND_PANELS := preload("res://materials/complex_v3/command_panels.tres")
 const DOMESTIC_PANELS := preload("res://materials/complex_v3/domestic_panels.tres")
@@ -23,6 +28,7 @@ const MIN_SEGMENT_LENGTH := 0.05
 
 @export_file("*.json") var handoff_path: String = DEFAULT_HANDOFF_PATH
 @export_file("*.json") var vertical_path: String = DEFAULT_VERTICAL_PATH
+@export var geometry_source := GeometrySource.HANDOFF_PREVIEW
 @export var build_on_ready := true
 @export var build_collisions := true
 @export var include_ceilings := true
@@ -64,6 +70,10 @@ var _editor_preview_refresh_pending := false
 
 func _ready() -> void:
 	set_process(Engine.is_editor_hint())
+	if geometry_source == GeometrySource.REGENERATED_PACKAGE:
+		set_process(false)
+		_initialize_regenerated_package()
+		return
 	if Engine.is_editor_hint():
 		if editor_preview_enabled:
 			build_from_handoff()
@@ -75,7 +85,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if not Engine.is_editor_hint() or not editor_preview_enabled:
+	if geometry_source != GeometrySource.HANDOFF_PREVIEW or not Engine.is_editor_hint() or not editor_preview_enabled:
 		return
 	if get_node_or_null("Generated") == null:
 		_queue_editor_preview_refresh()
@@ -84,6 +94,8 @@ func _process(_delta: float) -> void:
 func _refresh_editor_preview() -> void:
 	_editor_preview_refresh_pending = false
 	if not Engine.is_editor_hint() or not is_inside_tree():
+		return
+	if geometry_source != GeometrySource.HANDOFF_PREVIEW:
 		return
 	if editor_preview_enabled:
 		build_from_handoff()
@@ -99,6 +111,9 @@ func _queue_editor_preview_refresh() -> void:
 
 
 func build_from_handoff() -> void:
+	if geometry_source != GeometrySource.HANDOFF_PREVIEW:
+		push_error("Handoff generation is disabled for production package sectors")
+		return
 	_clear_generated()
 	_handoff = _load_json(handoff_path)
 	_vertical = _load_json(vertical_path)
@@ -118,6 +133,24 @@ func build_from_handoff() -> void:
 	set_meta("units", str(_handoff.get("units", "")))
 	set_meta("sector_ids", sector_ids)
 	set_meta("build_role", "infrastructure" if not build_room_spaces else "sector" if not build_shared_infrastructure else "full")
+
+
+func _initialize_regenerated_package() -> void:
+	_handoff = _load_json(handoff_path)
+	_vertical = _load_json(vertical_path)
+	_reset_stats()
+	_index_spaces()
+	_compile_openings()
+	for space_value: Variant in _handoff.get("spaces", []):
+		if _space_is_included(space_value as Dictionary):
+			_stats["spaces"] += 1
+	set_meta("map_id", str(_handoff.get("map_id", "")))
+	set_meta("handoff_artifact_id", str(_handoff.get("artifact_id", "")))
+	set_meta("units", str(_handoff.get("units", "")))
+	set_meta("sector_ids", sector_ids)
+	set_meta("build_role", "sector")
+	for error: String in validate_regeneration_contract(false):
+		push_error(error)
 
 
 func _load_json(path: String) -> Dictionary:
@@ -907,6 +940,8 @@ func _portal_passage(portal: Dictionary, floor_y: float, declared_side: String) 
 
 
 func validate_against_handoff() -> PackedStringArray:
+	if geometry_source == GeometrySource.REGENERATED_PACKAGE:
+		return validate_regeneration_contract(false)
 	var errors := PackedStringArray()
 	if _handoff.is_empty() or _vertical.is_empty():
 		errors.append("Handoff data is not loaded")

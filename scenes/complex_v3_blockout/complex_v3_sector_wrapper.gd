@@ -47,8 +47,11 @@ func rebuild_contract_generated() -> PackedStringArray:
 	add_child(staging)
 	if not _instantiate_generated_layer(generated_architecture_scene, "Architecture", staging):
 		errors.append("Generated architecture resource root must be Node3D")
-	if generated_stairs_scene != null and not _instantiate_generated_layer(generated_stairs_scene, "Stairs", staging):
-		errors.append("Generated stairs resource root must be Node3D")
+	if generated_stairs_scene != null:
+		if not _instantiate_generated_layer(generated_stairs_scene, "Stairs", staging):
+			errors.append("Generated stairs resource root must be Node3D")
+	else:
+		_add_empty_generated_layer("Stairs", staging)
 	if not errors.is_empty():
 		staging.free()
 		return errors
@@ -72,8 +75,11 @@ func rebuild_contract_editor_preview() -> PackedStringArray:
 	add_child(preview)
 	if not _instantiate_generated_layer(generated_architecture_scene, "Architecture", preview):
 		errors.append("Preview architecture resource root must be Node3D")
-	if generated_stairs_scene != null and not _instantiate_generated_layer(generated_stairs_scene, "Stairs", preview):
-		errors.append("Preview stairs resource root must be Node3D")
+	if generated_stairs_scene != null:
+		if not _instantiate_generated_layer(generated_stairs_scene, "Stairs", preview):
+			errors.append("Preview stairs resource root must be Node3D")
+	else:
+		_add_empty_generated_layer("Stairs", preview)
 	_strip_preview_physics(preview)
 	if preview.owner != null:
 		errors.append("EditorPreview must remain transient and have no scene owner")
@@ -111,8 +117,8 @@ func validate_regeneration_contract(require_external_authored := false) -> Packe
 		if architecture == null or str(architecture.get_meta("content_owner", "")) != "regenerator":
 			errors.append("Generated must contain regenerator-owned Architecture")
 		var stairs := generated.get_node_or_null("Stairs")
-		if generated_stairs_scene != null and (stairs == null or str(stairs.get_meta("content_owner", "")) != "regenerator"):
-			errors.append("Configured generated stairs must remain regenerator-owned")
+		if stairs == null or str(stairs.get_meta("content_owner", "")) != "regenerator":
+			errors.append("Generated must contain a regenerator-owned Stairs layer")
 	if authored_nodes.size() == 1:
 		var authored := authored_nodes[0]
 		if str(authored.get_meta("content_owner", "")) != "author":
@@ -145,6 +151,13 @@ func _instantiate_generated_layer(scene: PackedScene, layer_name: String, parent
 	layer.set_meta("content_owner", "regenerator")
 	parent.add_child(layer)
 	return true
+
+
+func _add_empty_generated_layer(layer_name: String, parent: Node3D) -> void:
+	var layer := Node3D.new()
+	layer.name = layer_name
+	layer.set_meta("content_owner", "regenerator")
+	parent.add_child(layer)
 
 
 func _strip_preview_physics(node: Node) -> void:

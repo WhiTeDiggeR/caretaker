@@ -12,6 +12,7 @@ SCENE_DIR = ROOT / "scenes" / "complex_v3_blockout"
 CATALOG_PATH = SCENE_DIR / "sector_catalog.json"
 PASSPORTS_PATH = ROOT / "docs/design/complex_v3/handoff/passports/sector-passports.json"
 GEOMETRY_PATH = ROOT / "docs/design/complex_v3/handoff/geometry/complex-handoff.json"
+GENERATION_MANIFEST_PATH = ROOT / "tools/complex_v3_regeneration/sector_generation_manifest.json"
 ASSEMBLY_PATH = SCENE_DIR / "complex_v3_blockout.tscn"
 
 
@@ -19,6 +20,8 @@ def main() -> int:
     catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
     passports = json.loads(PASSPORTS_PATH.read_text(encoding="utf-8"))["passports"]
     geometry = json.loads(GEOMETRY_PATH.read_text(encoding="utf-8"))
+    generation = json.loads(GENERATION_MANIFEST_PATH.read_text(encoding="utf-8"))
+    generation_by_sector = {item["sector_id"]: item for item in generation["sectors"]}
     errors: list[str] = []
     passport_by_sector = {item["sector_id"]: item for item in passports}
     geometry_sectors = {item["sector_id"] for item in geometry["spaces"]}
@@ -53,10 +56,33 @@ def main() -> int:
             errors.append(f"scene does not instance the common zone base: {scene_path}")
         if '[node name="AuthoredContent" type="Node3D"' not in content or 'parent="."' not in content:
             errors.append(f"scene has no preserved AuthoredContent root: {scene_path}")
-        if "editor_preview_enabled = true" not in content:
-            errors.append(f"scene does not enable editor preview: {scene_path}")
-        if item["sector_id"] == "T-CIRCULATION" and "preview_shared_infrastructure_when_standalone = true" not in content:
-            errors.append("T-CIRCULATION must expose the standalone infrastructure preview")
+        production = generation_by_sector[item["sector_id"]]
+        package_root = production["output_resource_dir"]
+        architecture = f'{package_root}/Generated/Architecture/{production["scene_name"]}.tscn'
+        required_fragments = [
+            "geometry_source = 1",
+            f'metadata/complex_v3_sector_id = "{item["sector_id"]}"',
+            f'path="{architecture}"',
+            '[node name="Generated" type="Node3D" parent="."]',
+            '[node name="Architecture" parent="Generated"',
+            '[node name="Stairs"',
+            '[node name="SetDressing" parent="AuthoredContent"',
+            '[node name="AnchorRegistry" type="Node" parent="."]',
+            f'anchor_frames_path = "{package_root}/anchor_frames.json"',
+        ]
+        for fragment in required_fragments:
+            if fragment not in content:
+                errors.append(f"{scene_path} is missing production fragment: {fragment}")
+        if "editor_preview_enabled = true" in content or "preview_shared_infrastructure_when_standalone = true" in content:
+            errors.append(f"production scene still enables handoff preview: {scene_path}")
+        architecture_file = ROOT / architecture.removeprefix("res://")
+        if not architecture_file.is_file():
+            errors.append(f"missing generated architecture scene: {architecture}")
+        if production["vertical_generators"]:
+            generator_id = production["vertical_generators"][0]["generator_id"]
+            stairs = f"{package_root}/Generated/Stairs/{generator_id}/{generator_id}.tscn"
+            if f'path="{stairs}"' not in content or not (ROOT / stairs.removeprefix("res://")).is_file():
+                errors.append(f"missing generated stairs scene: {stairs}")
         resource_path = item["scene"]
         if assembly.count(resource_path) != 1:
             errors.append(f"assembly must instance exactly one {resource_path}")
@@ -79,6 +105,8 @@ def main() -> int:
         errors.append("editor preview must not build physics collisions")
     if "editor_preview_show_ceilings := false" not in builder or "not Engine.is_editor_hint() or editor_preview_show_ceilings" not in builder:
         errors.append("editor preview ceilings must be independently hidden by default")
+    if "enum GeometrySource" not in builder or "REGENERATED_PACKAGE" not in builder:
+        errors.append("sector builder must expose the handoff/package geometry source enum")
     if not assembly_script.startswith("@tool\n") or "part.editor_preview_enabled = false" not in assembly_script:
         errors.append("full assembly must disable child editor previews")
     if errors:

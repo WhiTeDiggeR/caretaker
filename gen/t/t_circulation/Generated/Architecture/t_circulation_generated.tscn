@@ -1,0 +1,839 @@
+[gd_scene load_steps=89 format=3]
+
+[ext_resource type="Material" path="res://gen/t/t_circulation/Generated/Architecture/floor_material.tres" id="1_floor_material"]
+
+[ext_resource type="Material" path="res://gen/t/t_circulation/Generated/Architecture/ceiling_material.tres" id="7_ceiling_material"]
+
+[ext_resource type="Material" path="res://gen/t/t_circulation/Generated/Architecture/wall_material.tres" id="3_wall_material"]
+
+[ext_resource type="Material" path="res://gen/t/t_circulation/Generated/Architecture/obstacle_material.tres" id="5_obstacle_material"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/floor_001_t_circulation_floor_freight.obj" id="floor_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/floor_002_t_circulation_floor_tech.obj" id="floor_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/floor_003_t_circulation_floor_cable.obj" id="floor_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/floor_004_t_circulation_floor_west_north.obj" id="floor_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/floor_005_t_circulation_floor_west_south.obj" id="floor_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/floor_006_t_circulation_floor_east_north.obj" id="floor_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/floor_007_t_circulation_floor_east_south.obj" id="floor_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/ceiling_001_t_circulation_ceiling_tech.obj" id="ceiling_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/ceiling_002_t_circulation_ceiling_freight.obj" id="ceiling_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/ceiling_003_t_circulation_ceiling_cable.obj" id="ceiling_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/ceiling_004_t_circulation_ceiling_west_north.obj" id="ceiling_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/ceiling_005_t_circulation_ceiling_west_south.obj" id="ceiling_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/ceiling_006_t_circulation_ceiling_east_north.obj" id="ceiling_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/ceiling_007_t_circulation_ceiling_east_south.obj" id="ceiling_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_001_t_circulation_wall_tech_north.obj" id="box_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_002_t_circulation_wall_tech_south_west.obj" id="box_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_003_t_circulation_wall_tech_south_center.obj" id="box_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_004_t_circulation_wall_tech_south_east.obj" id="box_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_005_t_circulation_wall_tech_west.obj" id="box_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_006_t_circulation_wall_tech_east.obj" id="box_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_007_t_circulation_wall_freight_north_west.obj" id="box_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_008_t_circulation_wall_freight_north_center.obj" id="box_part_8_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_009_t_circulation_wall_freight_north_east.obj" id="box_part_9_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_010_t_circulation_wall_freight_south.obj" id="box_part_10_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_011_t_circulation_wall_freight_west.obj" id="box_part_11_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_012_t_circulation_wall_freight_east.obj" id="box_part_12_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_013_t_circulation_wall_cable_north_west.obj" id="box_part_13_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_014_t_circulation_wall_cable_north_center.obj" id="box_part_14_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_015_t_circulation_wall_cable_north_east.obj" id="box_part_15_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_016_t_circulation_wall_cable_south_west.obj" id="box_part_16_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_017_t_circulation_wall_cable_south_center.obj" id="box_part_17_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_018_t_circulation_wall_cable_south_east.obj" id="box_part_18_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_019_t_circulation_wall_cable_west.obj" id="box_part_19_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_020_t_circulation_wall_cable_east.obj" id="box_part_20_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_021_t_circulation_wall_west_transition_west_north.obj" id="box_part_21_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_022_t_circulation_wall_west_transition_west_south.obj" id="box_part_22_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_023_t_circulation_wall_west_transition_east_north.obj" id="box_part_23_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_024_t_circulation_wall_west_transition_east_south.obj" id="box_part_24_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_025_t_circulation_wall_east_transition_west_north.obj" id="box_part_25_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_026_t_circulation_wall_east_transition_west_south.obj" id="box_part_26_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_027_t_circulation_wall_east_transition_east_north.obj" id="box_part_27_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_circulation/Generated/Architecture/wall_028_t_circulation_wall_east_transition_east_south.obj" id="box_part_28_mesh"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_1"]
+data = PackedVector3Array(-110, -11.5, 67.5, -110, -11.5, 60, 32, -11.5, 60, 32, -11.5, 60, 32, -11.5, 67.5, -110, -11.5, 67.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_2"]
+data = PackedVector3Array(-105, -11.5, 20.5, -105, -11.5, 15, 32, -11.5, 15, 32, -11.5, 15, 32, -11.5, 20.5, -105, -11.5, 20.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_3"]
+data = PackedVector3Array(-90, -11.5, 49, -90, -11.5, 46, 20, -11.5, 46, 20, -11.5, 46, 20, -11.5, 49, -90, -11.5, 49)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_4"]
+data = PackedVector3Array(-71, -11.5, 46, -71, -11.5, 20.5, -69, -11.5, 20.5, -69, -11.5, 20.5, -69, -11.5, 46, -71, -11.5, 46)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_5"]
+data = PackedVector3Array(-71, -11.5, 60, -71, -11.5, 49, -69, -11.5, 49, -69, -11.5, 49, -69, -11.5, 60, -71, -11.5, 60)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_6"]
+data = PackedVector3Array(9, -11.5, 46, 9, -11.5, 20.5, 11, -11.5, 20.5, 11, -11.5, 20.5, 11, -11.5, 46, 9, -11.5, 46)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_7"]
+data = PackedVector3Array(9, -11.5, 60, 9, -11.5, 49, 11, -11.5, 49, 11, -11.5, 49, 11, -11.5, 60, 9, -11.5, 60)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_1"]
+data = PackedVector3Array(-105, -7.5, 20.5, 32, -7.5, 15, -105, -7.5, 15, 32, -7.5, 15, -105, -7.5, 20.5, 32, -7.5, 20.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_2"]
+data = PackedVector3Array(-110, -6.5, 67.5, 32, -6.5, 60, -110, -6.5, 60, 32, -6.5, 60, -110, -6.5, 67.5, 32, -6.5, 67.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_3"]
+data = PackedVector3Array(-90, -8.7, 49, 20, -8.7, 46, -90, -8.7, 46, 20, -8.7, 46, -90, -8.7, 49, 20, -8.7, 49)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_4"]
+data = PackedVector3Array(-71, -8.7, 46, -69, -8.7, 20.5, -71, -8.7, 20.5, -69, -8.7, 20.5, -71, -8.7, 46, -69, -8.7, 46)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_5"]
+data = PackedVector3Array(-71, -8.7, 60, -69, -8.7, 49, -71, -8.7, 49, -69, -8.7, 49, -71, -8.7, 60, -69, -8.7, 60)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_6"]
+data = PackedVector3Array(9, -8.7, 46, 11, -8.7, 20.5, 9, -8.7, 20.5, 11, -8.7, 20.5, 9, -8.7, 46, 11, -8.7, 46)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_7"]
+data = PackedVector3Array(9, -8.7, 60, 11, -8.7, 49, 9, -8.7, 49, 11, -8.7, 49, 9, -8.7, 60, 11, -8.7, 60)
+
+[sub_resource type="BoxShape3D" id="Box_1"]
+size = Vector3(137.3, 4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_2"]
+size = Vector3(34.15, 4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_3"]
+size = Vector3(78, 4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_4"]
+size = Vector3(21.15, 4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_5"]
+size = Vector3(5.199, 4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_6"]
+size = Vector3(5.199, 4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_7"]
+size = Vector3(39.15, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_8"]
+size = Vector3(78, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_9"]
+size = Vector3(21.15, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_10"]
+size = Vector3(142.3, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_11"]
+size = Vector3(7.199, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_12"]
+size = Vector3(7.199, 5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_13"]
+size = Vector3(18.9995, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_14"]
+size = Vector3(78.3, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_15"]
+size = Vector3(8.9995, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_16"]
+size = Vector3(19.3, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_17"]
+size = Vector3(78.3, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_18"]
+size = Vector3(8.9995, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_19"]
+size = Vector3(2.699, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_20"]
+size = Vector3(2.699, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_21"]
+size = Vector3(25.65, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_22"]
+size = Vector3(10.8495, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_23"]
+size = Vector3(25.3495, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_24"]
+size = Vector3(10.8495, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_25"]
+size = Vector3(25.3495, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_26"]
+size = Vector3(10.8495, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_27"]
+size = Vector3(25.65, 2.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_28"]
+size = Vector3(11.15, 2.8, 0.3)
+
+[node name="t_circulation_generated" type="Node3D"]
+
+metadata/source_file = "$PROJECT_ROOT\\docs\\design\\complex_v3\\plans\\generation\\technical\\t_circulation.svg"
+
+metadata/generator = "svg_to_godot3d 1.19.0"
+
+[node name="Floors" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Floors"]
+
+[node name="Ceilings" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Ceilings"]
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Walls"]
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Obstacles"]
+
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Floors"]
+
+[node name="Visual" type="Node3D" parent="Ceilings"]
+
+[node name="Visual" type="Node3D" parent="Walls"]
+
+[node name="Visual" type="Node3D" parent="Obstacles"]
+
+[node name="Floor_001_t_circulation_floor_freight" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_1_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-circulation-floor-freight"
+
+[node name="Floor_002_t_circulation_floor_tech" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_2_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-circulation-floor-tech"
+
+[node name="Floor_003_t_circulation_floor_cable" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_3_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-circulation-floor-cable"
+
+[node name="Floor_004_t_circulation_floor_west_north" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_4_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-circulation-floor-west-north"
+
+[node name="Floor_005_t_circulation_floor_west_south" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_5_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-circulation-floor-west-south"
+
+[node name="Floor_006_t_circulation_floor_east_north" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_6_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-circulation-floor-east-north"
+
+[node name="Floor_007_t_circulation_floor_east_south" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_7_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-circulation-floor-east-south"
+
+[node name="Ceiling_001_t_circulation_ceiling_tech" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_1_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-circulation-ceiling-tech"
+
+[node name="Ceiling_002_t_circulation_ceiling_freight" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_2_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-circulation-ceiling-freight"
+
+[node name="Ceiling_003_t_circulation_ceiling_cable" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_3_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-circulation-ceiling-cable"
+
+[node name="Ceiling_004_t_circulation_ceiling_west_north" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_4_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-circulation-ceiling-west-north"
+
+[node name="Ceiling_005_t_circulation_ceiling_west_south" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_5_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-circulation-ceiling-west-south"
+
+[node name="Ceiling_006_t_circulation_ceiling_east_north" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_6_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-circulation-ceiling-east-north"
+
+[node name="Ceiling_007_t_circulation_ceiling_east_south" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_7_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-circulation-ceiling-east-south"
+
+[node name="Wall_001_t_circulation_wall_tech_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_1_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-tech-north"
+
+[node name="Wall_002_t_circulation_wall_tech_south_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_2_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-tech-south-west"
+
+[node name="Wall_003_t_circulation_wall_tech_south_center" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_3_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-tech-south-center"
+
+[node name="Wall_004_t_circulation_wall_tech_south_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_4_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-tech-south-east"
+
+[node name="Wall_005_t_circulation_wall_tech_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_5_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-tech-west"
+
+[node name="Wall_006_t_circulation_wall_tech_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_6_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-tech-east"
+
+[node name="Wall_007_t_circulation_wall_freight_north_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_7_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-freight-north-west"
+
+[node name="Wall_008_t_circulation_wall_freight_north_center" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_8_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-freight-north-center"
+
+[node name="Wall_009_t_circulation_wall_freight_north_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_9_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-freight-north-east"
+
+[node name="Wall_010_t_circulation_wall_freight_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_10_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-freight-south"
+
+[node name="Wall_011_t_circulation_wall_freight_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_11_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-freight-west"
+
+[node name="Wall_012_t_circulation_wall_freight_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_12_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-freight-east"
+
+[node name="Wall_013_t_circulation_wall_cable_north_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_13_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-cable-north-west"
+
+[node name="Wall_014_t_circulation_wall_cable_north_center" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_14_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-cable-north-center"
+
+[node name="Wall_015_t_circulation_wall_cable_north_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_15_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-cable-north-east"
+
+[node name="Wall_016_t_circulation_wall_cable_south_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_16_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-cable-south-west"
+
+[node name="Wall_017_t_circulation_wall_cable_south_center" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_17_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-cable-south-center"
+
+[node name="Wall_018_t_circulation_wall_cable_south_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_18_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-cable-south-east"
+
+[node name="Wall_019_t_circulation_wall_cable_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_19_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-cable-west"
+
+[node name="Wall_020_t_circulation_wall_cable_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_20_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-cable-east"
+
+[node name="Wall_021_t_circulation_wall_west_transition_west_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_21_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-west-transition-west-north"
+
+[node name="Wall_022_t_circulation_wall_west_transition_west_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_22_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-west-transition-west-south"
+
+[node name="Wall_023_t_circulation_wall_west_transition_east_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_23_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-west-transition-east-north"
+
+[node name="Wall_024_t_circulation_wall_west_transition_east_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_24_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-west-transition-east-south"
+
+[node name="Wall_025_t_circulation_wall_east_transition_west_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_25_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-east-transition-west-north"
+
+[node name="Wall_026_t_circulation_wall_east_transition_west_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_26_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-east-transition-west-south"
+
+[node name="Wall_027_t_circulation_wall_east_transition_east_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_27_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-east-transition-east-north"
+
+[node name="Wall_028_t_circulation_wall_east_transition_east_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_28_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-circulation-wall-east-transition-east-south"
+
+[node name="Floor_001_t_circulation_floor_freight" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-floor-freight"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_001_t_circulation_floor_freight"]
+shape = SubResource("ConcaveFloor_1")
+
+[node name="Floor_002_t_circulation_floor_tech" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-floor-tech"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_002_t_circulation_floor_tech"]
+shape = SubResource("ConcaveFloor_2")
+
+[node name="Floor_003_t_circulation_floor_cable" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-floor-cable"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_003_t_circulation_floor_cable"]
+shape = SubResource("ConcaveFloor_3")
+
+[node name="Floor_004_t_circulation_floor_west_north" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-floor-west-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_004_t_circulation_floor_west_north"]
+shape = SubResource("ConcaveFloor_4")
+
+[node name="Floor_005_t_circulation_floor_west_south" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-floor-west-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_005_t_circulation_floor_west_south"]
+shape = SubResource("ConcaveFloor_5")
+
+[node name="Floor_006_t_circulation_floor_east_north" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-floor-east-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_006_t_circulation_floor_east_north"]
+shape = SubResource("ConcaveFloor_6")
+
+[node name="Floor_007_t_circulation_floor_east_south" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-floor-east-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_007_t_circulation_floor_east_south"]
+shape = SubResource("ConcaveFloor_7")
+
+[node name="Ceiling_001_t_circulation_ceiling_tech" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-ceiling-tech"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_001_t_circulation_ceiling_tech"]
+shape = SubResource("ConcaveCeiling_1")
+
+[node name="Ceiling_002_t_circulation_ceiling_freight" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-ceiling-freight"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_002_t_circulation_ceiling_freight"]
+shape = SubResource("ConcaveCeiling_2")
+
+[node name="Ceiling_003_t_circulation_ceiling_cable" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-ceiling-cable"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_003_t_circulation_ceiling_cable"]
+shape = SubResource("ConcaveCeiling_3")
+
+[node name="Ceiling_004_t_circulation_ceiling_west_north" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-ceiling-west-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_004_t_circulation_ceiling_west_north"]
+shape = SubResource("ConcaveCeiling_4")
+
+[node name="Ceiling_005_t_circulation_ceiling_west_south" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-ceiling-west-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_005_t_circulation_ceiling_west_south"]
+shape = SubResource("ConcaveCeiling_5")
+
+[node name="Ceiling_006_t_circulation_ceiling_east_north" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-ceiling-east-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_006_t_circulation_ceiling_east_north"]
+shape = SubResource("ConcaveCeiling_6")
+
+[node name="Ceiling_007_t_circulation_ceiling_east_south" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-ceiling-east-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_007_t_circulation_ceiling_east_south"]
+shape = SubResource("ConcaveCeiling_7")
+
+[node name="Wall_001_t_circulation_wall_tech_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-36.5, -9.5, 15)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-tech-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_001_t_circulation_wall_tech_north"]
+shape = SubResource("Box_1")
+
+[node name="Wall_002_t_circulation_wall_tech_south_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-88.075, -9.5, 20.5)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-tech-south-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_002_t_circulation_wall_tech_south_west"]
+shape = SubResource("Box_2")
+
+[node name="Wall_003_t_circulation_wall_tech_south_center" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-30, -9.5, 20.5)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-tech-south-center"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_003_t_circulation_wall_tech_south_center"]
+shape = SubResource("Box_3")
+
+[node name="Wall_004_t_circulation_wall_tech_south_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(21.575, -9.5, 20.5)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-tech-south-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_004_t_circulation_wall_tech_south_east"]
+shape = SubResource("Box_4")
+
+[node name="Wall_005_t_circulation_wall_tech_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-105, -9.5, 17.75)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-tech-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_005_t_circulation_wall_tech_west"]
+shape = SubResource("Box_5")
+
+[node name="Wall_006_t_circulation_wall_tech_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(32, -9.5, 17.75)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-tech-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_006_t_circulation_wall_tech_east"]
+shape = SubResource("Box_6")
+
+[node name="Wall_007_t_circulation_wall_freight_north_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-90.575, -9, 60)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-freight-north-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_007_t_circulation_wall_freight_north_west"]
+shape = SubResource("Box_7")
+
+[node name="Wall_008_t_circulation_wall_freight_north_center" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-30, -9, 60)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-freight-north-center"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_008_t_circulation_wall_freight_north_center"]
+shape = SubResource("Box_8")
+
+[node name="Wall_009_t_circulation_wall_freight_north_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(21.575, -9, 60)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-freight-north-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_009_t_circulation_wall_freight_north_east"]
+shape = SubResource("Box_9")
+
+[node name="Wall_010_t_circulation_wall_freight_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-39, -9, 67.5)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-freight-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_010_t_circulation_wall_freight_south"]
+shape = SubResource("Box_10")
+
+[node name="Wall_011_t_circulation_wall_freight_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-110, -9, 63.75)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-freight-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_011_t_circulation_wall_freight_west"]
+shape = SubResource("Box_11")
+
+[node name="Wall_012_t_circulation_wall_freight_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(32, -9, 63.75)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-freight-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_012_t_circulation_wall_freight_east"]
+shape = SubResource("Box_12")
+
+[node name="Wall_013_t_circulation_wall_cable_north_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-80.6502, -10.1, 46)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-cable-north-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_013_t_circulation_wall_cable_north_west"]
+shape = SubResource("Box_13")
+
+[node name="Wall_014_t_circulation_wall_cable_north_center" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-30, -10.1, 46)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-cable-north-center"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_014_t_circulation_wall_cable_north_center"]
+shape = SubResource("Box_14")
+
+[node name="Wall_015_t_circulation_wall_cable_north_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(15.6502, -10.1, 46)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-cable-north-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_015_t_circulation_wall_cable_north_east"]
+shape = SubResource("Box_15")
+
+[node name="Wall_016_t_circulation_wall_cable_south_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-80.5, -10.1, 49)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-cable-south-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_016_t_circulation_wall_cable_south_west"]
+shape = SubResource("Box_16")
+
+[node name="Wall_017_t_circulation_wall_cable_south_center" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-30, -10.1, 49)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-cable-south-center"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_017_t_circulation_wall_cable_south_center"]
+shape = SubResource("Box_17")
+
+[node name="Wall_018_t_circulation_wall_cable_south_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(15.6502, -10.1, 49)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-cable-south-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_018_t_circulation_wall_cable_south_east"]
+shape = SubResource("Box_18")
+
+[node name="Wall_019_t_circulation_wall_cable_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-90, -10.1, 47.5)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-cable-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_019_t_circulation_wall_cable_west"]
+shape = SubResource("Box_19")
+
+[node name="Wall_020_t_circulation_wall_cable_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(20, -10.1, 47.5)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-cable-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_020_t_circulation_wall_cable_east"]
+shape = SubResource("Box_20")
+
+[node name="Wall_021_t_circulation_wall_west_transition_west_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-71, -10.1, 33.325)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-west-transition-west-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_021_t_circulation_wall_west_transition_west_north"]
+shape = SubResource("Box_21")
+
+[node name="Wall_022_t_circulation_wall_west_transition_west_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-71, -10.1, 54.5752)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-west-transition-west-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_022_t_circulation_wall_west_transition_west_south"]
+shape = SubResource("Box_22")
+
+[node name="Wall_023_t_circulation_wall_west_transition_east_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-69, -10.1, 33.1748)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-west-transition-east-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_023_t_circulation_wall_west_transition_east_north"]
+shape = SubResource("Box_23")
+
+[node name="Wall_024_t_circulation_wall_west_transition_east_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-69, -10.1, 54.5752)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-west-transition-east-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_024_t_circulation_wall_west_transition_east_south"]
+shape = SubResource("Box_24")
+
+[node name="Wall_025_t_circulation_wall_east_transition_west_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(9, -10.1, 33.1748)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-east-transition-west-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_025_t_circulation_wall_east_transition_west_north"]
+shape = SubResource("Box_25")
+
+[node name="Wall_026_t_circulation_wall_east_transition_west_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(9, -10.1, 54.5752)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-east-transition-west-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_026_t_circulation_wall_east_transition_west_south"]
+shape = SubResource("Box_26")
+
+[node name="Wall_027_t_circulation_wall_east_transition_east_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(11, -10.1, 33.325)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-east-transition-east-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_027_t_circulation_wall_east_transition_east_north"]
+shape = SubResource("Box_27")
+
+[node name="Wall_028_t_circulation_wall_east_transition_east_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(11, -10.1, 54.425)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-circulation-wall-east-transition-east-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_028_t_circulation_wall_east_transition_east_south"]
+shape = SubResource("Box_28")
+
+[node name="Marker_t_circulation_anchor_west_upper" type="Marker3D" parent="Markers"]
+position = Vector3(-70, -11.5, 20.5)
+metadata/type = "marker"
+metadata/source_id = "t-circulation-anchor-west-upper"
+metadata/anchor_id = "T-CIRCULATION/transition/west/upper"
+metadata/anchor_role = "corridor_entry"
+
+[node name="Marker_t_circulation_anchor_west_lower" type="Marker3D" parent="Markers"]
+position = Vector3(-70, -11.5, 60)
+metadata/type = "marker"
+metadata/source_id = "t-circulation-anchor-west-lower"
+metadata/anchor_id = "T-CIRCULATION/transition/west/lower"
+metadata/anchor_role = "corridor_entry"
+
+[node name="Marker_t_circulation_anchor_east_upper" type="Marker3D" parent="Markers"]
+position = Vector3(10, -11.5, 20.5)
+metadata/type = "marker"
+metadata/source_id = "t-circulation-anchor-east-upper"
+metadata/anchor_id = "T-CIRCULATION/transition/east/upper"
+metadata/anchor_role = "corridor_entry"
+
+[node name="Marker_t_circulation_anchor_east_lower" type="Marker3D" parent="Markers"]
+position = Vector3(10, -11.5, 60)
+metadata/type = "marker"
+metadata/source_id = "t-circulation-anchor-east-lower"
+metadata/anchor_id = "T-CIRCULATION/transition/east/lower"
+metadata/anchor_role = "corridor_entry"

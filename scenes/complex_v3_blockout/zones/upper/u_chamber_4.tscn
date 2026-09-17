@@ -1,14 +1,37 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/complex_v3_zone.tscn" id="1_zone"]
 [ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/set_dressing/sectors/u_chamber_4_dressing.tscn" id="2_dressing"]
+[ext_resource type="PackedScene" path="res://gen/u/u_chamber_4/Generated/Architecture/u_chamber_4_generated.tscn" id="3_architecture"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_registry.gd" id="4_anchor_registry"]
+
 
 [node name="U_CHAMBER_4" instance=ExtResource("1_zone")]
 sector_ids = PackedStringArray("U-CHAMBER-4")
-editor_preview_enabled = true
+geometry_source = 1
+generated_architecture_scene = ExtResource("3_architecture")
 
+authored_content_scene = ExtResource("2_dressing")
+editor_preview_enabled = false
+metadata/complex_v3_sector_id = "U-CHAMBER-4"
+metadata/sector_id = "U-CHAMBER-4"
+
+[node name="Generated" type="Node3D" parent="."]
+metadata/content_owner = "regenerator"
+metadata/contract_version = "1.0.0"
+
+[node name="Architecture" parent="Generated" instance=ExtResource("3_architecture")]
+metadata/content_owner = "regenerator"
+
+[node name="Stairs" type="Node3D" parent="Generated"]
+metadata/content_owner = "regenerator"
 
 [node name="AuthoredContent" type="Node3D" parent="."]
 metadata/sector_id = "U-CHAMBER-4"
+metadata/content_owner = "author"
 
 [node name="SetDressing" parent="AuthoredContent" instance=ExtResource("2_dressing")]
+
+[node name="AnchorRegistry" type="Node" parent="."]
+script = ExtResource("4_anchor_registry")
+anchor_frames_path = "res://gen/u/u_chamber_4/anchor_frames.json"

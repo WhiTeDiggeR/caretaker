@@ -1,0 +1,2412 @@
+[gd_scene load_steps=63 format=3]
+
+[ext_resource type="Material" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/stair_material.tres" id="1_stairs"]
+[ext_resource type="Material" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/railing_material.tres" id="2_railings"]
+[ext_resource type="Material" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/shaft_material.tres" id="3_shaft"]
+
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0001_Flight_01_Left_Handrail.obj" id="4_joint_mesh_0001"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0002_Flight_01_Left_Midrail.obj" id="4_joint_mesh_0002"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0003_Flight_01_Right_Handrail.obj" id="4_joint_mesh_0003"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0004_Flight_01_Right_Midrail.obj" id="4_joint_mesh_0004"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0005_Flight_02_Left_Handrail.obj" id="4_joint_mesh_0005"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0006_Flight_02_Left_Midrail.obj" id="4_joint_mesh_0006"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0007_Flight_02_Right_Handrail.obj" id="4_joint_mesh_0007"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0008_Flight_02_Right_Midrail.obj" id="4_joint_mesh_0008"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0009_Landing_01_West_01_Handrail.obj" id="4_joint_mesh_0009"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0010_Landing_01_West_01_Midrail.obj" id="4_joint_mesh_0010"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0011_Landing_01_East_01_Handrail.obj" id="4_joint_mesh_0011"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0012_Landing_01_East_01_Midrail.obj" id="4_joint_mesh_0012"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0013_Landing_01_South_01_Handrail.obj" id="4_joint_mesh_0013"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0014_Landing_01_South_01_Midrail.obj" id="4_joint_mesh_0014"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0015_Landing_01_North_01_Handrail.obj" id="4_joint_mesh_0015"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0016_Landing_01_North_01_Midrail.obj" id="4_joint_mesh_0016"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0017_Landing_01_South_01_Handrail_Transition_01.obj" id="4_joint_mesh_0017"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0018_Landing_01_South_01_Handrail_Transition_02.obj" id="4_joint_mesh_0018"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0019_Landing_01_South_01_Midrail_Transition_01.obj" id="4_joint_mesh_0019"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0020_Landing_01_South_01_Midrail_Transition_02.obj" id="4_joint_mesh_0020"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0021_Flight_01_Left_Post_001_terminal_adapter.obj" id="4_joint_mesh_0021"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0022_Flight_01_Right_Post_006_terminal_adapter.obj" id="4_joint_mesh_0022"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0023_Flight_02_Left_Post_015_terminal_adapter.obj" id="4_joint_mesh_0023"]
+[ext_resource type="Mesh" path="res://gen/u/u_route_a/Generated/Stairs/route_a_stair/joint_meshes/0024_Flight_02_Right_Post_020_terminal_adapter.obj" id="4_joint_mesh_0024"]
+
+[sub_resource type="BoxMesh" id="PrimitiveMesh_0001"]
+size = Vector3(1.5, 0.15, 0.25)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0001"]
+size = Vector3(1.5, 0.15, 0.25)
+
+[sub_resource type="PrismMesh" id="PrimitiveMesh_0002"]
+size = Vector3(0.25, 0.15, 1.5)
+left_to_right = false
+
+[sub_resource type="ConvexPolygonShape3D" id="PrimitiveShape3D_0002"]
+points = PackedVector3Array(-0.125, 0.075, 0.75, 0.125, -0.075, 0.75, -0.125, -0.075, 0.75, -0.125, 0.075, -0.75, 0.125, -0.075, -0.75, -0.125, -0.075, -0.75)
+
+[sub_resource type="BoxMesh" id="PrimitiveMesh_0003"]
+size = Vector3(3.7, 0.15, 2.0)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0003"]
+size = Vector3(3.7, 0.15, 2.0)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0004"]
+size = Vector3(0.05, 0.05, 5.699027)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0005"]
+size = Vector3(0.035, 0.035, 5.690025)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0006"]
+size = Vector3(0.035, 0.035, 5.690025)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0007"]
+size = Vector3(0.05, 0.05, 2.006925)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0008"]
+size = Vector3(0.035, 0.035, 1.997347)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0009"]
+size = Vector3(0.05, 0.05, 2.006925)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0010"]
+size = Vector3(0.035, 0.035, 1.997347)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0011"]
+size = Vector3(0.05, 0.05, 0.8)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0012"]
+size = Vector3(0.035, 0.035, 0.785)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0013"]
+size = Vector3(0.05, 0.05, 3.7)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0014"]
+size = Vector3(0.035, 0.035, 3.685)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0015"]
+size = Vector3(0.05, 0.05, 0.106925)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0016"]
+size = Vector3(0.05, 0.05, 0.106925)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0017"]
+size = Vector3(0.035, 0.035, 0.074847)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0018"]
+size = Vector3(0.035, 0.035, 0.074847)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0019"]
+size = Vector3(0.05, 0.05, 0.081925)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0020"]
+size = Vector3(0.05, 0.05, 0.081925)
+
+[sub_resource type="BoxMesh" id="PrimitiveMesh_0004"]
+size = Vector3(0.05, 0.9, 0.05)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0021"]
+size = Vector3(0.05, 0.9, 0.05)
+
+[sub_resource type="BoxMesh" id="PrimitiveMesh_0005"]
+size = Vector3(0.05, 0.880845, 0.05)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0022"]
+size = Vector3(0.05, 0.880845, 0.05)
+
+[sub_resource type="BoxMesh" id="PrimitiveMesh_0006"]
+size = Vector3(0.05, 0.975, 0.05)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0023"]
+size = Vector3(0.05, 0.975, 0.05)
+
+[sub_resource type="BoxMesh" id="PrimitiveMesh_0007"]
+size = Vector3(0.05, 0.05, 0.05)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0024"]
+size = Vector3(0.05, 0.05, 0.05)
+
+[sub_resource type="BoxMesh" id="PrimitiveMesh_0008"]
+size = Vector3(6.18, 2.2, 0.09)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0025"]
+size = Vector3(6.18, 2.2, 0.09)
+
+[sub_resource type="BoxMesh" id="PrimitiveMesh_0009"]
+size = Vector3(0.09, 2.2, 7.18)
+
+[sub_resource type="BoxShape3D" id="PrimitiveShape3D_0026"]
+size = Vector3(0.09, 2.2, 7.18)
+
+[node name="route_a_stair" type="Node3D"]
+metadata/generator = "generate-godot-stairs"
+metadata/generator_version = "2.9.0"
+metadata/layout = "u-turn"
+
+[node name="Stairs" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Stairs"]
+
+[node name="Collision" type="StaticBody3D" parent="Stairs"]
+collision_layer = 1
+collision_mask = 1
+
+[node name="Flight_01_Tread_001" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.075, 3.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 1
+metadata/part = "tread"
+metadata/top_y = 0.15
+
+[node name="Flight_01_Riser_001" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, -0.075, 3.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 1
+metadata/part = "riser"
+metadata/top_y = 0.15
+
+[node name="Flight_01_Tread_002" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.225, 3.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 2
+metadata/part = "tread"
+metadata/top_y = 0.3
+
+[node name="Flight_01_Riser_002" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.075, 3.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 2
+metadata/part = "riser"
+metadata/top_y = 0.3
+
+[node name="Flight_01_Tread_003" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.375, 2.875)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 3
+metadata/part = "tread"
+metadata/top_y = 0.45
+
+[node name="Flight_01_Riser_003" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.225, 2.875)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 3
+metadata/part = "riser"
+metadata/top_y = 0.45
+
+[node name="Flight_01_Tread_004" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.525, 2.625)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 4
+metadata/part = "tread"
+metadata/top_y = 0.6
+
+[node name="Flight_01_Riser_004" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.375, 2.625)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 4
+metadata/part = "riser"
+metadata/top_y = 0.6
+
+[node name="Flight_01_Tread_005" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.675, 2.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 5
+metadata/part = "tread"
+metadata/top_y = 0.75
+
+[node name="Flight_01_Riser_005" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.525, 2.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 5
+metadata/part = "riser"
+metadata/top_y = 0.75
+
+[node name="Flight_01_Tread_006" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.825, 2.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 6
+metadata/part = "tread"
+metadata/top_y = 0.9
+
+[node name="Flight_01_Riser_006" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.675, 2.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 6
+metadata/part = "riser"
+metadata/top_y = 0.9
+
+[node name="Flight_01_Tread_007" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.975, 1.875)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 7
+metadata/part = "tread"
+metadata/top_y = 1.05
+
+[node name="Flight_01_Riser_007" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.825, 1.875)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 7
+metadata/part = "riser"
+metadata/top_y = 1.05
+
+[node name="Flight_01_Tread_008" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.125, 1.625)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 8
+metadata/part = "tread"
+metadata/top_y = 1.2
+
+[node name="Flight_01_Riser_008" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 0.975, 1.625)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 8
+metadata/part = "riser"
+metadata/top_y = 1.2
+
+[node name="Flight_01_Tread_009" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.275, 1.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 9
+metadata/part = "tread"
+metadata/top_y = 1.35
+
+[node name="Flight_01_Riser_009" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.125, 1.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 9
+metadata/part = "riser"
+metadata/top_y = 1.35
+
+[node name="Flight_01_Tread_010" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.425, 1.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 10
+metadata/part = "tread"
+metadata/top_y = 1.5
+
+[node name="Flight_01_Riser_010" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.275, 1.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 10
+metadata/part = "riser"
+metadata/top_y = 1.5
+
+[node name="Flight_01_Tread_011" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.575, 0.875)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 11
+metadata/part = "tread"
+metadata/top_y = 1.65
+
+[node name="Flight_01_Riser_011" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.425, 0.875)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 11
+metadata/part = "riser"
+metadata/top_y = 1.65
+
+[node name="Flight_01_Tread_012" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.725, 0.625)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 12
+metadata/part = "tread"
+metadata/top_y = 1.8
+
+[node name="Flight_01_Riser_012" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.575, 0.625)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 12
+metadata/part = "riser"
+metadata/top_y = 1.8
+
+[node name="Flight_01_Tread_013" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.875, 0.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 13
+metadata/part = "tread"
+metadata/top_y = 1.95
+
+[node name="Flight_01_Riser_013" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.725, 0.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 13
+metadata/part = "riser"
+metadata/top_y = 1.95
+
+[node name="Flight_01_Tread_014" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.025, 0.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 14
+metadata/part = "tread"
+metadata/top_y = 2.1
+
+[node name="Flight_01_Riser_014" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 1.875, 0.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 14
+metadata/part = "riser"
+metadata/top_y = 2.1
+
+[node name="Flight_01_Tread_015" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.175, -0.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 15
+metadata/part = "tread"
+metadata/top_y = 2.25
+
+[node name="Flight_01_Riser_015" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.025, -0.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 15
+metadata/part = "riser"
+metadata/top_y = 2.25
+
+[node name="Flight_01_Tread_016" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.325, -0.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 16
+metadata/part = "tread"
+metadata/top_y = 2.4
+
+[node name="Flight_01_Riser_016" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.175, -0.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 16
+metadata/part = "riser"
+metadata/top_y = 2.4
+
+[node name="Flight_01_Tread_017" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.475, -0.625)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 17
+metadata/part = "tread"
+metadata/top_y = 2.55
+
+[node name="Flight_01_Riser_017" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.325, -0.625)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 17
+metadata/part = "riser"
+metadata/top_y = 2.55
+
+[node name="Flight_01_Tread_018" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.625, -0.875)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 18
+metadata/part = "tread"
+metadata/top_y = 2.7
+
+[node name="Flight_01_Riser_018" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.475, -0.875)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 18
+metadata/part = "riser"
+metadata/top_y = 2.7
+
+[node name="Flight_01_Tread_019" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.775, -1.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 19
+metadata/part = "tread"
+metadata/top_y = 2.85
+
+[node name="Flight_01_Riser_019" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.625, -1.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 19
+metadata/part = "riser"
+metadata/top_y = 2.85
+
+[node name="Flight_01_Tread_020" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.925, -1.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 20
+metadata/part = "tread"
+metadata/top_y = 3.0
+
+[node name="Flight_01_Riser_020" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(1.1, 2.775, -1.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 1
+metadata/step = 20
+metadata/part = "riser"
+metadata/top_y = 3.0
+
+[node name="Flight_02_Tread_001" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.075, -1.375)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 1
+metadata/part = "tread"
+metadata/top_y = 3.15
+
+[node name="Flight_02_Riser_001" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 2.925, -1.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 1
+metadata/part = "riser"
+metadata/top_y = 3.15
+
+[node name="Flight_02_Tread_002" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.225, -1.125)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 2
+metadata/part = "tread"
+metadata/top_y = 3.3
+
+[node name="Flight_02_Riser_002" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.075, -1.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 2
+metadata/part = "riser"
+metadata/top_y = 3.3
+
+[node name="Flight_02_Tread_003" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.375, -0.875)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 3
+metadata/part = "tread"
+metadata/top_y = 3.45
+
+[node name="Flight_02_Riser_003" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.225, -0.875)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 3
+metadata/part = "riser"
+metadata/top_y = 3.45
+
+[node name="Flight_02_Tread_004" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.525, -0.625)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 4
+metadata/part = "tread"
+metadata/top_y = 3.6
+
+[node name="Flight_02_Riser_004" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.375, -0.625)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 4
+metadata/part = "riser"
+metadata/top_y = 3.6
+
+[node name="Flight_02_Tread_005" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.675, -0.375)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 5
+metadata/part = "tread"
+metadata/top_y = 3.75
+
+[node name="Flight_02_Riser_005" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.525, -0.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 5
+metadata/part = "riser"
+metadata/top_y = 3.75
+
+[node name="Flight_02_Tread_006" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.825, -0.125)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 6
+metadata/part = "tread"
+metadata/top_y = 3.9
+
+[node name="Flight_02_Riser_006" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.675, -0.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 6
+metadata/part = "riser"
+metadata/top_y = 3.9
+
+[node name="Flight_02_Tread_007" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.975, 0.125)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 7
+metadata/part = "tread"
+metadata/top_y = 4.05
+
+[node name="Flight_02_Riser_007" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.825, 0.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 7
+metadata/part = "riser"
+metadata/top_y = 4.05
+
+[node name="Flight_02_Tread_008" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.125, 0.375)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 8
+metadata/part = "tread"
+metadata/top_y = 4.2
+
+[node name="Flight_02_Riser_008" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 3.975, 0.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 8
+metadata/part = "riser"
+metadata/top_y = 4.2
+
+[node name="Flight_02_Tread_009" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.275, 0.625)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 9
+metadata/part = "tread"
+metadata/top_y = 4.35
+
+[node name="Flight_02_Riser_009" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.125, 0.625)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 9
+metadata/part = "riser"
+metadata/top_y = 4.35
+
+[node name="Flight_02_Tread_010" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.425, 0.875)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 10
+metadata/part = "tread"
+metadata/top_y = 4.5
+
+[node name="Flight_02_Riser_010" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.275, 0.875)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 10
+metadata/part = "riser"
+metadata/top_y = 4.5
+
+[node name="Flight_02_Tread_011" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.575, 1.125)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 11
+metadata/part = "tread"
+metadata/top_y = 4.65
+
+[node name="Flight_02_Riser_011" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.425, 1.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 11
+metadata/part = "riser"
+metadata/top_y = 4.65
+
+[node name="Flight_02_Tread_012" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.725, 1.375)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 12
+metadata/part = "tread"
+metadata/top_y = 4.8
+
+[node name="Flight_02_Riser_012" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.575, 1.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 12
+metadata/part = "riser"
+metadata/top_y = 4.8
+
+[node name="Flight_02_Tread_013" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.875, 1.625)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 13
+metadata/part = "tread"
+metadata/top_y = 4.95
+
+[node name="Flight_02_Riser_013" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.725, 1.625)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 13
+metadata/part = "riser"
+metadata/top_y = 4.95
+
+[node name="Flight_02_Tread_014" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.025, 1.875)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 14
+metadata/part = "tread"
+metadata/top_y = 5.1
+
+[node name="Flight_02_Riser_014" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 4.875, 1.875)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 14
+metadata/part = "riser"
+metadata/top_y = 5.1
+
+[node name="Flight_02_Tread_015" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.175, 2.125)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 15
+metadata/part = "tread"
+metadata/top_y = 5.25
+
+[node name="Flight_02_Riser_015" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.025, 2.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 15
+metadata/part = "riser"
+metadata/top_y = 5.25
+
+[node name="Flight_02_Tread_016" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.325, 2.375)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 16
+metadata/part = "tread"
+metadata/top_y = 5.4
+
+[node name="Flight_02_Riser_016" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.175, 2.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 16
+metadata/part = "riser"
+metadata/top_y = 5.4
+
+[node name="Flight_02_Tread_017" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.475, 2.625)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 17
+metadata/part = "tread"
+metadata/top_y = 5.55
+
+[node name="Flight_02_Riser_017" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.325, 2.625)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 17
+metadata/part = "riser"
+metadata/top_y = 5.55
+
+[node name="Flight_02_Tread_018" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.625, 2.875)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 18
+metadata/part = "tread"
+metadata/top_y = 5.7
+
+[node name="Flight_02_Riser_018" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.475, 2.875)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 18
+metadata/part = "riser"
+metadata/top_y = 5.7
+
+[node name="Flight_02_Tread_019" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.775, 3.125)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 19
+metadata/part = "tread"
+metadata/top_y = 5.85
+
+[node name="Flight_02_Riser_019" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.625, 3.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 19
+metadata/part = "riser"
+metadata/top_y = 5.85
+
+[node name="Flight_02_Tread_020" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.925, 3.375)
+mesh = SubResource("PrimitiveMesh_0001")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 20
+metadata/part = "tread"
+metadata/top_y = 6.0
+
+[node name="Flight_02_Riser_020" type="MeshInstance3D" parent="Stairs/Visual"]
+position = Vector3(-1.1, 5.775, 3.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+mesh = SubResource("PrimitiveMesh_0002")
+material_override = ExtResource("1_stairs")
+metadata/flight = 2
+metadata/step = 20
+metadata/part = "riser"
+metadata/top_y = 6.0
+
+[node name="Flight_01_Tread_001" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.075, 3.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_001" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, -0.075, 3.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_002" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.225, 3.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_002" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.075, 3.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_003" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.375, 2.875)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_003" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.225, 2.875)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_004" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.525, 2.625)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_004" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.375, 2.625)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_005" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.675, 2.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_005" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.525, 2.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_006" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.825, 2.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_006" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.675, 2.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_007" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.975, 1.875)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_007" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.825, 1.875)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_008" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.125, 1.625)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_008" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 0.975, 1.625)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_009" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.275, 1.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_009" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.125, 1.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_010" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.425, 1.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_010" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.275, 1.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_011" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.575, 0.875)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_011" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.425, 0.875)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_012" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.725, 0.625)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_012" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.575, 0.625)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_013" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.875, 0.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_013" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.725, 0.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_014" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.025, 0.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_014" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 1.875, 0.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_015" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.175, -0.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_015" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.025, -0.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_016" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.325, -0.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_016" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.175, -0.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_017" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.475, -0.625)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_017" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.325, -0.625)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_018" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.625, -0.875)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_018" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.475, -0.875)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_019" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.775, -1.125)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_019" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.625, -1.125)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_01_Tread_020" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.925, -1.375)
+rotation = Vector3(0.0, -3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_01_Riser_020" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(1.1, 2.775, -1.375)
+rotation = Vector3(3.141593, 1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_001" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.075, -1.375)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_001" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 2.925, -1.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_002" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.225, -1.125)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_002" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.075, -1.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_003" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.375, -0.875)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_003" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.225, -0.875)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_004" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.525, -0.625)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_004" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.375, -0.625)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_005" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.675, -0.375)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_005" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.525, -0.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_006" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.825, -0.125)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_006" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.675, -0.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_007" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.975, 0.125)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_007" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.825, 0.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_008" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.125, 0.375)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_008" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 3.975, 0.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_009" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.275, 0.625)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_009" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.125, 0.625)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_010" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.425, 0.875)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_010" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.275, 0.875)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_011" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.575, 1.125)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_011" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.425, 1.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_012" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.725, 1.375)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_012" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.575, 1.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_013" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.875, 1.625)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_013" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.725, 1.625)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_014" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.025, 1.875)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_014" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 4.875, 1.875)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_015" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.175, 2.125)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_015" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.025, 2.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_016" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.325, 2.375)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_016" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.175, 2.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_017" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.475, 2.625)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_017" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.325, 2.625)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_018" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.625, 2.875)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_018" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.475, 2.875)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_019" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.775, 3.125)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_019" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.625, 3.125)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Flight_02_Tread_020" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.925, 3.375)
+shape = SubResource("PrimitiveShape3D_0001")
+
+[node name="Flight_02_Riser_020" type="CollisionShape3D" parent="Stairs/Collision"]
+position = Vector3(-1.1, 5.775, 3.375)
+rotation = Vector3(3.141593, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0002")
+
+[node name="Landings" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Landings"]
+
+[node name="Collision" type="StaticBody3D" parent="Landings"]
+collision_layer = 1
+collision_mask = 1
+
+[node name="Landing_01" type="MeshInstance3D" parent="Landings/Visual"]
+position = Vector3(0.0, 2.925, -2.5)
+mesh = SubResource("PrimitiveMesh_0003")
+material_override = ExtResource("1_stairs")
+metadata/landing = 1
+metadata/top_y = 3.0
+
+[node name="Landing_01" type="CollisionShape3D" parent="Landings/Collision"]
+position = Vector3(0.0, 2.925, -2.5)
+shape = SubResource("PrimitiveShape3D_0003")
+
+[node name="Railings" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Railings"]
+
+[node name="Collision" type="StaticBody3D" parent="Railings"]
+collision_layer = 1
+collision_mask = 1
+
+[node name="Flight_01_Left_Handrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 2.5375, 0.9375)
+rotation = Vector3(-0.54042, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0001")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:001:node:handrail:Flight_01_Left_Handrail.end,terminal:Flight_01_Left_Post_001"
+
+[node name="Flight_01_Left_Midrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 2.038747, 0.935422)
+rotation = Vector3(-0.54042, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0002")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:009:node:midrail:Flight_01_Left_Midrail.end"
+
+[node name="Flight_01_Right_Handrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 2.5375, 0.9375)
+rotation = Vector3(-0.54042, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0003")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:002:node:handrail:Flight_01_Right_Handrail.end,terminal:Flight_01_Right_Post_006"
+
+[node name="Flight_01_Right_Midrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 2.038747, 0.935422)
+rotation = Vector3(-0.54042, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0004")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:010:node:midrail:Flight_01_Right_Midrail.end"
+
+[node name="Flight_02_Left_Handrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 5.4625, 0.9375)
+rotation = Vector3(-0.54042, 0.0, 0.0)
+mesh = ExtResource("4_joint_mesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:003:node:handrail:Flight_02_Left_Handrail.start,terminal:Flight_02_Left_Post_015"
+
+[node name="Flight_02_Left_Midrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 4.961253, 0.935422)
+rotation = Vector3(-0.54042, 0.0, 0.0)
+mesh = ExtResource("4_joint_mesh_0006")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:011:node:midrail:Flight_02_Left_Midrail.start"
+
+[node name="Flight_02_Right_Handrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 5.4625, 0.9375)
+rotation = Vector3(-0.54042, 0.0, 0.0)
+mesh = ExtResource("4_joint_mesh_0007")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:004:node:handrail:Flight_02_Right_Handrail.start,terminal:Flight_02_Right_Post_020"
+
+[node name="Flight_02_Right_Midrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 4.961253, 0.935422)
+rotation = Vector3(-0.54042, 0.0, 0.0)
+mesh = ExtResource("4_joint_mesh_0008")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:012:node:midrail:Flight_02_Right_Midrail.start"
+
+[node name="Landing_01_West_01_Handrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 4.0, -2.496538)
+rotation = Vector3(0.0, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0009")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "west"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:001:node:handrail:Flight_01_Left_Handrail.end,joint:006:node:handrail:Landing_01_North_01_Handrail.start"
+
+[node name="Landing_01_West_01_Midrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 3.5, -2.493826)
+rotation = Vector3(0.0, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0010")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "west"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:009:node:midrail:Flight_01_Left_Midrail.end,joint:014:node:midrail:Landing_01_North_01_Midrail.start"
+
+[node name="Landing_01_East_01_Handrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 4.0, -2.496538)
+rotation = Vector3(0.0, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0011")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "east"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:003:node:handrail:Flight_02_Left_Handrail.start,joint:005:node:handrail:Landing_01_East_01_Handrail.end"
+
+[node name="Landing_01_East_01_Midrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 3.5, -2.493826)
+rotation = Vector3(0.0, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0012")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "east"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:011:node:midrail:Flight_02_Left_Midrail.start,joint:013:node:midrail:Landing_01_East_01_Midrail.end"
+
+[node name="Landing_01_South_01_Handrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.0, 4.0, -1.575)
+rotation = Vector3(0.0, -1.570796, 0.0)
+mesh = ExtResource("4_joint_mesh_0013")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "south"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/turn_bridge = true
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:007:node:handrail:Landing_01_South_01_Handrail_Transition_01.end,joint:008:node:handrail:Landing_01_South_01_Handrail_Transition_02.end"
+
+[node name="Landing_01_South_01_Midrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.0, 3.5, -1.5525)
+rotation = Vector3(0.0, -1.570796, 0.0)
+mesh = ExtResource("4_joint_mesh_0014")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "south"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/turn_bridge = true
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:015:node:midrail:Landing_01_South_01_Midrail_Transition_01.end,joint:016:node:midrail:Landing_01_South_01_Midrail_Transition_02.end"
+
+[node name="Landing_01_North_01_Handrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.0, 4.0, -3.475)
+rotation = Vector3(0.0, -1.570796, 0.0)
+mesh = ExtResource("4_joint_mesh_0015")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "north"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:005:node:handrail:Landing_01_East_01_Handrail.end,joint:006:node:handrail:Landing_01_North_01_Handrail.start"
+
+[node name="Landing_01_North_01_Midrail" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.0, 3.5, -3.475)
+rotation = Vector3(0.0, -1.570796, 0.0)
+mesh = ExtResource("4_joint_mesh_0016")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "north"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:013:node:midrail:Landing_01_East_01_Midrail.end,joint:014:node:midrail:Landing_01_North_01_Midrail.start"
+
+[node name="Landing_01_South_01_Handrail_Transition_01" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 4.0, -1.546538)
+rotation = Vector3(0.0, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0017")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "south"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/turn_bridge = true
+metadata/turn_transition = true
+metadata/flight = 1
+metadata/flight_endpoint = "end"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:002:node:handrail:Flight_01_Right_Handrail.end,joint:007:node:handrail:Landing_01_South_01_Handrail_Transition_01.end"
+
+[node name="Landing_01_South_01_Handrail_Transition_02" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 4.0, -1.546538)
+rotation = Vector3(0.0, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0018")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "south"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/turn_bridge = true
+metadata/turn_transition = true
+metadata/flight = 2
+metadata/flight_endpoint = "start"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:004:node:handrail:Flight_02_Right_Handrail.start,joint:008:node:handrail:Landing_01_South_01_Handrail_Transition_02.end"
+
+[node name="Landing_01_South_01_Midrail_Transition_01" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 3.5, -1.532576)
+rotation = Vector3(0.0, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0019")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "south"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/turn_bridge = true
+metadata/turn_transition = true
+metadata/flight = 1
+metadata/flight_endpoint = "end"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:010:node:midrail:Flight_01_Right_Midrail.end,joint:015:node:midrail:Landing_01_South_01_Midrail_Transition_01.end"
+
+[node name="Landing_01_South_01_Midrail_Transition_02" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 3.5, -1.532576)
+rotation = Vector3(0.0, 3.141593, 0.0)
+mesh = ExtResource("4_joint_mesh_0020")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "south"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/turn_bridge = true
+metadata/turn_transition = true
+metadata/flight = 2
+metadata/flight_endpoint = "start"
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "joint:012:node:midrail:Flight_02_Right_Midrail.start,joint:016:node:midrail:Landing_01_South_01_Midrail_Transition_02.end"
+
+[node name="Flight_01_Left_Post_001.terminal_adapter" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 1.075, 3.409038)
+mesh = ExtResource("4_joint_mesh_0021")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 1
+metadata/terminal_adapter = true
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "terminal:Flight_01_Left_Post_001"
+
+[node name="Flight_01_Right_Post_006.terminal_adapter" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 1.075, 3.409038)
+mesh = ExtResource("4_joint_mesh_0022")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 1
+metadata/terminal_adapter = true
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "terminal:Flight_01_Right_Post_006"
+
+[node name="Flight_02_Left_Post_015.terminal_adapter" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 6.925, 3.409038)
+mesh = ExtResource("4_joint_mesh_0023")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 6
+metadata/terminal_adapter = true
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "terminal:Flight_02_Left_Post_015"
+
+[node name="Flight_02_Right_Post_020.terminal_adapter" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 6.925, 3.409038)
+mesh = ExtResource("4_joint_mesh_0024")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 6
+metadata/terminal_adapter = true
+metadata/joint_finish = "surface_union"
+metadata/finished_by = "terminal:Flight_02_Right_Post_020"
+
+[node name="Flight_01_Left_Post_001" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 0.6, 3.375)
+mesh = SubResource("PrimitiveMesh_0004")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 1
+
+[node name="Flight_01_Left_Post_002" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 1.190423, 2.375)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="Flight_01_Left_Post_003" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 1.790423, 1.375)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="Flight_01_Left_Post_004" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 2.390423, 0.375)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="Flight_01_Left_Post_005" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 2.990423, -0.625)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 5
+
+[node name="Flight_01_Right_Post_006" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 0.6, 3.375)
+mesh = SubResource("PrimitiveMesh_0004")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 1
+
+[node name="Flight_01_Right_Post_007" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 1.190423, 2.375)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="Flight_01_Right_Post_008" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 1.790423, 1.375)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="Flight_01_Right_Post_009" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 2.390423, 0.375)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="Flight_01_Right_Post_010" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 2.990423, -0.625)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 5
+
+[node name="Flight_02_Left_Post_011" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 4.190423, -0.375)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="Flight_02_Left_Post_012" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 4.790423, 0.625)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="Flight_02_Left_Post_013" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 5.390423, 1.625)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="Flight_02_Left_Post_014" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 5.990423, 2.625)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 5
+
+[node name="Flight_02_Left_Post_015" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 6.45, 3.375)
+mesh = SubResource("PrimitiveMesh_0004")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 6
+
+[node name="Flight_02_Right_Post_016" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 4.190423, -0.375)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="Flight_02_Right_Post_017" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 4.790423, 0.625)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="Flight_02_Right_Post_018" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 5.390423, 1.625)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="Flight_02_Right_Post_019" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 5.990423, 2.625)
+mesh = SubResource("PrimitiveMesh_0005")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 5
+
+[node name="Flight_02_Right_Post_020" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 6.45, 3.375)
+mesh = SubResource("PrimitiveMesh_0004")
+material_override = ExtResource("2_railings")
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 6
+
+[node name="Landing_01_West_01_Post_021" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 3.4875, -2.5)
+mesh = SubResource("PrimitiveMesh_0006")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "west"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="Landing_01_East_01_Post_022" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 3.4875, -2.5)
+mesh = SubResource("PrimitiveMesh_0006")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "east"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="Landing_01_North_01_Post_023" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.9125, 3.4875, -3.475)
+mesh = SubResource("PrimitiveMesh_0006")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "north"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="Landing_01_North_01_Post_024" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.0, 3.4875, -3.475)
+mesh = SubResource("PrimitiveMesh_0006")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "north"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="Landing_01_North_01_Post_025" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.9125, 3.4875, -3.475)
+mesh = SubResource("PrimitiveMesh_0006")
+material_override = ExtResource("2_railings")
+metadata/landing = 1
+metadata/side = "north"
+metadata/segment = 1
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="SupportCap_Flight_01_Left_Post_002" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 1.655845, 2.375)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_01_Left_Post_002"
+metadata/post_id = "Flight_01_Left_Post_002"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_01_Left_Post_002.top', 'Flight_01_Left_Handrail.support.Flight_01_Left_Post_002')"
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="SupportCap_Flight_01_Left_Post_003" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 2.255845, 1.375)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_01_Left_Post_003"
+metadata/post_id = "Flight_01_Left_Post_003"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_01_Left_Post_003.top', 'Flight_01_Left_Handrail.support.Flight_01_Left_Post_003')"
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="SupportCap_Flight_01_Left_Post_004" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 2.855845, 0.375)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_01_Left_Post_004"
+metadata/post_id = "Flight_01_Left_Post_004"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_01_Left_Post_004.top', 'Flight_01_Left_Handrail.support.Flight_01_Left_Post_004')"
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="SupportCap_Flight_01_Left_Post_005" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(1.825, 3.455845, -0.625)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_01_Left_Post_005"
+metadata/post_id = "Flight_01_Left_Post_005"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_01_Left_Post_005.top', 'Flight_01_Left_Handrail.support.Flight_01_Left_Post_005')"
+metadata/flight = 1
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 5
+
+[node name="SupportCap_Flight_01_Right_Post_007" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 1.655845, 2.375)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_01_Right_Post_007"
+metadata/post_id = "Flight_01_Right_Post_007"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_01_Right_Post_007.top', 'Flight_01_Right_Handrail.support.Flight_01_Right_Post_007')"
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="SupportCap_Flight_01_Right_Post_008" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 2.255845, 1.375)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_01_Right_Post_008"
+metadata/post_id = "Flight_01_Right_Post_008"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_01_Right_Post_008.top', 'Flight_01_Right_Handrail.support.Flight_01_Right_Post_008')"
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="SupportCap_Flight_01_Right_Post_009" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 2.855845, 0.375)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_01_Right_Post_009"
+metadata/post_id = "Flight_01_Right_Post_009"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_01_Right_Post_009.top', 'Flight_01_Right_Handrail.support.Flight_01_Right_Post_009')"
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="SupportCap_Flight_01_Right_Post_010" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(0.375, 3.455845, -0.625)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_01_Right_Post_010"
+metadata/post_id = "Flight_01_Right_Post_010"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_01_Right_Post_010.top', 'Flight_01_Right_Handrail.support.Flight_01_Right_Post_010')"
+metadata/flight = 1
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 5
+
+[node name="SupportCap_Flight_02_Left_Post_011" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 4.655845, -0.375)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_02_Left_Post_011"
+metadata/post_id = "Flight_02_Left_Post_011"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_02_Left_Post_011.top', 'Flight_02_Left_Handrail.support.Flight_02_Left_Post_011')"
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="SupportCap_Flight_02_Left_Post_012" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 5.255845, 0.625)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_02_Left_Post_012"
+metadata/post_id = "Flight_02_Left_Post_012"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_02_Left_Post_012.top', 'Flight_02_Left_Handrail.support.Flight_02_Left_Post_012')"
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="SupportCap_Flight_02_Left_Post_013" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 5.855845, 1.625)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_02_Left_Post_013"
+metadata/post_id = "Flight_02_Left_Post_013"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_02_Left_Post_013.top', 'Flight_02_Left_Handrail.support.Flight_02_Left_Post_013')"
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="SupportCap_Flight_02_Left_Post_014" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-1.825, 6.455845, 2.625)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_02_Left_Post_014"
+metadata/post_id = "Flight_02_Left_Post_014"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_02_Left_Post_014.top', 'Flight_02_Left_Handrail.support.Flight_02_Left_Post_014')"
+metadata/flight = 2
+metadata/side = "left"
+metadata/pipeline = "ports"
+metadata/post = 5
+
+[node name="SupportCap_Flight_02_Right_Post_016" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 4.655845, -0.375)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_02_Right_Post_016"
+metadata/post_id = "Flight_02_Right_Post_016"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_02_Right_Post_016.top', 'Flight_02_Right_Handrail.support.Flight_02_Right_Post_016')"
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 2
+
+[node name="SupportCap_Flight_02_Right_Post_017" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 5.255845, 0.625)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_02_Right_Post_017"
+metadata/post_id = "Flight_02_Right_Post_017"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_02_Right_Post_017.top', 'Flight_02_Right_Handrail.support.Flight_02_Right_Post_017')"
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 3
+
+[node name="SupportCap_Flight_02_Right_Post_018" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 5.855845, 1.625)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_02_Right_Post_018"
+metadata/post_id = "Flight_02_Right_Post_018"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_02_Right_Post_018.top', 'Flight_02_Right_Handrail.support.Flight_02_Right_Post_018')"
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 4
+
+[node name="SupportCap_Flight_02_Right_Post_019" type="MeshInstance3D" parent="Railings/Visual"]
+position = Vector3(-0.375, 6.455845, 2.625)
+mesh = SubResource("PrimitiveMesh_0007")
+material_override = ExtResource("2_railings")
+metadata/connection_id = "support:Flight_02_Right_Post_019"
+metadata/post_id = "Flight_02_Right_Post_019"
+metadata/support_connector = true
+metadata/connection_ports = "('Flight_02_Right_Post_019.top', 'Flight_02_Right_Handrail.support.Flight_02_Right_Post_019')"
+metadata/flight = 2
+metadata/side = "right"
+metadata/pipeline = "ports"
+metadata/post = 5
+
+[node name="Flight_01_Left_Handrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 2.5375, 0.9375)
+rotation = Vector3(-0.54042, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0004")
+
+[node name="Flight_01_Left_Midrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 2.038747, 0.935422)
+rotation = Vector3(-0.54042, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0005")
+
+[node name="Flight_01_Right_Handrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 2.5375, 0.9375)
+rotation = Vector3(-0.54042, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0004")
+
+[node name="Flight_01_Right_Midrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 2.038747, 0.935422)
+rotation = Vector3(-0.54042, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0005")
+
+[node name="Flight_02_Left_Handrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 5.4625, 0.9375)
+rotation = Vector3(-0.54042, 0.0, 0.0)
+shape = SubResource("PrimitiveShape3D_0004")
+
+[node name="Flight_02_Left_Midrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 4.961253, 0.935422)
+rotation = Vector3(-0.54042, 0.0, 0.0)
+shape = SubResource("PrimitiveShape3D_0006")
+
+[node name="Flight_02_Right_Handrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 5.4625, 0.9375)
+rotation = Vector3(-0.54042, 0.0, 0.0)
+shape = SubResource("PrimitiveShape3D_0004")
+
+[node name="Flight_02_Right_Midrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 4.961253, 0.935422)
+rotation = Vector3(-0.54042, 0.0, 0.0)
+shape = SubResource("PrimitiveShape3D_0006")
+
+[node name="Landing_01_West_01_Handrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 4.0, -2.496538)
+rotation = Vector3(0.0, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0007")
+
+[node name="Landing_01_West_01_Midrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 3.5, -2.493826)
+rotation = Vector3(0.0, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0008")
+
+[node name="Landing_01_East_01_Handrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 4.0, -2.496538)
+rotation = Vector3(0.0, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0009")
+
+[node name="Landing_01_East_01_Midrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 3.5, -2.493826)
+rotation = Vector3(0.0, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0010")
+
+[node name="Landing_01_South_01_Handrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.0, 4.0, -1.575)
+rotation = Vector3(0.0, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0011")
+
+[node name="Landing_01_South_01_Midrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.0, 3.5, -1.5525)
+rotation = Vector3(0.0, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0012")
+
+[node name="Landing_01_North_01_Handrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.0, 4.0, -3.475)
+rotation = Vector3(0.0, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0013")
+
+[node name="Landing_01_North_01_Midrail" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.0, 3.5, -3.475)
+rotation = Vector3(0.0, -1.570796, 0.0)
+shape = SubResource("PrimitiveShape3D_0014")
+
+[node name="Landing_01_South_01_Handrail_Transition_01" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 4.0, -1.546538)
+rotation = Vector3(0.0, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0015")
+
+[node name="Landing_01_South_01_Handrail_Transition_02" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 4.0, -1.546538)
+rotation = Vector3(0.0, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0016")
+
+[node name="Landing_01_South_01_Midrail_Transition_01" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 3.5, -1.532576)
+rotation = Vector3(0.0, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0017")
+
+[node name="Landing_01_South_01_Midrail_Transition_02" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 3.5, -1.532576)
+rotation = Vector3(0.0, 3.141593, 0.0)
+shape = SubResource("PrimitiveShape3D_0018")
+
+[node name="Flight_01_Left_Post_001.terminal_adapter" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 1.075, 3.409038)
+shape = SubResource("PrimitiveShape3D_0019")
+
+[node name="Flight_01_Right_Post_006.terminal_adapter" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 1.075, 3.409038)
+shape = SubResource("PrimitiveShape3D_0019")
+
+[node name="Flight_02_Left_Post_015.terminal_adapter" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 6.925, 3.409038)
+shape = SubResource("PrimitiveShape3D_0020")
+
+[node name="Flight_02_Right_Post_020.terminal_adapter" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 6.925, 3.409038)
+shape = SubResource("PrimitiveShape3D_0020")
+
+[node name="Flight_01_Left_Post_001" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 0.6, 3.375)
+shape = SubResource("PrimitiveShape3D_0021")
+
+[node name="Flight_01_Left_Post_002" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 1.190423, 2.375)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_01_Left_Post_003" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 1.790423, 1.375)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_01_Left_Post_004" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 2.390423, 0.375)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_01_Left_Post_005" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 2.990423, -0.625)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_01_Right_Post_006" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 0.6, 3.375)
+shape = SubResource("PrimitiveShape3D_0021")
+
+[node name="Flight_01_Right_Post_007" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 1.190423, 2.375)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_01_Right_Post_008" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 1.790423, 1.375)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_01_Right_Post_009" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 2.390423, 0.375)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_01_Right_Post_010" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 2.990423, -0.625)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Left_Post_011" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 4.190423, -0.375)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Left_Post_012" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 4.790423, 0.625)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Left_Post_013" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 5.390423, 1.625)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Left_Post_014" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 5.990423, 2.625)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Left_Post_015" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 6.45, 3.375)
+shape = SubResource("PrimitiveShape3D_0021")
+
+[node name="Flight_02_Right_Post_016" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 4.190423, -0.375)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Right_Post_017" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 4.790423, 0.625)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Right_Post_018" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 5.390423, 1.625)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Right_Post_019" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 5.990423, 2.625)
+shape = SubResource("PrimitiveShape3D_0022")
+
+[node name="Flight_02_Right_Post_020" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 6.45, 3.375)
+shape = SubResource("PrimitiveShape3D_0021")
+
+[node name="Landing_01_West_01_Post_021" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 3.4875, -2.5)
+shape = SubResource("PrimitiveShape3D_0023")
+
+[node name="Landing_01_East_01_Post_022" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 3.4875, -2.5)
+shape = SubResource("PrimitiveShape3D_0023")
+
+[node name="Landing_01_North_01_Post_023" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.9125, 3.4875, -3.475)
+shape = SubResource("PrimitiveShape3D_0023")
+
+[node name="Landing_01_North_01_Post_024" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.0, 3.4875, -3.475)
+shape = SubResource("PrimitiveShape3D_0023")
+
+[node name="Landing_01_North_01_Post_025" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.9125, 3.4875, -3.475)
+shape = SubResource("PrimitiveShape3D_0023")
+
+[node name="SupportCap_Flight_01_Left_Post_002" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 1.655845, 2.375)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_01_Left_Post_003" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 2.255845, 1.375)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_01_Left_Post_004" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 2.855845, 0.375)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_01_Left_Post_005" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(1.825, 3.455845, -0.625)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_01_Right_Post_007" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 1.655845, 2.375)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_01_Right_Post_008" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 2.255845, 1.375)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_01_Right_Post_009" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 2.855845, 0.375)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_01_Right_Post_010" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(0.375, 3.455845, -0.625)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_02_Left_Post_011" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 4.655845, -0.375)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_02_Left_Post_012" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 5.255845, 0.625)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_02_Left_Post_013" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 5.855845, 1.625)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_02_Left_Post_014" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-1.825, 6.455845, 2.625)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_02_Right_Post_016" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 4.655845, -0.375)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_02_Right_Post_017" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 5.255845, 0.625)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_02_Right_Post_018" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 5.855845, 1.625)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="SupportCap_Flight_02_Right_Post_019" type="CollisionShape3D" parent="Railings/Collision"]
+position = Vector3(-0.375, 6.455845, 2.625)
+shape = SubResource("PrimitiveShape3D_0024")
+
+[node name="Shaft" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Shaft"]
+
+[node name="Collision" type="StaticBody3D" parent="Shaft"]
+collision_layer = 1
+collision_mask = 1
+
+[node name="ShaftWall_North" type="MeshInstance3D" parent="Shaft/Visual"]
+position = Vector3(0.0, 4.7, 3.545)
+mesh = SubResource("PrimitiveMesh_0008")
+material_override = ExtResource("3_shaft")
+metadata/side = "north"
+metadata/vertical_gap_only = true
+metadata/bottom_y = 3.6
+metadata/top_y = 5.8
+
+[node name="ShaftWall_East" type="MeshInstance3D" parent="Shaft/Visual"]
+position = Vector3(3.045, 4.7, 0.0)
+mesh = SubResource("PrimitiveMesh_0009")
+material_override = ExtResource("3_shaft")
+metadata/side = "east"
+metadata/vertical_gap_only = true
+metadata/bottom_y = 3.6
+metadata/top_y = 5.8
+
+[node name="ShaftWall_South" type="MeshInstance3D" parent="Shaft/Visual"]
+position = Vector3(0.0, 4.7, -3.545)
+mesh = SubResource("PrimitiveMesh_0008")
+material_override = ExtResource("3_shaft")
+metadata/side = "south"
+metadata/vertical_gap_only = true
+metadata/bottom_y = 3.6
+metadata/top_y = 5.8
+
+[node name="ShaftWall_West" type="MeshInstance3D" parent="Shaft/Visual"]
+position = Vector3(-3.045, 4.7, 0.0)
+mesh = SubResource("PrimitiveMesh_0009")
+material_override = ExtResource("3_shaft")
+metadata/side = "west"
+metadata/vertical_gap_only = true
+metadata/bottom_y = 3.6
+metadata/top_y = 5.8
+
+[node name="ShaftWall_North" type="CollisionShape3D" parent="Shaft/Collision"]
+position = Vector3(0.0, 4.7, 3.545)
+shape = SubResource("PrimitiveShape3D_0025")
+
+[node name="ShaftWall_East" type="CollisionShape3D" parent="Shaft/Collision"]
+position = Vector3(3.045, 4.7, 0.0)
+shape = SubResource("PrimitiveShape3D_0026")
+
+[node name="ShaftWall_South" type="CollisionShape3D" parent="Shaft/Collision"]
+position = Vector3(0.0, 4.7, -3.545)
+shape = SubResource("PrimitiveShape3D_0025")
+
+[node name="ShaftWall_West" type="CollisionShape3D" parent="Shaft/Collision"]
+position = Vector3(-3.045, 4.7, 0.0)
+shape = SubResource("PrimitiveShape3D_0026")
