@@ -18,6 +18,16 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def expected_runtime_bindings(sector: dict) -> str:
+    configured = sector["safe_regeneration"]["bindings_input"]
+    document = json.loads((ROOT / configured).read_text(encoding="utf-8"))
+    referenced = {item.get("object_ref", {}).get("scene", "") for item in document["bindings"]}
+    if not referenced or referenced == {sector["authored_scene"]}:
+        return configured
+    slug = sector["sector_id"].lower().replace("-", "_")
+    return f"scenes/complex_v3_blockout/bindings/{slug}.bindings.json"
+
+
 class ProductionSectorSceneTests(unittest.TestCase):
     def setUp(self) -> None:
         self.manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -39,6 +49,13 @@ class ProductionSectorSceneTests(unittest.TestCase):
             self.assertEqual(content.count('[node name="Stairs"'), 1, scene)
             self.assertEqual(content.count('[node name="AuthoredContent"'), 1, scene)
             self.assertEqual(content.count('[node name="AnchorRegistry"'), 1, scene)
+            self.assertEqual(content.count('[node name="AnchorController"'), 1, scene)
+            self.assertIn(
+                f'object_bindings_path = "res://{expected_runtime_bindings(sector)}"',
+                content,
+                scene,
+            )
+            self.assertIn(f'authored_scene_path = "{sector["authored_scene"]}"', content, scene)
             self.assertNotIn("editor_preview_enabled = true", content, scene)
             self.assertTrue((ROOT / architecture.removeprefix("res://")).is_file(), architecture)
 

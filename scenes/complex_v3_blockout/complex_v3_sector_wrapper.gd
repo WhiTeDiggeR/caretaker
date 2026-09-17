@@ -59,7 +59,10 @@ func rebuild_contract_generated() -> PackedStringArray:
 	if previous != null:
 		previous.free()
 	staging.name = GENERATED_NAME
-	return validate_regeneration_contract(true)
+	errors.append_array(validate_regeneration_contract(true))
+	if errors.is_empty():
+		errors.append_array(_refresh_sector_bindings())
+	return errors
 
 
 func rebuild_contract_editor_preview() -> PackedStringArray:
@@ -158,6 +161,15 @@ func _add_empty_generated_layer(layer_name: String, parent: Node3D) -> void:
 	layer.name = layer_name
 	layer.set_meta("content_owner", "regenerator")
 	parent.add_child(layer)
+
+
+func _refresh_sector_bindings() -> PackedStringArray:
+	var controller := get_node_or_null("AnchorController")
+	if controller == null:
+		return PackedStringArray()
+	if not controller.has_method("refresh_after_generation"):
+		return PackedStringArray(["AnchorController does not implement refresh_after_generation"])
+	return controller.call("refresh_after_generation") as PackedStringArray
 
 
 func _strip_preview_physics(node: Node) -> void:

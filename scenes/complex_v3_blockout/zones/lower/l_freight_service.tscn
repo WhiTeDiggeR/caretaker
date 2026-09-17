@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/complex_v3_zone.tscn" id="1_zone"]
 [ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/set_dressing/sectors/l_freight_service_dressing.tscn" id="2_dressing"]
 [ext_resource type="PackedScene" path="res://gen/l/l_freight_service/Generated/Architecture/l_freight_service_generated.tscn" id="3_architecture"]
 [ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_registry.gd" id="4_anchor_registry"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/sector_anchor_controller.gd" id="5_anchor_controller"]
 
 
 [node name="L_FREIGHT_SERVICE" instance=ExtResource("1_zone")]
@@ -35,3 +36,9 @@ metadata/content_owner = "author"
 [node name="AnchorRegistry" type="Node" parent="."]
 script = ExtResource("4_anchor_registry")
 anchor_frames_path = "res://gen/l/l_freight_service/anchor_frames.json"
+
+[node name="AnchorController" type="Node" parent="."]
+script = ExtResource("5_anchor_controller")
+anchor_frames_path = "res://gen/l/l_freight_service/anchor_frames.json"
+object_bindings_path = "res://scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_freight_service/object_bindings.json"
+authored_scene_path = "res://scenes/complex_v3_blockout/set_dressing/sectors/l_freight_service_dressing.tscn"

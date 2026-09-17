@@ -8,6 +8,7 @@
 - `complex_v3_assembly.gd` — собирает 30 секторных сцен и единственную общую infrastructure-сцену.
 - `complex_v3_blockout.gd` — контроллер сектора с production-режимом `REGENERATED_PACKAGE` и диагностическим `HANDOFF_PREVIEW`.
 - `complex_v3_sector_wrapper.gd` — контракт владельцев: заменяемый `Generated` с внешними слоями `Architecture`/`Stairs`, отдельный persistent `AuthoredContent` и transient `EditorPreview` без physics.
+- `../complex_v3_regeneration/sector_anchor_controller.gd` — транзакционно применяет `object_bindings.json` к `AnchoredObject3D`, блокируя пропавшие/неоднозначные ID и placement за границами anchor.
 - `complex_v3_zone.tscn` и `zones/{upper,lower,technical}/` — общая база и 30 тонких сцен по stable sector ID.
 - `complex_v3_infrastructure.tscn` — магистрали, межзонные соединители и вертикальные переходы без дублирования по зонам.
 - `res://objects/complex_v3/main_core_switchback_stair.tscn` — самостоятельная редактируемая лестница главного ядра; зональные сцены содержат только совпадающий с ней монтажный проём.
@@ -32,6 +33,8 @@
 Ручные объекты конкретной зоны следует добавлять только в отдельную authored-сцену `set_dressing/sectors/<slug>_dressing.tscn`, подключённую как `AuthoredContent/SetDressing`. Генератор детерминированно пересобирает тонкие sector wrappers, но не записывает authored-сцены. Узел `Generated` полностью принадлежит регенератору и содержит отдельные слои `Architecture` и `Stairs` из `res://gen/**`.
 
 Regeneration wrapper принимает `PackedScene` для generated-архитектуры, generated-лестниц и ручного слоя. `AuthoredContent` обязан быть корнем отдельной сцены; rebuild собирает `GeneratedStaging`, заменяет только прежний `Generated` и валидирует прямые sibling-корни. Все 30 production-сцен используют `REGENERATED_PACKAGE`; старый handoff-builder доступен только как диагностический preview и тестовый fallback.
+
+`AnchorController` загружает promoted `anchor_frames.json` и sector-owned `object_bindings.json`, рекурсивно индексирует только стабильные `object_id` и сначала разрешает весь набор привязок без изменения сцены. Если проверка полностью успешна, он применяет placement и сохраняемую `author_correction`, затем вызывает `AnchorRegistry.refresh_registered_objects()`. При любой blocking-ошибке authored transforms остаются прежними; ближайший якорь автоматически не выбирается.
 
 В production-сценах `editor_preview_enabled` отключён: редактор показывает подключённый пакет `res://gen/**`, поэтому старая handoff-геометрия не может сосуществовать с ним. В режиме `HANDOFF_PREVIEW` временная геометрия не сохраняется в `.tscn`, не содержит physics collision и остаётся доступной для диагностических сцен и тестов.
 

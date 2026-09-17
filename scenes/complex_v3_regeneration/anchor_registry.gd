@@ -193,6 +193,9 @@ func resolve_transform(anchor_id: String, expected_type: String, placement: Comp
 	var anchor_basis := Basis(forward, up, normal)
 	var position := origin + forward * distance + normal * placement.normal_offset_m + up * placement.height_m
 	var resolved := Transform3D(anchor_basis * placement.rotation_basis(), position) * author_correction
+	_validate_linear_footprint(frame, bounds, placement, resolved, origin, forward, up, errors)
+	if not errors.is_empty():
+		return {"ok": false, "errors": errors}
 	return {"ok": true, "transform": resolved, "anchor_id": anchor_id, "generation_id": _generation_id}
 
 
@@ -334,6 +337,35 @@ func _validate_surface_footprint(bounds: Dictionary, placement: ComplexV3AnchorP
 	for hole: PackedVector2Array in holes:
 		if _polygons_overlap(hull, hole):
 			errors.append("surface footprint overlaps an opening")
+
+
+func _validate_linear_footprint(_frame: Dictionary, bounds: Dictionary, placement: ComplexV3AnchorPlacement, resolved: Transform3D, origin: Vector3, forward: Vector3, up: Vector3, errors: PackedStringArray) -> void:
+	var size := placement.footprint_m
+	# Pre-footprint linear resources remain valid for backward compatibility.
+	# Binding documents are stricter: SectorAnchorController requires an explicit
+	# positive footprint before calling the registry.
+	if size == Vector3.ZERO and placement.footprint_center_m == Vector3.ZERO:
+		return
+	if not size.is_finite() or minf(size.x, minf(size.y, size.z)) <= 0.0 or not placement.footprint_center_m.is_finite():
+		errors.append("linear placement requires explicit positive footprint dimensions and finite center")
+		return
+	var raw_range: Variant = bounds.get("along_range_m", [0.0, bounds.get("length_m")])
+	if not _valid_range(raw_range):
+		errors.append("linear anchor requires an explicit along range")
+		return
+	var height_extent := float(bounds.get("height_m", bounds.get("clear_height_m", bounds.get("height", -1.0))))
+	if not is_finite(height_extent) or height_extent < 0.0:
+		errors.append("linear anchor height is missing")
+		return
+	for x: float in [-0.5, 0.5]:
+		for y: float in [-0.5, 0.5]:
+			for z: float in [-0.5, 0.5]:
+				var world := resolved * (placement.footprint_center_m + size * Vector3(x, y, z))
+				if not world.is_finite():
+					errors.append("transformed footprint must be finite")
+					return
+				_validate_scalar_limit((world - origin).dot(forward), raw_range, "footprint along", errors)
+				_validate_scalar_limit((world - origin).dot(up), [0.0, height_extent], "footprint height", errors)
 
 
 func _point_on_segment(point: Vector2, first: Vector2, second: Vector2) -> bool:

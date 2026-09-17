@@ -16,6 +16,16 @@ GENERATION_MANIFEST_PATH = ROOT / "tools/complex_v3_regeneration/sector_generati
 ASSEMBLY_PATH = SCENE_DIR / "complex_v3_blockout.tscn"
 
 
+def runtime_bindings_input(sector: dict) -> str:
+    configured = sector["safe_regeneration"]["bindings_input"]
+    document = json.loads((ROOT / configured).read_text(encoding="utf-8"))
+    referenced = {item.get("object_ref", {}).get("scene", "") for item in document["bindings"]}
+    if not referenced or referenced == {sector["authored_scene"]}:
+        return configured
+    slug = sector["sector_id"].lower().replace("-", "_")
+    return f"scenes/complex_v3_blockout/bindings/{slug}.bindings.json"
+
+
 def main() -> int:
     catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
     passports = json.loads(PASSPORTS_PATH.read_text(encoding="utf-8"))["passports"]
@@ -58,6 +68,7 @@ def main() -> int:
             errors.append(f"scene has no preserved AuthoredContent root: {scene_path}")
         production = generation_by_sector[item["sector_id"]]
         package_root = production["output_resource_dir"]
+        bindings_input = runtime_bindings_input(production)
         architecture = f'{package_root}/Generated/Architecture/{production["scene_name"]}.tscn'
         required_fragments = [
             "geometry_source = 1",
@@ -69,6 +80,9 @@ def main() -> int:
             '[node name="SetDressing" parent="AuthoredContent"',
             '[node name="AnchorRegistry" type="Node" parent="."]',
             f'anchor_frames_path = "{package_root}/anchor_frames.json"',
+            '[node name="AnchorController" type="Node" parent="."]',
+            f'object_bindings_path = "res://{bindings_input}"',
+            f'authored_scene_path = "{production["authored_scene"]}"',
         ]
         for fragment in required_fragments:
             if fragment not in content:

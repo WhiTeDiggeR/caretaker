@@ -44,3 +44,14 @@ Old planar records may still be indexed as metadata, but cannot be used for
 placement without this explicit parameterization. In particular converter 1.19
 records still need an exact adapter for ranges and declared placement limits;
 the runtime does not silently repair them. Point/shaft placement remains blocking.
+
+`sector_anchor_controller.gd` applies a sector's generated anchor document and
+authored binding document as one transaction. It indexes `AnchoredObject3D`
+instances by stable `object_id`, validates every binding before moving any node,
+preserves `author_correction`, and refreshes registered objects only after the
+whole binding set resolves. Missing IDs, duplicate/ambiguous objects, type
+mismatches, invalid placement bounds, and non-blocking missing-anchor policies
+block readiness; the controller never selects a nearby replacement anchor.
+Application is explicit through `apply_bindings()` or
+`refresh_after_generation()`: merely instantiating an assembly does not mutate
+authored content from sectors that were not regenerated.

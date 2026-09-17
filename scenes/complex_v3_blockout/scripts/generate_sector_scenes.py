@@ -40,6 +40,26 @@ def existing_scene_uid(path: Path) -> str:
     return f' uid="{match.group(1)}"' if match else ""
 
 
+def runtime_bindings_input(generation: dict, sector_id: str) -> str:
+    configured = generation["safe_regeneration"]["bindings_input"]
+    document = json.loads((ROOT / configured).read_text(encoding="utf-8"))
+    referenced_scenes = {
+        str(binding.get("object_ref", {}).get("scene", ""))
+        for binding in document.get("bindings", [])
+    }
+    if not referenced_scenes or referenced_scenes == {generation["authored_scene"]}:
+        return configured
+    fallback = f"scenes/complex_v3_blockout/bindings/{scene_slug(sector_id)}.bindings.json"
+    fallback_document = json.loads((ROOT / fallback).read_text(encoding="utf-8"))
+    fallback_scenes = {
+        str(binding.get("object_ref", {}).get("scene", ""))
+        for binding in fallback_document.get("bindings", [])
+    }
+    if fallback_scenes and fallback_scenes != {generation["authored_scene"]}:
+        raise ValueError(f"{sector_id} has no object_bindings document for its authored scene")
+    return fallback
+
+
 def main() -> None:
     passports_data = json.loads(PASSPORTS_PATH.read_text(encoding="utf-8"))
     geometry = json.loads(GEOMETRY_PATH.read_text(encoding="utf-8"))
@@ -88,19 +108,20 @@ def main() -> None:
         resource_path = f"res://scenes/complex_v3_blockout/{relative_path}"
         generation = generation_by_sector[sector_id]
         package_root = generation["output_resource_dir"]
+        bindings_input = runtime_bindings_input(generation, sector_id)
         architecture_path = f'{package_root}/Generated/Architecture/{generation["scene_name"]}.tscn'
         stair_scene_path = ""
         if generation["vertical_generators"]:
             generator_id = generation["vertical_generators"][0]["generator_id"]
             stair_scene_path = f"{package_root}/Generated/Stairs/{generator_id}/{generator_id}.tscn"
-        load_steps = 6 if stair_scene_path else 5
+        load_steps = 7 if stair_scene_path else 6
         stair_resource = (
-            f'[ext_resource type="PackedScene" path="{stair_scene_path}" id="5_stairs"]'
+            f'[ext_resource type="PackedScene" path="{stair_scene_path}" id="6_stairs"]'
             if stair_scene_path else ""
         )
-        stair_property = 'generated_stairs_scene = ExtResource("5_stairs")' if stair_scene_path else ""
+        stair_property = 'generated_stairs_scene = ExtResource("6_stairs")' if stair_scene_path else ""
         stair_node = (
-            '[node name="Stairs" parent="Generated" instance=ExtResource("5_stairs")]'
+            '[node name="Stairs" parent="Generated" instance=ExtResource("6_stairs")]'
             if stair_scene_path else '[node name="Stairs" type="Node3D" parent="Generated"]'
         )
         scene_file = BLOCKOUT_DIR / relative_path
@@ -113,6 +134,7 @@ def main() -> None:
                 f'[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/set_dressing/sectors/{scene_slug(sector_id)}_dressing.tscn" id="2_dressing"]',
                 f'[ext_resource type="PackedScene" path="{architecture_path}" id="3_architecture"]',
                 '[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_registry.gd" id="4_anchor_registry"]',
+                '[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/sector_anchor_controller.gd" id="5_anchor_controller"]',
                 stair_resource,
                 "",
                 f'[node name="{node_name(sector_id)}" instance=ExtResource("1_zone")]',
@@ -144,6 +166,12 @@ def main() -> None:
                 '[node name="AnchorRegistry" type="Node" parent="."]',
                 'script = ExtResource("4_anchor_registry")',
                 f'anchor_frames_path = "{package_root}/anchor_frames.json"',
+                "",
+                '[node name="AnchorController" type="Node" parent="."]',
+                'script = ExtResource("5_anchor_controller")',
+                f'anchor_frames_path = "{package_root}/anchor_frames.json"',
+                f'object_bindings_path = "res://{bindings_input}"',
+                f'authored_scene_path = "{generation["authored_scene"]}"',
                 "",
             ]
         )
