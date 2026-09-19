@@ -24,3 +24,37 @@ Run tests with:
 ```powershell
 python -m unittest discover -s tools/complex_v3_repair_package/tests -v
 ```
+
+## Explicit Agent Fix runner
+
+`run_agent_fix.py` is the only orchestration entry point that invokes an agent,
+and it must be started by an explicit editor action. It accepts the latest T24
+safe report, rejects clean or non-composition failures, verifies current source
+and sector-config hashes plus every evidence artifact, and builds a persistent
+minimal package inside that attempt's evidence directory.
+
+```powershell
+python tools/complex_v3_repair_package/run_agent_fix.py `
+  --sector U-CONTROL `
+  --manifest tools/complex_v3_regeneration/sector_generation_manifest.json `
+  --safe-report <latest-safe-report.json> `
+  --python <python> `
+  --svg-tool-root <svg-tool-root> `
+  --stair-tool-root <stair-tool-root> `
+  --agent-launcher <configured-launcher>
+```
+
+The launcher may be one executable path or a JSON string array containing an
+executable and fixed arguments. The runner appends `--project-root`,
+`--repair-package`, and `--prompt`; a production Codex wrapper must accept those
+arguments and return the agent exit code.
+
+Before and after the launcher, the runner hashes project files and immutable
+attempt evidence. Only the current sector authored scene, its bindings, and
+explicit `safe_regeneration.agent_allow_files`/`--allow-file` entries may change.
+Any other change blocks revalidation. A successful agent exit always triggers a
+new full `safe_regenerate.py` run—never `--validate-only` and never validation of
+the old live package. The editor may reload only when that run returns a ready
+`success` or `noop` report. The final safe report records agent invocation,
+command, exit code, changed allowlisted files, forbidden changes, package path,
+and the complete revalidation result.

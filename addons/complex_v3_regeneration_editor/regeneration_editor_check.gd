@@ -39,6 +39,13 @@ func _init() -> void:
 	var allowed_blocked: Dictionary = operations.read_report("res://addons/complex_v3_regeneration_editor/fixtures/allowed_blocked_report.json")
 	_assert(bool(allowed_blocked.get("offer_agent_fix", false)), "authored missing-anchor blocker did not offer Agent Fix")
 	_assert(allowed_blocked.get("display_status") == "Blocked" and int(allowed_blocked.get("problem_count", 0)) == 1, "blocked status summary failed")
+	var agent_invocation: Dictionary = operations.build_agent_fix_invocation(metadata_context, {
+		"python": "python-fixture", "manifest": manifest, "agent_launcher": "codex-fixture",
+		"svg_tool_root": "C:/SVG Tool", "stair_tool_root": "C:/Stair Tool",
+	}, "res://addons/complex_v3_regeneration_editor/fixtures/allowed_blocked_report.json")
+	_assert(bool(agent_invocation.get("ok", false)), "Agent Fix runner invocation was not built")
+	var agent_arguments := agent_invocation.get("arguments", PackedStringArray()) as PackedStringArray
+	_assert("--agent-launcher" in agent_arguments and "codex-fixture" in agent_arguments, "Agent Fix runner arguments are incomplete")
 	var denied_blocked: Dictionary = operations.read_report("res://addons/complex_v3_regeneration_editor/fixtures/denied_blocked_report.json")
 	_assert(not bool(denied_blocked.get("offer_agent_fix", true)), "generated blocker offered Agent Fix")
 	var invalid_source: Dictionary = operations.read_report("res://addons/complex_v3_regeneration_editor/fixtures/invalid_source_report.json")
