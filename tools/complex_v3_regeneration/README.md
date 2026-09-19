@@ -69,16 +69,22 @@ The validations logically associated with bindings and composition run against t
 
 Semantic equality covers `Generated/`, `anchor_frames.json`, and `generation_manifest.json`. The backend diagnostic report is excluded because operational evidence does not define geometry. When semantic output is unchanged, status is `noop` and the live directory is not renamed or overwritten. Files outside the generator-owned set—including `AuthoredContent`, `Materials`, and arbitrary user files—are preserved byte-for-byte in the candidate.
 
-### Durable diagnostics (T13 integration correction)
+### Durable candidate evidence (T24)
 
-Orchestrator 1.1.0 includes the optional `validation_artifacts` report field without
-changing schema 1.0.0. Once composition validation runs, both its JSON report and
-`repair_queue.json` are retained in a fresh `<report-stem>.evidence-*` directory
-beside the requested machine report, outside live and transaction staging.
-Each entry records the absolute path and SHA-256. This also happens when the
-validator exits 2; transaction cleanup must not erase removed-anchor evidence.
-Failure to preserve diagnostics blocks promotion. Failure reports record the
-post-attempt live hash as well as the original hash.
+Orchestrator 1.2.0 keeps schema 1.0.0 compatible and extends the optional
+`validation_artifacts` report field. Once composition validation runs, a fresh
+`<report-stem>.evidence-*` directory beside the requested machine report retains
+the resolved composition, validation report, repair queue, candidate anchor
+frames, candidate generation manifest, candidate regeneration report, source
+SHA-256, sector-config SHA-256, and generation ID. Every report entry records the
+absolute path and SHA-256, and `evidence_directory` identifies their common
+attempt directory. JSON evidence is identity-checked against one `map_id`,
+`sector_id`, and `generation_id`; an inconsistency blocks promotion.
+
+Evidence is preserved even when the validator exits 2, before transaction staging
+is deleted, so Agent Fix can inspect the exact candidate anchors. Failure to
+preserve the complete available context blocks promotion. Failure reports record
+the post-attempt live hash as well as the original hash.
 
 The current machine report points only to evidence from that attempt. A clean
 attempt points to a new empty repair queue; an earlier-stage failure has an empty

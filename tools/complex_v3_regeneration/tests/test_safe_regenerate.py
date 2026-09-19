@@ -42,6 +42,7 @@ anchor={"anchor_id":"AF-WALL-A","type":"wall","status":"active","source_ref":{"a
 anchors={"schema_id":"caretaker.anchor_frames","schema_version":"1.0.0","map_id":manifest["map_id"],"sector_id":a.sector,"generation_id":generation_id,"anchors":[anchor]}
 generation={"schema_id":"caretaker.sector_generation_result","schema_version":"1.0.0","map_id":manifest["map_id"],"sector_id":a.sector,"generation_id":generation_id}
 report={"schema_id":"caretaker.sector_regeneration_report","schema_version":"1.0.0","sector_id":a.sector,"generation_id":generation_id,"status":"ok","staging_path":str(root)}
+if mode=="identity": report["generation_id"]="sha256:mismatched"
 for name,value in (("anchor_frames.json",anchors),("generation_manifest.json",generation),("regeneration_report.json",report)):
     (root/name).write_text(json.dumps(value,ensure_ascii=False,sort_keys=True)+"\n",encoding="utf-8")
 '''
@@ -217,6 +218,28 @@ class SafeRegenerationTests(unittest.TestCase):
         self.assertEqual(len(missing), 1)
         self.assertEqual(missing[0]["previous_anchor_ref"]["anchor_id"], "AF-MISSING")
         self.assertEqual(missing[0]["candidate_anchor_ids"], [])
+        expected = {
+            "resolved_composition.json", "validation_report.json", "repair_queue.json",
+            "candidate_anchor_frames.json", "candidate_generation_manifest.json",
+            "candidate_regeneration_report.json", "source_sha256",
+            "sector_config_sha256", "generation_id",
+        }
+        self.assertEqual(set(report["validation_artifacts"]), expected)
+        evidence_directories = set()
+        for name, details in report["validation_artifacts"].items():
+            evidence_path = Path(details["path"])
+            self.assertTrue(evidence_path.is_file(), name)
+            self.assertEqual(details["sha256"], SAFE.digest_bytes(evidence_path.read_bytes()), name)
+            evidence_directories.add(evidence_path.parent)
+            document = json.loads(evidence_path.read_text(encoding="utf-8"))
+            self.assertEqual(document["map_id"], report["map_id"], name)
+            self.assertEqual(document["sector_id"], report["sector_id"], name)
+            self.assertEqual(document["generation_id"], report["generation_id"], name)
+        self.assertEqual(evidence_directories, {Path(report["evidence_directory"])})
+        source_hash = json.loads(Path(report["validation_artifacts"]["source_sha256"]["path"]).read_text(encoding="utf-8"))
+        config_hash = json.loads(Path(report["validation_artifacts"]["sector_config_sha256"]["path"]).read_text(encoding="utf-8"))
+        self.assertEqual(source_hash["value"], report["input_hashes"]["source"])
+        self.assertEqual(config_hash["value"], report["input_hashes"]["sector_config"])
         self.assertEqual(list(self.live.parent.glob(".*.regeneration-*")), [])
 
     def test_current_report_never_reuses_stale_repair_queue(self) -> None:
@@ -224,18 +247,32 @@ class SafeRegenerationTests(unittest.TestCase):
         self.write_composition(missing_anchor=True)
         _, blocked = self.run_safe()
         previous = Path(blocked["validation_artifacts"]["repair_queue.json"]["path"])
+        previous_evidence = Path(blocked["evidence_directory"])
         previous_bytes = previous.read_bytes()
         self.write_composition()
         code, clean = self.run_safe()
         self.assertEqual(code, 0)
         current = Path(clean["validation_artifacts"]["repair_queue.json"]["path"])
         self.assertNotEqual(previous, current)
+        self.assertNotEqual(previous_evidence, Path(clean["evidence_directory"]))
         self.assertEqual(json.loads(current.read_text(encoding="utf-8"))["blocking_count"], 0)
         self.assertEqual(previous.read_bytes(), previous_bytes)
         self.write_manifest("converter")
         code, failed = self.run_safe()
         self.assertEqual(code, 2)
         self.assertEqual(failed["validation_artifacts"], {})
+
+    def test_inconsistent_candidate_identity_blocks_and_preserves_live(self) -> None:
+        self.seed_live()
+        before = SAFE.path_hash(self.live)
+        self.write_manifest("identity")
+        code, report = self.run_safe()
+        self.assertEqual(code, 2)
+        self.assertEqual(report["errors"][0]["stage"], "diagnostic_persistence")
+        self.assertIn("generation_id", report["errors"][0]["message"])
+        self.assertEqual(SAFE.path_hash(self.live), before)
+        self.assertEqual(report["validation_artifacts"], {})
+        self.assertEqual(list(self.live.parent.glob(".*.regeneration-*")), [])
 
     def test_validate_only_failure_retains_diagnostics_without_live_mutation(self) -> None:
         self.seed_live()

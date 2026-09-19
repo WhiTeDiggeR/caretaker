@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 SCHEMA_ID = "caretaker.safe_regeneration_report"
 SCHEMA_VERSION = "1.0.0"
 MANAGED_NAMES = ("Generated", "anchor_frames.json", "generation_manifest.json", "regeneration_report.json")
@@ -257,34 +257,101 @@ def resolve_composition(
     return output
 
 
-def preserve_validation_evidence(output: Path, report_path: Path, report: dict[str, Any]) -> None:
+def _evidence_value(
+    kind: str, value: str, map_id: str, sector_id: str, generation_id: str,
+) -> dict[str, Any]:
+    return {
+        "schema_id": "caretaker.safe_regeneration_evidence_value",
+        "schema_version": SCHEMA_VERSION,
+        "kind": kind,
+        "map_id": map_id,
+        "sector_id": sector_id,
+        "generation_id": generation_id,
+        "value": value,
+    }
+
+
+def _require_evidence_identity(
+    document: dict[str, Any], name: str, map_id: str, sector_id: str, generation_id: str,
+) -> None:
+    expected = {"map_id": map_id, "sector_id": sector_id, "generation_id": generation_id}
+    mismatches = [key for key, value in expected.items() if document.get(key) != value]
+    if mismatches:
+        raise OrchestrationError(
+            "diagnostic_persistence",
+            f"Evidence identity mismatch in {name}: {', '.join(mismatches)}",
+        )
+
+
+def preserve_validation_evidence(
+    output: Path, candidate_package: Path, report_path: Path, report: dict[str, Any],
+) -> None:
     """Keep this attempt's diagnostics outside the disposable transaction and live.
 
     A fresh directory prevents stale repair items from an earlier attempt from
     masquerading as current evidence. The report is the sole current pointer;
     previous attempts are retained for audit, never deleted implicitly.
     """
-    names = ("resolved_composition.json", "validation_report.json", "repair_queue.json")
-    available = [name for name in names if (output / name).is_file()]
-    if not available:
-        return
+    anchors = load_object(candidate_package / "anchor_frames.json", "diagnostic_persistence")
+    generation = load_object(candidate_package / "generation_manifest.json", "diagnostic_persistence")
+    regeneration = load_object(candidate_package / "regeneration_report.json", "diagnostic_persistence")
+    map_id = str(anchors.get("map_id", ""))
+    sector_id = str(anchors.get("sector_id", ""))
+    generation_id = str(anchors.get("generation_id", ""))
+    if not map_id or not sector_id or not generation_id:
+        raise OrchestrationError("diagnostic_persistence", "Candidate anchor identity is incomplete")
+    _require_evidence_identity(generation, "generation_manifest.json", map_id, sector_id, generation_id)
+    if "map_id" not in regeneration:
+        regeneration["map_id"] = map_id
+    _require_evidence_identity(regeneration, "regeneration_report.json", map_id, sector_id, generation_id)
+
+    documents: dict[str, dict[str, Any]] = {
+        "candidate_anchor_frames.json": anchors,
+        "candidate_generation_manifest.json": generation,
+        "candidate_regeneration_report.json": regeneration,
+        "source_sha256": _evidence_value(
+            "source_sha256", str(report.get("input_hashes", {}).get("source", "")),
+            map_id, sector_id, generation_id,
+        ),
+        "sector_config_sha256": _evidence_value(
+            "sector_config_sha256", str(report.get("input_hashes", {}).get("sector_config", "")),
+            map_id, sector_id, generation_id,
+        ),
+        "generation_id": _evidence_value(
+            "generation_id", generation_id, map_id, sector_id, generation_id,
+        ),
+    }
+    for name in ("resolved_composition.json", "validation_report.json", "repair_queue.json"):
+        source = output / name
+        if source.is_file():
+            document = load_object(source, "diagnostic_persistence")
+            _require_evidence_identity(document, name, map_id, sector_id, generation_id)
+            documents[name] = document
+
+    evidence: Path | None = None
     try:
         report_path.parent.mkdir(parents=True, exist_ok=True)
         evidence = Path(tempfile.mkdtemp(prefix=f"{report_path.stem}.evidence-", dir=report_path.parent))
-        for name in available:
-            document = load_object(output / name, "diagnostic_persistence")
+        artifacts: dict[str, dict[str, str]] = {}
+        for name, document in documents.items():
             destination = evidence / name
             atomic_write_json(destination, document)
-            report["validation_artifacts"][name] = {
+            artifacts[name] = {
                 "path": str(destination), "sha256": digest_bytes(destination.read_bytes()),
             }
+        report["map_id"] = map_id
+        report["generation_id"] = generation_id
+        report["evidence_directory"] = str(evidence)
+        report["validation_artifacts"] = artifacts
     except OSError as exc:
+        if evidence is not None:
+            shutil.rmtree(evidence, ignore_errors=True)
         raise OrchestrationError("diagnostic_persistence", f"Cannot retain validation evidence: {exc}") from exc
 
 
 def validate_composition(
     args: argparse.Namespace, project_root: Path, input_path: Path, output: Path,
-    report_path: Path, report: dict[str, Any],
+    candidate_package: Path, report_path: Path, report: dict[str, Any],
 ) -> None:
     validator = Path(args.composition_validator).resolve()
     if not validator.is_file():
@@ -297,7 +364,7 @@ def validate_composition(
     finally:
         # The validator intentionally exits 2 for blocked compositions, but its
         # repair queue is still the useful result and must survive cleanup.
-        preserve_validation_evidence(output, report_path, report)
+        preserve_validation_evidence(output, candidate_package, report_path, report)
     result = load_object(output / "validation_report.json", "composition_validation")
     if result.get("status") != "clean":
         raise OrchestrationError("composition_validation", "Composition validator did not report clean")
@@ -369,7 +436,7 @@ def execute(args: argparse.Namespace) -> int:
             mark(report, "combined_validation", "passed")
             resolved = resolve_composition(sector, project_root, live, live, anchors, validation / "resolved_composition.json")
             mark(report, "binding_resolution", "passed")
-            validate_composition(args, project_root, resolved, validation / "composition", report_path, report)
+            validate_composition(args, project_root, resolved, validation / "composition", live, report_path, report)
             mark(report, "composition_validation", "passed")
             report["output_hashes"] = {"managed": path_hash(live, EQUIVALENCE_NAMES), "generation_id": generation.get("generation_id")}
             report["status"], report["ready"] = "validated", True
@@ -394,7 +461,7 @@ def execute(args: argparse.Namespace) -> int:
             mark(report, "combined_validation", "passed")
             resolved = resolve_composition(sector, project_root, live, candidate, anchors, validation / "resolved_composition.json")
             mark(report, "binding_resolution", "passed")
-            validate_composition(args, project_root, resolved, validation / "composition", report_path, report)
+            validate_composition(args, project_root, resolved, validation / "composition", candidate, report_path, report)
             mark(report, "composition_validation", "passed")
             # regeneration_report.json embeds ephemeral command/staging paths and is
             # deliberately excluded from semantic equality.
