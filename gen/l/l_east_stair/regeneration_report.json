@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "L-EAST-STAIR",
-  "generation_id": "sha256:e2ccef021777bbcac8a9ca4808f231d32caf457296264d4b7610eec9ea1d5dc6",
+  "generation_id": "sha256:ec710ebf83a76c64d39be2e7e92642234c11984e45e0691a26922b1c2d8b7b94",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/lower/source/l_east_stair.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_east_stair.svg",
         "--profile",
         "generic",
         "--scale",
@@ -41,8 +41,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/lower/source/l_east_stair.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_east_stair.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

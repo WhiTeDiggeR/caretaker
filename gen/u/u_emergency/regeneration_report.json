@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "U-EMERGENCY",
-  "generation_id": "sha256:1aafb45ed5c2f93461fa466a699870c854c263a1558617d2a42a6e1ecfe87f6d",
+  "generation_id": "sha256:97b89223100bb3a3bb65145bfb851b55536d6f9f0a84398ef3fc8effdaa79c48",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/upper/source/u_emergency.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_emergency.svg",
         "--profile",
         "generic",
         "--scale",
@@ -40,8 +40,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/upper/source/u_emergency.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_emergency.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

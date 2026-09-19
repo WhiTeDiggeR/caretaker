@@ -24,7 +24,7 @@ LEVEL_Y = {"LV-U":0.0,"LV-L":-6.0,"LV-T":-11.5}
 
 def dump(path: Path, value: dict) -> None:
     path.parent.mkdir(parents=True,exist_ok=True)
-    path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
 
 
 def point_basis(a: list, b: list) -> tuple[list,list]:
@@ -100,7 +100,7 @@ def main() -> int:
         scene=staging/"Generated/Infrastructure/shared_infrastructure_generated.tscn"
         if not scene.exists() or scene.stat().st_size == 0:
             raise RuntimeError("Godot did not create staged scene")
-        scene.write_text(re.sub(r" unique_id=\d+", "", scene.read_text(encoding="utf-8")), encoding="utf-8")
+        scene.write_text(re.sub(r" unique_id=\d+", "", scene.read_text(encoding="utf-8")), encoding="utf-8", newline="\n")
         dump(staging/"anchor_frames.json",build_frames(h,v,ports))
         dump(staging/"generation_report.json",{
             "schema_id":"caretaker.shared_generation_report",

@@ -562,9 +562,9 @@ def write_outputs(output: Path, context: dict[str, Any], issues: list[dict[str, 
         "issues": sorted(issues, key=lambda item: item["issue_id"]),
     }
     repair_queue = make_repair_queue(context, report["issues"])
-    (output / "validation_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (output / "repair_queue.json").write_text(json.dumps(repair_queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (output / "validation_report.md").write_text(markdown_report(report), encoding="utf-8")
+    (output / "validation_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    (output / "repair_queue.json").write_text(json.dumps(repair_queue, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    (output / "validation_report.md").write_text(markdown_report(report), encoding="utf-8", newline="\n")
     return report
 
 

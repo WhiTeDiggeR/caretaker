@@ -61,7 +61,7 @@ def main() -> int:
     report = audit(handoff, vertical)
     output = Path(args.report)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
     print(f"AUDIT_ONLY owners={len(report['owners'])} connectors={len(report['connectors'])} verticals={len(report['verticals'])} bounds_candidates={len(report['sector_shared_bounds_candidates'])} pending_diagnostics={len(report['diagnostics'])}")
     return 0
 

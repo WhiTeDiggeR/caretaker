@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "T-ENERGY",
-  "generation_id": "sha256:6659b6515f99de91848bca49391d5d38c93772a703dea153b74f95de3ff50c7f",
+  "generation_id": "sha256:a23c883d95c34acba1ddee9b0a0de72ff91e1f02dc5b70044ec5b0421a292a3d",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/technical/source/t_energy.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/technical/t_energy.svg",
         "--profile",
         "generic",
         "--scale",
@@ -40,8 +40,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/technical/source/t_energy.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/technical/t_energy.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

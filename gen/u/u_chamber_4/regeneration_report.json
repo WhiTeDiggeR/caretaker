@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "U-CHAMBER-4",
-  "generation_id": "sha256:121ac50a4a520a0e99807498a4023394af93db698d528d443d713df44151c9a9",
+  "generation_id": "sha256:05b3e27346d281853a7139eb7f571efe2989388dbf1747f15b43f6ab148ae746",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/upper/source/u_chamber_4.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_chamber_4.svg",
         "--profile",
         "generic",
         "--scale",
@@ -41,8 +41,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/upper/source/u_chamber_4.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_chamber_4.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

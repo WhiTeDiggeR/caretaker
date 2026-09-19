@@ -118,7 +118,7 @@ def main() -> int:
     }
     output = args.output or pilot / "reports/handoff-verification.json"
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"{report['status'].upper()}: checks={len(checks)} errors={len(errors)}")
     return 0 if not errors else 2
 

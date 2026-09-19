@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "L-OLD-RECEIVING",
-  "generation_id": "sha256:77c7bee951e19442f9e6aa0dc8ae5cf3a6a4ff3b0ebb4999df618afedd69dbf5",
+  "generation_id": "sha256:d95f5ea83d5cb285343b4cfdd863acb655254aca14ea0668b58cf1d4e2578129",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/lower/source/l_old_receiving.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_old_receiving.svg",
         "--profile",
         "generic",
         "--scale",
@@ -41,8 +41,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/lower/source/l_old_receiving.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_old_receiving.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

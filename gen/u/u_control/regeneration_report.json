@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "U-CONTROL",
-  "generation_id": "sha256:13be38c62a690652c33b93695442cde513258df8aa812ab86b8d3cef80ef0378",
+  "generation_id": "sha256:415c97dfccd67e03e2207e4beea6b9445059a11104b3bc16c3f64881e3d81a1d",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/upper/source/u_control.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_control.svg",
         "--profile",
         "generic",
         "--scale",
@@ -41,8 +41,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/upper/source/u_control.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_control.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

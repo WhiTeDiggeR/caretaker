@@ -58,7 +58,12 @@ class SafeRegenerationTests(unittest.TestCase):
             encoding="utf-8",
         )
         self.source = self.root / "план.svg"
-        self.source.write_text("<svg/>", encoding="utf-8")
+        self.source.write_text(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" viewBox="0 0 1 1">'
+            '<rect width="1" height="1" fill="#000"/></svg>\n',
+            encoding="utf-8",
+            newline="\n",
+        )
         self.backend = self.root / "fake_backend.py"
         self.backend.write_text(FAKE_BACKEND, encoding="utf-8")
         self.live = self.root / "sectors" / "fixture"

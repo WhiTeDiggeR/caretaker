@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "T-WORKSHOP",
-  "generation_id": "sha256:77b908dd0b27f2ce557b06d03c8ce010db7a12895458c5e7003464c42f064a87",
+  "generation_id": "sha256:143e03270e005b3f7ae302ffcc2b6f61f611722244de4a65c170354e2e44bbc0",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/technical/source/t_workshop.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/technical/t_workshop.svg",
         "--profile",
         "generic",
         "--scale",
@@ -40,8 +40,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/technical/source/t_workshop.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/technical/t_workshop.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

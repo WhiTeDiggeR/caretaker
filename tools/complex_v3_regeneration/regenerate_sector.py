@@ -70,7 +70,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def write_json(path: Path, value: dict[str, Any]) -> None:
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 def _portable_value(value: Any, replacements: Sequence[tuple[str, str]]) -> Any:
@@ -100,7 +100,7 @@ def sanitize_generated_metadata(staging: Path, replacements: Sequence[tuple[str,
         text = path.read_text(encoding="utf-8")
         for original, replacement in expanded:
             text = text.replace(original.replace("\\", "\\\\"), replacement).replace(original, replacement)
-        path.write_text(text, encoding="utf-8")
+        path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def require_empty_staging(path: Path) -> None:
@@ -578,7 +578,7 @@ def normalize_surface_collision_winding(scene: Path) -> None:
     original = scene.read_text(encoding="utf-8")
     corrected = pattern.sub(correct, original)
     if corrected != original:
-        scene.write_text(corrected, encoding="utf-8")
+        scene.write_text(corrected, encoding="utf-8", newline="\n")
 
 
 def generate_stairs(

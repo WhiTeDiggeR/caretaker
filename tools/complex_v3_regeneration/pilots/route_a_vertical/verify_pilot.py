@@ -58,7 +58,7 @@ def main() -> int:
     if physics["status"] != "passed" or physics["stair_shapes"] < 100:
         errors.append("combined physics proof missing or failed")
     report = {"schema_id": "caretaker.route_a_handoff_verification", "schema_version": "1.0.0", "status": "blocked" if errors else "passed", "counts": counts, "errors": errors}
-    (PILOT / "reports/handoff-verification.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (PILOT / "reports/handoff-verification.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(report, ensure_ascii=False))
     return 2 if errors else 0
 

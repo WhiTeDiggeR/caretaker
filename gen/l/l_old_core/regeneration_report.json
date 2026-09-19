@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "L-OLD-CORE",
-  "generation_id": "sha256:9a15368c8d1b6787b17b51cd37640155b439c311aff5d89232f8df86ba03ac29",
+  "generation_id": "sha256:24518eddd9b81ab930fb93ad44d7d7928814c92fef7c19949b771db4151fc22d",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/lower/source/l_old_core.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_old_core.svg",
         "--profile",
         "generic",
         "--scale",
@@ -41,8 +41,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/lower/source/l_old_core.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_old_core.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

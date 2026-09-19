@@ -77,7 +77,7 @@ def main() -> int:
     }
     output = rollout / f"reports/{args.level}_rollout_report.json"
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"{report['status'].upper()}: sectors={len(summaries)} anchors={len(all_anchors)} bindings={len(all_objects)}")
     return 0 if not errors else 2
 

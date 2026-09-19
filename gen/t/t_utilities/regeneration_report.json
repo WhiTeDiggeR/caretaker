@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "T-UTILITIES",
-  "generation_id": "sha256:a8d3c257acafffe00ec34df623b638fc132ede64e935f47d4a6fb2c9922c3977",
+  "generation_id": "sha256:506232b5c8ae75eba6290ebd46fa61e91593bbd161914c70cfa6a359e31f095a",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/inspect_svg_plan.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/technical/source/t_utilities.svg",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/technical/t_utilities.svg",
         "--profile",
         "generic",
         "--scale",
@@ -40,8 +40,8 @@
       "stage": "convert",
       "argv": [
         "$PYTHON",
-        "$SVG_TOOL_ROOT/svg_to_godot3d.py",
-        "$PROJECT_ROOT/scenes/complex_v3_regeneration/rollout/technical/source/t_utilities.svg",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/technical/t_utilities.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",

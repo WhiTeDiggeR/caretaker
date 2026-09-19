@@ -74,7 +74,7 @@ def main() -> int:
     result = map_ports(h,v)
     output = Path(args.report)
     output.parent.mkdir(parents=True,exist_ok=True)
-    output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8",newline="\n")
     print(f"{result['status'].upper()}: portal_candidates={sum(len(t['ports']) for t in result['transitions'])} diagnostics={len(result['diagnostics'])}; no frames or geometry emitted")
     return 2 if result["diagnostics"] else 0
 

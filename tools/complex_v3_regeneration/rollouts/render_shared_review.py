@@ -69,7 +69,7 @@ def main() -> int:
     anchors = json.loads(FRAMES.read_text(encoding="utf-8"))["anchors"]
     OUTPUT.mkdir(parents=True, exist_ok=True)
     for level, y in LEVELS.items():
-        (OUTPUT / f"shared-frames-{level.lower()}.svg").write_text(render(level, y, anchors), encoding="utf-8")
+        (OUTPUT / f"shared-frames-{level.lower()}.svg").write_text(render(level, y, anchors), encoding="utf-8", newline="\n")
     print(f"SHARED_REVIEW_OK renders={len(LEVELS)}")
     return 0
 

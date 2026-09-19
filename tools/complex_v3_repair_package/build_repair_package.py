@@ -60,7 +60,7 @@ def load_object(path: Path, label: str) -> dict[str, Any]:
 
 
 def write_json(path: Path, value: dict[str, Any]) -> None:
-    path.write_text(json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 def require_schema(document: dict[str, Any], schema_id: str, label: str) -> None:
