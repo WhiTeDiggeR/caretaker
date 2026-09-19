@@ -7,6 +7,15 @@ const REPORT_SCHEMA_VERSION := "1.0.0"
 const CLEAN_STATUSES := ["success", "noop", "validated"]
 const MIN_SVG_VERSION := [1, 19, 0]
 const MIN_STAIR_VERSION := [2, 9, 0]
+const REPAIR_QUEUE_SCHEMA_ID := "caretaker.repair_queue"
+const AGENT_FIX_CODES := [
+	"missing_anchor",
+	"outside_sector", "outside_space", "wrong_sector",
+	"object_overlap", "authored_overlap", "authored_object_overlap", "collision_overlap",
+	"wall_penetration", "floor_penetration", "ceiling_penetration",
+	"door_blockage", "passage_blockage", "stair_conflict", "shaft_conflict",
+	"support_missing", "wall_mount_out_of_bounds", "mount_invalid",
+]
 const ENVIRONMENT_KEYS := {
 	"python_executable": "COMPLEX_V3_PYTHON_EXECUTABLE",
 	"svg_tool_root": "COMPLEX_V3_SVG_TOOL_ROOT",
@@ -72,6 +81,7 @@ func resolve_sector(metadata: Dictionary, scene_path: String, manifest_path: Str
 		"sector": sector,
 		"source_svg": source_svg,
 		"output_resource_dir": str(sector.get("output_resource_dir", "")),
+		"sector_scene": str(sector.get("sector_scene", "")),
 	}
 
 
@@ -103,6 +113,32 @@ func build_cli_invocation(context: Dictionary, settings: Dictionary, validate_on
 	if validate_only:
 		arguments.append("--validate-only")
 	return {"ok": true, "errors": PackedStringArray(), "executable": python, "arguments": arguments, "report": _globalize(report)}
+
+
+func build_agent_fix_invocation(context: Dictionary, settings: Dictionary, safe_report: String) -> Dictionary:
+	if not bool(context.get("ok", false)):
+		return context
+	var python := str(settings.get("python", "")).strip_edges()
+	var manifest := str(settings.get("manifest", "")).strip_edges()
+	var launcher := str(settings.get("agent_launcher", "")).strip_edges()
+	var runner := str(settings.get("agent_runner", "res://tools/complex_v3_repair_package/run_agent_fix.py"))
+	if python.is_empty() or manifest.is_empty() or safe_report.is_empty() or launcher.is_empty():
+		return _blocked("python, manifest, safe report and agent launcher are required")
+	if not FileAccess.file_exists(runner):
+		return _blocked("Agent Fix runner is not installed yet: %s" % runner)
+	var arguments := PackedStringArray([
+		_globalize(runner),
+		"--sector", str(context["sector_id"]),
+		"--manifest", _globalize(manifest),
+		"--safe-report", _globalize(safe_report),
+		"--python", python,
+		"--agent-launcher", launcher,
+	])
+	for setting_key: String in ["svg_tool_root", "stair_tool_root"]:
+		var value := str(settings.get(setting_key, "")).strip_edges()
+		if not value.is_empty():
+			arguments.append_array(PackedStringArray(["--%s" % setting_key.replace("_", "-"), _globalize(value)]))
+	return {"ok": true, "errors": PackedStringArray(), "executable": python, "arguments": arguments}
 
 
 func resolve_toolchain(configured: Dictionary) -> Dictionary:
@@ -209,15 +245,84 @@ func read_report(path: String) -> Dictionary:
 	var last_stage := "none"
 	if stages_value is Array and not stages_value.is_empty() and stages_value[-1] is Dictionary:
 		last_stage = str((stages_value[-1] as Dictionary).get("stage", "none"))
+	var failed_stage := _failed_stage(report)
+	var repair := _repair_summary(report)
+	var ready := bool(report.get("ready", false))
+	var status := str(report.get("status", "unknown"))
+	var display_status := "Clean" if ready and status in CLEAN_STATUSES else ("Blocked" if failed_stage == "composition_validation" else "Failed")
+	var report_errors: Array = []
+	if report.get("errors", []) is Array:
+		report_errors = report.get("errors", []) as Array
+	var problem_count := int(repair.get("blocking_count", report_errors.size()))
 	return {
 		"ok": true,
 		"errors": PackedStringArray(),
 		"report": report,
-		"status": str(report.get("status", "unknown")),
+		"status": status,
+		"display_status": display_status,
 		"last_stage": last_stage,
-		"ready": bool(report.get("ready", false)),
-		"offer_agent_fix": false,
+		"failed_stage": failed_stage,
+		"ready": ready,
+		"problem_count": problem_count,
+		"repair_queue_path": str(repair.get("path", "")),
+		"offer_agent_fix": failed_stage == "composition_validation" and bool(repair.get("agent_fix_allowed", false)),
 	}
+
+
+func _failed_stage(report: Dictionary) -> String:
+	var errors_value: Variant = report.get("errors", [])
+	if errors_value is Array:
+		for index: int in range((errors_value as Array).size() - 1, -1, -1):
+			var item: Variant = (errors_value as Array)[index]
+			if item is Dictionary and not str((item as Dictionary).get("stage", "")).is_empty():
+				return str((item as Dictionary)["stage"])
+	var stages_value: Variant = report.get("stages", [])
+	if stages_value is Array:
+		for index: int in range((stages_value as Array).size() - 1, -1, -1):
+			var stage: Variant = (stages_value as Array)[index]
+			if stage is Dictionary and str((stage as Dictionary).get("status", "")) == "failed":
+				return str((stage as Dictionary).get("stage", ""))
+	return ""
+
+
+func _repair_summary(report: Dictionary) -> Dictionary:
+	var artifacts_value: Variant = report.get("validation_artifacts", {})
+	if not artifacts_value is Dictionary:
+		return {"blocking_count": 0, "agent_fix_allowed": false, "path": ""}
+	var artifact_value: Variant = (artifacts_value as Dictionary).get("repair_queue.json")
+	if not artifact_value is Dictionary:
+		return {"blocking_count": 0, "agent_fix_allowed": false, "path": ""}
+	var path := str((artifact_value as Dictionary).get("path", ""))
+	if path.is_empty():
+		return {"blocking_count": 0, "agent_fix_allowed": false, "path": ""}
+	var loaded := load_json_object(path)
+	if not bool(loaded.get("ok", false)):
+		return {"blocking_count": 0, "agent_fix_allowed": false, "path": path}
+	var queue := loaded["value"] as Dictionary
+	if queue.get("schema_id") != REPAIR_QUEUE_SCHEMA_ID or queue.get("schema_version") != REPORT_SCHEMA_VERSION:
+		return {"blocking_count": 0, "agent_fix_allowed": false, "path": path}
+	if str(queue.get("sector_id", "")) != str(report.get("sector_id", "")):
+		return {"blocking_count": 0, "agent_fix_allowed": false, "path": path}
+	var items_value: Variant = queue.get("items", [])
+	if not items_value is Array:
+		return {"blocking_count": 0, "agent_fix_allowed": false, "path": path}
+	var open_items: Array[Dictionary] = []
+	for value: Variant in items_value:
+		if value is Dictionary and str((value as Dictionary).get("severity", "")) == "blocking" and str((value as Dictionary).get("status", "")) == "open":
+			open_items.append(value as Dictionary)
+	var allowed := not open_items.is_empty()
+	for item: Dictionary in open_items:
+		var evidence_value: Variant = item.get("evidence")
+		if not evidence_value is Dictionary:
+			allowed = false
+			break
+		var evidence := evidence_value as Dictionary
+		var owner := str(evidence.get("responsible_owner", ""))
+		var actions_value: Variant = item.get("allowed_actions", [])
+		if str(item.get("code", "")) not in AGENT_FIX_CODES or owner not in ["authored_content", "authored_bindings"] or str(item.get("object_id", "")).is_empty() or not actions_value is Array or (actions_value as Array).is_empty():
+			allowed = false
+			break
+	return {"blocking_count": open_items.size(), "agent_fix_allowed": allowed, "path": path}
 
 
 func has_unsaved_authored_changes(scene_path: String, current_version: int, saved_version: int) -> bool:

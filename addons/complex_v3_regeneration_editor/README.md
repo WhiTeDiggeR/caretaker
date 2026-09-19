@@ -5,8 +5,9 @@ The dock is a thin Godot 4.7 editor client for `tools/complex_v3_regeneration/sa
 - `Regenerate Sector` blocks while the active scene UndoRedo version differs from its last saved version.
 - `Validate Sector` calls the same CLI with `--validate-only`.
 - Sector identity comes from root metadata `complex_v3_sector_id`/`sector_id`, or one unambiguous manifest `output_resource_dir` match. Conflicts block.
-- The dock shows the current stage, process exit code, status, and absolute report path. It never offers Agent Fix for a clean result.
-- A successful live result triggers an EditorFileSystem scan and reloads the active scene only when that scene belongs to the promoted sector. Failures leave the open scene untouched.
+- The main dock shows sector, canonical source, toolchain readiness, `Clean`/`Blocked`/`Failed`, and problem count. Persistent paths, stage/exit diagnostics, and manual binding controls are kept under collapsible `Settings`.
+- A successful regeneration waits for `EditorFileSystem` import, replaces the loaded architecture/stairs resources, rebuilds `Generated`, reloads `AnchorRegistry`, applies authored bindings, and reloads the same saved sector scene. Failed CLI transactions never trigger a scan or scene reload.
+- `Agent Fix` is hidden for clean/warning-only reports and for source semantics, toolchain/version, stair, resource, or generated-geometry failures. It is visible only when composition validation produced a current repair queue whose every open blocker belongs to authored content/bindings and has an allowlisted missing-anchor, bounds, collision/passage, support, or mount code. The runner itself is supplied by T25.
 - Bind/Rebind require an explicit anchor ID and delegate to the T07 `ComplexV3AnchorEditorOperations`, preserving its Undo/Redo and no-guessing rules.
 
 Tool paths are persistent `EditorSettings`, configured once in the dock's Settings
@@ -22,7 +23,7 @@ variable, then a compatible installed Codex skill. The panel shows detected
 versions and `Ready` only for `svg_to_godot3d >= 1.19.0` and
 `generate_godot_stairs >= 2.9.0`; missing or incompatible tools block before the
 CLI can create staging. Reports are written under
-`user://complex_v3_regeneration_reports/` and can be opened with `Show Last Report`.
+`user://complex_v3_regeneration_reports/` and can be opened with `Show Report`.
 
 Headless fixture check:
 
