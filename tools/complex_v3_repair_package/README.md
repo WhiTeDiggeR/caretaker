@@ -49,6 +49,30 @@ executable and fixed arguments. The runner appends `--project-root`,
 `--repair-package`, and `--prompt`; a production Codex wrapper must accept those
 arguments and return the agent exit code.
 
+The repository provides that wrapper as `codex_agent_launcher.py`. Configure
+**Agent launcher** with a JSON string array so Windows paths with spaces remain
+unambiguous:
+
+```json
+["C:\\Path\\To\\python.exe", "D:\\Path\\To\\project\\tools\\complex_v3_repair_package\\codex_agent_launcher.py", "--codex", "C:\\Path\\To\\codex.exe"]
+```
+
+The wrapper runs `codex exec` non-interactively in the project root with the
+`workspace-write` sandbox, automatic approval review, and an ephemeral session.
+It passes the generated prompt through stdin and points the agent at the
+authoritative repair package. It never uses a shell or bypasses Codex sandboxing.
+Use `--check` with the same three runner-appended paths to validate a setup
+without starting an agent:
+
+```powershell
+python tools/complex_v3_repair_package/codex_agent_launcher.py `
+  --codex <codex.exe> `
+  --project-root . `
+  --repair-package <repair_package.json> `
+  --prompt <agent_prompt.md> `
+  --check
+```
+
 Before and after the launcher, the runner hashes project files and immutable
 attempt evidence. Only the current sector authored scene, its bindings, and
 explicit `safe_regeneration.agent_allow_files`/`--allow-file` entries may change.
