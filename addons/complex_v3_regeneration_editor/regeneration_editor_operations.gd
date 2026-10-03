@@ -22,6 +22,13 @@ const ENVIRONMENT_KEYS := {
 	"stair_tool_root": "COMPLEX_V3_STAIR_TOOL_ROOT",
 	"agent_launcher": "COMPLEX_V3_AGENT_LAUNCHER",
 }
+const INKSCAPE_ENVIRONMENT_KEY := "COMPLEX_V3_INKSCAPE"
+const CLAUDE_LAUNCHER_SCRIPT := "res://tools/complex_v3_repair_package/claude_agent_launcher.py"
+const STORE_INKSCAPE_PREFIX := "25415Inkscape.Inkscape_"
+const STORE_INKSCAPE_RELATIVE := "VFS/ProgramFilesX64/Inkscape/bin/inkscape.exe"
+
+var _store_inkscape_checked := false
+var _store_inkscape_path := ""
 
 
 func load_json_object(path: String) -> Dictionary:
@@ -180,6 +187,90 @@ func resolve_toolchain(configured: Dictionary) -> Dictionary:
 	result["errors"] = errors
 	result["ok"] = errors.is_empty()
 	return result
+
+## Resolves the Inkscape executable: EditorSettings, then COMPLEX_V3_INKSCAPE, then the
+## standard Windows install locations. `source` tells the user where the path came from.
+func resolve_inkscape(configured: String) -> Dictionary:
+	var value := configured.strip_edges()
+	if not value.is_empty():
+		return _inkscape_result(value, "настройки", true)
+	value = OS.get_environment(INKSCAPE_ENVIRONMENT_KEY).strip_edges()
+	if not value.is_empty():
+		return _inkscape_result(value, "переменная %s" % INKSCAPE_ENVIRONMENT_KEY, true)
+	var program_files := OS.get_environment("ProgramFiles").strip_edges()
+	var local_app_data := OS.get_environment("LOCALAPPDATA").strip_edges()
+	var candidates: Array[String] = []
+	if not program_files.is_empty():
+		candidates.append(program_files.path_join("Inkscape/bin/inkscape.exe"))
+	if not local_app_data.is_empty():
+		candidates.append(local_app_data.path_join("Programs/Inkscape/bin/inkscape.exe"))
+	for candidate: String in candidates:
+		if FileAccess.file_exists(candidate):
+			return _inkscape_result(candidate, "стандартная установка", false)
+	var store := _store_inkscape(program_files)
+	if not store.is_empty():
+		return _inkscape_result(store, "установка из Microsoft Store", false)
+	return {
+		"ok": false, "path": "", "source": "missing",
+		"errors": PackedStringArray(["Inkscape не найден: укажите путь к inkscape.exe в настройках или в %s" % INKSCAPE_ENVIRONMENT_KEY]),
+	}
+
+
+func _inkscape_result(path: String, source: String, must_exist: bool) -> Dictionary:
+	if must_exist and not FileAccess.file_exists(path):
+		return {"ok": false, "path": path, "source": source, "errors": PackedStringArray(["Inkscape не найден по пути (%s): %s" % [source, path]])}
+	return {"ok": true, "path": path, "source": source, "errors": PackedStringArray()}
+
+
+func _store_inkscape(program_files: String) -> String:
+	if _store_inkscape_checked:
+		return _store_inkscape_path
+	_store_inkscape_checked = true
+	# The package folder name contains the version, so ask Windows for the install location.
+	var output := []
+	if OS.get_name() == "Windows" and OS.execute("powershell", PackedStringArray([
+		"-NoProfile", "-NonInteractive", "-Command",
+		"(Get-AppxPackage -Name 25415Inkscape.Inkscape | Select-Object -First 1).InstallLocation",
+	]), output, true) == 0 and not output.is_empty():
+		var location := str(output[0]).strip_edges()
+		var candidate := location.path_join(STORE_INKSCAPE_RELATIVE)
+		if not location.is_empty() and FileAccess.file_exists(candidate):
+			_store_inkscape_path = candidate
+			return _store_inkscape_path
+	var apps := program_files.path_join("WindowsApps") if not program_files.is_empty() else ""
+	var directory := DirAccess.open(apps) if not apps.is_empty() else null
+	if directory != null:
+		var versions: Array[String] = []
+		for entry: String in directory.get_directories():
+			if entry.begins_with(STORE_INKSCAPE_PREFIX):
+				versions.append(entry)
+		versions.sort()
+		versions.reverse()
+		for entry: String in versions:
+			var fallback := apps.path_join(entry).path_join(STORE_INKSCAPE_RELATIVE)
+			if FileAccess.file_exists(fallback):
+				_store_inkscape_path = fallback
+				break
+	return _store_inkscape_path
+
+
+## JSON-array launcher setting that makes Claude Code the Agent Fix agent. `claude` itself is
+## resolved from PATH by the launcher, so no executable location is guessed here.
+func claude_launcher_setting(python: String) -> String:
+	var interpreter := python.strip_edges() if not python.strip_edges().is_empty() else "python"
+	return JSON.stringify([interpreter, _globalize(CLAUDE_LAUNCHER_SCRIPT)])
+
+
+func agent_name(launcher: String) -> String:
+	var lowered := launcher.to_lower()
+	if lowered.is_empty():
+		return "не выбран"
+	if lowered.contains("claude"):
+		return "Claude"
+	if lowered.contains("codex"):
+		return "Codex"
+	return "свой запуск"
+
 
 
 func _installed_default(key: String) -> String:

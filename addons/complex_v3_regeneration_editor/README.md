@@ -2,13 +2,21 @@
 
 The dock is a thin Godot 4.7 editor client for `tools/complex_v3_regeneration/safe_regenerate.py`. It does not implement geometry generation in GDScript.
 
-- `Regenerate Sector` blocks while the active scene UndoRedo version differs from its last saved version.
-- `Validate Sector` calls the same CLI with `--validate-only`.
+The Russian-language dock is ordered as the work happens:
+
+1. **Сектор** — sector id and source plan file; if the scene is not a sector scene a hint says which scene to open.
+2. **Инструменты** — generator readiness (`Ready` only with `svg_to_godot3d >= 1.19.0` and `generate_godot_stairs >= 2.9.0`), the resolved Inkscape and the selected Agent Fix agent (Claude, Codex or custom).
+3. **Работа с планом** — `1. Открыть план в Inkscape`, `2. Проверить сектор` (`--validate-only`), `3. Пересоздать сектор`.
+4. **Результат** — coloured status (`✔` clean, `✖` blocked/failed), problem count, human-readable stage, exit code, a short bullet list of problems, `Показать отчёт` and, when offered, `Исправить агентом`.
+5. **Привязка объектов** (collapsed) — `Привязать двери по ID` plus manual Bind/Rebind/Unbind with an explicit anchor ID.
+6. **Настройки** (collapsed) — every field has a one-line explanation; `Агент исправления: Claude` writes the Claude Code launcher.
+
+- `Пересоздать сектор` blocks while the active scene UndoRedo version differs from its last saved version.
 - Sector identity comes from root metadata `complex_v3_sector_id`/`sector_id`, or one unambiguous manifest `output_resource_dir` match. Conflicts block.
-- The main dock shows sector, canonical source, toolchain readiness, `Clean`/`Blocked`/`Failed`, and problem count. Persistent paths, stage/exit diagnostics, and manual binding controls are kept under collapsible `Settings`.
+- `Открыть план в Inkscape` starts Inkscape on the source SVG. The executable is resolved from the `inkscape_executable` setting, then `COMPLEX_V3_INKSCAPE`, then the standard install locations and the Microsoft Store package (found through `Get-AppxPackage`). The dock shows where it was found; if nothing is found it asks for the path. No browser fallback is used.
 - A successful regeneration waits for `EditorFileSystem` import, replaces the loaded architecture/stairs resources, rebuilds `Generated`, reloads `AnchorRegistry`, applies authored bindings, and reloads the same saved sector scene. Failed CLI transactions never trigger a scan or scene reload.
-- `Agent Fix` is hidden for clean/warning-only reports and for source semantics, toolchain/version, stair, resource, or generated-geometry failures. It is visible only when composition validation produced a current repair queue whose every open blocker belongs to authored content/bindings and has an allowlisted missing-anchor, bounds, collision/passage, support, or mount code. The runner itself is supplied by T25.
-- Bind/Rebind require an explicit anchor ID and delegate to the T07 `ComplexV3AnchorEditorOperations`, preserving its Undo/Redo and no-guessing rules.
+- `Исправить агентом` is hidden for clean/warning-only reports and for source semantics, toolchain/version, stair, resource, or generated-geometry failures. It is visible only when composition validation produced a current repair queue whose every open blocker belongs to authored content/bindings and has an allowlisted code.
+- `Привязать двери по ID` uses `ComplexV3DoorBindingBuilder` (see `scenes/complex_v3_regeneration/README.md`), writes the sector's bindings file and applies it immediately. Manual Bind/Rebind delegate to the T07 `ComplexV3AnchorEditorOperations`, preserving Undo/Redo and the no-guessing rules.
 
 Tool paths are persistent `EditorSettings`, configured once in the dock's Settings
 section:
@@ -17,6 +25,7 @@ section:
 - `complex_v3_regeneration/svg_tool_root`
 - `complex_v3_regeneration/stair_tool_root`
 - `complex_v3_regeneration/agent_launcher`
+- `complex_v3_regeneration/inkscape_executable`
 
 Each value resolves in this order: EditorSettings, then its `COMPLEX_V3_*` environment
 variable. There is no default skill directory: the tool roots must point at the
