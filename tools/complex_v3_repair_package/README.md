@@ -82,3 +82,20 @@ the old live package. The editor may reload only when that run returns a ready
 `success` or `noop` report. The final safe report records agent invocation,
 command, exit code, changed allowlisted files, forbidden changes, package path,
 and the complete revalidation result.
+
+## Claude Code launcher
+
+`claude_agent_launcher.py` is the same wrapper contract for Claude Code. It runs
+`claude -p` non-interactively with only `Read,Edit,Write,Glob,Grep` available (no Bash),
+`acceptEdits`, no session persistence, the project root as working directory and
+`--add-dir`, and the generated prompt on stdin (UTF-8). Edit permission is still limited
+by the runner's allowlist check, which rejects any other changed file.
+
+```json
+["C:\Path\To\python.exe", "D:\Path\To\project\tools\complex_v3_repair_package\claude_agent_launcher.py", "--claude", "C:\Tools\bin\claude.cmd"]
+```
+
+`--claude` may be omitted when `claude` resolves from `PATH`. The Claude Code CLI must be
+signed in (`claude` then `/login`) before the first Agent Fix; an unauthenticated CLI exits
+non-zero with `Not logged in`, and the runner reports that exit code. Validate the setup
+without starting an agent with `--check`, exactly as for the Codex wrapper.
