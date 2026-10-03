@@ -55,3 +55,18 @@ block readiness; the controller never selects a nearby replacement anchor.
 Application is explicit through `apply_bindings()` or
 `refresh_after_generation()`: merely instantiating an assembly does not mutate
 authored content from sectors that were not regenerated.
+
+## Door-frame bindings
+
+Authored door objects do not follow a regenerated door until they are bound.
+`bind_doors_cli.gd` binds them by exact identifier only: an object's
+`metadata/placement_id` must equal the `data-handoff-id` of a `door` element in the
+sector's source SVG; the anchor is `svg:<element id>:door:center`. Distance and name
+matching are never used. The object keeps its orientation and scale and is seated on the
+door centre; the result is merged into the sector's `*.bindings.json` (other entries are
+preserved) and applied by `SectorAnchorController.apply_bindings()` after regeneration.
+
+```powershell
+godot --headless --path . --script res://scenes/complex_v3_regeneration/bind_doors_cli.gd -- --sector-id U-ROUTE-A
+godot --headless --path . --script res://scenes/complex_v3_regeneration/door_binding_check.gd
+```
