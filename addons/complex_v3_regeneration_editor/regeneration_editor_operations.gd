@@ -159,9 +159,9 @@ func resolve_toolchain(configured: Dictionary) -> Dictionary:
 	if str(result["python_executable"]).is_empty():
 		errors.append("Python is not configured")
 	if str(result["svg_tool_root"]).is_empty():
-		errors.append("svg-plan-to-godot is not configured")
+		errors.append("svg-plan-to-godot is not configured: set SVG tool root in Settings or COMPLEX_V3_SVG_TOOL_ROOT (requires svg_to_godot3d >= 1.19.0)")
 	if str(result["stair_tool_root"]).is_empty():
-		errors.append("generate-godot-stairs is not configured")
+		errors.append("generate-godot-stairs is not configured: set Stair tool root in Settings or COMPLEX_V3_STAIR_TOOL_ROOT (requires generate_godot_stairs >= 2.9.0)")
 	var versions := {}
 	if errors.is_empty():
 		var python := str(result["python_executable"])
@@ -185,20 +185,8 @@ func resolve_toolchain(configured: Dictionary) -> Dictionary:
 func _installed_default(key: String) -> String:
 	if key == "python_executable":
 		return "python"
-	var homes := PackedStringArray()
-	var codex_home := OS.get_environment("CODEX_HOME").strip_edges()
-	if not codex_home.is_empty():
-		homes.append(codex_home)
-	var profile := OS.get_environment("USERPROFILE").strip_edges()
-	if not profile.is_empty():
-		homes.append(profile.path_join(".codex"))
-	var skill := "svg-plan-to-godot" if key == "svg_tool_root" else ("generate-godot-stairs" if key == "stair_tool_root" else "")
-	if skill.is_empty():
-		return ""
-	for home: String in homes:
-		var candidate := home.path_join("skills").path_join(skill)
-		if DirAccess.dir_exists_absolute(candidate):
-			return candidate
+	# Tool roots are never guessed from an agent's skill directory: the user (or the
+	# launching agent) must provide the paths of the skills it actually uses.
 	return ""
 
 

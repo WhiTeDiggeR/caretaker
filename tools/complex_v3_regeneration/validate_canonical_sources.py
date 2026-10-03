@@ -110,8 +110,15 @@ def production_settings() -> dict[str, dict[str, Any]]:
     return result
 
 
+def tool_script(tool_root: Path, name: str) -> Path:
+    for candidate in (tool_root / "scripts" / name, tool_root / name):
+        if candidate.is_file():
+            return candidate
+    return tool_root / name
+
+
 def strict_preflight(project_root: Path, manifest: dict[str, Any], tool_root: Path) -> tuple[list[dict[str, Any]], list[str], str]:
-    inspector = tool_root / "inspect_svg_plan.py"
+    inspector = tool_script(tool_root, "inspect_svg_plan.py")
     if not inspector.is_file():
         return [], [f"inspector not found: {inspector}"], "unavailable"
     version_run = subprocess.run([sys.executable, str(inspector), "--version"], text=True, encoding="utf-8", errors="replace", capture_output=True)
@@ -159,8 +166,8 @@ def strict_preflight(project_root: Path, manifest: dict[str, Any], tool_root: Pa
 
 
 def conversion_regression(project_root: Path, tool_root: Path) -> tuple[dict[str, Any], list[str]]:
-    converter = tool_root / "svg_to_godot3d.py"
-    inspector = tool_root / "inspect_svg_plan.py"
+    converter = tool_script(tool_root, "svg_to_godot3d.py")
+    inspector = tool_script(tool_root, "inspect_svg_plan.py")
     errors: list[str] = []
     result: dict[str, Any] = {"sector_id": "U-CONTROL", "noop_byte_equivalent": False, "stable_anchor_id": False, "geometry_changed": False}
     with tempfile.TemporaryDirectory(prefix=".t19-conversion-", dir=project_root) as temporary:

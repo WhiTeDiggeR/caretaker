@@ -18,8 +18,10 @@ section:
 - `complex_v3_regeneration/stair_tool_root`
 - `complex_v3_regeneration/agent_launcher`
 
-Each value resolves in this order: EditorSettings, its `COMPLEX_V3_*` environment
-variable, then a compatible installed Codex skill. The panel shows detected
+Each value resolves in this order: EditorSettings, then its `COMPLEX_V3_*` environment
+variable. There is no default skill directory: the tool roots must point at the
+skills the user's agent actually has installed, and the panel stays blocked with a
+request for the missing path until they are set. The panel shows detected
 versions and `Ready` only for `svg_to_godot3d >= 1.19.0` and
 `generate_godot_stairs >= 2.9.0`; missing or incompatible tools block before the
 CLI can create staging. Reports are written under
