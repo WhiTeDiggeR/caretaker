@@ -10,6 +10,7 @@ const PREVIEW_NAME := "EditorPreview"
 @export_group("Regeneration contract")
 @export var generated_architecture_scene: PackedScene
 @export var generated_stairs_scene: PackedScene
+@export var generated_stairs_transform: Transform3D = Transform3D.IDENTITY
 @export var authored_content_scene: PackedScene
 @export var assemble_contract_on_ready := false
 @export var contract_editor_preview_enabled := false
@@ -48,7 +49,7 @@ func rebuild_contract_generated() -> PackedStringArray:
 	if not _instantiate_generated_layer(generated_architecture_scene, "Architecture", staging):
 		errors.append("Generated architecture resource root must be Node3D")
 	if generated_stairs_scene != null:
-		if not _instantiate_generated_layer(generated_stairs_scene, "Stairs", staging):
+		if not _instantiate_generated_layer(generated_stairs_scene, "Stairs", staging, generated_stairs_transform):
 			errors.append("Generated stairs resource root must be Node3D")
 	else:
 		_add_empty_generated_layer("Stairs", staging)
@@ -79,7 +80,7 @@ func rebuild_contract_editor_preview() -> PackedStringArray:
 	if not _instantiate_generated_layer(generated_architecture_scene, "Architecture", preview):
 		errors.append("Preview architecture resource root must be Node3D")
 	if generated_stairs_scene != null:
-		if not _instantiate_generated_layer(generated_stairs_scene, "Stairs", preview):
+		if not _instantiate_generated_layer(generated_stairs_scene, "Stairs", preview, generated_stairs_transform):
 			errors.append("Preview stairs resource root must be Node3D")
 	else:
 		_add_empty_generated_layer("Stairs", preview)
@@ -144,13 +145,14 @@ func _validate_configured_resources() -> PackedStringArray:
 	return errors
 
 
-func _instantiate_generated_layer(scene: PackedScene, layer_name: String, parent: Node3D) -> bool:
+func _instantiate_generated_layer(scene: PackedScene, layer_name: String, parent: Node3D, layer_transform: Transform3D = Transform3D.IDENTITY) -> bool:
 	if scene == null:
 		return false
 	var layer := scene.instantiate() as Node3D
 	if layer == null:
 		return false
 	layer.name = layer_name
+	layer.transform = layer_transform
 	layer.set_meta("content_owner", "regenerator")
 	parent.add_child(layer)
 	return true

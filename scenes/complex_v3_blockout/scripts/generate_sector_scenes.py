@@ -60,6 +60,13 @@ def runtime_bindings_input(generation: dict, sector_id: str) -> str:
     return fallback
 
 
+def godot_transform(local_to_world: dict) -> str:
+    """Serialize a manifest local_to_world (column basis + origin) as a Godot Transform3D."""
+    columns = (local_to_world["basis_x"], local_to_world["basis_y"], local_to_world["basis_z"])
+    values = [columns[column][row] for row in range(3) for column in range(3)] + list(local_to_world["origin"])
+    return "Transform3D(" + ", ".join(f"{value:g}" for value in values) + ")"
+
+
 def main() -> None:
     passports_data = json.loads(PASSPORTS_PATH.read_text(encoding="utf-8"))
     geometry = json.loads(GEOMETRY_PATH.read_text(encoding="utf-8"))
@@ -119,9 +126,17 @@ def main() -> None:
             f'[ext_resource type="PackedScene" path="{stair_scene_path}" id="6_stairs"]'
             if stair_scene_path else ""
         )
-        stair_property = 'generated_stairs_scene = ExtResource("6_stairs")' if stair_scene_path else ""
+        stair_transform = ""
+        if stair_scene_path:
+            if len(generation["vertical_generators"]) != 1:
+                raise ValueError(f"{sector_id}: exactly one vertical generator is supported per sector scene")
+            stair_transform = godot_transform(generation["vertical_generators"][0]["local_to_world"])
+        stair_property = (
+            f'generated_stairs_scene = ExtResource("6_stairs")\ngenerated_stairs_transform = {stair_transform}'
+            if stair_scene_path else ""
+        )
         stair_node = (
-            '[node name="Stairs" parent="Generated" instance=ExtResource("6_stairs")]'
+            f'[node name="Stairs" parent="Generated" instance=ExtResource("6_stairs")]\ntransform = {stair_transform}'
             if stair_scene_path else '[node name="Stairs" type="Node3D" parent="Generated"]'
         )
         scene_file = BLOCKOUT_DIR / relative_path
