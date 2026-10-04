@@ -611,6 +611,12 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
                    f'data-surface-side-id="{sector_id}/wall-{n_wall:02d}" data-normal-side="{normal}" '
                    f'x1="{fmt(q[0])}" y1="{fmt(q[1])}" x2="{fmt(q[2])}" y2="{fmt(q[3])}" />')
     wall_lines = [l for l in plan.lines if l.cls in WALL_LINE]
+    for am in entry.get("amendments", []):
+        if am["op"] == "wall_shift":
+            for l in wall_lines:
+                if l.cls == am.get("class", "partition"):
+                    l.y1 += am["dz_m"] / tf.ky
+                    l.y2 += am["dz_m"] / tf.ky
     for l in wall_lines:
         n_wall += 1
         q = (tf.px(l.x1), tf.py(l.y1), tf.px(l.x2), tf.py(l.y2))
