@@ -43,3 +43,5 @@ godot --headless --path . --script res://addons/complex_v3_regeneration_editor/r
 ```
 
 For manual editor workflow checks, open `fixtures/fixture_scene.tscn`. Its root carries `complex_v3_sector_id`; the fixture manifest, source SVG, composition input, and clean machine report are colocated. The fixture manifest is for editor behavior tests, not production generation.
+
+When enabled, the plugin narrows the 3D editor depth range to near 0.1 / far 300 (the player camera uses the same values) to reduce z-fighting. It only replaces the factory defaults `editors/3d/default_z_near = 0.05` and `default_z_far = 4000`; values you changed are kept. These are global editor settings, so they also apply to other projects opened with the same Godot.

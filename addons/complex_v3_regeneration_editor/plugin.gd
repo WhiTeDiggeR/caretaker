@@ -5,6 +5,11 @@ const OPERATIONS_SCRIPT := preload("res://addons/complex_v3_regeneration_editor/
 const ANCHOR_OPERATIONS_SCRIPT := preload("res://addons/complex_v3_anchor_editor/anchor_editor_operations.gd")
 const DOOR_BINDING_SCRIPT := preload("res://scenes/complex_v3_regeneration/door_binding_builder.gd")
 const SETTINGS_PREFIX := "complex_v3_regeneration/"
+## A narrower depth range reduces z-fighting where surfaces overlap. Only factory values are replaced.
+const VIEWPORT_Z_NEAR := 0.1
+const VIEWPORT_Z_FAR := 300.0
+const FACTORY_Z_NEAR := 0.05
+const FACTORY_Z_FAR := 4000.0
 const PERSISTENT_SETTINGS := ["python_executable", "svg_tool_root", "stair_tool_root", "agent_launcher", "inkscape_executable"]
 const FILE_SETTINGS := ["python_executable", "agent_launcher", "inkscape_executable"]
 const COLOR_OK := Color(0.42, 0.78, 0.45)
@@ -79,6 +84,7 @@ func _enter_tree() -> void:
 	_operations = OPERATIONS_SCRIPT.new()
 	_anchor_operations = ANCHOR_OPERATIONS_SCRIPT.new()
 	_ensure_editor_settings()
+	_apply_viewport_depth_range()
 	_build_panel()
 	add_control_to_dock(DOCK_SLOT_RIGHT_UL, _panel)
 	scene_changed.connect(_on_scene_changed)
@@ -302,6 +308,14 @@ func _ensure_editor_settings() -> void:
 		if not settings.has_setting(full_key):
 			settings.set_setting(full_key, "")
 		settings.add_property_info({"name": full_key, "type": TYPE_STRING, "hint": PROPERTY_HINT_GLOBAL_FILE if key in FILE_SETTINGS else PROPERTY_HINT_GLOBAL_DIR})
+
+
+func _apply_viewport_depth_range() -> void:
+	var settings := get_editor_interface().get_editor_settings()
+	if settings.has_setting("editors/3d/default_z_near") and is_equal_approx(float(settings.get_setting("editors/3d/default_z_near")), FACTORY_Z_NEAR):
+		settings.set_setting("editors/3d/default_z_near", VIEWPORT_Z_NEAR)
+	if settings.has_setting("editors/3d/default_z_far") and is_equal_approx(float(settings.get_setting("editors/3d/default_z_far")), FACTORY_Z_FAR):
+		settings.set_setting("editors/3d/default_z_far", VIEWPORT_Z_FAR)
 
 
 func _save_setting(key: String, value: String) -> void:
