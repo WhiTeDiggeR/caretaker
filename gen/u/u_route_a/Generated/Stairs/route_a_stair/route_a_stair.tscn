@@ -124,16 +124,16 @@ size = Vector3(0.05, 0.05, 0.05)
 size = Vector3(0.05, 0.05, 0.05)
 
 [sub_resource type="BoxMesh" id="PrimitiveMesh_0008"]
-size = Vector3(6.18, 2.2, 0.09)
+size = Vector3(6.16, 2.4, 0.09)
 
 [sub_resource type="BoxShape3D" id="PrimitiveShape3D_0025"]
-size = Vector3(6.18, 2.2, 0.09)
+size = Vector3(6.16, 2.4, 0.09)
 
 [sub_resource type="BoxMesh" id="PrimitiveMesh_0009"]
-size = Vector3(0.09, 2.2, 7.18)
+size = Vector3(0.09, 2.4, 7.18)
 
 [sub_resource type="BoxShape3D" id="PrimitiveShape3D_0026"]
-size = Vector3(0.09, 2.2, 7.18)
+size = Vector3(0.09, 2.4, 7.18)
 
 [node name="route_a_stair" type="Node3D"]
 metadata/generator = "generate-godot-stairs"
@@ -2360,53 +2360,53 @@ collision_layer = 1
 collision_mask = 1
 
 [node name="ShaftWall_North" type="MeshInstance3D" parent="Shaft/Visual"]
-position = Vector3(0.0, 4.7, 3.545)
+position = Vector3(0.0, 4.8, 3.545)
 mesh = SubResource("PrimitiveMesh_0008")
 material_override = ExtResource("3_shaft")
 metadata/side = "north"
 metadata/vertical_gap_only = true
 metadata/bottom_y = 3.6
-metadata/top_y = 5.8
+metadata/top_y = 6.0
 
 [node name="ShaftWall_East" type="MeshInstance3D" parent="Shaft/Visual"]
-position = Vector3(3.045, 4.7, 0.0)
+position = Vector3(3.035, 4.8, 0.0)
 mesh = SubResource("PrimitiveMesh_0009")
 material_override = ExtResource("3_shaft")
 metadata/side = "east"
 metadata/vertical_gap_only = true
 metadata/bottom_y = 3.6
-metadata/top_y = 5.8
+metadata/top_y = 6.0
 
 [node name="ShaftWall_South" type="MeshInstance3D" parent="Shaft/Visual"]
-position = Vector3(0.0, 4.7, -3.545)
+position = Vector3(0.0, 4.8, -3.545)
 mesh = SubResource("PrimitiveMesh_0008")
 material_override = ExtResource("3_shaft")
 metadata/side = "south"
 metadata/vertical_gap_only = true
 metadata/bottom_y = 3.6
-metadata/top_y = 5.8
+metadata/top_y = 6.0
 
 [node name="ShaftWall_West" type="MeshInstance3D" parent="Shaft/Visual"]
-position = Vector3(-3.045, 4.7, 0.0)
+position = Vector3(-3.035, 4.8, 0.0)
 mesh = SubResource("PrimitiveMesh_0009")
 material_override = ExtResource("3_shaft")
 metadata/side = "west"
 metadata/vertical_gap_only = true
 metadata/bottom_y = 3.6
-metadata/top_y = 5.8
+metadata/top_y = 6.0
 
 [node name="ShaftWall_North" type="CollisionShape3D" parent="Shaft/Collision"]
-position = Vector3(0.0, 4.7, 3.545)
+position = Vector3(0.0, 4.8, 3.545)
 shape = SubResource("PrimitiveShape3D_0025")
 
 [node name="ShaftWall_East" type="CollisionShape3D" parent="Shaft/Collision"]
-position = Vector3(3.045, 4.7, 0.0)
+position = Vector3(3.035, 4.8, 0.0)
 shape = SubResource("PrimitiveShape3D_0026")
 
 [node name="ShaftWall_South" type="CollisionShape3D" parent="Shaft/Collision"]
-position = Vector3(0.0, 4.7, -3.545)
+position = Vector3(0.0, 4.8, -3.545)
 shape = SubResource("PrimitiveShape3D_0025")
 
 [node name="ShaftWall_West" type="CollisionShape3D" parent="Shaft/Collision"]
-position = Vector3(-3.045, 4.7, 0.0)
+position = Vector3(-3.035, 4.8, 0.0)
 shape = SubResource("PrimitiveShape3D_0026")
