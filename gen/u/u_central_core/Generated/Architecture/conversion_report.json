@@ -56,7 +56,55 @@
       "origin_mode": "none",
       "invert_z": false
     },
-    "surface_openings": [],
+    "surface_openings": [
+      {
+        "opening_id": "u-central-core-opening-floor-main-elevator",
+        "source_id": "u-central-core-opening-floor-main-elevator",
+        "surface": "floor",
+        "elevation_m": 0.0,
+        "applied": true,
+        "polygon_xz_m": [
+          [
+            -6.72,
+            -0.07
+          ],
+          [
+            -2.28,
+            -0.07
+          ],
+          [
+            -2.28,
+            4.82
+          ],
+          [
+            -6.72,
+            4.82
+          ]
+        ],
+        "area_m2": 21.7116,
+        "bounds_m": {
+          "min_x": -6.72,
+          "max_x": -2.28,
+          "min_z": -0.07,
+          "max_z": 4.82,
+          "width_x": 4.44,
+          "length_z": 4.89
+        },
+        "local_center_m": [
+          -4.5,
+          0.0,
+          2.375
+        ],
+        "centroid_m": [
+          -4.5,
+          0.0,
+          2.375
+        ],
+        "contained_markers": [],
+        "is_stair_shaft_candidate": false,
+        "space_id": "U-CENTRAL-CORE/passenger_elevator"
+      }
+    ],
     "wall_construction": [
       {
         "source_id": "w-0586c92d1a",
@@ -3235,10 +3283,13 @@
         "geometry_hash": "sha256:767aab281479684498e9994bc1f0fd6650f0c21239ada57603770f19804531e6"
       }
     ],
-    "space_ids": []
+    "space_ids": [
+      "U-CENTRAL-CORE/passenger_elevator"
+    ]
   },
   "counts": {
     "input_floor": 6,
+    "input_floor_opening": 1,
     "input_ceiling": 6,
     "input_wall": 20,
     "input_door": 6,
@@ -3251,9 +3302,9 @@
     "wall_joints_resolved": 18,
     "wall_volume_overlaps": 0,
     "floor_polygons_before_normalization": 6,
-    "floor_cells_after_normalization": 13,
-    "floor_openings_requested": 0,
-    "floor_openings_applied": 0,
+    "floor_cells_after_normalization": 16,
+    "floor_openings_requested": 1,
+    "floor_openings_applied": 1,
     "ceiling_polygons_before_normalization": 6,
     "ceiling_cells_after_normalization": 13,
     "ceiling_openings_requested": 0,
@@ -3261,19 +3312,20 @@
     "removed_stale_generated_parts": 0,
     "material_files_created": 4,
     "material_files_preserved": 0,
-    "generated_floors": 13,
+    "generated_floors": 16,
     "generated_ceilings": 13,
     "generated_walls": 35,
     "generated_obstacles": 0,
     "generated_markers": 6,
-    "generated_floor_visual_nodes": 13,
+    "generated_floor_visual_nodes": 16,
     "generated_ceiling_visual_nodes": 13,
     "generated_wall_visual_nodes": 35,
     "generated_obstacle_visual_nodes": 0
   },
   "assumptions": [
     "Wall normalization merged 7 duplicate or overlapping segment(s) with tolerance 0.02 m",
-    "Wall joint normalization converted 18 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap"
+    "Wall joint normalization converted 18 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
+    "Floor openings removed 21.7116 m2 from visible and collision geometry"
   ],
   "warnings": [],
   "errors": [],
@@ -3306,14 +3358,17 @@
     "floor_003_f_02a79545dc.obj",
     "floor_004_f_1d833a515f.obj",
     "floor_005_f_1d833a515f.obj",
-    "floor_006_f_4f408b452f.obj",
-    "floor_007_f_4f408b452f.obj",
-    "floor_008_f_31f67293ac.obj",
-    "floor_009_f_31f67293ac.obj",
-    "floor_010_f_31f67293ac.obj",
+    "floor_006_f_1d833a515f.obj",
+    "floor_007_f_1d833a515f.obj",
+    "floor_008_f_1d833a515f.obj",
+    "floor_009_f_4f408b452f.obj",
+    "floor_010_f_4f408b452f.obj",
     "floor_011_f_31f67293ac.obj",
-    "floor_012_f_b48b79fb09.obj",
-    "floor_013_f_b48b79fb09.obj",
+    "floor_012_f_31f67293ac.obj",
+    "floor_013_f_31f67293ac.obj",
+    "floor_014_f_31f67293ac.obj",
+    "floor_015_f_b48b79fb09.obj",
+    "floor_016_f_b48b79fb09.obj",
     "ceiling_001_c_9cb3f88170.obj",
     "ceiling_002_c_02a79545dc.obj",
     "ceiling_003_c_02a79545dc.obj",

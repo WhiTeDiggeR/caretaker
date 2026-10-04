@@ -4,7 +4,7 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "sector_id": "T-CIRCULATION",
-  "generation_id": "sha256:4386e980ba335b9f39bce59eece8ab132c17954d584cf86e817b207f5a16478a",
+  "generation_id": "sha256:9719e9d6fe45ba3c81e968269db28fb23a16b1357e50b6407b5d109bab9195d3",
   "producer": {
     "name": "complex_v3_regenerate_sector",
     "version": "1.1.1",
@@ -634,6 +634,114 @@
       "geometry_hash": "sha256:0999793727a7ed012f00b7a0e7c30856f469f4dc3e6cfaa89abe845f7bc909bb"
     },
     {
+      "anchor_id": "svg:t-circulation-ceiling-main-lift:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-circulation-ceiling-main-lift"
+      },
+      "origin": [
+        -6.9,
+        -7.5,
+        -0.25
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -7.5,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -6.9,
+            -0.25
+          ],
+          [
+            -2.1,
+            -0.25
+          ],
+          [
+            -2.1,
+            5.0
+          ],
+          [
+            -6.9,
+            5.0
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          4.8
+        ],
+        "v_range_m": [
+          0.0,
+          5.25
+        ],
+        "holes_xz": [
+          [
+            [
+              -6.72,
+              -0.07
+            ],
+            [
+              -2.28,
+              -0.07
+            ],
+            [
+              -2.28,
+              4.82
+            ],
+            [
+              -6.72,
+              4.82
+            ]
+          ]
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:2c42447b357a06dcaeaf1bc9c5304aba647ab288593a3f292e4c8fdefd65f8e4"
+    },
+    {
       "anchor_id": "svg:t-circulation-ceiling-tech:ceiling",
       "type": "ceiling",
       "role": "surface",
@@ -1255,6 +1363,95 @@
         }
       },
       "geometry_hash": "sha256:f9fcda7a245334e7fd13ff8a1707b6d0c379b440424dded51db71a0f1cc32bbc"
+    },
+    {
+      "anchor_id": "svg:t-circulation-floor-main-lift:floor",
+      "type": "floor",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-circulation-floor-main-lift"
+      },
+      "origin": [
+        -6.9,
+        -11.5,
+        -0.25
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -11.5,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -6.9,
+            -0.25
+          ],
+          [
+            -2.1,
+            -0.25
+          ],
+          [
+            -2.1,
+            5.0
+          ],
+          [
+            -6.9,
+            5.0
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          4.8
+        ],
+        "v_range_m": [
+          0.0,
+          5.25
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:6e6f8c2ca094771280dd886b053d62ac65ea049d753c4b55c3b0b6c3c796a86b"
     },
     {
       "anchor_id": "svg:t-circulation-floor-tech:floor",
@@ -2872,6 +3069,306 @@
         }
       },
       "geometry_hash": "sha256:b42db048c9ebcf1e7c57f564eb6e6b58566f68d32541bda6e7e3b26571caab18"
+    },
+    {
+      "anchor_id": "svg:t-circulation-wall-main-lift-east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-circulation-wall-main-lift-east"
+      },
+      "origin": [
+        -2.25,
+        -11.5,
+        -0.25
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 5.25,
+        "height_m": 4.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-CIRCULATION/main_lift_service_compartment/east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -2.1,
+          -11.5,
+          -0.25
+        ],
+        "along_range_m": [
+          0.0,
+          5.25
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:9d6222370694323077aa1ef6e76a5ae36f643f1096cc68de8153933c0912f4f5"
+    },
+    {
+      "anchor_id": "svg:t-circulation-wall-main-lift-north:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-circulation-wall-main-lift-north"
+      },
+      "origin": [
+        -6.9,
+        -11.5,
+        -0.1
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.8,
+        "height_m": 4.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-CIRCULATION/main_lift_service_compartment/north",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -6.9,
+          -11.5,
+          -0.25
+        ],
+        "along_range_m": [
+          0.0,
+          4.8
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:772f1594513468086365239edd53988d9cded150bd7cedcca899f1fdfeceef85"
+    },
+    {
+      "anchor_id": "svg:t-circulation-wall-main-lift-south:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-circulation-wall-main-lift-south"
+      },
+      "origin": [
+        -2.1,
+        -11.5,
+        4.85
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.8,
+        "height_m": 4.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-CIRCULATION/main_lift_service_compartment/south",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -2.1,
+          -11.5,
+          5.0
+        ],
+        "along_range_m": [
+          0.0,
+          4.8
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:b898303b09c21e1ae24b661380a9257e200d7337759096546a792fb43bbcac6f"
+    },
+    {
+      "anchor_id": "svg:t-circulation-wall-main-lift-west:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-circulation-wall-main-lift-west"
+      },
+      "origin": [
+        -6.75,
+        -11.5,
+        5.0
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 5.25,
+        "height_m": 4.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-CIRCULATION/main_lift_service_compartment/west",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -6.9,
+          -11.5,
+          5.0
+        ],
+        "along_range_m": [
+          0.0,
+          5.25
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:b3f57c9237ae43eaddcaff8f64ae4f3918825442ed943f7692d539cb731b06f7"
     },
     {
       "anchor_id": "svg:t-circulation-wall-tech-east:wall",

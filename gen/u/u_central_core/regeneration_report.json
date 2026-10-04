@@ -4,12 +4,12 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "U-CENTRAL-CORE",
-  "generation_id": "sha256:b4e742d942fc5427e739aeac2aba46dcae64d5cd3ac704aa15dfc4b34e9be84b",
+  "generation_id": "sha256:4aee25947764c5a17111d2ae8885605e925e821f4ebefe0d5f5e9a580ead24ce",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
-        "$PYTHON",
+        "python",
         "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
         "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_central_core.svg",
         "--profile",
@@ -40,7 +40,7 @@
     {
       "stage": "convert",
       "argv": [
-        "$PYTHON",
+        "python",
         "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
         "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_central_core.svg",
         "$STAGING/Generated/Architecture",

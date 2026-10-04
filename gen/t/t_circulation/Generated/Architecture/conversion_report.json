@@ -39,9 +39,9 @@
   },
   "view_box": [
     -111.0,
-    14.0,
+    -1.0,
     144.0,
-    54.5
+    69.5
   ],
   "profile": "generic",
   "spatial_handoff": {
@@ -56,7 +56,55 @@
       "origin_mode": "none",
       "invert_z": false
     },
-    "surface_openings": [],
+    "surface_openings": [
+      {
+        "opening_id": "t-circulation-opening-ceiling-main-lift",
+        "source_id": "t-circulation-opening-ceiling-main-lift",
+        "surface": "ceiling",
+        "elevation_m": -7.5,
+        "applied": true,
+        "polygon_xz_m": [
+          [
+            -6.72,
+            -0.07
+          ],
+          [
+            -2.28,
+            -0.07
+          ],
+          [
+            -2.28,
+            4.82
+          ],
+          [
+            -6.72,
+            4.82
+          ]
+        ],
+        "area_m2": 21.7116,
+        "bounds_m": {
+          "min_x": -6.72,
+          "max_x": -2.28,
+          "min_z": -0.07,
+          "max_z": 4.82,
+          "width_x": 4.44,
+          "length_z": 4.89
+        },
+        "local_center_m": [
+          -4.5,
+          -7.5,
+          2.375
+        ],
+        "centroid_m": [
+          -4.5,
+          -7.5,
+          2.375
+        ],
+        "contained_markers": [],
+        "is_stair_shaft_candidate": false,
+        "space_id": "T-CIRCULATION/main_lift_service_compartment"
+      }
+    ],
     "wall_construction": [
       {
         "source_id": "t-circulation-wall-cable-east",
@@ -167,6 +215,30 @@
         "base_elevation_m": -11.5
       },
       {
+        "source_id": "t-circulation-wall-main-lift-east",
+        "thickness_m": 0.3,
+        "height_m": 4.0,
+        "base_elevation_m": -11.5
+      },
+      {
+        "source_id": "t-circulation-wall-main-lift-north",
+        "thickness_m": 0.3,
+        "height_m": 4.0,
+        "base_elevation_m": -11.5
+      },
+      {
+        "source_id": "t-circulation-wall-main-lift-south",
+        "thickness_m": 0.3,
+        "height_m": 4.0,
+        "base_elevation_m": -11.5
+      },
+      {
+        "source_id": "t-circulation-wall-main-lift-west",
+        "thickness_m": 0.3,
+        "height_m": 4.0,
+        "base_elevation_m": -11.5
+      },
+      {
         "source_id": "t-circulation-wall-tech-east",
         "thickness_m": 0.3,
         "height_m": 4.0,
@@ -268,6 +340,12 @@
         "source_id": "t-circulation-ceiling-east-south",
         "underside_elevation_m": -8.7,
         "top_elevation_m": -8.5,
+        "thickness_m": 0.2
+      },
+      {
+        "source_id": "t-circulation-ceiling-main-lift",
+        "underside_elevation_m": -7.5,
+        "top_elevation_m": -7.3,
         "thickness_m": 0.2
       }
     ],
@@ -832,6 +910,72 @@
         "geometry_hash": "sha256:01d063318eaa2f4899e4a319dfdf5957c3d0e1b81b77aab2a8cde04cd517845f"
       },
       {
+        "anchor_id": "svg:t-circulation-ceiling-main-lift:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-circulation-ceiling-main-lift"
+        },
+        "origin": [
+          -6.9,
+          -7.5,
+          -0.25
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -6.9,
+              -0.25
+            ],
+            [
+              -2.1,
+              -0.25
+            ],
+            [
+              -2.1,
+              5.0
+            ],
+            [
+              -6.9,
+              5.0
+            ]
+          ],
+          "elevation_m": -7.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:d79eeff4de1679685a208c8825065e12d7264d8b5e557f510a619c05488933bd"
+      },
+      {
         "anchor_id": "svg:t-circulation-ceiling-tech:ceiling",
         "type": "ceiling",
         "role": "surface",
@@ -1292,6 +1436,72 @@
           ]
         },
         "geometry_hash": "sha256:7ea9f0ae4a46cc9be2f6a71b3227443712aaddd1d639ee7c21c4294f32a5f392"
+      },
+      {
+        "anchor_id": "svg:t-circulation-floor-main-lift:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-circulation-floor-main-lift"
+        },
+        "origin": [
+          -6.9,
+          -11.5,
+          -0.25
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -6.9,
+              -0.25
+            ],
+            [
+              -2.1,
+              -0.25
+            ],
+            [
+              -2.1,
+              5.0
+            ],
+            [
+              -6.9,
+              5.0
+            ]
+          ],
+          "elevation_m": -11.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:cc0387806c98431ce0d08c903adf36c5a923f0b4868101d0e9b22113553b2e3f"
       },
       {
         "anchor_id": "svg:t-circulation-floor-tech:floor",
@@ -2500,6 +2710,230 @@
         "geometry_hash": "sha256:a33c6d03efecfcf85c9cf938d126d79d5ae3348c27470da3999cdde0fa3a9123"
       },
       {
+        "anchor_id": "svg:t-circulation-wall-main-lift-east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-circulation-wall-main-lift-east"
+        },
+        "origin": [
+          -2.1,
+          -11.5,
+          -0.25
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 5.25,
+          "height_m": 4.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-CIRCULATION/main_lift_service_compartment/east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.0
+          ]
+        },
+        "geometry_hash": "sha256:38163e66365e40051008bccfdea238192ef9d3930e66916e20f6ec2c9ce88844"
+      },
+      {
+        "anchor_id": "svg:t-circulation-wall-main-lift-north:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-circulation-wall-main-lift-north"
+        },
+        "origin": [
+          -6.9,
+          -11.5,
+          -0.25
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.8,
+          "height_m": 4.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-CIRCULATION/main_lift_service_compartment/north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.0
+          ]
+        },
+        "geometry_hash": "sha256:4e5d3e9a2da550a9555af0d715ccca19135942cdf58f6b161f585a77f28ddd9e"
+      },
+      {
+        "anchor_id": "svg:t-circulation-wall-main-lift-south:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-circulation-wall-main-lift-south"
+        },
+        "origin": [
+          -2.1,
+          -11.5,
+          5.0
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.8,
+          "height_m": 4.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-CIRCULATION/main_lift_service_compartment/south",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.0
+          ]
+        },
+        "geometry_hash": "sha256:8374016dbbb04da7fa3776852059eca9594a92961d0d8d3e40aefa60dfb4cfbb"
+      },
+      {
+        "anchor_id": "svg:t-circulation-wall-main-lift-west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-circulation-wall-main-lift-west"
+        },
+        "origin": [
+          -6.9,
+          -11.5,
+          5.0
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 5.25,
+          "height_m": 4.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-CIRCULATION/main_lift_service_compartment/west",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.0
+          ]
+        },
+        "geometry_hash": "sha256:ddc9f421ae7290eb68cd3e4775c3f7a2cb6e868399dd9a84a55b33ec99a61678"
+      },
+      {
         "anchor_id": "svg:t-circulation-wall-tech-east:wall",
         "type": "wall",
         "role": "surface",
@@ -3060,44 +3494,48 @@
         "geometry_hash": "sha256:ad6da79df5e598d11933bcaba8e326d0a0264ab57221021e0e52019e0bd2fa25"
       }
     ],
-    "space_ids": []
+    "space_ids": [
+      "T-CIRCULATION/main_lift_service_compartment"
+    ]
   },
   "counts": {
-    "input_floor": 7,
-    "input_ceiling": 7,
-    "input_wall": 28,
+    "input_floor": 8,
+    "input_ceiling": 8,
+    "input_ceiling_opening": 1,
+    "input_wall": 32,
     "input_marker": 4,
     "ceiling_wall_alignment_issues": 0,
     "area_floors_expanded_to_wall_outer": 0,
     "area_ceilings_expanded_to_wall_outer": 0,
-    "wall_segments_before_normalization": 28,
-    "wall_segments_after_merge": 28,
-    "wall_segments_after_normalization": 28,
-    "wall_joints_resolved": 20,
+    "wall_segments_before_normalization": 32,
+    "wall_segments_after_merge": 32,
+    "wall_segments_after_normalization": 32,
+    "wall_joints_resolved": 24,
     "wall_volume_overlaps": 0,
-    "floor_polygons_before_normalization": 7,
-    "floor_cells_after_normalization": 7,
+    "floor_polygons_before_normalization": 8,
+    "floor_cells_after_normalization": 8,
     "floor_openings_requested": 0,
     "floor_openings_applied": 0,
-    "ceiling_polygons_before_normalization": 7,
-    "ceiling_cells_after_normalization": 7,
-    "ceiling_openings_requested": 0,
-    "ceiling_openings_applied": 0,
+    "ceiling_polygons_before_normalization": 8,
+    "ceiling_cells_after_normalization": 11,
+    "ceiling_openings_requested": 1,
+    "ceiling_openings_applied": 1,
     "removed_stale_generated_parts": 0,
     "material_files_created": 4,
     "material_files_preserved": 0,
-    "generated_floors": 7,
-    "generated_ceilings": 7,
-    "generated_walls": 28,
+    "generated_floors": 8,
+    "generated_ceilings": 11,
+    "generated_walls": 32,
     "generated_obstacles": 0,
     "generated_markers": 4,
-    "generated_floor_visual_nodes": 7,
-    "generated_ceiling_visual_nodes": 7,
-    "generated_wall_visual_nodes": 28,
+    "generated_floor_visual_nodes": 8,
+    "generated_ceiling_visual_nodes": 11,
+    "generated_wall_visual_nodes": 32,
     "generated_obstacle_visual_nodes": 0
   },
   "assumptions": [
-    "Wall joint normalization converted 20 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap"
+    "Wall joint normalization converted 24 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
+    "Ceiling openings removed 21.7116 m2 from visible and collision geometry"
   ],
   "warnings": [],
   "errors": [],
@@ -3130,15 +3568,20 @@
     "floor_003_t_circulation_floor_cable.obj",
     "floor_004_t_circulation_floor_west_north.obj",
     "floor_005_t_circulation_floor_west_south.obj",
-    "floor_006_t_circulation_floor_east_north.obj",
-    "floor_007_t_circulation_floor_east_south.obj",
+    "floor_006_t_circulation_floor_main_lift.obj",
+    "floor_007_t_circulation_floor_east_north.obj",
+    "floor_008_t_circulation_floor_east_south.obj",
     "ceiling_001_t_circulation_ceiling_tech.obj",
-    "ceiling_002_t_circulation_ceiling_freight.obj",
-    "ceiling_003_t_circulation_ceiling_cable.obj",
-    "ceiling_004_t_circulation_ceiling_west_north.obj",
-    "ceiling_005_t_circulation_ceiling_west_south.obj",
-    "ceiling_006_t_circulation_ceiling_east_north.obj",
-    "ceiling_007_t_circulation_ceiling_east_south.obj",
+    "ceiling_002_t_circulation_ceiling_main_lift.obj",
+    "ceiling_003_t_circulation_ceiling_main_lift.obj",
+    "ceiling_004_t_circulation_ceiling_main_lift.obj",
+    "ceiling_005_t_circulation_ceiling_main_lift.obj",
+    "ceiling_006_t_circulation_ceiling_freight.obj",
+    "ceiling_007_t_circulation_ceiling_cable.obj",
+    "ceiling_008_t_circulation_ceiling_west_north.obj",
+    "ceiling_009_t_circulation_ceiling_west_south.obj",
+    "ceiling_010_t_circulation_ceiling_east_north.obj",
+    "ceiling_011_t_circulation_ceiling_east_south.obj",
     "wall_001_t_circulation_wall_tech_north.obj",
     "wall_002_t_circulation_wall_tech_south_west.obj",
     "wall_003_t_circulation_wall_tech_south_center.obj",
@@ -3167,6 +3610,10 @@
     "wall_026_t_circulation_wall_east_transition_west_south.obj",
     "wall_027_t_circulation_wall_east_transition_east_north.obj",
     "wall_028_t_circulation_wall_east_transition_east_south.obj",
+    "wall_029_t_circulation_wall_main_lift_north.obj",
+    "wall_030_t_circulation_wall_main_lift_south.obj",
+    "wall_031_t_circulation_wall_main_lift_west.obj",
+    "wall_032_t_circulation_wall_main_lift_east.obj",
     "conversion_report.json"
   ]
 }

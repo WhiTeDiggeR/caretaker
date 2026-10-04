@@ -56,7 +56,102 @@
       "origin_mode": "none",
       "invert_z": false
     },
-    "surface_openings": [],
+    "surface_openings": [
+      {
+        "opening_id": "l-central-core-opening-floor-main-elevator",
+        "source_id": "l-central-core-opening-floor-main-elevator",
+        "surface": "floor",
+        "elevation_m": -6.0,
+        "applied": true,
+        "polygon_xz_m": [
+          [
+            -6.72,
+            -0.07
+          ],
+          [
+            -2.28,
+            -0.07
+          ],
+          [
+            -2.28,
+            4.82
+          ],
+          [
+            -6.72,
+            4.82
+          ]
+        ],
+        "area_m2": 21.7116,
+        "bounds_m": {
+          "min_x": -6.72,
+          "max_x": -2.28,
+          "min_z": -0.07,
+          "max_z": 4.82,
+          "width_x": 4.44,
+          "length_z": 4.89
+        },
+        "local_center_m": [
+          -4.5,
+          -6.0,
+          2.375
+        ],
+        "centroid_m": [
+          -4.5,
+          -6.0,
+          2.375
+        ],
+        "contained_markers": [],
+        "is_stair_shaft_candidate": false,
+        "space_id": "L-CENTRAL-CORE/passenger_elevator"
+      },
+      {
+        "opening_id": "l-central-core-opening-ceiling-main-elevator",
+        "source_id": "l-central-core-opening-ceiling-main-elevator",
+        "surface": "ceiling",
+        "elevation_m": -2.6,
+        "applied": true,
+        "polygon_xz_m": [
+          [
+            -6.72,
+            -0.07
+          ],
+          [
+            -2.28,
+            -0.07
+          ],
+          [
+            -2.28,
+            4.82
+          ],
+          [
+            -6.72,
+            4.82
+          ]
+        ],
+        "area_m2": 21.7116,
+        "bounds_m": {
+          "min_x": -6.72,
+          "max_x": -2.28,
+          "min_z": -0.07,
+          "max_z": 4.82,
+          "width_x": 4.44,
+          "length_z": 4.89
+        },
+        "local_center_m": [
+          -4.5,
+          -2.6,
+          2.375
+        ],
+        "centroid_m": [
+          -4.5,
+          -2.6,
+          2.375
+        ],
+        "contained_markers": [],
+        "is_stair_shaft_candidate": false,
+        "space_id": "L-CENTRAL-CORE/passenger_elevator"
+      }
+    ],
     "wall_construction": [
       {
         "source_id": "w-012a27d198",
@@ -3235,11 +3330,15 @@
         "geometry_hash": "sha256:638ad72184cd4622541a70f3db1525666e9c7eb0d276281c63b7df322be91bf4"
       }
     ],
-    "space_ids": []
+    "space_ids": [
+      "L-CENTRAL-CORE/passenger_elevator"
+    ]
   },
   "counts": {
     "input_floor": 6,
+    "input_floor_opening": 1,
     "input_ceiling": 6,
+    "input_ceiling_opening": 1,
     "input_wall": 20,
     "input_door": 6,
     "ceiling_wall_alignment_issues": 0,
@@ -3251,29 +3350,31 @@
     "wall_joints_resolved": 18,
     "wall_volume_overlaps": 0,
     "floor_polygons_before_normalization": 6,
-    "floor_cells_after_normalization": 13,
-    "floor_openings_requested": 0,
-    "floor_openings_applied": 0,
+    "floor_cells_after_normalization": 16,
+    "floor_openings_requested": 1,
+    "floor_openings_applied": 1,
     "ceiling_polygons_before_normalization": 6,
-    "ceiling_cells_after_normalization": 13,
-    "ceiling_openings_requested": 0,
-    "ceiling_openings_applied": 0,
+    "ceiling_cells_after_normalization": 16,
+    "ceiling_openings_requested": 1,
+    "ceiling_openings_applied": 1,
     "removed_stale_generated_parts": 0,
     "material_files_created": 4,
     "material_files_preserved": 0,
-    "generated_floors": 13,
-    "generated_ceilings": 13,
+    "generated_floors": 16,
+    "generated_ceilings": 16,
     "generated_walls": 35,
     "generated_obstacles": 0,
     "generated_markers": 6,
-    "generated_floor_visual_nodes": 13,
-    "generated_ceiling_visual_nodes": 13,
+    "generated_floor_visual_nodes": 16,
+    "generated_ceiling_visual_nodes": 16,
     "generated_wall_visual_nodes": 35,
     "generated_obstacle_visual_nodes": 0
   },
   "assumptions": [
     "Wall normalization merged 7 duplicate or overlapping segment(s) with tolerance 0.02 m",
-    "Wall joint normalization converted 18 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap"
+    "Wall joint normalization converted 18 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
+    "Floor openings removed 21.7116 m2 from visible and collision geometry",
+    "Ceiling openings removed 21.7116 m2 from visible and collision geometry"
   ],
   "warnings": [],
   "errors": [],
@@ -3306,27 +3407,33 @@
     "floor_003_f_6b68290461.obj",
     "floor_004_f_f7fc3ad6e0.obj",
     "floor_005_f_f7fc3ad6e0.obj",
-    "floor_006_f_f67a7b58d3.obj",
-    "floor_007_f_f67a7b58d3.obj",
-    "floor_008_f_bdb3421914.obj",
-    "floor_009_f_bdb3421914.obj",
-    "floor_010_f_bdb3421914.obj",
+    "floor_006_f_f7fc3ad6e0.obj",
+    "floor_007_f_f7fc3ad6e0.obj",
+    "floor_008_f_f7fc3ad6e0.obj",
+    "floor_009_f_f67a7b58d3.obj",
+    "floor_010_f_f67a7b58d3.obj",
     "floor_011_f_bdb3421914.obj",
-    "floor_012_f_90516290df.obj",
-    "floor_013_f_90516290df.obj",
+    "floor_012_f_bdb3421914.obj",
+    "floor_013_f_bdb3421914.obj",
+    "floor_014_f_bdb3421914.obj",
+    "floor_015_f_90516290df.obj",
+    "floor_016_f_90516290df.obj",
     "ceiling_001_c_f50929db65.obj",
     "ceiling_002_c_6b68290461.obj",
     "ceiling_003_c_6b68290461.obj",
     "ceiling_004_c_f7fc3ad6e0.obj",
     "ceiling_005_c_f7fc3ad6e0.obj",
-    "ceiling_006_c_f67a7b58d3.obj",
-    "ceiling_007_c_f67a7b58d3.obj",
-    "ceiling_008_c_bdb3421914.obj",
-    "ceiling_009_c_bdb3421914.obj",
-    "ceiling_010_c_bdb3421914.obj",
+    "ceiling_006_c_f7fc3ad6e0.obj",
+    "ceiling_007_c_f7fc3ad6e0.obj",
+    "ceiling_008_c_f7fc3ad6e0.obj",
+    "ceiling_009_c_f67a7b58d3.obj",
+    "ceiling_010_c_f67a7b58d3.obj",
     "ceiling_011_c_bdb3421914.obj",
-    "ceiling_012_c_90516290df.obj",
-    "ceiling_013_c_90516290df.obj",
+    "ceiling_012_c_bdb3421914.obj",
+    "ceiling_013_c_bdb3421914.obj",
+    "ceiling_014_c_bdb3421914.obj",
+    "ceiling_015_c_90516290df.obj",
+    "ceiling_016_c_90516290df.obj",
     "wall_001_w_95c3d7517a.obj",
     "wall_002_w_95c3d7517a.obj",
     "wall_003_w_2ba74848f7.obj",

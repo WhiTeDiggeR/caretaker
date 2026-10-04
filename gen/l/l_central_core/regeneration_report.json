@@ -4,12 +4,12 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "L-CENTRAL-CORE",
-  "generation_id": "sha256:eef512af99c4b65c78b0c78fec2748a2548f835883fff41fa308090b4215678a",
+  "generation_id": "sha256:d8fa853cfe8ca5d43b3ce402dd9e9522f5f08c5754d2e9c142bfb47b90d78ac7",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
-        "$PYTHON",
+        "python",
         "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
         "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_central_core.svg",
         "--profile",
@@ -40,7 +40,7 @@
     {
       "stage": "convert",
       "argv": [
-        "$PYTHON",
+        "python",
         "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
         "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_central_core.svg",
         "$STAGING/Generated/Architecture",
