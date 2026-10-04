@@ -50,7 +50,8 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
                 box: tuple[float, float, float, float] | None = None) -> Image.Image:
     rep = copy.deepcopy(R[sid])
     rooms = {rm["space_id"].split("/")[1]: dict(rm) for rm in rep["rooms"]}
-    doors = [dict(o) for o in rep["openings"]]
+    orig_doors = [dict(o) for o in rep["openings"]]
+    doors = list(orig_doors)
     extras: list[tuple] = []
     notes: list[tuple] = []
     def key(prefix: str) -> str:
@@ -66,7 +67,7 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
         elif op[0] == "add":
             extras.append(("room", op[1], op[2], op[3]))
         elif op[0] == "door":
-            doors[op[1]].update(op[2])
+            orig_doors[op[1]].update(op[2])
         elif op[0] == "adddoor":
             doors.append({"type": op[2], "world_m": list(op[1]), "state": op[3], "label": op[4], "rooms": [], "new": True})
         elif op[0] == "note":
@@ -91,7 +92,6 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
     gz = int(z0 // 5) * 5
     while gz < z1:
         d.line([T(x0, gz), T(x1, gz)], fill=(235, 235, 235, 255), width=1); gz += 5
-    d.text((6, 5), title, fill=(0, 0, 0, 255), font=font(15))
     if show_neighbours:
         for other, rep2 in R.items():
             if other == sid or rep2["level"] != rep["level"]:
@@ -139,6 +139,8 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
             for m in re.finditer(r'<line id="[^"]*" class="wall"[^>]*? x1="([-\d.]+)" y1="([-\d.]+)" x2="([-\d.]+)" y2="([-\d.]+)"', svg.read_text(encoding="utf-8")):
                 x1, y1, x2, y2 = map(float, m.groups())
                 d.line([T(x1, y1), T(x2, y2)], fill=(0, 0, 0, 255), width=5)
+    d.rectangle([0, 0, w, 26], fill=(255, 255, 255, 255))
+    d.text((6, 5), title, fill=(0, 0, 0, 255), font=font(15))
     # scale bar
     d.line([T(x0 + 1, z1 - 1), T(x0 + 6, z1 - 1)], fill=(0, 0, 0, 255), width=3)
     d.text(T(x0 + 1, z1 - 2.2), "5 м", fill=(0, 0, 0, 255), font=font(10))

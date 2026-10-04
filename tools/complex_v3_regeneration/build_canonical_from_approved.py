@@ -181,7 +181,7 @@ def classify(plan: Plan, entry: dict[str, Any], owns_trunks: bool) -> None:
                 r.role = "context"
                 r.reason = "outside this sector's rooms (shared drawing)"
             continue
-        if any(same_box(r.box, b) for b in exclude):
+        if any(same_box(r.box, b) for b in exclude) or r.ident in entry.get("exclude_ids", []):
             r.role, r.reason = "context", "neighbour / foreign element drawn in the plan"
         elif cls in ENVELOPE_CLASSES:
             r.role, r.reason = "envelope", "outline of a room group"
@@ -462,6 +462,25 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
     assign_labels(plan)
     tf, tf_info = build_transform(entry, level)
     for am in entry.get("amendments", []):
+        if am["op"] == "plan_stretch":
+            split, dpx = float(am["split_px"]), am["dx_m"] / tf.kx
+            for r in plan.rects:
+                if r.x >= split - 0.5:
+                    r.x += dpx
+                elif abs(r.x2 - split) < 1.0:
+                    r.w += dpx
+            for l in plan.lines:
+                if min(l.x1, l.x2) >= split - 0.5:
+                    l.x1 += dpx
+                    l.x2 += dpx
+                elif min(l.x1, l.x2) < split < max(l.x1, l.x2):
+                    if l.x1 > l.x2:
+                        l.x1 += dpx
+                    else:
+                        l.x2 += dpx
+            if am.get("drop_door_glyphs"):
+                plan.door_paths.clear()
+            continue
         if am["op"] == "room_add":
             x, z, w, h = am["rect_m"]
             plan.rects.append(Rect((x - tf.sx) / tf.kx + tf.ox, (z - tf.sy) / tf.ky + tf.oy, w / tf.kx, h / tf.ky, am.get("class", "support"), "space",
@@ -660,6 +679,13 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
                 lo, hi = sorted(((x1 - tf.sx) / tf.kx + tf.ox, (x2 - tf.sx) / tf.kx + tf.ox))
             cands.append({"orient": orient, "fixed": fixed_px, "lo": lo, "hi": hi, "gtype": am.get("kind", "door"), "source": f"amendment {am['id']}",
                           "src": f"amendment-{am['id']}", "prio": 9, "px": [fixed_px, lo, hi], "dtype": am.get("type"), "height": am.get("height_m"), "vertical": am.get("vertical"), "force": am.get("force")})
+        elif am["op"] == "opening_remove":
+            for c in list(cands):
+                mid = (c["lo"] + c["hi"]) / 2
+                cx, cz = (tf.px(mid), tf.py(c["fixed"])) if c["orient"] == "h" else (tf.px(c["fixed"]), tf.py(mid))
+                if abs(cx - am["near_m"][0]) + abs(cz - am["near_m"][1]) < 1.0 and (not am.get("gtype") or c["gtype"] == am["gtype"]):
+                    cands.remove(c)
+                    break
         elif am["op"] == "door_set":
             best, best_d = None, 1e9
             for c in cands:
@@ -674,6 +700,9 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
                 report["anomalies"].append({"type": "amendment_not_applied", "id": am["id"], "note": "no opening near the given point"})
                 continue
             mid = (best["lo"] + best["hi"]) / 2
+            if am.get("center_m"):
+                cm = am["center_m"]
+                mid = ((cm[0] - tf.sx) / tf.kx + tf.ox) if best["orient"] == "h" else ((cm[1] - tf.sy) / tf.ky + tf.oy)
             k = tf.kx if best["orient"] == "h" else tf.ky
             half = float(am["width_m"]) / 2 / k
             best["lo"], best["hi"] = mid - half, mid + half
