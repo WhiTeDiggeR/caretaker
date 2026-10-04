@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 
-from tools.complex_v3_regeneration.vertical_registry import load_definitions  # noqa: E402
+from tools.complex_v3_regeneration.vertical_registry import defined_transition_ids  # noqa: E402
 SPACE_REFS = {
     "VT-MAIN-ELEVATOR": {"LV-U":"U-CENTRAL-CORE/passenger_elevator", "LV-L":"L-CENTRAL-CORE/passenger_elevator"},
     "VT-MAIN-STAIR": {"LV-U":"U-CENTRAL-CORE/main_stair", "LV-L":"L-CENTRAL-CORE/main_stair"},
@@ -42,7 +42,7 @@ def map_ports(handoff: dict, vertical: dict) -> dict:
     portals = handoff["internal_portals"] + handoff["external_portals"]
     datums = vertical["level_datums"]
     entries, diagnostics = [], []
-    defined = set(load_definitions())
+    defined = defined_transition_ids()
     for transition in vertical["transitions"]:
         tid = transition["id"]
         if tid not in SPACE_REFS:

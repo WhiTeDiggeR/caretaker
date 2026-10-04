@@ -41,9 +41,22 @@ RESOLVED_STATUSES = {GENERATED, OPENINGS_READY}
 
 
 def load_definitions(path: Path = DEFINITIONS) -> dict[str, dict[str, Any]]:
-    """Map vertical_id -> {"host_sector_id", "generator"} for SVG-derived stairs."""
+    """Map vertical_id -> {"host_sector_id", "generator"} for SVG-derived stairs.
+
+    A transition that climbs through several levels (a chain of flights in one shaft) is described by one
+    definition per flight; each has its own vertical_id (the markup id) and the shared `transition_id`.
+    """
     document = json.loads(path.read_text(encoding="utf-8"))
     return {item["generator"]["vertical_id"]: item for item in document["stairs"]}
+
+
+def transition_of(definition: dict[str, Any]) -> str:
+    generator = definition["generator"]
+    return str(generator.get("transition_id", generator["vertical_id"]))
+
+
+def defined_transition_ids(definitions: dict[str, dict[str, Any]] | None = None) -> set[str]:
+    return {transition_of(item) for item in (definitions if definitions is not None else load_definitions()).values()}
 
 
 def build_registry(
@@ -57,14 +70,19 @@ def build_registry(
         vertical_id = transition["id"]
         kind = transition.get("kind", "")
         entry: dict[str, Any] = {"id": vertical_id, "kind": kind, "owner": "complex_v3_infrastructure", "detail": ""}
-        if vertical_id in definitions:
-            definition = definitions[vertical_id]
-            entry["owner"] = f"sector:{definition['host_sector_id']}"
-            try:
-                resolved = resolve_stair(definition["generator"], sectors, project_root)
-                entry.update(status=GENERATED, summary=resolved["summary"])
-            except (VerticalError, KeyError, OSError) as exc:
-                entry.update(status=INVALID, detail=str(exc))
+        flights = [item for item in definitions.values() if transition_of(item) == vertical_id]
+        if flights:
+            entry["owner"] = ", ".join(f"sector:{item['host_sector_id']}" for item in flights)
+            summaries, errors = [], []
+            for definition in flights:
+                try:
+                    summaries.append(resolve_stair(definition["generator"], sectors, project_root)["summary"])
+                except (VerticalError, KeyError, OSError) as exc:
+                    errors.append(f"{definition['generator']['vertical_id']}: {exc}")
+            if errors:
+                entry.update(status=INVALID, detail="; ".join(errors))
+            else:
+                entry.update(status=GENERATED, summary=summaries[0] if len(summaries) == 1 else summaries)
         elif kind in LIFT_KINDS:
             missing = [line for line in lift_diagnostics if line.startswith(vertical_id)]
             entry["owner"] = "sector_svg_openings"

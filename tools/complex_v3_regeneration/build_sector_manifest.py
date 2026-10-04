@@ -57,10 +57,14 @@ def circulation_entry(parameterization: dict[str, Any]) -> dict[str, Any]:
 
 def apply_vertical_definitions(source_by_id: dict[str, dict[str, Any]]) -> None:
     """Replace the static stair configuration with the SVG-derived definitions."""
+    hosts: dict[str, bool] = {}
     for stair in load_json(VERTICAL_DEFINITIONS)["stairs"]:
         host = stair["host_sector_id"]
         if host not in source_by_id:
             raise ValueError(f"Vertical definition host sector is unknown: {host}")
+        if hosts.get(host):
+            raise ValueError(f"Sector {host} hosts more than one stair generator; a sector scene has a single Stairs layer, host each flight in its own (upper) sector")
+        hosts[host] = True
         source_by_id[host]["vertical_generators"] = [copy.deepcopy(stair["generator"])]
 
 
