@@ -129,12 +129,6 @@ func _build_panel() -> void:
 	_source_label = _add_label("План: —", sector)
 	_hint_label = _add_label("", sector, COLOR_MUTED)
 
-	var tools := _section("Инструменты")
-	_toolchain_label = _add_label("Генераторы: проверка…", tools)
-	_inkscape_label = _add_label("Inkscape: проверка…", tools)
-	_agent_label = _add_label("Агент исправления: —", tools)
-	_claude_button = _add_button("Выбрать агентом Claude", _use_claude_agent, tools, "Записывает лаунчер Claude Code. Claude CLI должен быть авторизован (команда claude, затем /login).")
-
 	var actions := _section("Работа с планом")
 	_add_button("1. Открыть план в Inkscape", _open_source, actions, "Открывает исходный SVG сектора в Inkscape. После правки сохраните файл.")
 	_add_button("2. Проверить сектор", func() -> void: _start_cli(true), actions, "Проверяет план и сборку, ничего не меняя.")
@@ -165,6 +159,12 @@ func _build_panel() -> void:
 	_add_button("Привязать выбранный", func() -> void: _binding_action("bind"), _binding_container)
 	_add_button("Перепривязать выбранный", func() -> void: _binding_action("rebind"), _binding_container)
 	_add_button("Отвязать выбранный", func() -> void: _binding_action("unbind"), _binding_container)
+
+	var tools := _section("Инструменты")
+	_toolchain_label = _add_label("Генераторы: проверка…", tools)
+	_inkscape_label = _add_label("Inkscape: проверка…", tools)
+	_agent_label = _add_label("Агент исправления: —", tools)
+	_claude_button = _add_button("Выбрать агентом Claude", _use_claude_agent, tools, "Записывает лаунчер Claude Code. Claude CLI должен быть авторизован (команда claude, затем /login).")
 
 	_settings_toggle = _add_button("Настройки ▸", _toggle_settings, _content)
 	_settings_toggle.toggle_mode = true
