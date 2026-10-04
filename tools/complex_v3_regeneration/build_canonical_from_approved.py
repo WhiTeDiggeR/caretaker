@@ -305,8 +305,8 @@ def build_transform(entry: dict[str, Any], level: dict[str, Any]) -> tuple[Trans
     pp, oo = entry["pair"]["plan"], entry["pair"]["ov"]
     kx = (oo[2] / pp[2]) / scale
     ky = (oo[3] / pp[3]) / scale
-    sx = (oo[0] - x0) / scale
-    sy = (oo[1] - z0) / scale
+    sx = (oo[0] - x0) / scale + float(entry.get("offset_m", [0, 0])[0])
+    sy = (oo[1] - z0) / scale + float(entry.get("offset_m", [0, 0])[1])
     tf = Transform(kx, ky, pp[0], pp[1], sx, sy)
     info = {
         "plan_px_per_m_x": round(1 / kx, 3), "plan_px_per_m_y": round(1 / ky, 3),
@@ -594,12 +594,48 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
                 lo, hi = max(a.x, b.x), min(a.x2, b.x2)
                 if hi - lo > 1:
                     cands.append({"orient": "h", "fixed": fy, "lo": lo, "hi": hi, "gtype": "opening", "source": "same-room", "src": a.group, "prio": 9, "px": [fy, lo, hi]})
+    for am in entry.get("amendments", []):
+        if am["op"] == "door_add":
+            x1, z1, x2, z2 = am["at_m"]
+            if abs(x1 - x2) < 1e-6:
+                orient, fixed_px = "v", (x1 - tf.sx) / tf.kx + tf.ox
+                lo, hi = sorted(((z1 - tf.sy) / tf.ky + tf.oy, (z2 - tf.sy) / tf.ky + tf.oy))
+            else:
+                orient, fixed_px = "h", (z1 - tf.sy) / tf.ky + tf.oy
+                lo, hi = sorted(((x1 - tf.sx) / tf.kx + tf.ox, (x2 - tf.sx) / tf.kx + tf.ox))
+            cands.append({"orient": orient, "fixed": fixed_px, "lo": lo, "hi": hi, "gtype": am.get("kind", "door"), "source": f"amendment {am['id']}",
+                          "src": f"amendment-{am['id']}", "prio": 9, "px": [fixed_px, lo, hi], "dtype": am.get("type"), "height": am.get("height_m")})
+        elif am["op"] == "door_set":
+            best, best_d = None, 1e9
+            for c in cands:
+                if c["gtype"] == "window":
+                    continue
+                mid = (c["lo"] + c["hi"]) / 2
+                cx, cz = (tf.px(mid), tf.py(c["fixed"])) if c["orient"] == "h" else (tf.px(c["fixed"]), tf.py(mid))
+                dist = abs(cx - am["near_m"][0]) + abs(cz - am["near_m"][1])
+                if dist < best_d:
+                    best, best_d = c, dist
+            if best is None or best_d > 2.0:
+                report["anomalies"].append({"type": "amendment_not_applied", "id": am["id"], "note": "no opening near the given point"})
+                continue
+            mid = (best["lo"] + best["hi"]) / 2
+            k = tf.kx if best["orient"] == "h" else tf.ky
+            half = float(am["width_m"]) / 2 / k
+            best["lo"], best["hi"] = mid - half, mid + half
+            best["dtype"], best["height"] = am.get("type"), am.get("height_m")
+            if am.get("kind"):
+                best["gtype"] = am["kind"]
+    report["amendments"] = [am["id"] for am in entry.get("amendments", [])]
     out.append(f'  <g id="{sid}-openings" data-layer="openings">')
     n_open = 0
     for c in cands:
         hosts = host_rooms(c, rooms)
         if not hosts:
-            report["anomalies"].append({"type": "opening_not_on_sector_wall", "source_id": c["src"], "source": c["source"], "plan_px": c["px"],
+            if c["orient"] == "h":
+                wm = [tf.px(c["lo"]), tf.py(c["fixed"]), tf.px(c["hi"]), tf.py(c["fixed"])]
+            else:
+                wm = [tf.px(c["fixed"]), tf.py(c["lo"]), tf.px(c["fixed"]), tf.py(c["hi"])]
+            report["anomalies"].append({"type": "opening_not_on_sector_wall", "source_id": c["src"], "source": c["source"], "plan_px": c["px"], "world_m": wm, "gtype": c["gtype"],
                                         "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"})
             continue
         fixed = min((xs if c["orient"] == "v" else ys), key=lambda v: abs(v - c["fixed"]))
@@ -629,7 +665,11 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             else:
                 inside_high = bool(high)
             inside = "normal" if (inside_high and c["orient"] == "h") or ((not inside_high) and c["orient"] == "v") else "opposite"
-            attr = f' data-door-height="{fmt(4.5 if width >= 4.0 and wall_h >= 5.0 else 2.4)}" data-inside-side="{inside}"'
+            height = c.get("height") or (4.5 if width >= 4.0 and wall_h >= 5.0 else 2.4)
+            dtype = f' data-door-type="{c["dtype"]}"' if c.get("dtype") else ""
+            attr = f' data-door-height="{fmt(height)}"{dtype} data-inside-side="{inside}"'
+        elif gtype == "opening" and c.get("dtype"):
+            attr = f' data-door-type="{c["dtype"]}"'
         elif gtype == "window":
             attr = ""
         grow(p[0], p[1]); grow(p[2], p[3])
