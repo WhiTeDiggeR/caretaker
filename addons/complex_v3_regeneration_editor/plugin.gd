@@ -566,7 +566,10 @@ func _reload_promoted_sector() -> void:
 			if controller == null or not controller.has_method("apply_bindings"):
 				errors.append("в перезагруженном секторе нет AnchorController")
 			else:
-				errors.append_array(controller.call("apply_bindings") as PackedStringArray)
+				# Doors may have moved or been resized: re-seat their frames before applying bindings.
+				var doors := _run_door_binding(reloaded, _active_context)
+				if not bool(doors["ok"]):
+					errors.append_array(doors["errors"] as PackedStringArray)
 			_finish_reload(errors)
 			return
 	_finish_reload(PackedStringArray(["перезагрузка сцены сектора не завершилась вовремя"]))
@@ -647,24 +650,30 @@ func _bind_doors_by_id() -> void:
 	if not bool(context.get("ok", false)) or root == null:
 		_show_errors(context.get("errors", PackedStringArray(["откройте сцену сектора"])) as PackedStringArray)
 		return
+	var outcome := _run_door_binding(root, context)
+	if bool(outcome["ok"]):
+		_set_status("clean", "привязано дверей: %d" % int(outcome["count"]), outcome["notes"] as PackedStringArray)
+	else:
+		_set_status("failed", "привязка дверей не выполнена", outcome["errors"] as PackedStringArray)
+
+
+## Binds the sector's door objects to door anchors by ID, writes the bindings file and applies it.
+func _run_door_binding(root: Node, context: Dictionary) -> Dictionary:
 	var controller := root.get_node_or_null("AnchorController")
 	var authored := root.get_node_or_null("AuthoredContent")
 	if controller == null or authored == null:
-		_show_errors(PackedStringArray(["в сцене нет AnchorController или AuthoredContent"]))
-		return
+		return {"ok": false, "count": 0, "errors": PackedStringArray(["в сцене нет AnchorController или AuthoredContent"]), "notes": PackedStringArray()}
 	var objects: Array = []
 	_collect_anchored_objects(authored, objects)
 	var anchor_document: Variant = JSON.parse_string(FileAccess.get_file_as_string(str(controller.get("anchor_frames_path"))))
 	if not anchor_document is Dictionary:
-		_show_errors(PackedStringArray(["не прочитан файл якорей: %s" % str(controller.get("anchor_frames_path"))]))
-		return
+		return {"ok": false, "count": 0, "errors": PackedStringArray(["не прочитан файл якорей: %s" % str(controller.get("anchor_frames_path"))]), "notes": PackedStringArray()}
 	var result := DOOR_BINDING_SCRIPT.build_bindings(
-		objects, anchor_document as Dictionary, ProjectSettings.globalize_path(_source_svg),
+		objects, anchor_document as Dictionary, ProjectSettings.globalize_path(str(context["source_svg"])),
 		str(controller.get("authored_scene_path")), str(context["sector_id"])
 	)
 	if not bool(result["ok"]):
-		_show_errors(result["errors"] as PackedStringArray)
-		return
+		return {"ok": false, "count": 0, "errors": result["errors"] as PackedStringArray, "notes": PackedStringArray()}
 	var bindings_path := str(controller.get("object_bindings_path"))
 	var existing: Variant = JSON.parse_string(FileAccess.get_file_as_string(bindings_path))
 	var merged := DOOR_BINDING_SCRIPT.merge_document(
@@ -673,16 +682,13 @@ func _bind_doors_by_id() -> void:
 	)
 	var file := FileAccess.open(bindings_path, FileAccess.WRITE)
 	if file == null:
-		_show_errors(PackedStringArray(["не удалось записать файл привязок: %s" % bindings_path]))
-		return
-	file.store_string(JSON.stringify(merged, "  ") + "\n")
+		return {"ok": false, "count": 0, "errors": PackedStringArray(["не удалось записать файл привязок: %s" % bindings_path]), "notes": PackedStringArray()}
+	file.store_string(JSON.stringify(merged, "  ") + "
+")
 	file.close()
+	var notes := PackedStringArray(Array(result["skipped"]).map(func(line: Variant) -> String: return "пропущено: %s" % str(line)))
 	var errors := controller.call("apply_bindings") as PackedStringArray
-	var lines := PackedStringArray(Array(result["skipped"]).map(func(line: Variant) -> String: return "пропущено: %s" % str(line)))
-	if errors.is_empty():
-		_set_status("clean", "привязано дверей: %d" % (result["bindings"] as Array).size(), lines)
-	else:
-		_set_status("failed", "привязки записаны, но не применились", errors)
+	return {"ok": errors.is_empty(), "count": (result["bindings"] as Array).size(), "errors": errors, "notes": notes}
 
 
 func _collect_anchored_objects(node: Node, objects: Array) -> void:

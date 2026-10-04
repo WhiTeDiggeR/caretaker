@@ -305,6 +305,58 @@ def _segments_cross_strictly_xz(a: Sequence[float], b: Sequence[float], c: Seque
     return values[0] * values[1] < -EPS and values[2] * values[3] < -EPS
 
 
+STAIR_DOOR_BOUNDARY_TOLERANCE_M = 0.25
+STAIR_DOOR_WIDTH_TOLERANCE_M = 0.02
+STAIR_DOOR_LEVEL_TOLERANCE_M = 0.5
+
+
+def _opening_on_wall(frame: dict[str, Any]) -> tuple[str, float, float, float, float] | None:
+    """Return (width axis, boundary coordinate, low, high, elevation) of a door or stair opening."""
+    origin, forward = frame["origin"], frame["forward"]
+    bounds = frame.get("bounds", {})
+    if frame.get("type") == "door" and frame.get("role") == "center":
+        width = bounds.get("width_m")
+        axis = "x" if abs(forward[0]) >= abs(forward[2]) else "z"
+    elif frame.get("type") in {"stair_entry", "stair_exit"}:
+        width = bounds.get("clear_width_m")
+        axis = "z" if abs(forward[0]) >= abs(forward[2]) else "x"
+    else:
+        return None
+    if not isinstance(width, (int, float)) or width <= 0:
+        return None
+    centre, boundary = (origin[0], origin[2]) if axis == "x" else (origin[2], origin[0])
+    return axis, float(boundary), float(centre) - float(width) / 2, float(centre) + float(width) / 2, float(origin[1])
+
+
+def check_stair_door_alignment(frames: Sequence[dict[str, Any]]) -> None:
+    """A door that opens onto a stair must be exactly as wide as, and aligned with, the stair.
+
+    A wider or shifted door leaves part of the opening over the shaft: a guard rail in the
+    doorway and a fall past the stair.
+    """
+    doors = [(frame, _opening_on_wall(frame)) for frame in frames if frame.get("type") == "door" and frame.get("role") == "center"]
+    stairs = [(frame, _opening_on_wall(frame)) for frame in frames if frame.get("type") in {"stair_entry", "stair_exit"}]
+    errors: list[str] = []
+    for stair, stair_opening in stairs:
+        if stair_opening is None:
+            continue
+        axis, boundary, low, high, level = stair_opening
+        for door, door_opening in doors:
+            if door_opening is None or door_opening[0] != axis:
+                continue
+            if abs(door_opening[1] - boundary) > STAIR_DOOR_BOUNDARY_TOLERANCE_M or abs(door_opening[4] - level) > STAIR_DOOR_LEVEL_TOLERANCE_M:
+                continue
+            if min(high, door_opening[3]) - max(low, door_opening[2]) <= 0:
+                continue
+            if abs(door_opening[2] - low) > STAIR_DOOR_WIDTH_TOLERANCE_M or abs(door_opening[3] - high) > STAIR_DOOR_WIDTH_TOLERANCE_M:
+                errors.append(
+                    f"Door {door['anchor_id']} opens {door_opening[2]:.3f}..{door_opening[3]:.3f} on {axis}, but stair {stair['anchor_id']} "
+                    f"opens {low:.3f}..{high:.3f}; set the door to {low:.3f}..{high:.3f} so it is neither wider nor narrower than the stair"
+                )
+    if errors:
+        raise RegenerationError("Door and stair openings do not match: " + "; ".join(errors))
+
+
 def parameterize_frames(
     frames: list[dict[str, Any]], sector: dict[str, Any], handoff: dict[str, Any],
     *, producer: str = "svg",
@@ -680,6 +732,7 @@ def execute(args: argparse.Namespace) -> int:
     commands.extend(stair_commands)
     frames = parameterize_frames(svg_frames, sector, conversion_report.get("spatial_handoff", {}))
     frames.extend(parameterize_frames(stair_frames, sector, {}, producer="stairs"))
+    check_stair_door_alignment(frames)
     anchor_document = normalized_anchor_document(
         manifest["map_id"], args.sector, generation_id,
         {"sector_backend": VERSION, "svg_converter": conversion_report.get("generator_version", "unknown"), "stair_generator": stair_reports[0].get("generator_version", "none") if stair_reports else "none"},

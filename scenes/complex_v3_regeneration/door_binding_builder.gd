@@ -9,6 +9,8 @@ class_name ComplexV3DoorBindingBuilder
 const SCHEMA_ID := "caretaker.object_bindings"
 const SCHEMA_VERSION := "1.0.0"
 const DOOR_TYPE := "door"
+## Distance between the post centres of objects/complex_v3/open_door_frame.tscn at scale 1.
+const DOOR_FRAME_POST_SPACING_M := 2.38
 const PLACEHOLDER_FOOTPRINT := [0.1, 0.1, 0.1]
 ## The marker box stands on the pivot (floor) so it stays inside the door height limits.
 const PLACEHOLDER_FOOTPRINT_CENTER := [0.0, 0.05, 0.0]
@@ -16,7 +18,8 @@ const PLACEHOLDER_FOOTPRINT_CENTER := [0.0, 0.05, 0.0]
 
 ## Returns {"ok": bool, "bindings": Array, "errors": PackedStringArray, "skipped": Array}.
 ## `objects` are AnchoredObject3D instances already positioned by the author; their
-## orientation and scale are preserved, only the position is seated on the door centre.
+## orientation is preserved, the position is seated on the door centre and the frame width
+## follows the door opening (height/depth scale are kept).
 static func build_bindings(
 	objects: Array,
 	anchor_document: Dictionary,
@@ -58,7 +61,13 @@ static func build_bindings(
 			continue
 		var base_transform := base["transform"] as Transform3D
 		var current := object.global_transform if object.is_inside_tree() else object.transform
-		var correction := Transform3D(base_transform.basis.inverse() * current.basis, Vector3.ZERO)
+		# Keep orientation and height/depth scale; the width follows the door opening.
+		var door_width := float(((registry.get_anchor_frame(anchor_id).get("bounds", {})) as Dictionary).get("width_m", 0.0))
+		var scale := current.basis.get_scale()
+		if door_width > 0.0:
+			scale.x = door_width / DOOR_FRAME_POST_SPACING_M
+		var local_basis := Basis(current.basis.orthonormalized().get_rotation_quaternion()).scaled_local(scale)
+		var correction := Transform3D(base_transform.basis.inverse() * local_basis, Vector3.ZERO)
 		bindings.append(_binding_entry(sector_id, authored_scene_path, object, anchor_id, correction))
 	return {"ok": errors.is_empty(), "bindings": bindings, "errors": errors, "skipped": skipped}
 
