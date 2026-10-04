@@ -26,6 +26,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # The set-dressing check compares scenes with a committed baseline read through `git show`.
+          fetch-depth: 0
 
       - name: Install Godot 4.7 stable
         shell: bash
