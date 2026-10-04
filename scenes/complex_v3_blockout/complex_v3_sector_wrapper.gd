@@ -127,13 +127,26 @@ func validate_regeneration_contract(require_external_authored := false) -> Packe
 		var authored := authored_nodes[0]
 		if str(authored.get_meta("content_owner", "")) != "author":
 			errors.append("AuthoredContent must declare author ownership")
-		if require_external_authored and authored.scene_file_path.is_empty():
-			errors.append("AuthoredContent must be the root of a separate PackedScene resource")
+		if require_external_authored and not _authored_is_external_resource(authored):
+			errors.append("AuthoredContent must be the root of a separate PackedScene resource, or hold an instance of authored_content_scene")
 		if authored.find_child(GENERATED_NAME, true, false) != null:
 			errors.append("Generated must not be nested below AuthoredContent")
 		if authored.find_child(PREVIEW_NAME, true, false) != null:
 			errors.append("EditorPreview must not be stored below AuthoredContent")
 	return errors
+
+
+## Authored content is external when AuthoredContent is itself an instance root, or when it is the
+## holder used by production sector scenes and directly contains an instance of authored_content_scene.
+func _authored_is_external_resource(authored: Node) -> bool:
+	if not authored.scene_file_path.is_empty():
+		return true
+	if authored_content_scene == null or authored_content_scene.resource_path.is_empty():
+		return false
+	for child: Node in authored.get_children():
+		if child.scene_file_path == authored_content_scene.resource_path:
+			return true
+	return false
 
 
 func _validate_configured_resources() -> PackedStringArray:

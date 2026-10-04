@@ -47,6 +47,13 @@ func _initialize() -> void:
 		errors.append("EditorPreview contains collision")
 	if authored != null and authored.find_child("EditorPreview", true, false) != null:
 		errors.append("EditorPreview leaked into AuthoredContent")
+	# Production sector scenes keep AuthoredContent as a plain holder of the SetDressing instance.
+	var production: Variant = (load("res://scenes/complex_v3_blockout/zones/upper/u_route_a.tscn") as PackedScene).instantiate()
+	root.add_child(production)
+	await process_frame
+	for error: String in production.rebuild_contract_generated():
+		errors.append("production U-ROUTE-A rebuild: %s" % error)
+	production.queue_free()
 	if errors.is_empty():
 		print("COMPLEX_V3_SECTOR_WRAPPER_CONTRACT_OK generated=replaceable authored=preserved preview=transient_collision_free")
 	else:
