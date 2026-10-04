@@ -19,7 +19,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     env:
       GODOT_VERSION: 4.7-stable
       GODOT_BINARY: Godot_v4.7-stable_linux.x86_64
@@ -43,3 +43,15 @@ jobs:
       - name: Smoke-test startup scene
         shell: bash
         run: ./"${GODOT_BINARY}" --headless --path . --quit-after 5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Python suites, scene/registry indexes and every headless Godot check (tools/ci/run_checks.sh).
+      # Tests that need svg-plan-to-godot / generate-godot-stairs skip themselves here: those tools are
+      # not part of the repository, so they run locally with SVG_TOOL_ROOT / STAIR_TOOL_ROOT set.
+      - name: Run repository checks
+        shell: bash
+        run: GODOT_BIN="${PWD}/${GODOT_BINARY}" bash tools/ci/run_checks.sh
