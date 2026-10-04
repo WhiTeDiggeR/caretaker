@@ -460,14 +460,16 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             rect.h = float(override.get("height", rect.h))
             rect.w = float(override.get("width", rect.w))
     assign_labels(plan)
-    classify(plan, entry, bool(entry.get("owns_trunks")))
     tf, tf_info = build_transform(entry, level)
-    wall_h = float(entry["wall_height"])
-
     for am in entry.get("amendments", []):
+        if am["op"] == "room_add":
+            x, z, w, h = am["rect_m"]
+            plan.rects.append(Rect((x - tf.sx) / tf.kx + tf.ox, (z - tf.sy) / tf.ky + tf.oy, w / tf.kx, h / tf.ky, am.get("class", "support"), "space",
+                                   f"amendment-{am['id']}", am["label"], "room"))
+            continue
         if am["op"] not in {"rect_set", "rect_grow"}:
             continue
-        target = next((r for r in plan.rects if r.role in {"room", "carve"} and r.label.upper().startswith(am["label"].upper())), None)
+        target = next((r for r in plan.rects if r.label.upper().startswith(am["label"].upper())), None)
         if target is None:
             report_missing = True
             continue
@@ -482,6 +484,9 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             elif side == "n": target.y -= by_y; target.h += by_y
             elif side == "e": target.w += by_x
             elif side == "w": target.x -= by_x; target.w += by_x
+    classify(plan, entry, bool(entry.get("owns_trunks")))
+    wall_h = float(entry["wall_height"])
+
     pieces_total = 0
     for r in [r for r in plan.rects if r.role == "carve"]:
         pieces = carve(r, plan.rects, 1.0 / tf.kx, 1.0 / tf.ky)
@@ -654,7 +659,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
                 orient, fixed_px = "h", (z1 - tf.sy) / tf.ky + tf.oy
                 lo, hi = sorted(((x1 - tf.sx) / tf.kx + tf.ox, (x2 - tf.sx) / tf.kx + tf.ox))
             cands.append({"orient": orient, "fixed": fixed_px, "lo": lo, "hi": hi, "gtype": am.get("kind", "door"), "source": f"amendment {am['id']}",
-                          "src": f"amendment-{am['id']}", "prio": 9, "px": [fixed_px, lo, hi], "dtype": am.get("type"), "height": am.get("height_m"), "vertical": am.get("vertical")})
+                          "src": f"amendment-{am['id']}", "prio": 9, "px": [fixed_px, lo, hi], "dtype": am.get("type"), "height": am.get("height_m"), "vertical": am.get("vertical"), "force": am.get("force")})
         elif am["op"] == "door_set":
             best, best_d = None, 1e9
             for c in cands:
@@ -682,6 +687,8 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
     n_open = 0
     for c in cands:
         hosts = host_rooms(c, rooms)
+        if not hosts and c.get("force"):
+            hosts = [r for r in rooms if r.space]
         if not hosts:
             if c["orient"] == "h":
                 wm = [tf.px(c["lo"]), tf.py(c["fixed"]), tf.px(c["hi"]), tf.py(c["fixed"])]
@@ -690,8 +697,11 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             report["anomalies"].append({"type": "opening_not_on_sector_wall", "source_id": c["src"], "source": c["source"], "plan_px": c["px"], "world_m": wm, "gtype": c["gtype"],
                                         "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"})
             continue
-        fixed = min((xs if c["orient"] == "v" else ys), key=lambda v: abs(v - c["fixed"]))
-        fixed = (xs if c["orient"] == "v" else ys)[fixed]
+        if c.get("force"):
+            fixed = c["fixed"]
+        else:
+            fixed = min((xs if c["orient"] == "v" else ys), key=lambda v: abs(v - c["fixed"]))
+            fixed = (xs if c["orient"] == "v" else ys)[fixed]
         lo, hi = c["lo"], c["hi"]
         if c["orient"] == "h":
             p = (tf.px(lo), tf.py(fixed), tf.px(hi), tf.py(fixed))
