@@ -1,0 +1,345 @@
+{
+  "sector_id": "L-OLD-CORE",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_old_core.svg",
+  "registration": {
+    "plan_px_per_m_x": 18.0,
+    "plan_px_per_m_y": 15.242,
+    "anisotropy_percent": 16.6,
+    "world_envelope_m": [
+      -81.11,
+      -9.33,
+      20.0,
+      34.44
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 3.4,
+  "rooms": [
+    {
+      "id": "l-old-core-floor-01",
+      "space_id": "L-OLD-CORE/staryy-rezervnyy-cu",
+      "label": "СТАРЫЙ РЕЗЕРВНЫЙ ЦУ / аналоговая операторская",
+      "class": "old",
+      "source_id": "l_old_core-geometry-002",
+      "plan_px": [
+        300.0,
+        55.0,
+        210.0,
+        185.0
+      ],
+      "world_m": [
+        -78.333,
+        -9.333,
+        11.666,
+        12.137
+      ],
+      "size_m": [
+        11.67,
+        12.14
+      ],
+      "area_m2": 141.6
+    },
+    {
+      "id": "l-old-core-floor-02",
+      "space_id": "L-OLD-CORE/releynaya",
+      "label": "РЕЛЕЙНАЯ / связь · питание",
+      "class": "support",
+      "source_id": "l_old_core-space-001",
+      "plan_px": [
+        510.0,
+        55.0,
+        90.0,
+        100.0
+      ],
+      "world_m": [
+        -66.667,
+        -9.333,
+        5.0,
+        6.561
+      ],
+      "size_m": [
+        5.0,
+        6.56
+      ],
+      "area_m2": 32.8
+    },
+    {
+      "id": "l-old-core-floor-03",
+      "space_id": "L-OLD-CORE/komnata",
+      "label": "КОМНАТА / СТАРШЕГО",
+      "class": "old",
+      "source_id": "l_old_core-geometry-003",
+      "plan_px": [
+        510.0,
+        155.0,
+        90.0,
+        85.0
+      ],
+      "world_m": [
+        -66.667,
+        -2.772,
+        5.0,
+        5.576
+      ],
+      "size_m": [
+        5.0,
+        5.58
+      ],
+      "area_m2": 27.9
+    },
+    {
+      "id": "l-old-core-floor-04",
+      "space_id": "L-OLD-CORE/corridor",
+      "label": "",
+      "class": "corridor",
+      "source_id": "l_old_core-space-002",
+      "plan_px": [
+        400.0,
+        240.0,
+        100.0,
+        60.0
+      ],
+      "world_m": [
+        -72.778,
+        2.804,
+        5.556,
+        3.937
+      ],
+      "size_m": [
+        5.56,
+        3.94
+      ],
+      "area_m2": 21.9
+    },
+    {
+      "id": "l-old-core-floor-05",
+      "space_id": "L-OLD-CORE/raspredelitelnyy-holl-starog",
+      "label": "РАСПРЕДЕЛИТЕЛЬНЫЙ ХОЛЛ СТАРОГО ЯДРА / старый навигационный узел · отдельные направления / стойка указателей / локальная связь · план сектора",
+      "class": "old",
+      "source_id": "l_old_core-geometry-004",
+      "plan_px": [
+        250.0,
+        300.0,
+        360.0,
+        280.0
+      ],
+      "world_m": [
+        -81.111,
+        6.741,
+        20.0,
+        18.37
+      ],
+      "size_m": [
+        20.0,
+        18.37
+      ],
+      "area_m2": 367.4
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-old-core-window-01",
+      "type": "window",
+      "source": "window",
+      "source_id": "l_old_core-annotation-001",
+      "width_m": 2.22,
+      "rooms": [
+        "L-OLD-CORE/corridor",
+        "L-OLD-CORE/staryy-rezervnyy-cu"
+      ],
+      "world_m": [
+        -72.5,
+        2.804,
+        -70.278,
+        2.804
+      ]
+    },
+    {
+      "id": "l-old-core-door-02",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_old_core-opening-001",
+      "width_m": 3.33,
+      "rooms": [
+        "L-OLD-CORE/corridor",
+        "L-OLD-CORE/raspredelitelnyy-holl-starog"
+      ],
+      "world_m": [
+        -71.667,
+        6.741,
+        -68.333,
+        6.741
+      ]
+    },
+    {
+      "id": "l-old-core-opening-03",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "l_old_core-opening-004",
+      "width_m": 1.97,
+      "rooms": [
+        "L-OLD-CORE/releynaya",
+        "L-OLD-CORE/staryy-rezervnyy-cu"
+      ],
+      "world_m": [
+        -66.667,
+        -6.053,
+        -66.667,
+        -4.085
+      ]
+    },
+    {
+      "id": "l-old-core-opening-04",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "l_old_core-opening-007",
+      "width_m": 1.97,
+      "rooms": [
+        "L-OLD-CORE/komnata",
+        "L-OLD-CORE/staryy-rezervnyy-cu"
+      ],
+      "world_m": [
+        -66.667,
+        -0.476,
+        -66.667,
+        1.492
+      ]
+    },
+    {
+      "id": "l-old-core-door-05",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_old_core-opening-010",
+      "width_m": 3.15,
+      "rooms": [
+        "L-OLD-CORE/raspredelitelnyy-holl-starog"
+      ],
+      "world_m": [
+        -81.111,
+        12.646,
+        -81.111,
+        15.795
+      ]
+    },
+    {
+      "id": "l-old-core-door-06",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_old_core-opening-011",
+      "width_m": 3.28,
+      "rooms": [
+        "L-OLD-CORE/raspredelitelnyy-holl-starog"
+      ],
+      "world_m": [
+        -61.111,
+        11.333,
+        -61.111,
+        14.614
+      ]
+    },
+    {
+      "id": "l-old-core-door-07",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_old_core-opening-012",
+      "width_m": 4.44,
+      "rooms": [
+        "L-OLD-CORE/raspredelitelnyy-holl-starog"
+      ],
+      "world_m": [
+        -73.333,
+        25.111,
+        -68.889,
+        25.111
+      ]
+    },
+    {
+      "id": "l-old-core-door-08",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_old_core-opening-013",
+      "width_m": 2.62,
+      "rooms": [
+        "L-OLD-CORE/raspredelitelnyy-holl-starog"
+      ],
+      "world_m": [
+        -61.111,
+        20.19,
+        -61.111,
+        22.815
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_old_core-geometry-001",
+      "role": "envelope",
+      "class": "old",
+      "label": "СТАРЫЙ РЕЗЕРВНЫЙ ЦУ / РЕЛЕЙНАЯ / аналоговая операторская / связь · питание / КОМНАТА / СТАРШЕГО",
+      "reason": "outline of a room group (inner rooms cover 100%)",
+      "world_m": [
+        -78.33,
+        -9.33,
+        16.67,
+        12.14
+      ]
+    },
+    {
+      "source_id": "l_old_core-space-003",
+      "role": "context",
+      "class": "context-zone",
+      "label": "КАМЕРА №1 / единый перестроенный тамбур",
+      "reason": "neighbouring sector drawn for orientation",
+      "world_m": [
+        -90.56,
+        11.01,
+        9.45,
+        6.23
+      ]
+    },
+    {
+      "source_id": "l_old_core-space-004",
+      "role": "context",
+      "class": "context-zone",
+      "label": "АРХИВ · МАРШРУТ A / отделённая секция",
+      "reason": "neighbouring sector drawn for orientation",
+      "world_m": [
+        -61.11,
+        10.02,
+        8.33,
+        5.91
+      ]
+    },
+    {
+      "source_id": "l_old_core-space-005",
+      "role": "context",
+      "class": "context-zone",
+      "label": "СТАРЫЙ ПРИЁМНЫЙ ЗАЛ / широкий общий доступ",
+      "reason": "neighbouring sector drawn for orientation",
+      "world_m": [
+        -77.22,
+        25.11,
+        12.22,
+        5.58
+      ]
+    },
+    {
+      "source_id": "l_old_core-space-006",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ПАССАЖИРСКАЯ МАГИСТРАЛЬ",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -61.11,
+        19.21,
+        10.55,
+        4.59
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 12,
+  "feature_rects_ignored": 5,
+  "unmapped_other_elements": 0
+}

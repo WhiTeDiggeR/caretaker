@@ -1,0 +1,204 @@
+{
+  "sector_id": "T-OLD-ACCESS",
+  "level": "LV-T",
+  "source_plan": "docs/design/complex_v3/plans/sectors/technical/t_old_access.svg",
+  "registration": {
+    "plan_px_per_m_x": 15.289,
+    "plan_px_per_m_y": 15.433,
+    "anisotropy_percent": 0.9,
+    "world_envelope_m": [
+      -102.4,
+      24.24,
+      28.12,
+      31.75
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 4.2,
+  "rooms": [
+    {
+      "id": "t-old-access-floor-01",
+      "space_id": "T-OLD-ACCESS/staraya-lestnica",
+      "label": "СТАРАЯ ЛЕСТНИЦА / ↑ в холл старого ядра",
+      "class": "shaft",
+      "source_id": "t_old_access-space-002",
+      "plan_px": [
+        80.0,
+        200.0,
+        280.0,
+        240.0
+      ],
+      "world_m": [
+        -102.4,
+        26.829,
+        18.314,
+        15.551
+      ],
+      "size_m": [
+        18.31,
+        15.55
+      ],
+      "area_m2": 284.8
+    },
+    {
+      "id": "t-old-access-floor-02",
+      "space_id": "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul",
+      "label": "СТАРЫЙ СЛУЖЕБНЫЙ ВЕСТИБЮЛЬ",
+      "class": "corridor",
+      "source_id": "t_old_access-space-003",
+      "plan_px": [
+        360.0,
+        160.0,
+        150.0,
+        280.0
+      ],
+      "world_m": [
+        -84.086,
+        24.238,
+        9.811,
+        18.142
+      ],
+      "size_m": [
+        9.81,
+        18.14
+      ],
+      "area_m2": 178.0
+    },
+    {
+      "id": "t-old-access-floor-03",
+      "space_id": "T-OLD-ACCESS/bokovoy-dostup",
+      "label": "БОКОВОЙ ДОСТУП",
+      "class": "corridor",
+      "source_id": "t_old_access-space-004",
+      "plan_px": [
+        300.0,
+        440.0,
+        210.0,
+        70.0
+      ],
+      "world_m": [
+        -88.01,
+        42.38,
+        13.735,
+        4.536
+      ],
+      "size_m": [
+        13.73,
+        4.54
+      ],
+      "area_m2": 62.3
+    },
+    {
+      "id": "t-old-access-floor-04",
+      "space_id": "T-OLD-ACCESS/podstanciya",
+      "label": "ПОДСТАНЦИЯ / старого ядра · тупиковая",
+      "class": "energy",
+      "source_id": "t_old_access-geometry-002",
+      "plan_px": [
+        80.0,
+        510.0,
+        300.0,
+        140.0
+      ],
+      "world_m": [
+        -102.4,
+        46.916,
+        19.622,
+        9.071
+      ],
+      "size_m": [
+        19.62,
+        9.07
+      ],
+      "area_m2": 178.0
+    }
+  ],
+  "openings": [
+    {
+      "id": "t-old-access-door-01",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "t_old_access-opening-001",
+      "width_m": 4.25,
+      "rooms": [
+        "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -81.143,
+        24.238,
+        -76.891,
+        24.238
+      ]
+    },
+    {
+      "id": "t-old-access-opening-02",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "t_old_access-opening-002",
+      "width_m": 4.54,
+      "rooms": [
+        "T-OLD-ACCESS/staraya-lestnica",
+        "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -84.086,
+        31.365,
+        -84.086,
+        35.901
+      ]
+    },
+    {
+      "id": "t-old-access-door-03",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "t_old_access-opening-003",
+      "width_m": 4.25,
+      "rooms": [
+        "T-OLD-ACCESS/bokovoy-dostup",
+        "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -81.143,
+        42.38,
+        -76.891,
+        42.38
+      ]
+    },
+    {
+      "id": "t-old-access-door-04",
+      "type": "door",
+      "source": "energy-gap",
+      "source_id": "t_old_access-opening-004",
+      "width_m": 3.27,
+      "rooms": [
+        "T-OLD-ACCESS/bokovoy-dostup",
+        "T-OLD-ACCESS/podstanciya"
+      ],
+      "world_m": [
+        -87.029,
+        46.916,
+        -83.759,
+        46.916
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "t_old_access-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -102.4,
+        17.76,
+        48.4,
+        6.48
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 11,
+  "feature_rects_ignored": 1,
+  "unmapped_other_elements": 1
+}

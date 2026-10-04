@@ -1,0 +1,247 @@
+{
+  "sector_id": "L-ARCHIVE-A",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_archive_a.svg",
+  "registration": {
+    "plan_px_per_m_x": 24.188,
+    "plan_px_per_m_y": 24.065,
+    "anisotropy_percent": 0.5,
+    "world_envelope_m": [
+      -58.89,
+      -9.33,
+      17.78,
+      25.56
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 3.4,
+  "rooms": [
+    {
+      "id": "l-archive-a-floor-01",
+      "space_id": "L-ARCHIVE-A/sluzhebnyy-prohod-marshruta",
+      "label": "СЛУЖЕБНЫЙ ПРОХОД МАРШРУТА A / поздняя перестройка · двустороннее движение персонала / старые архивные шкафы сдвинуты к стене",
+      "class": "corridor",
+      "source_id": "l_archive_a-space-002",
+      "plan_px": [
+        290.0,
+        455.0,
+        350.0,
+        125.0
+      ],
+      "world_m": [
+        -58.889,
+        7.288,
+        14.47,
+        5.194
+      ],
+      "size_m": [
+        14.47,
+        5.19
+      ],
+      "area_m2": 75.2
+    },
+    {
+      "id": "l-archive-a-floor-02",
+      "space_id": "L-ARCHIVE-A/lestnica-a",
+      "label": "ЛЕСТНИЦА A ↑ / к вентиляции и складу верхнего этажа",
+      "class": "support",
+      "source_id": "l_archive_a-space-004",
+      "plan_px": [
+        470.0,
+        580.0,
+        170.0,
+        90.0
+      ],
+      "world_m": [
+        -51.447,
+        12.482,
+        7.028,
+        3.74
+      ],
+      "size_m": [
+        7.03,
+        3.74
+      ],
+      "area_m2": 26.3
+    },
+    {
+      "id": "l-archive-a-floor-03",
+      "space_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy",
+      "label": "СТАРЫЙ АРХИВ · ЕДИНЫЙ ИСХОДНЫЙ КОНТУР / штатный вход · пожарные проходы между стеллажами / учёт / ПОЗДНЯЯ ПЕРЕГОРОДКА МАРШРУТА A / нижняя часть всё ещё читается как бывший архив",
+      "class": "old",
+      "source_id": "l_archive_a-geometry-001",
+      "plan_px": [
+        290.0,
+        55.0,
+        430.0,
+        400.0
+      ],
+      "world_m": [
+        -58.889,
+        -9.333,
+        17.778,
+        16.621
+      ],
+      "size_m": [
+        17.78,
+        16.62
+      ],
+      "area_m2": 295.5
+    },
+    {
+      "id": "l-archive-a-floor-04",
+      "space_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy-2",
+      "label": "СТАРЫЙ АРХИВ · ЕДИНЫЙ ИСХОДНЫЙ КОНТУР / штатный вход · пожарные проходы между стеллажами / учёт / ПОЗДНЯЯ ПЕРЕГОРОДКА МАРШРУТА A / нижняя часть всё ещё читается как бывший архив",
+      "class": "old",
+      "source_id": "l_archive_a-geometry-001",
+      "plan_px": [
+        640.0,
+        455.0,
+        80.0,
+        215.0
+      ],
+      "world_m": [
+        -44.419,
+        7.288,
+        3.308,
+        8.934
+      ],
+      "size_m": [
+        3.31,
+        8.93
+      ],
+      "area_m2": 29.6
+    },
+    {
+      "id": "l-archive-a-floor-05",
+      "space_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy-3",
+      "label": "СТАРЫЙ АРХИВ · ЕДИНЫЙ ИСХОДНЫЙ КОНТУР / штатный вход · пожарные проходы между стеллажами / учёт / ПОЗДНЯЯ ПЕРЕГОРОДКА МАРШРУТА A / нижняя часть всё ещё читается как бывший архив",
+      "class": "old",
+      "source_id": "l_archive_a-geometry-001",
+      "plan_px": [
+        290.0,
+        580.0,
+        180.0,
+        90.0
+      ],
+      "world_m": [
+        -58.889,
+        12.482,
+        7.442,
+        3.74
+      ],
+      "size_m": [
+        7.44,
+        3.74
+      ],
+      "area_m2": 27.8
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-archive-a-door-01",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_archive_a-opening-001",
+      "width_m": 1.99,
+      "rooms": [
+        "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy"
+      ],
+      "world_m": [
+        -41.111,
+        -4.388,
+        -41.111,
+        -2.394
+      ]
+    },
+    {
+      "id": "l-archive-a-door-02",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_archive_a-opening-004",
+      "width_m": 2.49,
+      "rooms": [
+        "L-ARCHIVE-A/sluzhebnyy-prohod-marshruta"
+      ],
+      "world_m": [
+        -58.889,
+        8.41,
+        -58.889,
+        10.903
+      ]
+    },
+    {
+      "id": "l-archive-a-opening-03",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "l_archive_a-opening-007",
+      "width_m": 4.96,
+      "rooms": [
+        "L-ARCHIVE-A/lestnica-a",
+        "L-ARCHIVE-A/sluzhebnyy-prohod-marshruta"
+      ],
+      "world_m": [
+        -50.413,
+        12.482,
+        -45.452,
+        12.482
+      ]
+    },
+    {
+      "id": "l-archive-a-opening-04",
+      "type": "opening",
+      "source": "same-room",
+      "source_id": "l_archive_a-geometry-001",
+      "width_m": 3.31,
+      "rooms": [
+        "L-ARCHIVE-A/sluzhebnyy-prohod-marshruta",
+        "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy",
+        "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy-2"
+      ],
+      "world_m": [
+        -44.419,
+        7.288,
+        -41.111,
+        7.288
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_archive_a-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ПАССАЖИРСКИЙ / КОРИДОР",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -41.11,
+        -5.39,
+        4.96,
+        4.16
+      ]
+    },
+    {
+      "source_id": "l_archive_a-space-003",
+      "role": "context",
+      "class": "corridor",
+      "label": "ХОЛЛ СТАРОГО ЯДРА / механическая дверь",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -66.33,
+        7.7,
+        7.44,
+        3.95
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "room_without_drawn_opening",
+      "space": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy-3",
+      "label": "СТАРЫЙ АРХИВ · ЕДИНЫЙ ИСХОДНЫЙ КОНТУР / штатный вход · пожарные проходы между стеллажами / учёт / ПОЗДНЯЯ ПЕРЕГОРОДКА МАРШРУТА A / нижняя часть всё ещё читается как бывший архив"
+    }
+  ],
+  "wall_segments": 9,
+  "feature_rects_ignored": 7,
+  "unmapped_other_elements": 1
+}

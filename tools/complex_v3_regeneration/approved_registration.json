@@ -1,0 +1,1028 @@
+{
+  "schema": "caretaker.approved_plan_registration",
+  "version": 1,
+  "notes": [
+    "Every sector SVG is built from an approved presentation plan under docs/design/complex_v3/plans/sectors.",
+    "Metric scale and world position come ONLY from the approved overview plan of the same level: each entry pairs one rectangle of the sector plan (px) with the rectangle of the same room group on the overview plan (px).",
+    "Overview scale bars: upper and lower 135 px = 15 m (9 px/m); technical 80 px = 10 m (8 px/m).",
+    "World frame U/L: x = (ov_x - 990) / 9, z = (ov_y - 124) / 9. Upper and lower overviews share one pixel frame. Technical frame is anchored on the centre of the old stair (see levels.T).",
+    "Axes are scaled independently: the approved sector plans are not drawn at one uniform scale, so the anisotropy is reported instead of being hidden.",
+    "post_approval_ids are elements added to the approved plans by later agent work (stair pilots); they are not part of the approved plan and are dropped.",
+    "rect_overrides restore the approved size of elements changed in place by later stair-pilot work."
+  ],
+  "levels": {
+    "U": {
+      "scale_px_per_m": 9.0,
+      "origin_ov_px": [
+        990.0,
+        124.0
+      ],
+      "elevation_m": 0.0,
+      "level_id": "LV-U",
+      "folder": "upper"
+    },
+    "L": {
+      "scale_px_per_m": 9.0,
+      "origin_ov_px": [
+        990.0,
+        124.0
+      ],
+      "elevation_m": -6.0,
+      "level_id": "LV-L",
+      "folder": "lower"
+    },
+    "T": {
+      "scale_px_per_m": 8.0,
+      "origin_ov_px": [
+        854.2,
+        84.1
+      ],
+      "elevation_m": -11.5,
+      "level_id": "LV-T",
+      "folder": "technical"
+    }
+  },
+  "post_approval_ids": [
+    "route-a-stair-floor-opening",
+    "route-a-stair-ceiling-opening",
+    "old-stair-lower-footprint",
+    "old-stair-lower-floor-opening",
+    "old-stair-lower-vestibule",
+    "old-stair-lower-steps",
+    "old-stair-lower-hall-door",
+    "old-stair-technical-ceiling-opening"
+  ],
+  "sectors": {
+    "U-EMERGENCY": {
+      "plan": "sectors/upper/u_emergency.svg",
+      "level": "U",
+      "wall_height": 3.8,
+      "pair": {
+        "plan": [
+          25,
+          65,
+          285,
+          255
+        ],
+        "ov": [
+          20,
+          50,
+          190,
+          170
+        ]
+      },
+      "check_pairs": [
+        {
+          "plan": [
+            25,
+            320,
+            105,
+            105
+          ],
+          "ov": [
+            20,
+            220,
+            70,
+            70
+          ]
+        },
+        {
+          "plan": [
+            355,
+            125,
+            285,
+            315
+          ],
+          "ov": [
+            240,
+            90,
+            190,
+            210
+          ]
+        }
+      ],
+      "only": [
+        [
+          25,
+          65,
+          285,
+          255
+        ],
+        [
+          25,
+          320,
+          105,
+          105
+        ],
+        [
+          310,
+          193,
+          45,
+          67
+        ],
+        [
+          355,
+          125,
+          285,
+          315
+        ],
+        [
+          340,
+          358,
+          15,
+          52
+        ]
+      ]
+    },
+    "U-ROUTE-A": {
+      "plan": "sectors/upper/u_emergency.svg",
+      "level": "U",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          730,
+          320,
+          90,
+          105
+        ],
+        "ov": [
+          490,
+          220,
+          60,
+          70
+        ]
+      },
+      "check_pairs": [
+        {
+          "plan": [
+            670,
+            140,
+            90,
+            180
+          ],
+          "ov": [
+            450,
+            100,
+            60,
+            120
+          ]
+        },
+        {
+          "plan": [
+            760,
+            140,
+            90,
+            180
+          ],
+          "ov": [
+            510,
+            100,
+            60,
+            120
+          ]
+        }
+      ],
+      "only": [
+        [
+          640,
+          253,
+          30,
+          60
+        ],
+        [
+          670,
+          140,
+          90,
+          180
+        ],
+        [
+          760,
+          140,
+          90,
+          180
+        ],
+        [
+          730,
+          320,
+          90,
+          105
+        ]
+      ]
+    },
+    "U-MEDBAY": {
+      "plan": "sectors/upper/u_medbay.svg",
+      "level": "U",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          70,
+          120,
+          570,
+          390
+        ],
+        "ov": [
+          110,
+          220,
+          120,
+          70
+        ]
+      }
+    },
+    "U-DOMESTIC": {
+      "plan": "sectors/upper/u_domestic.svg",
+      "level": "U",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          60,
+          40,
+          600,
+          651
+        ],
+        "ov": [
+          450,
+          20,
+          240,
+          260
+        ]
+      },
+      "check_pairs": [
+        {
+          "plan": [
+            435,
+            40,
+            225,
+            263
+          ],
+          "ov": [
+            600,
+            20,
+            90,
+            105
+          ]
+        },
+        {
+          "plan": [
+            60,
+            40,
+            300,
+            175
+          ],
+          "ov": [
+            450,
+            20,
+            120,
+            70
+          ]
+        }
+      ]
+    },
+    "U-CONTROL": {
+      "plan": "sectors/upper/u_control.svg",
+      "level": "U",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          90,
+          40,
+          510,
+          590
+        ],
+        "ov": [
+          710,
+          50,
+          190,
+          240
+        ]
+      }
+    },
+    "U-CENTRAL-CORE": {
+      "plan": "sectors/upper/u_central_core.svg",
+      "level": "U",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          140,
+          70,
+          372,
+          504
+        ],
+        "ov": [
+          920,
+          70,
+          140,
+          190
+        ]
+      },
+      "exclude": [
+        [
+          18,
+          214,
+          92,
+          150
+        ],
+        [
+          110,
+          270,
+          30,
+          48
+        ],
+        [
+          522,
+          214,
+          104,
+          150
+        ],
+        [
+          170,
+          784,
+          78,
+          306
+        ]
+      ]
+    },
+    "U-EAST-SUPPORT": {
+      "plan": "sectors/upper/u_east_support.svg",
+      "level": "U",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          70,
+          50,
+          475,
+          600
+        ],
+        "ov": [
+          1080,
+          60,
+          190,
+          240
+        ]
+      }
+    },
+    "U-CHAMBER-4": {
+      "plan": "sectors/upper/u_chamber_4.svg",
+      "level": "U",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          180,
+          100,
+          540,
+          610
+        ],
+        "ov": [
+          20,
+          500,
+          220,
+          230
+        ]
+      }
+    },
+    "U-SECURITY": {
+      "plan": "sectors/upper/u_security.svg",
+      "level": "U",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          80,
+          175,
+          510,
+          370
+        ],
+        "ov": [
+          730,
+          450,
+          170,
+          140
+        ]
+      },
+      "exclude": [
+        [
+          560,
+          739,
+          190,
+          72
+        ],
+        [
+          750,
+          739,
+          130,
+          72
+        ]
+      ]
+    },
+    "U-CHAMBER-6": {
+      "plan": "sectors/upper/u_chamber_6.svg",
+      "level": "U",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          180,
+          100,
+          540,
+          610
+        ],
+        "ov": [
+          990,
+          430,
+          280,
+          300
+        ]
+      }
+    },
+    "U-FREIGHT": {
+      "plan": "sectors/upper/u_freight.svg",
+      "level": "U",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          600,
+          260,
+          330,
+          200
+        ],
+        "ov": [
+          1090,
+          800,
+          150,
+          90
+        ]
+      },
+      "check_pairs": [
+        {
+          "plan": [
+            70,
+            260,
+            530,
+            200
+          ],
+          "ov": [
+            850,
+            800,
+            240,
+            90
+          ]
+        }
+      ]
+    },
+    "L-OLD-CORE": {
+      "plan": "sectors/lower/l_old_core.svg",
+      "level": "L",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          250,
+          55,
+          360,
+          525
+        ],
+        "ov": [
+          260,
+          40,
+          180,
+          310
+        ]
+      }
+    },
+    "L-CHAMBER-1": {
+      "plan": "sectors/lower/l_chamber_1.svg",
+      "level": "L",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          55,
+          70,
+          430,
+          500
+        ],
+        "ov": [
+          20,
+          100,
+          170,
+          210
+        ]
+      },
+      "check_pairs": [
+        {
+          "plan": [
+            485,
+            205,
+            170,
+            230
+          ],
+          "ov": [
+            190,
+            200,
+            70,
+            100
+          ]
+        }
+      ],
+      "exclude": [
+        [
+          655,
+          245,
+          120,
+          150
+        ]
+      ]
+    },
+    "L-ARCHIVE-A": {
+      "plan": "sectors/lower/l_archive_a.svg",
+      "level": "L",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          290,
+          55,
+          430,
+          615
+        ],
+        "ov": [
+          460,
+          40,
+          160,
+          230
+        ]
+      },
+      "exclude": [
+        [
+          110,
+          465,
+          180,
+          95
+        ]
+      ]
+    },
+    "L-OLD-RECEIVING": {
+      "plan": "sectors/lower/l_old_receiving.svg",
+      "level": "L",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          250,
+          185,
+          470,
+          360
+        ],
+        "ov": [
+          160,
+          560,
+          180,
+          190
+        ]
+      }
+    },
+    "L-CHAMBER-2": {
+      "plan": "sectors/lower/l_chamber_2.svg",
+      "level": "L",
+      "wall_height": 4.5,
+      "pair": {
+        "plan": [
+          235,
+          220,
+          430,
+          300
+        ],
+        "ov": [
+          370,
+          450,
+          190,
+          180
+        ]
+      },
+      "check_pairs": [
+        {
+          "plan": [
+            310,
+            95,
+            280,
+            125
+          ],
+          "ov": [
+            420,
+            400,
+            80,
+            50
+          ]
+        },
+        {
+          "plan": [
+            330,
+            520,
+            240,
+            115
+          ],
+          "ov": [
+            420,
+            630,
+            80,
+            50
+          ]
+        }
+      ]
+    },
+    "L-SLEEP-LAB": {
+      "plan": "sectors/lower/l_sleep_lab.svg",
+      "level": "L",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          160,
+          70,
+          580,
+          440
+        ],
+        "ov": [
+          690,
+          60,
+          200,
+          190
+        ]
+      },
+      "exclude": [
+        [
+          770,
+          430,
+          100,
+          80
+        ]
+      ]
+    },
+    "L-CHAMBER-3": {
+      "plan": "sectors/lower/l_chamber_3.svg",
+      "level": "L",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          245,
+          220,
+          430,
+          330
+        ],
+        "ov": [
+          680,
+          450,
+          220,
+          180
+        ]
+      },
+      "check_pairs": [
+        {
+          "plan": [
+            325,
+            95,
+            270,
+            125
+          ],
+          "ov": [
+            740,
+            400,
+            80,
+            50
+          ]
+        },
+        {
+          "plan": [
+            340,
+            550,
+            240,
+            110
+          ],
+          "ov": [
+            740,
+            630,
+            80,
+            50
+          ]
+        }
+      ]
+    },
+    "L-SERVICE-INTERCHANGE": {
+      "plan": "sectors/lower/l_service_interchange.svg",
+      "level": "L",
+      "wall_height": 3.8,
+      "pair": {
+        "plan": [
+          250,
+          100,
+          400,
+          420
+        ],
+        "ov": [
+          560,
+          560,
+          120,
+          120
+        ]
+      },
+      "exclude": [
+        [
+          250,
+          25,
+          400,
+          75
+        ]
+      ]
+    },
+    "L-CENTRAL-CORE": {
+      "plan": "sectors/lower/l_central_core.svg",
+      "level": "L",
+      "wall_height": 3.4,
+      "pair": {
+        "plan": [
+          140,
+          70,
+          372,
+          504
+        ],
+        "ov": [
+          920,
+          70,
+          140,
+          190
+        ]
+      },
+      "exclude": [
+        [
+          18,
+          214,
+          92,
+          150
+        ],
+        [
+          110,
+          270,
+          30,
+          48
+        ],
+        [
+          522,
+          214,
+          104,
+          150
+        ],
+        [
+          170,
+          784,
+          78,
+          306
+        ]
+      ]
+    },
+    "L-EAST-STAIR": {
+      "plan": "sectors/lower/l_east_stair.svg",
+      "level": "L",
+      "wall_height": 3.8,
+      "pair": {
+        "plan": [
+          320,
+          450,
+          225,
+          200
+        ],
+        "ov": [
+          1180,
+          220,
+          90,
+          80
+        ]
+      },
+      "only": [
+        [
+          320,
+          450,
+          225,
+          110
+        ],
+        [
+          320,
+          560,
+          225,
+          90
+        ]
+      ]
+    },
+    "L-CHAMBER-5": {
+      "plan": "sectors/lower/l_chamber_5.svg",
+      "level": "L",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          180,
+          100,
+          540,
+          610
+        ],
+        "ov": [
+          1030,
+          400,
+          240,
+          280
+        ]
+      }
+    },
+    "L-FREIGHT-SERVICE": {
+      "plan": "sectors/lower/l_freight_service.svg",
+      "level": "L",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          600,
+          250,
+          330,
+          200
+        ],
+        "ov": [
+          1090,
+          750,
+          150,
+          90
+        ]
+      },
+      "check_pairs": [
+        {
+          "plan": [
+            70,
+            250,
+            530,
+            160
+          ],
+          "ov": [
+            850,
+            750,
+            240,
+            90
+          ]
+        }
+      ]
+    },
+    "T-ENERGY": {
+      "plan": "sectors/technical/t_energy.svg",
+      "level": "T",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          70,
+          70,
+          660,
+          450
+        ],
+        "ov": [
+          35,
+          45,
+          350,
+          165
+        ]
+      }
+    },
+    "T-WORKSHOP": {
+      "plan": "sectors/technical/t_workshop.svg",
+      "level": "T",
+      "wall_height": 4.5,
+      "pair": {
+        "plan": [
+          75,
+          90,
+          750,
+          450
+        ],
+        "ov": [
+          410,
+          45,
+          305,
+          125
+        ]
+      }
+    },
+    "T-OLD-ACCESS": {
+      "plan": "sectors/technical/t_old_access.svg",
+      "level": "T",
+      "wall_height": 4.2,
+      "pair": {
+        "plan": [
+          80,
+          160,
+          430,
+          490
+        ],
+        "ov": [
+          35,
+          278,
+          225,
+          254
+        ]
+      }
+    },
+    "T-EAST-VERTICAL": {
+      "plan": "sectors/technical/t_east_vertical.svg",
+      "level": "T",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          70,
+          80,
+          690,
+          470
+        ],
+        "ov": [
+          730,
+          45,
+          225,
+          175
+        ]
+      }
+    },
+    "T-UTILITIES": {
+      "plan": "sectors/technical/t_utilities.svg",
+      "level": "T",
+      "wall_height": 4.2,
+      "pair": {
+        "plan": [
+          60,
+          229,
+          864,
+          131
+        ],
+        "ov": [
+          315,
+          365,
+          640,
+          105
+        ]
+      }
+    },
+    "T-FREIGHT": {
+      "plan": "sectors/technical/t_freight.svg",
+      "level": "T",
+      "wall_height": 5.0,
+      "pair": {
+        "plan": [
+          70,
+          250,
+          860,
+          200
+        ],
+        "ov": [
+          690,
+          606,
+          265,
+          70
+        ]
+      }
+    },
+    "T-CIRCULATION": {
+      "plan": "sectors/technical/t_circulation.svg",
+      "level": "T",
+      "wall_height": 4.2,
+      "pair": {
+        "plan": [
+          70,
+          100,
+          960,
+          615
+        ],
+        "ov": [
+          170,
+          230,
+          785,
+          376
+        ]
+      },
+      "owns_trunks": true,
+      "exclude": [
+        [
+          360,
+          200,
+          130,
+          85
+        ],
+        [
+          540,
+          200,
+          130,
+          85
+        ],
+        [
+          690,
+          200,
+          90,
+          85
+        ],
+        [
+          350,
+          420,
+          410,
+          180
+        ]
+      ]
+    }
+  },
+  "rect_overrides": {
+    "l_archive_a-space-004": {
+      "height": 90.0,
+      "note": "approved size before the stair pilot enlarged it to 120"
+    }
+  }
+}

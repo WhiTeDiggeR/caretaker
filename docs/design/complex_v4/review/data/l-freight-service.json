@@ -1,0 +1,377 @@
+{
+  "sector_id": "L-FREIGHT-SERVICE",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_freight_service.svg",
+  "registration": {
+    "plan_px_per_m_x": 19.8,
+    "plan_px_per_m_y": 20.0,
+    "anisotropy_percent": 1.0,
+    "world_envelope_m": [
+      11.11,
+      69.56,
+      16.67,
+      10.0
+    ],
+    "check_pairs": [
+      {
+        "plan_px": [
+          70,
+          250,
+          530,
+          160
+        ],
+        "overview_px": [
+          850,
+          750,
+          240,
+          90
+        ],
+        "plan_size_m": [
+          26.77,
+          8.0
+        ],
+        "overview_size_m": [
+          26.67,
+          10.0
+        ]
+      }
+    ]
+  },
+  "wall_height_m": 5.0,
+  "rooms": [
+    {
+      "id": "l-freight-service-floor-01",
+      "space_id": "L-FREIGHT-SERVICE/ventilyaciya",
+      "label": "ВЕНТИЛЯЦИЯ / И ФИЛЬТРЫ",
+      "class": "support",
+      "source_id": "l_freight_service-space-002",
+      "plan_px": [
+        70.0,
+        250.0,
+        155.0,
+        160.0
+      ],
+      "world_m": [
+        -15.657,
+        69.556,
+        7.829,
+        8.0
+      ],
+      "size_m": [
+        7.83,
+        8.0
+      ],
+      "area_m2": 62.6
+    },
+    {
+      "id": "l-freight-service-floor-02",
+      "space_id": "L-FREIGHT-SERVICE/raspredelitelnaya",
+      "label": "РАСПРЕДЕЛИТЕЛЬНАЯ / ЩИТОВАЯ",
+      "class": "support",
+      "source_id": "l_freight_service-space-003",
+      "plan_px": [
+        225.0,
+        250.0,
+        155.0,
+        160.0
+      ],
+      "world_m": [
+        -7.828,
+        69.556,
+        7.828,
+        8.0
+      ],
+      "size_m": [
+        7.83,
+        8.0
+      ],
+      "area_m2": 62.6
+    },
+    {
+      "id": "l-freight-service-floor-03",
+      "space_id": "L-FREIGHT-SERVICE/gruzovaya-platforma",
+      "label": "ГРУЗОВАЯ ПЛАТФОРМА / контейнеры · временная постановка",
+      "class": "cargo",
+      "source_id": "l_freight_service-geometry-001",
+      "plan_px": [
+        380.0,
+        250.0,
+        220.0,
+        160.0
+      ],
+      "world_m": [
+        0.0,
+        69.556,
+        11.111,
+        8.0
+      ],
+      "size_m": [
+        11.11,
+        8.0
+      ],
+      "area_m2": 88.9
+    },
+    {
+      "id": "l-freight-service-floor-04",
+      "space_id": "L-FREIGHT-SERVICE/zaschischennyy-sluzhebnyy-ob",
+      "label": "защищённый служебный обход нижнего грузового блока",
+      "class": "walkway",
+      "source_id": "l_freight_service-geometry-002",
+      "plan_px": [
+        70.0,
+        410.0,
+        530.0,
+        40.0
+      ],
+      "world_m": [
+        -15.657,
+        77.556,
+        26.768,
+        2.0
+      ],
+      "size_m": [
+        26.77,
+        2.0
+      ],
+      "area_m2": 53.5
+    },
+    {
+      "id": "l-freight-service-floor-05",
+      "space_id": "L-FREIGHT-SERVICE/gruzovoy-lift",
+      "label": "ГРУЗОВОЙ ЛИФТ / платформа · контейнер · капсула / верхний этаж ↑ · технический уровень ↓",
+      "class": "lift",
+      "source_id": "l_freight_service-geometry-003",
+      "plan_px": [
+        600.0,
+        250.0,
+        260.0,
+        160.0
+      ],
+      "world_m": [
+        11.111,
+        69.556,
+        13.131,
+        8.0
+      ],
+      "size_m": [
+        13.13,
+        8.0
+      ],
+      "area_m2": 105.0
+    },
+    {
+      "id": "l-freight-service-floor-06",
+      "space_id": "L-FREIGHT-SERVICE/privod",
+      "label": "привод / контроль",
+      "class": "support",
+      "source_id": "l_freight_service-space-004",
+      "plan_px": [
+        860.0,
+        250.0,
+        70.0,
+        80.0
+      ],
+      "world_m": [
+        24.242,
+        69.556,
+        3.536,
+        4.0
+      ],
+      "size_m": [
+        3.54,
+        4.0
+      ],
+      "area_m2": 14.1
+    },
+    {
+      "id": "l-freight-service-floor-07",
+      "space_id": "L-FREIGHT-SERVICE/sluzhebnyy",
+      "label": "служебный / тамбур",
+      "class": "support",
+      "source_id": "l_freight_service-space-005",
+      "plan_px": [
+        860.0,
+        330.0,
+        70.0,
+        80.0
+      ],
+      "world_m": [
+        24.242,
+        73.556,
+        3.536,
+        4.0
+      ],
+      "size_m": [
+        3.54,
+        4.0
+      ],
+      "area_m2": 14.1
+    },
+    {
+      "id": "l-freight-service-floor-08",
+      "space_id": "L-FREIGHT-SERVICE/obhod-shahty-avariynaya-svya",
+      "label": "обход шахты · аварийная связь",
+      "class": "walkway",
+      "source_id": "l_freight_service-geometry-004",
+      "plan_px": [
+        600.0,
+        410.0,
+        330.0,
+        40.0
+      ],
+      "world_m": [
+        11.111,
+        77.556,
+        16.667,
+        2.0
+      ],
+      "size_m": [
+        16.67,
+        2.0
+      ],
+      "area_m2": 33.3
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-freight-service-window-01",
+      "type": "window",
+      "source": "window",
+      "source_id": "l_freight_service-annotation-002",
+      "width_m": 1.85,
+      "rooms": [
+        "L-FREIGHT-SERVICE/gruzovoy-lift",
+        "L-FREIGHT-SERVICE/privod"
+      ],
+      "world_m": [
+        24.242,
+        70.956,
+        24.242,
+        72.806
+      ]
+    },
+    {
+      "id": "l-freight-service-door-02",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_freight_service-opening-001",
+      "width_m": 3.54,
+      "rooms": [
+        "L-FREIGHT-SERVICE/ventilyaciya"
+      ],
+      "world_m": [
+        -13.636,
+        69.556,
+        -10.101,
+        69.556
+      ]
+    },
+    {
+      "id": "l-freight-service-door-03",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_freight_service-opening-003",
+      "width_m": 3.54,
+      "rooms": [
+        "L-FREIGHT-SERVICE/raspredelitelnaya"
+      ],
+      "world_m": [
+        -5.808,
+        69.556,
+        -2.273,
+        69.556
+      ]
+    },
+    {
+      "id": "l-freight-service-door-04",
+      "type": "door",
+      "source": "cargo-gap",
+      "source_id": "l_freight_service-opening-005",
+      "width_m": 6.57,
+      "rooms": [
+        "L-FREIGHT-SERVICE/gruzovaya-platforma"
+      ],
+      "world_m": [
+        2.273,
+        69.556,
+        8.838,
+        69.556
+      ]
+    },
+    {
+      "id": "l-freight-service-door-05",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_freight_service-opening-006",
+      "width_m": 1.52,
+      "rooms": [
+        "L-FREIGHT-SERVICE/privod",
+        "L-FREIGHT-SERVICE/sluzhebnyy"
+      ],
+      "world_m": [
+        25.253,
+        73.556,
+        26.768,
+        73.556
+      ]
+    },
+    {
+      "id": "l-freight-service-door-06",
+      "type": "door",
+      "source": "gate",
+      "source_id": "l_freight_service-annotation-001",
+      "width_m": 5.7,
+      "rooms": [
+        "L-FREIGHT-SERVICE/gruzovaya-platforma",
+        "L-FREIGHT-SERVICE/gruzovoy-lift"
+      ],
+      "world_m": [
+        11.111,
+        70.956,
+        11.111,
+        76.656
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_freight_service-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ТЯЖЁЛАЯ ТРАНСПОРТНАЯ МАГИСТРАЛЬ / чистая ширина 7–8 м · тот же контур, что на верхнем этаже",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -15.66,
+        61.06,
+        43.44,
+        8.5
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_freight_service-annotation-003",
+      "source": "gate",
+      "plan_px": [
+        264.0,
+        425.0,
+        555.0
+      ],
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "room_without_drawn_opening",
+      "space": "L-FREIGHT-SERVICE/zaschischennyy-sluzhebnyy-ob",
+      "label": "защищённый служебный обход нижнего грузового блока"
+    },
+    {
+      "type": "room_without_drawn_opening",
+      "space": "L-FREIGHT-SERVICE/obhod-shahty-avariynaya-svya",
+      "label": "обход шахты · аварийная связь"
+    }
+  ],
+  "wall_segments": 10,
+  "feature_rects_ignored": 5,
+  "unmapped_other_elements": 0
+}

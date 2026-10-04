@@ -36,7 +36,7 @@ class CanonicalSvgSourceTests(unittest.TestCase):
         self.assertIn("res://tools/complex_v3_regeneration/sector_generation_manifest.json", plugin)
         manifest = json.loads(CANONICAL.MANIFEST.read_text(encoding="utf-8"))
         control = next(item for item in manifest["sectors"] if item["sector_id"] == "U-CONTROL")
-        self.assertEqual(control["source_svg"], "docs/design/complex_v3/plans/generation/upper/u_control.svg")
+        self.assertEqual(control["source_svg"], "docs/design/complex_v4/plans/generation/upper/u_control.svg")
 
 
 if __name__ == "__main__":

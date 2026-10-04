@@ -198,7 +198,7 @@ def build_sector(sector: dict[str, Any], handoff: dict[str, Any], dressing: dict
     if sealed_portals:
         lines.append('  </g>')
     lines.append('</svg>')
-    source = ROOT / f"docs/design/complex_v3/plans/generation/{level_name}/{sector_slug}.svg"
+    source = ROOT / f"docs/design/complex_v4/plans/generation/{level_name}/{sector_slug}.svg"
     if not source.is_file():
         raise BuildError(f"canonical SVG is missing: {source.relative_to(ROOT)}")
 

@@ -1,0 +1,550 @@
+{
+  "sector_id": "U-FREIGHT",
+  "level": "LV-U",
+  "source_plan": "docs/design/complex_v3/plans/sectors/upper/u_freight.svg",
+  "registration": {
+    "plan_px_per_m_x": 19.8,
+    "plan_px_per_m_y": 20.0,
+    "anisotropy_percent": 1.0,
+    "world_envelope_m": [
+      11.11,
+      75.11,
+      16.67,
+      10.0
+    ],
+    "check_pairs": [
+      {
+        "plan_px": [
+          70,
+          260,
+          530,
+          200
+        ],
+        "overview_px": [
+          850,
+          800,
+          240,
+          90
+        ],
+        "plan_size_m": [
+          26.77,
+          10.0
+        ],
+        "overview_size_m": [
+          26.67,
+          10.0
+        ]
+      }
+    ]
+  },
+  "wall_height_m": 5.0,
+  "rooms": [
+    {
+      "id": "u-freight-floor-01",
+      "space_id": "U-FREIGHT/izolyator",
+      "label": "Изолятор / подозрительный груз / герметичный слив",
+      "class": "controlled",
+      "source_id": "u_freight-geometry-002",
+      "plan_px": [
+        70.0,
+        260.0,
+        140.0,
+        100.0
+      ],
+      "world_m": [
+        -15.657,
+        75.111,
+        7.071,
+        5.0
+      ],
+      "size_m": [
+        7.07,
+        5.0
+      ],
+      "area_m2": 35.4
+    },
+    {
+      "id": "u-freight-floor-02",
+      "space_id": "U-FREIGHT/tehnika-zaryadka",
+      "label": "техника · зарядка / пожарный комплект",
+      "class": "work",
+      "source_id": "u_freight-equipment-001",
+      "plan_px": [
+        70.0,
+        360.0,
+        140.0,
+        60.0
+      ],
+      "world_m": [
+        -15.657,
+        80.111,
+        7.071,
+        3.0
+      ],
+      "size_m": [
+        7.07,
+        3.0
+      ],
+      "area_m2": 21.2
+    },
+    {
+      "id": "u-freight-floor-03",
+      "space_id": "U-FREIGHT/dosmotrovaya-polosa",
+      "label": "Досмотровая полоса / сканер · весы · отбор проб",
+      "class": "work",
+      "source_id": "u_freight-equipment-002",
+      "plan_px": [
+        210.0,
+        260.0,
+        200.0,
+        100.0
+      ],
+      "world_m": [
+        -8.586,
+        75.111,
+        10.101,
+        5.0
+      ],
+      "size_m": [
+        10.1,
+        5.0
+      ],
+      "area_m2": 50.5
+    },
+    {
+      "id": "u-freight-floor-04",
+      "space_id": "U-FREIGHT/operatorskaya",
+      "label": "операторская / ворота · лифт",
+      "class": "controlled",
+      "source_id": "u_freight-geometry-003",
+      "plan_px": [
+        210.0,
+        360.0,
+        100.0,
+        60.0
+      ],
+      "world_m": [
+        -8.586,
+        80.111,
+        5.051,
+        3.0
+      ],
+      "size_m": [
+        5.05,
+        3.0
+      ],
+      "area_m2": 15.2
+    },
+    {
+      "id": "u-freight-floor-05",
+      "space_id": "U-FREIGHT/proby-siz",
+      "label": "пробы · СИЗ / аварийный душ",
+      "class": "controlled",
+      "source_id": "u_freight-geometry-004",
+      "plan_px": [
+        310.0,
+        360.0,
+        100.0,
+        60.0
+      ],
+      "world_m": [
+        -3.535,
+        80.111,
+        5.05,
+        3.0
+      ],
+      "size_m": [
+        5.05,
+        3.0
+      ],
+      "area_m2": 15.1
+    },
+    {
+      "id": "u-freight-floor-06",
+      "space_id": "U-FREIGHT/razgruzochnyy-karman",
+      "label": "Разгрузочный карман / платформы · временная постановка / без постоянного хранения",
+      "class": "work",
+      "source_id": "u_freight-equipment-003",
+      "plan_px": [
+        410.0,
+        260.0,
+        190.0,
+        160.0
+      ],
+      "world_m": [
+        1.515,
+        75.111,
+        9.596,
+        8.0
+      ],
+      "size_m": [
+        9.6,
+        8.0
+      ],
+      "area_m2": 76.8
+    },
+    {
+      "id": "u-freight-floor-07",
+      "space_id": "U-FREIGHT/zaschischennaya-peshehodnaya",
+      "label": "защищённая пешеходная полоса · 1,8–2 м",
+      "class": "walkway",
+      "source_id": "u_freight-geometry-005",
+      "plan_px": [
+        70.0,
+        420.0,
+        530.0,
+        40.0
+      ],
+      "world_m": [
+        -15.657,
+        83.111,
+        26.768,
+        2.0
+      ],
+      "size_m": [
+        26.77,
+        2.0
+      ],
+      "area_m2": 53.5
+    },
+    {
+      "id": "u-freight-floor-08",
+      "space_id": "U-FREIGHT/gruzovoy-lift",
+      "label": "ГРУЗОВОЙ ЛИФТ / капсула · платформа · контейнер / поверхность ↑ · нижний этаж · техуровень ↓",
+      "class": "lift",
+      "source_id": "u_freight-geometry-006",
+      "plan_px": [
+        600.0,
+        260.0,
+        260.0,
+        160.0
+      ],
+      "world_m": [
+        11.111,
+        75.111,
+        13.131,
+        8.0
+      ],
+      "size_m": [
+        13.13,
+        8.0
+      ],
+      "area_m2": 105.0
+    },
+    {
+      "id": "u-freight-floor-09",
+      "space_id": "U-FREIGHT/privod",
+      "label": "привод / контроль",
+      "class": "controlled",
+      "source_id": "u_freight-geometry-007",
+      "plan_px": [
+        860.0,
+        260.0,
+        70.0,
+        80.0
+      ],
+      "world_m": [
+        24.242,
+        75.111,
+        3.536,
+        4.0
+      ],
+      "size_m": [
+        3.54,
+        4.0
+      ],
+      "area_m2": 14.1
+    },
+    {
+      "id": "u-freight-floor-10",
+      "space_id": "U-FREIGHT/sluzhebnyy",
+      "label": "служебный / тамбур",
+      "class": "controlled",
+      "source_id": "u_freight-geometry-008",
+      "plan_px": [
+        860.0,
+        340.0,
+        70.0,
+        80.0
+      ],
+      "world_m": [
+        24.242,
+        79.111,
+        3.536,
+        4.0
+      ],
+      "size_m": [
+        3.54,
+        4.0
+      ],
+      "area_m2": 14.1
+    },
+    {
+      "id": "u-freight-floor-11",
+      "space_id": "U-FREIGHT/sluzhebnyy-obhod-shahty-avar",
+      "label": "служебный обход шахты · аварийная связь",
+      "class": "walkway",
+      "source_id": "u_freight-geometry-009",
+      "plan_px": [
+        600.0,
+        420.0,
+        330.0,
+        40.0
+      ],
+      "world_m": [
+        11.111,
+        83.111,
+        16.667,
+        2.0
+      ],
+      "size_m": [
+        16.67,
+        2.0
+      ],
+      "area_m2": 33.3
+    }
+  ],
+  "openings": [
+    {
+      "id": "u-freight-door-01",
+      "type": "door",
+      "source": "gate",
+      "source_id": "u_freight-annotation-005",
+      "width_m": 2.8,
+      "rooms": [
+        "U-FREIGHT/dosmotrovaya-polosa",
+        "U-FREIGHT/izolyator"
+      ],
+      "world_m": [
+        -8.586,
+        76.211,
+        -8.586,
+        79.011
+      ]
+    },
+    {
+      "id": "u-freight-door-02",
+      "type": "door",
+      "source": "gate",
+      "source_id": "u_freight-annotation-007",
+      "width_m": 6.57,
+      "rooms": [
+        "U-FREIGHT/dosmotrovaya-polosa"
+      ],
+      "world_m": [
+        -6.818,
+        75.111,
+        -0.253,
+        75.111
+      ]
+    },
+    {
+      "id": "u-freight-door-03",
+      "type": "door",
+      "source": "gate",
+      "source_id": "u_freight-annotation-009",
+      "width_m": 5.4,
+      "rooms": [
+        "U-FREIGHT/dosmotrovaya-polosa",
+        "U-FREIGHT/proby-siz",
+        "U-FREIGHT/razgruzochnyy-karman"
+      ],
+      "world_m": [
+        1.515,
+        76.411,
+        1.515,
+        81.811
+      ]
+    },
+    {
+      "id": "u-freight-door-04",
+      "type": "door",
+      "source": "gate",
+      "source_id": "u_freight-annotation-011",
+      "width_m": 5.4,
+      "rooms": [
+        "U-FREIGHT/gruzovoy-lift",
+        "U-FREIGHT/razgruzochnyy-karman"
+      ],
+      "world_m": [
+        11.111,
+        76.411,
+        11.111,
+        81.811
+      ]
+    },
+    {
+      "id": "u-freight-door-05",
+      "type": "door",
+      "source": "door-glyph",
+      "source_id": "u_freight-opening-002",
+      "width_m": 1.0,
+      "rooms": [
+        "U-FREIGHT/zaschischennaya-peshehodnaya"
+      ],
+      "world_m": [
+        -15.657,
+        83.611,
+        -15.657,
+        84.611
+      ]
+    },
+    {
+      "id": "u-freight-door-06",
+      "type": "door",
+      "source": "door-glyph",
+      "source_id": "u_freight-opening-004",
+      "width_m": 1.01,
+      "rooms": [
+        "U-FREIGHT/tehnika-zaryadka",
+        "U-FREIGHT/zaschischennaya-peshehodnaya"
+      ],
+      "world_m": [
+        -13.384,
+        83.111,
+        -12.374,
+        83.111
+      ]
+    },
+    {
+      "id": "u-freight-door-07",
+      "type": "door",
+      "source": "door-glyph",
+      "source_id": "u_freight-opening-006",
+      "width_m": 1.01,
+      "rooms": [
+        "U-FREIGHT/sluzhebnyy",
+        "U-FREIGHT/sluzhebnyy-obhod-shahty-avar"
+      ],
+      "world_m": [
+        25.253,
+        83.111,
+        26.263,
+        83.111
+      ]
+    },
+    {
+      "id": "u-freight-door-08",
+      "type": "door",
+      "source": "door-glyph",
+      "source_id": "u_freight-opening-008",
+      "width_m": 1.01,
+      "rooms": [
+        "U-FREIGHT/privod",
+        "U-FREIGHT/sluzhebnyy"
+      ],
+      "world_m": [
+        25.253,
+        79.111,
+        26.263,
+        79.111
+      ]
+    },
+    {
+      "id": "u-freight-door-09",
+      "type": "door",
+      "source": "door-glyph",
+      "source_id": "u_freight-opening-010",
+      "width_m": 1.01,
+      "rooms": [
+        "U-FREIGHT/gruzovoy-lift",
+        "U-FREIGHT/sluzhebnyy-obhod-shahty-avar"
+      ],
+      "world_m": [
+        16.919,
+        83.111,
+        17.929,
+        83.111
+      ]
+    },
+    {
+      "id": "u-freight-door-10",
+      "type": "door",
+      "source": "door-glyph",
+      "source_id": "u_freight-opening-012",
+      "width_m": 1.01,
+      "rooms": [
+        "U-FREIGHT/operatorskaya",
+        "U-FREIGHT/zaschischennaya-peshehodnaya"
+      ],
+      "world_m": [
+        -6.818,
+        83.111,
+        -5.808,
+        83.111
+      ]
+    },
+    {
+      "id": "u-freight-door-11",
+      "type": "door",
+      "source": "door-glyph",
+      "source_id": "u_freight-opening-014",
+      "width_m": 1.01,
+      "rooms": [
+        "U-FREIGHT/proby-siz",
+        "U-FREIGHT/zaschischennaya-peshehodnaya"
+      ],
+      "world_m": [
+        -1.768,
+        83.111,
+        -0.758,
+        83.111
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "u_freight-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ТЯЖЁЛАЯ ТРАНСПОРТНАЯ МАГИСТРАЛЬ / чистая ширина 7–8 м · разворот и встречное движение платформ",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -15.66,
+        66.61,
+        43.44,
+        8.5
+      ]
+    },
+    {
+      "source_id": "u_freight-geometry-001",
+      "role": "envelope",
+      "class": "outer",
+      "label": "привод / Изолятор / Досмотровая полоса / контроль / ГРУЗОВОЙ ЛИФТ / подозрительный груз / Разгрузочный карман / сканер · весы · отбор проб / герметичный слив / капсула · платформа · контейнер / платформы · временная постановка / без постоянного хранения / поверхность ↑ · нижний этаж · техуровень ↓ / служебный / техника · зарядка / операторская / пробы · СИЗ / тамбур / пожарный комплект / ворота · лифт / аварийный душ / защищённая пешеходная полоса · 1,8–2 м / служебный обход шахты · аварийная связь",
+      "reason": "outline of a room group (inner rooms cover 100%)",
+      "world_m": [
+        -15.66,
+        75.11,
+        43.44,
+        10.0
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "u_freight-annotation-001",
+      "source": "gate",
+      "plan_px": [
+        70.0,
+        112.0,
+        220.0
+      ],
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "u_freight-annotation-003",
+      "source": "gate",
+      "plan_px": [
+        90.0,
+        745.0,
+        855.0
+      ],
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    }
+  ],
+  "wall_segments": 12,
+  "feature_rects_ignored": 0,
+  "unmapped_other_elements": 0
+}

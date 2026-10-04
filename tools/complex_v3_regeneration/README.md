@@ -22,7 +22,7 @@ The backend runs strict SVG inspection and conversion with one shared argument l
 
 `sector_generation_manifest.json` is the single production manifest for all 30 sectors. Every
 `source_svg` points to the single metric input under
-`docs/design/complex_v3/plans/generation/`; SVGs under `plans/sectors` and
+`docs/design/complex_v4/plans/generation/`; SVGs under `plans/sectors` and
 `plans/overview` are presentation-only. The split manifests under `rollouts/` remain
 regression inputs, but neither the editor nor production CLI selects them. Before
 creating staging, the backend validates the complete manifest contract and checks

@@ -1,0 +1,405 @@
+{
+  "sector_id": "L-CHAMBER-3",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_chamber_3.svg",
+  "registration": {
+    "plan_px_per_m_x": 17.591,
+    "plan_px_per_m_y": 16.5,
+    "anisotropy_percent": 6.4,
+    "world_envelope_m": [
+      -34.44,
+      36.22,
+      24.44,
+      20.0
+    ],
+    "check_pairs": [
+      {
+        "plan_px": [
+          325,
+          95,
+          270,
+          125
+        ],
+        "overview_px": [
+          740,
+          400,
+          80,
+          50
+        ],
+        "plan_size_m": [
+          15.35,
+          7.58
+        ],
+        "overview_size_m": [
+          8.89,
+          5.56
+        ]
+      },
+      {
+        "plan_px": [
+          340,
+          550,
+          240,
+          110
+        ],
+        "overview_px": [
+          740,
+          630,
+          80,
+          50
+        ],
+        "plan_size_m": [
+          13.64,
+          6.67
+        ],
+        "overview_size_m": [
+          8.89,
+          5.56
+        ]
+      }
+    ]
+  },
+  "wall_height_m": 5.0,
+  "rooms": [
+    {
+      "id": "l-chamber-3-floor-01",
+      "space_id": "L-CHAMBER-3/post",
+      "label": "ПОСТ / ПЕРСОНАЛЬНЫЙ / ШЛЮЗ / наблюдение · блокировка",
+      "class": "support",
+      "source_id": "l_chamber_3-space-002",
+      "plan_px": [
+        325.0,
+        95.0,
+        270.0,
+        125.0
+      ],
+      "world_m": [
+        -29.897,
+        28.646,
+        15.349,
+        7.576
+      ],
+      "size_m": [
+        15.35,
+        7.58
+      ],
+      "area_m2": 116.3
+    },
+    {
+      "id": "l-chamber-3-floor-02",
+      "space_id": "L-CHAMBER-3/kamera-3-rannyaya-kapsula",
+      "label": "КАМЕРА №3 · РАННЯЯ КАПСУЛА / экспериментальный гермоконтур / открытый технический обход внутри камеры",
+      "class": "containment",
+      "source_id": "l_chamber_3-geometry-001",
+      "plan_px": [
+        245.0,
+        220.0,
+        430.0,
+        330.0
+      ],
+      "world_m": [
+        -34.444,
+        36.222,
+        24.444,
+        20.0
+      ],
+      "size_m": [
+        24.44,
+        20.0
+      ],
+      "area_m2": 488.9
+    },
+    {
+      "id": "l-chamber-3-floor-03",
+      "space_id": "L-CHAMBER-3/zaschischennaya",
+      "label": "ЗАЩИЩЁННАЯ / БОКОВАЯ ГАЛЕРЕЯ / доступ персонала вне камеры",
+      "class": "corridor",
+      "source_id": "l_chamber_3-space-003",
+      "plan_px": [
+        675.0,
+        95.0,
+        170.0,
+        155.0
+      ],
+      "world_m": [
+        -10.0,
+        28.646,
+        9.664,
+        9.394
+      ],
+      "size_m": [
+        9.66,
+        9.39
+      ],
+      "area_m2": 90.8
+    },
+    {
+      "id": "l-chamber-3-floor-04",
+      "space_id": "L-CHAMBER-3/operatorskaya",
+      "label": "ОПЕРАТОРСКАЯ / устройство погружения",
+      "class": "support",
+      "source_id": "l_chamber_3-space-004",
+      "plan_px": [
+        675.0,
+        250.0,
+        170.0,
+        220.0
+      ],
+      "world_m": [
+        -10.0,
+        38.04,
+        9.664,
+        13.334
+      ],
+      "size_m": [
+        9.66,
+        13.33
+      ],
+      "area_m2": 128.9
+    },
+    {
+      "id": "l-chamber-3-floor-05",
+      "space_id": "L-CHAMBER-3/diagnostika",
+      "label": "ДИАГНОСТИКА / запись · питание",
+      "class": "support",
+      "source_id": "l_chamber_3-space-005",
+      "plan_px": [
+        675.0,
+        470.0,
+        170.0,
+        80.0
+      ],
+      "world_m": [
+        -10.0,
+        51.374,
+        9.664,
+        4.848
+      ],
+      "size_m": [
+        9.66,
+        4.85
+      ],
+      "area_m2": 46.9
+    },
+    {
+      "id": "l-chamber-3-floor-06",
+      "space_id": "L-CHAMBER-3/gruzovoy-germoshlyuz",
+      "label": "ГРУЗОВОЙ ГЕРМОШЛЮЗ / подача капсулы · штатно закрыт",
+      "class": "support",
+      "source_id": "l_chamber_3-space-006",
+      "plan_px": [
+        340.0,
+        550.0,
+        240.0,
+        110.0
+      ],
+      "world_m": [
+        -29.044,
+        56.222,
+        13.643,
+        6.667
+      ],
+      "size_m": [
+        13.64,
+        6.67
+      ],
+      "area_m2": 91.0
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-chamber-3-window-01",
+      "type": "window",
+      "source": "window",
+      "source_id": "l_chamber_3-annotation-001",
+      "width_m": 5.45,
+      "rooms": [
+        "L-CHAMBER-3/kamera-3-rannyaya-kapsula",
+        "L-CHAMBER-3/operatorskaya"
+      ],
+      "world_m": [
+        -10.0,
+        41.98,
+        -10.0,
+        47.434
+      ]
+    },
+    {
+      "id": "l-chamber-3-window-02",
+      "type": "window",
+      "source": "window",
+      "source_id": "l_chamber_3-annotation-002",
+      "width_m": 4.26,
+      "rooms": [
+        "L-CHAMBER-3/kamera-3-rannyaya-kapsula",
+        "L-CHAMBER-3/post"
+      ],
+      "world_m": [
+        -28.76,
+        36.222,
+        -24.496,
+        36.222
+      ]
+    },
+    {
+      "id": "l-chamber-3-door-03",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_chamber_3-opening-001",
+      "width_m": 2.84,
+      "rooms": [
+        "L-CHAMBER-3/post"
+      ],
+      "world_m": [
+        -27.623,
+        28.646,
+        -24.78,
+        28.646
+      ]
+    },
+    {
+      "id": "l-chamber-3-opening-04",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "l_chamber_3-opening-005",
+      "width_m": 3.13,
+      "rooms": [
+        "L-CHAMBER-3/kamera-3-rannyaya-kapsula",
+        "L-CHAMBER-3/post"
+      ],
+      "world_m": [
+        -20.233,
+        36.222,
+        -17.106,
+        36.222
+      ]
+    },
+    {
+      "id": "l-chamber-3-door-05",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_chamber_3-opening-006",
+      "width_m": 3.41,
+      "rooms": [
+        "L-CHAMBER-3/zaschischennaya"
+      ],
+      "world_m": [
+        -7.442,
+        28.646,
+        -4.031,
+        28.646
+      ]
+    },
+    {
+      "id": "l-chamber-3-door-06",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_chamber_3-opening-007",
+      "width_m": 3.98,
+      "rooms": [
+        "L-CHAMBER-3/operatorskaya",
+        "L-CHAMBER-3/zaschischennaya"
+      ],
+      "world_m": [
+        -7.158,
+        38.04,
+        -3.178,
+        38.04
+      ]
+    },
+    {
+      "id": "l-chamber-3-door-07",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_chamber_3-opening-008",
+      "width_m": 3.98,
+      "rooms": [
+        "L-CHAMBER-3/diagnostika",
+        "L-CHAMBER-3/operatorskaya"
+      ],
+      "world_m": [
+        -7.158,
+        51.374,
+        -3.178,
+        51.374
+      ]
+    },
+    {
+      "id": "l-chamber-3-door-08",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_chamber_3-opening-011",
+      "width_m": 5.68,
+      "rooms": [
+        "L-CHAMBER-3/gruzovoy-germoshlyuz",
+        "L-CHAMBER-3/kamera-3-rannyaya-kapsula"
+      ],
+      "world_m": [
+        -25.065,
+        56.222,
+        -19.38,
+        56.222
+      ]
+    },
+    {
+      "id": "l-chamber-3-door-09",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_chamber_3-opening-012",
+      "width_m": 5.68,
+      "rooms": [
+        "L-CHAMBER-3/gruzovoy-germoshlyuz"
+      ],
+      "world_m": [
+        -25.065,
+        62.889,
+        -19.38,
+        62.889
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_chamber_3-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ПАССАЖИРСКАЯ МАГИСТРАЛЬ",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -32.74,
+        24.4,
+        32.4,
+        4.24
+      ]
+    },
+    {
+      "source_id": "l_chamber_3-space-007",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ТЯЖЁЛАЯ МАГИСТРАЛЬ",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -34.44,
+        62.89,
+        24.44,
+        4.54
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_chamber_3-opening-002",
+      "source": "support-gap",
+      "plan_px": [
+        455.0,
+        145.0,
+        180.0
+      ],
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    }
+  ],
+  "wall_segments": 15,
+  "feature_rects_ignored": 3,
+  "unmapped_other_elements": 0
+}

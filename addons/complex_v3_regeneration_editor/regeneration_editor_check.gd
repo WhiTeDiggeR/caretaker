@@ -18,7 +18,7 @@ func _init() -> void:
 	var production_manifest := "res://tools/complex_v3_regeneration/sector_generation_manifest.json"
 	var production_context: Dictionary = operations.resolve_sector({"complex_v3_sector_id": "U-CONTROL"}, "", production_manifest)
 	_assert(bool(production_context.get("ok", false)), "production sector resolution failed")
-	_assert(production_context.get("source_svg") == "res://docs/design/complex_v3/plans/generation/upper/u_control.svg", "production source path is not canonical")
+	_assert(production_context.get("source_svg") == "res://docs/design/complex_v4/plans/generation/upper/u_control.svg", "production source path is not canonical")
 	var path_context: Dictionary = operations.resolve_sector({}, "res://addons/complex_v3_regeneration_editor/fixtures/live/generated.tscn", manifest)
 	_assert(bool(path_context.get("ok", false)), "manifest path sector resolution failed")
 	var conflict: Dictionary = operations.resolve_sector({"complex_v3_sector_id": "FIXTURE-EDITOR", "sector_id": "OTHER"}, "", manifest)

@@ -17,7 +17,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / "tools/complex_v3_regeneration/sector_generation_manifest.json"
-CANONICAL_PREFIX = "docs/design/complex_v3/plans/generation/"
+CANONICAL_PREFIX = "docs/design/complex_v4/plans/generation/"
 DRAWABLE = {"rect", "line", "polyline", "polygon", "path", "circle", "ellipse", "text"}
 LEVEL_ELEVATION = {"LV-U": 0.0, "LV-L": -6.0, "LV-T": -11.5}
 SETTINGS_MANIFESTS = [
@@ -174,7 +174,7 @@ def conversion_regression(project_root: Path, tool_root: Path) -> tuple[dict[str
         temporary_root = Path(temporary)
         source = temporary_root / "u_control.svg"
         output = temporary_root / "generated"
-        shutil.copy2(project_root / "docs/design/complex_v3/plans/generation/upper/u_control.svg", source)
+        shutil.copy2(project_root / "docs/design/complex_v4/plans/generation/upper/u_control.svg", source)
         common = [
             "--profile", "generic", "--scale", "1", "--origin", "none", "--elevation", "0",
             "--wall-thickness", ".3", "--floor-thickness", ".2", "--ceiling-thickness", ".2",

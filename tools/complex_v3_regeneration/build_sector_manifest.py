@@ -40,7 +40,7 @@ def write_json(path: Path, value: dict[str, Any]) -> None:
 def circulation_entry(parameterization: dict[str, Any]) -> dict[str, Any]:
     return {
         "sector_id": "T-CIRCULATION", "level": "LV-T", "status": "ready", "blockers": [],
-        "source_svg": "docs/design/complex_v3/plans/generation/technical/t_circulation.svg",
+        "source_svg": "docs/design/complex_v4/plans/generation/technical/t_circulation.svg",
         "profile": "generic",
         "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": -11.5},
         "shared_args": ["--wall-height", "2.8", "--wall-thickness", "0.3", "--floor-thickness", "0.2", "--ceiling-thickness", "0.2", "--strict-wall-overlaps"],

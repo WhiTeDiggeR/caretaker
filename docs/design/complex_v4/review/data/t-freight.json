@@ -1,0 +1,303 @@
+{
+  "sector_id": "T-FREIGHT",
+  "level": "LV-T",
+  "source_plan": "docs/design/complex_v3/plans/sectors/technical/t_freight.svg",
+  "registration": {
+    "plan_px_per_m_x": 25.962,
+    "plan_px_per_m_y": 22.857,
+    "anisotropy_percent": 12.7,
+    "world_envelope_m": [
+      -20.53,
+      65.24,
+      33.12,
+      8.75
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 5.0,
+  "rooms": [
+    {
+      "id": "t-freight-floor-01",
+      "space_id": "T-FREIGHT/tehnicheskaya-servisnaya-pri",
+      "label": "ТЕХНИЧЕСКАЯ СЕРВИСНАЯ ПРИЁМКА / разгрузка узлов · ремонтная постановка · без постоянного хранения",
+      "class": "work",
+      "source_id": "t_freight-equipment-001",
+      "plan_px": [
+        70.0,
+        250.0,
+        530.0,
+        160.0
+      ],
+      "world_m": [
+        -20.525,
+        65.237,
+        20.414,
+        7.0
+      ],
+      "size_m": [
+        20.41,
+        7.0
+      ],
+      "area_m2": 142.9
+    },
+    {
+      "id": "t-freight-floor-02",
+      "space_id": "T-FREIGHT/zaschischennyy-sluzhebnyy-ob",
+      "label": "защищённый служебный обход технической приёмки",
+      "class": "corridor",
+      "source_id": "t_freight-space-002",
+      "plan_px": [
+        70.0,
+        410.0,
+        530.0,
+        40.0
+      ],
+      "world_m": [
+        -20.525,
+        72.237,
+        20.414,
+        1.75
+      ],
+      "size_m": [
+        20.41,
+        1.75
+      ],
+      "area_m2": 35.7
+    },
+    {
+      "id": "t-freight-floor-03",
+      "space_id": "T-FREIGHT/gruzovoy-lift",
+      "label": "ГРУЗОВОЙ ЛИФТ / тот же шахтный контур на всех этажах / верхний этаж ↑ · нижний этаж ↑ · техуровень",
+      "class": "shaft",
+      "source_id": "t_freight-space-003",
+      "plan_px": [
+        600.0,
+        250.0,
+        260.0,
+        160.0
+      ],
+      "world_m": [
+        -0.111,
+        65.237,
+        10.015,
+        7.0
+      ],
+      "size_m": [
+        10.02,
+        7.0
+      ],
+      "area_m2": 70.1
+    },
+    {
+      "id": "t-freight-floor-04",
+      "space_id": "T-FREIGHT/privod",
+      "label": "привод / контроль",
+      "class": "room",
+      "source_id": "t_freight-space-004",
+      "plan_px": [
+        860.0,
+        250.0,
+        70.0,
+        80.0
+      ],
+      "world_m": [
+        9.904,
+        65.237,
+        2.696,
+        3.5
+      ],
+      "size_m": [
+        2.7,
+        3.5
+      ],
+      "area_m2": 9.4
+    },
+    {
+      "id": "t-freight-floor-05",
+      "space_id": "T-FREIGHT/sluzhebnyy",
+      "label": "служебный / тамбур",
+      "class": "room",
+      "source_id": "t_freight-space-005",
+      "plan_px": [
+        860.0,
+        330.0,
+        70.0,
+        80.0
+      ],
+      "world_m": [
+        9.904,
+        68.737,
+        2.696,
+        3.5
+      ],
+      "size_m": [
+        2.7,
+        3.5
+      ],
+      "area_m2": 9.4
+    },
+    {
+      "id": "t-freight-floor-06",
+      "space_id": "T-FREIGHT/obhod-shahty-avariynaya-svya",
+      "label": "обход шахты · аварийная связь",
+      "class": "corridor",
+      "source_id": "t_freight-space-006",
+      "plan_px": [
+        600.0,
+        410.0,
+        330.0,
+        40.0
+      ],
+      "world_m": [
+        -0.111,
+        72.237,
+        12.711,
+        1.75
+      ],
+      "size_m": [
+        12.71,
+        1.75
+      ],
+      "area_m2": 22.2
+    }
+  ],
+  "openings": [
+    {
+      "id": "t-freight-window-01",
+      "type": "window",
+      "source": "window",
+      "source_id": "t_freight-annotation-001",
+      "width_m": 1.62,
+      "rooms": [
+        "T-FREIGHT/gruzovoy-lift",
+        "T-FREIGHT/privod"
+      ],
+      "world_m": [
+        9.904,
+        66.462,
+        9.904,
+        68.081
+      ]
+    },
+    {
+      "id": "t-freight-door-02",
+      "type": "door",
+      "source": "work-gap",
+      "source_id": "t_freight-opening-001",
+      "width_m": 5.01,
+      "rooms": [
+        "T-FREIGHT/tehnicheskaya-servisnaya-pri"
+      ],
+      "world_m": [
+        -13.784,
+        65.237,
+        -8.777,
+        65.237
+      ]
+    },
+    {
+      "id": "t-freight-opening-03",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "t_freight-opening-003",
+      "width_m": 4.99,
+      "rooms": [
+        "T-FREIGHT/gruzovoy-lift",
+        "T-FREIGHT/tehnicheskaya-servisnaya-pri"
+      ],
+      "world_m": [
+        -0.111,
+        66.462,
+        -0.111,
+        71.45
+      ]
+    },
+    {
+      "id": "t-freight-door-04",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "t_freight-opening-004",
+      "width_m": 2.7,
+      "rooms": [
+        "T-FREIGHT/tehnicheskaya-servisnaya-pri",
+        "T-FREIGHT/zaschischennyy-sluzhebnyy-ob"
+      ],
+      "world_m": [
+        -13.014,
+        72.237,
+        -10.318,
+        72.237
+      ]
+    },
+    {
+      "id": "t-freight-door-05",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "t_freight-opening-005",
+      "width_m": 2.31,
+      "rooms": [
+        "T-FREIGHT/gruzovoy-lift",
+        "T-FREIGHT/obhod-shahty-avariynaya-svya"
+      ],
+      "world_m": [
+        3.741,
+        72.237,
+        6.052,
+        72.237
+      ]
+    },
+    {
+      "id": "t-freight-opening-06",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "t_freight-opening-006",
+      "width_m": 1.16,
+      "rooms": [
+        "T-FREIGHT/privod",
+        "T-FREIGHT/sluzhebnyy"
+      ],
+      "world_m": [
+        10.674,
+        68.737,
+        11.83,
+        68.737
+      ]
+    },
+    {
+      "id": "t-freight-door-07",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "t_freight-opening-007",
+      "width_m": 1.16,
+      "rooms": [
+        "T-FREIGHT/obhod-shahty-avariynaya-svya",
+        "T-FREIGHT/sluzhebnyy"
+      ],
+      "world_m": [
+        10.674,
+        72.237,
+        11.83,
+        72.237
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "t_freight-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ТЯЖЁЛАЯ ГРУЗОВАЯ МАГИСТРАЛЬ / чистая ширина 7–8 м · тот же контур, что на двух основных этажах",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -20.52,
+        57.8,
+        33.12,
+        7.44
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 8,
+  "feature_rects_ignored": 3,
+  "unmapped_other_elements": 0
+}

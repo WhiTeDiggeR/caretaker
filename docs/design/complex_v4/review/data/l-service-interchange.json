@@ -1,0 +1,245 @@
+{
+  "sector_id": "L-SERVICE-INTERCHANGE",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_service_interchange.svg",
+  "registration": {
+    "plan_px_per_m_x": 30.0,
+    "plan_px_per_m_y": 31.5,
+    "anisotropy_percent": 4.9,
+    "world_envelope_m": [
+      -47.78,
+      48.44,
+      13.33,
+      13.33
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 3.8,
+  "rooms": [
+    {
+      "id": "l-service-interchange-floor-01",
+      "space_id": "L-SERVICE-INTERCHANGE/sluzhebnyy-vestibyul",
+      "label": "СЛУЖЕБНЫЙ ВЕСТИБЮЛЬ / проверка допуска · противопожарное разделение / стойка допуска",
+      "class": "support",
+      "source_id": "l_service_interchange-space-002",
+      "plan_px": [
+        250.0,
+        100.0,
+        400.0,
+        150.0
+      ],
+      "world_m": [
+        -47.778,
+        48.444,
+        13.334,
+        4.762
+      ],
+      "size_m": [
+        13.33,
+        4.76
+      ],
+      "area_m2": 63.5
+    },
+    {
+      "id": "l-service-interchange-floor-02",
+      "space_id": "L-SERVICE-INTERCHANGE/lestnica",
+      "label": "ЛЕСТНИЦА / НА ТЕХЭТАЖ / огнестойкая клетка",
+      "class": "support",
+      "source_id": "l_service_interchange-space-003",
+      "plan_px": [
+        250.0,
+        250.0,
+        140.0,
+        270.0
+      ],
+      "world_m": [
+        -47.778,
+        53.206,
+        4.667,
+        8.572
+      ],
+      "size_m": [
+        4.67,
+        8.57
+      ],
+      "area_m2": 40.0
+    },
+    {
+      "id": "l-service-interchange-floor-03",
+      "space_id": "L-SERVICE-INTERCHANGE/shlyuz-1",
+      "label": "ШЛЮЗ 1 / чистая сторона / ШЛЮЗ 2 / тяжёлая сторона",
+      "class": "support",
+      "source_id": "l_service_interchange-space-004",
+      "plan_px": [
+        390.0,
+        250.0,
+        150.0,
+        270.0
+      ],
+      "world_m": [
+        -43.111,
+        53.206,
+        5.0,
+        8.572
+      ],
+      "size_m": [
+        5.0,
+        8.57
+      ],
+      "area_m2": 42.9
+    },
+    {
+      "id": "l-service-interchange-floor-04",
+      "space_id": "L-SERVICE-INTERCHANGE/schit",
+      "label": "ЩИТ / УПРАВЛЕНИЯ / двери · отсечки / пожарный комплект",
+      "class": "equipment-room",
+      "source_id": "l_service_interchange-equipment-007",
+      "plan_px": [
+        540.0,
+        250.0,
+        110.0,
+        270.0
+      ],
+      "world_m": [
+        -38.111,
+        53.206,
+        3.667,
+        8.572
+      ],
+      "size_m": [
+        3.67,
+        8.57
+      ],
+      "area_m2": 31.4
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-service-interchange-door-01",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_service_interchange-opening-001",
+      "width_m": 2.33,
+      "rooms": [
+        "L-SERVICE-INTERCHANGE/sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -42.278,
+        48.444,
+        -39.944,
+        48.444
+      ]
+    },
+    {
+      "id": "l-service-interchange-opening-02",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "l_service_interchange-opening-002",
+      "width_m": 1.67,
+      "rooms": [
+        "L-SERVICE-INTERCHANGE/lestnica",
+        "L-SERVICE-INTERCHANGE/sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -46.278,
+        53.206,
+        -44.611,
+        53.206
+      ]
+    },
+    {
+      "id": "l-service-interchange-opening-03",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "l_service_interchange-opening-005",
+      "width_m": 2.67,
+      "rooms": [
+        "L-SERVICE-INTERCHANGE/shlyuz-1",
+        "L-SERVICE-INTERCHANGE/sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -41.944,
+        53.206,
+        -39.278,
+        53.206
+      ]
+    },
+    {
+      "id": "l-service-interchange-door-04",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_service_interchange-opening-007",
+      "width_m": 3.0,
+      "rooms": [
+        "L-SERVICE-INTERCHANGE/shlyuz-1"
+      ],
+      "world_m": [
+        -42.111,
+        61.778,
+        -39.111,
+        61.778
+      ]
+    },
+    {
+      "id": "l-service-interchange-door-05",
+      "type": "door",
+      "source": "equip-gap",
+      "source_id": "l_service_interchange-opening-008",
+      "width_m": 2.0,
+      "rooms": [
+        "L-SERVICE-INTERCHANGE/schit",
+        "L-SERVICE-INTERCHANGE/sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -37.278,
+        53.206,
+        -35.278,
+        53.206
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_service_interchange-space-001",
+      "role": "context",
+      "class": "corridor",
+      "label": "ПАССАЖИРСКИЙ СЛУЖЕБНЫЙ ПОДХОД",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -47.78,
+        46.06,
+        13.33,
+        2.38
+      ]
+    },
+    {
+      "source_id": "l_service_interchange-space-005",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ТЯЖЁЛАЯ МАГИСТРАЛЬ / оборудование · конвой · платформы",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -47.78,
+        61.78,
+        13.33,
+        2.54
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_service_interchange-opening-006",
+      "source": "room-gap",
+      "plan_px": [
+        385.0,
+        425.0,
+        505.0
+      ],
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    }
+  ],
+  "wall_segments": 8,
+  "feature_rects_ignored": 2,
+  "unmapped_other_elements": 0
+}

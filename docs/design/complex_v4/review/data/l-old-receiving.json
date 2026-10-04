@@ -1,0 +1,293 @@
+{
+  "sector_id": "L-OLD-RECEIVING",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_old_receiving.svg",
+  "registration": {
+    "plan_px_per_m_x": 23.5,
+    "plan_px_per_m_y": 17.053,
+    "anisotropy_percent": 31.8,
+    "world_envelope_m": [
+      -92.22,
+      48.44,
+      20.0,
+      21.11
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 5.0,
+  "rooms": [
+    {
+      "id": "l-old-receiving-floor-01",
+      "space_id": "L-OLD-RECEIVING/corridor",
+      "label": "",
+      "class": "corridor",
+      "source_id": "l_old_receiving-space-002",
+      "plan_px": [
+        395.0,
+        105.0,
+        120.0,
+        80.0
+      ],
+      "world_m": [
+        -86.052,
+        43.753,
+        5.106,
+        4.691
+      ],
+      "size_m": [
+        5.11,
+        4.69
+      ],
+      "area_m2": 24.0
+    },
+    {
+      "id": "l-old-receiving-floor-02",
+      "space_id": "L-OLD-RECEIVING/post",
+      "label": "ПОСТ / УПРАВЛЕНИЯ / ворота · лебёдка",
+      "class": "support",
+      "source_id": "l_old_receiving-space-003",
+      "plan_px": [
+        600.0,
+        185.0,
+        120.0,
+        95.0
+      ],
+      "world_m": [
+        -77.329,
+        48.444,
+        5.107,
+        5.571
+      ],
+      "size_m": [
+        5.11,
+        5.57
+      ],
+      "area_m2": 28.5
+    },
+    {
+      "id": "l-old-receiving-floor-03",
+      "space_id": "L-OLD-RECEIVING/komnata",
+      "label": "КОМНАТА / СМЕНЫ / непроходная",
+      "class": "support",
+      "source_id": "l_old_receiving-space-004",
+      "plan_px": [
+        250.0,
+        185.0,
+        115.0,
+        95.0
+      ],
+      "world_m": [
+        -92.222,
+        48.444,
+        4.893,
+        5.571
+      ],
+      "size_m": [
+        4.89,
+        5.57
+      ],
+      "area_m2": 27.3
+    },
+    {
+      "id": "l-old-receiving-floor-04",
+      "space_id": "L-OLD-RECEIVING/staryy-priemnyy-zal",
+      "label": "СТАРЫЙ ПРИЁМНЫЙ ЗАЛ / РАЗГРУЗОЧНАЯ / ДОСМОТРОВАЯ / ПЛОЩАДКА / ПОЛОСА / напольная направляющая старых платформ",
+      "class": "old",
+      "source_id": "l_old_receiving-geometry-001",
+      "plan_px": [
+        365.0,
+        185.0,
+        235.0,
+        95.0
+      ],
+      "world_m": [
+        -87.329,
+        48.444,
+        10.0,
+        5.571
+      ],
+      "size_m": [
+        10.0,
+        5.57
+      ],
+      "area_m2": 55.7
+    },
+    {
+      "id": "l-old-receiving-floor-05",
+      "space_id": "L-OLD-RECEIVING/staryy-priemnyy-zal-2",
+      "label": "СТАРЫЙ ПРИЁМНЫЙ ЗАЛ / РАЗГРУЗОЧНАЯ / ДОСМОТРОВАЯ / ПЛОЩАДКА / ПОЛОСА / напольная направляющая старых платформ",
+      "class": "old",
+      "source_id": "l_old_receiving-geometry-001",
+      "plan_px": [
+        250.0,
+        280.0,
+        470.0,
+        265.0
+      ],
+      "world_m": [
+        -92.222,
+        54.015,
+        20.0,
+        15.541
+      ],
+      "size_m": [
+        20.0,
+        15.54
+      ],
+      "area_m2": 310.8
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-old-receiving-window-01",
+      "type": "window",
+      "source": "window",
+      "source_id": "l_old_receiving-annotation-001",
+      "width_m": 2.98,
+      "rooms": [
+        "L-OLD-RECEIVING/post",
+        "L-OLD-RECEIVING/staryy-priemnyy-zal-2"
+      ],
+      "world_m": [
+        -76.478,
+        54.015,
+        -73.499,
+        54.015
+      ]
+    },
+    {
+      "id": "l-old-receiving-door-02",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_old_receiving-opening-001",
+      "width_m": 2.98,
+      "rooms": [
+        "L-OLD-RECEIVING/corridor",
+        "L-OLD-RECEIVING/staryy-priemnyy-zal"
+      ],
+      "world_m": [
+        -84.988,
+        48.444,
+        -82.009,
+        48.444
+      ]
+    },
+    {
+      "id": "l-old-receiving-opening-03",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "l_old_receiving-opening-002",
+      "width_m": 1.76,
+      "rooms": [
+        "L-OLD-RECEIVING/komnata",
+        "L-OLD-RECEIVING/staryy-priemnyy-zal"
+      ],
+      "world_m": [
+        -87.329,
+        51.083,
+        -87.329,
+        52.843
+      ]
+    },
+    {
+      "id": "l-old-receiving-opening-04",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "l_old_receiving-opening-005",
+      "width_m": 1.76,
+      "rooms": [
+        "L-OLD-RECEIVING/post",
+        "L-OLD-RECEIVING/staryy-priemnyy-zal"
+      ],
+      "world_m": [
+        -77.329,
+        51.377,
+        -77.329,
+        53.136
+      ]
+    },
+    {
+      "id": "l-old-receiving-door-05",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_old_receiving-opening-008",
+      "width_m": 5.28,
+      "rooms": [
+        "L-OLD-RECEIVING/staryy-priemnyy-zal-2"
+      ],
+      "world_m": [
+        -92.222,
+        57.827,
+        -92.222,
+        63.105
+      ]
+    },
+    {
+      "id": "l-old-receiving-door-06",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_old_receiving-opening-009",
+      "width_m": 3.83,
+      "rooms": [
+        "L-OLD-RECEIVING/staryy-priemnyy-zal-2"
+      ],
+      "world_m": [
+        -83.712,
+        69.556,
+        -79.882,
+        69.556
+      ]
+    },
+    {
+      "id": "l-old-receiving-opening-07",
+      "type": "opening",
+      "source": "same-room",
+      "source_id": "l_old_receiving-geometry-001",
+      "width_m": 10.0,
+      "rooms": [
+        "L-OLD-RECEIVING/komnata",
+        "L-OLD-RECEIVING/post",
+        "L-OLD-RECEIVING/staryy-priemnyy-zal",
+        "L-OLD-RECEIVING/staryy-priemnyy-zal-2"
+      ],
+      "world_m": [
+        -87.329,
+        54.015,
+        -77.329,
+        54.015
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_old_receiving-space-001",
+      "role": "context",
+      "class": "context-zone",
+      "label": "ХОЛЛ СТАРОГО ЯДРА / широкий общий проход",
+      "reason": "neighbouring sector drawn for orientation",
+      "world_m": [
+        -88.39,
+        39.06,
+        9.79,
+        4.69
+      ]
+    },
+    {
+      "source_id": "l_old_receiving-space-005",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ТЯЖЁЛАЯ МАГИСТРАЛЬ / заключённые · оборудование · платформы",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -87.75,
+        69.56,
+        15.74,
+        4.98
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 10,
+  "feature_rects_ignored": 2,
+  "unmapped_other_elements": 1
+}

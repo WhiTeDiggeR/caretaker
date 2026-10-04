@@ -1,0 +1,138 @@
+{
+  "sector_id": "T-WORKSHOP",
+  "level": "LV-T",
+  "source_plan": "docs/design/complex_v3/plans/sectors/technical/t_workshop.svg",
+  "registration": {
+    "plan_px_per_m_x": 19.672,
+    "plan_px_per_m_y": 28.8,
+    "anisotropy_percent": 37.7,
+    "world_envelope_m": [
+      -55.53,
+      -4.89,
+      38.12,
+      15.62
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 4.5,
+  "rooms": [
+    {
+      "id": "t-workshop-floor-01",
+      "space_id": "T-WORKSHOP/masterskaya",
+      "label": "МАСТЕРСКАЯ / ремонт оборудования · грязные работы / ремонтный стенд / свободный маневровый проход",
+      "class": "work",
+      "source_id": "t_workshop-equipment-001",
+      "plan_px": [
+        75.0,
+        90.0,
+        450.0,
+        450.0
+      ],
+      "world_m": [
+        -55.525,
+        -4.887,
+        22.875,
+        15.625
+      ],
+      "size_m": [
+        22.88,
+        15.62
+      ],
+      "area_m2": 357.4
+    },
+    {
+      "id": "t-workshop-floor-02",
+      "space_id": "T-WORKSHOP/sklad-zapchastey",
+      "label": "СКЛАД ЗАПЧАСТЕЙ / центральный проход для тележки",
+      "class": "work",
+      "source_id": "t_workshop-equipment-006",
+      "plan_px": [
+        525.0,
+        90.0,
+        300.0,
+        450.0
+      ],
+      "world_m": [
+        -32.65,
+        -4.887,
+        15.25,
+        15.625
+      ],
+      "size_m": [
+        15.25,
+        15.62
+      ],
+      "area_m2": 238.3
+    }
+  ],
+  "openings": [
+    {
+      "id": "t-workshop-door-01",
+      "type": "door",
+      "source": "work-gap",
+      "source_id": "t_workshop-opening-001",
+      "width_m": 3.65,
+      "rooms": [
+        "T-WORKSHOP/masterskaya",
+        "T-WORKSHOP/sklad-zapchastey"
+      ],
+      "world_m": [
+        -32.65,
+        2.404,
+        -32.65,
+        6.05
+      ]
+    },
+    {
+      "id": "t-workshop-door-02",
+      "type": "door",
+      "source": "work-gap",
+      "source_id": "t_workshop-opening-002",
+      "width_m": 3.81,
+      "rooms": [
+        "T-WORKSHOP/masterskaya"
+      ],
+      "world_m": [
+        -47.646,
+        10.738,
+        -43.833,
+        10.738
+      ]
+    },
+    {
+      "id": "t-workshop-door-03",
+      "type": "door",
+      "source": "work-gap",
+      "source_id": "t_workshop-opening-004",
+      "width_m": 3.81,
+      "rooms": [
+        "T-WORKSHOP/sklad-zapchastey"
+      ],
+      "world_m": [
+        -27.058,
+        10.738,
+        -23.246,
+        10.738
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "t_workshop-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -55.52,
+        10.74,
+        38.12,
+        3.12
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 5,
+  "feature_rects_ignored": 6,
+  "unmapped_other_elements": 0
+}
