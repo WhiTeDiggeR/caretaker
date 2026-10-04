@@ -55,6 +55,7 @@ var _agent_launcher: LineEdit
 var _inkscape: LineEdit
 var _anchor_id: LineEdit
 var _agent_fix_button: Button
+var _claude_button: Button
 var _binding_toggle: Button
 var _binding_container: VBoxContainer
 var _settings_toggle: Button
@@ -132,6 +133,7 @@ func _build_panel() -> void:
 	_toolchain_label = _add_label("Генераторы: проверка…", tools)
 	_inkscape_label = _add_label("Inkscape: проверка…", tools)
 	_agent_label = _add_label("Агент исправления: —", tools)
+	_claude_button = _add_button("Выбрать агентом Claude", _use_claude_agent, tools, "Записывает лаунчер Claude Code. Claude CLI должен быть авторизован (команда claude, затем /login).")
 
 	var actions := _section("Работа с планом")
 	_add_button("1. Открыть план в Inkscape", _open_source, actions, "Открывает исходный SVG сектора в Inkscape. После правки сохраните файл.")
@@ -175,7 +177,9 @@ func _build_panel() -> void:
 	_stair_root = _add_persistent_field("Папка generate-godot-stairs", "stair_tool_root", _settings_container, "Папка установленного скилла generate-godot-stairs (нужна версия 2.9.0 или новее).")
 	_inkscape = _add_persistent_field("Inkscape (inkscape.exe)", "inkscape_executable", _settings_container, "Пусто — ищется в стандартных местах и в Microsoft Store.")
 	_agent_launcher = _add_persistent_field("Запуск агента-исправителя", "agent_launcher", _settings_container, "JSON-массив: исполняемый файл и аргументы лаунчера.")
-	_add_button("Агент исправления: Claude", _use_claude_agent, _settings_container, "Записывает лаунчер Claude Code. Claude CLI должен быть авторизован (команда claude, затем /login).")
+	var bottom_space := Control.new()
+	bottom_space.custom_minimum_size = Vector2(0, 48)
+	_content.add_child(bottom_space)
 	_refresh_toolchain()
 
 
@@ -324,6 +328,8 @@ func _refresh_toolchain() -> void:
 	_agent_label.add_theme_color_override("font_color", COLOR_OK if agent != "не выбран" else COLOR_WARNING)
 	if _agent_fix_button != null:
 		_agent_fix_button.text = "Исправить агентом (%s)" % agent
+	if _claude_button != null:
+		_claude_button.visible = agent != "Claude"
 
 
 # --- Scene context ----------------------------------------------------------------------
