@@ -2,10 +2,14 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
+
+from tools.complex_v3_regeneration.vertical_resolver import resolve_sector_verticals  # noqa: E402
 BLOCKOUT_DIR = ROOT / "scenes" / "complex_v3_blockout"
 PASSPORTS_PATH = ROOT / "docs" / "design" / "complex_v3" / "handoff" / "passports" / "sector-passports.json"
 GEOMETRY_PATH = ROOT / "docs" / "design" / "complex_v3" / "handoff" / "geometry" / "complex-handoff.json"
@@ -71,7 +75,7 @@ def main() -> None:
     passports_data = json.loads(PASSPORTS_PATH.read_text(encoding="utf-8"))
     geometry = json.loads(GEOMETRY_PATH.read_text(encoding="utf-8"))
     generation_manifest = json.loads(GENERATION_MANIFEST_PATH.read_text(encoding="utf-8"))
-    generation_by_sector = {item["sector_id"]: item for item in generation_manifest["sectors"]}
+    generation_by_sector = {item["sector_id"]: resolve_sector_verticals(item, generation_manifest, ROOT) for item in generation_manifest["sectors"]}
     passports = sorted(passports_data["passports"], key=lambda item: item["sector_id"])
     space_counts: dict[str, int] = {}
     sector_bounds: dict[str, list[float]] = {}

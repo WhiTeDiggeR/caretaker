@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import copy
 import json
 from pathlib import Path
@@ -12,6 +13,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 CATALOG = ROOT / "scenes" / "complex_v3_blockout" / "sector_catalog.json"
 OUTPUT = Path(__file__).with_name("sector_generation_manifest.json")
+VERTICAL_DEFINITIONS = Path(__file__).with_name("vertical_definitions.json")
 SOURCE_MANIFESTS = (
     Path(__file__).with_name("rollouts") / "lower_generation_manifest.json",
     Path(__file__).with_name("rollouts") / "upper_generation_manifest.json",
@@ -53,7 +55,19 @@ def circulation_entry(parameterization: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def apply_vertical_definitions(source_by_id: dict[str, dict[str, Any]]) -> None:
+    """Replace the static stair configuration with the SVG-derived definitions."""
+    for stair in load_json(VERTICAL_DEFINITIONS)["stairs"]:
+        host = stair["host_sector_id"]
+        if host not in source_by_id:
+            raise ValueError(f"Vertical definition host sector is unknown: {host}")
+        source_by_id[host]["vertical_generators"] = [copy.deepcopy(stair["generator"])]
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=OUTPUT)
+    options = parser.parse_args(argv)
     catalog = load_json(CATALOG)
     catalog_by_id = {item["sector_id"]: item for item in catalog["sectors"]}
     source_by_id: dict[str, dict[str, Any]] = {}
@@ -66,6 +80,7 @@ def main() -> int:
     if parameterization is None:
         raise ValueError("U-ROUTE-A parameterization template is missing")
     source_by_id["T-CIRCULATION"] = circulation_entry(parameterization)
+    apply_vertical_definitions(source_by_id)
     if set(source_by_id) != set(catalog_by_id):
         missing = sorted(set(catalog_by_id) - set(source_by_id))
         extra = sorted(set(source_by_id) - set(catalog_by_id))
@@ -92,7 +107,7 @@ def main() -> int:
         "producer_requirements": {"svg_to_godot3d": ">=1.19.0", "generate_godot_stairs": ">=2.9.0"},
         "sectors": sectors,
     }
-    write_json(OUTPUT, document)
+    write_json(options.output, document)
     return 0
 
 

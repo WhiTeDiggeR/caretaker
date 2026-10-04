@@ -11,16 +11,20 @@ import math
 import re
 import subprocess
 import sys
+from xml.etree.ElementTree import ParseError as ET_ParseError
 from pathlib import Path
 from typing import Any, Sequence
 
 try:
     from .manifest_contract import validate_manifest_document
+    from .vertical_resolver import VerticalError, resolve_sector_verticals
 except ImportError:
     try:
         from tools.complex_v3_regeneration.manifest_contract import validate_manifest_document
+        from tools.complex_v3_regeneration.vertical_resolver import VerticalError, resolve_sector_verticals
     except ImportError:
         from manifest_contract import validate_manifest_document
+        from vertical_resolver import VerticalError, resolve_sector_verticals
 
 
 VERSION = "1.1.1"
@@ -703,6 +707,10 @@ def execute(args: argparse.Namespace) -> int:
     if sector.get("status") != "ready" or blockers:
         detail = ", ".join(str(value) for value in blockers) or "sector status is not ready"
         raise RegenerationError(f"Sector {args.sector} configuration is blocked: {detail}")
+    try:
+        sector = resolve_sector_verticals(sector, manifest, project_root)
+    except (VerticalError, KeyError, OSError, ET_ParseError) as exc:
+        raise RegenerationError(f"Vertical markup is invalid: {exc}") from exc
     required = (
         "source_svg", "profile", "metric_settings", "shared_args", "semantic_mappings", "material_mappings",
         "scene_name", "output_resource_dir", "local_to_world",

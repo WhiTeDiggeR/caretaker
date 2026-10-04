@@ -4,10 +4,10 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "sector_id": "U-ROUTE-A",
-  "generation_id": "sha256:3bb565fce24c651febe25a0685d53ede5a1e8873de48098087b11f40db2be0d0",
+  "generation_id": "sha256:7299508b0994375efc2cfffb4c23b501c36c25fa14d834d8e8f5acd1863e9a0a",
   "source": {
     "path": "docs/design/complex_v3/plans/generation/upper/u_route_a.svg",
-    "sha256": "sha256:b614679e4a605a6ffcea917fb0fbf112f53f703bcb5efd0ee6e4cff7e12e7a7f"
+    "sha256": "sha256:b746d241e56dd579a7fe5bc0c0dd260d2a0f217c649193247199cd028de28d7a"
   },
   "output_resource_dir": "res://gen/u/u_route_a",
   "local_to_world": {
@@ -57,6 +57,18 @@
   "vertical_generators": [
     {
       "generator_id": "route_a_stair",
+      "source": "svg",
+      "vertical_id": "VT-ROUTE-A",
+      "kind": "stair",
+      "levels": {
+        "upper": {
+          "sector_id": "U-ROUTE-A"
+        },
+        "lower": {
+          "sector_id": "L-ARCHIVE-A"
+        }
+      },
+      "clearance_m": 0.01,
       "args": [
         "--shaft-width",
         "5.98",
@@ -68,6 +80,14 @@
         "u-turn",
         "--stair-width",
         "1.5",
+        "--lower-entry-side",
+        "north",
+        "--upper-exit-side",
+        "north",
+        "--shaft-wall-bottom",
+        "3.6",
+        "--shaft-wall-top",
+        "6",
         "--target-riser",
         "0.15",
         "--max-riser",
@@ -86,21 +106,13 @@
         "auto",
         "--wall-thickness",
         "0.09",
-        "--shaft-wall-bottom",
-        "3.6",
-        "--shaft-wall-top",
-        "6",
-        "--lower-entry-side",
-        "north",
-        "--upper-exit-side",
-        "north",
         "--scene-name",
         "route_a_stair"
       ],
       "local_to_world": {
         "origin": [
           -52.5,
-          -6,
+          -6.0,
           9.51
         ],
         "basis_x": [
@@ -118,6 +130,19 @@
           0,
           -1
         ]
+      },
+      "resolved": {
+        "vertical_id": "VT-ROUTE-A",
+        "layout": "u-turn",
+        "entry_side": "north",
+        "exit_side": "north",
+        "shaft_m": [
+          6.0,
+          7.0
+        ],
+        "stair_width_m": 1.5,
+        "floor_height_m": 6.0,
+        "clearance_m": 0.01
       }
     }
   ],

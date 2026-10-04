@@ -5153,17 +5153,19 @@
       "vertical_generators": [
         {
           "generator_id": "route_a_stair",
+          "source": "svg",
+          "vertical_id": "VT-ROUTE-A",
+          "kind": "stair",
+          "levels": {
+            "upper": {
+              "sector_id": "U-ROUTE-A"
+            },
+            "lower": {
+              "sector_id": "L-ARCHIVE-A"
+            }
+          },
+          "clearance_m": 0.01,
           "args": [
-            "--shaft-width",
-            "5.98",
-            "--shaft-length",
-            "7",
-            "--floor-height",
-            "6",
-            "--layout",
-            "u-turn",
-            "--stair-width",
-            "1.5",
             "--target-riser",
             "0.15",
             "--max-riser",
@@ -5182,39 +5184,9 @@
             "auto",
             "--wall-thickness",
             "0.09",
-            "--shaft-wall-bottom",
-            "3.6",
-            "--shaft-wall-top",
-            "6",
-            "--lower-entry-side",
-            "north",
-            "--upper-exit-side",
-            "north",
             "--scene-name",
             "route_a_stair"
-          ],
-          "local_to_world": {
-            "origin": [
-              -52.5,
-              -6,
-              9.51
-            ],
-            "basis_x": [
-              -1,
-              0,
-              0
-            ],
-            "basis_y": [
-              0,
-              1,
-              0
-            ],
-            "basis_z": [
-              0,
-              0,
-              -1
-            ]
-          }
+          ]
         }
       ],
       "safe_regeneration": {

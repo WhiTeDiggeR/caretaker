@@ -1,0 +1,33 @@
+{
+  "schema_id": "caretaker.vertical_definitions",
+  "schema_version": "1.0.0",
+  "description": "Stair generators whose geometry is derived from SVG markup (data-vertical-*). Only non-geometric choices are stored here; shaft size, position, entry/exit sides, stair width, floor height and shaft walls come from the plans. See docs/design/complex_v3/regeneration/vertical-markup.md.",
+  "stairs": [
+    {
+      "host_sector_id": "U-ROUTE-A",
+      "generator": {
+        "generator_id": "route_a_stair",
+        "source": "svg",
+        "vertical_id": "VT-ROUTE-A",
+        "kind": "stair",
+        "levels": {
+          "upper": { "sector_id": "U-ROUTE-A" },
+          "lower": { "sector_id": "L-ARCHIVE-A" }
+        },
+        "clearance_m": 0.01,
+        "args": [
+          "--target-riser", "0.15",
+          "--max-riser", "0.15",
+          "--target-tread", "0.25",
+          "--min-tread", "0.25",
+          "--minimum-headroom", "2.4",
+          "--landing-depth", "2",
+          "--flight-gap", "0.7",
+          "--railings", "auto",
+          "--wall-thickness", "0.09",
+          "--scene-name", "route_a_stair"
+        ]
+      }
+    }
+  ]
+}

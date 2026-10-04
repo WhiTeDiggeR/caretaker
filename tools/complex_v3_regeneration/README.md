@@ -138,3 +138,7 @@ python -m unittest discover -s tools/complex_v3_regeneration/tests -v
 ```
 
 For an integration check, invoke `regenerate_sector.py` with that fixture manifest, `--sector FIXTURE-ORDINARY` or `FIXTURE-VERTICAL`, and explicit canonical roots. Run the ordinary fixture twice into different empty staging directories and compare the package byte-for-byte. Backend, converter, preflight, and scene metadata paths are normalized to `$PROJECT_ROOT`, `$STAGING`, `$SVG_TOOL_ROOT`, `$STAIR_TOOL_ROOT`, and `$PYTHON`, so reports do not retain a developer's worktree path.
+
+## Vertical (stair) generation from the plans
+
+Stair generators with `"source": "svg"` take shaft size and position, entry/exit sides, stair width, floor height and shaft walls from `data-vertical-*` markup in the SVG plans via `vertical_resolver.py`; the manifest keeps only non-geometric arguments. The production manifest is built by `build_sector_manifest.py` from its sources, including `vertical_definitions.json`; never edit `sector_generation_manifest.json` by hand (`test_manifest_reproducible` fails if it drifts). Markup contract: `docs/design/complex_v3/regeneration/vertical-markup.md`.
