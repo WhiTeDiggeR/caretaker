@@ -76,6 +76,7 @@ res://scenes/complex_v3_regeneration/anchor_surface_check.gd|COMPLEX_V3_SURFACE_
 res://scenes/complex_v3_regeneration/sector_anchor_controller_check.tscn|COMPLEX_V3_SECTOR_ANCHOR_CONTROLLER_OK
 res://scenes/complex_v3_regeneration/production_anchor_binding_check.tscn|COMPLEX_V3_PRODUCTION_ANCHOR_BINDINGS_OK
 res://scenes/complex_v3_regeneration/door_binding_check.gd|DOOR_BINDING_CHECK doors=4 errors=0
+res://scenes/complex_v3_regeneration/door_frame_prefab_check.gd|DOOR_FRAME_PREFAB_CHECK doors=173 .* errors=0
 res://scenes/complex_v3_regeneration/rollout/shared/combined_check.gd|SHARED_COMBINED checks=[0-9]+ errors=0
 res://tools/complex_v3_regeneration/tests/production_matrix_check.gd|PRODUCTION_MATRIX generated=30 sectors=30 errors=0
 res://scenes/complex_v3_blockout/sector_wrapper_contract_check.gd|COMPLEX_V3_SECTOR_WRAPPER_CONTRACT_OK

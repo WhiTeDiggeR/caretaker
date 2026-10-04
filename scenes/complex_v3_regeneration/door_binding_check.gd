@@ -35,7 +35,7 @@ func _init() -> void:
 		var expected := Vector3(float(origin[0]), float(origin[1]), float(origin[2]))
 		if object.global_position.distance_to(expected) > TOLERANCE_M:
 			errors.append("%s is at %s, expected %s" % [object.name, object.global_position, expected])
-		var expected_scale := float(widths[object.anchor_id]) / ComplexV3DoorBindingBuilder.DOOR_FRAME_POST_SPACING_M
+		var expected_scale := float(widths[object.anchor_id]) / ComplexV3DoorBindingBuilder.frame_post_spacing(object)
 		if absf(object.global_transform.basis.get_scale().x - expected_scale) > SCALE_TOLERANCE:
 			errors.append("%s frame width scale is %.4f, expected %.4f" % [object.name, object.global_transform.basis.get_scale().x, expected_scale])
 	if doors != EXPECTED_DOORS:

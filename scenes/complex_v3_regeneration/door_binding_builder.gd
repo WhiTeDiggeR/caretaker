@@ -9,8 +9,8 @@ class_name ComplexV3DoorBindingBuilder
 const SCHEMA_ID := "caretaker.object_bindings"
 const SCHEMA_VERSION := "1.0.0"
 const DOOR_TYPE := "door"
-## Distance between the post centres of objects/complex_v3/open_door_frame.tscn at scale 1.
-const DOOR_FRAME_POST_SPACING_M := 2.38
+## Door frame prefabs declare the distance between their post centres at scale 1 in this root metadata.
+const SPACING_META := "door_frame_post_spacing_m"
 const PLACEHOLDER_FOOTPRINT := [0.1, 0.1, 0.1]
 ## The marker box stands on the pivot (floor) so it stays inside the door height limits.
 const PLACEHOLDER_FOOTPRINT_CENTER := [0.0, 0.05, 0.0]
@@ -62,10 +62,14 @@ static func build_bindings(
 		var base_transform := base["transform"] as Transform3D
 		var current := object.global_transform if object.is_inside_tree() else object.transform
 		# Keep orientation and height/depth scale; the width follows the door opening.
+		var spacing := frame_post_spacing(object)
+		if spacing <= 0.0:
+			errors.append("%s: its prefab declares no %s" % [object.name, SPACING_META])
+			continue
 		var door_width := float(((registry.get_anchor_frame(anchor_id).get("bounds", {})) as Dictionary).get("width_m", 0.0))
 		var scale := current.basis.get_scale()
 		if door_width > 0.0:
-			scale.x = door_width / DOOR_FRAME_POST_SPACING_M
+			scale.x = door_width / spacing
 		var local_basis := Basis(current.basis.orthonormalized().get_rotation_quaternion()).scaled_local(scale)
 		var correction := Transform3D(base_transform.basis.inverse() * local_basis, Vector3.ZERO)
 		bindings.append(_binding_entry(sector_id, authored_scene_path, object, anchor_id, correction))
@@ -91,6 +95,14 @@ static func merge_document(existing: Dictionary, map_id: String, sector_id: Stri
 	kept.append_array(bindings)
 	document["bindings"] = kept
 	return document
+
+
+## Post spacing at scale 1 declared by the prefab instanced as the object's `Content`; 0 if undeclared.
+static func frame_post_spacing(object: Node) -> float:
+	var content := object.get_node_or_null("Content")
+	if content == null:
+		return 0.0
+	return float(content.get_meta(SPACING_META, 0.0))
 
 
 static func door_placement() -> ComplexV3AnchorPlacement:
