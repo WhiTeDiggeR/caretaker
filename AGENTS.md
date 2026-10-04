@@ -56,6 +56,7 @@ Run the strongest available checks before delivery:
 2. `godot --headless --path . --quit-after 5`
 3. Open and exercise the affected scene in Godot 4.7 when the change is visual, interactive, physics-related, or audio-related.
 4. Run `git diff --check` and inspect the final diff for accidental scene churn.
+5. For changes to the generation flow, tools, plans or generated packages run `bash tools/ci/run_checks.sh` (all Python suites and headless Godot checks; CI runs the same script). Set `SVG_TOOL_ROOT` and `STAIR_TOOL_ROOT` to also run the tests that need the generation tools.
 
 Locating Godot: use the `GODOT_BIN` environment variable if it is set, otherwise the `godot` command from `PATH`. Run it through the console wrapper (`Godot_v4.7-stable_win64_console.exe`, not the GUI executable) and confirm `--version` reports 4.7. The wrapper only works under its original file name, so do not rename it; use a shim such as `godot.cmd` instead. Do not search whole drives before checking these two.
 
