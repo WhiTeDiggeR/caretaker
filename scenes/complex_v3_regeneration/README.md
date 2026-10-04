@@ -70,3 +70,17 @@ preserved) and applied by `SectorAnchorController.apply_bindings()` after regene
 godot --headless --path . --script res://scenes/complex_v3_regeneration/bind_doors_cli.gd -- --sector-id U-ROUTE-A
 godot --headless --path . --script res://scenes/complex_v3_regeneration/door_binding_check.gd
 ```
+
+## Joint check (z-fighting and interpenetration)
+
+`surface_conflict_check.gd` loads every sector and compares the meshes of its `Generated` layer in world space:
+**coplanar** (same-facing faces of two meshes closer than 5 mm that overlap, the renderer flickers) and
+**crossing** (an edge of one mesh passes through a face of another by more than 1 cm). Pairs inside the stair
+package are the stair generator's own and are not reported. Counts per sector are compared with
+`surface_conflict_baseline.json`: more than the baseline fails, fewer asks to lower it, and sectors in `clean`
+must have none. After fixing a sector, rewrite the baseline:
+
+```powershell
+godot --headless --path . --script res://scenes/complex_v3_regeneration/surface_conflict_check.gd -- --verbose
+godot --headless --path . --script res://scenes/complex_v3_regeneration/surface_conflict_check.gd -- --write-baseline
+```
