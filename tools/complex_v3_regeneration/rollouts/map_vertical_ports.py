@@ -4,9 +4,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
+
+from tools.complex_v3_regeneration.vertical_registry import load_definitions  # noqa: E402
 SPACE_REFS = {
     "VT-MAIN-ELEVATOR": {"LV-U":"U-CENTRAL-CORE/passenger_elevator", "LV-L":"L-CENTRAL-CORE/passenger_elevator"},
     "VT-MAIN-STAIR": {"LV-U":"U-CENTRAL-CORE/main_stair", "LV-L":"L-CENTRAL-CORE/main_stair"},
@@ -38,10 +42,11 @@ def map_ports(handoff: dict, vertical: dict) -> dict:
     portals = handoff["internal_portals"] + handoff["external_portals"]
     datums = vertical["level_datums"]
     entries, diagnostics = [], []
+    defined = set(load_definitions())
     for transition in vertical["transitions"]:
         tid = transition["id"]
         if tid not in SPACE_REFS:
-            entries.append({"transition_id":tid,"policy":"reuse_integrated_pilot" if tid == "VT-ROUTE-A" else "non_port_transition_requires_separate_geometry", "ports":[]})
+            entries.append({"transition_id":tid,"policy":"derived_from_svg_markup" if tid in defined else "non_port_transition_requires_separate_geometry", "ports":[]})
             continue
         levels = transition.get("stops", transition.get("connects", []))
         ports = []

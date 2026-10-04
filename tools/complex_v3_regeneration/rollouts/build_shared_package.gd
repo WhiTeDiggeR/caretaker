@@ -23,17 +23,27 @@ func _initialize() -> void:
 
 func _run() -> void:
 	var output := DEFAULT_OUTPUT
+	var owners: Dictionary = EXTERNAL_GEOMETRY_OWNERS.duplicate()
+	var blocked := PackedStringArray(BLOCKED_VERTICALS)
 	for argument: String in OS.get_cmdline_user_args():
 		if argument.begins_with("--output="):
 			output = argument.trim_prefix("--output=")
+		elif argument.begins_with("--owners="):
+			owners = {"horizontal_routes": "sector_rollouts", "connectors": "sector_rollouts"}
+			for pair: String in argument.trim_prefix("--owners=").split(";", false):
+				var parts := pair.split("=", true, 1)
+				if parts.size() == 2:
+					owners[parts[0]] = parts[1]
+		elif argument.begins_with("--blocked="):
+			blocked = PackedStringArray(argument.trim_prefix("--blocked=").split(",", false))
 	var generated := Node3D.new()
 	generated.name = "SharedInfrastructureGenerated"
 	root.add_child(generated)
 	generated.set_meta("content_owner", "complex_v3_shared_rollout")
 	generated.set_meta("contract_version", "1.0.0")
 	generated.set_meta("geometry_policy", "external_single_owner")
-	generated.set_meta("external_geometry_owners", EXTERNAL_GEOMETRY_OWNERS)
-	generated.set_meta("blocked_vertical_geometry", PackedStringArray(BLOCKED_VERTICALS))
+	generated.set_meta("external_geometry_owners", owners)
+	generated.set_meta("blocked_vertical_geometry", blocked)
 	generated.set_meta("anchor_frames", "res://gen/shared/anchor_frames.json")
 	var generated_contract := Node3D.new()
 	generated_contract.name = "Generated"

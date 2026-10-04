@@ -142,3 +142,7 @@ For an integration check, invoke `regenerate_sector.py` with that fixture manife
 ## Vertical (stair) generation from the plans
 
 Stair generators with `"source": "svg"` take shaft size and position, entry/exit sides, stair width, floor height and shaft walls from `data-vertical-*` markup in the SVG plans via `vertical_resolver.py`; the manifest keeps only non-geometric arguments. The production manifest is built by `build_sector_manifest.py` from its sources, including `vertical_definitions.json`; never edit `sector_generation_manifest.json` by hand (`test_manifest_reproducible` fails if it drifts). Markup contract: `docs/design/complex_v3/regeneration/vertical-markup.md`.
+
+## Vertical status registry
+
+`vertical_registry.py` is the single source of truth for every vertical transition: stairs defined in `vertical_definitions.json` are `generated` (resolved from the plans), lift shafts are `openings_ready` or `markup_incomplete` (checked from the plans' openings), everything else is `unresolved` with the reason. The shared infrastructure report (`gen/shared/generation_report.json`), the input audit and the port mapper read it; do not hard-code vertical ids. Run `python tools/complex_v3_regeneration/vertical_registry.py` for the table. After changing plans or definitions refresh the shared package: `rollouts/map_vertical_ports.py --report ...`, `rollouts/audit_shared_inputs.py --report ...`, then `rollouts/build_shared_contract.py` (needs `GODOT_BIN`).

@@ -4,12 +4,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
+
+from tools.complex_v3_regeneration.vertical_registry import GENERATED, OPENINGS_READY, load_registry  # noqa: E402
 
 
-def audit(handoff: dict, vertical: dict) -> dict:
+def audit(handoff: dict, vertical: dict, registry: list | None = None) -> dict:
+    states = {item["id"]: item for item in (registry if registry is not None else load_registry())}
     owners, diagnostics, connectors = [], [], []
     seen = set()
     for item in handoff["route_spaces"] + handoff["connection_corridors"] + handoff["controlled_technical_transitions"]:
@@ -28,9 +33,10 @@ def audit(handoff: dict, vertical: dict) -> dict:
     verticals = []
     for transition in vertical["transitions"]:
         identity = transition["id"]
-        policy = "reuse_integrated_pilot" if identity == "VT-ROUTE-A" else "pending_geometry_and_combined_validation"
+        state = states[identity]
+        policy = {GENERATED: "derived_from_svg_markup", OPENINGS_READY: "openings_from_svg_markup"}.get(state["status"], "pending_geometry_and_combined_validation")
         missing = []
-        if "stair" in transition["kind"] and identity != "VT-ROUTE-A":
+        if "stair" in transition["kind"] and state["status"] != GENERATED:
             for key in ("lower_entry_side", "upper_exit_side"):
                 if key not in transition:
                     missing.append(key)
@@ -38,7 +44,7 @@ def audit(handoff: dict, vertical: dict) -> dict:
                 diagnostics.append({"code":"explicit_stair_port_orientation_missing", "source_id":identity, "severity":"blocking", "missing_fields":missing, "action":"resolve_from_explicit_portal_geometry_or_reviewed_config; never_guess"})
         if "elevator" in transition["kind"]:
             diagnostics.append({"code":"lift_threshold_mapping_pending", "source_id":identity, "severity":"blocking", "action":"map_each_stop_to_exact_portal; do_not_create_stop_on_pass_through_level"})
-        verticals.append({"source_id":identity, "owner":"route_a_vertical_pilot" if identity == "VT-ROUTE-A" else "complex_v3_infrastructure", "policy":policy, "shaft_bounds_xz":transition.get("shaft_bounds_xz"), "clear_opening_bounds_xz":transition.get("clear_opening_bounds_xz"), "missing_explicit_port_fields":missing})
+        verticals.append({"source_id":identity, "owner":state["owner"], "policy":policy, "shaft_bounds_xz":transition.get("shaft_bounds_xz"), "clear_opening_bounds_xz":transition.get("clear_opening_bounds_xz"), "missing_explicit_port_fields":missing})
     candidates = []
     sector_levels = {s["id"]:s["level"] for s in handoff["sectors"]}
     for route in handoff["route_spaces"]:

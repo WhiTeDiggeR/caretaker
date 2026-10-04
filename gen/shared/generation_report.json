@@ -8,19 +8,86 @@
   "geometry_owners": {
     "horizontal_routes": "sector_rollouts",
     "connectors": "sector_rollouts",
-    "VT-ROUTE-A": "route_a_vertical_pilot"
+    "VT-MAIN-ELEVATOR": "sector_svg_openings",
+    "VT-MAIN-STAIR": "complex_v3_infrastructure",
+    "VT-ROUTE-A": "sector:U-ROUTE-A",
+    "VT-OLD-STAIR": "complex_v3_infrastructure",
+    "VT-SERVICE-STAIR": "complex_v3_infrastructure",
+    "VT-EAST-STAIR": "complex_v3_infrastructure",
+    "VT-FREIGHT-LIFT": "sector_svg_openings",
+    "VT-OLD-INCLINE": "complex_v3_infrastructure"
   },
-  "generated_vertical_geometry": [],
-  "unresolved_vertical_geometry": [
+  "generated_vertical_geometry": [
     "VT-MAIN-ELEVATOR",
+    "VT-ROUTE-A"
+  ],
+  "unresolved_vertical_geometry": [
+    "VT-EAST-STAIR",
+    "VT-FREIGHT-LIFT",
     "VT-MAIN-STAIR",
     "VT-OLD-INCLINE",
     "VT-OLD-STAIR",
-    "VT-SERVICE-STAIR",
-    "VT-EAST-STAIR",
-    "VT-FREIGHT-LIFT"
+    "VT-SERVICE-STAIR"
   ],
-  "blocking_reason": "No vertical may be emitted until its sector-owned floors and walls expose a non-overlapping shaft/opening boundary.",
+  "blocking_reason": "Verticals still without resolved geometry: VT-MAIN-STAIR (unresolved), VT-OLD-STAIR (unresolved), VT-SERVICE-STAIR (unresolved), VT-EAST-STAIR (unresolved), VT-FREIGHT-LIFT (markup_incomplete), VT-OLD-INCLINE (unresolved)",
+  "verticals": [
+    {
+      "id": "VT-MAIN-ELEVATOR",
+      "kind": "passenger_elevator",
+      "status": "openings_ready",
+      "owner": "sector_svg_openings",
+      "detail": ""
+    },
+    {
+      "id": "VT-MAIN-STAIR",
+      "kind": "main_stair",
+      "status": "unresolved",
+      "owner": "complex_v3_infrastructure",
+      "detail": "no vertical definition: add data-vertical-* markup to the plans and an entry to vertical_definitions.json"
+    },
+    {
+      "id": "VT-ROUTE-A",
+      "kind": "switchback_stair",
+      "status": "generated",
+      "owner": "sector:U-ROUTE-A",
+      "detail": ""
+    },
+    {
+      "id": "VT-OLD-STAIR",
+      "kind": "historic_dogleg_stair",
+      "status": "unresolved",
+      "owner": "complex_v3_infrastructure",
+      "detail": "no vertical definition: add data-vertical-* markup to the plans and an entry to vertical_definitions.json"
+    },
+    {
+      "id": "VT-SERVICE-STAIR",
+      "kind": "service_stair",
+      "status": "unresolved",
+      "owner": "complex_v3_infrastructure",
+      "detail": "no vertical definition: add data-vertical-* markup to the plans and an entry to vertical_definitions.json"
+    },
+    {
+      "id": "VT-EAST-STAIR",
+      "kind": "continuous_emergency_stair",
+      "status": "unresolved",
+      "owner": "complex_v3_infrastructure",
+      "detail": "no vertical definition: add data-vertical-* markup to the plans and an entry to vertical_definitions.json"
+    },
+    {
+      "id": "VT-FREIGHT-LIFT",
+      "kind": "freight_elevator",
+      "status": "markup_incomplete",
+      "owner": "sector_svg_openings",
+      "detail": "VT-FREIGHT-LIFT LV-U: no floor-opening marked; rooms there: U-FREIGHT/freight_lift, U-FREIGHT/service_walkway; VT-FREIGHT-LIFT LV-L: no floor-opening marked; rooms there: L-FREIGHT-SERVICE/freight_lift, L-FREIGHT-SERVICE/shaft_bypass; VT-FREIGHT-LIFT LV-L: no ceiling-opening marked; rooms there: L-FREIGHT-SERVICE/freight_lift, L-FREIGHT-SERVICE/shaft_bypass; VT-FREIGHT-LIFT LV-T: no ceiling-opening marked; rooms there: T-FREIGHT/freight_lift, T-FREIGHT/heavy_spine, T-FREIGHT/service_bypass"
+    },
+    {
+      "id": "VT-OLD-INCLINE",
+      "kind": "historic_inclined_freight_tunnel",
+      "status": "unresolved",
+      "owner": "complex_v3_infrastructure",
+      "detail": "non-port transition: separate geometry is required"
+    }
+  ],
   "connector_aliases": [
     {
       "source_id": "C-E-L02",

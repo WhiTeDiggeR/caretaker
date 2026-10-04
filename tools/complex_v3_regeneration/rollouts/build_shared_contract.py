@@ -10,10 +10,14 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import uuid
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
+
+from tools.complex_v3_regeneration.vertical_registry import load_registry, summarize  # noqa: E402
 HANDOFF = ROOT / "docs/design/complex_v3/handoff/geometry/complex-handoff.json"
 VERTICAL = ROOT / "docs/design/complex_v3/handoff/vertical/vertical-transitions.json"
 PORT_REPORT = ROOT / "scenes/complex_v3_regeneration/rollout/shared/reports/vertical-port-mapping.json"
@@ -91,10 +95,11 @@ def main() -> int:
     if not args.godot:
         raise SystemExit("GODOT_BIN or --godot required")
     h=json.loads(HANDOFF.read_text(encoding="utf-8")); v=json.loads(VERTICAL.read_text(encoding="utf-8")); ports=json.loads(PORT_REPORT.read_text(encoding="utf-8")); audit=json.loads(AUDIT_REPORT.read_text(encoding="utf-8"))
+    summary=summarize(load_registry())
     staging=ROOT/f"gen/.shared-staging-{uuid.uuid4().hex}"
     resource=f"res://{staging.relative_to(ROOT).as_posix()}/Generated/Infrastructure/shared_infrastructure_generated.tscn"
     try:
-        completed=subprocess.run([args.godot,"--headless","--disable-crash-handler","--path",str(ROOT),"--script","res://tools/complex_v3_regeneration/rollouts/build_shared_package.gd","--",f"--output={resource}"],text=True,encoding="utf-8",errors="replace",capture_output=True)
+        completed=subprocess.run([args.godot,"--headless","--disable-crash-handler","--path",str(ROOT),"--script","res://tools/complex_v3_regeneration/rollouts/build_shared_package.gd","--",f"--owners={';'.join(f'{key}={value}' for key, value in summary['owners'].items())}",f"--blocked={','.join(summary['unresolved_vertical_geometry'])}",f"--output={resource}"],text=True,encoding="utf-8",errors="replace",capture_output=True)
         if completed.returncode:
             raise RuntimeError(completed.stdout+completed.stderr)
         scene=staging/"Generated/Infrastructure/shared_infrastructure_generated.tscn"
@@ -105,14 +110,15 @@ def main() -> int:
         dump(staging/"generation_report.json",{
             "schema_id":"caretaker.shared_generation_report",
             "schema_version":"1.0.0",
-            "status":"ready_with_blocking_vertical_diagnostics",
+            "status":summary["status"],
             "map_id":h["map_id"],
             "generated_scene":"Generated/Infrastructure/shared_infrastructure_generated.tscn",
             "geometry_policy":"external_single_owner",
-            "geometry_owners":{"horizontal_routes":"sector_rollouts","connectors":"sector_rollouts","VT-ROUTE-A":"route_a_vertical_pilot"},
-            "generated_vertical_geometry":[],
-            "unresolved_vertical_geometry":["VT-MAIN-ELEVATOR","VT-MAIN-STAIR","VT-OLD-INCLINE","VT-OLD-STAIR","VT-SERVICE-STAIR","VT-EAST-STAIR","VT-FREIGHT-LIFT"],
-            "blocking_reason":"No vertical may be emitted until its sector-owned floors and walls expose a non-overlapping shaft/opening boundary.",
+            "geometry_owners":{"horizontal_routes":"sector_rollouts","connectors":"sector_rollouts",**summary["owners"]},
+            "generated_vertical_geometry":summary["generated_vertical_geometry"],
+            "unresolved_vertical_geometry":summary["unresolved_vertical_geometry"],
+            "blocking_reason":summary["blocking_reason"],
+            "verticals":summary["verticals"],
             "connector_aliases":[item for item in audit.get("connectors", []) if item.get("zero_length")],
             "vertical_mapping_report":"res://scenes/complex_v3_regeneration/rollout/shared/reports/vertical-port-mapping.json",
             "startup_modified":False,
