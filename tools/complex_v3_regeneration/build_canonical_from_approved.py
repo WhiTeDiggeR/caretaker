@@ -617,6 +617,12 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
                 if l.cls == am.get("class", "partition"):
                     l.y1 += am["dz_m"] / tf.ky
                     l.y2 += am["dz_m"] / tf.ky
+    for am in entry.get("amendments", []):
+        if am["op"] == "wall_replace":
+            wall_lines = [l for l in wall_lines if l.cls != am.get("class", "partition")]
+            for k, seg in enumerate(am["segments_m"], 1):
+                wall_lines.append(Line((seg[0] - tf.sx) / tf.kx + tf.ox, (seg[1] - tf.sy) / tf.ky + tf.oy,
+                                       (seg[2] - tf.sx) / tf.kx + tf.ox, (seg[3] - tf.sy) / tf.ky + tf.oy, "wall", "wall", f"amendment-{am['id']}-{k}"))
     for l in wall_lines:
         n_wall += 1
         q = (tf.px(l.x1), tf.py(l.y1), tf.px(l.x2), tf.py(l.y2))
