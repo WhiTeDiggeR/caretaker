@@ -45,7 +45,8 @@ var _agent_label: Label
 var _stage_label: Label
 var _exit_label: Label
 var _status: Label
-var _details: Label
+var _details: TextEdit
+var _copy_button: Button
 var _problems_label: Label
 var _manifest: LineEdit
 var _python: LineEdit
@@ -140,9 +141,17 @@ func _build_panel() -> void:
 	_problems_label = _add_label("Проблем: —", result)
 	_stage_label = _add_label("Этап: ожидание", result)
 	_exit_label = _add_label("Код выхода: —", result)
-	_details = _add_label("", result, COLOR_MUTED)
-	_details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_details = TextEdit.new()
+	_details.editable = false
+	_details.context_menu_enabled = true
+	_details.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+	_details.custom_minimum_size = Vector2(0, 120)
+	_details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_details.tooltip_text = "Текст можно выделять и копировать (Ctrl+C)."
 	_details.visible = false
+	result.add_child(_details)
+	_copy_button = _add_button("Копировать ошибку", _copy_result, result, "Копирует статус и подробности в буфер обмена.")
+	_copy_button.visible = false
 	_add_button("Показать отчёт", _open_report, result, "Открывает полный отчёт последнего запуска.")
 	_agent_fix_button = _add_button("Исправить агентом", _start_agent_fix, result, "Агент правит только авторские объекты и привязки, затем сектор проверяется заново.")
 	_agent_fix_button.visible = false
@@ -271,7 +280,12 @@ func _set_status(kind: String, text: String, details: PackedStringArray = Packed
 	_status.text = "Статус: %s %s" % [icon, text]
 	_status.add_theme_color_override("font_color", color)
 	_details.visible = not details.is_empty()
+	_copy_button.visible = not details.is_empty()
 	_details.text = "\n".join(PackedStringArray(Array(details).map(func(line: String) -> String: return "• %s" % line)))
+
+
+func _copy_result() -> void:
+	DisplayServer.clipboard_set("%s\n%s" % [_status.text, _details.text])
 
 
 func _stage_text(stage: String) -> String:

@@ -6,7 +6,7 @@ The Russian-language dock is ordered as the work happens:
 
 1. **Сектор** — sector id and source plan file; if the scene is not a sector scene a hint says which scene to open.
 2. **Работа с планом** — `1. Открыть план в Inkscape`, `2. Проверить сектор` (`--validate-only`), `3. Пересоздать сектор`.
-3. **Результат** — coloured status (`✔` clean, `✖` blocked/failed), problem count, human-readable stage, exit code, a short bullet list of problems, `Показать отчёт` and, when offered, `Исправить агентом`.
+3. **Результат** — coloured status (`✔` clean, `✖` blocked/failed), problem count, human-readable stage, exit code, a selectable read-only list of problems with `Копировать ошибку` (copies the status and details to the clipboard), `Показать отчёт` and, when offered, `Исправить агентом`.
 4. **Привязка объектов** (collapsed) — `Привязать двери по ID` plus manual Bind/Rebind/Unbind with an explicit anchor ID.
 5. **Инструменты** — generator readiness (`Ready` only with `svg_to_godot3d >= 1.19.0` and `generate_godot_stairs >= 2.9.0`), the resolved Inkscape and the selected Agent Fix agent (Claude, Codex or custom) with the `Выбрать агентом Claude` button, which writes the Claude Code launcher and hides itself once Claude is selected.
 6. **Настройки** (collapsed) — every field has a one-line explanation.
