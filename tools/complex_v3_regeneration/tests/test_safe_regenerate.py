@@ -201,6 +201,38 @@ class SafeRegenerationTests(unittest.TestCase):
         self.assertEqual(report["status"], "noop")
         self.assertEqual(self.live.stat().st_mtime_ns, marker)
 
+    def test_godot_sidecars_do_not_defeat_noop_and_survive_promotion(self) -> None:
+        self.assertEqual(self.run_safe()[0], 0)
+        scene = self.live / "Generated" / "Architecture" / "fixture.tscn"
+        import_file = scene.with_name("fixture.tscn.import")
+        uid_file = scene.with_name("fixture.tscn.uid")
+        import_file.write_text('uid="uid://stable"\n', encoding="utf-8")
+        uid_file.write_text("uid://stable_scene\n", encoding="utf-8")
+        code, report = self.run_safe()
+        self.assertEqual(code, 0)
+        self.assertEqual(report["status"], "noop")
+        # A changed source regenerates the package but keeps Godot's stable UID files.
+        self.write_source_change()
+        code, report = self.run_safe()
+        self.assertEqual(code, 0)
+        self.assertEqual(report["status"], "success")
+        self.assertEqual(import_file.read_text(encoding="utf-8"), 'uid="uid://stable"\n')
+        self.assertEqual(uid_file.read_text(encoding="utf-8"), "uid://stable_scene\n")
+
+    def test_sidecar_of_a_removed_source_is_dropped(self) -> None:
+        self.assertEqual(self.run_safe()[0], 0)
+        orphan = self.live / "Generated" / "Architecture" / "gone.obj.import"
+        orphan.write_text('uid="uid://orphan"\n', encoding="utf-8")
+        self.write_source_change()
+        self.assertEqual(self.run_safe()[1]["status"], "success")
+        self.assertFalse(orphan.exists())
+
+    def write_source_change(self) -> None:
+        """Change the sector configuration so the generated output (generation id) differs."""
+        value = json.loads(self.manifest.read_text(encoding="utf-8"))
+        value["sectors"][0]["fixture_revision"] = value["sectors"][0].get("fixture_revision", 1) + 1
+        self.manifest.write_text(json.dumps(value), encoding="utf-8")
+
     def test_removed_anchor_keeps_repair_queue_after_staging_cleanup(self) -> None:
         self.seed_live()
         self.write_composition(missing_anchor=True)

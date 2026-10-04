@@ -23,6 +23,9 @@ SCHEMA_ID = "caretaker.safe_regeneration_report"
 SCHEMA_VERSION = "1.0.0"
 MANAGED_NAMES = ("Generated", "anchor_frames.json", "generation_manifest.json", "regeneration_report.json")
 EQUIVALENCE_NAMES = ("Generated", "anchor_frames.json", "generation_manifest.json")
+# Godot writes these next to imported resources; they are not generator output and must neither
+# defeat the noop comparison nor be lost (their UIDs are referenced) when the package is replaced.
+GODOT_SIDECAR_SUFFIXES = (".import", ".uid")
 RESOURCE_RE = re.compile(r'path="(res://[^"]+)"')
 
 
@@ -82,15 +85,16 @@ def atomic_write_json(path: Path, value: dict[str, Any]) -> None:
             temporary.unlink()
 
 
-def path_hash(path: Path, names: Sequence[str] | None = None) -> str:
+def path_hash(path: Path, names: Sequence[str] | None = None, ignore_suffixes: Sequence[str] = ()) -> str:
     hasher = hashlib.sha256()
     roots = [path / name for name in names] if names is not None else [path]
     files: list[tuple[str, Path]] = []
     for root in roots:
         if root.is_file():
-            files.append((root.relative_to(path).as_posix(), root))
+            if root.suffix not in ignore_suffixes:
+                files.append((root.relative_to(path).as_posix(), root))
         elif root.is_dir():
-            files.extend((item.relative_to(path).as_posix(), item) for item in root.rglob("*") if item.is_file())
+            files.extend((item.relative_to(path).as_posix(), item) for item in root.rglob("*") if item.is_file() and item.suffix not in ignore_suffixes)
     for relative, item in sorted(files):
         hasher.update(relative.encode("utf-8"))
         hasher.update(b"\0")
@@ -176,6 +180,7 @@ def build_candidate(live: Path, staging: Path, candidate: Path) -> None:
         candidate.mkdir(parents=True)
     for name in MANAGED_NAMES:
         target = candidate / name
+        sidecars = _godot_sidecars(target) if target.is_dir() else {}
         if target.is_dir():
             shutil.rmtree(target)
         elif target.exists():
@@ -183,8 +188,25 @@ def build_candidate(live: Path, staging: Path, candidate: Path) -> None:
         source = staging / name
         if source.is_dir():
             shutil.copytree(source, target)
+            _restore_godot_sidecars(target, sidecars)
         elif source.is_file():
             shutil.copy2(source, target)
+
+
+def _godot_sidecars(root: Path) -> dict[str, bytes]:
+    return {
+        item.relative_to(root).as_posix(): item.read_bytes()
+        for item in root.rglob("*") if item.is_file() and item.suffix in GODOT_SIDECAR_SUFFIXES
+    }
+
+
+def _restore_godot_sidecars(root: Path, sidecars: dict[str, bytes]) -> None:
+    """Keep Godot's .import/.uid files (and their UIDs) for resources that still exist."""
+    for relative, content in sidecars.items():
+        sidecar = root / relative
+        if sidecar.exists() or not sidecar.with_suffix("").is_file():
+            continue
+        sidecar.write_bytes(content)
 
 
 def resource_path_exists(resource: str, project_root: Path, live: Path, candidate: Path) -> bool:
@@ -438,7 +460,7 @@ def execute(args: argparse.Namespace) -> int:
             mark(report, "binding_resolution", "passed")
             validate_composition(args, project_root, resolved, validation / "composition", live, report_path, report)
             mark(report, "composition_validation", "passed")
-            report["output_hashes"] = {"managed": path_hash(live, EQUIVALENCE_NAMES), "generation_id": generation.get("generation_id")}
+            report["output_hashes"] = {"managed": path_hash(live, EQUIVALENCE_NAMES, GODOT_SIDECAR_SUFFIXES), "generation_id": generation.get("generation_id")}
             report["status"], report["ready"] = "validated", True
         else:
             staging.mkdir()
@@ -465,8 +487,8 @@ def execute(args: argparse.Namespace) -> int:
             mark(report, "composition_validation", "passed")
             # regeneration_report.json embeds ephemeral command/staging paths and is
             # deliberately excluded from semantic equality.
-            generated_hash = path_hash(staging, EQUIVALENCE_NAMES)
-            live_managed_hash = path_hash(live, EQUIVALENCE_NAMES) if live.exists() else None
+            generated_hash = path_hash(staging, EQUIVALENCE_NAMES, GODOT_SIDECAR_SUFFIXES)
+            live_managed_hash = path_hash(live, EQUIVALENCE_NAMES, GODOT_SIDECAR_SUFFIXES) if live.exists() else None
             report["output_hashes"] = {"managed": generated_hash, "generation_id": generation.get("generation_id")}
             if live_managed_hash == generated_hash:
                 report["status"], report["ready"] = "noop", True
