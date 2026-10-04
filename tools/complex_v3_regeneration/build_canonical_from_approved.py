@@ -215,7 +215,7 @@ def classify(plan: Plan, entry: dict[str, Any], owns_trunks: bool) -> None:
     for r in rooms:
         for other in rooms:
             if other is not r and other.role == "room" and r.role == "room" and contains(other, r):
-                if r.w * r.h < 0.12 * other.w * other.h:
+                if r.w * r.h < 0.04 * other.w * other.h or (r.cls == other.cls and r.w * r.h < 0.12 * other.w * other.h):
                     r.role, r.reason = "subfeature", f"small element inside {other.ident}"
                 else:
                     other.role, other.reason = "carve", "room with a sub-room cut out of it"
@@ -464,6 +464,24 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
     tf, tf_info = build_transform(entry, level)
     wall_h = float(entry["wall_height"])
 
+    for am in entry.get("amendments", []):
+        if am["op"] not in {"rect_set", "rect_grow"}:
+            continue
+        target = next((r for r in plan.rects if r.role in {"room", "carve"} and r.label.upper().startswith(am["label"].upper())), None)
+        if target is None:
+            report_missing = True
+            continue
+        if am["op"] == "rect_set":
+            x, z, w, h = am["rect_m"]
+            target.x, target.y = (x - tf.sx) / tf.kx + tf.ox, (z - tf.sy) / tf.ky + tf.oy
+            target.w, target.h = w / tf.kx, h / tf.ky
+        else:
+            by_x, by_y = am.get("by_m", 0) / tf.kx, am.get("by_m", 0) / tf.ky
+            side = am["side"]
+            if side == "s": target.h += by_y
+            elif side == "n": target.y -= by_y; target.h += by_y
+            elif side == "e": target.w += by_x
+            elif side == "w": target.x -= by_x; target.w += by_x
     pieces_total = 0
     for r in [r for r in plan.rects if r.role == "carve"]:
         pieces = carve(r, plan.rects, 1.0 / tf.kx, 1.0 / tf.ky)
@@ -523,9 +541,43 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
 
     # --- walls: every room edge, merged into maximal collinear segments
     spans: dict[tuple[str, float], list[list[float]]] = {}
+    sides: dict[tuple[str, float, str], dict[str, list[list[float]]]] = {}
     for r in rooms:
         for orient, fixed, lo, hi in edge_segments(r):
-            spans.setdefault((orient, round(fixed, 4)), []).append([lo, hi])
+            key = (orient, round(fixed, 4))
+            if r.group:
+                low_side = (orient == "h" and abs(fixed - r.y2) < 1e-6) or (orient == "v" and abs(fixed - r.x2) < 1e-6)
+                sides.setdefault((orient, round(fixed, 4), r.group), {"lo": [], "hi": []})["lo" if low_side else "hi"].append([lo, hi])
+            else:
+                spans.setdefault(key, []).append([lo, hi])
+
+    def subtract(items: list[list[float]], cuts: list[list[float]]) -> list[list[float]]:
+        out_: list[list[float]] = []
+        for lo, hi in items:
+            parts = [[lo, hi]]
+            for c_lo, c_hi in cuts:
+                nxt: list[list[float]] = []
+                for a_, b_ in parts:
+                    if c_hi <= a_ + 1e-9 or c_lo >= b_ - 1e-9:
+                        nxt.append([a_, b_])
+                        continue
+                    if c_lo > a_ + 1e-9:
+                        nxt.append([a_, c_lo])
+                    if c_hi < b_ - 1e-9:
+                        nxt.append([c_hi, b_])
+                parts = nxt
+            out_.extend(parts)
+        return out_
+
+    for (orient, fixed, _group), both in sides.items():
+        shared = []
+        for a_lo, a_hi in both["lo"]:
+            for b_lo, b_hi in both["hi"]:
+                lo_, hi_ = max(a_lo, b_lo), min(a_hi, b_hi)
+                if hi_ - lo_ > 1e-9:
+                    shared.append([lo_, hi_])
+        for seg in subtract(both["lo"], shared) + subtract(both["hi"], shared):
+            spans.setdefault((orient, fixed), []).append(seg)
     wall_items: list[tuple[str, float, float, float]] = []
     for (orient, fixed), segs in sorted(spans.items()):
         segs.sort()
@@ -580,20 +632,6 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
 
     # --- door / opening lines
     cands = collect_openings(plan, rooms)
-    for i, a in enumerate(rooms):
-        for b in rooms[i + 1:]:
-            if not a.group or a.group != b.group:
-                continue
-            if abs(a.x2 - b.x) < 0.01 or abs(b.x2 - a.x) < 0.01:
-                fx = a.x2 if abs(a.x2 - b.x) < 0.01 else a.x
-                lo, hi = max(a.y, b.y), min(a.y2, b.y2)
-                if hi - lo > 1:
-                    cands.append({"orient": "v", "fixed": fx, "lo": lo, "hi": hi, "gtype": "opening", "source": "same-room", "src": a.group, "prio": 9, "px": [fx, lo, hi]})
-            if abs(a.y2 - b.y) < 0.01 or abs(b.y2 - a.y) < 0.01:
-                fy = a.y2 if abs(a.y2 - b.y) < 0.01 else a.y
-                lo, hi = max(a.x, b.x), min(a.x2, b.x2)
-                if hi - lo > 1:
-                    cands.append({"orient": "h", "fixed": fy, "lo": lo, "hi": hi, "gtype": "opening", "source": "same-room", "src": a.group, "prio": 9, "px": [fy, lo, hi]})
     for am in entry.get("amendments", []):
         if am["op"] == "door_add":
             x1, z1, x2, z2 = am["at_m"]
@@ -604,7 +642,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
                 orient, fixed_px = "h", (z1 - tf.sy) / tf.ky + tf.oy
                 lo, hi = sorted(((x1 - tf.sx) / tf.kx + tf.ox, (x2 - tf.sx) / tf.kx + tf.ox))
             cands.append({"orient": orient, "fixed": fixed_px, "lo": lo, "hi": hi, "gtype": am.get("kind", "door"), "source": f"amendment {am['id']}",
-                          "src": f"amendment-{am['id']}", "prio": 9, "px": [fixed_px, lo, hi], "dtype": am.get("type"), "height": am.get("height_m")})
+                          "src": f"amendment-{am['id']}", "prio": 9, "px": [fixed_px, lo, hi], "dtype": am.get("type"), "height": am.get("height_m"), "vertical": am.get("vertical")})
         elif am["op"] == "door_set":
             best, best_d = None, 1e9
             for c in cands:
@@ -623,6 +661,8 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             half = float(am["width_m"]) / 2 / k
             best["lo"], best["hi"] = mid - half, mid + half
             best["dtype"], best["height"] = am.get("type"), am.get("height_m")
+            if am.get("vertical"):
+                best["vertical"] = am["vertical"]
             if am.get("kind"):
                 best["gtype"] = am["kind"]
     report["amendments"] = [am["id"] for am in entry.get("amendments", [])]
@@ -667,7 +707,8 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             inside = "normal" if (inside_high and c["orient"] == "h") or ((not inside_high) and c["orient"] == "v") else "opposite"
             height = c.get("height") or (4.5 if width >= 4.0 and wall_h >= 5.0 else 2.4)
             dtype = f' data-door-type="{c["dtype"]}"' if c.get("dtype") else ""
-            attr = f' data-door-height="{fmt(height)}"{dtype} data-inside-side="{inside}"'
+            vert = f' data-vertical-id="{c["vertical"]["id"]}" data-vertical-role="{c["vertical"]["role"]}"' if c.get("vertical") else ""
+            attr = f' data-door-height="{fmt(height)}"{dtype}{vert} data-inside-side="{inside}"'
         elif gtype == "opening" and c.get("dtype"):
             attr = f' data-door-type="{c["dtype"]}"'
         elif gtype == "window":
@@ -679,6 +720,19 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             "rooms": sorted({h.space for h in hosts}), "world_m": [round(v, 3) for v in p],
         })
     out.append("  </g>")
+
+    cuts = [am for am in entry.get("amendments", []) if am["op"] == "vertical_cut"]
+    if cuts:
+        out.append(f'  <g id="{sid}-vertical" data-layer="vertical">')
+        for n, am in enumerate(cuts, 1):
+            x, z, w, h = am["rect_m"]
+            host = next((rm for rm in report["rooms"] if rm["world_m"][0] - 1e-6 <= x + w / 2 <= rm["world_m"][0] + rm["world_m"][2] + 1e-6
+                         and rm["world_m"][1] - 1e-6 <= z + h / 2 <= rm["world_m"][1] + rm["world_m"][3] + 1e-6), None)
+            space = f' data-space-id="{host["space_id"]}"' if host else ""
+            grow(x, z); grow(x + w, z + h)
+            out.append(f'    <rect id="{sid}-{am["kind"]}-{n:02d}" class="opening" data-godot-type="{am["kind"]}"{space} data-vertical-id="{am["vertical_id"]}" '
+                       f'data-vertical-role="shaft" x="{fmt(x)}" y="{fmt(z)}" width="{fmt(w)}" height="{fmt(h)}" />')
+        out.append("  </g>")
 
     # --- context / ignored drawing (kept visible for orientation, never generated)
     out.append(f'  <g id="{sid}-context" data-layer="context" opacity="0.35">')

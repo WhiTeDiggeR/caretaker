@@ -53,12 +53,16 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
     doors = [dict(o) for o in rep["openings"]]
     extras: list[tuple] = []
     notes: list[tuple] = []
+    def key(prefix: str) -> str:
+        return next(k for k in rooms if k.startswith(prefix))
+
     for op in (edit.ops if edit else []):
         if op[0] == "rect":
-            rooms[op[1]]["world_m"] = list(op[2])
+            rooms[key(op[1])]["world_m"] = list(op[2])
         elif op[0] == "remove":
-            rooms.pop(op[1], None)
-            doors = [d for d in doors if not any(s.endswith("/" + op[1]) for s in d["rooms"])]
+            k = key(op[1])
+            rooms.pop(k, None)
+            doors = [d for d in doors if not any(s.endswith("/" + k) for s in d["rooms"])]
         elif op[0] == "add":
             extras.append(("room", op[1], op[2], op[3]))
         elif op[0] == "door":
@@ -73,7 +77,7 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
     zs = [v for r in rooms.values() for v in (r["world_m"][1], r["world_m"][1] + r["world_m"][3])]
     for e in extras:
         if e[0] == "room":
-            xs += [e[2][0], e[2][0] + e[2][2]]; zs += [e[2][1], e[2][1] + e[2][3]]
+            xs += [e[1][0], e[1][0] + e[1][2]]; zs += [e[1][1], e[1][1] + e[1][3]]
     x0, x1, z0, z1 = (min(xs) - pad, max(xs) + pad, min(zs) - pad, max(zs) + pad) if box is None else (box[0], box[2], box[1], box[3])
     w, h = int((x1 - x0) * ppm), int((z1 - z0) * ppm) + 30
     im = Image.new("RGB", (w, h), "white")
@@ -106,9 +110,9 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
         d.text(T(a + 0.25, b + 0.15 + 0.9), f"{c:.1f}×{e:.1f} м", fill=(70, 70, 70, 255), font=font(9))
     for e in extras:
         if e[0] == "room":
-            a, b, c, f = e[2]
+            a, b, c, f = e[1]
             d.rectangle([T(a, b), T(a + c, b + f)], fill=tuple(e[3]) + (210,), outline=(150, 100, 0, 255), width=2)
-            d.text(T(a + 0.25, b + 0.15), e[1], fill=(0, 0, 0, 255), font=font(10))
+            d.text(T(a + 0.25, b + 0.15), e[2], fill=(0, 0, 0, 255), font=font(10))
             d.text(T(a + 0.25, b + 1.05), f"{c:.1f}×{f:.1f} м", fill=(70, 70, 70, 255), font=font(9))
         else:
             d.line([T(e[1], e[2]), T(e[3], e[4])], fill=tuple(e[5]) + (255,), width=3)

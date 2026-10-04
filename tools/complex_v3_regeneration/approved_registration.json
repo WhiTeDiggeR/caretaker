@@ -265,6 +265,46 @@
           90,
           105
         ]
+      ],
+      "amendments": [
+        {
+          "id": "D-03",
+          "op": "door_set",
+          "near_m": [
+            -62.222,
+            7.93
+          ],
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "type": "wing"
+        },
+        {
+          "id": "D-06a",
+          "op": "vertical_cut",
+          "kind": "floor-opening",
+          "rect_m": [
+            -55.556,
+            10.667,
+            6.667,
+            7.777
+          ],
+          "vertical_id": "VT-ROUTE-A"
+        },
+        {
+          "id": "D-06b",
+          "op": "door_set",
+          "near_m": [
+            -50.59,
+            10.667
+          ],
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "type": "stair-opening",
+          "vertical": {
+            "id": "VT-ROUTE-A",
+            "role": "exit"
+          }
+        }
       ]
     },
     "U-MEDBAY": {
@@ -614,7 +654,84 @@
           465,
           180,
           95
+        ],
+        [
+          290,
+          455,
+          350,
+          125
         ]
+      ],
+      "amendments": [
+        {
+          "id": "D-07a",
+          "op": "rect_grow",
+          "label": "СТАРЫЙ АРХИВ",
+          "side": "s",
+          "by_m": 2.2
+        },
+        {
+          "id": "D-07b",
+          "op": "rect_set",
+          "label": "ЛЕСТНИЦА A",
+          "rect_m": [
+            -55.556,
+            10.667,
+            6.667,
+            7.777
+          ]
+        },
+        {
+          "id": "D-06c",
+          "op": "vertical_cut",
+          "kind": "ceiling-opening",
+          "rect_m": [
+            -55.556,
+            10.667,
+            6.667,
+            7.777
+          ],
+          "vertical_id": "VT-ROUTE-A"
+        },
+        {
+          "id": "D-06d",
+          "op": "door_add",
+          "at_m": [
+            -51.49,
+            10.667,
+            -49.69,
+            10.667
+          ],
+          "kind": "door",
+          "height_m": 2.8,
+          "type": "stair-opening",
+          "vertical": {
+            "id": "VT-ROUTE-A",
+            "role": "entry"
+          }
+        },
+        {
+          "id": "D-08a",
+          "op": "door_set",
+          "near_m": [
+            -58.889,
+            9.66
+          ],
+          "width_m": 1.4,
+          "height_m": 2.3,
+          "type": "historic"
+        },
+        {
+          "id": "D-08b",
+          "op": "door_set",
+          "near_m": [
+            -41.111,
+            -3.39
+          ],
+          "width_m": 4.0,
+          "kind": "opening",
+          "type": "corridor-to-room"
+        }
       ]
     },
     "L-OLD-RECEIVING": {
