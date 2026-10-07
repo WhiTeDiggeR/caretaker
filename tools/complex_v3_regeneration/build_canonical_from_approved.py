@@ -451,6 +451,8 @@ def fmt(value: float) -> str:
 
 
 def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> tuple[str, dict[str, Any], Path]:
+    global SNAP_PX
+    SNAP_PX = float(entry.get("snap_px", 2.5))
     level = reg["levels"][entry["level"]]
     plan = parse_plan(PLANS / entry["plan"], set(reg["post_approval_ids"]))
     # u_route_a.svg carries pilot edits; the shared drawing is read from the untouched u_emergency plan.
@@ -515,8 +517,9 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
         plan.rects.extend(pieces)
     rooms = [r for r in plan.rects if r.role == "room"]
     # --- snap room edges so neighbouring rooms share exact wall centre lines
-    xs = cluster([v for r in rooms for v in (r.x, r.x2)], SNAP_PX)
-    ys = cluster([v for r in rooms for v in (r.y, r.y2)], SNAP_PX)
+    snap = float(entry.get("snap_px", SNAP_PX))
+    xs = cluster([v for r in rooms for v in (r.x, r.x2)], snap)
+    ys = cluster([v for r in rooms for v in (r.y, r.y2)], snap)
     for r in rooms:
         nx1, nx2, ny1, ny2 = xs[r.x], xs[r.x2], ys[r.y], ys[r.y2]
         r.x, r.y, r.w, r.h = nx1, ny1, nx2 - nx1, ny2 - ny1
