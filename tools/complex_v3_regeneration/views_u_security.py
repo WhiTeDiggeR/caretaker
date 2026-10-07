@@ -18,4 +18,4 @@ def build(R):
     e.line(-10.67, 44.6, -7.86, 44.6, (0, 0, 0), False).line(-10.67, 50.7, -7.86, 50.7, (0, 0, 0), False)
     e.note(-33, 59, "B: связь и КПП сдвинуты на 2,9 м к блоку, стены КПП и ворота 1,8, двери комнат 1,8 / 1,0", (0, 100, 0))
     P = draw_sector(R, sid, e, "ПРЕДЛОЖЕНИЕ", box=box, ppm=18)
-    save(sheet([now, P], cols=2), "u-security-options.png")
+    save(sheet([now, P], cols=2), "u-security-options2.png")
