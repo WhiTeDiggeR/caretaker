@@ -104,7 +104,7 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
                 d.text(T(a + 0.2, b + 0.1), other, fill=(170, 170, 170, 255), font=font(9))
     for slug, rm in rooms.items():
         a, b, c, e = rm["world_m"]
-        d.rectangle([T(a, b), T(a + c, b + e)], fill=PALETTE.get(rm["class"], (200, 210, 220)) + (255,), outline=(150, 150, 150, 255) if edit is None else (40, 50, 60, 255), width=1 if edit is None else 2)
+        d.rectangle([T(a, b), T(a + c, b + e)], fill=PALETTE.get(rm["class"], (200, 210, 220)) + (255,), outline=PALETTE.get(rm['class'], (200, 210, 220)) + (255,) if edit is None else (40, 50, 60, 255), width=1 if edit is None else 2)
         lab = (rm["label"].split(" / ")[0] or slug)[:26]
         d.text(T(a + 0.25, b + 0.15), lab, fill=(0, 0, 0, 255), font=font(10))
         d.text(T(a + 0.25, b + 0.15 + 0.9), f"{c:.1f}×{e:.1f} м", fill=(70, 70, 70, 255), font=font(9))
