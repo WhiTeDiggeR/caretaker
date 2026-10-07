@@ -27,7 +27,7 @@ class UMedbayPilotPipelineTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix=".u-medbay-pilot-scenario-", dir=PROJECT)
         self.root = Path(self.temp.name)
         self.source = self.root / "source.svg"
-        shutil.copy2(PROJECT / "docs/design/complex_v4/plans/generation/upper/u_medbay.svg", self.source)
+        shutil.copy2(TOOLS / "tests" / "fixtures" / "pilot_u_medbay.svg", self.source)   # regression fixture, not the canonical plan
         authored = self.root / "AuthoredContent"
         authored.mkdir()
         shutil.copy2(PILOT / "AuthoredContent" / "composition.json", authored / "composition.json")

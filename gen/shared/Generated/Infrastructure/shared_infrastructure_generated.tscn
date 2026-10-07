@@ -5,18 +5,18 @@ metadata/content_owner = "complex_v3_shared_rollout"
 metadata/contract_version = "1.0.0"
 metadata/geometry_policy = "external_single_owner"
 metadata/external_geometry_owners = {
-"VT-EAST-STAIR": "complex_v3_infrastructure",
+"VT-EAST-STAIR": "sector:U-EAST-SUPPORT, sector:L-EAST-STAIR",
 "VT-FREIGHT-LIFT": "sector_svg_openings",
 "VT-MAIN-ELEVATOR": "sector_svg_openings",
-"VT-MAIN-STAIR": "complex_v3_infrastructure",
+"VT-MAIN-STAIR": "sector:U-CENTRAL-CORE",
 "VT-OLD-INCLINE": "complex_v3_infrastructure",
-"VT-OLD-STAIR": "complex_v3_infrastructure",
+"VT-OLD-STAIR": "sector:L-OLD-CORE",
 "VT-ROUTE-A": "sector:U-ROUTE-A",
-"VT-SERVICE-STAIR": "complex_v3_infrastructure",
+"VT-SERVICE-STAIR": "sector:L-SERVICE-INTERCHANGE",
 "connectors": "sector_rollouts",
 "horizontal_routes": "sector_rollouts"
 }
-metadata/blocked_vertical_geometry = PackedStringArray("VT-EAST-STAIR", "VT-FREIGHT-LIFT", "VT-MAIN-STAIR", "VT-OLD-INCLINE", "VT-OLD-STAIR", "VT-SERVICE-STAIR")
+metadata/blocked_vertical_geometry = PackedStringArray("VT-OLD-INCLINE")
 metadata/anchor_frames = "res://gen/shared/anchor_frames.json"
 
 [node name="Generated" type="Node3D" parent="."]

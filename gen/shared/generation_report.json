@@ -9,27 +9,27 @@
     "horizontal_routes": "sector_rollouts",
     "connectors": "sector_rollouts",
     "VT-MAIN-ELEVATOR": "sector_svg_openings",
-    "VT-MAIN-STAIR": "complex_v3_infrastructure",
+    "VT-MAIN-STAIR": "sector:U-CENTRAL-CORE",
     "VT-ROUTE-A": "sector:U-ROUTE-A",
-    "VT-OLD-STAIR": "complex_v3_infrastructure",
-    "VT-SERVICE-STAIR": "complex_v3_infrastructure",
-    "VT-EAST-STAIR": "complex_v3_infrastructure",
+    "VT-OLD-STAIR": "sector:L-OLD-CORE",
+    "VT-SERVICE-STAIR": "sector:L-SERVICE-INTERCHANGE",
+    "VT-EAST-STAIR": "sector:U-EAST-SUPPORT, sector:L-EAST-STAIR",
     "VT-FREIGHT-LIFT": "sector_svg_openings",
     "VT-OLD-INCLINE": "complex_v3_infrastructure"
   },
   "generated_vertical_geometry": [
-    "VT-MAIN-ELEVATOR",
-    "VT-ROUTE-A"
-  ],
-  "unresolved_vertical_geometry": [
     "VT-EAST-STAIR",
     "VT-FREIGHT-LIFT",
+    "VT-MAIN-ELEVATOR",
     "VT-MAIN-STAIR",
-    "VT-OLD-INCLINE",
     "VT-OLD-STAIR",
+    "VT-ROUTE-A",
     "VT-SERVICE-STAIR"
   ],
-  "blocking_reason": "Verticals still without resolved geometry: VT-MAIN-STAIR (unresolved), VT-OLD-STAIR (unresolved), VT-SERVICE-STAIR (unresolved), VT-EAST-STAIR (unresolved), VT-FREIGHT-LIFT (markup_incomplete), VT-OLD-INCLINE (unresolved)",
+  "unresolved_vertical_geometry": [
+    "VT-OLD-INCLINE"
+  ],
+  "blocking_reason": "Verticals still without resolved geometry: VT-OLD-INCLINE (unresolved)",
   "verticals": [
     {
       "id": "VT-MAIN-ELEVATOR",
@@ -41,9 +41,9 @@
     {
       "id": "VT-MAIN-STAIR",
       "kind": "main_stair",
-      "status": "unresolved",
-      "owner": "complex_v3_infrastructure",
-      "detail": "no vertical definition: add data-vertical-* markup to the plans and an entry to vertical_definitions.json"
+      "status": "generated",
+      "owner": "sector:U-CENTRAL-CORE",
+      "detail": ""
     },
     {
       "id": "VT-ROUTE-A",
@@ -55,30 +55,30 @@
     {
       "id": "VT-OLD-STAIR",
       "kind": "historic_dogleg_stair",
-      "status": "unresolved",
-      "owner": "complex_v3_infrastructure",
-      "detail": "no vertical definition: add data-vertical-* markup to the plans and an entry to vertical_definitions.json"
+      "status": "generated",
+      "owner": "sector:L-OLD-CORE",
+      "detail": ""
     },
     {
       "id": "VT-SERVICE-STAIR",
       "kind": "service_stair",
-      "status": "unresolved",
-      "owner": "complex_v3_infrastructure",
-      "detail": "no vertical definition: add data-vertical-* markup to the plans and an entry to vertical_definitions.json"
+      "status": "generated",
+      "owner": "sector:L-SERVICE-INTERCHANGE",
+      "detail": ""
     },
     {
       "id": "VT-EAST-STAIR",
       "kind": "continuous_emergency_stair",
-      "status": "unresolved",
-      "owner": "complex_v3_infrastructure",
-      "detail": "no vertical definition: add data-vertical-* markup to the plans and an entry to vertical_definitions.json"
+      "status": "generated",
+      "owner": "sector:U-EAST-SUPPORT, sector:L-EAST-STAIR",
+      "detail": ""
     },
     {
       "id": "VT-FREIGHT-LIFT",
       "kind": "freight_elevator",
-      "status": "markup_incomplete",
+      "status": "openings_ready",
       "owner": "sector_svg_openings",
-      "detail": "VT-FREIGHT-LIFT LV-U: no floor-opening marked; rooms there: U-FREIGHT/freight_lift, U-FREIGHT/service_walkway; VT-FREIGHT-LIFT LV-L: no floor-opening marked; rooms there: L-FREIGHT-SERVICE/freight_lift, L-FREIGHT-SERVICE/shaft_bypass; VT-FREIGHT-LIFT LV-L: no ceiling-opening marked; rooms there: L-FREIGHT-SERVICE/freight_lift, L-FREIGHT-SERVICE/shaft_bypass; VT-FREIGHT-LIFT LV-T: no ceiling-opening marked; rooms there: T-FREIGHT/freight_lift, T-FREIGHT/heavy_spine, T-FREIGHT/service_bypass"
+      "detail": ""
     },
     {
       "id": "VT-OLD-INCLINE",

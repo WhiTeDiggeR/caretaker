@@ -312,7 +312,7 @@
           ],
           "width_m": 2.0,
           "height_m": 2.4,
-          "shaft_side": "south",
+          "shaft_side": "north",
           "status": "generator_boundary_port"
         },
         {
@@ -336,7 +336,7 @@
           ],
           "width_m": 2.0,
           "height_m": 2.4,
-          "shaft_side": "south",
+          "shaft_side": "north",
           "status": "generator_boundary_port"
         }
       ]
@@ -367,8 +367,8 @@
           ],
           "width_m": 2.33,
           "height_m": 2.4,
-          "shaft_side": "south",
-          "status": "generator_boundary_port"
+          "shaft_side": null,
+          "status": "external_threshold"
         },
         {
           "portal_source_id": "P-L-CENTRAL-CORE-05",
@@ -391,8 +391,8 @@
           ],
           "width_m": 2.33,
           "height_m": 2.4,
-          "shaft_side": "south",
-          "status": "generator_boundary_port"
+          "shaft_side": null,
+          "status": "external_threshold"
         }
       ]
     },
@@ -518,6 +518,26 @@
     }
   ],
   "diagnostics": [
+    {
+      "transition_id": "VT-MAIN-STAIR",
+      "level": "LV-U",
+      "code": "generator_boundary_port_missing",
+      "severity": "blocking",
+      "portal_source_ids": [
+        "P-U-CENTRAL-CORE-05"
+      ],
+      "action": "keep threshold frames active; do not infer stair generator orientation"
+    },
+    {
+      "transition_id": "VT-MAIN-STAIR",
+      "level": "LV-L",
+      "code": "generator_boundary_port_missing",
+      "severity": "blocking",
+      "portal_source_ids": [
+        "P-L-CENTRAL-CORE-05"
+      ],
+      "action": "keep threshold frames active; do not infer stair generator orientation"
+    },
     {
       "transition_id": "VT-OLD-STAIR",
       "level": "LV-L",

@@ -30,10 +30,10 @@ class VerticalRegistryTests(unittest.TestCase):
         self.assertEqual(self.items["VT-ROUTE-A"]["status"], registry.GENERATED)
         self.assertEqual(self.items["VT-ROUTE-A"]["owner"], "sector:U-ROUTE-A")
         self.assertEqual(self.items["VT-MAIN-ELEVATOR"]["status"], registry.OPENINGS_READY)
-        self.assertEqual(self.items["VT-FREIGHT-LIFT"]["status"], registry.MARKUP_INCOMPLETE)
-        self.assertTrue(self.items["VT-FREIGHT-LIFT"]["missing"])
-        for vertical_id in ("VT-MAIN-STAIR", "VT-OLD-STAIR", "VT-SERVICE-STAIR", "VT-EAST-STAIR", "VT-OLD-INCLINE"):
-            self.assertEqual(self.items[vertical_id]["status"], registry.UNRESOLVED, vertical_id)
+        self.assertEqual(self.items["VT-FREIGHT-LIFT"]["status"], registry.OPENINGS_READY)
+        for vertical_id in ("VT-MAIN-STAIR", "VT-OLD-STAIR", "VT-SERVICE-STAIR", "VT-EAST-STAIR"):
+            self.assertEqual(self.items[vertical_id]["status"], registry.GENERATED, vertical_id)
+        self.assertEqual(self.items["VT-OLD-INCLINE"]["status"], registry.UNRESOLVED)
 
     def test_a_broken_definition_is_reported_as_invalid_not_ignored(self) -> None:
         definitions = copy.deepcopy(self.definitions)
@@ -45,8 +45,8 @@ class VerticalRegistryTests(unittest.TestCase):
     def test_summary_is_blocking_until_everything_is_resolved(self) -> None:
         summary = registry.summarize(list(self.items.values()))
         self.assertEqual(summary["status"], "ready_with_blocking_vertical_diagnostics")
-        self.assertEqual(summary["generated_vertical_geometry"], ["VT-MAIN-ELEVATOR", "VT-ROUTE-A"])
-        self.assertIn("VT-FREIGHT-LIFT (markup_incomplete)", summary["blocking_reason"])
+        self.assertEqual(summary["generated_vertical_geometry"], ["VT-EAST-STAIR", "VT-FREIGHT-LIFT", "VT-MAIN-ELEVATOR", "VT-MAIN-STAIR", "VT-OLD-STAIR", "VT-ROUTE-A", "VT-SERVICE-STAIR"])
+        self.assertIn("VT-OLD-INCLINE (unresolved)", summary["blocking_reason"])
         done = [dict(item, status=registry.GENERATED) for item in self.items.values()]
         ready = registry.summarize(done)
         self.assertEqual((ready["status"], ready["unresolved_vertical_geometry"], ready["blocking_reason"]), ("ready", [], ""))

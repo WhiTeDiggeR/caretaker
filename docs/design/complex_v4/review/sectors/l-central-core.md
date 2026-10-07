@@ -1,36 +1,26 @@
 # L-CENTRAL-CORE
 
-Источник: `docs/design/complex_v3/plans/sectors/lower/l_central_core.svg`. Уровень LV-L. Высота стен 3.4 м (рабочее значение, не из плана).
-Масштаб: 23.914 px/м по X, 23.874 px/м по Y; анизотропия 0.2%. Положение сектора (x, z, ширина, глубина), м: [-7.78, -6.0, 15.56, 21.11].
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_central_core.svg`. Высота стен 3.4 м. Габарит 14.1×19.6 м, x -7.0…7.0, z 0.0…19.6.
 
+![L-CENTRAL-CORE](img/l-central-core.png)
 
 ## Помещения
 
-| Помещение | Подпись на плане | Размер, м | м² | Проёмов | Замечания |
-|---|---|---|---|---|---|
-| `elektroschitovaya` | Электрощитовая | 4.52×4.52 | 20.4 | 1 | L-CENTRAL-CORE-01 |
-| `sluzhebnyy-dostup-1-5-m` | СЛУЖЕБНЫЙ ДОСТУП · 1,5 М | 1.5×10.05 | 15.1 | 1 | L-CENTRAL-CORE-01 |
-| `lift` | ЛИФТ | 4.52×5.03 | 22.7 | 1 | L-CENTRAL-CORE-01 |
-| `liftovoy-holl` | Лифтовой холл | 6.52×4.52 | 29.5 | 3 | L-CENTRAL-CORE-01 |
-| `promezhutochnaya-ploschadka` | промежуточная площадка | 5.52×2.26 | 12.5 | 0 | L-CENTRAL-CORE-01 |
-| `verhnyaya-ploschadka` | верхняя площадка | 5.52×2.01 | 11.1 | 0 | L-CENTRAL-CORE-01 |
-| `obschiy-vestibyul-vertikalno` | ОБЩИЙ ВЕСТИБЮЛЬ ВЕРТИКАЛЬНОГО УЗЛА | 14.55×5.03 | 73.1 | 2 | L-CENTRAL-CORE-01 |
-| `passenger` | (без подписи) | 4.52×2.51 | 11.4 | 0 | L-CENTRAL-CORE-01 |
-| `glavnaya-lestnica` | ГЛАВНАЯ ЛЕСТНИЦА | 6.52×1.51 | 9.8 | 0 | L-CENTRAL-CORE-01 |
-| `glavnaya-lestnica-2` | ГЛАВНАЯ ЛЕСТНИЦА | 6.52×8.29 | 54.1 | 0 | L-CENTRAL-CORE-01 |
+| Помещение | Размер, м | м² | Класс |
+|---|---|---|---|
+| Электрощитовая | 5.02×4.78 | 24.0 | service |
+| СЛУЖЕБНЫЙ ДОСТУП · 1,5 М | 2.01×10.05 | 20.2 | passenger |
+| ЛИФТ | 5.02×5.28 | 26.5 | vertical |
+| Лифтовой холл | 7.03×4.52 | 31.8 | passenger |
+| ГЛАВНАЯ ЛЕСТНИЦА | 7.03×14.58 | 102.4 | vertical |
+| ОБЩИЙ ВЕСТИБЮЛЬ ВЕРТИКАЛЬНОГО УЗЛА | 14.05×5.03 | 70.6 | passenger |
 
-## Замечания и варианты исправления
+## Проёмы и двери
 
-- **L-CENTRAL-CORE-01** [секторный план] Копия U-CENTRAL-CORE: два этажа используют один чертёж. Различий нет; проёмы см. U-CENTRAL-CORE.
-  - **A.** Принять.
-  - Рекомендация: **A**.
+door 1.0 м × 2, door 1.8 м × 1, opening 2.01 м × 1, opening 3.0 м × 1, opening 4.52 м × 1, opening 6.52 м × 1
 
-## Автоматические наблюдения
+## Решения
 
-- room_without_drawn_opening: L-CENTRAL-CORE/promezhutochnaya-ploschadka 
-- room_without_drawn_opening: L-CENTRAL-CORE/verhnyaya-ploschadka 
-- room_without_drawn_opening: L-CENTRAL-CORE/passenger 
-- room_without_drawn_opening: L-CENTRAL-CORE/glavnaya-lestnica 
-- room_without_drawn_opening: L-CENTRAL-CORE/glavnaya-lestnica-2 
+- **D-14** — Лестница одной комнатой с площадкой (без стены между ними), щели 0,5 м между комнатами ядра закрыты (общие стены), проёмы лифта и лестницы размечены; двери служебные 1,0; вход на площадку проходом 3,0; генератор главной лестницы добавлен (VT-MAIN-STAIR)
+- **D-40** — Тамбур у ядра убран, ядро сдвинуто ещё на 2,5 м: общий вестибюль примыкает к коридору проёмом 4,5 м; дорисованы недостающие встречные проёмы (L-OLD-CORE: связка с архивом, подход камеры №2, общий доступ; L-OLD-RECEIVING: дверь к подходу газовой; U-ROUTE-A: дверь к аварийному блоку на уровне двери U-EMERGENCY); главный лифт T: комната содержит лифт L (z 4,78…10,06)
 
-Ничего из перечисленного не применено к каноническому SVG.

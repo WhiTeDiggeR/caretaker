@@ -120,17 +120,17 @@ class ResolverTests(unittest.TestCase):
 
 
 class RouteARegressionTests(unittest.TestCase):
-    def test_route_a_plan_reproduces_the_values_that_were_hand_written_before(self) -> None:
+    def test_route_a_plan_gives_the_canonical_v4_values(self) -> None:
         manifest = json.loads((ROOT / "tools/complex_v3_regeneration/sector_generation_manifest.json").read_text(encoding="utf-8"))
         sector = next(item for item in manifest["sectors"] if item["sector_id"] == "U-ROUTE-A")
         resolved = resolver.resolve_sector_verticals(sector, manifest, ROOT)["vertical_generators"][0]
         values = ResolverTests.pairs(resolved["args"])
         self.assertEqual(
             {key: values[key] for key in ("--shaft-width", "--shaft-length", "--floor-height", "--layout", "--stair-width", "--lower-entry-side", "--upper-exit-side", "--shaft-wall-bottom", "--shaft-wall-top")},
-            {"--shaft-width": "5.98", "--shaft-length": "7", "--floor-height": "6", "--layout": "u-turn", "--stair-width": "1.5",
+            {"--shaft-width": "6.647", "--shaft-length": "7.777", "--floor-height": "6", "--layout": "u-turn", "--stair-width": "1.8",
              "--lower-entry-side": "north", "--upper-exit-side": "north", "--shaft-wall-bottom": "3.6", "--shaft-wall-top": "6"},
         )
-        self.assertEqual(resolved["local_to_world"]["origin"], [-52.5, -6.0, 9.51])
+        self.assertEqual(resolved["local_to_world"]["origin"], [-52.2225, -6.0, 15.7655])
 
 
 if __name__ == "__main__":

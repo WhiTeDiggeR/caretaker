@@ -29,7 +29,7 @@ class SharedAuditTests(unittest.TestCase):
                 self.assertEqual(connector["geometry_policy"],"no_corridor_prism")
                 self.assertTrue(connector["portal_source_refs"])
         ids = {x["source_id"] for x in report["diagnostics"] if x["code"] == "explicit_stair_port_orientation_missing"}
-        self.assertEqual(ids,{"VT-MAIN-STAIR","VT-OLD-STAIR","VT-SERVICE-STAIR","VT-EAST-STAIR"})
+        self.assertEqual(ids, set())  # every stair now has explicit ports from the plan markup
         self.assertEqual(report,AUDIT.audit(h,v))
 
 
