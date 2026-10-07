@@ -1068,7 +1068,107 @@
           190,
           240
         ]
-      }
+      },
+      "exclude_ids": [
+        "u_east_support-space-005"
+      ],
+      "amendments": [
+        {
+          "id": "D-15k",
+          "op": "rect_grow",
+          "label": "АВАРИЙНАЯ ЛЕСТНИЦА",
+          "side": "n",
+          "by_m": 3.0
+        },
+        {
+          "id": "D-15a",
+          "op": "rect_set",
+          "ids": [
+            "u_east_support-space-004"
+          ],
+          "rect_m": [
+            16.444,
+            -7.111,
+            3.556,
+            26.667
+          ]
+        },
+        {
+          "id": "D-15b",
+          "op": "door_set",
+          "near_m": [
+            16.44,
+            -3.0
+          ],
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "type": "service"
+        },
+        {
+          "id": "D-15c",
+          "op": "door_set",
+          "near_m": [
+            16.44,
+            2.93
+          ],
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "type": "service"
+        },
+        {
+          "id": "D-15d",
+          "op": "door_set",
+          "near_m": [
+            16.44,
+            9.33
+          ],
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "type": "service"
+        },
+        {
+          "id": "D-15e",
+          "op": "door_set",
+          "near_m": [
+            26.13,
+            19.56
+          ],
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "type": "fire"
+        },
+        {
+          "id": "D-15f",
+          "op": "door_set",
+          "near_m": [
+            26.1,
+            15.56
+          ],
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "type": "fire",
+          "center_m": [
+            22.9,
+            15.56
+          ],
+          "vertical": {
+            "id": "VT-EAST-STAIR-LU",
+            "role": "exit"
+          }
+        },
+        {
+          "id": "D-15g",
+          "op": "vertical_cut",
+          "kind": "floor-opening",
+          "rect_m": [
+            21.111,
+            7.667,
+            10.0,
+            7.889
+          ],
+          "vertical_id": "VT-EAST-STAIR-LU"
+        }
+      ]
     },
     "U-CHAMBER-4": {
       "plan": "sectors/upper/u_chamber_4.svg",
@@ -1699,9 +1799,9 @@
       "only": [
         [
           320,
-          450,
+          382.5,
           225,
-          110
+          177.5
         ],
         [
           320,
@@ -1709,6 +1809,57 @@
           225,
           90
         ]
+      ],
+      "amendments": [
+        {
+          "id": "D-15k",
+          "op": "rect_grow",
+          "label": "АВАРИЙНАЯ ЛЕСТНИЦА",
+          "side": "n",
+          "by_m": 3.0
+        },
+        {
+          "id": "D-15h",
+          "op": "door_set",
+          "near_m": [
+            26.13,
+            19.56
+          ],
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "type": "fire"
+        },
+        {
+          "id": "D-15i",
+          "op": "door_set",
+          "near_m": [
+            26.1,
+            15.56
+          ],
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "type": "fire",
+          "center_m": [
+            28.7,
+            15.56
+          ],
+          "vertical": {
+            "id": "VT-EAST-STAIR-LU",
+            "role": "entry"
+          }
+        },
+        {
+          "id": "D-15j",
+          "op": "vertical_cut",
+          "kind": "ceiling-opening",
+          "rect_m": [
+            21.111,
+            7.667,
+            10.0,
+            7.889
+          ],
+          "vertical_id": "VT-EAST-STAIR-LU"
+        }
       ]
     },
     "L-CHAMBER-5": {
