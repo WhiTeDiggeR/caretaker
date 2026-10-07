@@ -30,15 +30,15 @@
       ],
       "world_m": [
         -102.4,
-        -4.887,
+        -4.889,
         27.178,
-        20.625
+        20.627
       ],
       "size_m": [
         27.18,
-        20.62
+        20.63
       ],
-      "area_m2": 560.5
+      "area_m2": 560.6
     },
     {
       "id": "t-energy-floor-02",
@@ -50,13 +50,13 @@
         210.0,
         520.0,
         130.0,
-        70.0
+        69.9
       ],
       "world_m": [
         -93.12,
         15.738,
         8.618,
-        3.208
+        3.205
       ],
       "size_m": [
         8.62,
@@ -78,9 +78,9 @@
       ],
       "world_m": [
         -75.222,
-        -4.887,
+        -4.889,
         16.572,
-        8.708
+        8.71
       ],
       "size_m": [
         16.57,
@@ -121,44 +121,20 @@
       "plan_px": [
         730.0,
         70.0,
-        90.0,
+        46.8,
         520.0
       ],
       "world_m": [
         -58.65,
-        -4.887,
-        5.966,
-        23.833
+        -4.889,
+        3.1,
+        23.832
       ],
       "size_m": [
-        5.97,
+        3.1,
         23.83
       ],
-      "area_m2": 142.2
-    },
-    {
-      "id": "t-energy-floor-06",
-      "space_id": "T-ENERGY/sluzhebnyy-karman-pered-inzh",
-      "label": "служебный карман перед инженерными помещениями",
-      "class": "corridor",
-      "source_id": "t_energy-space-002",
-      "plan_px": [
-        340.0,
-        520.0,
-        390.0,
-        70.0
-      ],
-      "world_m": [
-        -84.502,
-        15.738,
-        25.852,
-        3.208
-      ],
-      "size_m": [
-        25.85,
-        3.21
-      ],
-      "area_m2": 82.9
+      "area_m2": 73.9
     }
   ],
   "openings": [
@@ -184,15 +160,15 @@
       "type": "door",
       "source": "energy-gap",
       "source_id": "t_energy-opening-001",
-      "width_m": 3.98,
+      "width_m": 4.5,
       "rooms": [
         "T-ENERGY/generatornyy-zal",
         "T-ENERGY/pozharnyy-tambur"
       ],
       "world_m": [
-        -90.8,
+        -91.06,
         15.738,
-        -86.822,
+        -86.56,
         15.738
       ]
     },
@@ -201,15 +177,15 @@
       "type": "door",
       "source": "energy-gap",
       "source_id": "t_energy-opening-002",
-      "width_m": 3.98,
+      "width_m": 4.5,
       "rooms": [
         "T-ENERGY/pozharnyy-tambur"
       ],
       "world_m": [
-        -90.8,
-        18.946,
-        -86.822,
-        18.946
+        -91.06,
+        18.943,
+        -86.56,
+        18.943
       ]
     },
     {
@@ -217,16 +193,16 @@
       "type": "door",
       "source": "door-gap",
       "source_id": "t_energy-opening-003",
-      "width_m": 2.29,
+      "width_m": 1.8,
       "rooms": [
         "T-ENERGY/schitovaya",
         "T-ENERGY/sluzhebnyy-podhod"
       ],
       "world_m": [
         -58.65,
-        -1.45,
+        -1.43,
         -58.65,
-        0.842
+        0.37
       ]
     },
     {
@@ -234,20 +210,49 @@
       "type": "door",
       "source": "door-gap",
       "source_id": "t_energy-opening-004",
-      "width_m": 2.29,
+      "width_m": 1.8,
       "rooms": [
         "T-ENERGY/ohlazhdenie",
         "T-ENERGY/sluzhebnyy-podhod"
       ],
       "world_m": [
         -58.65,
-        8.862,
+        8.88,
         -58.65,
-        11.154
+        10.68
+      ]
+    },
+    {
+      "id": "t-energy-opening-06",
+      "type": "opening",
+      "source": "amendment D-28f",
+      "source_id": "amendment-D-28f",
+      "width_m": 3.1,
+      "rooms": [
+        "T-ENERGY/sluzhebnyy-podhod"
+      ],
+      "world_m": [
+        -58.65,
+        18.943,
+        -55.55,
+        18.943
       ]
     }
   ],
   "ignored": [
+    {
+      "source_id": "t_energy-space-002",
+      "role": "context",
+      "class": "corridor",
+      "label": "служебный карман перед инженерными помещениями",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -84.5,
+        15.74,
+        25.85,
+        3.21
+      ]
+    },
     {
       "source_id": "t_energy-space-003",
       "role": "trunk",
@@ -262,15 +267,16 @@
       ]
     }
   ],
-  "anomalies": [
-    {
-      "type": "room_without_drawn_opening",
-      "space": "T-ENERGY/sluzhebnyy-karman-pered-inzh",
-      "label": "служебный карман перед инженерными помещениями"
-    }
+  "anomalies": [],
+  "wall_segments": 11,
+  "amendments": [
+    "D-28a",
+    "D-28b",
+    "D-28c",
+    "D-28d",
+    "D-28e",
+    "D-28f"
   ],
-  "wall_segments": 10,
-  "amendments": [],
   "feature_rects_ignored": 4,
   "unmapped_other_elements": 2
 }
