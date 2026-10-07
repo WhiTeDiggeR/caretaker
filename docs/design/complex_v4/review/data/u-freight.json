@@ -52,9 +52,9 @@
         100.0
       ],
       "world_m": [
-        -15.657,
+        -15.658,
         75.111,
-        7.071,
+        7.072,
         5.0
       ],
       "size_m": [
@@ -76,9 +76,9 @@
         60.0
       ],
       "world_m": [
-        -15.657,
+        -15.658,
         80.111,
-        7.071,
+        7.072,
         3.0
       ],
       "size_m": [
@@ -196,9 +196,9 @@
         40.0
       ],
       "world_m": [
-        -15.657,
+        -15.658,
         83.111,
-        26.768,
+        26.769,
         2.0
       ],
       "size_m": [
@@ -302,6 +302,30 @@
         2.0
       ],
       "area_m2": 33.3
+    },
+    {
+      "id": "u-freight-floor-12",
+      "space_id": "U-FREIGHT/zaschitnyy-peshehodnyy-korid",
+      "label": "ЗАЩИТНЫЙ ПЕШЕХОДНЫЙ КОРИДОР",
+      "class": "corridor",
+      "source_id": "amendment-D-19a",
+      "plan_px": [
+        30.3,
+        90.0,
+        39.6,
+        370.0
+      ],
+      "world_m": [
+        -17.66,
+        66.61,
+        2.002,
+        18.501
+      ],
+      "size_m": [
+        2.0,
+        18.5
+      ],
+      "area_m2": 37.0
     }
   ],
   "openings": [
@@ -310,16 +334,16 @@
       "type": "door",
       "source": "gate",
       "source_id": "u_freight-annotation-005",
-      "width_m": 2.8,
+      "width_m": 4.5,
       "rooms": [
         "U-FREIGHT/dosmotrovaya-polosa",
         "U-FREIGHT/izolyator"
       ],
       "world_m": [
         -8.586,
-        76.211,
+        75.36,
         -8.586,
-        79.011
+        79.86
       ]
     },
     {
@@ -327,14 +351,14 @@
       "type": "door",
       "source": "gate",
       "source_id": "u_freight-annotation-007",
-      "width_m": 6.57,
+      "width_m": 4.5,
       "rooms": [
         "U-FREIGHT/dosmotrovaya-polosa"
       ],
       "world_m": [
-        -6.818,
+        -5.785,
         75.111,
-        -0.253,
+        -1.285,
         75.111
       ]
     },
@@ -343,17 +367,16 @@
       "type": "door",
       "source": "gate",
       "source_id": "u_freight-annotation-009",
-      "width_m": 5.4,
+      "width_m": 4.5,
       "rooms": [
         "U-FREIGHT/dosmotrovaya-polosa",
-        "U-FREIGHT/proby-siz",
         "U-FREIGHT/razgruzochnyy-karman"
       ],
       "world_m": [
         1.515,
-        76.411,
+        75.36,
         1.515,
-        81.811
+        79.86
       ]
     },
     {
@@ -361,16 +384,16 @@
       "type": "door",
       "source": "gate",
       "source_id": "u_freight-annotation-011",
-      "width_m": 5.4,
+      "width_m": 4.5,
       "rooms": [
         "U-FREIGHT/gruzovoy-lift",
         "U-FREIGHT/razgruzochnyy-karman"
       ],
       "world_m": [
         11.111,
-        76.411,
+        76.86,
         11.111,
-        81.811
+        81.36
       ]
     },
     {
@@ -380,12 +403,13 @@
       "source_id": "u_freight-opening-002",
       "width_m": 1.0,
       "rooms": [
-        "U-FREIGHT/zaschischennaya-peshehodnaya"
+        "U-FREIGHT/zaschischennaya-peshehodnaya",
+        "U-FREIGHT/zaschitnyy-peshehodnyy-korid"
       ],
       "world_m": [
-        -15.657,
+        -15.658,
         83.611,
-        -15.657,
+        -15.658,
         84.611
       ]
     },
@@ -490,6 +514,39 @@
         -0.758,
         83.111
       ]
+    },
+    {
+      "id": "u-freight-door-12",
+      "type": "door",
+      "source": "amendment D-19f",
+      "source_id": "amendment-D-19f",
+      "width_m": 1.0,
+      "rooms": [
+        "U-FREIGHT/sluzhebnyy-obhod-shahty-avar",
+        "U-FREIGHT/zaschischennaya-peshehodnaya"
+      ],
+      "world_m": [
+        11.111,
+        83.6,
+        11.111,
+        84.6
+      ]
+    },
+    {
+      "id": "u-freight-door-13",
+      "type": "door",
+      "source": "amendment D-19g",
+      "source_id": "amendment-D-19g",
+      "width_m": 1.0,
+      "rooms": [
+        "U-FREIGHT/zaschitnyy-peshehodnyy-korid"
+      ],
+      "world_m": [
+        -15.658,
+        68.5,
+        -15.658,
+        69.5
+      ]
     }
   ],
   "ignored": [
@@ -523,24 +580,6 @@
   "anomalies": [
     {
       "type": "opening_not_on_sector_wall",
-      "source_id": "u_freight-annotation-001",
-      "source": "gate",
-      "plan_px": [
-        70.0,
-        112.0,
-        220.0
-      ],
-      "world_m": [
-        -15.657,
-        67.711,
-        -15.657,
-        73.111
-      ],
-      "gtype": "door",
-      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
-    },
-    {
-      "type": "opening_not_on_sector_wall",
       "source_id": "u_freight-annotation-003",
       "source": "gate",
       "plan_px": [
@@ -558,8 +597,18 @@
       "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
     }
   ],
-  "wall_segments": 12,
-  "amendments": [],
+  "wall_segments": 14,
+  "amendments": [
+    "D-19a",
+    "D-19b",
+    "D-19c",
+    "D-19d",
+    "D-19e",
+    "D-19f",
+    "D-19g",
+    "D-19h",
+    "D-19k"
+  ],
   "feature_rects_ignored": 0,
   "unmapped_other_elements": 0
 }
