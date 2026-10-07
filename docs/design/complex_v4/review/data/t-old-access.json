@@ -23,22 +23,22 @@
       "class": "shaft",
       "source_id": "t_old_access-space-002",
       "plan_px": [
-        80.0,
-        200.0,
-        280.0,
-        240.0
+        83.1,
+        224.2,
+        152.9,
+        206.8
       ],
       "world_m": [
-        -102.4,
-        26.829,
-        18.314,
-        15.551
+        -102.2,
+        28.4,
+        10.0,
+        13.4
       ],
       "size_m": [
-        18.31,
-        15.55
+        10.0,
+        13.4
       ],
-      "area_m2": 284.8
+      "area_m2": 134.0
     },
     {
       "id": "t-old-access-floor-02",
@@ -47,138 +47,97 @@
       "class": "corridor",
       "source_id": "t_old_access-space-003",
       "plan_px": [
-        360.0,
+        235.9,
         160.0,
         150.0,
-        280.0
+        271.0
       ],
       "world_m": [
-        -84.086,
-        24.238,
-        9.811,
-        18.142
+        -92.2,
+        24.24,
+        9.81,
+        17.56
       ],
       "size_m": [
         9.81,
-        18.14
+        17.56
       ],
-      "area_m2": 178.0
+      "area_m2": 172.3
     },
     {
       "id": "t-old-access-floor-03",
-      "space_id": "T-OLD-ACCESS/bokovoy-dostup",
-      "label": "БОКОВОЙ ДОСТУП",
-      "class": "corridor",
-      "source_id": "t_old_access-space-004",
-      "plan_px": [
-        300.0,
-        440.0,
-        210.0,
-        70.0
-      ],
-      "world_m": [
-        -88.01,
-        42.38,
-        13.735,
-        4.536
-      ],
-      "size_m": [
-        13.73,
-        4.54
-      ],
-      "area_m2": 62.3
-    },
-    {
-      "id": "t-old-access-floor-04",
       "space_id": "T-OLD-ACCESS/podstanciya",
       "label": "ПОДСТАНЦИЯ / старого ядра · тупиковая",
       "class": "energy",
       "source_id": "t_old_access-geometry-002",
       "plan_px": [
-        80.0,
-        510.0,
-        300.0,
+        83.1,
+        431.0,
+        302.9,
         140.0
       ],
       "world_m": [
-        -102.4,
-        46.916,
-        19.622,
-        9.071
-      ],
-      "size_m": [
-        19.62,
+        -102.2,
+        41.8,
+        19.81,
         9.07
       ],
-      "area_m2": 178.0
+      "size_m": [
+        19.81,
+        9.07
+      ],
+      "area_m2": 179.7
     }
   ],
   "openings": [
     {
-      "id": "t-old-access-door-01",
-      "type": "door",
-      "source": "door-gap",
-      "source_id": "t_old_access-opening-001",
-      "width_m": 4.25,
+      "id": "t-old-access-opening-01",
+      "type": "opening",
+      "source": "amendment D-30e",
+      "source_id": "amendment-D-30e",
+      "width_m": 4.0,
       "rooms": [
         "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
       ],
       "world_m": [
-        -81.143,
-        24.238,
-        -76.891,
-        24.238
+        -89.3,
+        24.24,
+        -85.3,
+        24.24
       ]
     },
     {
       "id": "t-old-access-opening-02",
       "type": "opening",
-      "source": "room-gap",
-      "source_id": "t_old_access-opening-002",
-      "width_m": 4.54,
+      "source": "amendment D-30f",
+      "source_id": "amendment-D-30f",
+      "width_m": 4.5,
       "rooms": [
         "T-OLD-ACCESS/staraya-lestnica",
         "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
       ],
       "world_m": [
-        -84.086,
-        31.365,
-        -84.086,
-        35.901
+        -92.2,
+        30.85,
+        -92.2,
+        35.35
       ]
     },
     {
       "id": "t-old-access-door-03",
       "type": "door",
-      "source": "door-gap",
-      "source_id": "t_old_access-opening-003",
-      "width_m": 4.25,
+      "source": "amendment D-30g",
+      "source_id": "amendment-D-30g",
+      "width_m": 1.8,
       "rooms": [
-        "T-OLD-ACCESS/bokovoy-dostup",
+        "T-OLD-ACCESS/podstanciya",
         "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
       ],
       "world_m": [
-        -81.143,
-        42.38,
-        -76.891,
-        42.38
-      ]
-    },
-    {
-      "id": "t-old-access-door-04",
-      "type": "door",
-      "source": "energy-gap",
-      "source_id": "t_old_access-opening-004",
-      "width_m": 3.27,
-      "rooms": [
-        "T-OLD-ACCESS/bokovoy-dostup",
-        "T-OLD-ACCESS/podstanciya"
-      ],
-      "world_m": [
-        -87.029,
-        46.916,
-        -83.759,
-        46.916
+        -88.2,
+        41.8,
+        -86.4,
+        41.8
       ]
     }
   ],
@@ -195,11 +154,35 @@
         48.4,
         6.48
       ]
+    },
+    {
+      "source_id": "t_old_access-space-004",
+      "role": "context",
+      "class": "corridor",
+      "label": "БОКОВОЙ ДОСТУП",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -88.01,
+        42.38,
+        13.73,
+        4.54
+      ]
     }
   ],
   "anomalies": [],
-  "wall_segments": 11,
-  "amendments": [],
+  "wall_segments": 7,
+  "amendments": [
+    "D-30a",
+    "D-30b",
+    "D-30c",
+    "D-30d0",
+    "D-30d1",
+    "D-30d2",
+    "D-30d3",
+    "D-30e",
+    "D-30f",
+    "D-30g"
+  ],
   "feature_rects_ignored": 1,
   "unmapped_other_elements": 1
 }
