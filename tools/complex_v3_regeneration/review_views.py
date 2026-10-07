@@ -55,7 +55,7 @@ def draw_sector(R: dict, sid: str, edit: Edit | None, title: str, ppm: float = 2
     extras: list[tuple] = []
     notes: list[tuple] = []
     def key(prefix: str) -> str:
-        return next(k for k in rooms if k.startswith(prefix))
+        return prefix if prefix in rooms else next(k for k in rooms if k.startswith(prefix))
 
     for op in (edit.ops if edit else []):
         if op[0] == "rect":
