@@ -462,6 +462,9 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             rect.h = float(override.get("height", rect.h))
             rect.w = float(override.get("width", rect.w))
     assign_labels(plan)
+    for _old, _new in entry.get("label_replace", {}).items():
+        for rect in plan.rects:
+            rect.label = rect.label.replace(_old, _new)
     tf, tf_info = build_transform(entry, level)
     for am in entry.get("amendments", []):
         if am["op"] == "plan_stretch":
@@ -482,6 +485,10 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
                         l.x2 += dpx
             if am.get("drop_door_glyphs"):
                 plan.door_paths.clear()
+            continue
+        if am["op"] == "room_add" and "rect_px" in am:
+            px_, py_, pw_, ph_ = am["rect_px"]
+            plan.rects.append(Rect(px_, py_, pw_, ph_, am.get("class", "support"), "space", f"amendment-{am['id']}", am["label"], "room"))
             continue
         if am["op"] == "room_add":
             x, z, w, h = am["rect_m"]
@@ -674,6 +681,17 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
     # --- door / opening lines
     cands = collect_openings(plan, rooms)
     for am in entry.get("amendments", []):
+        if "near_px" in am:
+            am["near_m"] = [tf.px(am["near_px"][0]), tf.py(am["near_px"][1])]
+        if "at_px" in am:
+            ax1, ay1, ax2, ay2 = am["at_px"]
+            am["at_m"] = [tf.px(ax1), tf.py(ay1), tf.px(ax2), tf.py(ay2)]
+        if "center_px" in am:
+            am["center_m"] = [tf.px(am["center_px"][0]), tf.py(am["center_px"][1])]
+        if am["op"] == "door_add" and "center_px" in am and "orient" in am:
+            cxm, czm = tf.px(am["center_px"][0]), tf.py(am["center_px"][1])
+            half = am["width_m"] / 2
+            am["at_m"] = [cxm, czm - half, cxm, czm + half] if am["orient"] == "v" else [cxm - half, czm, cxm + half, czm]
         if am["op"] == "door_add":
             x1, z1, x2, z2 = am["at_m"]
             if abs(x1 - x2) < 1e-6:
