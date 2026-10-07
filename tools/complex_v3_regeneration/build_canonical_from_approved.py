@@ -684,6 +684,8 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
 
     # --- door / opening lines
     cands = collect_openings(plan, rooms)
+    if entry.get("drop_plan_openings"):
+        cands = []
     for am in entry.get("amendments", []):
         if "near_px" in am:
             am["near_m"] = [tf.px(am["near_px"][0]), tf.py(am["near_px"][1])]
