@@ -488,12 +488,12 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             continue
         if am["op"] == "room_add" and "rect_px" in am:
             px_, py_, pw_, ph_ = am["rect_px"]
-            plan.rects.append(Rect(px_, py_, pw_, ph_, am.get("class", "support"), "space", f"amendment-{am['id']}", am["label"], "room"))
+            plan.rects.append(Rect(px_, py_, pw_, ph_, am.get("class", "support"), "space", f"amendment-{am['id']}", am["label"], "room", group=am.get("group", "")))
             continue
         if am["op"] == "room_add":
             x, z, w, h = am["rect_m"]
             plan.rects.append(Rect((x - tf.sx) / tf.kx + tf.ox, (z - tf.sy) / tf.ky + tf.oy, w / tf.kx, h / tf.ky, am.get("class", "support"), "space",
-                                   f"amendment-{am['id']}", am["label"], "room"))
+                                   f"amendment-{am['id']}", am["label"], "room", group=am.get("group", "")))
             continue
         if am["op"] not in {"rect_set", "rect_grow"}:
             continue
@@ -531,10 +531,16 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
         nx1, nx2, ny1, ny2 = xs[r.x], xs[r.x2], ys[r.y], ys[r.y2]
         r.x, r.y, r.w, r.h = nx1, ny1, nx2 - nx1, ny2 - ny1
     seen: dict[str, int] = {}
+    group_space: dict[str, str] = {}
     for r in rooms:
+        if r.group and r.group in group_space and r.ident.startswith("amendment-"):
+            r.space = group_space[r.group]          # pieces of one amended room share the space id
+            continue
         base = slug(r.label.split(" / ")[0] if r.label else f"{r.cls}")
         seen[base] = seen.get(base, 0) + 1
         r.space = f"{sector_id}/{base}" + (f"-{seen[base]}" if seen[base] > 1 else "")
+        if r.group and r.ident.startswith("amendment-"):
+            group_space[r.group] = r.space
 
     report: dict[str, Any] = {
         "sector_id": sector_id, "level": level["level_id"], "source_plan": (f"docs/design/complex_v3/plans/{entry['plan']}" if entry.get("plan") else "synthetic: overview of the level"),

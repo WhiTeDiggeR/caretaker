@@ -3460,7 +3460,11 @@
           ],
           "kind": "door",
           "height_m": 2.8,
-          "type": "fire"
+          "type": "fire",
+          "vertical": {
+            "id": "VT-SERVICE-STAIR",
+            "role": "exit"
+          }
         },
         {
           "id": "D-27g",
@@ -3513,6 +3517,18 @@
           "kind": "door",
           "height_m": 4.5,
           "type": "heavy-gate"
+        },
+        {
+          "id": "D-42f",
+          "op": "vertical_cut",
+          "kind": "floor-opening",
+          "rect_m": [
+            -47.77,
+            53.22,
+            4.65,
+            8.55
+          ],
+          "vertical_id": "VT-SERVICE-STAIR"
         }
       ]
     },
@@ -4949,7 +4965,7 @@
             -47.78,
             53.21,
             4.67,
-            8.57
+            8.59
           ]
         },
         {
@@ -5140,17 +5156,72 @@
           "type": "heavy-gate"
         },
         {
-          "id": "D-36k",
+          "id": "D-42a",
+          "op": "room_add",
+          "label": "ЗАЩИЩЁННЫЙ ПРОХОД К ЛЕСТНИЦЕ",
+          "rect_m": [
+            -49.78,
+            51.21,
+            2.0,
+            10.59
+          ],
+          "group": "svc-pass",
+          "class": "corridor"
+        },
+        {
+          "id": "D-42b",
+          "op": "room_add",
+          "label": "ЗАЩИЩЁННЫЙ ПРОХОД К ЛЕСТНИЦЕ",
+          "rect_m": [
+            -47.78,
+            51.21,
+            4.67,
+            2.0
+          ],
+          "group": "svc-pass",
+          "class": "corridor"
+        },
+        {
+          "id": "D-42c",
           "op": "door_add",
           "at_m": [
-            -46.35,
+            -49.68,
             61.8,
-            -44.55,
+            -47.88,
             61.8
           ],
           "kind": "door",
           "height_m": 2.8,
           "type": "fire"
+        },
+        {
+          "id": "D-42d",
+          "op": "door_add",
+          "at_m": [
+            -46.4,
+            53.21,
+            -44.6,
+            53.21
+          ],
+          "kind": "door",
+          "height_m": 2.8,
+          "type": "fire",
+          "vertical": {
+            "id": "VT-SERVICE-STAIR",
+            "role": "entry"
+          }
+        },
+        {
+          "id": "D-42e",
+          "op": "vertical_cut",
+          "kind": "ceiling-opening",
+          "rect_m": [
+            -47.77,
+            53.22,
+            4.65,
+            8.55
+          ],
+          "vertical_id": "VT-SERVICE-STAIR"
         }
       ]
     },
@@ -5725,9 +5796,9 @@
           "id": "AUTO-15",
           "op": "door_add",
           "at_m": [
-            -46.35,
+            -49.68,
             61.8,
-            -44.55,
+            -47.88,
             61.8
           ],
           "kind": "door",

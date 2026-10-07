@@ -50,17 +50,17 @@
         271.9,
         409.6,
         50.4,
-        85.6
+        85.7
       ],
       "world_m": [
         -47.78,
         53.21,
         4.67,
-        8.58
+        8.59
       ],
       "size_m": [
         4.67,
-        8.58
+        8.59
       ],
       "area_m2": 40.1
     },
@@ -122,19 +122,19 @@
         701.0,
         129.1,
         48.6,
-        366.2
+        366.3
       ],
       "world_m": [
         -8.05,
         25.1,
         4.5,
-        36.69
+        36.7
       ],
       "size_m": [
         4.5,
-        36.69
+        36.7
       ],
-      "area_m2": 165.1
+      "area_m2": 165.2
     },
     {
       "id": "t-utilities-floor-06",
@@ -159,6 +159,54 @@
         13.12
       ],
       "area_m2": 211.9
+    },
+    {
+      "id": "t-utilities-floor-07",
+      "space_id": "T-UTILITIES/zaschischennyy-prohod-k-lest",
+      "label": "ЗАЩИЩЁННЫЙ ПРОХОД К ЛЕСТНИЦЕ",
+      "class": "corridor",
+      "source_id": "amendment-D-42a",
+      "plan_px": [
+        250.3,
+        389.7,
+        21.6,
+        105.7
+      ],
+      "world_m": [
+        -49.78,
+        51.21,
+        2.0,
+        10.59
+      ],
+      "size_m": [
+        2.0,
+        10.59
+      ],
+      "area_m2": 21.2
+    },
+    {
+      "id": "t-utilities-floor-08",
+      "space_id": "T-UTILITIES/zaschischennyy-prohod-k-lest",
+      "label": "ЗАЩИЩЁННЫЙ ПРОХОД К ЛЕСТНИЦЕ",
+      "class": "corridor",
+      "source_id": "amendment-D-42b",
+      "plan_px": [
+        271.9,
+        389.7,
+        50.4,
+        20.0
+      ],
+      "world_m": [
+        -47.78,
+        51.21,
+        4.67,
+        2.0
+      ],
+      "size_m": [
+        4.67,
+        2.0
+      ],
+      "area_m2": 9.3
     }
   ],
   "openings": [
@@ -255,25 +303,43 @@
       ],
       "world_m": [
         -8.05,
-        61.79,
+        61.8,
         -3.55,
-        61.79
+        61.8
       ]
     },
     {
       "id": "t-utilities-door-07",
       "type": "door",
-      "source": "amendment D-36k",
-      "source_id": "amendment-D-36k",
+      "source": "amendment D-42c",
+      "source_id": "amendment-D-42c",
       "width_m": 1.8,
       "rooms": [
-        "T-UTILITIES/lestnica"
+        "T-UTILITIES/lestnica",
+        "T-UTILITIES/zaschischennyy-prohod-k-lest"
       ],
       "world_m": [
-        -46.35,
-        61.79,
-        -44.55,
-        61.79
+        -49.68,
+        61.8,
+        -47.88,
+        61.8
+      ]
+    },
+    {
+      "id": "t-utilities-door-08",
+      "type": "door",
+      "source": "amendment D-42d",
+      "source_id": "amendment-D-42d",
+      "width_m": 1.8,
+      "rooms": [
+        "T-UTILITIES/lestnica",
+        "T-UTILITIES/zaschischennyy-prohod-k-lest"
+      ],
+      "world_m": [
+        -46.4,
+        53.21,
+        -44.6,
+        53.21
       ]
     }
   ],
@@ -449,7 +515,7 @@
     }
   ],
   "anomalies": [],
-  "wall_segments": 18,
+  "wall_segments": 20,
   "amendments": [
     "D-32b",
     "D-36a",
@@ -476,7 +542,11 @@
     "D-36h3",
     "D-36i",
     "D-36j",
-    "D-36k"
+    "D-42a",
+    "D-42b",
+    "D-42c",
+    "D-42d",
+    "D-42e"
   ],
   "feature_rects_ignored": 5,
   "unmapped_other_elements": 3

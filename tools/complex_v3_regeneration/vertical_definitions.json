@@ -204,6 +204,46 @@
         ],
         "transition_id": "VT-EAST-STAIR"
       }
+    },
+    {
+      "host_sector_id": "L-SERVICE-INTERCHANGE",
+      "generator": {
+        "generator_id": "service_stair",
+        "source": "svg",
+        "vertical_id": "VT-SERVICE-STAIR",
+        "kind": "stair",
+        "levels": {
+          "upper": {
+            "sector_id": "L-SERVICE-INTERCHANGE"
+          },
+          "lower": {
+            "sector_id": "T-UTILITIES"
+          }
+        },
+        "clearance_m": 0.01,
+        "args": [
+          "--target-riser",
+          "0.15",
+          "--max-riser",
+          "0.15",
+          "--target-tread",
+          "0.3",
+          "--min-tread",
+          "0.3",
+          "--minimum-headroom",
+          "2.4",
+          "--landing-depth",
+          "2",
+          "--flight-gap",
+          "0.7",
+          "--railings",
+          "auto",
+          "--wall-thickness",
+          "0.09",
+          "--scene-name",
+          "service_stair"
+        ]
+      }
     }
   ]
 }
