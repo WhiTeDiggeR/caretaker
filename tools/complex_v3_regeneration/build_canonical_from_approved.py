@@ -488,21 +488,23 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             continue
         if am["op"] not in {"rect_set", "rect_grow"}:
             continue
-        target = next((r for r in plan.rects if r.label.upper().startswith(am["label"].upper())), None)
-        if target is None:
-            report_missing = True
-            continue
-        if am["op"] == "rect_set":
-            x, z, w, h = am["rect_m"]
-            target.x, target.y = (x - tf.sx) / tf.kx + tf.ox, (z - tf.sy) / tf.ky + tf.oy
-            target.w, target.h = w / tf.kx, h / tf.ky
+        if am.get("ids"):
+            targets = [r for r in plan.rects if r.ident in am["ids"]]
         else:
-            by_x, by_y = am.get("by_m", 0) / tf.kx, am.get("by_m", 0) / tf.ky
-            side = am["side"]
-            if side == "s": target.h += by_y
-            elif side == "n": target.y -= by_y; target.h += by_y
-            elif side == "e": target.w += by_x
-            elif side == "w": target.x -= by_x; target.w += by_x
+            first = next((r for r in plan.rects if r.label.upper().startswith(am["label"].upper())), None)
+            targets = [first] if first else []
+        for target in targets:
+            if am["op"] == "rect_set":
+                x, z, w, h = am["rect_m"]
+                target.x, target.y = (x - tf.sx) / tf.kx + tf.ox, (z - tf.sy) / tf.ky + tf.oy
+                target.w, target.h = w / tf.kx, h / tf.ky
+            else:
+                by_x, by_y = am.get("by_m", 0) / tf.kx, am.get("by_m", 0) / tf.ky
+                side = am["side"]
+                if side == "s": target.h += by_y
+                elif side == "n": target.y -= by_y; target.h += by_y
+                elif side == "e": target.w += by_x
+                elif side == "w": target.x -= by_x; target.w += by_x
     classify(plan, entry, bool(entry.get("owns_trunks")))
     wall_h = float(entry["wall_height"])
 
