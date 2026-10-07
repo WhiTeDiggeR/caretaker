@@ -454,7 +454,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
     global SNAP_PX
     SNAP_PX = float(entry.get("snap_px", 2.5))
     level = reg["levels"][entry["level"]]
-    plan = parse_plan(PLANS / entry["plan"], set(reg["post_approval_ids"]))
+    plan = Plan() if not entry.get("plan") else parse_plan(PLANS / entry["plan"], set(reg["post_approval_ids"]))
     # u_route_a.svg carries pilot edits; the shared drawing is read from the untouched u_emergency plan.
     for rect in plan.rects:
         override = reg.get("rect_overrides", {}).get(rect.ident)
@@ -537,7 +537,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
         r.space = f"{sector_id}/{base}" + (f"-{seen[base]}" if seen[base] > 1 else "")
 
     report: dict[str, Any] = {
-        "sector_id": sector_id, "level": level["level_id"], "source_plan": f"docs/design/complex_v3/plans/{entry['plan']}",
+        "sector_id": sector_id, "level": level["level_id"], "source_plan": (f"docs/design/complex_v3/plans/{entry['plan']}" if entry.get("plan") else "synthetic: overview of the level"),
         "registration": tf_info, "wall_height_m": wall_h, "rooms": [], "openings": [], "ignored": [], "anomalies": [],
     }
     sid = sector_id.lower()
@@ -852,9 +852,9 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
         f'viewBox="{fmt(vx)} {fmt(vy)} {fmt(vw)} {fmt(vh)}" width="{fmt(vw * 12)}" height="{fmt(vh * 12)}" '
         f'data-scale="1" data-scale-unit="m-per-svg-unit" data-grid-size="1" data-artifact-id="APPROVED-{sector_id}-SVG-01" '
         f'data-plan-style-id="caretaker-style-b-v1" data-sector-id="{sector_id}" data-level="{level["level_id"]}" '
-        f'data-source-plan="{entry["plan"]}" data-derivation="approved-plan-scaled-by-overview">',
+        f'data-source-plan="{entry.get('plan') or 'overview'}" data-derivation="approved-plan-scaled-by-overview">',
         f'  <title>{sector_id} — метрический источник из утверждённого плана</title>',
-        f'  <desc>+X восток, +Z юг, метры. Построено из {entry["plan"]}; масштаб и положение — по общему плану этажа. Геометрия не исправлялась.</desc>',
+        f'  <desc>+X восток, +Z юг, метры. Построено из {entry.get('plan') or 'общего плана этажа'}; масштаб и положение — по общему плану этажа. Геометрия не исправлялась.</desc>',
         '  <style>.floor{fill:#b9c9d2;fill-opacity:.55;stroke:none}.ceiling{fill:none;stroke:none}.wall{stroke:#253038;stroke-width:.12}</style>',
     ]
     svg = "\n".join(header + out + ["</svg>", ""])

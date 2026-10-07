@@ -302,6 +302,27 @@
             "id": "VT-ROUTE-A",
             "role": "exit"
           }
+        },
+        {
+          "id": "D-40e",
+          "op": "opening_remove",
+          "near_m": [
+            -62.22,
+            9.13
+          ]
+        },
+        {
+          "id": "D-40f",
+          "op": "door_add",
+          "at_m": [
+            -62.22,
+            7.03,
+            -62.22,
+            8.83
+          ],
+          "kind": "door",
+          "height_m": 2.8,
+          "type": "wing"
         }
       ],
       "offset_m": [
@@ -980,7 +1001,7 @@
           "op": "door_set",
           "near_m": [
             -2.258,
-            -0.15
+            2.35
           ],
           "width_m": 1.0,
           "height_m": 2.1,
@@ -992,7 +1013,7 @@
           "op": "door_set",
           "near_m": [
             -1.0,
-            7.558
+            10.058
           ],
           "width_m": 1.0,
           "height_m": 2.1,
@@ -1004,7 +1025,7 @@
           "op": "door_set",
           "near_m": [
             3.5,
-            12.082
+            14.582
           ],
           "width_m": 3.0,
           "height_m": null,
@@ -1017,7 +1038,7 @@
           "kind": "floor-opening",
           "rect_m": [
             0.3,
-            -2.4,
+            0.1,
             6.4,
             11.9
           ],
@@ -1028,9 +1049,9 @@
           "op": "door_add",
           "at_m": [
             0.6,
-            9.569,
+            12.069,
             2.4,
-            9.569
+            12.069
           ],
           "kind": "door",
           "height_m": 2.8,
@@ -1047,7 +1068,7 @@
           "kind": "floor-opening",
           "rect_m": [
             -6.7,
-            2.6,
+            5.1,
             4.4,
             4.9
           ],
@@ -1056,7 +1077,10 @@
       ],
       "offset_m": [
         0.0,
-        2.5
+        5.0
+      ],
+      "exclude_ids": [
+        "u_central_core-geometry-017"
       ]
     },
     "U-EAST-SUPPORT": {
@@ -2060,6 +2084,43 @@
           ],
           "kind": "opening",
           "type": "corridor-to-room"
+        },
+        {
+          "id": "D-40a",
+          "op": "door_add",
+          "at_m": [
+            -58.89,
+            12.2,
+            -58.89,
+            13.6
+          ],
+          "kind": "door",
+          "height_m": 2.3,
+          "type": "historic"
+        },
+        {
+          "id": "D-40b",
+          "op": "door_add",
+          "at_m": [
+            -65.83,
+            25.1,
+            -61.43,
+            25.1
+          ],
+          "kind": "opening",
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "D-40c",
+          "op": "door_add",
+          "at_m": [
+            -87.5,
+            48.44,
+            -82.5,
+            48.44
+          ],
+          "kind": "opening",
+          "type": "corridor-to-room"
         }
       ]
     },
@@ -2420,6 +2481,19 @@
             48.44
           ],
           "gtype": "door"
+        },
+        {
+          "id": "D-40d",
+          "op": "door_add",
+          "at_m": [
+            -75.02,
+            50.5,
+            -75.02,
+            51.9
+          ],
+          "kind": "door",
+          "height_m": 2.3,
+          "type": "historic"
         }
       ]
     },
@@ -3475,7 +3549,7 @@
           "op": "door_set",
           "near_m": [
             -2.258,
-            -0.15
+            2.35
           ],
           "width_m": 1.0,
           "height_m": 2.1,
@@ -3487,7 +3561,7 @@
           "op": "door_set",
           "near_m": [
             -1.0,
-            7.558
+            10.058
           ],
           "width_m": 1.0,
           "height_m": 2.1,
@@ -3499,7 +3573,7 @@
           "op": "door_set",
           "near_m": [
             3.5,
-            12.082
+            14.582
           ],
           "width_m": 3.0,
           "height_m": null,
@@ -3512,7 +3586,7 @@
           "kind": "ceiling-opening",
           "rect_m": [
             0.3,
-            -2.4,
+            0.1,
             6.4,
             11.9
           ],
@@ -3523,9 +3597,9 @@
           "op": "door_add",
           "at_m": [
             4.6,
-            9.569,
+            12.069,
             6.4,
-            9.569
+            12.069
           ],
           "kind": "door",
           "height_m": 2.8,
@@ -3542,7 +3616,7 @@
           "kind": "ceiling-opening",
           "rect_m": [
             -6.7,
-            2.6,
+            5.1,
             4.4,
             4.9
           ],
@@ -3554,7 +3628,7 @@
           "kind": "floor-opening",
           "rect_m": [
             -6.7,
-            2.6,
+            5.1,
             4.4,
             4.9
           ],
@@ -3563,7 +3637,10 @@
       ],
       "offset_m": [
         0.0,
-        2.5
+        5.0
+      ],
+      "exclude_ids": [
+        "l_central_core-geometry-017"
       ]
     },
     "L-EAST-STAIR": {
@@ -4660,7 +4737,7 @@
           "kind": "ceiling-opening",
           "rect_m": [
             -6.7,
-            2.6,
+            5.1,
             4.4,
             4.9
           ],
@@ -5349,20 +5426,7 @@
           "type": "heavy-gate"
         },
         {
-          "id": "D-37f1",
-          "op": "door_add",
-          "at_m": [
-            -91.06,
-            19.6,
-            -86.56,
-            19.6
-          ],
-          "kind": "door",
-          "height_m": 4.5,
-          "type": "heavy-gate"
-        },
-        {
-          "id": "D-37f2",
+          "id": "AUTO-01",
           "op": "door_add",
           "at_m": [
             -58.65,
@@ -5371,10 +5435,25 @@
             19.6
           ],
           "kind": "opening",
+          "force": false,
           "type": "corridor-to-room"
         },
         {
-          "id": "D-37f3",
+          "id": "AUTO-02",
+          "op": "door_add",
+          "at_m": [
+            -91.06,
+            19.6,
+            -86.56,
+            19.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        },
+        {
+          "id": "AUTO-03",
           "op": "door_add",
           "at_m": [
             -47.74,
@@ -5383,10 +5462,11 @@
             19.6
           ],
           "kind": "opening",
+          "force": false,
           "type": "corridor-to-room"
         },
         {
-          "id": "D-37f4",
+          "id": "AUTO-04",
           "op": "door_add",
           "at_m": [
             -27.15,
@@ -5395,47 +5475,11 @@
             19.6
           ],
           "kind": "opening",
+          "force": false,
           "type": "corridor-to-room"
         },
         {
-          "id": "D-37f5",
-          "op": "door_add",
-          "at_m": [
-            -5.5,
-            19.6,
-            -1.5,
-            19.6
-          ],
-          "kind": "opening",
-          "type": "corridor-to-room"
-        },
-        {
-          "id": "D-37f6",
-          "op": "door_add",
-          "at_m": [
-            2.4,
-            19.6,
-            5.9,
-            19.6
-          ],
-          "kind": "opening",
-          "type": "corridor-to-room"
-        },
-        {
-          "id": "D-37f7",
-          "op": "door_add",
-          "at_m": [
-            24.7,
-            19.6,
-            26.5,
-            19.6
-          ],
-          "kind": "door",
-          "height_m": 2.8,
-          "type": "fire"
-        },
-        {
-          "id": "D-37f8",
+          "id": "AUTO-05",
           "op": "door_add",
           "at_m": [
             -89.3,
@@ -5444,10 +5488,51 @@
             25.1
           ],
           "kind": "opening",
+          "force": false,
           "type": "corridor-to-room"
         },
         {
-          "id": "D-37f9",
+          "id": "AUTO-06",
+          "op": "door_add",
+          "at_m": [
+            -5.5,
+            19.6,
+            -1.5,
+            19.6
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-07",
+          "op": "door_add",
+          "at_m": [
+            2.4,
+            19.6,
+            5.9,
+            19.6
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-08",
+          "op": "door_add",
+          "at_m": [
+            24.7,
+            19.6,
+            26.5,
+            19.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 2.8,
+          "type": "fire"
+        },
+        {
+          "id": "AUTO-09",
           "op": "door_add",
           "at_m": [
             -60.8,
@@ -5456,11 +5541,12 @@
             25.1
           ],
           "kind": "door",
+          "force": false,
           "height_m": 2.8,
           "type": "wing"
         },
         {
-          "id": "D-37f10",
+          "id": "AUTO-10",
           "op": "door_add",
           "at_m": [
             -33.3,
@@ -5469,24 +5555,26 @@
             25.1
           ],
           "kind": "door",
+          "force": false,
           "height_m": 2.8,
           "type": "wing"
         },
         {
-          "id": "D-37f11",
+          "id": "AUTO-11",
           "op": "door_add",
           "at_m": [
-            -17.049999999999997,
+            -17.05,
             25.1,
-            -15.249999999999998,
+            -15.25,
             25.1
           ],
           "kind": "door",
+          "force": false,
           "height_m": 2.8,
           "type": "wing"
         },
         {
-          "id": "D-37f12",
+          "id": "AUTO-12",
           "op": "door_add",
           "at_m": [
             3.6,
@@ -5495,11 +5583,12 @@
             25.1
           ],
           "kind": "door",
+          "force": false,
           "height_m": 2.8,
           "type": "wing"
         },
         {
-          "id": "D-37f13",
+          "id": "AUTO-13",
           "op": "door_add",
           "at_m": [
             -8.05,
@@ -5508,11 +5597,12 @@
             25.1
           ],
           "kind": "door",
+          "force": false,
           "height_m": 4.5,
           "type": "heavy-gate"
         },
         {
-          "id": "D-37f14",
+          "id": "AUTO-14",
           "op": "door_add",
           "at_m": [
             -8.05,
@@ -5521,11 +5611,12 @@
             61.8
           ],
           "kind": "door",
+          "force": false,
           "height_m": 4.5,
           "type": "heavy-gate"
         },
         {
-          "id": "D-37f15",
+          "id": "AUTO-15",
           "op": "door_add",
           "at_m": [
             -46.35,
@@ -5534,11 +5625,12 @@
             61.8
           ],
           "kind": "door",
+          "force": false,
           "height_m": 2.8,
           "type": "fire"
         },
         {
-          "id": "D-37f16",
+          "id": "AUTO-16",
           "op": "door_add",
           "at_m": [
             -4.55,
@@ -5547,12 +5639,482 @@
             69.6
           ],
           "kind": "door",
+          "force": false,
           "height_m": 4.5,
           "type": "heavy-gate"
         }
       ],
       "owns_trunks": true,
-      "drop_plan_openings": true
+      "drop_plan_openings": true,
+      "snap_px": 0.2
+    },
+    "U-CIRCULATION": {
+      "plan": null,
+      "level": "U",
+      "wall_height": 4.5,
+      "pair": {
+        "plan": [
+          0,
+          0,
+          100,
+          100
+        ],
+        "ov": [
+          990.0,
+          124.0,
+          900,
+          900
+        ]
+      },
+      "owns_trunks": true,
+      "drop_plan_openings": true,
+      "amendments": [
+        {
+          "id": "D-39a",
+          "op": "room_add",
+          "label": "ГЛАВНЫЙ ПАССАЖИРСКИЙ КОРИДОР",
+          "rect_m": [
+            -98.9,
+            19.6,
+            130.0,
+            5.5
+          ],
+          "class": "corridor"
+        },
+        {
+          "id": "D-39b",
+          "op": "room_add",
+          "label": "ТЯЖЁЛАЯ ТРАНСПОРТНАЯ МАГИСТРАЛЬ",
+          "rect_m": [
+            -98.9,
+            61.8,
+            128.8,
+            7.8
+          ],
+          "class": "corridor"
+        },
+        {
+          "id": "AUTO-01",
+          "op": "door_add",
+          "at_m": [
+            -75.05,
+            19.6,
+            -70.55,
+            19.6
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "hall-to-corridor"
+        },
+        {
+          "id": "AUTO-02",
+          "op": "door_add",
+          "at_m": [
+            -2.258,
+            19.6,
+            2.258,
+            19.6
+          ],
+          "kind": "opening",
+          "force": false
+        },
+        {
+          "id": "AUTO-03",
+          "op": "door_add",
+          "at_m": [
+            14.533,
+            19.6,
+            16.578,
+            19.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 2.4
+        },
+        {
+          "id": "AUTO-04",
+          "op": "door_add",
+          "at_m": [
+            25.233,
+            19.6,
+            27.033,
+            19.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 2.8,
+          "type": "fire"
+        },
+        {
+          "id": "AUTO-05",
+          "op": "door_add",
+          "at_m": [
+            -89.753,
+            61.8,
+            -85.253,
+            61.8
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        },
+        {
+          "id": "AUTO-06",
+          "op": "door_add",
+          "at_m": [
+            -94.99,
+            25.1,
+            -88.65,
+            25.1
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-07",
+          "op": "door_add",
+          "at_m": [
+            22.422,
+            61.8,
+            26.922,
+            61.8
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        },
+        {
+          "id": "AUTO-08",
+          "op": "door_add",
+          "at_m": [
+            17.19,
+            25.1,
+            23.53,
+            25.1
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-09",
+          "op": "door_add",
+          "at_m": [
+            -5.785,
+            69.6,
+            -1.285,
+            69.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        },
+        {
+          "id": "AUTO-10",
+          "op": "door_add",
+          "at_m": [
+            -17.16,
+            69.6,
+            -16.16,
+            69.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 2.1,
+          "type": "service"
+        }
+      ],
+      "snap_px": 0.04
+    },
+    "L-CIRCULATION": {
+      "plan": null,
+      "level": "L",
+      "wall_height": 4.5,
+      "pair": {
+        "plan": [
+          0,
+          0,
+          100,
+          100
+        ],
+        "ov": [
+          990.0,
+          124.0,
+          900,
+          900
+        ]
+      },
+      "owns_trunks": true,
+      "drop_plan_openings": true,
+      "amendments": [
+        {
+          "id": "D-39c",
+          "op": "room_add",
+          "label": "ПАССАЖИРСКИЙ КОРИДОР",
+          "rect_m": [
+            -61.1,
+            19.6,
+            92.2,
+            5.5
+          ],
+          "class": "corridor"
+        },
+        {
+          "id": "D-39d",
+          "op": "room_add",
+          "label": "ТЯЖЁЛАЯ ТРАНСПОРТНАЯ МАГИСТРАЛЬ",
+          "rect_m": [
+            -72.2,
+            61.8,
+            102.1,
+            7.8
+          ],
+          "class": "corridor"
+        },
+        {
+          "id": "D-39e",
+          "op": "room_add",
+          "label": "СВЯЗУЮЩИЙ КОРИДОР",
+          "rect_m": [
+            -0.3,
+            25.1,
+            4.7,
+            36.7
+          ],
+          "class": "corridor"
+        },
+        {
+          "id": "D-39f",
+          "op": "door_add",
+          "at_m": [
+            -0.3,
+            25.1,
+            4.4,
+            25.1
+          ],
+          "kind": "opening",
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "D-39g",
+          "op": "door_add",
+          "at_m": [
+            -0.3,
+            61.8,
+            4.4,
+            61.8
+          ],
+          "kind": "opening",
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-01",
+          "op": "door_add",
+          "at_m": [
+            -61.1,
+            19.7,
+            -61.1,
+            23.7
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-02",
+          "op": "door_add",
+          "at_m": [
+            -72.2,
+            62.4,
+            -72.2,
+            69.0
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-03",
+          "op": "door_add",
+          "at_m": [
+            -61.38,
+            61.8,
+            -56.88,
+            61.8
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        },
+        {
+          "id": "AUTO-04",
+          "op": "door_add",
+          "at_m": [
+            -23.7,
+            19.6,
+            -20.7,
+            19.6
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-05",
+          "op": "door_add",
+          "at_m": [
+            -29.9,
+            25.1,
+            -25.5,
+            25.1
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-06",
+          "op": "door_add",
+          "at_m": [
+            -6.67,
+            25.1,
+            -3.67,
+            25.1
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-07",
+          "op": "door_add",
+          "at_m": [
+            -24.47,
+            61.8,
+            -19.97,
+            61.8
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        },
+        {
+          "id": "AUTO-08",
+          "op": "door_add",
+          "at_m": [
+            -42.86,
+            61.8,
+            -38.36,
+            61.8
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        },
+        {
+          "id": "AUTO-09",
+          "op": "door_add",
+          "at_m": [
+            -2.258,
+            19.6,
+            2.258,
+            19.6
+          ],
+          "kind": "opening",
+          "force": false
+        },
+        {
+          "id": "AUTO-10",
+          "op": "door_add",
+          "at_m": [
+            25.233,
+            19.6,
+            27.033,
+            19.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 2.8,
+          "type": "fire"
+        },
+        {
+          "id": "AUTO-11",
+          "op": "door_add",
+          "at_m": [
+            22.422,
+            61.8,
+            26.922,
+            61.8
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        },
+        {
+          "id": "AUTO-12",
+          "op": "door_add",
+          "at_m": [
+            17.19,
+            25.1,
+            23.53,
+            25.1
+          ],
+          "kind": "opening",
+          "force": false,
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "AUTO-13",
+          "op": "door_add",
+          "at_m": [
+            -12.77,
+            69.6,
+            -10.97,
+            69.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 2.8,
+          "type": "wing"
+        },
+        {
+          "id": "AUTO-14",
+          "op": "door_add",
+          "at_m": [
+            -4.94,
+            69.6,
+            -3.14,
+            69.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 2.8,
+          "type": "wing"
+        },
+        {
+          "id": "AUTO-15",
+          "op": "door_add",
+          "at_m": [
+            3.3,
+            69.6,
+            7.8,
+            69.6
+          ],
+          "kind": "door",
+          "force": false,
+          "height_m": 4.5,
+          "type": "heavy-gate"
+        }
+      ],
+      "snap_px": 0.04
     }
   },
   "rect_overrides": {

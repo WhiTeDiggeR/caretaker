@@ -3,9 +3,7 @@ import hashlib
 
 BOX = (-114, -14, 38, 90)
 PPM = 4.0
-TR = {"LV-U": [(-98.9, 19.6, 130.0, 5.5), (-98.9, 61.8, 128.8, 7.8)],
-      "LV-L": [(-61.1, 19.6, 92.2, 5.5), (-72.2, 61.8, 102.1, 7.8), (-0.3, 25.1, 4.7, 36.7)],
-      "LV-T": []}
+TR = {"LV-U": [], "LV-L": [], "LV-T": []}
 
 
 def col(sid):
@@ -42,4 +40,4 @@ def panel(R, level, title):
 
 def build(R):
     row = [panel(R, lv, ln) for lv, ln in (("LV-U", "Верхний этаж"), ("LV-L", "Нижний этаж"), ("LV-T", "Технический этаж"))]
-    save(sheet(row, cols=3, gap=8), "levels-final.png")
+    save(sheet(row, cols=3, gap=8), "levels-final2.png")
