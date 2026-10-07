@@ -3812,7 +3812,7 @@
             -58.65,
             -4.89,
             3.1,
-            23.83
+            23.13
           ]
         },
         {
@@ -3828,21 +3828,6 @@
           "center_m": [
             -88.81,
             15.74
-          ]
-        },
-        {
-          "id": "D-28c",
-          "op": "door_set",
-          "near_m": [
-            -88.81,
-            18.95
-          ],
-          "width_m": 4.5,
-          "height_m": 4.5,
-          "type": "heavy-gate",
-          "center_m": [
-            -88.81,
-            18.95
           ]
         },
         {
@@ -3880,12 +3865,46 @@
           "op": "door_add",
           "at_m": [
             -58.65,
-            18.95,
+            18.24,
             -55.55,
-            18.95
+            18.24
           ],
           "kind": "opening",
           "type": "corridor-to-room"
+        },
+        {
+          "id": "D-28c",
+          "op": "opening_remove",
+          "near_m": [
+            -88.81,
+            18.95
+          ]
+        },
+        {
+          "id": "D-28g",
+          "op": "rect_set",
+          "ids": [
+            "t_energy-geometry-002"
+          ],
+          "rect_m": [
+            -93.12,
+            15.74,
+            8.62,
+            2.5
+          ]
+        },
+        {
+          "id": "D-28h",
+          "op": "door_add",
+          "at_m": [
+            -91.06,
+            18.24,
+            -86.56,
+            18.24
+          ],
+          "kind": "door",
+          "height_m": 4.5,
+          "type": "heavy-gate"
         }
       ]
     },
@@ -3906,7 +3925,102 @@
           305,
           125
         ]
-      }
+      },
+      "amendments": [
+        {
+          "id": "D-29a",
+          "op": "door_set",
+          "near_m": [
+            -32.65,
+            4.2
+          ],
+          "width_m": 3.6,
+          "kind": "opening",
+          "type": "corridor-to-room",
+          "center_m": [
+            -32.65,
+            4.2
+          ]
+        },
+        {
+          "id": "D-29b",
+          "op": "door_set",
+          "near_m": [
+            -45.74,
+            10.74
+          ],
+          "width_m": 4.0,
+          "kind": "opening",
+          "type": "corridor-to-room",
+          "center_m": [
+            -45.74,
+            10.74
+          ]
+        },
+        {
+          "id": "D-29c",
+          "op": "door_set",
+          "near_m": [
+            -25.15,
+            10.74
+          ],
+          "width_m": 4.0,
+          "kind": "opening",
+          "type": "corridor-to-room",
+          "center_m": [
+            -25.15,
+            10.74
+          ]
+        },
+        {
+          "id": "D-29d",
+          "op": "room_add",
+          "label": "ПОДЪЕЗД К МАСТЕРСКОЙ",
+          "rect_m": [
+            -47.74,
+            10.74,
+            4.0,
+            7.5
+          ],
+          "class": "corridor"
+        },
+        {
+          "id": "D-29e",
+          "op": "room_add",
+          "label": "ПОДЪЕЗД К СКЛАДУ",
+          "rect_m": [
+            -27.15,
+            10.74,
+            4.0,
+            7.5
+          ],
+          "class": "corridor"
+        },
+        {
+          "id": "D-29f",
+          "op": "door_add",
+          "at_m": [
+            -47.74,
+            18.24,
+            -43.74,
+            18.24
+          ],
+          "kind": "opening",
+          "type": "corridor-to-room"
+        },
+        {
+          "id": "D-29g",
+          "op": "door_add",
+          "at_m": [
+            -27.15,
+            18.24,
+            -23.15,
+            18.24
+          ],
+          "kind": "opening",
+          "type": "corridor-to-room"
+        }
+      ]
     },
     "T-OLD-ACCESS": {
       "plan": "sectors/technical/t_old_access.svg",

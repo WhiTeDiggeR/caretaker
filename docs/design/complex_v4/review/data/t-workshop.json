@@ -32,11 +32,11 @@
         -55.525,
         -4.887,
         22.875,
-        15.625
+        15.626
       ],
       "size_m": [
         22.88,
-        15.62
+        15.63
       ],
       "area_m2": 357.4
     },
@@ -56,63 +56,145 @@
         -32.65,
         -4.887,
         15.25,
-        15.625
+        15.626
       ],
       "size_m": [
         15.25,
-        15.62
+        15.63
       ],
       "area_m2": 238.3
+    },
+    {
+      "id": "t-workshop-floor-03",
+      "space_id": "T-WORKSHOP/podezd-k-masterskoy",
+      "label": "ПОДЪЕЗД К МАСТЕРСКОЙ",
+      "class": "corridor",
+      "source_id": "amendment-D-29d",
+      "plan_px": [
+        228.1,
+        540.0,
+        78.7,
+        216.0
+      ],
+      "world_m": [
+        -47.74,
+        10.739,
+        4.0,
+        7.501
+      ],
+      "size_m": [
+        4.0,
+        7.5
+      ],
+      "area_m2": 30.0
+    },
+    {
+      "id": "t-workshop-floor-04",
+      "space_id": "T-WORKSHOP/podezd-k-skladu",
+      "label": "ПОДЪЕЗД К СКЛАДУ",
+      "class": "corridor",
+      "source_id": "amendment-D-29e",
+      "plan_px": [
+        633.2,
+        540.0,
+        78.7,
+        216.0
+      ],
+      "world_m": [
+        -27.15,
+        10.739,
+        4.0,
+        7.501
+      ],
+      "size_m": [
+        4.0,
+        7.5
+      ],
+      "area_m2": 30.0
     }
   ],
   "openings": [
     {
-      "id": "t-workshop-door-01",
-      "type": "door",
+      "id": "t-workshop-opening-01",
+      "type": "opening",
       "source": "work-gap",
       "source_id": "t_workshop-opening-001",
-      "width_m": 3.65,
+      "width_m": 3.6,
       "rooms": [
         "T-WORKSHOP/masterskaya",
         "T-WORKSHOP/sklad-zapchastey"
       ],
       "world_m": [
         -32.65,
-        2.404,
+        2.4,
         -32.65,
-        6.05
+        6.0
       ]
     },
     {
-      "id": "t-workshop-door-02",
-      "type": "door",
+      "id": "t-workshop-opening-02",
+      "type": "opening",
       "source": "work-gap",
       "source_id": "t_workshop-opening-002",
-      "width_m": 3.81,
+      "width_m": 4.0,
       "rooms": [
-        "T-WORKSHOP/masterskaya"
+        "T-WORKSHOP/masterskaya",
+        "T-WORKSHOP/podezd-k-masterskoy"
       ],
       "world_m": [
-        -47.646,
-        10.738,
-        -43.833,
-        10.738
+        -47.74,
+        10.739,
+        -43.74,
+        10.739
       ]
     },
     {
-      "id": "t-workshop-door-03",
-      "type": "door",
+      "id": "t-workshop-opening-03",
+      "type": "opening",
       "source": "work-gap",
       "source_id": "t_workshop-opening-004",
-      "width_m": 3.81,
+      "width_m": 4.0,
       "rooms": [
+        "T-WORKSHOP/podezd-k-skladu",
         "T-WORKSHOP/sklad-zapchastey"
       ],
       "world_m": [
-        -27.058,
-        10.738,
-        -23.246,
-        10.738
+        -27.15,
+        10.739,
+        -23.15,
+        10.739
+      ]
+    },
+    {
+      "id": "t-workshop-opening-04",
+      "type": "opening",
+      "source": "amendment D-29f",
+      "source_id": "amendment-D-29f",
+      "width_m": 4.0,
+      "rooms": [
+        "T-WORKSHOP/podezd-k-masterskoy"
+      ],
+      "world_m": [
+        -47.74,
+        18.24,
+        -43.74,
+        18.24
+      ]
+    },
+    {
+      "id": "t-workshop-opening-05",
+      "type": "opening",
+      "source": "amendment D-29g",
+      "source_id": "amendment-D-29g",
+      "width_m": 4.0,
+      "rooms": [
+        "T-WORKSHOP/podezd-k-skladu"
+      ],
+      "world_m": [
+        -27.15,
+        18.24,
+        -23.15,
+        18.24
       ]
     }
   ],
@@ -132,8 +214,16 @@
     }
   ],
   "anomalies": [],
-  "wall_segments": 5,
-  "amendments": [],
+  "wall_segments": 11,
+  "amendments": [
+    "D-29a",
+    "D-29b",
+    "D-29c",
+    "D-29d",
+    "D-29e",
+    "D-29f",
+    "D-29g"
+  ],
   "feature_rects_ignored": 6,
   "unmapped_other_elements": 0
 }
