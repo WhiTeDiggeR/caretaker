@@ -1275,7 +1275,46 @@
           }
         }
       },
-      "vertical_generators": [],
+      "vertical_generators": [
+        {
+          "generator_id": "east_stair_tl",
+          "source": "svg",
+          "vertical_id": "VT-EAST-STAIR-TL",
+          "kind": "stair",
+          "levels": {
+            "upper": {
+              "sector_id": "L-EAST-STAIR"
+            },
+            "lower": {
+              "sector_id": "T-EAST-VERTICAL"
+            }
+          },
+          "clearance_m": 0.01,
+          "args": [
+            "--target-riser",
+            "0.15",
+            "--max-riser",
+            "0.15",
+            "--target-tread",
+            "0.25",
+            "--min-tread",
+            "0.25",
+            "--minimum-headroom",
+            "2.4",
+            "--landing-depth",
+            "2",
+            "--flight-gap",
+            "0.7",
+            "--railings",
+            "auto",
+            "--wall-thickness",
+            "0.09",
+            "--scene-name",
+            "east_stair_tl"
+          ],
+          "transition_id": "VT-EAST-STAIR"
+        }
+      ],
       "safe_regeneration": {
         "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_east_stair/composition.json",
         "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_east_stair/object_bindings.json"
@@ -1609,7 +1648,45 @@
           }
         }
       },
-      "vertical_generators": [],
+      "vertical_generators": [
+        {
+          "generator_id": "old_stair",
+          "source": "svg",
+          "vertical_id": "VT-OLD-STAIR",
+          "kind": "stair",
+          "levels": {
+            "upper": {
+              "sector_id": "L-OLD-CORE"
+            },
+            "lower": {
+              "sector_id": "T-OLD-ACCESS"
+            }
+          },
+          "clearance_m": 0.01,
+          "args": [
+            "--target-riser",
+            "0.15",
+            "--max-riser",
+            "0.15",
+            "--target-tread",
+            "0.28",
+            "--min-tread",
+            "0.28",
+            "--minimum-headroom",
+            "2.4",
+            "--landing-depth",
+            "2",
+            "--flight-gap",
+            "0.7",
+            "--railings",
+            "auto",
+            "--wall-thickness",
+            "0.09",
+            "--scene-name",
+            "old_stair"
+          ]
+        }
+      ],
       "safe_regeneration": {
         "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_old_core/composition.json",
         "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_old_core/object_bindings.json"
