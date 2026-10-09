@@ -104,7 +104,7 @@ func _sandbox_case(c: OpeningCheck) -> void:
 	var button := sandbox.get_node(^"Stations/InteractionStation/Button") as Node3D
 	player.global_position = Vector3(button.global_position.x, 0.9, button.global_position.z - 1.6)
 	player.rotation = Vector3(0, PI, 0)
-	(player.get_node(^"Camera3D") as Node3D).rotation.x = deg_to_rad(-20.0)
+	(player.get_node(^"Camera3D") as Node3D).rotation.x = deg_to_rad(-30.0)
 	await c.physics_frames(4)
 	c.equal(player.interactor.target, button.get_node(^"Interactable"), "player ray finds the sandbox button")
 	var hud := sandbox.get_node(^"OpeningHud") as OpeningHud

@@ -17,7 +17,7 @@ const MOUSE_SENS = 0.002
 const STAND_HEIGHT := 1.8
 const CROUCH_HEIGHT := 1.0
 const CROUCH_TRANSITION_SPEED := 5.0  # metres of capsule height per second
-const STAND_CAMERA_Y := 0.3
+const STAND_CAMERA_Y := 0.7  # eyes 1.6 m above the floor (docs/game_design/02-prop-standard.md)
 
 const MANTLE_MIN_HEIGHT := 0.35  # lower edges are stepped over by jumping
 const MANTLE_MAX_HEIGHT := 1.25  # canon: only low obstacles, no parkour
