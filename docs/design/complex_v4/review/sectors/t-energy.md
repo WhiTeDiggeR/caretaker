@@ -1,6 +1,6 @@
 # T-ENERGY
 
-Этаж: технический (LV-T). Источник: `docs/design/complex_v3/plans/sectors/technical/t_energy.svg`. Высота стен 5.0 м. Габарит 46.9×24.5 м, x -102.4…-55.5, z -4.9…19.6.
+Этаж: технический (LV-T). Источник: `docs/design/complex_v3/plans/sectors/technical/t_energy.svg`. Высота стен 4.5 м. Габарит 46.9×24.5 м, x -102.4…-55.5, z -4.9…19.6.
 
 ![T-ENERGY](img/t-energy.png)
 
