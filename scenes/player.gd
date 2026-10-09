@@ -31,8 +31,10 @@ const CLEARANCE_SKIN := 0.03
 @onready var camera: Camera3D = $Camera3D
 @onready var ray: RayCast3D = $Camera3D/RayCast3D
 @onready var _collision: CollisionShape3D = $CollisionShape3D
+@onready var interactor: Interactor = $Interactor
 
 @export var interact_label: Label
+@export var hold_progress_bar: Range
 
 var is_crouching := false
 var is_mantling := false
@@ -44,6 +46,8 @@ var _forced_crouch := false
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	interactor.prompt_label = interact_label
+	interactor.hold_bar = hold_progress_bar
 	# The capsule changes height at runtime, so every player owns its shape.
 	_shape = (_collision.shape as CapsuleShape3D).duplicate()
 	_collision.shape = _shape
@@ -100,7 +104,6 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, WALK_SPEED)
 
 	move_and_slide()
-	_handle_interaction()
 
 
 # --- Crouch ----------------------------------------------------------------
@@ -194,6 +197,7 @@ func find_mantle_target() -> Vector3:
 
 func _perform_mantle(target: Vector3) -> void:
 	is_mantling = true
+	interactor.set_physics_process(false)
 	velocity = Vector3.ZERO
 	if not _capsule_fits(target, STAND_HEIGHT):
 		_forced_crouch = true
@@ -207,34 +211,10 @@ func _perform_mantle(target: Vector3) -> void:
 	tween.tween_property(self, "global_position", target, MANTLE_MOVE_TIME)
 	await tween.finished
 	is_mantling = false
+	interactor.set_physics_process(true)
 	mantle_finished.emit()
 
 
 func _ray(space: PhysicsDirectSpaceState3D, from: Vector3, to: Vector3) -> Dictionary:
 	var query := PhysicsRayQueryParameters3D.create(from, to, collision_mask, [get_rid()])
 	return space.intersect_ray(query)
-
-
-# --- Interaction -------------------------------------------------------------
-
-func _handle_interaction() -> void:
-	if interact_label == null:
-		return
-	if not ray.is_colliding():
-		interact_label.visible = false
-		return
-
-	var target: Node = ray.get_collider()
-	while target:
-		if target.has_method("interact"):
-			interact_label.visible = true
-			var interaction_text := "ВЗАИМОДЕЙСТВОВАТЬ"
-			if target.has_method("get_interaction_text"):
-				interaction_text = str(target.get_interaction_text())
-			interact_label.text = InputPromptFormatter.format_action(&"interact", interaction_text)
-			if Input.is_action_just_pressed("interact"):
-				target.interact()
-			return
-		target = target.get_parent()
-
-	interact_label.visible = false
