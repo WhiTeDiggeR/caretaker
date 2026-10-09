@@ -2,8 +2,8 @@ extends Node
 
 ## Renders still frames of a scene for visual review (needs a display, e.g. xvfb-run).
 ## godot --path . --rendering-driver opengl3 res://tools/opening/capture_views.tscn -- \
-##     <scene.tscn> <out_dir> <name>:<x>,<y>,<z>:<yaw_deg>,<pitch_deg> ...
-## Each view moves the scene's `Player` (or a free camera when there is none) and saves a PNG.
+##     <scene.tscn> <out_dir> <name>:<x>,<y>,<z>:<yaw_deg>,<pitch_deg>[:<section>=<off|emergency|main>,...] ...
+## Each view moves the scene's `Player`, optionally loads section power instantly, and saves a PNG.
 
 const SETTLE_FRAMES := 20
 
@@ -28,6 +28,8 @@ func _ready() -> void:
 			player.global_position = Vector3(pos[0], pos[1], pos[2])
 			player.rotation = Vector3(0, deg_to_rad(angles[0]), 0)
 			(player.get_node(^"Camera3D") as Node3D).rotation = Vector3(deg_to_rad(angles[1]), 0, 0)
+		if parts.size() > 3:
+			_apply_power(parts[3])
 		await _frames(SETTLE_FRAMES)
 		var path := "%s/%s.png" % [args[1], parts[0]]
 		get_viewport().get_texture().get_image().save_png(path)
@@ -38,3 +40,11 @@ func _ready() -> void:
 func _frames(count: int) -> void:
 	for _i in count:
 		await get_tree().process_frame
+
+
+func _apply_power(spec: String) -> void:
+	var state := GameState.to_dict()
+	for pair in spec.split(","):
+		var entry := pair.split("=")
+		(state["section_power"] as Dictionary)[entry[0]] = entry[1]
+	GameState.from_dict(state)
