@@ -35,8 +35,8 @@ func _ready() -> void:
 			checked += 1
 			sector.queue_free()
 			await get_tree().process_frame
-	if checked != 30:
-		errors.append("expected 30 sector scenes, found %d" % checked)
+	if checked != 32:
+		errors.append("expected 32 sector scenes, found %d" % checked)
 	if errors.is_empty():
 		print("COMPLEX_V3_PRODUCTION_ANCHOR_BINDINGS_OK sectors=%d" % checked)
 		get_tree().quit(0)

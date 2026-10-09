@@ -4,7 +4,7 @@
   "map_id": "caretaker-complex-v3",
   "plan_style_id": "caretaker-style-b-v1",
   "status": "verified",
-  "passport_count": 30,
+  "passport_count": 32,
   "passports": [
     {
       "id": "PASS-U-EMERGENCY",
@@ -2091,6 +2091,118 @@
           "centerline_z": 64.0
         }
       ],
+      "allowed_internal_subdivision": [
+        "main_service_corridor",
+        "cable_gallery",
+        "west_controlled_transition",
+        "east_controlled_transition",
+        "heavy_spine"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "non_transit_engineering_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-U-CIRCULATION",
+      "sector_id": "U-CIRCULATION",
+      "level": "LV-U",
+      "detail_id": "DETAIL-U-CIRCULATION",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "synthetic: built from the overview of the level (docs/design/complex_v4)",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -98.9,
+        19.6,
+        130.0,
+        50.0
+      ],
+      "local_origin_xyz": [
+        -98.9,
+        0.0,
+        19.6
+      ],
+      "neighbors": [
+        "U-CENTRAL-CORE",
+        "U-CHAMBER-4",
+        "U-CHAMBER-6",
+        "U-CONTROL",
+        "U-DOMESTIC",
+        "U-EAST-SUPPORT",
+        "U-EMERGENCY",
+        "U-FREIGHT",
+        "U-MEDBAY",
+        "U-ROUTE-A",
+        "U-SECURITY"
+      ],
+      "required_connections": [],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
+      "allowed_internal_subdivision": [
+        "main_service_corridor",
+        "cable_gallery",
+        "west_controlled_transition",
+        "east_controlled_transition",
+        "heavy_spine"
+      ],
+      "clearance_profile": "service",
+      "required_clearances": {
+        "minimum_width": 1.5,
+        "minimum_height": 2.5,
+        "turning_envelope": 1.8
+      },
+      "hidden_or_inaccessible_reserved_volumes": [
+        "non_transit_engineering_volume"
+      ],
+      "geometry_status": "provisional-metric; exact structured layout in complex-handoff.json",
+      "status": "verified"
+    },
+    {
+      "id": "PASS-L-CIRCULATION",
+      "sector_id": "L-CIRCULATION",
+      "level": "LV-L",
+      "detail_id": "DETAIL-L-CIRCULATION",
+      "parent_artifact": "OVERVIEW-DATA-01",
+      "plan_style_id": "caretaker-style-b-v1",
+      "source_detail": "synthetic: built from the overview of the level (docs/design/complex_v4)",
+      "source_use": "full sector geometry",
+      "parent_boundary_xz": [
+        -72.2,
+        19.6,
+        103.3,
+        50.0
+      ],
+      "local_origin_xyz": [
+        -72.2,
+        -6.0,
+        19.6
+      ],
+      "neighbors": [
+        "L-ARCHIVE-A",
+        "L-CENTRAL-CORE",
+        "L-CHAMBER-2",
+        "L-CHAMBER-3",
+        "L-CHAMBER-5",
+        "L-EAST-STAIR",
+        "L-FREIGHT-SERVICE",
+        "L-OLD-CORE",
+        "L-OLD-RECEIVING",
+        "L-SERVICE-INTERCHANGE",
+        "L-SLEEP-LAB"
+      ],
+      "required_connections": [],
+      "forbidden_direct_connections": [],
+      "preserved_intermediate_volumes": [],
+      "anchors": [],
       "allowed_internal_subdivision": [
         "main_service_corridor",
         "cable_gallery",

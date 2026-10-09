@@ -35,7 +35,7 @@ class ProductionSectorSceneTests(unittest.TestCase):
 
     def test_all_sector_scenes_use_one_generated_package(self) -> None:
         by_id = {item["sector_id"]: item for item in self.manifest["sectors"]}
-        self.assertEqual(len(by_id), 30)
+        self.assertEqual(len(by_id), 32)
         for catalog_entry in self.catalog["sectors"]:
             sector = by_id[catalog_entry["sector_id"]]
             scene = ROOT / catalog_entry["scene"].removeprefix("res://")

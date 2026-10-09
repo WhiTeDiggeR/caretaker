@@ -15,8 +15,8 @@ func _initialize() -> void:
 func _run() -> void:
 	var manifest := _read_json(MANIFEST)
 	var sectors_value: Variant = manifest.get("sectors", [])
-	if not sectors_value is Array or (sectors_value as Array).size() != 30:
-		_errors.append("production manifest does not contain 30 sectors")
+	if not sectors_value is Array or (sectors_value as Array).size() != 32:
+		_errors.append("production manifest does not contain 32 sectors")
 		_finish()
 		return
 	for value: Variant in sectors_value:
@@ -51,7 +51,7 @@ func _run() -> void:
 		sector_root.queue_free()
 		await process_frame
 
-	var assembly := _instantiate(ASSEMBLY, "30-sector assembly")
+	var assembly := _instantiate(ASSEMBLY, "32-sector assembly")
 	if assembly != null:
 		root.add_child(assembly)
 		await process_frame
@@ -60,12 +60,12 @@ func _run() -> void:
 			_errors.append("assembly has no get_sector_ids()")
 		else:
 			var ids := assembly.call("get_sector_ids") as PackedStringArray
-			if ids.size() != 30:
-				_errors.append("assembly loaded %d sector IDs instead of 30" % ids.size())
+			if ids.size() != 32:
+				_errors.append("assembly loaded %d sector IDs instead of 32" % ids.size())
 			var unique := {}
 			for sector_id: String in ids:
 				unique[sector_id] = true
-			if unique.size() != 30:
+			if unique.size() != 32:
 				_errors.append("assembly contains duplicate sector IDs")
 		if assembly.has_method("validate_against_handoff"):
 			_errors.append_array(assembly.call("validate_against_handoff") as PackedStringArray)

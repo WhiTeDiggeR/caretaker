@@ -20,7 +20,7 @@ The backend runs strict SVG inspection and conversion with one shared argument l
 - `generation_manifest.json` with input hashes and effective geometry settings;
 - `regeneration_report.json` with commands and exit codes.
 
-`sector_generation_manifest.json` is the single production manifest for all 30 sectors. Every
+`sector_generation_manifest.json` is the single production manifest for all 32 sectors. Every
 `source_svg` points to the single metric input under
 `docs/design/complex_v4/plans/generation/`; SVGs under `plans/sectors` and
 `plans/overview` are presentation-only. The split manifests under `rollouts/` remain

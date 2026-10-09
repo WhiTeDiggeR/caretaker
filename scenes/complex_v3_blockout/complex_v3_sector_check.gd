@@ -50,7 +50,7 @@ func _initialize() -> void:
 		if _visible_zone_count(blockout) != expected_context:
 			errors.append("Neighbor view expected %d zones, found %d" % [expected_context, _visible_zone_count(blockout)])
 		blockout.show_full_complex()
-		if _visible_zone_count(blockout) != 30:
+		if _visible_zone_count(blockout) != 32:
 			errors.append("Full view must show 30 zones")
 	var expected_spaces := (handoff.get("spaces", []) as Array).size()
 	var expected_portals := (handoff.get("internal_portals", []) as Array).size()
@@ -63,7 +63,7 @@ func _initialize() -> void:
 		errors.append("Sector scenes total %d passages instead of %d" % [total_portals, expected_portals])
 
 	if errors.is_empty():
-		print("COMPLEX_V3_SECTORS_OK sectors=30 spaces=%d portals=%d modes=3" % [total_spaces, total_portals])
+		print("COMPLEX_V3_SECTORS_OK sectors=32 spaces=%d portals=%d modes=3" % [total_spaces, total_portals])
 	else:
 		for error: String in errors:
 			push_error(error)

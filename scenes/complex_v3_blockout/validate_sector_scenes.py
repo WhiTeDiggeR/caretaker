@@ -36,13 +36,13 @@ def main() -> int:
     passport_by_sector = {item["sector_id"]: item for item in passports}
     geometry_sectors = {item["sector_id"] for item in geometry["spaces"]}
     catalog_sectors = {item["sector_id"] for item in catalog["sectors"]}
-    if len(catalog["sectors"]) != 30 or len(catalog_sectors) != 30:
-        errors.append("catalog must contain 30 unique sector scenes")
+    if len(catalog["sectors"]) != 32 or len(catalog_sectors) != 32:
+        errors.append("catalog must contain 32 unique sector scenes")
     if catalog_sectors != set(passport_by_sector):
         errors.append("catalog sector IDs do not match sector passports")
     missing_geometry_sectors = catalog_sectors - geometry_sectors
     extra_geometry_sectors = geometry_sectors - catalog_sectors
-    if missing_geometry_sectors != {"T-CIRCULATION"} or extra_geometry_sectors:
+    if missing_geometry_sectors != {"T-CIRCULATION", "U-CIRCULATION", "L-CIRCULATION"} or extra_geometry_sectors:
         errors.append(
             "catalog sector IDs do not match geometry sectors: "
             f"missing={sorted(missing_geometry_sectors)}, "
@@ -128,7 +128,7 @@ def main() -> int:
             print(f"ERROR: {error}")
         print(f"FAILED: {len(errors)} issue(s)")
         return 1
-    print(f"OK: 30 sector scenes match passports, {expected_space_count} spaces and one shared infrastructure scene")
+    print(f"OK: 32 sector scenes match passports, {expected_space_count} spaces and one shared infrastructure scene")
     return 0
 
 

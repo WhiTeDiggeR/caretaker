@@ -1,5 +1,11 @@
 # Complex v3 set dressing
 
+> **Состояние на 2026-10-09.** Сектора комплекса перерисованы (`docs/design/complex_v4`), все ранее расставленные объекты удалены по решению автора:
+> засевы, размещения в manifest, поправки, привязки и подсцены пусты (`tools/complex_v3_regeneration/reset_authored_objects.py`),
+> миграционные снимки удалены. Структура и контракты сохранены; объекты расставляются заново. Проверка: `set_dressing_scene_check.gd`
+> (32 пустые подсцены). Текст ниже описывает прежнюю, уже удалённую расстановку и миграцию.
+
+
 Первый тематический проход по 30 редактируемым зонам комплекса. Геометрия и порталы берутся только из `HANDOFF-GEOMETRY-01`.
 
 ## Как редактировать зону
@@ -57,7 +63,5 @@ python scenes/complex_v3_blockout/scripts/generate_set_dressing.py `
 Детерминированный результат расстановки записан в `set_dressing_manifest.json`. Проверки:
 
 ```powershell
-python scenes/complex_v3_blockout/validate_set_dressing.py
-python scenes/complex_v3_blockout/set_dressing/validate_migration.py
 python -m unittest discover -s scenes/complex_v3_blockout/set_dressing/tests -v
 ```

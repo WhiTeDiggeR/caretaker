@@ -17,8 +17,8 @@ class CanonicalSvgSourceTests(unittest.TestCase):
         manifest = json.loads(CANONICAL.MANIFEST.read_text(encoding="utf-8"))
         self.assertEqual(CANONICAL.validate_structure(ROOT, manifest), [])
         sources = [item["source_svg"] for item in manifest["sectors"]]
-        self.assertEqual(len(sources), 30)
-        self.assertEqual(len(set(sources)), 30)
+        self.assertEqual(len(sources), 32)
+        self.assertEqual(len(set(sources)), 32)
         self.assertTrue(all(path.startswith(CANONICAL.CANONICAL_PREFIX) for path in sources))
 
     def test_presentation_plans_are_never_generator_inputs(self) -> None:

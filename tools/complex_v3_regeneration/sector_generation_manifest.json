@@ -4,7 +4,7 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "project_root": "../..",
-  "sector_count": 30,
+  "sector_count": 32,
   "producer_requirements": {
     "svg_to_godot3d": ">=1.19.0",
     "generate_godot_stairs": ">=2.9.0"
@@ -1115,6 +1115,276 @@
       },
       "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_chamber_5.tscn",
       "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_chamber_5_dressing.tscn"
+    },
+    {
+      "sector_id": "L-CIRCULATION",
+      "level": "LV-L",
+      "status": "ready",
+      "blockers": [],
+      "source_svg": "docs/design/complex_v4/plans/generation/lower/l_circulation.svg",
+      "profile": "generic",
+      "metric_settings": {
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": -6.0
+      },
+      "shared_args": [
+        "--wall-height",
+        "2.8",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
+      "semantic_mappings": [],
+      "material_mappings": {},
+      "scene_name": "l_circulation_generated",
+      "output_resource_dir": "res://gen/l/l_circulation",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                2.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "point": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "shaft": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                6
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "stair_entry": {
+            "placement_limits": {
+              "normal_offset_m": [
+                -0.75,
+                0.75
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "stair_exit": {
+            "placement_limits": {
+              "normal_offset_m": [
+                -0.75,
+                0.75
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
+      "vertical_generators": [],
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_circulation/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/l_circulation/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/lower/l_circulation.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/l_circulation_dressing.tscn"
     },
     {
       "sector_id": "L-EAST-STAIR",
@@ -4038,6 +4308,276 @@
       },
       "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_chamber_6.tscn",
       "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_chamber_6_dressing.tscn"
+    },
+    {
+      "sector_id": "U-CIRCULATION",
+      "level": "LV-U",
+      "status": "ready",
+      "blockers": [],
+      "source_svg": "docs/design/complex_v4/plans/generation/upper/u_circulation.svg",
+      "profile": "generic",
+      "metric_settings": {
+        "scale_m_per_svg_unit": 1.0,
+        "origin": "none",
+        "elevation_m": 0.0
+      },
+      "shared_args": [
+        "--wall-height",
+        "2.8",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps"
+      ],
+      "semantic_mappings": [],
+      "material_mappings": {},
+      "scene_name": "u_circulation_generated",
+      "output_resource_dir": "res://gen/u/u_circulation",
+      "local_to_world": {
+        "origin": [
+          0,
+          0,
+          0
+        ],
+        "basis_x": [
+          1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          1
+        ]
+      },
+      "anchor_parameterization": {
+        "defaults_by_type": {
+          "door": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                2.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "point": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "wall": {
+            "origin": "finished_face",
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                1
+              ],
+              "height_m": [
+                0,
+                3.4
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  0,
+                  0
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "floor": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "ceiling": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "shaft": {
+            "placement_limits": {
+              "normal_offset_m": [
+                0,
+                0
+              ],
+              "height_m": [
+                0,
+                6
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "stair_entry": {
+            "placement_limits": {
+              "normal_offset_m": [
+                -0.75,
+                0.75
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "stair_exit": {
+            "placement_limits": {
+              "normal_offset_m": [
+                -0.75,
+                0.75
+              ],
+              "height_m": [
+                0,
+                0
+              ],
+              "rotation_deg": {
+                "yaw": [
+                  -180,
+                  180
+                ],
+                "pitch": [
+                  0,
+                  0
+                ],
+                "roll": [
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        }
+      },
+      "vertical_generators": [],
+      "safe_regeneration": {
+        "composition_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_circulation/composition.json",
+        "bindings_input": "scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/u_circulation/object_bindings.json"
+      },
+      "sector_scene": "res://scenes/complex_v3_blockout/zones/upper/u_circulation.tscn",
+      "authored_scene": "res://scenes/complex_v3_blockout/set_dressing/sectors/u_circulation_dressing.tscn"
     },
     {
       "sector_id": "U-CONTROL",

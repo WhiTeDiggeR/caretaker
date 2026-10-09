@@ -115,11 +115,11 @@ class SectorRegenerationTests(unittest.TestCase):
             "--python", sys.executable,
         ])
 
-    def test_production_manifest_enumerates_30_unique_ready_sectors(self) -> None:
+    def test_production_manifest_enumerates_32_unique_ready_sectors(self) -> None:
         manifest = json.loads((ROOT / "sector_generation_manifest.json").read_text(encoding="utf-8"))
         ids = [sector["sector_id"] for sector in manifest["sectors"]]
-        self.assertEqual(len(ids), 30)
-        self.assertEqual(len(set(ids)), 30)
+        self.assertEqual(len(ids), 32)
+        self.assertEqual(len(set(ids)), 32)
         self.assertTrue(all(sector["status"] == "ready" and not sector["blockers"] for sector in manifest["sectors"]))
 
     def test_unknown_sector_is_code_2_without_staging(self) -> None:

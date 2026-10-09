@@ -31,7 +31,7 @@ func _ready() -> void:
 	_compile_sector_catalog()
 	set_meta("map_id", str(_handoff.get("map_id", "")))
 	set_meta("units", str(_handoff.get("units", "")))
-	set_meta("composition", "30 sector scenes + shared infrastructure")
+	set_meta("composition", "32 sector scenes + shared infrastructure")
 	show_full_complex()
 
 
@@ -109,8 +109,8 @@ func get_portal_passages() -> Array[Dictionary]:
 func validate_against_handoff() -> PackedStringArray:
 	var errors := PackedStringArray()
 	var sector_ids := get_sector_ids()
-	if sector_ids.size() != 30:
-		errors.append("Expected 30 sector scenes, found %d" % sector_ids.size())
+	if sector_ids.size() != 32:
+		errors.append("Expected 32 sector scenes, found %d" % sector_ids.size())
 	var seen := PackedStringArray()
 	for part: ComplexV3BlockoutPart in _get_parts():
 		for error: String in part.validate_against_handoff():

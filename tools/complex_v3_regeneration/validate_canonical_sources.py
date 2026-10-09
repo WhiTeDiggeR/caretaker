@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the 30 canonical metric SVG inputs and run strict tool preflight."""
+"""Validate the 32 canonical metric SVG inputs and run strict tool preflight."""
 from __future__ import annotations
 
 import argparse
@@ -43,8 +43,8 @@ def write_json(path: Path, value: Any) -> None:
 def validate_structure(project_root: Path, manifest: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     sectors = manifest.get("sectors", [])
-    if manifest.get("sector_count") != 30 or len(sectors) != 30:
-        errors.append("production manifest must contain exactly 30 sectors")
+    if manifest.get("sector_count") != 32 or len(sectors) != 32:
+        errors.append("production manifest must contain exactly 32 sectors")
     sector_ids = [str(item.get("sector_id", "")) for item in sectors]
     if len(sector_ids) != len(set(sector_ids)):
         errors.append("production manifest contains duplicate sector IDs")
@@ -102,11 +102,12 @@ def production_settings() -> dict[str, dict[str, Any]]:
     for path in SETTINGS_MANIFESTS:
         for sector in json.loads(path.read_text(encoding="utf-8"))["sectors"]:
             result[sector["sector_id"]] = sector
-    result["T-CIRCULATION"] = {
-        "profile": "generic",
-        "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": -11.5},
-        "shared_args": ["--wall-thickness", "0.3", "--floor-thickness", "0.2", "--ceiling-thickness", "0.2", "--strict-wall-overlaps"],
-    }
+    for sector_id, elevation in (("T-CIRCULATION", -11.5), ("U-CIRCULATION", 0.0), ("L-CIRCULATION", -6.0)):
+        result[sector_id] = {
+            "profile": "generic",
+            "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": elevation},
+            "shared_args": ["--wall-thickness", "0.3", "--floor-thickness", "0.2", "--ceiling-thickness", "0.2", "--strict-wall-overlaps"],
+        }
     return result
 
 

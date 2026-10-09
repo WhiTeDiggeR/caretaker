@@ -52,8 +52,8 @@ def validate_manifest_document(document: Any, project_root: Path, *, production:
         return errors + ["manifest sectors must be an array"]
     if document.get("sector_count") != len(sectors):
         errors.append("sector_count does not match sectors length")
-    if production and len(sectors) != 30:
-        errors.append("production manifest must contain exactly 30 sectors")
+    if production and len(sectors) != 32:
+        errors.append("production manifest must contain exactly 32 sectors")
 
     seen: set[str] = set()
     for index, raw in enumerate(sectors):

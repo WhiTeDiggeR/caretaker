@@ -37,20 +37,29 @@ def write_json(path: Path, value: dict[str, Any]) -> None:
         stream.write("\n")
 
 
-def circulation_entry(parameterization: dict[str, Any]) -> dict[str, Any]:
+CIRCULATION = {  # corridor / trunk owners: sector id -> (level, folder, level code, elevation)
+    "T-CIRCULATION": ("LV-T", "technical", "t", -11.5),
+    "U-CIRCULATION": ("LV-U", "upper", "u", 0.0),
+    "L-CIRCULATION": ("LV-L", "lower", "l", -6.0),
+}
+
+
+def circulation_entry(sector_id: str, parameterization: dict[str, Any]) -> dict[str, Any]:
+    level, folder, code, elevation = CIRCULATION[sector_id]
+    slug = sector_id.lower().replace("-", "_")
     return {
-        "sector_id": "T-CIRCULATION", "level": "LV-T", "status": "ready", "blockers": [],
-        "source_svg": "docs/design/complex_v4/plans/generation/technical/t_circulation.svg",
+        "sector_id": sector_id, "level": level, "status": "ready", "blockers": [],
+        "source_svg": f"docs/design/complex_v4/plans/generation/{folder}/{slug}.svg",
         "profile": "generic",
-        "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": -11.5},
+        "metric_settings": {"scale_m_per_svg_unit": 1.0, "origin": "none", "elevation_m": elevation},
         "shared_args": ["--wall-height", "2.8", "--wall-thickness", "0.3", "--floor-thickness", "0.2", "--ceiling-thickness", "0.2", "--strict-wall-overlaps"],
         "semantic_mappings": [], "material_mappings": {},
-        "scene_name": "t_circulation_generated", "output_resource_dir": "res://gen/t/t_circulation",
+        "scene_name": f"{slug}_generated", "output_resource_dir": f"res://gen/{code}/{slug}",
         "local_to_world": {"origin": [0, 0, 0], "basis_x": [1, 0, 0], "basis_y": [0, 1, 0], "basis_z": [0, 0, 1]},
         "anchor_parameterization": copy.deepcopy(parameterization), "vertical_generators": [],
         "safe_regeneration": {
-            "composition_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_circulation/composition.json",
-            "bindings_input": "scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/t_circulation/object_bindings.json",
+            "composition_input": f"scenes/complex_v3_regeneration/rollout/{folder}/AuthoredContent/{slug}/composition.json",
+            "bindings_input": f"scenes/complex_v3_regeneration/rollout/{folder}/AuthoredContent/{slug}/object_bindings.json",
         },
     }
 
@@ -83,7 +92,8 @@ def main(argv: list[str] | None = None) -> int:
                 parameterization = copy.deepcopy(source["anchor_parameterization"])
     if parameterization is None:
         raise ValueError("U-ROUTE-A parameterization template is missing")
-    source_by_id["T-CIRCULATION"] = circulation_entry(parameterization)
+    for circulation_id in CIRCULATION:
+        source_by_id[circulation_id] = circulation_entry(circulation_id, parameterization)
     # Production authored content is empty (objects are re-placed from scratch); the pilot AuthoredContent stays a test input.
     for sector_id, level_dir in (("U-MEDBAY", "upper"), ("U-ROUTE-A", "upper"), ("L-ARCHIVE-A", "lower")):
         slug = sector_id.lower().replace("-", "_")
