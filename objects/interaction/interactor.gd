@@ -61,7 +61,7 @@ func step(new_target: Object, pressed: bool, just_pressed: bool, delta: float) -
 		Interactable.Mode.INSPECT:
 			if just_pressed:
 				interactable.trigger()
-				show_message(interactable.inspect_title, interactable.inspect_text)
+				show_message(interactable.get_inspect_title(), interactable.get_inspect_text())
 		Interactable.Mode.HOLD:
 			if not pressed:
 				_cancel_hold()

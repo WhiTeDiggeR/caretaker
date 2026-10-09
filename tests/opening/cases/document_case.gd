@@ -22,6 +22,15 @@ func run(c: OpeningCheck) -> void:
 	c.equal(DocumentLibrary.read_ids(), ["sandbox_log", "sandbox_memo"] as Array[String], "journal survives a save")
 	GameState.reset()
 
+	# Inspect-only texts stay out of the journal and feed Interactable.
+	c.is_true(not DocumentLibrary.mark_read("pod_staff_occupied"), "inspect text is not a journal entry")
+	var panel := Interactable.new()
+	panel.mode = Interactable.Mode.INSPECT
+	panel.inspect_text_id = "pod_hero"
+	c.equal(panel.get_inspect_title(), "КАПСУЛА АВАРИЙНОГО СНА", "inspect title comes from the library")
+	c.is_true(panel.get_inspect_text().contains("ТАБ. № 2-117"), "inspect text comes from the library")
+	panel.free()
+
 	var sandbox: Node3D = c.add((load(SANDBOX) as PackedScene).instantiate())
 	await c.physics_frames(2)
 	var player := sandbox.get_node(^"Player") as CharacterBody3D

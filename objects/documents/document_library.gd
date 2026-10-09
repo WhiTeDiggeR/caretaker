@@ -32,6 +32,8 @@ static func reload() -> void:
 			if str(document.get("title", "")).is_empty() or str(document.get("body", "")).is_empty():
 				_errors.append("%s/%s: title and body are required" % [file, id])
 			_errors.append_array(StateRules.validate_effects(document.get("on_read", []), "%s/%s" % [file, id]))
+			if not bool(document.get("journal", true)) and document.has("on_read"):
+				_errors.append("%s/%s: an inspect text (journal: false) never runs on_read; use Interactable.sets_flag" % [file, id])
 			document["id"] = id
 			_documents[id] = document
 
@@ -46,7 +48,7 @@ static func has(id: String) -> bool:
 	return _documents.has(id)
 
 
-## {id, title, meta, body, on_read}; an empty dictionary for an unknown id.
+## {id, title, meta, body, on_read, journal}; an empty dictionary for an unknown id.
 static func get_document(id: String) -> Dictionary:
 	_ensure()
 	return _documents.get(id, {})
@@ -60,7 +62,7 @@ static func ids() -> Array:
 ## Marks a document as read: appends it to the journal and applies its `on_read` effects
 ## the first time. Returns true for a newly read document.
 static func mark_read(id: String) -> bool:
-	if not has(id) or is_read(id):
+	if not has(id) or is_read(id) or not bool(get_document(id).get("journal", true)):
 		return false
 	var journal := read_ids()
 	journal.append(id)

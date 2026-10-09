@@ -26,6 +26,8 @@ const DEFAULT_PROMPT := "ВЗАИМОДЕЙСТВОВАТЬ"
 @export var one_shot := false
 @export var inspect_title := ""
 @export_multiline var inspect_text := ""
+## Takes the inspect title and text from a DocumentLibrary entry (data/documents) instead.
+@export var inspect_text_id := ""
 ## Story flag set in GameState when the object is used (e.g. a read diagnostic panel).
 @export var sets_flag: StringName = &""
 
@@ -50,6 +52,18 @@ func get_prompt_text() -> String:
 	if is_available():
 		return InputPromptFormatter.format_action(&"interact", prompt)
 	return unavailable_prompt
+
+
+func get_inspect_title() -> String:
+	if not inspect_text_id.is_empty():
+		return str(DocumentLibrary.get_document(inspect_text_id).get("title", inspect_title))
+	return inspect_title
+
+
+func get_inspect_text() -> String:
+	if not inspect_text_id.is_empty():
+		return str(DocumentLibrary.get_document(inspect_text_id).get("body", inspect_text))
+	return inspect_text
 
 
 func trigger() -> void:
