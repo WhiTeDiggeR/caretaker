@@ -26,6 +26,8 @@ const DEFAULT_PROMPT := "ВЗАИМОДЕЙСТВОВАТЬ"
 @export var one_shot := false
 @export var inspect_title := ""
 @export_multiline var inspect_text := ""
+## Story flag set in GameState when the object is used (e.g. a read diagnostic panel).
+@export var sets_flag: StringName = &""
 
 var used := false
 
@@ -54,4 +56,6 @@ func trigger() -> void:
 	if not is_available():
 		return
 	used = true
+	if not sets_flag.is_empty():
+		GameState.set_flag(sets_flag)
 	interacted.emit()
