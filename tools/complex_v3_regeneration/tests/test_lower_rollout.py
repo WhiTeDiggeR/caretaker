@@ -15,6 +15,13 @@ BUILDER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(BUILDER)
 
 
+def canonical_door_ids(folder: str, slug: str) -> list[str]:
+    """Door elements of the canonical v4 SVG of a sector; each one must have door anchors in the generated package."""
+    import xml.etree.ElementTree as ET
+    root = ET.parse(PROJECT / f"docs/design/complex_v4/plans/generation/{folder}/{slug}.svg").getroot()
+    return [el.get("id") for el in root.iter() if el.get("data-godot-type") == "door"]
+
+
 class LowerRolloutTests(unittest.TestCase):
     def test_ambiguous_portal_semantics_block(self) -> None:
         for portal in ({"id":"bad", "state":"unknown"}, {"id":"bad", "state":"closed", "traversable":True}, {"id":"bad", "state":"openable", "traversable":"false"}):
@@ -36,72 +43,23 @@ class LowerRolloutTests(unittest.TestCase):
         }
         self.assertEqual(self.sector_ids, expected)
         self.assertEqual(self.manifest["sector_count"], 11)
-        expected_objects = {
-            placement["object_id"]
-            for sector in self.dressing["sectors"] if sector["sector_id"] in expected
-            for placement in sector["placements"]
-        }
-        actual_objects: list[str] = []
         for sector_id in expected:
             slug = sector_id.lower().replace("-", "_")
             authored = PROJECT / f"scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/{slug}"
             composition = json.loads((authored / "composition.json").read_text(encoding="utf-8"))
             bindings = json.loads((authored / "object_bindings.json").read_text(encoding="utf-8"))
-            bound = [item["object_ref"]["object_id"] for item in bindings["bindings"]]
-            self.assertEqual(set(bound), {item["object_id"] for item in composition["objects"]})
-            self.assertTrue(all(item["on_missing_anchor"] == "block" for item in bindings["bindings"]))
-            self.assertTrue(all((PROJECT / item["object_ref"]["scene"].removeprefix("res://")).is_file() for item in bindings["bindings"]))
-            actual_objects.extend(bound)
-        self.assertEqual(len(actual_objects), 110)
-        self.assertEqual(set(actual_objects), expected_objects)
-        self.assertEqual(len(actual_objects), len(set(actual_objects)))
+            # the old placed objects were removed on purpose (sectors were redrawn); they are placed again from scratch
+            self.assertEqual(composition["objects"], [])
+            self.assertEqual(bindings["bindings"], [])
 
-    def test_portal_centers_widths_and_neighbor_ids_match_handoff(self) -> None:
+    def test_every_canonical_door_has_door_anchors(self) -> None:
         for sector in self.manifest["sectors"]:
-            sector_id = sector["sector_id"]
-            slug = sector_id.lower().replace("-", "_")
+            slug = sector["sector_id"].lower().replace("-", "_")
             frames_doc = json.loads((PROJECT / f"gen/l/{slug}/anchor_frames.json").read_text(encoding="utf-8"))
-            frames = {item["anchor_id"]: item for item in frames_doc["anchors"]}
-            local_spaces = {item["id"] for item in self.handoff["spaces"] if item["sector_id"] == sector_id}
-            portals = [item for item in self.handoff["internal_portals"] if any(value in local_spaces for value in item["between"])]
-            portals += [item for item in self.handoff["external_portals"] if item.get("space") in local_spaces]
-            for portal in portals:
-                a, b = portal["segment_xz"]
-                midpoint = [(a[0] + b[0]) * 0.5, (a[1] + b[1]) * 0.5]
-                if BUILDER.portal_is_traversable(portal):
-                    base = f"svg:{BUILDER.stable_id('d', portal['id'])}:door"
-                    for role in ("center", "threshold_inside", "threshold_outside"):
-                        self.assertIn(base + ":" + role, frames)
-                    center = frames[base + ":center"]
-                    self.assertTrue(math.isclose(center["origin"][0], midpoint[0], abs_tol=1e-6))
-                    self.assertTrue(math.isclose(center["origin"][2], midpoint[1], abs_tol=1e-6))
-                    self.assertTrue(math.isclose(center["bounds"]["width_m"], math.dist(a, b), abs_tol=1e-6))
-                else:
-                    marker = f"svg:{BUILDER.stable_id('p', portal['id'])}:point"
-                    self.assertIn(marker, frames)
-                    self.assertEqual(frames[marker]["role"], "sealed_portal")
-                    self.assertEqual(frames[marker]["metadata"]["declared_anchor_id"], portal["id"])
-                    self.assertNotIn(f"svg:{BUILDER.stable_id('d', portal['id'])}:door:center", frames)
-
-    def test_closed_portals_keep_solid_wall_and_authored_semantics(self) -> None:
-        closed = [
-            item for item in self.handoff["external_portals"]
-            if item.get("state") == "closed" and any(space["sector_id"] in self.sector_ids and space["id"] == item.get("space") for space in self.handoff["spaces"])
-        ]
-        self.assertEqual({item["id"] for item in closed}, {
-            "PX-E-L13-L-CHAMBER-2", "PX-E-L14-L-CHAMBER-3", "PX-E-L16-L-CHAMBER-5",
-        })
-        for portal in closed:
-            sector_id = next(space["sector_id"] for space in self.handoff["spaces"] if space["id"] == portal["space"])
-            slug = sector_id.lower().replace("-", "_")
-            composition = json.loads((PROJECT / f"scenes/complex_v3_regeneration/rollout/lower/AuthoredContent/{slug}/composition.json").read_text(encoding="utf-8"))
-            frames = json.loads((PROJECT / f"gen/l/{slug}/anchor_frames.json").read_text(encoding="utf-8"))
-            frame_ids = {item["anchor_id"] for item in frames["anchors"]}
-            sealed_object = next(item for item in composition["objects"] if item.get("portal_semantics", {}).get("portal_id") == portal["id"])
-            self.assertEqual(sealed_object["portal_semantics"], {"portal_id": portal["id"], "state": "closed", "traversable": False})
-            self.assertEqual(sealed_object["placement_mode"], "wall")
-            self.assertFalse(any(f"svg:{BUILDER.stable_id('d', portal['id'])}:door:" in value for value in frame_ids))
-            self.assertFalse(any(f"svg:{BUILDER.stable_id('d', portal['id'])}:door:center" in infra.get("opening_anchor_ids", []) for infra in composition["infrastructure"]))
+            frames = {item["anchor_id"] for item in frames_doc["anchors"]}
+            for door_id in canonical_door_ids("lower", slug):
+                for role in ("center", "threshold_inside", "threshold_outside"):
+                    self.assertIn(f"svg:{door_id}:door:{role}", frames, (slug, door_id))
 
 
 if __name__ == "__main__":

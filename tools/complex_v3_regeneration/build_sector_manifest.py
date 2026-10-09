@@ -84,6 +84,11 @@ def main(argv: list[str] | None = None) -> int:
     if parameterization is None:
         raise ValueError("U-ROUTE-A parameterization template is missing")
     source_by_id["T-CIRCULATION"] = circulation_entry(parameterization)
+    # Production authored content is empty (objects are re-placed from scratch); the pilot AuthoredContent stays a test input.
+    for sector_id, level_dir in (("U-MEDBAY", "upper"), ("U-ROUTE-A", "upper"), ("L-ARCHIVE-A", "lower")):
+        slug = sector_id.lower().replace("-", "_")
+        base = f"scenes/complex_v3_regeneration/rollout/{level_dir}/AuthoredContent/{slug}"
+        source_by_id[sector_id]["safe_regeneration"] = {"composition_input": f"{base}/composition.json", "bindings_input": f"{base}/object_bindings.json"}
     apply_vertical_definitions(source_by_id)
     if set(source_by_id) != set(catalog_by_id):
         missing = sorted(set(catalog_by_id) - set(source_by_id))

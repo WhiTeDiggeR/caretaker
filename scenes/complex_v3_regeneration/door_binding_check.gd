@@ -4,7 +4,7 @@ extends SceneTree
 ## sector controller applies the bindings, and its frame width must follow the door opening.
 const SECTOR_SCENE := "res://scenes/complex_v3_blockout/zones/upper/u_route_a.tscn"
 const ANCHOR_FRAMES := "res://gen/u/u_route_a/anchor_frames.json"
-const EXPECTED_DOORS := 4
+const EXPECTED_DOORS := 0   # the old placed objects were removed; doors are placed again from scratch
 const TOLERANCE_M := 0.0001
 const SCALE_TOLERANCE := 0.001
 

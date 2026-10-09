@@ -15,6 +15,13 @@ BUILDER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(BUILDER)
 
 
+def canonical_door_ids(folder: str, slug: str) -> list[str]:
+    """Door elements of the canonical v4 SVG of a sector; each one must have door anchors in the generated package."""
+    import xml.etree.ElementTree as ET
+    root = ET.parse(PROJECT / f"docs/design/complex_v4/plans/generation/{folder}/{slug}.svg").getroot()
+    return [el.get("id") for el in root.iter() if el.get("data-godot-type") == "door"]
+
+
 class UpperRolloutTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -32,23 +39,14 @@ class UpperRolloutTests(unittest.TestCase):
         self.assertEqual(actual_sectors, expected_sectors)
         self.assertEqual(self.manifest["sector_count"], 9)
 
-        expected_ids = {
-            placement["object_id"]
-            for sector in self.dressing["sectors"] if sector["sector_id"] in expected_sectors
-            for placement in sector["placements"]
-        }
-        actual_ids: list[str] = []
         for sector in self.manifest["sectors"]:
             slug = sector["sector_id"].lower().replace("-", "_")
             authored = PROJECT / f"scenes/complex_v3_regeneration/rollout/upper/AuthoredContent/{slug}"
             composition = json.loads((authored / "composition.json").read_text(encoding="utf-8"))
             bindings = json.loads((authored / "object_bindings.json").read_text(encoding="utf-8"))
-            self.assertEqual({item["object_id"] for item in composition["objects"]}, {item["object_ref"]["object_id"] for item in bindings["bindings"]})
-            self.assertTrue(all(item["on_missing_anchor"] == "block" for item in bindings["bindings"]))
-            actual_ids.extend(item["object_id"] for item in composition["objects"])
-        self.assertEqual(len(actual_ids), 149)
-        self.assertEqual(set(actual_ids), expected_ids)
-        self.assertEqual(len(actual_ids), len(set(actual_ids)))
+            # the old placed objects were removed on purpose (sectors were redrawn); they are placed again from scratch
+            self.assertEqual(composition["objects"], [])
+            self.assertEqual(bindings["bindings"], [])
 
     def test_generated_anchor_ids_are_unique_and_portals_match_handoff(self) -> None:
         all_ids: list[str] = []
@@ -61,14 +59,9 @@ class UpperRolloutTests(unittest.TestCase):
             self.assertFalse(any(":hinge" in anchor_id for anchor_id in ids))
             all_ids.extend(ids)
 
-            local_spaces = {item["id"] for item in self.handoff["spaces"] if item["sector_id"] == sector["sector_id"]}
-            portals = [item for item in self.handoff["internal_portals"] if any(value in local_spaces for value in item["between"])]
-            portals += [item for item in self.handoff["external_portals"] if item.get("space") in local_spaces]
-            for portal in portals:
-                base = f"svg:{BUILDER.stable_id('d', portal['id'])}:door"
-                self.assertIn(base + ":center", ids)
-                self.assertIn(base + ":threshold_inside", ids)
-                self.assertIn(base + ":threshold_outside", ids)
+            for door_id in canonical_door_ids("upper", slug):
+                for role in ("center", "threshold_inside", "threshold_outside"):
+                    self.assertIn(f"svg:{door_id}:door:{role}", ids, (slug, door_id))
 
         self.assertEqual(len(all_ids), len(set(all_ids)))
 

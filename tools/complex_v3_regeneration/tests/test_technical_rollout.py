@@ -19,43 +19,20 @@ class TechnicalRolloutTests(unittest.TestCase):
         self.assertFalse(interface["generated_sector_geometry"])
         self.assertEqual(interface["architecture_owner"], "complex_v3_infrastructure")
         self.assertEqual(interface["combined_validation"], "pending_T18")
-        dressing = read("scenes/complex_v3_blockout/set_dressing/set_dressing_manifest.json")
-        authored = next(s for s in dressing["sectors"] if s["sector_id"] == "T-CIRCULATION")["placements"][0]
-        self.assertEqual(interface["objects"][0]["object_id"], authored["object_id"])
-        self.assertEqual(interface["objects"][0]["world_transform"]["position"], authored["position"])
+        self.assertEqual(interface["objects"], [])   # the old placed objects were removed on purpose
 
-    def test_authored_identity_equipment_support_and_shared_routes(self) -> None:
+    def test_authored_content_is_empty_and_every_canonical_door_has_anchors(self) -> None:
         manifest = read("tools/complex_v3_regeneration/rollouts/technical_generation_manifest.json")
-        dressing = read("scenes/complex_v3_blockout/set_dressing/set_dressing_manifest.json")
-        handoff = read("docs/design/complex_v3/handoff/geometry/complex-handoff.json")
-        routes = [r for r in handoff["route_spaces"] if r["level"] == "LV-T"]
-        all_ids = []
+        import xml.etree.ElementTree as ET
         for sector in manifest["sectors"]:
-            sid = sector["sector_id"]
-            slug = sid.lower().replace("-", "_")
-            authored = next(s for s in dressing["sectors"] if s["sector_id"] == sid)
-            bindings = read(f"scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/{slug}/object_bindings.json")["bindings"]
-            by_id = {b["object_ref"]["object_id"]: b for b in bindings}
-            self.assertEqual(set(by_id), {p["object_id"] for p in authored["placements"]})
-            all_ids.extend(by_id)
-            for p in authored["placements"]:
-                binding = by_id[p["object_id"]]
-                self.assertEqual(binding["on_missing_anchor"], "block")
-                if p["kind"] == "open_portal_frame":
-                    continue
-                # Reviewed props have explicit single-space floor support, not a
-                # guessed wall or an implicit multi-anchor construction.
-                self.assertEqual(binding["anchor_ref"]["expected_type"], "floor")
-                self.assertTrue(p["space_id"])
-                x, _, z = p["position"]
-                width, depth = p["footprint_xz"]
-                for route in routes:
-                    x0, z0, x1, z1 = route["bounds_xz"]
-                    overlap_x = min(x + width / 2, x1) - max(x - width / 2, x0)
-                    overlap_z = min(z + depth / 2, z1) - max(z - depth / 2, z0)
-                    self.assertFalse(overlap_x > 1e-6 and overlap_z > 1e-6, (p["object_id"], route["id"]))
-        self.assertEqual(len(all_ids), 58)
-        self.assertEqual(len(set(all_ids)), 58)
+            slug = sector["sector_id"].lower().replace("-", "_")
+            self.assertEqual(read(f"scenes/complex_v3_regeneration/rollout/technical/AuthoredContent/{slug}/object_bindings.json")["bindings"], [])
+            frames = {a["anchor_id"] for a in read(f"gen/t/{slug}/anchor_frames.json")["anchors"]}
+            svg = ET.parse(ROOT / f"docs/design/complex_v4/plans/generation/technical/{slug}.svg").getroot()
+            for el in svg.iter():
+                if el.get("data-godot-type") == "door":
+                    for role in ("center", "threshold_inside", "threshold_outside"):
+                        self.assertIn(f"svg:{el.get('id')}:door:{role}", frames, (slug, el.get("id")))
 
     def test_portal_clearance_footprints_remain_unoccupied(self) -> None:
         handoff = read("docs/design/complex_v3/handoff/geometry/complex-handoff.json")
