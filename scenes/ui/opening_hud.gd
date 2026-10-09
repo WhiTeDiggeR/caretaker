@@ -2,7 +2,7 @@ class_name OpeningHud
 extends CanvasLayer
 
 ## First-person HUD for the opening: crosshair, interaction prompt, hold progress,
-## current objective and short inspect messages. The objective follows `GameState`;
+## current objective and short inspect messages. `J` opens the journal of read documents. The objective follows `GameState`;
 ## the prompt and hold bar are driven by the player's `Interactor`.
 
 const OBJECTIVE_PREFIX := "ЦЕЛЬ: "
@@ -45,6 +45,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if message_panel.visible and event.is_action_pressed(&"ui_cancel"):
 		hide_message()
 		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed(&"journal"):
+		var player := get_tree().get_first_node_in_group(&"player")
+		if player == null or not player.get("controls_locked"):
+			DocumentReader.open_journal_scene(get_tree())
+			get_viewport().set_input_as_handled()
 
 
 func _on_objective_changed(_objective_id: StringName, text: String) -> void:
