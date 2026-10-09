@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="3_hud"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/movement_station.tscn" id="4_movement"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/interaction_station.tscn" id="5_interaction"]
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stations/door_station.tscn" id="6_doors"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
@@ -61,6 +62,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
 [node name="InteractionStation" parent="Stations" instance=ExtResource("5_interaction")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 16)
+[node name="DoorStation" parent="Stations" instance=ExtResource("6_doors")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -22, 0, 6)
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
