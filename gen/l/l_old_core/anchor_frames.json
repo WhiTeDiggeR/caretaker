@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "sector_id": "L-OLD-CORE",
-  "generation_id": "sha256:24518eddd9b81ab930fb93ad44d7d7928814c92fef7c19949b771db4151fc22d",
+  "generation_id": "sha256:6e84ffd55eb9f975bdcf6e87611ee85b60179848c1824e70e486409e92abdbb3",
   "producer": {
     "name": "complex_v3_regenerate_sector",
     "version": "1.1.1",
     "components": {
       "sector_backend": "1.1.1",
       "svg_converter": "1.19.0",
-      "stair_generator": "none"
+      "stair_generator": "2.9.0"
     }
   },
   "coordinate_space": {
@@ -22,19 +22,695 @@
   },
   "anchors": [
     {
-      "anchor_id": "svg:c-158e4059b5:ceiling",
+      "anchor_id": "AF-STAIRS-OLD-STAIR-ENTRY-LOWER",
+      "type": "stair_entry",
+      "role": "lower_entry",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -94.69,
+        -11.5,
+        32.05
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "clear_width_m": 1.4,
+        "level_id": "LOWER",
+        "transition_id": "STAIRS-OLD-STAIR"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          -0.7,
+          0.7
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:74cf08604929f1658cb9ac907dd724d661f8dda1bdfb1889953926fc3f8a6955"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-EXIT-UPPER",
+      "type": "stair_exit",
+      "role": "upper_exit",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -94.97,
+        -6.0,
+        34.15
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "clear_width_m": 1.4,
+        "level_id": "UPPER",
+        "transition_id": "STAIRS-OLD-STAIR"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          -0.7,
+          0.7
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:621da541826e7e0edc3ba59598f7e7e6761d0f60ab17ec339cd990b0fbef85c5"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-LANDING-01",
+      "type": "floor",
+      "role": "landing",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -100.01,
+        -8.675676,
+        34.85
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "elevation_m": -8.675676,
+        "landing_id": "Landing_01",
+        "polygon_xz": [
+          [
+            -100.01,
+            31.35
+          ],
+          [
+            -100.01,
+            34.85
+          ],
+          [
+            -102.01,
+            34.85
+          ],
+          [
+            -102.01,
+            31.35
+          ]
+        ],
+        "thickness_m": 0.15,
+        "u_range_m": [
+          -2.0,
+          0.0
+        ],
+        "v_range_m": [
+          -3.5,
+          0.0
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0.0,
+          0.0
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:d3174c457416d525a7bca5c640368efc9cc52aa7859e03699dae176bc5dd57db"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-PASSAGE-FLIGHT-01",
+      "type": "point",
+      "role": "flight_passage",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -97.35,
+        -10.087838,
+        32.05
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "radius_m": 0.0,
+        "flight_id": "Flight_01",
+        "run_m": 5.32,
+        "rise_m": 2.824324,
+        "clear_width_m": 1.4
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          -0.7,
+          0.7
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:78e2ae2c2ad10d0aeb701a0bc26c34b48e047c2ac366364d85879df987d76e67"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-PASSAGE-FLIGHT-02",
+      "type": "point",
+      "role": "flight_passage",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -97.49,
+        -7.337838,
+        34.15
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "radius_m": 0.0,
+        "flight_id": "Flight_02",
+        "run_m": 5.04,
+        "rise_m": 2.675676,
+        "clear_width_m": 1.4
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          -0.7,
+          0.7
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:d9c4d2ed756eaf91b2470ff7628ddd581a17522651b993e5f91faee5ed7b98a3"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-SHAFT-CLEAR",
+      "type": "shaft",
+      "role": "clear_volume",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -98.01,
+        -11.5,
+        33.1
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "clear_bounds_xz": [
+          -102.01,
+          31.01,
+          -94.01,
+          35.19
+        ],
+        "bottom_y": -11.5,
+        "top_y": -6.0
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0.0,
+          0.0
+        ],
+        "height_m": [
+          0.0,
+          5.5
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:b132db5ae4dd4c1896bdd696699d2f3319fdd32aac7d1825cd7755cee9f37ef9"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-SHAFT-FACE-EAST",
+      "type": "wall",
+      "role": "shaft_face",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -102.01,
+        -7.1,
+        31.01
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.18,
+        "height_m": 1.1,
+        "thickness_m": 0.09,
+        "surface_side_id": "STAIRS-OLD-STAIR/SHAFT/EAST",
+        "along_range_m": [
+          0.0,
+          4.18
+        ]
+      },
+      "placement_limits": {
+        "along_normalized": [
+          0.0,
+          1.0
+        ],
+        "normal_offset_m": [
+          0.0,
+          0.09
+        ],
+        "height_m": [
+          0.0,
+          1.1
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:d803a34410724059c1b96c445186466eb9e55283c94d56c9a16d23e8deaa1d95"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-SHAFT-FACE-NORTH",
+      "type": "wall",
+      "role": "shaft_face",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -94.01,
+        -7.1,
+        31.01
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 8.0,
+        "height_m": 1.1,
+        "thickness_m": 0.09,
+        "surface_side_id": "STAIRS-OLD-STAIR/SHAFT/NORTH",
+        "along_range_m": [
+          0.0,
+          8.0
+        ]
+      },
+      "placement_limits": {
+        "along_normalized": [
+          0.0,
+          1.0
+        ],
+        "normal_offset_m": [
+          0.0,
+          0.09
+        ],
+        "height_m": [
+          0.0,
+          1.1
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:73b5692f612f60bedd22de27fdc985be02a32942a26fb85175649f2efbba75ca"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-SHAFT-FACE-SOUTH",
+      "type": "wall",
+      "role": "shaft_face",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -102.01,
+        -7.1,
+        35.19
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 8.0,
+        "height_m": 1.1,
+        "thickness_m": 0.09,
+        "surface_side_id": "STAIRS-OLD-STAIR/SHAFT/SOUTH",
+        "along_range_m": [
+          0.0,
+          8.0
+        ]
+      },
+      "placement_limits": {
+        "along_normalized": [
+          0.0,
+          1.0
+        ],
+        "normal_offset_m": [
+          0.0,
+          0.09
+        ],
+        "height_m": [
+          0.0,
+          1.1
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:a311ef00b07d974a8a4003f1b3e223cb622ae2d43e9523aa46f2e089f918fa46"
+    },
+    {
+      "anchor_id": "AF-STAIRS-OLD-STAIR-SHAFT-FACE-WEST",
+      "type": "wall",
+      "role": "shaft_face",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-OLD-STAIR"
+      },
+      "origin": [
+        -94.01,
+        -7.1,
+        35.19
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.18,
+        "height_m": 1.1,
+        "thickness_m": 0.09,
+        "surface_side_id": "STAIRS-OLD-STAIR/SHAFT/WEST",
+        "along_range_m": [
+          0.0,
+          4.18
+        ]
+      },
+      "placement_limits": {
+        "along_normalized": [
+          0.0,
+          1.0
+        ],
+        "normal_offset_m": [
+          0.0,
+          0.09
+        ],
+        "height_m": [
+          0.0,
+          1.1
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:5f65395749fb2fd5e3ec4c73f5e3700dde47c2e231f2c61270f24839a817bd8d"
+    },
+    {
+      "anchor_id": "svg:l-old-core-ceiling-01:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "c-158e4059b5"
+        "source_id": "l-old-core-ceiling-01"
       },
       "origin": [
-        -84.0,
+        -78.333,
         -2.6,
-        2.333
+        -9.333
       ],
       "forward": [
         1.0,
@@ -58,29 +734,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -84.0,
-            2.333
+            -78.333,
+            -9.333
           ],
           [
-            -62.0,
-            2.333
+            -66.667,
+            -9.333
           ],
           [
-            -62.0,
-            15.0
+            -66.667,
+            2.804
           ],
           [
-            -84.0,
-            15.0
+            -78.333,
+            2.804
           ]
         ],
         "u_range_m": [
           0.0,
-          22.0
+          11.666
         ],
         "v_range_m": [
           0.0,
-          12.667
+          12.137
         ],
         "holes_xz": []
       },
@@ -108,22 +784,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:d1a22bed859928428c7d9cfb0f18b272b55784437c01d93548625b195623ba52"
+      "geometry_hash": "sha256:384e7e80ca8f1bf55a760782a098698f61cf8bcdc44c68dbeaa9bcc2ca81ffd5"
     },
     {
-      "anchor_id": "svg:c-a5a8b8776c:ceiling",
+      "anchor_id": "svg:l-old-core-ceiling-02:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "c-a5a8b8776c"
+        "source_id": "l-old-core-ceiling-02"
       },
       "origin": [
-        -68.111,
+        -66.667,
         -2.6,
-        -7.333
+        -9.333
       ],
       "forward": [
         1.0,
@@ -147,29 +823,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -68.111,
-            -7.333
+            -66.667,
+            -9.333
           ],
           [
-            -62.611,
-            -7.333
+            -61.667,
+            -9.333
           ],
           [
-            -62.611,
-            -1.667
+            -61.667,
+            -2.772
           ],
           [
-            -68.111,
-            -1.667
+            -66.667,
+            -2.772
           ]
         ],
         "u_range_m": [
           0.0,
-          5.5
+          5.0
         ],
         "v_range_m": [
           0.0,
-          5.666
+          6.561
         ],
         "holes_xz": []
       },
@@ -197,22 +873,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:0f8c08b0dccefe295cb515c4a3c2bb79e69e25fa3250182fec8910323f269e32"
+      "geometry_hash": "sha256:0d04217c69066216aef946ce6ef98a41a71b49f6e8feb9272a34b877e522e078"
     },
     {
-      "anchor_id": "svg:c-d398437469:ceiling",
+      "anchor_id": "svg:l-old-core-ceiling-03:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "c-d398437469"
+        "source_id": "l-old-core-ceiling-03"
       },
       "origin": [
-        -74.833,
+        -66.667,
         -2.6,
-        -1.667
+        -2.772
       ],
       "forward": [
         1.0,
@@ -236,29 +912,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -74.833,
-            -1.667
+            -66.667,
+            -2.772
           ],
           [
-            -68.722,
-            -1.667
+            -61.667,
+            -2.772
           ],
           [
-            -68.722,
-            2.333
+            -61.667,
+            2.804
           ],
           [
-            -74.833,
-            2.333
+            -66.667,
+            2.804
           ]
         ],
         "u_range_m": [
           0.0,
-          6.111
+          5.0
         ],
         "v_range_m": [
           0.0,
-          4.0
+          5.576
         ],
         "holes_xz": []
       },
@@ -286,22 +962,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:bf6ea397220a5975550752ae96fbbb3b12756ceaacdd9cc9f408efcfa602c7dd"
+      "geometry_hash": "sha256:3fc6f747c8ed4d57416e09c2c4a760a6d45c488cad5ceaf2537481c69b8a5bfe"
     },
     {
-      "anchor_id": "svg:c-efd3b0af10:ceiling",
+      "anchor_id": "svg:l-old-core-ceiling-04:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "c-efd3b0af10"
+        "source_id": "l-old-core-ceiling-04"
       },
       "origin": [
-        -80.944,
+        -72.778,
         -2.6,
-        -14.0
+        2.804
       ],
       "forward": [
         1.0,
@@ -325,29 +1001,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -80.944,
-            -14.0
+            -72.778,
+            2.804
           ],
           [
-            -68.111,
-            -14.0
+            -67.222,
+            2.804
           ],
           [
-            -68.111,
-            -1.667
+            -67.222,
+            6.741
           ],
           [
-            -80.944,
-            -1.667
+            -72.778,
+            6.741
           ]
         ],
         "u_range_m": [
           0.0,
-          12.833
+          5.556
         ],
         "v_range_m": [
           0.0,
-          12.333
+          3.937
         ],
         "holes_xz": []
       },
@@ -375,22 +1051,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:d40a74e6a7be616d367b8037dcc88040f50acd6ec05a794f32bfc112285b7cd6"
+      "geometry_hash": "sha256:6dacc082640fc87ef763a56a09fc00f08974b04467c8c2ed652a05fe4d9f3338"
     },
     {
-      "anchor_id": "svg:c-f86f92d3fc:ceiling",
+      "anchor_id": "svg:l-old-core-ceiling-05:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "c-f86f92d3fc"
+        "source_id": "l-old-core-ceiling-05"
       },
       "origin": [
-        -68.111,
+        -81.106,
         -2.6,
-        -14.0
+        6.741
       ],
       "forward": [
         1.0,
@@ -414,29 +1090,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -68.111,
-            -14.0
+            -81.106,
+            6.741
           ],
           [
-            -62.611,
-            -14.0
+            -61.111,
+            6.741
           ],
           [
-            -62.611,
-            -7.333
+            -61.111,
+            25.111
           ],
           [
-            -68.111,
-            -7.333
+            -81.106,
+            25.111
           ]
         ],
         "u_range_m": [
           0.0,
-          5.5
+          19.995
         ],
         "v_range_m": [
           0.0,
-          6.667
+          18.37
         ],
         "holes_xz": []
       },
@@ -464,22 +1140,378 @@
           ]
         }
       },
-      "geometry_hash": "sha256:5952269155119aea4e4f821f084e3cba4d9498f01ad5a1ffe712623f09ca3f24"
+      "geometry_hash": "sha256:8239c2abe50d3a3c554369eba4cd79fff208a98894b58517deaf59bdb88c5520"
     },
     {
-      "anchor_id": "svg:d-0cdd6a504a:door:center",
+      "anchor_id": "svg:l-old-core-ceiling-06:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-ceiling-06"
+      },
+      "origin": [
+        -88.9,
+        -2.6,
+        15.05
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -2.6,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -88.9,
+            15.05
+          ],
+          [
+            -81.106,
+            15.05
+          ],
+          [
+            -81.106,
+            48.4
+          ],
+          [
+            -88.9,
+            48.4
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          7.794
+        ],
+        "v_range_m": [
+          0.0,
+          33.35
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:c55f2206300fb9a2c23c844e5b7c241532054fc1f583e51aa6b007cd9f536ee7"
+    },
+    {
+      "anchor_id": "svg:l-old-core-ceiling-07:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-ceiling-07"
+      },
+      "origin": [
+        -92.2,
+        -2.6,
+        30.7
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -2.6,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -92.2,
+            30.7
+          ],
+          [
+            -88.9,
+            30.7
+          ],
+          [
+            -88.9,
+            39.6
+          ],
+          [
+            -92.2,
+            39.6
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          3.3
+        ],
+        "v_range_m": [
+          0.0,
+          8.9
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:b8b203af172f28fe4b18749d31d72b4f7d57105acb9ae103e691335d5ccbb857"
+    },
+    {
+      "anchor_id": "svg:l-old-core-ceiling-08:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-ceiling-08"
+      },
+      "origin": [
+        -102.2,
+        -2.6,
+        28.4
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -2.6,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -102.2,
+            28.4
+          ],
+          [
+            -92.2,
+            28.4
+          ],
+          [
+            -92.2,
+            41.8
+          ],
+          [
+            -102.2,
+            41.8
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          10.0
+        ],
+        "v_range_m": [
+          0.0,
+          13.4
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:1c22f09f8350b67c1197a5e2be435292f695cd1ca8cd38be2586208de6038289"
+    },
+    {
+      "anchor_id": "svg:l-old-core-ceiling-09:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-ceiling-09"
+      },
+      "origin": [
+        -61.111,
+        -2.6,
+        10.7
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -2.6,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -61.111,
+            10.7
+          ],
+          [
+            -58.89,
+            10.7
+          ],
+          [
+            -58.89,
+            15.05
+          ],
+          [
+            -61.111,
+            15.05
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          2.221
+        ],
+        "v_range_m": [
+          0.0,
+          4.35
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:c5283234c24ad6faf67c9a43ab50165e6a3406961215455cd510da75a8d9d0d1"
+    },
+    {
+      "anchor_id": "svg:l-old-core-door-02:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-0cdd6a504a"
+        "source_id": "l-old-core-door-02"
       },
       "origin": [
-        -71.7785,
+        -70.0,
         -6.0,
-        -1.667
+        6.741
       ],
       "forward": [
         -1.0,
@@ -498,15 +1530,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.667,
+        "width_m": 3.334,
         "height_m": 2.4,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -1.8335,
-          1.8335
+          -1.667,
+          1.667
         ],
         "origin_semantics": "line_center"
       },
@@ -537,22 +1569,22 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:2f94fc46f68cd7a682c345234b4e86d112141a15a2dc5b1e4d1d4a6742054eea"
+      "geometry_hash": "sha256:e45a7589473e8f25fdb181571dd520dfd19c625d9366186e4e5c6369bca13292"
     },
     {
-      "anchor_id": "svg:d-0cdd6a504a:door:threshold_inside",
+      "anchor_id": "svg:l-old-core-door-02:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-0cdd6a504a"
+        "source_id": "l-old-core-door-02"
       },
       "origin": [
-        -71.7785,
+        -70.0,
         -6.0,
-        -1.817
+        6.591
       ],
       "forward": [
         -1.0,
@@ -571,15 +1603,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.667,
+        "width_m": 3.334,
         "height_m": 2.4,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -1.8335,
-          1.8335
+          -1.667,
+          1.667
         ],
         "origin_semantics": "line_center"
       },
@@ -610,22 +1642,22 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:3c4d9c126a0e5213c26171319a0f080c39b3a983221b4a8d5a25b59d63693e4e"
+      "geometry_hash": "sha256:bddf7f15fd2702828080422dbc8169e94d9ee09cf314c0a6aa6e4c86e7928fff"
     },
     {
-      "anchor_id": "svg:d-0cdd6a504a:door:threshold_outside",
+      "anchor_id": "svg:l-old-core-door-02:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-0cdd6a504a"
+        "source_id": "l-old-core-door-02"
       },
       "origin": [
-        -71.7785,
+        -70.0,
         -6.0,
-        -1.517
+        6.891
       ],
       "forward": [
         -1.0,
@@ -644,15 +1676,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.667,
+        "width_m": 3.334,
         "height_m": 2.4,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -1.8335,
-          1.8335
+          -1.667,
+          1.667
         ],
         "origin_semantics": "line_center"
       },
@@ -683,30 +1715,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:77ca0676f4829ee9fb29b547d17def7a97e490dab809b0743cfe2812b1954807"
+      "geometry_hash": "sha256:2ee5b9c91f3a88d04ee7e9542b2e05ef8b2ed28bd0ffdd2eaec3c40e2d99481b"
     },
     {
-      "anchor_id": "svg:d-16c6ae0e21:door:center",
+      "anchor_id": "svg:l-old-core-door-03:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-16c6ae0e21"
+        "source_id": "l-old-core-door-03"
       },
       "origin": [
-        -62.0,
+        -66.667,
         -6.0,
-        8.6665
+        -5.069
       ],
       "forward": [
         0.0,
         0.0,
-        1.0
+        -1.0
       ],
       "normal": [
-        -1.0,
+        1.0,
         0.0,
         0.0
       ],
@@ -717,15 +1749,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.333,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
+        "inside_side": "opposite",
         "along_range_m": [
-          -1.6665,
-          1.6665
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -756,30 +1788,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:277381f0d1fdabf0ed1268fe949c0b59f731735a7ea58badeeb087f27c5efb65"
+      "geometry_hash": "sha256:d9e915d74ae68b0b5ce62e8782d2f8011d429a51ac42977e15b045a4c92df2e2"
     },
     {
-      "anchor_id": "svg:d-16c6ae0e21:door:threshold_inside",
+      "anchor_id": "svg:l-old-core-door-03:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-16c6ae0e21"
+        "source_id": "l-old-core-door-03"
       },
       "origin": [
-        -62.15,
+        -66.517,
         -6.0,
-        8.6665
+        -5.069
       ],
       "forward": [
         0.0,
         0.0,
-        1.0
+        -1.0
       ],
       "normal": [
-        -1.0,
+        1.0,
         0.0,
         0.0
       ],
@@ -790,15 +1822,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.333,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
+        "inside_side": "opposite",
         "along_range_m": [
-          -1.6665,
-          1.6665
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -829,30 +1861,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:cb439a6915f1928ccd007d7abaeb94831781fc261f3a986ba3749e6bb4526f58"
+      "geometry_hash": "sha256:9ba5f74865e97863c1491bcf8d1e1db9ebbb4b3436d258687d5e2c41301439ef"
     },
     {
-      "anchor_id": "svg:d-16c6ae0e21:door:threshold_outside",
+      "anchor_id": "svg:l-old-core-door-03:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-16c6ae0e21"
+        "source_id": "l-old-core-door-03"
       },
       "origin": [
-        -61.85,
+        -66.817,
         -6.0,
-        8.6665
+        -5.069
       ],
       "forward": [
         0.0,
         0.0,
-        1.0
+        -1.0
       ],
       "normal": [
-        -1.0,
+        1.0,
         0.0,
         0.0
       ],
@@ -863,15 +1895,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.333,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
+        "inside_side": "opposite",
         "along_range_m": [
-          -1.6665,
-          1.6665
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -902,32 +1934,32 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:8d2b2f49dc3cba745dbfe7424350d535d88050b6d9a3aa70ad6c18dfd44a6e84"
+      "geometry_hash": "sha256:897de02bd107a2cba919e1e12617bf22f11144335229687c1bf438ecf007d78c"
     },
     {
-      "anchor_id": "svg:d-3055292269:door:center",
+      "anchor_id": "svg:l-old-core-door-04:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-3055292269"
+        "source_id": "l-old-core-door-04"
       },
       "origin": [
-        -80.0,
+        -66.667,
         -6.0,
-        15.0
+        0.508
       ],
       "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
         0.0,
         0.0,
         -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
       ],
       "up": [
         0.0,
@@ -936,15 +1968,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -975,32 +2007,32 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:02e37280684277c77f4266beb351430dac03a23b6e0739604ee5ca1c63aab254"
+      "geometry_hash": "sha256:a414bf2989ec8b0d84b0c450dcebd3f1a11ec00151823aa21d5b951a82112de9"
     },
     {
-      "anchor_id": "svg:d-3055292269:door:threshold_inside",
+      "anchor_id": "svg:l-old-core-door-04:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-3055292269"
+        "source_id": "l-old-core-door-04"
       },
       "origin": [
-        -80.0,
+        -66.517,
         -6.0,
-        14.85
+        0.508
       ],
       "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
         0.0,
         0.0,
         -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
       ],
       "up": [
         0.0,
@@ -1009,15 +2041,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1048,32 +2080,32 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:98097d89ddfdf1ac4f5944c5bea7650913f79f0f1889a12a05a39735df458121"
+      "geometry_hash": "sha256:4fe59da9c314ee03939d101edaaddf2a92c04d3a6c2968effe2b78de0dc65e58"
     },
     {
-      "anchor_id": "svg:d-3055292269:door:threshold_outside",
+      "anchor_id": "svg:l-old-core-door-04:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-3055292269"
+        "source_id": "l-old-core-door-04"
       },
       "origin": [
-        -80.0,
+        -66.817,
         -6.0,
-        15.15
+        0.508
       ],
       "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
         0.0,
         0.0,
         -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
       ],
       "up": [
         0.0,
@@ -1082,15 +2114,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1121,30 +2153,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:99b71b289c5ac56dfdfef1f81ea377111af1703cd5c5e31e7c6544530a2f2c5c"
+      "geometry_hash": "sha256:1ac759bfd7ada2468e69105f417d3a05ead41c0e9393fbaed36d2af94c608b10"
     },
     {
-      "anchor_id": "svg:d-9a3bced08a:door:center",
+      "anchor_id": "svg:l-old-core-door-05:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-9a3bced08a"
+        "source_id": "l-old-core-door-05"
       },
       "origin": [
-        -68.111,
+        -81.106,
         -6.0,
-        -9.667
+        10.0
       ],
       "forward": [
         0.0,
         0.0,
-        1.0
+        -1.0
       ],
       "normal": [
-        -1.0,
+        1.0,
         0.0,
         0.0
       ],
@@ -1155,15 +2187,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 2.0,
-        "height_m": 2.4,
+        "width_m": 5.6,
+        "height_m": 4.5,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
+        "inside_side": "opposite",
         "along_range_m": [
-          -1.0,
-          1.0
+          -2.8,
+          2.8
         ],
         "origin_semantics": "line_center"
       },
@@ -1194,30 +2226,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:49724ce7b022f01ccd264c8ab28cd718f3cb9a3446412bd42f9a1df3f7648692"
+      "geometry_hash": "sha256:efdfe395fb22b3901541954ce5e88af5407763d2b4328e23ec39415412d92397"
     },
     {
-      "anchor_id": "svg:d-9a3bced08a:door:threshold_inside",
+      "anchor_id": "svg:l-old-core-door-05:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-9a3bced08a"
+        "source_id": "l-old-core-door-05"
       },
       "origin": [
-        -68.261,
+        -80.956,
         -6.0,
-        -9.667
+        10.0
       ],
       "forward": [
         0.0,
         0.0,
-        1.0
+        -1.0
       ],
       "normal": [
-        -1.0,
+        1.0,
         0.0,
         0.0
       ],
@@ -1228,15 +2260,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 2.0,
-        "height_m": 2.4,
+        "width_m": 5.6,
+        "height_m": 4.5,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
+        "inside_side": "opposite",
         "along_range_m": [
-          -1.0,
-          1.0
+          -2.8,
+          2.8
         ],
         "origin_semantics": "line_center"
       },
@@ -1267,30 +2299,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:83401565b9a87ed42a6f3428cd609c5779d2e3fb291aaf2e48ae192014c50b3e"
+      "geometry_hash": "sha256:f42df4543463b126c6b067c2405a16bc053c0d4622c342e8546ed82cfb149803"
     },
     {
-      "anchor_id": "svg:d-9a3bced08a:door:threshold_outside",
+      "anchor_id": "svg:l-old-core-door-05:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-9a3bced08a"
+        "source_id": "l-old-core-door-05"
       },
       "origin": [
-        -67.961,
+        -81.256,
         -6.0,
-        -9.667
+        10.0
       ],
       "forward": [
         0.0,
         0.0,
-        1.0
+        -1.0
       ],
       "normal": [
-        -1.0,
+        1.0,
         0.0,
         0.0
       ],
@@ -1301,15 +2333,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 2.0,
-        "height_m": 2.4,
+        "width_m": 5.6,
+        "height_m": 4.5,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
+        "inside_side": "opposite",
         "along_range_m": [
-          -1.0,
-          1.0
+          -2.8,
+          2.8
         ],
         "origin_semantics": "line_center"
       },
@@ -1340,32 +2372,32 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:798f67987372bfcfdffbfe87aad4e57d0251f1f8cd934d3ed8cc91f80e5e831f"
+      "geometry_hash": "sha256:4a76a2326f09f0f181641f259aee87b22a16ab468f98bcdfa5260b1f2aa5e415"
     },
     {
-      "anchor_id": "svg:d-9d9f56448f:door:center",
+      "anchor_id": "svg:l-old-core-door-06:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-9d9f56448f"
+        "source_id": "l-old-core-door-06"
       },
       "origin": [
-        -71.7785,
+        -61.111,
         -6.0,
-        2.333
+        12.9
       ],
       "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
         0.0,
         0.0,
         -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
       ],
       "up": [
         0.0,
@@ -1374,15 +2406,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.667,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -1.8335,
-          1.8335
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1413,32 +2445,32 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:ddc612988ea555a3f7035f9a09f2ea6d9a24e42faa60b67a6fcdbbef5b84f519"
+      "geometry_hash": "sha256:332131536f5891cc119d5c608c3c3f442e4786bbdf47811dc9ad45fc4ff78f15"
     },
     {
-      "anchor_id": "svg:d-9d9f56448f:door:threshold_inside",
+      "anchor_id": "svg:l-old-core-door-06:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-9d9f56448f"
+        "source_id": "l-old-core-door-06"
       },
       "origin": [
-        -71.7785,
+        -60.961,
         -6.0,
-        2.183
+        12.9
       ],
       "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
         0.0,
         0.0,
         -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
       ],
       "up": [
         0.0,
@@ -1447,15 +2479,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.667,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -1.8335,
-          1.8335
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1486,32 +2518,32 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:fe82397b47b3c72fecc23f209ed21ef8a52cffcbb09903464ec7a8d595a850e3"
+      "geometry_hash": "sha256:dab7b3a440f578df7e614cbcb907175a600848c6f4910851fae2f2b4d2bc1ecb"
     },
     {
-      "anchor_id": "svg:d-9d9f56448f:door:threshold_outside",
+      "anchor_id": "svg:l-old-core-door-06:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-9d9f56448f"
+        "source_id": "l-old-core-door-06"
       },
       "origin": [
-        -71.7785,
+        -61.261,
         -6.0,
-        2.483
+        12.9
       ],
       "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
         0.0,
         0.0,
         -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
       ],
       "up": [
         0.0,
@@ -1520,15 +2552,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 3.667,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "opposite",
         "along_range_m": [
-          -1.8335,
-          1.8335
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1559,30 +2591,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:e28301817329a4cbfa881cb2cd9f362f2d6fea86e2ecc19d3e8ad7ef9756b2f4"
+      "geometry_hash": "sha256:07a694d20f9c792affe267ce7fc92831357bd7f85ea86b544bf469cd539271e7"
     },
     {
-      "anchor_id": "svg:d-da09201c4a:door:center",
+      "anchor_id": "svg:l-old-core-door-11:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-da09201c4a"
+        "source_id": "l-old-core-door-11"
       },
       "origin": [
-        -84.0,
+        -58.89,
         -6.0,
-        8.675
+        12.9
       ],
       "forward": [
         0.0,
         0.0,
-        -1.0
+        1.0
       ],
       "normal": [
-        1.0,
+        -1.0,
         0.0,
         0.0
       ],
@@ -1593,15 +2625,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
+        "inside_side": "normal",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1632,30 +2664,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:291cb61af66a92d4e8a550d6b8f5bec3e588c1ef4efd6ae778719558640abdce"
+      "geometry_hash": "sha256:ad2d7039e18bcdf90d791b6c83589656e235dfed41309571dc52eb75fe969a21"
     },
     {
-      "anchor_id": "svg:d-da09201c4a:door:threshold_inside",
+      "anchor_id": "svg:l-old-core-door-11:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-da09201c4a"
+        "source_id": "l-old-core-door-11"
       },
       "origin": [
-        -83.85,
+        -59.04,
         -6.0,
-        8.675
+        12.9
       ],
       "forward": [
         0.0,
         0.0,
-        -1.0
+        1.0
       ],
       "normal": [
-        1.0,
+        -1.0,
         0.0,
         0.0
       ],
@@ -1666,15 +2698,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
+        "inside_side": "normal",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1705,30 +2737,30 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:754d9f74f07acceb3630f652d6e704dd56021c85675e33eaae4c1f141d372306"
+      "geometry_hash": "sha256:0d8f02a6bbb75c035de4bf119ae003f71ded7ad44b07617e7a3308611e070a89"
     },
     {
-      "anchor_id": "svg:d-da09201c4a:door:threshold_outside",
+      "anchor_id": "svg:l-old-core-door-11:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-da09201c4a"
+        "source_id": "l-old-core-door-11"
       },
       "origin": [
-        -84.15,
+        -58.74,
         -6.0,
-        8.675
+        12.9
       ],
       "forward": [
         0.0,
         0.0,
-        -1.0
+        1.0
       ],
       "normal": [
-        1.0,
+        -1.0,
         0.0,
         0.0
       ],
@@ -1739,15 +2771,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
+        "inside_side": "normal",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1778,22 +2810,22 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:ef56ead6c5e9dc5b1cecefa4c1f2510e9325f3a1a4ec63ef20ba570272e50667"
+      "geometry_hash": "sha256:f9fcaab20cd407935cbc6729a2b4303ee3935bb64df2d191dcb264e7c8074624"
     },
     {
-      "anchor_id": "svg:d-e73df3f307:door:center",
+      "anchor_id": "svg:l-old-core-door-14:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-e73df3f307"
+        "source_id": "l-old-core-door-14"
       },
       "origin": [
-        -62.0,
+        -94.0,
         -6.0,
-        8.666
+        33.1
       ],
       "forward": [
         0.0,
@@ -1812,15 +2844,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "normal",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1851,22 +2883,22 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:c24cf242b57fe76dcfb16287bd2832f64cbb670db1e02d4a83617bbd556bbd42"
+      "geometry_hash": "sha256:aaea47f2adfa88b47ffdf9f0517797d7da7f344cc4c748215ce2dfe077f8e0ed"
     },
     {
-      "anchor_id": "svg:d-e73df3f307:door:threshold_inside",
+      "anchor_id": "svg:l-old-core-door-14:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-e73df3f307"
+        "source_id": "l-old-core-door-14"
       },
       "origin": [
-        -62.15,
+        -94.15,
         -6.0,
-        8.666
+        33.1
       ],
       "forward": [
         0.0,
@@ -1885,15 +2917,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "normal",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1924,22 +2956,22 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:a3f0d66ce79e781b85f42363e730ae7a01ac75055600514319e498419398af8d"
+      "geometry_hash": "sha256:7160131a43d84f4a1d2cff2a9c2609748abc93388571e923b8ba43d0448024cf"
     },
     {
-      "anchor_id": "svg:d-e73df3f307:door:threshold_outside",
+      "anchor_id": "svg:l-old-core-door-14:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "d-e73df3f307"
+        "source_id": "l-old-core-door-14"
       },
       "origin": [
-        -61.85,
+        -93.85,
         -6.0,
-        8.666
+        33.1
       ],
       "forward": [
         0.0,
@@ -1958,15 +2990,15 @@
       ],
       "bounds": {
         "kind": "portal",
-        "width_m": 1.2,
-        "height_m": 2.4,
+        "width_m": 1.4,
+        "height_m": 2.3,
         "bottom_m": 0.0,
         "wall_thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
         "inside_side": "normal",
         "along_range_m": [
-          -0.6,
-          0.6
+          -0.7,
+          0.7
         ],
         "origin_semantics": "line_center"
       },
@@ -1997,241 +3029,22 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:a605ef167de1209a8b75fca14a0ba5b34912b361ccb36a176de30f64aa64fd7f"
+      "geometry_hash": "sha256:c7a368db71637f5cedbcb7d07a2f7000ed91a53ba838e6e90e9f59e6d9703559"
     },
     {
-      "anchor_id": "svg:d-f9681e2457:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "d-f9681e2457"
-      },
-      "origin": [
-        -68.111,
-        -6.0,
-        -4.0
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 2.0,
-        "height_m": 2.4,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -1.0,
-          1.0
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:3624bb39c0fb596f9160260dc7fb11f027a86b59ebd606f67e124a8fd3b74730"
-    },
-    {
-      "anchor_id": "svg:d-f9681e2457:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "d-f9681e2457"
-      },
-      "origin": [
-        -68.261,
-        -6.0,
-        -4.0
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 2.0,
-        "height_m": 2.4,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -1.0,
-          1.0
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:a0249affde9fd033549cdd71d398f00775e5a72492ec44dcd28bf76bf8933679"
-    },
-    {
-      "anchor_id": "svg:d-f9681e2457:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "d-f9681e2457"
-      },
-      "origin": [
-        -67.961,
-        -6.0,
-        -4.0
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 2.0,
-        "height_m": 2.4,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -1.0,
-          1.0
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:5abfbc3004dd4ec2a182a1ce4d7ef6f78c110aa4ab04a868c80016938e4e9400"
-    },
-    {
-      "anchor_id": "svg:f-158e4059b5:floor",
+      "anchor_id": "svg:l-old-core-floor-01:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "f-158e4059b5"
+        "source_id": "l-old-core-floor-01"
       },
       "origin": [
-        -84.0,
+        -78.333,
         -6.0,
-        2.333
+        -9.333
       ],
       "forward": [
         1.0,
@@ -2255,29 +3068,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -84.0,
-            2.333
+            -78.333,
+            -9.333
           ],
           [
-            -62.0,
-            2.333
+            -66.667,
+            -9.333
           ],
           [
-            -62.0,
-            15.0
+            -66.667,
+            2.804
           ],
           [
-            -84.0,
-            15.0
+            -78.333,
+            2.804
           ]
         ],
         "u_range_m": [
           0.0,
-          22.0
+          11.666
         ],
         "v_range_m": [
           0.0,
-          12.667
+          12.137
         ],
         "holes_xz": []
       },
@@ -2305,22 +3118,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:683ce31cc4165d699074281aaba185f141f0ad398dca14178b0d40ed61653ea9"
+      "geometry_hash": "sha256:4e7328f2a1bfbacfe84e989f712744cab79d29ec415d39eea3c27aa66bc24b94"
     },
     {
-      "anchor_id": "svg:f-a5a8b8776c:floor",
+      "anchor_id": "svg:l-old-core-floor-02:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "f-a5a8b8776c"
+        "source_id": "l-old-core-floor-02"
       },
       "origin": [
-        -68.111,
+        -66.667,
         -6.0,
-        -7.333
+        -9.333
       ],
       "forward": [
         1.0,
@@ -2344,29 +3157,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -68.111,
-            -7.333
+            -66.667,
+            -9.333
           ],
           [
-            -62.611,
-            -7.333
+            -61.667,
+            -9.333
           ],
           [
-            -62.611,
-            -1.667
+            -61.667,
+            -2.772
           ],
           [
-            -68.111,
-            -1.667
+            -66.667,
+            -2.772
           ]
         ],
         "u_range_m": [
           0.0,
-          5.5
+          5.0
         ],
         "v_range_m": [
           0.0,
-          5.666
+          6.561
         ],
         "holes_xz": []
       },
@@ -2394,22 +3207,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:47c09248dd23082b0e717754814ed1a7cef2b8877e1522b522a5a13cca007bd1"
+      "geometry_hash": "sha256:9d4ce58f6dce9fab77d5510dbfc7dd984ae8b14386e9a2db2633cd359f99c969"
     },
     {
-      "anchor_id": "svg:f-d398437469:floor",
+      "anchor_id": "svg:l-old-core-floor-03:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "f-d398437469"
+        "source_id": "l-old-core-floor-03"
       },
       "origin": [
-        -74.833,
+        -66.667,
         -6.0,
-        -1.667
+        -2.772
       ],
       "forward": [
         1.0,
@@ -2433,29 +3246,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -74.833,
-            -1.667
+            -66.667,
+            -2.772
           ],
           [
-            -68.722,
-            -1.667
+            -61.667,
+            -2.772
           ],
           [
-            -68.722,
-            2.333
+            -61.667,
+            2.804
           ],
           [
-            -74.833,
-            2.333
+            -66.667,
+            2.804
           ]
         ],
         "u_range_m": [
           0.0,
-          6.111
+          5.0
         ],
         "v_range_m": [
           0.0,
-          4.0
+          5.576
         ],
         "holes_xz": []
       },
@@ -2483,22 +3296,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:86e362c5b96ebdf3cc1e5d2a50dce0ece211358480c45be6821e45e918eba37c"
+      "geometry_hash": "sha256:f8cc4dcfc3822b0247f46b1a0a0269d12fe302a5ad3b220bf07daeaa7ad9647f"
     },
     {
-      "anchor_id": "svg:f-efd3b0af10:floor",
+      "anchor_id": "svg:l-old-core-floor-04:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "f-efd3b0af10"
+        "source_id": "l-old-core-floor-04"
       },
       "origin": [
-        -80.944,
+        -72.778,
         -6.0,
-        -14.0
+        2.804
       ],
       "forward": [
         1.0,
@@ -2522,29 +3335,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -80.944,
-            -14.0
+            -72.778,
+            2.804
           ],
           [
-            -68.111,
-            -14.0
+            -67.222,
+            2.804
           ],
           [
-            -68.111,
-            -1.667
+            -67.222,
+            6.741
           ],
           [
-            -80.944,
-            -1.667
+            -72.778,
+            6.741
           ]
         ],
         "u_range_m": [
           0.0,
-          12.833
+          5.556
         ],
         "v_range_m": [
           0.0,
-          12.333
+          3.937
         ],
         "holes_xz": []
       },
@@ -2572,22 +3385,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:0027d0a0a0c3931e0a3c645fb3c9f50be57fcbe1db8a3940aa2814892aa14e6b"
+      "geometry_hash": "sha256:dbe99aaae5772c6c43f829c29b46b6e9ae928ed2493d72225a3b9fc30ba89a68"
     },
     {
-      "anchor_id": "svg:f-f86f92d3fc:floor",
+      "anchor_id": "svg:l-old-core-floor-05:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "f-f86f92d3fc"
+        "source_id": "l-old-core-floor-05"
       },
       "origin": [
-        -68.111,
+        -81.106,
         -6.0,
-        -14.0
+        6.741
       ],
       "forward": [
         1.0,
@@ -2611,29 +3424,29 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -68.111,
-            -14.0
+            -81.106,
+            6.741
           ],
           [
-            -62.611,
-            -14.0
+            -61.111,
+            6.741
           ],
           [
-            -62.611,
-            -7.333
+            -61.111,
+            25.111
           ],
           [
-            -68.111,
-            -7.333
+            -81.106,
+            25.111
           ]
         ],
         "u_range_m": [
           0.0,
-          5.5
+          19.995
         ],
         "v_range_m": [
           0.0,
-          6.667
+          18.37
         ],
         "holes_xz": []
       },
@@ -2661,31 +3474,31 @@
           ]
         }
       },
-      "geometry_hash": "sha256:4fe5cc4de961d923aca0c4afb389bb5a44e542a5bed846bc2ee0c2372b3d18e8"
+      "geometry_hash": "sha256:86653d54a1b8b1cd2b28e26cc7d53f856856a35743655fdf974bebf1cc2b4623"
     },
     {
-      "anchor_id": "svg:w-1045324f43:wall",
-      "type": "wall",
+      "anchor_id": "svg:l-old-core-floor-06:floor",
+      "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-1045324f43"
+        "source_id": "l-old-core-floor-06"
       },
       "origin": [
-        -68.872,
+        -88.9,
         -6.0,
-        -1.667
+        15.05
       ],
       "forward": [
+        1.0,
         0.0,
-        0.0,
-        1.0
+        0.0
       ],
       "normal": [
-        -1.0,
         0.0,
+        1.0,
         0.0
       ],
       "up": [
@@ -2694,37 +3507,51 @@
         0.0
       ],
       "bounds": {
-        "kind": "linear_surface",
-        "length_m": 4.0,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/control_access/east",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -68.722,
-          -6.0,
-          -1.667
+        "kind": "planar_surface",
+        "elevation_m": -6.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -88.9,
+            15.05
+          ],
+          [
+            -81.106,
+            15.05
+          ],
+          [
+            -81.106,
+            48.4
+          ],
+          [
+            -88.9,
+            48.4
+          ]
         ],
-        "along_range_m": [
+        "u_range_m": [
           0.0,
-          4.0
-        ]
+          7.794
+        ],
+        "v_range_m": [
+          0.0,
+          33.35
+        ],
+        "holes_xz": []
       },
       "placement_limits": {
         "normal_offset_m": [
           0,
-          1
+          0
         ],
         "height_m": [
           0,
-          3.4
+          0
         ],
         "rotation_deg": {
           "yaw": [
-            0,
-            0
+            -180,
+            180
           ],
           "pitch": [
             0,
@@ -2736,31 +3563,31 @@
           ]
         }
       },
-      "geometry_hash": "sha256:5d470a73361f327f1cf805dc3eb8654dd102558db033649628c1c6fab32317ba"
+      "geometry_hash": "sha256:4ec37bc92b4b5f89fd67eff46bb30cb83007439debb6a9a419c4c68a38b4cdcc"
     },
     {
-      "anchor_id": "svg:w-16dad0c4f3:wall",
-      "type": "wall",
+      "anchor_id": "svg:l-old-core-floor-07:floor",
+      "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-16dad0c4f3"
+        "source_id": "l-old-core-floor-07"
       },
       "origin": [
-        -83.85,
+        -92.2,
         -6.0,
-        15.0
+        30.7
       ],
       "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
         1.0,
         0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
         0.0
       ],
       "up": [
@@ -2769,37 +3596,51 @@
         0.0
       ],
       "bounds": {
-        "kind": "linear_surface",
-        "length_m": 12.667,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/distribution_hall/west",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -84.0,
-          -6.0,
-          15.0
+        "kind": "planar_surface",
+        "elevation_m": -6.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -92.2,
+            30.7
+          ],
+          [
+            -88.9,
+            30.7
+          ],
+          [
+            -88.9,
+            39.6
+          ],
+          [
+            -92.2,
+            39.6
+          ]
         ],
-        "along_range_m": [
+        "u_range_m": [
           0.0,
-          12.667
-        ]
+          3.3
+        ],
+        "v_range_m": [
+          0.0,
+          8.9
+        ],
+        "holes_xz": []
       },
       "placement_limits": {
         "normal_offset_m": [
           0,
-          1
+          0
         ],
         "height_m": [
           0,
-          3.4
+          0
         ],
         "rotation_deg": {
           "yaw": [
-            0,
-            0
+            -180,
+            180
           ],
           "pitch": [
             0,
@@ -2811,31 +3652,31 @@
           ]
         }
       },
-      "geometry_hash": "sha256:fc952f493e63f8157b653a89b88b0a18d96284be39a05249551ebb560f48f4d9"
+      "geometry_hash": "sha256:4bb9e8ff76bc0841439ead1da99617852926b3ff93d69abd090095d860a175ed"
     },
     {
-      "anchor_id": "svg:w-173ba77dce:wall",
-      "type": "wall",
+      "anchor_id": "svg:l-old-core-floor-08:floor",
+      "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-173ba77dce"
+        "source_id": "l-old-core-floor-08"
       },
       "origin": [
-        -62.761,
+        -102.2,
         -6.0,
-        -14.0
+        28.4
       ],
       "forward": [
+        1.0,
         0.0,
-        0.0,
-        1.0
+        0.0
       ],
       "normal": [
-        -1.0,
         0.0,
+        1.0,
         0.0
       ],
       "up": [
@@ -2844,37 +3685,70 @@
         0.0
       ],
       "bounds": {
-        "kind": "linear_surface",
-        "length_m": 12.333,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/relay_room/east",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -62.611,
-          -6.0,
-          -14.0
+        "kind": "planar_surface",
+        "elevation_m": -6.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -102.2,
+            28.4
+          ],
+          [
+            -92.2,
+            28.4
+          ],
+          [
+            -92.2,
+            41.8
+          ],
+          [
+            -102.2,
+            41.8
+          ]
         ],
-        "along_range_m": [
+        "u_range_m": [
           0.0,
-          12.333
+          10.0
+        ],
+        "v_range_m": [
+          0.0,
+          13.4
+        ],
+        "holes_xz": [
+          [
+            [
+              -102.0,
+              31.0
+            ],
+            [
+              -94.0,
+              31.0
+            ],
+            [
+              -94.0,
+              35.2
+            ],
+            [
+              -102.0,
+              35.2
+            ]
+          ]
         ]
       },
       "placement_limits": {
         "normal_offset_m": [
           0,
-          1
+          0
         ],
         "height_m": [
           0,
-          3.4
+          0
         ],
         "rotation_deg": {
           "yaw": [
-            0,
-            0
+            -180,
+            180
           ],
           "pitch": [
             0,
@@ -2886,32 +3760,32 @@
           ]
         }
       },
-      "geometry_hash": "sha256:ac0990b768d73dada008e35ddb6a3363678c9c446f5ec9121e59e8d0d6e4d0aa"
+      "geometry_hash": "sha256:f3f045836be2b4d4d6885fef8b43b7d8cdeaad85211a37a2a08c58cd2bd4a2e9"
     },
     {
-      "anchor_id": "svg:w-3815a4d203:wall",
-      "type": "wall",
+      "anchor_id": "svg:l-old-core-floor-09:floor",
+      "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-3815a4d203"
+        "source_id": "l-old-core-floor-09"
       },
       "origin": [
-        -62.0,
+        -61.111,
         -6.0,
-        14.85
+        10.7
       ],
       "forward": [
-        -1.0,
+        1.0,
         0.0,
         0.0
       ],
       "normal": [
         0.0,
-        0.0,
-        -1.0
+        1.0,
+        0.0
       ],
       "up": [
         0.0,
@@ -2919,37 +3793,51 @@
         0.0
       ],
       "bounds": {
-        "kind": "linear_surface",
-        "length_m": 22.0,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/distribution_hall/south",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -62.0,
-          -6.0,
-          15.0
+        "kind": "planar_surface",
+        "elevation_m": -6.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -61.111,
+            10.7
+          ],
+          [
+            -58.89,
+            10.7
+          ],
+          [
+            -58.89,
+            15.05
+          ],
+          [
+            -61.111,
+            15.05
+          ]
         ],
-        "along_range_m": [
+        "u_range_m": [
           0.0,
-          22.0
-        ]
+          2.221
+        ],
+        "v_range_m": [
+          0.0,
+          4.35
+        ],
+        "holes_xz": []
       },
       "placement_limits": {
         "normal_offset_m": [
           0,
-          1
+          0
         ],
         "height_m": [
           0,
-          3.4
+          0
         ],
         "rotation_deg": {
           "yaw": [
-            0,
-            0
+            -180,
+            180
           ],
           "pitch": [
             0,
@@ -2961,247 +3849,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:ecdd8fa0a1dfe7e51d9d147c78af68d528a8d09ea55e17e8e14f4c8dd64bca6d"
+      "geometry_hash": "sha256:3698a57cbd33873ba808b28b850f319f760c894b8912acda4c9f84f86da67d6d"
     },
     {
-      "anchor_id": "svg:w-41c665594e:wall",
+      "anchor_id": "svg:l-old-core-wall-01:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-41c665594e"
+        "source_id": "l-old-core-wall-01"
       },
       "origin": [
-        -74.833,
+        -92.2,
         -6.0,
-        -1.817
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 6.111,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/reserve_control/south",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -74.833,
-          -6.0,
-          -1.667
-        ],
-        "along_range_m": [
-          0.0,
-          6.111
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:bfae88e9644fabaae65a4c0321ffc73b5425252837e29eb156232183f352128f"
-    },
-    {
-      "anchor_id": "svg:w-4c4dbacb38:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "w-4c4dbacb38"
-      },
-      "origin": [
-        -68.722,
-        -6.0,
-        2.183
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 6.111,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/control_access/south",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -68.722,
-          -6.0,
-          2.333
-        ],
-        "along_range_m": [
-          0.0,
-          6.111
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:ff7865819cf198ce332c0eaa27cc9a8f5fc9ab610052972cd5d9711df4a3186f"
-    },
-    {
-      "anchor_id": "svg:w-569d58d9e0:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "w-569d58d9e0"
-      },
-      "origin": [
-        -68.261,
-        -6.0,
-        -7.333
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 5.666,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/reserve_control/east",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -68.111,
-          -6.0,
-          -7.333
-        ],
-        "along_range_m": [
-          0.0,
-          5.666
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:509c26d4e2a8febc2e95618e202ddddb04b46612875ceb1b240a5c311e64f424"
-    },
-    {
-      "anchor_id": "svg:w-65b0ed722e:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "w-65b0ed722e"
-      },
-      "origin": [
-        -62.611,
-        -6.0,
-        -1.817
+        28.25
       ],
       "forward": [
         -1.0,
@@ -3220,21 +3883,21 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 6.111,
+        "length_m": 10.0,
         "height_m": 3.4,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/reserve_control/south",
+        "surface_side_id": "L-OLD-CORE/wall-01",
         "normal_side": "opposite",
         "source_segment_index": 1,
         "centerline_origin": [
-          -62.611,
+          -92.2,
           -6.0,
-          -1.667
+          28.4
         ],
         "along_range_m": [
           0.0,
-          6.111
+          10.0
         ]
       },
       "placement_limits": {
@@ -3261,397 +3924,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:a500d1c44acc5aec3ae4b68f873d92d35f23676c01daab645fe8af1d3265977b"
+      "geometry_hash": "sha256:639c13ec2f93f8961730b0ac1c5e09d0de96b401e2077c63c7fb7e1db6263cb1"
     },
     {
-      "anchor_id": "svg:w-704b80ed2f-2:wall",
+      "anchor_id": "svg:l-old-core-wall-02:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-704b80ed2f-2"
+        "source_id": "l-old-core-wall-02"
       },
       "origin": [
-        -68.722,
+        -92.2,
         -6.0,
-        2.483
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 6.722,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/distribution_hall/north",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -68.722,
-          -6.0,
-          2.333
-        ],
-        "along_range_m": [
-          0.0,
-          6.722
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:30b1128e54cf11f8a3159b3c2c2aec781d9fc29628657644e38451df65adc66d"
-    },
-    {
-      "anchor_id": "svg:w-704b80ed2f:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "w-704b80ed2f"
-      },
-      "origin": [
-        -84.0,
-        -6.0,
-        2.483
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 9.167,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/distribution_hall/north",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -84.0,
-          -6.0,
-          2.333
-        ],
-        "along_range_m": [
-          0.0,
-          9.167
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:4f01410c7955e1dd79a40a2683cf54c442638a6cb662420843cc3fcbf8ae17a5"
-    },
-    {
-      "anchor_id": "svg:w-77aea4b407:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "w-77aea4b407"
-      },
-      "origin": [
-        -62.15,
-        -6.0,
-        2.333
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 12.667,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/distribution_hall/east",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -62.0,
-          -6.0,
-          2.333
-        ],
-        "along_range_m": [
-          0.0,
-          12.667
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:d1a962cedb57d1f186d5aa87261d5810124dcc5e6534afcf20e140e193f78cb3"
-    },
-    {
-      "anchor_id": "svg:w-7e34c8f9fd:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "w-7e34c8f9fd"
-      },
-      "origin": [
-        -74.683,
-        -6.0,
-        2.333
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 4.0,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/control_access/west",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -74.833,
-          -6.0,
-          2.333
-        ],
-        "along_range_m": [
-          0.0,
-          4.0
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:62c7271e644ec41391dd9480fe99db62275c44cd5b023db761f47954ac547676"
-    },
-    {
-      "anchor_id": "svg:w-801e3c1eb1:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "w-801e3c1eb1"
-      },
-      "origin": [
-        -80.794,
-        -6.0,
-        -1.667
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 12.333,
-        "height_m": 3.4,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/reserve_control/west",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -80.944,
-          -6.0,
-          -1.667
-        ],
-        "along_range_m": [
-          0.0,
-          12.333
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.4
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:171ae37822bc6bb6f1ca99ac2c26940e7c775da3071550601758fef3df66949d"
-    },
-    {
-      "anchor_id": "svg:w-819056ed0c:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "w-819056ed0c"
-      },
-      "origin": [
-        -62.611,
-        -6.0,
-        -7.483
+        41.65
       ],
       "forward": [
         -1.0,
@@ -3670,21 +3958,21 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 5.5,
+        "length_m": 10.0,
         "height_m": 3.4,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/relay_room/south",
+        "surface_side_id": "L-OLD-CORE/wall-02",
         "normal_side": "opposite",
         "source_segment_index": 1,
         "centerline_origin": [
-          -62.611,
+          -92.2,
           -6.0,
-          -7.333
+          41.8
         ],
         "along_range_m": [
           0.0,
-          5.5
+          10.0
         ]
       },
       "placement_limits": {
@@ -3711,22 +3999,322 @@
           ]
         }
       },
-      "geometry_hash": "sha256:f350b4acf844ca3d44882dda3ac1b553ebe5b8d55e031eddb9338493270ab9e6"
+      "geometry_hash": "sha256:3990c64e31dc536959cac72ba9a28be90ffc3cda7eaaabb5ac3f00b87078d521"
     },
     {
-      "anchor_id": "svg:w-a35be11521:wall",
+      "anchor_id": "svg:l-old-core-wall-03:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-a35be11521"
+        "source_id": "l-old-core-wall-03"
       },
       "origin": [
-        -80.944,
+        -88.9,
         -6.0,
-        -13.85
+        30.55
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 3.3,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-03",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -88.9,
+          -6.0,
+          30.7
+        ],
+        "along_range_m": [
+          0.0,
+          3.3
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:b9cf628b275ad7f67bd4772ef2ff3e326ae220c0e202de70d95963a0df8a9829"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-04:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-04"
+      },
+      "origin": [
+        -88.9,
+        -6.0,
+        39.45
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 3.3,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-04",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -88.9,
+          -6.0,
+          39.6
+        ],
+        "along_range_m": [
+          0.0,
+          3.3
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:3b6139476a1f398c3967a9fad0c29de130a47203bf467d9507805bb3e68322b6"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-05:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-05"
+      },
+      "origin": [
+        -81.106,
+        -6.0,
+        14.9
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 7.794,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-05",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -81.106,
+          -6.0,
+          15.05
+        ],
+        "along_range_m": [
+          0.0,
+          7.794
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:e93f63df499e316968efc05663fd57c86f1793164b6697eb19327cf945928485"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-06:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-06"
+      },
+      "origin": [
+        -81.106,
+        -6.0,
+        48.25
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 7.794,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-06",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -81.106,
+          -6.0,
+          48.4
+        ],
+        "along_range_m": [
+          0.0,
+          7.794
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:60c61d35c059f746679b889c7362cc0a4f89c3a8c5e80581638ba717c74fd695"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-07:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-07"
+      },
+      "origin": [
+        -81.106,
+        -6.0,
+        6.891
       ],
       "forward": [
         1.0,
@@ -3745,21 +4333,21 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 18.333,
+        "length_m": 19.995,
         "height_m": 3.4,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/relay_room/north",
+        "surface_side_id": "L-OLD-CORE/wall-07",
         "normal_side": "normal",
         "source_segment_index": 1,
         "centerline_origin": [
-          -80.944,
+          -81.106,
           -6.0,
-          -14.0
+          6.741
         ],
         "along_range_m": [
           0.0,
-          18.333
+          19.995
         ]
       },
       "placement_limits": {
@@ -3786,22 +4374,97 @@
           ]
         }
       },
-      "geometry_hash": "sha256:29c93608506008b41c8b652b7f57889075c6ec8ca0f8bca50374a9184e8a14e4"
+      "geometry_hash": "sha256:2d3f96df36cdd9a89d97b15fcc7967e0e9d5841a185b3dca5b053d61a726a1fb"
     },
     {
-      "anchor_id": "svg:w-bc4eb0bb27:wall",
+      "anchor_id": "svg:l-old-core-wall-08:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-bc4eb0bb27"
+        "source_id": "l-old-core-wall-08"
       },
       "origin": [
-        -74.833,
+        -61.111,
         -6.0,
-        -1.517
+        24.961
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 19.995,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-08",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -61.111,
+          -6.0,
+          25.111
+        ],
+        "along_range_m": [
+          0.0,
+          19.995
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:59f102696abe6513f3d40ec2db06180fdad6f155e45269b6c053a3c6b0fb67a7"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-09:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-09"
+      },
+      "origin": [
+        -78.333,
+        -6.0,
+        -9.183
       ],
       "forward": [
         1.0,
@@ -3820,21 +4483,21 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 6.111,
+        "length_m": 16.666,
         "height_m": 3.4,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/control_access/north",
+        "surface_side_id": "L-OLD-CORE/wall-09",
         "normal_side": "normal",
         "source_segment_index": 1,
         "centerline_origin": [
-          -74.833,
+          -78.333,
           -6.0,
-          -1.667
+          -9.333
         ],
         "along_range_m": [
           0.0,
-          6.111
+          16.666
         ]
       },
       "placement_limits": {
@@ -3861,22 +4524,322 @@
           ]
         }
       },
-      "geometry_hash": "sha256:27f46159c14b3d2230cb722d2bbd35cb3e5c2750d13322844b34dadcd9375e67"
+      "geometry_hash": "sha256:a6f5b1eba5082724d6c53c6cccb59fea49e096109b3e6e333dd95e29ac68f769"
     },
     {
-      "anchor_id": "svg:w-f72eae0b06:wall",
+      "anchor_id": "svg:l-old-core-wall-10:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "w-f72eae0b06"
+        "source_id": "l-old-core-wall-10"
       },
       "origin": [
-        -67.961,
+        -78.333,
         -6.0,
-        -7.333
+        2.954
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 16.666,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-10",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -78.333,
+          -6.0,
+          2.804
+        ],
+        "along_range_m": [
+          0.0,
+          16.666
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:84941efbc38885ecc95adb555e72dbd3476aee00a00b6a16a461c5eee68d704b"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-11:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-11"
+      },
+      "origin": [
+        -66.667,
+        -6.0,
+        -2.622
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 5.0,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-11",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -66.667,
+          -6.0,
+          -2.772
+        ],
+        "along_range_m": [
+          0.0,
+          5.0
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:5e7a40a811291168e6a18b5dda61483e07ea66e19a6f74d5d78ab317ede673dd"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-12:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-12"
+      },
+      "origin": [
+        -58.89,
+        -6.0,
+        10.55
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 2.221,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-12",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -58.89,
+          -6.0,
+          10.7
+        ],
+        "along_range_m": [
+          0.0,
+          2.221
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:8013c642c0c7de62eb7c7312cdc430bb40f14bf332e949f42f9c02ec8df9a5fc"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-13:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-13"
+      },
+      "origin": [
+        -58.89,
+        -6.0,
+        14.9
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 2.221,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-13",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -58.89,
+          -6.0,
+          15.05
+        ],
+        "along_range_m": [
+          0.0,
+          2.221
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:bd8bc1526fc6f70f89a25f6299ea3a30854b5aef0c2d8a76192bff52c1baa1f7"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-14:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-14"
+      },
+      "origin": [
+        -102.05,
+        -6.0,
+        41.8
       ],
       "forward": [
         0.0,
@@ -3895,21 +4858,21 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 6.667,
+        "length_m": 13.4,
         "height_m": 3.4,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-OLD-CORE/relay_room/west",
+        "surface_side_id": "L-OLD-CORE/wall-14",
         "normal_side": "opposite",
         "source_segment_index": 1,
         "centerline_origin": [
-          -68.111,
+          -102.2,
           -6.0,
-          -7.333
+          41.8
         ],
         "along_range_m": [
           0.0,
-          6.667
+          13.4
         ]
       },
       "placement_limits": {
@@ -3936,7 +4899,757 @@
           ]
         }
       },
-      "geometry_hash": "sha256:7c19df564fc0ea443351ce525b918ce5f035e5875a2d759037803f861877908b"
+      "geometry_hash": "sha256:a91cd81926fe6cebbc03104ce8371e1db01b6dde68a43fbd7a78439852d23989"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-15:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-15"
+      },
+      "origin": [
+        -92.35,
+        -6.0,
+        28.4
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 13.4,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-15",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -92.2,
+          -6.0,
+          28.4
+        ],
+        "along_range_m": [
+          0.0,
+          13.4
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:8d52fc7293bc1807b675fe143d1341980bbc1f4727239bb743625769017ff8f4"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-16:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-16"
+      },
+      "origin": [
+        -89.05,
+        -6.0,
+        15.05
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 33.35,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-16",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -88.9,
+          -6.0,
+          15.05
+        ],
+        "along_range_m": [
+          0.0,
+          33.35
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:ca157ff3d6e9692b5acd1f4a09d79945918a5f6872aa5292c83f188e70f9f7d2"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-17:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-17"
+      },
+      "origin": [
+        -81.256,
+        -6.0,
+        6.741
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 41.659,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-17",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -81.106,
+          -6.0,
+          6.741
+        ],
+        "along_range_m": [
+          0.0,
+          41.659
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:942b6415b2404be40fdf01265a8aa651ddfa143a0a45bd50ac8f2f40b9640db3"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-18:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-18"
+      },
+      "origin": [
+        -78.183,
+        -6.0,
+        2.804
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.137,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-18",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -78.333,
+          -6.0,
+          2.804
+        ],
+        "along_range_m": [
+          0.0,
+          12.137
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:e7b4ce488045fc89c22df4d2a87d58bc9510e7940a2639eceee88306f746e79c"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-19:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-19"
+      },
+      "origin": [
+        -72.628,
+        -6.0,
+        6.741
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 3.937,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-19",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -72.778,
+          -6.0,
+          6.741
+        ],
+        "along_range_m": [
+          0.0,
+          3.937
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:df6cdb21b8e36b83e6e52f8a562a6852541f77e8f9b267212a52cfa39ab51545"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-20:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-20"
+      },
+      "origin": [
+        -67.372,
+        -6.0,
+        2.804
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 3.937,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-20",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -67.222,
+          -6.0,
+          2.804
+        ],
+        "along_range_m": [
+          0.0,
+          3.937
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:0852f26806bb393fa8f03407cd2c31a4f63fd599ac8b9c5018bdae9575dbfb03"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-21:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-21"
+      },
+      "origin": [
+        -66.817,
+        -6.0,
+        -9.333
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.137,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-21",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -66.667,
+          -6.0,
+          -9.333
+        ],
+        "along_range_m": [
+          0.0,
+          12.137
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:86b7e59b74af4ffdeb725a4a9dc691e287b4888d568edb6d7a3e8cf25ac95517"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-22:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-22"
+      },
+      "origin": [
+        -61.817,
+        -6.0,
+        -9.333
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.137,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-22",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -61.667,
+          -6.0,
+          -9.333
+        ],
+        "along_range_m": [
+          0.0,
+          12.137
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:4159e5f5f86329a9e300b105951cfaee13f567a427a92a0e906ec4d0eeaa2284"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-23:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-23"
+      },
+      "origin": [
+        -61.261,
+        -6.0,
+        6.741
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 18.37,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-23",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -61.111,
+          -6.0,
+          6.741
+        ],
+        "along_range_m": [
+          0.0,
+          18.37
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:2d4a413ca6e7880a16cc5121246eec77f3814ccd969f3168d2ddd7b178d953b1"
+    },
+    {
+      "anchor_id": "svg:l-old-core-wall-24:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-old-core-wall-24"
+      },
+      "origin": [
+        -59.04,
+        -6.0,
+        10.7
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.35,
+        "height_m": 3.4,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-OLD-CORE/wall-24",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -58.89,
+          -6.0,
+          10.7
+        ],
+        "along_range_m": [
+          0.0,
+          4.35
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.4
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:4a30418c23ab57d62b136773655750a8754d3b1aded7d691fc6ce5b1bb0c4e87"
     }
   ]
 }

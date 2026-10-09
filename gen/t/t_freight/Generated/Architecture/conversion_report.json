@@ -1,6 +1,6 @@
 {
   "generator_version": "1.19.0",
-  "source": "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/technical/t_freight.svg",
+  "source": "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/technical/t_freight.svg",
   "scene": "$STAGING/Generated/Architecture/t_freight_generated.tscn",
   "settings": {
     "scale": 1.0,
@@ -38,10 +38,10 @@
     "strict": true
   },
   "view_box": [
-    -21.0,
-    66.5,
-    52.0,
-    16.5
+    -17.7,
+    67.56,
+    47.5,
+    14.0
   ],
   "profile": "generic",
   "spatial_handoff": {
@@ -56,64 +56,106 @@
       "origin_mode": "none",
       "invert_z": false
     },
-    "surface_openings": [],
+    "surface_openings": [
+      {
+        "opening_id": "t-freight-ceiling-opening-01",
+        "source_id": "t-freight-ceiling-opening-01",
+        "surface": "ceiling",
+        "elevation_m": -6.5,
+        "applied": true,
+        "polygon_xz_m": [
+          [
+            11.2,
+            69.6
+          ],
+          [
+            24.1,
+            69.6
+          ],
+          [
+            24.1,
+            77.4
+          ],
+          [
+            11.2,
+            77.4
+          ]
+        ],
+        "area_m2": 100.62,
+        "bounds_m": {
+          "min_x": 11.2,
+          "max_x": 24.1,
+          "min_z": 69.6,
+          "max_z": 77.4,
+          "width_x": 12.9,
+          "length_z": 7.8
+        },
+        "local_center_m": [
+          17.65,
+          -6.5,
+          73.5
+        ],
+        "centroid_m": [
+          17.65,
+          -6.5,
+          73.5
+        ],
+        "contained_markers": [],
+        "is_stair_shaft_candidate": false,
+        "space_id": "T-FREIGHT/gruzovoy-lift"
+      }
+    ],
     "wall_construction": [
       {
-        "source_id": "w-0082641163",
+        "source_id": "t-freight-wall-01",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "w-0b063c2462",
+        "source_id": "t-freight-wall-02",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "w-6c4bff4328",
+        "source_id": "t-freight-wall-03",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "w-8eb21e3dc1",
+        "source_id": "t-freight-wall-04",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "w-9457fdcde5",
+        "source_id": "t-freight-wall-05",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "w-a39de6f0b1",
+        "source_id": "t-freight-wall-06",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "w-ac90a7f1c5",
+        "source_id": "t-freight-wall-07",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "w-c53ecdb1a3",
+        "source_id": "t-freight-wall-08",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "w-d5513044c8",
-        "thickness_m": 0.3,
-        "height_m": 5.0,
-        "base_elevation_m": -11.5
-      },
-      {
-        "source_id": "w-dbd62ea9ae",
+        "source_id": "t-freight-wall-09",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -11.5
@@ -121,25 +163,37 @@
     ],
     "ceiling_construction": [
       {
-        "source_id": "c-09b5445e49",
+        "source_id": "t-freight-ceiling-01",
         "underside_elevation_m": -6.5,
         "top_elevation_m": -6.3,
         "thickness_m": 0.2
       },
       {
-        "source_id": "c-93252104f8",
+        "source_id": "t-freight-ceiling-02",
         "underside_elevation_m": -6.5,
         "top_elevation_m": -6.3,
         "thickness_m": 0.2
       },
       {
-        "source_id": "c-0f510e6361",
+        "source_id": "t-freight-ceiling-03",
         "underside_elevation_m": -6.5,
         "top_elevation_m": -6.3,
         "thickness_m": 0.2
       },
       {
-        "source_id": "c-9952cf695f",
+        "source_id": "t-freight-ceiling-04",
+        "underside_elevation_m": -6.5,
+        "top_elevation_m": -6.3,
+        "thickness_m": 0.2
+      },
+      {
+        "source_id": "t-freight-ceiling-05",
+        "underside_elevation_m": -6.5,
+        "top_elevation_m": -6.3,
+        "thickness_m": 0.2
+      },
+      {
+        "source_id": "t-freight-ceiling-06",
         "underside_elevation_m": -6.5,
         "top_elevation_m": -6.3,
         "thickness_m": 0.2
@@ -150,76 +204,94 @@
     ],
     "reference_points": [
       {
-        "source_id": "d-d6eeaec6a0",
-        "type": "door",
+        "source_id": "t-freight-window-01",
+        "type": "window",
         "position_m": [
-          -4.5,
-          -9.25,
-          71.125
+          24.2,
+          -9.9,
+          71.81
         ]
       },
       {
-        "source_id": "d-8f432a6058",
+        "source_id": "t-freight-door-02",
         "type": "door",
         "position_m": [
-          17.0,
+          -2.3,
           -9.25,
-          71.125
+          69.56
         ]
       },
       {
-        "source_id": "d-55f7a9f3de",
+        "source_id": "t-freight-door-03",
         "type": "door",
         "position_m": [
-          26.5,
+          11.1,
           -9.25,
-          71.125
+          73.56
         ]
       },
       {
-        "source_id": "d-d9208c39da",
+        "source_id": "t-freight-door-04",
         "type": "door",
         "position_m": [
-          11.0,
-          -9.25,
-          76.562
+          -2.3,
+          -10.45,
+          77.56
         ]
       },
       {
-        "source_id": "d-16e8d1f719",
+        "source_id": "t-freight-door-05",
         "type": "door",
         "position_m": [
-          23.0,
-          -9.25,
-          76.562
+          17.7,
+          -10.45,
+          77.56
         ]
       },
       {
-        "source_id": "d-c24850a351",
+        "source_id": "t-freight-door-06",
         "type": "door",
         "position_m": [
-          5.0,
-          -9.25,
-          67.5
+          25.95,
+          -10.45,
+          73.56
+        ]
+      },
+      {
+        "source_id": "t-freight-door-07",
+        "type": "door",
+        "position_m": [
+          25.95,
+          -10.45,
+          77.56
+        ]
+      },
+      {
+        "source_id": "t-freight-door-08",
+        "type": "door",
+        "position_m": [
+          11.1,
+          -10.45,
+          78.56
         ]
       }
     ],
     "anchors": [],
     "anchor_frames": [
       {
-        "anchor_id": "svg:c-09b5445e49:ceiling",
+        "anchor_id": "svg:t-freight-ceiling-01:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "c-09b5445e49"
+          "source_id": "t-freight-ceiling-01"
         },
         "origin": [
-          -20.0,
+          -15.7,
           -6.5,
-          67.5
+          69.56
         ],
         "forward": [
           1.0,
@@ -240,20 +312,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -20.0,
-              67.5
+              -15.7,
+              69.56
             ],
             [
-              30.0,
-              67.5
+              11.1,
+              69.56
             ],
             [
-              30.0,
-              71.125
+              11.1,
+              77.56
             ],
             [
-              -20.0,
-              71.125
+              -15.7,
+              77.56
             ]
           ],
           "elevation_m": -6.5,
@@ -270,22 +342,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:d536fe2448f530e03a043d21838fcf4f46018c457eae133ceccff679f25e22b2"
+        "geometry_hash": "sha256:84083b0393bdecd0dd7cc626c12aa2302aea73c67ab5f0878f0777a5249ece32"
       },
       {
-        "anchor_id": "svg:c-0f510e6361:ceiling",
+        "anchor_id": "svg:t-freight-ceiling-02:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "c-0f510e6361"
+          "source_id": "t-freight-ceiling-02"
         },
         "origin": [
-          11.0,
+          -15.7,
           -6.5,
-          71.125
+          77.56
         ],
         "forward": [
           1.0,
@@ -306,20 +378,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              11.0,
-              71.125
+              -15.7,
+              77.56
             ],
             [
-              23.0,
-              71.125
+              11.1,
+              77.56
             ],
             [
-              23.0,
-              82.0
+              11.1,
+              79.56
             ],
             [
-              11.0,
-              82.0
+              -15.7,
+              79.56
             ]
           ],
           "elevation_m": -6.5,
@@ -336,22 +408,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:305af944c60732fd28f826aba6fe33ef06401c28ebf3850a14eb816cf7d12c57"
+        "geometry_hash": "sha256:1e2d45070205c406c7f8ce44272e9618685512508121b8afbdcfc246a47d59f4"
       },
       {
-        "anchor_id": "svg:c-93252104f8:ceiling",
+        "anchor_id": "svg:t-freight-ceiling-03:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "c-93252104f8"
+          "source_id": "t-freight-ceiling-03"
         },
         "origin": [
-          -20.0,
+          11.1,
           -6.5,
-          71.125
+          69.56
         ],
         "forward": [
           1.0,
@@ -372,20 +444,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -20.0,
-              71.125
+              11.1,
+              69.56
             ],
             [
-              11.0,
-              71.125
+              24.2,
+              69.56
             ],
             [
-              11.0,
-              82.0
+              24.2,
+              77.56
             ],
             [
-              -20.0,
-              82.0
+              11.1,
+              77.56
             ]
           ],
           "elevation_m": -6.5,
@@ -402,22 +474,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:3b3adf6df2bbb66af830b0de552fc1594fe7d92e71588453df58a13d387dc113"
+        "geometry_hash": "sha256:1f8980eda40de0b8749e79df134e5b46ec24ad90d31c90a4d92b9da2807a942a"
       },
       {
-        "anchor_id": "svg:c-9952cf695f:ceiling",
+        "anchor_id": "svg:t-freight-ceiling-04:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "c-9952cf695f"
+          "source_id": "t-freight-ceiling-04"
         },
         "origin": [
-          23.0,
+          24.2,
           -6.5,
-          71.125
+          69.56
         ],
         "forward": [
           1.0,
@@ -438,20 +510,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              23.0,
-              71.125
+              24.2,
+              69.56
             ],
             [
-              30.0,
-              71.125
+              27.7,
+              69.56
             ],
             [
-              30.0,
-              82.0
+              27.7,
+              73.56
             ],
             [
-              23.0,
-              82.0
+              24.2,
+              73.56
             ]
           ],
           "elevation_m": -6.5,
@@ -468,32 +540,164 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:523ce0f1a3d2868fce2fa1165ad1f1e2543b8ee6974a0e67bc6d9bc42cee4790"
+        "geometry_hash": "sha256:44b0c19509fb5fb984414e0260e89cddc7fa4b1027ab766def5c45abdcc9e050"
       },
       {
-        "anchor_id": "svg:d-16e8d1f719:door:center",
+        "anchor_id": "svg:t-freight-ceiling-05:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-ceiling-05"
+        },
+        "origin": [
+          24.2,
+          -6.5,
+          73.56
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              24.2,
+              73.56
+            ],
+            [
+              27.7,
+              73.56
+            ],
+            [
+              27.7,
+              77.56
+            ],
+            [
+              24.2,
+              77.56
+            ]
+          ],
+          "elevation_m": -6.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:983e4762669774694ee3d03c430a6886fc22e10263ab48c4c5ae47a51d4464c2"
+      },
+      {
+        "anchor_id": "svg:t-freight-ceiling-06:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-ceiling-06"
+        },
+        "origin": [
+          11.1,
+          -6.5,
+          77.56
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              11.1,
+              77.56
+            ],
+            [
+              27.8,
+              77.56
+            ],
+            [
+              27.8,
+              79.56
+            ],
+            [
+              11.1,
+              79.56
+            ]
+          ],
+          "elevation_m": -6.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:b4aa65985423529847782e854c5cbbfd1554099ea5da98c513e70cbe9e4242ca"
+      },
+      {
+        "anchor_id": "svg:t-freight-door-02:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-16e8d1f719"
+          "source_id": "t-freight-door-02"
         },
         "origin": [
-          23.0,
+          -2.3,
           -11.5,
-          76.562
+          69.56
         ],
         "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
           0.0,
           0.0,
           1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
         ],
         "up": [
           0.0,
@@ -526,32 +730,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:267654940e7881ea7631248164cc0165f66f6a1311669c67a970b1f7e130ad3d"
+        "geometry_hash": "sha256:04b5baa6a065ccb98078bfb37043e643bc7f719bba131b4df3ea0e534f50ac0c"
       },
       {
-        "anchor_id": "svg:d-16e8d1f719:door:threshold_inside",
+        "anchor_id": "svg:t-freight-door-02:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-16e8d1f719"
+          "source_id": "t-freight-door-02"
         },
         "origin": [
-          22.85,
+          -2.3,
           -11.5,
-          76.562
+          69.71
         ],
         "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
           0.0,
           0.0,
           1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
         ],
         "up": [
           0.0,
@@ -584,32 +788,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:0f871f0e167bf679c97a6342c1e4920d841c355c1b3d792f9f42564d6fb04af5"
+        "geometry_hash": "sha256:105d3ebd8cc2f7a4e0ec357b94ddc45aaa9b98fc53bb8d4b831570983ffaf1c5"
       },
       {
-        "anchor_id": "svg:d-16e8d1f719:door:threshold_outside",
+        "anchor_id": "svg:t-freight-door-02:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-16e8d1f719"
+          "source_id": "t-freight-door-02"
         },
         "origin": [
-          23.15,
+          -2.3,
           -11.5,
-          76.562
+          69.41
         ],
         "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
           0.0,
           0.0,
           1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
         ],
         "up": [
           0.0,
@@ -642,32 +846,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:8a3176116d1640884daf021a93d5c8d975690963470af21b5d5876cc6c0089b3"
+        "geometry_hash": "sha256:527ae6c71c6ffb639fd6f9bb2e579501f15c10679314ad88db4b348fa79df774"
       },
       {
-        "anchor_id": "svg:d-55f7a9f3de:door:center",
+        "anchor_id": "svg:t-freight-door-03:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-55f7a9f3de"
+          "source_id": "t-freight-door-03"
         },
         "origin": [
-          26.5,
+          11.1,
           -11.5,
-          71.125
+          73.56
         ],
         "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
           0.0,
           0.0,
           -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
         ],
         "up": [
           0.0,
@@ -676,7 +880,7 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.2,
+          "width_m": 4.5,
           "height_m": 4.5,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
@@ -700,32 +904,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:1dd517215c27276200f8d2c730899d778358dd4f78cfbfae97594a92c468d14e"
+        "geometry_hash": "sha256:9c98edbfe56e354a325302fd1ad390aa38ab77f927aaac946f9e46366215cc3f"
       },
       {
-        "anchor_id": "svg:d-55f7a9f3de:door:threshold_inside",
+        "anchor_id": "svg:t-freight-door-03:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-55f7a9f3de"
+          "source_id": "t-freight-door-03"
         },
         "origin": [
-          26.5,
+          11.25,
           -11.5,
-          70.975
+          73.56
         ],
         "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
           0.0,
           0.0,
           -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
         ],
         "up": [
           0.0,
@@ -734,7 +938,7 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.2,
+          "width_m": 4.5,
           "height_m": 4.5,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
@@ -758,32 +962,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:45923f2844a381728594fbb3fea74b5231f4d3ba713e2cca50bd1f6895e05073"
+        "geometry_hash": "sha256:280f4ef6f442334ff88a9621292ab0eee8c6a503d17aab3fd173ae8367a33d7e"
       },
       {
-        "anchor_id": "svg:d-55f7a9f3de:door:threshold_outside",
+        "anchor_id": "svg:t-freight-door-03:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-55f7a9f3de"
+          "source_id": "t-freight-door-03"
         },
         "origin": [
-          26.5,
+          10.95,
           -11.5,
-          71.275
+          73.56
         ],
         "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
           0.0,
           0.0,
           -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
         ],
         "up": [
           0.0,
@@ -792,7 +996,7 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.2,
+          "width_m": 4.5,
           "height_m": 4.5,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
@@ -816,32 +1020,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:fa80789c66dc08f3537a423d0321029d22d7d4393e5db125ee4f14aa09f0b94a"
+        "geometry_hash": "sha256:114ce612adaaba193613df8496a26409cf36f158e03ff58ecb20fe68d16e837f"
       },
       {
-        "anchor_id": "svg:d-8f432a6058:door:center",
+        "anchor_id": "svg:t-freight-door-04:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-8f432a6058"
+          "source_id": "t-freight-door-04"
         },
         "origin": [
-          17.0,
+          -2.3,
           -11.5,
-          71.125
+          77.56
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -850,12 +1054,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -868,38 +1072,38 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:31e2ed4c3e2d46b313982e690d7700dade422e738187db34d1db0475f839df15"
+        "geometry_hash": "sha256:90f8cc800331dd6130819b012d983ce2660e67ba07276e916e5e11e00117550b"
       },
       {
-        "anchor_id": "svg:d-8f432a6058:door:threshold_inside",
+        "anchor_id": "svg:t-freight-door-04:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-8f432a6058"
+          "source_id": "t-freight-door-04"
         },
         "origin": [
-          17.0,
+          -2.3,
           -11.5,
-          70.975
+          77.71
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -908,12 +1112,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -926,38 +1130,38 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:ced53e683f810ce9bb93ac501d49a59b37641ca23c5ed8e263f37f8fdcc359f0"
+        "geometry_hash": "sha256:22433c96acde01520cb0127bdfb2c71e110bde7c918ab401d382c5c3a3fef303"
       },
       {
-        "anchor_id": "svg:d-8f432a6058:door:threshold_outside",
+        "anchor_id": "svg:t-freight-door-04:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-8f432a6058"
+          "source_id": "t-freight-door-04"
         },
         "origin": [
-          17.0,
+          -2.3,
           -11.5,
-          71.275
+          77.41
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -966,12 +1170,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -984,28 +1188,28 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:7e8e7ab683704cabc7e8a06104b812b67b034a4c45b56ee0a05baf8c3cf99fbf"
+        "geometry_hash": "sha256:85cd72218ee2cbed7be3d35f523b89b3228db468339d21870c4fd53c0b907e68"
       },
       {
-        "anchor_id": "svg:d-c24850a351:door:center",
+        "anchor_id": "svg:t-freight-door-05:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-c24850a351"
+          "source_id": "t-freight-door-05"
         },
         "origin": [
-          5.0,
+          17.7,
           -11.5,
-          67.5
+          77.56
         ],
         "forward": [
           1.0,
@@ -1024,8 +1228,8 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
@@ -1042,28 +1246,28 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:5f7ae43d48e89a040f077d2c9ad5ab4ef30a694c7a6c1460ed5183f478bf0983"
+        "geometry_hash": "sha256:986ddfe477173231a18b7588d7185035dc10738679401af51ad29117e9a293c9"
       },
       {
-        "anchor_id": "svg:d-c24850a351:door:threshold_inside",
+        "anchor_id": "svg:t-freight-door-05:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-c24850a351"
+          "source_id": "t-freight-door-05"
         },
         "origin": [
-          5.0,
+          17.7,
           -11.5,
-          67.65
+          77.71
         ],
         "forward": [
           1.0,
@@ -1082,8 +1286,8 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
@@ -1100,28 +1304,28 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:5c1dd158b8b16a67097c8e3ab9b05e24e69b7a5dd6d4b8af670273ccfc36e27b"
+        "geometry_hash": "sha256:92d58e506d427869e28a5cf1598490a0036152ca1ed5f9b5978cf4612a9919c3"
       },
       {
-        "anchor_id": "svg:d-c24850a351:door:threshold_outside",
+        "anchor_id": "svg:t-freight-door-05:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-c24850a351"
+          "source_id": "t-freight-door-05"
         },
         "origin": [
-          5.0,
+          17.7,
           -11.5,
-          67.35
+          77.41
         ],
         "forward": [
           1.0,
@@ -1140,8 +1344,8 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
@@ -1158,38 +1362,38 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:0caad73c6a3c1c90be096731013b051f2bfa9d3d50b29a62cada3264bed71d9a"
+        "geometry_hash": "sha256:5d5bd1f2db6357374439f24b366c22e1b5cf61ed031342ba12ef7c1ae825f566"
       },
       {
-        "anchor_id": "svg:d-d6eeaec6a0:door:center",
+        "anchor_id": "svg:t-freight-door-06:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-d6eeaec6a0"
+          "source_id": "t-freight-door-06"
         },
         "origin": [
-          -4.5,
+          25.95,
           -11.5,
-          71.125
+          73.56
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -1198,12 +1402,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -1216,38 +1420,38 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:fcc207e21adac909081564452109f5b11e522c53807ff6d3046d0762ac425de9"
+        "geometry_hash": "sha256:6261d2dcf536f8d170a136fcc4a1f268501c1e64f077d4fad95f21495a2c4878"
       },
       {
-        "anchor_id": "svg:d-d6eeaec6a0:door:threshold_inside",
+        "anchor_id": "svg:t-freight-door-06:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-d6eeaec6a0"
+          "source_id": "t-freight-door-06"
         },
         "origin": [
-          -4.5,
+          25.95,
           -11.5,
-          70.975
+          73.71
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -1256,12 +1460,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -1274,38 +1478,38 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:ee956c896d7472a7b58620807f627c30327dd0cd08e95c25302cc7bbce56ff95"
+        "geometry_hash": "sha256:d41b9afd9b49d20c3077ee85a25a70c277b706fe04af99d4409843c3279268f8"
       },
       {
-        "anchor_id": "svg:d-d6eeaec6a0:door:threshold_outside",
+        "anchor_id": "svg:t-freight-door-06:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-d6eeaec6a0"
+          "source_id": "t-freight-door-06"
         },
         "origin": [
-          -4.5,
+          25.95,
           -11.5,
-          71.275
+          73.41
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -1314,12 +1518,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -1332,38 +1536,38 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:2f926d01d3b50b65b5c0654f22824c071b2731efbabaf31e7d9663bdd702d561"
+        "geometry_hash": "sha256:c340f3614b913c9a3862cce0cd9d9234233db0ef00e6681cc16a2dda90265223"
       },
       {
-        "anchor_id": "svg:d-d9208c39da:door:center",
+        "anchor_id": "svg:t-freight-door-07:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-d9208c39da"
+          "source_id": "t-freight-door-07"
         },
         "origin": [
-          11.0,
+          25.95,
           -11.5,
-          76.562
+          77.56
         ],
         "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
           -1.0,
           0.0,
           0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
         ],
         "up": [
           0.0,
@@ -1372,12 +1576,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
+          "inside_side": "opposite"
         },
         "placement_limits": {
           "along_normalized": [
@@ -1390,38 +1594,38 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:057471607f067dba3bf2077267ef68c45db9d7cd2ffd8e9791b62230cff49cad"
+        "geometry_hash": "sha256:be594a4f9d7feef54a3bc263a4a145fad4d721eb5a9032652fd17db42fb8c6b8"
       },
       {
-        "anchor_id": "svg:d-d9208c39da:door:threshold_inside",
+        "anchor_id": "svg:t-freight-door-07:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-d9208c39da"
+          "source_id": "t-freight-door-07"
         },
         "origin": [
-          10.85,
+          25.95,
           -11.5,
-          76.562
+          77.41
         ],
         "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
           -1.0,
           0.0,
           0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
         ],
         "up": [
           0.0,
@@ -1430,12 +1634,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
+          "inside_side": "opposite"
         },
         "placement_limits": {
           "along_normalized": [
@@ -1448,38 +1652,38 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:0202d49934f4ac466cff14594439e54729bcf109d4d7a094091e52b99d84959c"
+        "geometry_hash": "sha256:d648329911ef1fc680e87e65052db2070393532dce42b85233bbc422cc9489c0"
       },
       {
-        "anchor_id": "svg:d-d9208c39da:door:threshold_outside",
+        "anchor_id": "svg:t-freight-door-07:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-d9208c39da"
+          "source_id": "t-freight-door-07"
         },
         "origin": [
-          11.15,
+          25.95,
           -11.5,
-          76.562
+          77.71
         ],
         "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
           -1.0,
           0.0,
           0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
         ],
         "up": [
           0.0,
@@ -1488,12 +1692,12 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 4.5,
-          "height_m": 4.5,
+          "width_m": 1.0,
+          "height_m": 2.1,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
+          "inside_side": "opposite"
         },
         "placement_limits": {
           "along_normalized": [
@@ -1506,28 +1710,202 @@
           ],
           "height_m": [
             0.0,
-            4.5
+            2.1
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:299f3410456ceb964a16f3dc93fc097900457ae8421d42954c536648c388435d"
+        "geometry_hash": "sha256:90dda6cfbcc0b7bbb6d8a54b2ce72d07759903c1827f77291845f5605f1a9e64"
       },
       {
-        "anchor_id": "svg:f-09b5445e49:floor",
+        "anchor_id": "svg:t-freight-door-08:door:center",
+        "type": "door",
+        "role": "center",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-door-08"
+        },
+        "origin": [
+          11.1,
+          -11.5,
+          78.56
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.1
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:fe58989c40e602207f6426ca2449943b6a2c10e159573f6b1a3d65c5c954c49d"
+      },
+      {
+        "anchor_id": "svg:t-freight-door-08:door:threshold_inside",
+        "type": "door",
+        "role": "threshold_inside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-door-08"
+        },
+        "origin": [
+          11.25,
+          -11.5,
+          78.56
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.1
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:d632fa90ada6fa82383074bfb5fb8106873501c9456b71763493af558fcbfc63"
+      },
+      {
+        "anchor_id": "svg:t-freight-door-08:door:threshold_outside",
+        "type": "door",
+        "role": "threshold_outside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-door-08"
+        },
+        "origin": [
+          10.95,
+          -11.5,
+          78.56
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.1
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:b1f74e2a6fe70c1f5d48093078436ec5ba8039e24bb1de967f472f24050b4ca5"
+      },
+      {
+        "anchor_id": "svg:t-freight-floor-01:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "f-09b5445e49"
+          "source_id": "t-freight-floor-01"
         },
         "origin": [
-          -20.0,
+          -15.7,
           -11.5,
-          67.5
+          69.56
         ],
         "forward": [
           1.0,
@@ -1548,20 +1926,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -20.0,
-              67.5
+              -15.7,
+              69.56
             ],
             [
-              30.0,
-              67.5
+              11.1,
+              69.56
             ],
             [
-              30.0,
-              71.125
+              11.1,
+              77.56
             ],
             [
-              -20.0,
-              71.125
+              -15.7,
+              77.56
             ]
           ],
           "elevation_m": -11.5,
@@ -1578,22 +1956,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:f891f77d3c9842ff7da19c791ae8eb6a900a72bc416c5c94919b33823b4070e9"
+        "geometry_hash": "sha256:defd73077a7f73361e0e9e7e9de5eb15a593cb023938286a3014ecfed408c4f7"
       },
       {
-        "anchor_id": "svg:f-0f510e6361:floor",
+        "anchor_id": "svg:t-freight-floor-02:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "f-0f510e6361"
+          "source_id": "t-freight-floor-02"
         },
         "origin": [
-          11.0,
+          -15.7,
           -11.5,
-          71.125
+          77.56
         ],
         "forward": [
           1.0,
@@ -1614,20 +1992,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              11.0,
-              71.125
+              -15.7,
+              77.56
             ],
             [
-              23.0,
-              71.125
+              11.1,
+              77.56
             ],
             [
-              23.0,
-              82.0
+              11.1,
+              79.56
             ],
             [
-              11.0,
-              82.0
+              -15.7,
+              79.56
             ]
           ],
           "elevation_m": -11.5,
@@ -1644,22 +2022,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:e1475fa8b3d8093b75af604b4a889e82634c2babe8e2f309ef91d776f857fa23"
+        "geometry_hash": "sha256:bc89eb8b32c5d202f8f61c52d2337e3384d8cfceb4ea2ac0c3d8cf36856e8a17"
       },
       {
-        "anchor_id": "svg:f-93252104f8:floor",
+        "anchor_id": "svg:t-freight-floor-03:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "f-93252104f8"
+          "source_id": "t-freight-floor-03"
         },
         "origin": [
-          -20.0,
+          11.1,
           -11.5,
-          71.125
+          69.56
         ],
         "forward": [
           1.0,
@@ -1680,20 +2058,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -20.0,
-              71.125
+              11.1,
+              69.56
             ],
             [
-              11.0,
-              71.125
+              24.2,
+              69.56
             ],
             [
-              11.0,
-              82.0
+              24.2,
+              77.56
             ],
             [
-              -20.0,
-              82.0
+              11.1,
+              77.56
             ]
           ],
           "elevation_m": -11.5,
@@ -1710,22 +2088,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:0039172fdc0cf3e97c42bfc8583d987697ff54932b6925bf0c49f7ae46b463ca"
+        "geometry_hash": "sha256:75603d5f8cc02083f87c437a2fb0c8d50583bcb51b4cca19eb35b94e097be3b9"
       },
       {
-        "anchor_id": "svg:f-9952cf695f:floor",
+        "anchor_id": "svg:t-freight-floor-04:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "f-9952cf695f"
+          "source_id": "t-freight-floor-04"
         },
         "origin": [
-          23.0,
+          24.2,
           -11.5,
-          71.125
+          69.56
         ],
         "forward": [
           1.0,
@@ -1746,20 +2124,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              23.0,
-              71.125
+              24.2,
+              69.56
             ],
             [
-              30.0,
-              71.125
+              27.7,
+              69.56
             ],
             [
-              30.0,
-              82.0
+              27.7,
+              73.56
             ],
             [
-              23.0,
-              82.0
+              24.2,
+              73.56
             ]
           ],
           "elevation_m": -11.5,
@@ -1776,22 +2154,154 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:c764a1602a95287a0e435ed2ed6e38543079e9657b2c72e248bffbf3b1a3aa28"
+        "geometry_hash": "sha256:1dff3c73955eb6587da451059ef4a76dd05ef8ece4812e055b4e70cffefd342c"
       },
       {
-        "anchor_id": "svg:w-0082641163:wall",
+        "anchor_id": "svg:t-freight-floor-05:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-floor-05"
+        },
+        "origin": [
+          24.2,
+          -11.5,
+          73.56
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              24.2,
+              73.56
+            ],
+            [
+              27.7,
+              73.56
+            ],
+            [
+              27.7,
+              77.56
+            ],
+            [
+              24.2,
+              77.56
+            ]
+          ],
+          "elevation_m": -11.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:ce966f879943d1d83b447795212bfe18c22673712780dc1592b1ed42d2c3ed8e"
+      },
+      {
+        "anchor_id": "svg:t-freight-floor-06:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-floor-06"
+        },
+        "origin": [
+          11.1,
+          -11.5,
+          77.56
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              11.1,
+              77.56
+            ],
+            [
+              27.8,
+              77.56
+            ],
+            [
+              27.8,
+              79.56
+            ],
+            [
+              11.1,
+              79.56
+            ]
+          ],
+          "elevation_m": -11.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:8f9cdd31afcff44cbe6b14730f8342c54be987361ddfc514cbd2b96c479da9db"
+      },
+      {
+        "anchor_id": "svg:t-freight-wall-01:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-0082641163"
+          "source_id": "t-freight-wall-01"
         },
         "origin": [
-          30.0,
+          27.7,
           -11.5,
-          82.0
+          69.56
         ],
         "forward": [
           -1.0,
@@ -1810,11 +2320,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 7.0,
+          "length_m": 43.4,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/service_bypass/south",
+          "surface_side_id": "T-FREIGHT/wall-01",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -1832,78 +2342,22 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:5500dc3a8760d5c9223aa4965c0950e92bd396623f36490377c9605db5e6240e"
+        "geometry_hash": "sha256:b42c4f0f1dbad4e09fbdf846aa27a6f1f624ae49c25c7a7c73474ed153e2419f"
       },
       {
-        "anchor_id": "svg:w-0b063c2462:wall",
+        "anchor_id": "svg:t-freight-wall-02:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-0b063c2462"
+          "source_id": "t-freight-wall-02"
         },
         "origin": [
-          11.0,
+          27.8,
           -11.5,
-          71.125
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 12.0,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/freight_lift/north",
-          "normal_side": "normal",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:1aa6a741c1a923eac92e131b62abb2b088f9a9067035e5c372b1bdddb0bd8e15"
-      },
-      {
-        "anchor_id": "svg:w-6c4bff4328:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-6c4bff4328"
-        },
-        "origin": [
-          30.0,
-          -11.5,
-          71.125
+          77.56
         ],
         "forward": [
           -1.0,
@@ -1922,11 +2376,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 7.0,
+          "length_m": 43.5,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/heavy_spine/south",
+          "surface_side_id": "T-FREIGHT/wall-02",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -1944,22 +2398,22 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:becadd7ce804890353ecaf41605f924253d9d880950cbae0ab3d906e412d9f13"
+        "geometry_hash": "sha256:c2f3ce55734995fc7ba2f52b55a28d99b3e4cf7b4e5ff21df142af37cb8dc131"
       },
       {
-        "anchor_id": "svg:w-8eb21e3dc1:wall",
+        "anchor_id": "svg:t-freight-wall-03:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-8eb21e3dc1"
+          "source_id": "t-freight-wall-03"
         },
         "origin": [
-          23.0,
+          27.8,
           -11.5,
-          82.0
+          79.56
         ],
         "forward": [
           -1.0,
@@ -1978,11 +2432,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 43.0,
+          "length_m": 43.5,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/freight_lift/south",
+          "surface_side_id": "T-FREIGHT/wall-03",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -2000,190 +2454,22 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:29bdaf210bda625f26a4f9b37fe26a561027bd1b54884c11ed2464aacf86bfb9"
+        "geometry_hash": "sha256:22d689d169eaf901a7423aebdc8514fb07c9fe7f36359b66cb647a2a44db616d"
       },
       {
-        "anchor_id": "svg:w-9457fdcde5:wall",
+        "anchor_id": "svg:t-freight-wall-04:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-9457fdcde5"
+          "source_id": "t-freight-wall-04"
         },
         "origin": [
-          11.0,
+          27.7,
           -11.5,
-          82.0
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "normal": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 10.875,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/freight_lift/west",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:db2cc2a539f3bb22346da5cfbd9c2d0019772a9b5e8314e7412a55a1fc887024"
-      },
-      {
-        "anchor_id": "svg:w-a39de6f0b1:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-a39de6f0b1"
-        },
-        "origin": [
-          -20.0,
-          -11.5,
-          82.0
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "normal": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 14.5,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/heavy_spine/west",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:31d204ff0df85eda53f2ea88c33be1d5fc67ebc4ce8491bcd05bfed01acd9380"
-      },
-      {
-        "anchor_id": "svg:w-ac90a7f1c5:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-ac90a7f1c5"
-        },
-        "origin": [
-          30.0,
-          -11.5,
-          67.5
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 14.5,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/heavy_spine/east",
-          "normal_side": "normal",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:7232fbe6fbe0e34c207bab7cea9f628aa4372d9acfcfb9d0ebca78e5b3a52a84"
-      },
-      {
-        "anchor_id": "svg:w-c53ecdb1a3:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-c53ecdb1a3"
-        },
-        "origin": [
-          11.0,
-          -11.5,
-          71.125
+          73.56
         ],
         "forward": [
           -1.0,
@@ -2202,11 +2488,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 31.0,
+          "length_m": 3.5,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/heavy_spine/south",
+          "surface_side_id": "T-FREIGHT/wall-04",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -2224,30 +2510,30 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:750004f3f85ee054dffa956c22af9aafbd55ca0a1af73c9308edb3c4091023cf"
+        "geometry_hash": "sha256:a87e63a31d70e96ddd77a67ee367ac8534e4755251056afd79d56ac7d02e3efe"
       },
       {
-        "anchor_id": "svg:w-d5513044c8:wall",
+        "anchor_id": "svg:t-freight-wall-05:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-d5513044c8"
+          "source_id": "t-freight-wall-05"
         },
         "origin": [
-          23.0,
+          -15.7,
           -11.5,
-          71.125
+          79.56
         ],
         "forward": [
           0.0,
           0.0,
-          1.0
+          -1.0
         ],
         "normal": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
@@ -2258,12 +2544,12 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 10.875,
+          "length_m": 10.0,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/freight_lift/east",
-          "normal_side": "normal",
+          "surface_side_id": "T-FREIGHT/wall-05",
+          "normal_side": "opposite",
           "source_segment_index": 1
         },
         "placement_limits": {
@@ -2280,32 +2566,32 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:363fef2980c2295d17148a96b60fc85911ff1fd5d276d0fb64ca25bf261041e0"
+        "geometry_hash": "sha256:becde45364efe5e51959957227be91b4dbf1a24c1dbcd4476c287927b48f4911"
       },
       {
-        "anchor_id": "svg:w-dbd62ea9ae:wall",
+        "anchor_id": "svg:t-freight-wall-06:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-dbd62ea9ae"
+          "source_id": "t-freight-wall-06"
         },
         "origin": [
-          -20.0,
+          11.1,
           -11.5,
-          67.5
+          79.56
         ],
         "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
           1.0,
           0.0,
           0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
         ],
         "up": [
           0.0,
@@ -2314,12 +2600,12 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 50.0,
+          "length_m": 10.0,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-FREIGHT/heavy_spine/north",
-          "normal_side": "normal",
+          "surface_side_id": "T-FREIGHT/wall-06",
+          "normal_side": "opposite",
           "source_segment_index": 1
         },
         "placement_limits": {
@@ -2336,52 +2622,231 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:f026deaafc20cbae7054b91d31fb4b2a9dea7591cd30a34bac98c10381164949"
+        "geometry_hash": "sha256:748140615d2cef89d5f71aa3f4e5d1b1183c8c0cd521d7657a749f3afe352b12"
+      },
+      {
+        "anchor_id": "svg:t-freight-wall-07:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-wall-07"
+        },
+        "origin": [
+          24.2,
+          -11.5,
+          77.56
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 8.0,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-FREIGHT/wall-07",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:d8f6ade81a770f10ecc56e77db5f26d51208b35211408e2300dcc2e67a2f4c8c"
+      },
+      {
+        "anchor_id": "svg:t-freight-wall-08:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-wall-08"
+        },
+        "origin": [
+          27.7,
+          -11.5,
+          77.56
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 8.0,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-FREIGHT/wall-08",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:293694d684566e658b8589cbd4a3bb6c7daa2cda4aaa56abc347e1233c794def"
+      },
+      {
+        "anchor_id": "svg:t-freight-wall-09:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-freight-wall-09"
+        },
+        "origin": [
+          27.8,
+          -11.5,
+          79.56
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 2.0,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-FREIGHT/wall-09",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:2073c70b9e70752eb9c6a6b09189ac2e1df563af238a61fef525930fd13fb919"
       }
     ],
-    "space_ids": []
+    "space_ids": [
+      "T-FREIGHT/gruzovoy-lift"
+    ]
   },
   "counts": {
-    "input_floor": 4,
-    "input_ceiling": 4,
-    "input_wall": 10,
-    "input_door": 6,
+    "input_floor": 6,
+    "input_ceiling": 6,
+    "input_wall": 9,
+    "input_window": 1,
+    "input_door": 7,
+    "input_ceiling_opening": 1,
     "ceiling_wall_alignment_issues": 0,
     "area_floors_expanded_to_wall_outer": 0,
     "area_ceilings_expanded_to_wall_outer": 0,
-    "wall_segments_before_normalization": 22,
-    "wall_segments_after_merge": 19,
-    "wall_segments_after_normalization": 25,
-    "wall_joints_resolved": 10,
+    "wall_segments_before_normalization": 26,
+    "wall_segments_after_merge": 26,
+    "wall_segments_after_normalization": 36,
+    "wall_joints_resolved": 14,
     "wall_volume_overlaps": 0,
-    "floor_polygons_before_normalization": 4,
-    "floor_cells_after_normalization": 6,
+    "floor_polygons_before_normalization": 6,
+    "floor_cells_after_normalization": 9,
     "floor_openings_requested": 0,
     "floor_openings_applied": 0,
-    "ceiling_polygons_before_normalization": 4,
-    "ceiling_cells_after_normalization": 6,
-    "ceiling_openings_requested": 0,
-    "ceiling_openings_applied": 0,
+    "ceiling_polygons_before_normalization": 6,
+    "ceiling_cells_after_normalization": 14,
+    "ceiling_openings_requested": 1,
+    "ceiling_openings_applied": 1,
     "removed_stale_generated_parts": 0,
     "material_files_created": 4,
     "material_files_preserved": 0,
-    "generated_floors": 6,
-    "generated_ceilings": 6,
-    "generated_walls": 25,
+    "generated_floors": 9,
+    "generated_ceilings": 14,
+    "generated_walls": 36,
     "generated_obstacles": 0,
-    "generated_markers": 6,
-    "generated_floor_visual_nodes": 6,
-    "generated_ceiling_visual_nodes": 6,
-    "generated_wall_visual_nodes": 25,
+    "generated_markers": 8,
+    "generated_floor_visual_nodes": 9,
+    "generated_ceiling_visual_nodes": 14,
+    "generated_wall_visual_nodes": 36,
     "generated_obstacle_visual_nodes": 0
   },
   "assumptions": [
-    "Wall normalization merged 3 duplicate or overlapping segment(s) with tolerance 0.02 m",
-    "Wall joint normalization converted 10 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap"
+    "Wall joint normalization converted 14 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
+    "Ceiling openings removed 100.62 m2 from visible and collision geometry"
   ],
   "warnings": [],
   "errors": [],
-  "ignored": [],
+  "ignored": [
+    {
+      "id": "t-freight-context-01",
+      "tag": "rect",
+      "classes": "context-trunk",
+      "reason": "mapped to ignore"
+    }
+  ],
   "materials": {
     "Floors": "res://gen/t/t_freight/Generated/Architecture/floor_material.tres",
     "Ceilings": "res://gen/t/t_freight/Generated/Architecture/ceiling_material.tres",
@@ -2405,43 +2870,65 @@
     "floor_geometry.obj",
     "ceiling_geometry.obj",
     "wall_geometry.obj",
-    "floor_001_f_09b5445e49.obj",
-    "floor_002_f_93252104f8.obj",
-    "floor_003_f_0f510e6361.obj",
-    "floor_004_f_0f510e6361.obj",
-    "floor_005_f_9952cf695f.obj",
-    "floor_006_f_9952cf695f.obj",
-    "ceiling_001_c_09b5445e49.obj",
-    "ceiling_002_c_93252104f8.obj",
-    "ceiling_003_c_0f510e6361.obj",
-    "ceiling_004_c_0f510e6361.obj",
-    "ceiling_005_c_9952cf695f.obj",
-    "ceiling_006_c_9952cf695f.obj",
-    "wall_001_w_dbd62ea9ae.obj",
-    "wall_002_w_dbd62ea9ae.obj",
-    "wall_003_w_dbd62ea9ae.obj",
-    "wall_004_w_c53ecdb1a3.obj",
-    "wall_005_w_0b063c2462_w_c53ecdb1a3.obj",
-    "wall_006_w_0b063c2462_w_c53ecdb1a3.obj",
-    "wall_007_w_0b063c2462_w_6c4bff4328.obj",
-    "wall_008_w_0b063c2462_w_6c4bff4328.obj",
-    "wall_009_w_6c4bff4328.obj",
-    "wall_010_w_c53ecdb1a3.obj",
-    "wall_011_w_0b063c2462.obj",
-    "wall_012_w_6c4bff4328.obj",
-    "wall_013_w_a39de6f0b1.obj",
-    "wall_014_w_a39de6f0b1.obj",
-    "wall_015_w_ac90a7f1c5.obj",
-    "wall_016_w_ac90a7f1c5.obj",
-    "wall_017_w_0082641163_w_8eb21e3dc1.obj",
-    "wall_018_w_0082641163_w_8eb21e3dc1.obj",
-    "wall_019_w_0082641163_w_8eb21e3dc1.obj",
-    "wall_020_w_9457fdcde5.obj",
-    "wall_021_w_9457fdcde5.obj",
-    "wall_022_w_9457fdcde5.obj",
-    "wall_023_w_d5513044c8.obj",
-    "wall_024_w_d5513044c8.obj",
-    "wall_025_w_d5513044c8.obj",
+    "floor_001_t_freight_floor_01.obj",
+    "floor_002_t_freight_floor_02.obj",
+    "floor_003_t_freight_floor_03.obj",
+    "floor_004_t_freight_floor_03.obj",
+    "floor_005_t_freight_floor_03.obj",
+    "floor_006_t_freight_floor_06.obj",
+    "floor_007_t_freight_floor_06.obj",
+    "floor_008_t_freight_floor_04.obj",
+    "floor_009_t_freight_floor_05.obj",
+    "ceiling_001_t_freight_ceiling_01.obj",
+    "ceiling_002_t_freight_ceiling_02.obj",
+    "ceiling_003_t_freight_ceiling_03.obj",
+    "ceiling_004_t_freight_ceiling_03.obj",
+    "ceiling_005_t_freight_ceiling_03.obj",
+    "ceiling_006_t_freight_ceiling_03.obj",
+    "ceiling_007_t_freight_ceiling_03.obj",
+    "ceiling_008_t_freight_ceiling_03.obj",
+    "ceiling_009_t_freight_ceiling_03.obj",
+    "ceiling_010_t_freight_ceiling_06.obj",
+    "ceiling_011_t_freight_ceiling_06.obj",
+    "ceiling_012_t_freight_ceiling_06.obj",
+    "ceiling_013_t_freight_ceiling_04.obj",
+    "ceiling_014_t_freight_ceiling_05.obj",
+    "wall_001_t_freight_wall_01.obj",
+    "wall_002_t_freight_wall_01.obj",
+    "wall_003_t_freight_wall_01.obj",
+    "wall_004_t_freight_wall_01.obj",
+    "wall_005_t_freight_wall_01.obj",
+    "wall_006_t_freight_wall_02.obj",
+    "wall_007_t_freight_wall_02.obj",
+    "wall_008_t_freight_wall_02.obj",
+    "wall_009_t_freight_wall_02.obj",
+    "wall_010_t_freight_wall_02.obj",
+    "wall_011_t_freight_wall_02.obj",
+    "wall_012_t_freight_wall_02.obj",
+    "wall_013_t_freight_wall_02.obj",
+    "wall_014_t_freight_wall_02.obj",
+    "wall_015_t_freight_wall_02.obj",
+    "wall_016_t_freight_wall_03.obj",
+    "wall_017_t_freight_wall_03.obj",
+    "wall_018_t_freight_wall_04.obj",
+    "wall_019_t_freight_wall_04.obj",
+    "wall_020_t_freight_wall_04.obj",
+    "wall_021_t_freight_wall_05.obj",
+    "wall_022_t_freight_wall_05.obj",
+    "wall_023_t_freight_wall_06.obj",
+    "wall_024_t_freight_wall_06.obj",
+    "wall_025_t_freight_wall_06.obj",
+    "wall_026_t_freight_wall_06.obj",
+    "wall_027_t_freight_wall_06.obj",
+    "wall_028_t_freight_wall_06.obj",
+    "wall_029_t_freight_wall_07.obj",
+    "wall_030_t_freight_wall_07.obj",
+    "wall_031_t_freight_wall_07.obj",
+    "wall_032_t_freight_wall_07.obj",
+    "wall_033_t_freight_wall_07.obj",
+    "wall_034_t_freight_wall_08.obj",
+    "wall_035_t_freight_wall_08.obj",
+    "wall_036_t_freight_wall_09.obj",
     "conversion_report.json"
   ]
 }

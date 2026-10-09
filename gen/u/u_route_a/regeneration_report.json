@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "U-ROUTE-A",
-  "generation_id": "sha256:7299508b0994375efc2cfffb4c23b501c36c25fa14d834d8e8f5acd1863e9a0a",
+  "generation_id": "sha256:97357c2b8ee157587ea7d70f7e808641a84295bc8d30a380d6d90dcb846caa28",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
-        "python",
+        "$PYTHON",
         "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
-        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_route_a.svg",
+        "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/upper/u_route_a.svg",
         "--profile",
         "generic",
         "--scale",
@@ -40,9 +40,9 @@
     {
       "stage": "convert",
       "argv": [
-        "python",
+        "$PYTHON",
         "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
-        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_route_a.svg",
+        "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/upper/u_route_a.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",
@@ -74,19 +74,19 @@
       "stage": "stairs",
       "generator_id": "route_a_stair",
       "argv": [
-        "python",
+        "$PYTHON",
         "$STAIR_TOOL_ROOT/scripts/generate_godot_stairs.py",
         "$STAGING/Generated/Stairs/route_a_stair",
         "--shaft-width",
-        "5.98",
+        "6.647",
         "--shaft-length",
-        "7",
+        "7.777",
         "--floor-height",
         "6",
         "--layout",
         "u-turn",
         "--stair-width",
-        "1.5",
+        "1.8",
         "--lower-entry-side",
         "north",
         "--upper-exit-side",
@@ -121,7 +121,7 @@
       "exit_code": 0
     }
   ],
-  "anchor_count": 42,
+  "anchor_count": 41,
   "errors": [],
   "warnings": [],
   "files": [

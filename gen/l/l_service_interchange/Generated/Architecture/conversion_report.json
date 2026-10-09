@@ -1,6 +1,6 @@
 {
   "generator_version": "1.19.0",
-  "source": "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/lower/l_service_interchange.svg",
+  "source": "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/lower/l_service_interchange.svg",
   "scene": "$STAGING/Generated/Architecture/l_service_interchange_generated.tscn",
   "settings": {
     "scale": 1.0,
@@ -38,10 +38,10 @@
     "strict": true
   },
   "view_box": [
-    -49.0,
-    41.0,
-    14.0,
-    20.0
+    -49.778,
+    46.444,
+    17.334,
+    17.335
   ],
   "profile": "generic",
   "spatial_handoff": {
@@ -56,64 +56,100 @@
       "origin_mode": "none",
       "invert_z": false
     },
-    "surface_openings": [],
+    "surface_openings": [
+      {
+        "opening_id": "l-service-interchange-floor-opening-01",
+        "source_id": "l-service-interchange-floor-opening-01",
+        "surface": "floor",
+        "elevation_m": -6.0,
+        "applied": true,
+        "polygon_xz_m": [
+          [
+            -47.77,
+            53.22
+          ],
+          [
+            -43.12,
+            53.22
+          ],
+          [
+            -43.12,
+            61.77
+          ],
+          [
+            -47.77,
+            61.77
+          ]
+        ],
+        "area_m2": 39.7575,
+        "bounds_m": {
+          "min_x": -47.77,
+          "max_x": -43.12,
+          "min_z": 53.22,
+          "max_z": 61.77,
+          "width_x": 4.65,
+          "length_z": 8.55
+        },
+        "local_center_m": [
+          -45.445,
+          -6.0,
+          57.495
+        ],
+        "centroid_m": [
+          -45.445,
+          -6.0,
+          57.495
+        ],
+        "contained_markers": [],
+        "is_stair_shaft_candidate": false,
+        "space_id": "L-SERVICE-INTERCHANGE/lestnica"
+      }
+    ],
     "wall_construction": [
       {
-        "source_id": "w-2857167144",
+        "source_id": "l-service-interchange-wall-01",
         "thickness_m": 0.3,
         "height_m": 3.8,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "w-49539d3cd4",
+        "source_id": "l-service-interchange-wall-02",
         "thickness_m": 0.3,
         "height_m": 3.8,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "w-4c6d45caf7",
+        "source_id": "l-service-interchange-wall-03",
         "thickness_m": 0.3,
         "height_m": 3.8,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "w-6fc5834736",
+        "source_id": "l-service-interchange-wall-04",
         "thickness_m": 0.3,
         "height_m": 3.8,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "w-718860f174",
+        "source_id": "l-service-interchange-wall-05",
         "thickness_m": 0.3,
         "height_m": 3.8,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "w-871597441e",
+        "source_id": "l-service-interchange-wall-06",
         "thickness_m": 0.3,
         "height_m": 3.8,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "w-95da49330d",
+        "source_id": "l-service-interchange-wall-07",
         "thickness_m": 0.3,
         "height_m": 3.8,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "w-aed2328cd7",
-        "thickness_m": 0.3,
-        "height_m": 3.8,
-        "base_elevation_m": -6.0
-      },
-      {
-        "source_id": "w-af7d2e93e7",
-        "thickness_m": 0.3,
-        "height_m": 3.8,
-        "base_elevation_m": -6.0
-      },
-      {
-        "source_id": "w-fa4f4097ce",
+        "source_id": "l-service-interchange-wall-08",
         "thickness_m": 0.3,
         "height_m": 3.8,
         "base_elevation_m": -6.0
@@ -121,25 +157,31 @@
     ],
     "ceiling_construction": [
       {
-        "source_id": "c-fc6e927be0",
+        "source_id": "l-service-interchange-ceiling-01",
         "underside_elevation_m": -2.2,
         "top_elevation_m": -2.0,
         "thickness_m": 0.2
       },
       {
-        "source_id": "c-1f3cd6dd5f",
+        "source_id": "l-service-interchange-ceiling-02",
         "underside_elevation_m": -2.2,
         "top_elevation_m": -2.0,
         "thickness_m": 0.2
       },
       {
-        "source_id": "c-afae1845a2",
+        "source_id": "l-service-interchange-ceiling-03",
         "underside_elevation_m": -2.2,
         "top_elevation_m": -2.0,
         "thickness_m": 0.2
       },
       {
-        "source_id": "c-3fe75079df",
+        "source_id": "l-service-interchange-ceiling-04",
+        "underside_elevation_m": -2.2,
+        "top_elevation_m": -2.0,
+        "thickness_m": 0.2
+      },
+      {
+        "source_id": "l-service-interchange-ceiling-05",
         "underside_elevation_m": -2.2,
         "top_elevation_m": -2.0,
         "thickness_m": 0.2
@@ -150,85 +192,67 @@
     ],
     "reference_points": [
       {
-        "source_id": "d-e20ab7fe6b",
+        "source_id": "l-service-interchange-door-02",
         "type": "door",
         "position_m": [
-          -45.6,
+          -45.44,
           -4.6,
-          46.5
+          53.208
         ]
       },
       {
-        "source_id": "d-5460689777",
+        "source_id": "l-service-interchange-door-03",
         "type": "door",
         "position_m": [
-          -41.4,
+          -40.61,
           -4.6,
-          46.5
+          53.208
         ]
       },
       {
-        "source_id": "d-8c87aff322",
+        "source_id": "l-service-interchange-door-04",
         "type": "door",
         "position_m": [
-          -37.8,
+          -36.28,
           -4.6,
-          46.5
+          53.208
         ]
       },
       {
-        "source_id": "d-e99356ee9d",
+        "source_id": "l-service-interchange-door-05",
         "type": "door",
         "position_m": [
-          -43.2,
+          -40.61,
           -4.6,
-          53.25
+          57.5
         ]
       },
       {
-        "source_id": "d-b91c50b7b1",
+        "source_id": "l-service-interchange-door-06",
         "type": "door",
         "position_m": [
-          -39.6,
-          -4.6,
-          53.25
-        ]
-      },
-      {
-        "source_id": "d-df360eb2ca",
-        "type": "door",
-        "position_m": [
-          -42.0,
-          -4.8,
-          42.0
-        ]
-      },
-      {
-        "source_id": "d-7e40d14cac",
-        "type": "door",
-        "position_m": [
-          -41.4,
-          -4.6,
-          60.0
+          -40.61,
+          -3.75,
+          61.779
         ]
       }
     ],
     "anchors": [],
     "anchor_frames": [
       {
-        "anchor_id": "svg:c-1f3cd6dd5f:ceiling",
+        "anchor_id": "svg:l-service-interchange-ceiling-01:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "c-1f3cd6dd5f"
+          "source_id": "l-service-interchange-ceiling-01"
         },
         "origin": [
-          -48.0,
+          -47.778,
           -2.2,
-          46.5
+          48.444
         ],
         "forward": [
           1.0,
@@ -249,20 +273,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -48.0,
-              46.5
+              -47.778,
+              48.444
             ],
             [
-              -43.2,
-              46.5
+              -34.444,
+              48.444
             ],
             [
-              -43.2,
-              60.0
+              -34.444,
+              53.208
             ],
             [
-              -48.0,
-              60.0
+              -47.778,
+              53.208
             ]
           ],
           "elevation_m": -2.2,
@@ -279,22 +303,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:ac5dd1e666147590f0d3f354a51bd149b3a1d2e53199e7dc679913c224e97864"
+        "geometry_hash": "sha256:e6f04c8508475a9901b875bdea0b2bb70953ced88d5ba98f7f7a386e7582beb6"
       },
       {
-        "anchor_id": "svg:c-3fe75079df:ceiling",
+        "anchor_id": "svg:l-service-interchange-ceiling-02:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "c-3fe75079df"
+          "source_id": "l-service-interchange-ceiling-02"
         },
         "origin": [
-          -39.6,
+          -47.778,
           -2.2,
-          46.5
+          53.208
         ],
         "forward": [
           1.0,
@@ -315,20 +339,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -39.6,
-              46.5
+              -47.778,
+              53.208
             ],
             [
-              -36.0,
-              46.5
+              -43.111,
+              53.208
             ],
             [
-              -36.0,
-              60.0
+              -43.111,
+              61.779
             ],
             [
-              -39.6,
-              60.0
+              -47.778,
+              61.779
             ]
           ],
           "elevation_m": -2.2,
@@ -345,22 +369,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:d0765055de9f4a82a4d1610f1a336fc92d5af4e0c5fccca4cc32cefc9ead157f"
+        "geometry_hash": "sha256:52a3b913799ddcf4f37009e5e1a1531233d10c84cb1745b6c2afdb40ec1ed2ae"
       },
       {
-        "anchor_id": "svg:c-afae1845a2:ceiling",
+        "anchor_id": "svg:l-service-interchange-ceiling-03:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "c-afae1845a2"
+          "source_id": "l-service-interchange-ceiling-03"
         },
         "origin": [
-          -43.2,
+          -43.111,
           -2.2,
-          46.5
+          53.208
         ],
         "forward": [
           1.0,
@@ -381,20 +405,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -43.2,
-              46.5
+              -43.111,
+              53.208
             ],
             [
-              -39.6,
-              46.5
+              -38.111,
+              53.208
             ],
             [
-              -39.6,
-              60.0
+              -38.111,
+              57.5
             ],
             [
-              -43.2,
-              60.0
+              -43.111,
+              57.5
             ]
           ],
           "elevation_m": -2.2,
@@ -411,22 +435,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:e89ff97bc48521226f2b0d24ee68869be673649b1a2d2d5390d8893f0aa3a7c2"
+        "geometry_hash": "sha256:1ed24e3dd8aa2c0c0e84b894e9147e8b6e927c1d7da202d83394065ce0b0034b"
       },
       {
-        "anchor_id": "svg:c-fc6e927be0:ceiling",
+        "anchor_id": "svg:l-service-interchange-ceiling-04:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "c-fc6e927be0"
+          "source_id": "l-service-interchange-ceiling-04"
         },
         "origin": [
-          -48.0,
+          -38.111,
           -2.2,
-          42.0
+          53.208
         ],
         "forward": [
           1.0,
@@ -447,20 +471,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -48.0,
-              42.0
+              -38.111,
+              53.208
             ],
             [
-              -36.0,
-              42.0
+              -34.444,
+              53.208
             ],
             [
-              -36.0,
-              46.5
+              -34.444,
+              61.779
             ],
             [
-              -48.0,
-              46.5
+              -38.111,
+              61.779
             ]
           ],
           "elevation_m": -2.2,
@@ -477,32 +501,98 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:7f177889cbabed4d6c3e5e4df1af92f09e487b99218b9c5092b497495fbea45f"
+        "geometry_hash": "sha256:eaf97a8267a6377bc7900d9aeeced3d94f8d3a4f1452c19f26734c4832c403cc"
       },
       {
-        "anchor_id": "svg:d-5460689777:door:center",
+        "anchor_id": "svg:l-service-interchange-ceiling-05:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-service-interchange-ceiling-05"
+        },
+        "origin": [
+          -43.111,
+          -2.2,
+          57.5
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -43.111,
+              57.5
+            ],
+            [
+              -38.111,
+              57.5
+            ],
+            [
+              -38.111,
+              61.779
+            ],
+            [
+              -43.111,
+              61.779
+            ]
+          ],
+          "elevation_m": -2.2,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:ec84f8341b22e6f69d0bac9a77c884ccac6e6eef81fba610cd24b238d7a3a98e"
+      },
+      {
+        "anchor_id": "svg:l-service-interchange-door-02:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-5460689777"
+          "source_id": "l-service-interchange-door-02"
         },
         "origin": [
-          -41.4,
+          -45.44,
           -6.0,
-          46.5
+          53.208
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -516,7 +606,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -535,32 +625,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:2d1e2e32309fef1b850e9390c3cadac5b989b70707ee82b772d12c9ac6cc171a"
+        "geometry_hash": "sha256:1d7a3ddca7d445050cc993732683926466a23876e7ad2ee7350b11b65d72c8d1"
       },
       {
-        "anchor_id": "svg:d-5460689777:door:threshold_inside",
+        "anchor_id": "svg:l-service-interchange-door-02:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-5460689777"
+          "source_id": "l-service-interchange-door-02"
         },
         "origin": [
-          -41.4,
+          -45.44,
           -6.0,
-          46.35
+          53.358
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -574,7 +664,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -593,32 +683,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:1412a7f80deb2ad7ec2d6a4991fcf02217081d10290606ed588a9be1558fc0a6"
+        "geometry_hash": "sha256:c43928e63996857e58068aa0751c7ba7d1655c67da945a32489bb0e1bac37659"
       },
       {
-        "anchor_id": "svg:d-5460689777:door:threshold_outside",
+        "anchor_id": "svg:l-service-interchange-door-02:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-5460689777"
+          "source_id": "l-service-interchange-door-02"
         },
         "origin": [
-          -41.4,
+          -45.44,
           -6.0,
-          46.65
+          53.058
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -632,7 +722,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -651,32 +741,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:8fff5bf4f70130d020aa171a44373129a54d710b81851d9bd0499e995ef865a0"
+        "geometry_hash": "sha256:f1d9d4a4b9b68f7079b2936033ae073b8c24b1a62bf68c602b3cf27e02921605"
       },
       {
-        "anchor_id": "svg:d-7e40d14cac:door:center",
+        "anchor_id": "svg:l-service-interchange-door-03:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-7e40d14cac"
+          "source_id": "l-service-interchange-door-03"
         },
         "origin": [
-          -41.4,
+          -40.61,
           -6.0,
-          60.0
+          53.208
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -690,7 +780,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -709,32 +799,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:88c52312cb87bfaad4901479d672371d06f1c461311432da481a0e287f14a377"
+        "geometry_hash": "sha256:d8d9a25fc85a86e6eeac021de1d73a92de3b7ecdaddc002b7ae5c352a669fe19"
       },
       {
-        "anchor_id": "svg:d-7e40d14cac:door:threshold_inside",
+        "anchor_id": "svg:l-service-interchange-door-03:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-7e40d14cac"
+          "source_id": "l-service-interchange-door-03"
         },
         "origin": [
-          -41.4,
+          -40.61,
           -6.0,
-          59.85
+          53.358
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -748,7 +838,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -767,32 +857,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:5d4e92e5f9fff324f443c1940e5293563fdf19f41f5d9810dcd6f0540412c6c4"
+        "geometry_hash": "sha256:7229daf107df4f7078e1526c2de2547760857fbe6fb503d694e5c2016325882e"
       },
       {
-        "anchor_id": "svg:d-7e40d14cac:door:threshold_outside",
+        "anchor_id": "svg:l-service-interchange-door-03:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-7e40d14cac"
+          "source_id": "l-service-interchange-door-03"
         },
         "origin": [
-          -41.4,
+          -40.61,
           -6.0,
-          60.15
+          53.058
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -806,7 +896,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -825,32 +915,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:ec0de307446c353eef1b1105e3b4d64a4bec2213809664ae6f2c3b0185b1fb3c"
+        "geometry_hash": "sha256:41136fa1833f281b51af67dbe0eec2bd3c79046ce2aa87057bead962b1fe309f"
       },
       {
-        "anchor_id": "svg:d-8c87aff322:door:center",
+        "anchor_id": "svg:l-service-interchange-door-04:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-8c87aff322"
+          "source_id": "l-service-interchange-door-04"
         },
         "origin": [
-          -37.8,
+          -36.28,
           -6.0,
-          46.5
+          53.208
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -864,7 +954,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -883,32 +973,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:0d0855bebc7241e60f50fed1b51ffc09320463d6cc28dca1c8f0ea2167749136"
+        "geometry_hash": "sha256:818abb9cc617c2ef564f182a5cb8f1422e8a284beeeb100c7a0183190ff339a1"
       },
       {
-        "anchor_id": "svg:d-8c87aff322:door:threshold_inside",
+        "anchor_id": "svg:l-service-interchange-door-04:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-8c87aff322"
+          "source_id": "l-service-interchange-door-04"
         },
         "origin": [
-          -37.8,
+          -36.28,
           -6.0,
-          46.35
+          53.358
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -922,7 +1012,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -941,32 +1031,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:2b675e8606a57991ed1a9b087381cf0e7c1f5fd012b32869030bdb89657ca958"
+        "geometry_hash": "sha256:2dc77e57d478f20d74d4014652da5ea76ecc513c2f118f6c9be12db9cea8362b"
       },
       {
-        "anchor_id": "svg:d-8c87aff322:door:threshold_outside",
+        "anchor_id": "svg:l-service-interchange-door-04:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-8c87aff322"
+          "source_id": "l-service-interchange-door-04"
         },
         "origin": [
-          -37.8,
+          -36.28,
           -6.0,
-          46.65
+          53.058
         ],
         "forward": [
-          -1.0,
+          1.0,
           0.0,
           0.0
         ],
         "normal": [
           0.0,
           0.0,
-          -1.0
+          1.0
         ],
         "up": [
           0.0,
@@ -980,7 +1070,7 @@
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
+          "inside_side": "normal"
         },
         "placement_limits": {
           "along_normalized": [
@@ -999,32 +1089,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:f45a9a0c788442519db7a3d1e32b89c26b5fae494320b56116a5006157ebf911"
+        "geometry_hash": "sha256:5c88d8742adda5bba9408adf9ed557638b3b8db289bdac398f8a5597d71954a1"
       },
       {
-        "anchor_id": "svg:d-b91c50b7b1:door:center",
+        "anchor_id": "svg:l-service-interchange-door-05:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-b91c50b7b1"
+          "source_id": "l-service-interchange-door-05"
         },
         "origin": [
-          -39.6,
+          -40.61,
           -6.0,
-          53.25
+          57.5
         ],
         "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
           0.0,
           0.0,
           1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
         ],
         "up": [
           0.0,
@@ -1057,32 +1147,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:abab5ab5b4664f3c4f08a54089f89217cbb3bbdd358863a0279d9961b40723ae"
+        "geometry_hash": "sha256:d941d47d8fd6fa9d3e8a19fc66c7df1844b054ed3eb49dd073bf136612c8844e"
       },
       {
-        "anchor_id": "svg:d-b91c50b7b1:door:threshold_inside",
+        "anchor_id": "svg:l-service-interchange-door-05:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-b91c50b7b1"
+          "source_id": "l-service-interchange-door-05"
         },
         "origin": [
-          -39.75,
+          -40.61,
           -6.0,
-          53.25
+          57.65
         ],
         "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
           0.0,
           0.0,
           1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
         ],
         "up": [
           0.0,
@@ -1115,32 +1205,32 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:7ff8c838174f01a2b9dbf98b50a8fe78d3c35404fdc7dfa2a7b7c87d6c2e7c48"
+        "geometry_hash": "sha256:9b60549e357af5f1921f926c7a774f3172e1ace3c76bcf03763a9ab7e86c4819"
       },
       {
-        "anchor_id": "svg:d-b91c50b7b1:door:threshold_outside",
+        "anchor_id": "svg:l-service-interchange-door-05:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-b91c50b7b1"
+          "source_id": "l-service-interchange-door-05"
         },
         "origin": [
-          -39.45,
+          -40.61,
           -6.0,
-          53.25
+          57.35
         ],
         "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
           0.0,
           0.0,
           1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
         ],
         "up": [
           0.0,
@@ -1173,196 +1263,22 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:c43cd0a8701103ca31a464c49f3c816f53bd8838f604284d33e09196d293ddf4"
+        "geometry_hash": "sha256:3d3da21ff9244f75d0c49b88c8ae48af9a604bf8660c41a706e51b1a87681e16"
       },
       {
-        "anchor_id": "svg:d-df360eb2ca:door:center",
+        "anchor_id": "svg:l-service-interchange-door-06:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-df360eb2ca"
+          "source_id": "l-service-interchange-door-06"
         },
         "origin": [
-          -42.0,
+          -40.61,
           -6.0,
-          42.0
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.2,
-          "height_m": 2.4,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.4
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:4bb74d1e3aad7609c8b9d6da4c59f877cea72e37ebf3841065b9d2915b51b33e"
-      },
-      {
-        "anchor_id": "svg:d-df360eb2ca:door:threshold_inside",
-        "type": "door",
-        "role": "threshold_inside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "d-df360eb2ca"
-        },
-        "origin": [
-          -42.0,
-          -6.0,
-          42.15
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.2,
-          "height_m": 2.4,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.4
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:3472faf48d2598738ab5d09b9d799df2877383c421601ffe73f8936d7c2747ab"
-      },
-      {
-        "anchor_id": "svg:d-df360eb2ca:door:threshold_outside",
-        "type": "door",
-        "role": "threshold_outside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "d-df360eb2ca"
-        },
-        "origin": [
-          -42.0,
-          -6.0,
-          41.85
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.2,
-          "height_m": 2.4,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.4
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:4420bc8059b34bd4f1aff84a2545858b1b628d88ad42311ed919ac377931a884"
-      },
-      {
-        "anchor_id": "svg:d-e20ab7fe6b:door:center",
-        "type": "door",
-        "role": "center",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "d-e20ab7fe6b"
-        },
-        "origin": [
-          -45.6,
-          -6.0,
-          46.5
+          61.779
         ],
         "forward": [
           -1.0,
@@ -1381,8 +1297,8 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
+          "width_m": 4.5,
+          "height_m": 4.5,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
@@ -1399,28 +1315,28 @@
           ],
           "height_m": [
             0.0,
-            2.8
+            4.5
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:b5f59712e771974edd19511c6bc235ddd9236434653812a997791a3bc55de5cf"
+        "geometry_hash": "sha256:e5b684313652205701e9f54d3f165542b8be4a4db5eaf73789dd47e34d179401"
       },
       {
-        "anchor_id": "svg:d-e20ab7fe6b:door:threshold_inside",
+        "anchor_id": "svg:l-service-interchange-door-06:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-e20ab7fe6b"
+          "source_id": "l-service-interchange-door-06"
         },
         "origin": [
-          -45.6,
+          -40.61,
           -6.0,
-          46.35
+          61.629
         ],
         "forward": [
           -1.0,
@@ -1439,8 +1355,8 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
+          "width_m": 4.5,
+          "height_m": 4.5,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
@@ -1457,28 +1373,28 @@
           ],
           "height_m": [
             0.0,
-            2.8
+            4.5
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:41666fa47f9f55f854fea9df3bb5cae2718b2857b16e92eba3f81f559ada17c7"
+        "geometry_hash": "sha256:4b8afc5e853506dbb8569d4cd4f466dd2919606ee60b360fac31b7ce91803450"
       },
       {
-        "anchor_id": "svg:d-e20ab7fe6b:door:threshold_outside",
+        "anchor_id": "svg:l-service-interchange-door-06:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "d-e20ab7fe6b"
+          "source_id": "l-service-interchange-door-06"
         },
         "origin": [
-          -45.6,
+          -40.61,
           -6.0,
-          46.65
+          61.929
         ],
         "forward": [
           -1.0,
@@ -1497,8 +1413,8 @@
         ],
         "bounds": {
           "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
+          "width_m": 4.5,
+          "height_m": 4.5,
           "bottom_m": 0.0,
           "wall_thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
@@ -1515,202 +1431,28 @@
           ],
           "height_m": [
             0.0,
-            2.8
+            4.5
           ]
         },
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:f5ef331fa803dadb4d28705b5e5faaf0662fdc8a30c39c18cc5cec9c76037ec8"
+        "geometry_hash": "sha256:6f8ccc8dc3e6f8ee8d0e6a5b866f2bb734d337f073ee14dfda2b09f4482f7d13"
       },
       {
-        "anchor_id": "svg:d-e99356ee9d:door:center",
-        "type": "door",
-        "role": "center",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "d-e99356ee9d"
-        },
-        "origin": [
-          -43.2,
-          -6.0,
-          53.25
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:86313af94a8ddb816c58c38e240789d48085bb5b65f2bb36ce91a6ca5348de3a"
-      },
-      {
-        "anchor_id": "svg:d-e99356ee9d:door:threshold_inside",
-        "type": "door",
-        "role": "threshold_inside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "d-e99356ee9d"
-        },
-        "origin": [
-          -43.35,
-          -6.0,
-          53.25
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:ffe369e2917adcc4d5e2443ebb544802dc5e92eb9707c89872841bc093b49f75"
-      },
-      {
-        "anchor_id": "svg:d-e99356ee9d:door:threshold_outside",
-        "type": "door",
-        "role": "threshold_outside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "d-e99356ee9d"
-        },
-        "origin": [
-          -43.05,
-          -6.0,
-          53.25
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:a56742eff2efa2a9050baa836f495ea0ca164157301a8936808e8344e8be2c2d"
-      },
-      {
-        "anchor_id": "svg:f-1f3cd6dd5f:floor",
+        "anchor_id": "svg:l-service-interchange-floor-01:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "f-1f3cd6dd5f"
+          "source_id": "l-service-interchange-floor-01"
         },
         "origin": [
-          -48.0,
+          -47.778,
           -6.0,
-          46.5
+          48.444
         ],
         "forward": [
           1.0,
@@ -1731,20 +1473,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -48.0,
-              46.5
+              -47.778,
+              48.444
             ],
             [
-              -43.2,
-              46.5
+              -34.444,
+              48.444
             ],
             [
-              -43.2,
-              60.0
+              -34.444,
+              53.208
             ],
             [
-              -48.0,
-              60.0
+              -47.778,
+              53.208
             ]
           ],
           "elevation_m": -6.0,
@@ -1761,22 +1503,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:1e8194cd626660daca71d4164796986ab69cea487a44111fef6811c6d45c3b27"
+        "geometry_hash": "sha256:31dad561267b615757733ce65335653a2b27f90552e6e7ea7b1647bfc4b8a0a4"
       },
       {
-        "anchor_id": "svg:f-3fe75079df:floor",
+        "anchor_id": "svg:l-service-interchange-floor-02:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "f-3fe75079df"
+          "source_id": "l-service-interchange-floor-02"
         },
         "origin": [
-          -39.6,
+          -47.778,
           -6.0,
-          46.5
+          53.208
         ],
         "forward": [
           1.0,
@@ -1797,20 +1539,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -39.6,
-              46.5
+              -47.778,
+              53.208
             ],
             [
-              -36.0,
-              46.5
+              -43.111,
+              53.208
             ],
             [
-              -36.0,
-              60.0
+              -43.111,
+              61.779
             ],
             [
-              -39.6,
-              60.0
+              -47.778,
+              61.779
             ]
           ],
           "elevation_m": -6.0,
@@ -1827,22 +1569,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:9d90833ad25be39645b37a2c7bb68343282185817f99fac9c091a6438b832888"
+        "geometry_hash": "sha256:8078be9fb9c8898dabb8e2b434d12a5dd07348c1a621529376045cd508a1ef7d"
       },
       {
-        "anchor_id": "svg:f-afae1845a2:floor",
+        "anchor_id": "svg:l-service-interchange-floor-03:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "f-afae1845a2"
+          "source_id": "l-service-interchange-floor-03"
         },
         "origin": [
-          -43.2,
+          -43.111,
           -6.0,
-          46.5
+          53.208
         ],
         "forward": [
           1.0,
@@ -1863,20 +1605,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -43.2,
-              46.5
+              -43.111,
+              53.208
             ],
             [
-              -39.6,
-              46.5
+              -38.111,
+              53.208
             ],
             [
-              -39.6,
-              60.0
+              -38.111,
+              57.5
             ],
             [
-              -43.2,
-              60.0
+              -43.111,
+              57.5
             ]
           ],
           "elevation_m": -6.0,
@@ -1893,22 +1635,22 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:5f903590d5ab61102a5868a2fe6a1d3c801ae793c708725c3ef854f05880a514"
+        "geometry_hash": "sha256:b0372f5dc3dc344f3df9a2c96898dc2031770e2ea022dd11d2b5dc23c9e26caa"
       },
       {
-        "anchor_id": "svg:f-fc6e927be0:floor",
+        "anchor_id": "svg:l-service-interchange-floor-04:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "f-fc6e927be0"
+          "source_id": "l-service-interchange-floor-04"
         },
         "origin": [
-          -48.0,
+          -38.111,
           -6.0,
-          42.0
+          53.208
         ],
         "forward": [
           1.0,
@@ -1929,20 +1671,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -48.0,
-              42.0
+              -38.111,
+              53.208
             ],
             [
-              -36.0,
-              42.0
+              -34.444,
+              53.208
             ],
             [
-              -36.0,
-              46.5
+              -34.444,
+              61.779
             ],
             [
-              -48.0,
-              46.5
+              -38.111,
+              61.779
             ]
           ],
           "elevation_m": -6.0,
@@ -1959,22 +1701,88 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:c35e7ec6bb04d454507462cf7f13517fde4d16434da1bce7fc97e1e6df922c34"
+        "geometry_hash": "sha256:0ef8438a6411b59d446252e67cb1302c1a9a8f06225b77e8219549b681553f19"
       },
       {
-        "anchor_id": "svg:w-2857167144:wall",
+        "anchor_id": "svg:l-service-interchange-floor-05:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-service-interchange-floor-05"
+        },
+        "origin": [
+          -43.111,
+          -6.0,
+          57.5
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -43.111,
+              57.5
+            ],
+            [
+              -38.111,
+              57.5
+            ],
+            [
+              -38.111,
+              61.779
+            ],
+            [
+              -43.111,
+              61.779
+            ]
+          ],
+          "elevation_m": -6.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:a02f36570995df51307d43f2963504849d48273d9716348b62f89fa72d8fbcca"
+      },
+      {
+        "anchor_id": "svg:l-service-interchange-wall-01:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-2857167144"
+          "source_id": "l-service-interchange-wall-01"
         },
         "origin": [
-          -39.6,
+          -47.778,
           -6.0,
-          46.5
+          48.444
         ],
         "forward": [
           1.0,
@@ -1993,11 +1801,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 3.6,
+          "length_m": 13.334,
           "height_m": 3.8,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/electrical_room/north",
+          "surface_side_id": "L-SERVICE-INTERCHANGE/wall-01",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -2015,78 +1823,22 @@
             3.8
           ]
         },
-        "geometry_hash": "sha256:772cf0deac0016450fb692a84cbceca1db881fb558fd96c1e2abcc137fe6649d"
+        "geometry_hash": "sha256:70aefb7d2969bcd0d129d5586636d2f067ed7e8c93cbed34f04abe9f83473d7c"
       },
       {
-        "anchor_id": "svg:w-49539d3cd4:wall",
+        "anchor_id": "svg:l-service-interchange-wall-02:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-49539d3cd4"
+          "source_id": "l-service-interchange-wall-02"
         },
         "origin": [
-          -39.6,
+          -47.778,
           -6.0,
-          46.5
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 13.5,
-          "height_m": 3.8,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/double_airlock/east",
-          "normal_side": "normal",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            3.8
-          ]
-        },
-        "geometry_hash": "sha256:c33ceecb7c5b388b3343e4cbcc5570813139e35cff88ac639262c001881d56fb"
-      },
-      {
-        "anchor_id": "svg:w-4c6d45caf7:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-4c6d45caf7"
-        },
-        "origin": [
-          -48.0,
-          -6.0,
-          42.0
+          53.208
         ],
         "forward": [
           1.0,
@@ -2105,11 +1857,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 12.0,
+          "length_m": 13.334,
           "height_m": 3.8,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/service_lobby/north",
+          "surface_side_id": "L-SERVICE-INTERCHANGE/wall-02",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -2127,78 +1879,22 @@
             3.8
           ]
         },
-        "geometry_hash": "sha256:38f36342d42e8eb11f22fb02bc3a4feafdc6bb08c4f469c23aae1e655b5223f8"
+        "geometry_hash": "sha256:91b664ad37774f819faa664cb523104ff8a65a8523c11c2cf19daa6f7be6f658"
       },
       {
-        "anchor_id": "svg:w-6fc5834736:wall",
+        "anchor_id": "svg:l-service-interchange-wall-03:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-6fc5834736"
+          "source_id": "l-service-interchange-wall-03"
         },
         "origin": [
-          -36.0,
+          -34.444,
           -6.0,
-          42.0
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 18.0,
-          "height_m": 3.8,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/electrical_room/east",
-          "normal_side": "normal",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            3.8
-          ]
-        },
-        "geometry_hash": "sha256:3f420efa9ec97504b81c7027195c0fb8f386dbd3f79222b9fd7c56f9725d9d3d"
-      },
-      {
-        "anchor_id": "svg:w-718860f174:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-718860f174"
-        },
-        "origin": [
-          -36.0,
-          -6.0,
-          60.0
+          61.779
         ],
         "forward": [
           -1.0,
@@ -2217,11 +1913,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 3.6,
+          "length_m": 13.334,
           "height_m": 3.8,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/electrical_room/south",
+          "surface_side_id": "L-SERVICE-INTERCHANGE/wall-03",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -2239,78 +1935,22 @@
             3.8
           ]
         },
-        "geometry_hash": "sha256:bd2776f7df0d05bf53db3e71e1f9eab444d7c99cf2d541678f5411a11a9abe26"
+        "geometry_hash": "sha256:5fd0c6106e08a4f47897fb78104b443cf4433821f53798b3c79f256e50e5d21a"
       },
       {
-        "anchor_id": "svg:w-871597441e:wall",
+        "anchor_id": "svg:l-service-interchange-wall-04:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-871597441e"
+          "source_id": "l-service-interchange-wall-04"
         },
         "origin": [
-          -43.2,
+          -43.111,
           -6.0,
-          60.0
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "normal": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 13.5,
-          "height_m": 3.8,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/double_airlock/west",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            3.8
-          ]
-        },
-        "geometry_hash": "sha256:b5cf3af80db1d37c54f3232da0cdfc1f9afb56ff50b8048f509830b8f169644e"
-      },
-      {
-        "anchor_id": "svg:w-95da49330d:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-95da49330d"
-        },
-        "origin": [
-          -43.2,
-          -6.0,
-          46.5
+          57.5
         ],
         "forward": [
           1.0,
@@ -2329,11 +1969,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 3.6,
+          "length_m": 5.0,
           "height_m": 3.8,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/double_airlock/north",
+          "surface_side_id": "L-SERVICE-INTERCHANGE/wall-04",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -2351,33 +1991,201 @@
             3.8
           ]
         },
-        "geometry_hash": "sha256:c17a979d7c47e674c9c925314c63c944e89bbd2bc6ce14e5f7587bfeda984cbe"
+        "geometry_hash": "sha256:c6942164c8a0299e955c9322f304606e0b35c844046121630c91edf7c2be9139"
       },
       {
-        "anchor_id": "svg:w-aed2328cd7:wall",
+        "anchor_id": "svg:l-service-interchange-wall-05:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "w-aed2328cd7"
+          "source_id": "l-service-interchange-wall-05"
         },
         "origin": [
-          -39.6,
+          -47.778,
           -6.0,
-          60.0
+          61.779
         ],
         "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 13.335,
+          "height_m": 3.8,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-SERVICE-INTERCHANGE/wall-05",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.8
+          ]
+        },
+        "geometry_hash": "sha256:0c4d26e900cc9a5346cf4de23d7310dcf83af031e690c69515d7e87db3b3a0a9"
+      },
+      {
+        "anchor_id": "svg:l-service-interchange-wall-06:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-service-interchange-wall-06"
+        },
+        "origin": [
+          -43.111,
+          -6.0,
+          61.779
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 8.571,
+          "height_m": 3.8,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-SERVICE-INTERCHANGE/wall-06",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.8
+          ]
+        },
+        "geometry_hash": "sha256:f537bb1142ac2b2e1bb5b62b9ba1b6b1a3e39da5b52eb96ebefdbae80a3397aa"
+      },
+      {
+        "anchor_id": "svg:l-service-interchange-wall-07:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-service-interchange-wall-07"
+        },
+        "origin": [
+          -38.111,
+          -6.0,
+          61.779
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 8.571,
+          "height_m": 3.8,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-SERVICE-INTERCHANGE/wall-07",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            3.8
+          ]
+        },
+        "geometry_hash": "sha256:5db7e23fd38f4652733b9ad535c771a16267ed4f5215758fc19bf23f128c35e2"
+      },
+      {
+        "anchor_id": "svg:l-service-interchange-wall-08:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-service-interchange-wall-08"
+        },
+        "origin": [
+          -34.444,
+          -6.0,
+          48.444
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
           -1.0,
           0.0,
           0.0
         ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
         "up": [
           0.0,
           1.0,
@@ -2385,12 +2193,12 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 8.4,
+          "length_m": 13.335,
           "height_m": 3.8,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/double_airlock/south",
-          "normal_side": "opposite",
+          "surface_side_id": "L-SERVICE-INTERCHANGE/wall-08",
+          "normal_side": "normal",
           "source_segment_index": 1
         },
         "placement_limits": {
@@ -2407,164 +2215,69 @@
             3.8
           ]
         },
-        "geometry_hash": "sha256:b0bb6e9d57c6c1415818f9c049a99546c8b9f207026b81989b49e5e1f8d6ceb2"
-      },
-      {
-        "anchor_id": "svg:w-af7d2e93e7:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-af7d2e93e7"
-        },
-        "origin": [
-          -48.0,
-          -6.0,
-          60.0
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "normal": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 18.0,
-          "height_m": 3.8,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/service_lobby/west",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            3.8
-          ]
-        },
-        "geometry_hash": "sha256:f422023b08239ff144e9997aab2f82a47ca79595ce7969adb47c86ea05798cdd"
-      },
-      {
-        "anchor_id": "svg:w-fa4f4097ce:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "w-fa4f4097ce"
-        },
-        "origin": [
-          -43.2,
-          -6.0,
-          46.5
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 4.8,
-          "height_m": 3.8,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-SERVICE-INTERCHANGE/service_lobby/south",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            3.8
-          ]
-        },
-        "geometry_hash": "sha256:8ea1d77cc55118d842b51993507be4c080da0da01d3bb13ea99ec401556b9d10"
+        "geometry_hash": "sha256:1c37caed6bde224b48f0a89e66dd566a9273d6273f24ec9c93e55ce55fe63173"
       }
     ],
-    "space_ids": []
+    "space_ids": [
+      "L-SERVICE-INTERCHANGE/lestnica"
+    ]
   },
   "counts": {
-    "input_floor": 4,
-    "input_ceiling": 4,
-    "input_wall": 10,
-    "input_door": 7,
+    "input_floor": 5,
+    "input_ceiling": 5,
+    "input_wall": 8,
+    "input_opening": 1,
+    "input_door": 5,
+    "input_floor_opening": 1,
     "ceiling_wall_alignment_issues": 0,
     "area_floors_expanded_to_wall_outer": 0,
     "area_ceilings_expanded_to_wall_outer": 0,
-    "wall_segments_before_normalization": 24,
-    "wall_segments_after_merge": 21,
-    "wall_segments_after_normalization": 27,
-    "wall_joints_resolved": 10,
+    "wall_segments_before_normalization": 18,
+    "wall_segments_after_merge": 18,
+    "wall_segments_after_normalization": 26,
+    "wall_joints_resolved": 12,
     "wall_volume_overlaps": 0,
-    "floor_polygons_before_normalization": 4,
-    "floor_cells_after_normalization": 8,
-    "floor_openings_requested": 0,
-    "floor_openings_applied": 0,
-    "ceiling_polygons_before_normalization": 4,
-    "ceiling_cells_after_normalization": 8,
+    "floor_polygons_before_normalization": 5,
+    "floor_cells_after_normalization": 14,
+    "floor_openings_requested": 1,
+    "floor_openings_applied": 1,
+    "ceiling_polygons_before_normalization": 5,
+    "ceiling_cells_after_normalization": 9,
     "ceiling_openings_requested": 0,
     "ceiling_openings_applied": 0,
     "removed_stale_generated_parts": 0,
     "material_files_created": 4,
     "material_files_preserved": 0,
-    "generated_floors": 8,
-    "generated_ceilings": 8,
-    "generated_walls": 27,
+    "generated_floors": 14,
+    "generated_ceilings": 9,
+    "generated_walls": 26,
     "generated_obstacles": 0,
-    "generated_markers": 7,
-    "generated_floor_visual_nodes": 8,
-    "generated_ceiling_visual_nodes": 8,
-    "generated_wall_visual_nodes": 27,
+    "generated_markers": 5,
+    "generated_floor_visual_nodes": 14,
+    "generated_ceiling_visual_nodes": 9,
+    "generated_wall_visual_nodes": 26,
     "generated_obstacle_visual_nodes": 0
   },
   "assumptions": [
-    "Wall normalization merged 3 duplicate or overlapping segment(s) with tolerance 0.02 m",
-    "Wall joint normalization converted 10 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap"
+    "Wall joint normalization converted 12 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
+    "Floor openings removed 39.7575 m2 from visible and collision geometry"
   ],
   "warnings": [],
   "errors": [],
-  "ignored": [],
+  "ignored": [
+    {
+      "id": "l-service-interchange-context-01",
+      "tag": "rect",
+      "classes": "context-context",
+      "reason": "mapped to ignore"
+    },
+    {
+      "id": "l-service-interchange-context-02",
+      "tag": "rect",
+      "classes": "context-trunk",
+      "reason": "mapped to ignore"
+    }
+  ],
   "materials": {
     "Floors": "res://gen/l/l_service_interchange/Generated/Architecture/floor_material.tres",
     "Ceilings": "res://gen/l/l_service_interchange/Generated/Architecture/ceiling_material.tres",
@@ -2588,49 +2301,55 @@
     "floor_geometry.obj",
     "ceiling_geometry.obj",
     "wall_geometry.obj",
-    "floor_001_f_fc6e927be0.obj",
-    "floor_002_f_1f3cd6dd5f.obj",
-    "floor_003_f_1f3cd6dd5f.obj",
-    "floor_004_f_afae1845a2.obj",
-    "floor_005_f_afae1845a2.obj",
-    "floor_006_f_afae1845a2.obj",
-    "floor_007_f_3fe75079df.obj",
-    "floor_008_f_3fe75079df.obj",
-    "ceiling_001_c_fc6e927be0.obj",
-    "ceiling_002_c_1f3cd6dd5f.obj",
-    "ceiling_003_c_1f3cd6dd5f.obj",
-    "ceiling_004_c_afae1845a2.obj",
-    "ceiling_005_c_afae1845a2.obj",
-    "ceiling_006_c_afae1845a2.obj",
-    "ceiling_007_c_3fe75079df.obj",
-    "ceiling_008_c_3fe75079df.obj",
-    "wall_001_w_4c6d45caf7.obj",
-    "wall_002_w_4c6d45caf7.obj",
-    "wall_003_w_4c6d45caf7.obj",
-    "wall_004_w_fa4f4097ce.obj",
-    "wall_005_w_95da49330d_w_fa4f4097ce.obj",
-    "wall_006_w_95da49330d_w_fa4f4097ce.obj",
-    "wall_007_w_2857167144_w_95da49330d.obj",
-    "wall_008_w_2857167144_w_95da49330d.obj",
-    "wall_009_w_2857167144.obj",
-    "wall_010_w_fa4f4097ce.obj",
-    "wall_011_w_95da49330d.obj",
-    "wall_012_w_2857167144.obj",
-    "wall_013_w_af7d2e93e7.obj",
-    "wall_014_w_af7d2e93e7.obj",
-    "wall_015_w_6fc5834736.obj",
-    "wall_016_w_6fc5834736.obj",
-    "wall_017_w_aed2328cd7.obj",
-    "wall_018_w_aed2328cd7.obj",
-    "wall_019_w_718860f174_w_aed2328cd7.obj",
-    "wall_020_w_718860f174_w_aed2328cd7.obj",
-    "wall_021_w_aed2328cd7.obj",
-    "wall_022_w_871597441e.obj",
-    "wall_023_w_871597441e.obj",
-    "wall_024_w_871597441e.obj",
-    "wall_025_w_49539d3cd4.obj",
-    "wall_026_w_49539d3cd4.obj",
-    "wall_027_w_49539d3cd4.obj",
+    "floor_001_l_service_interchange_floor_01.obj",
+    "floor_002_l_service_interchange_floor_01.obj",
+    "floor_003_l_service_interchange_floor_02.obj",
+    "floor_004_l_service_interchange_floor_02.obj",
+    "floor_005_l_service_interchange_floor_02.obj",
+    "floor_006_l_service_interchange_floor_02.obj",
+    "floor_007_l_service_interchange_floor_02.obj",
+    "floor_008_l_service_interchange_floor_02.obj",
+    "floor_009_l_service_interchange_floor_02.obj",
+    "floor_010_l_service_interchange_floor_03.obj",
+    "floor_011_l_service_interchange_floor_05.obj",
+    "floor_012_l_service_interchange_floor_04.obj",
+    "floor_013_l_service_interchange_floor_04.obj",
+    "floor_014_l_service_interchange_floor_04.obj",
+    "ceiling_001_l_service_interchange_ceiling_01.obj",
+    "ceiling_002_l_service_interchange_ceiling_02.obj",
+    "ceiling_003_l_service_interchange_ceiling_02.obj",
+    "ceiling_004_l_service_interchange_ceiling_02.obj",
+    "ceiling_005_l_service_interchange_ceiling_03.obj",
+    "ceiling_006_l_service_interchange_ceiling_05.obj",
+    "ceiling_007_l_service_interchange_ceiling_04.obj",
+    "ceiling_008_l_service_interchange_ceiling_04.obj",
+    "ceiling_009_l_service_interchange_ceiling_04.obj",
+    "wall_001_l_service_interchange_wall_01.obj",
+    "wall_002_l_service_interchange_wall_01.obj",
+    "wall_003_l_service_interchange_wall_02.obj",
+    "wall_004_l_service_interchange_wall_02.obj",
+    "wall_005_l_service_interchange_wall_02.obj",
+    "wall_006_l_service_interchange_wall_02.obj",
+    "wall_007_l_service_interchange_wall_02.obj",
+    "wall_008_l_service_interchange_wall_02.obj",
+    "wall_009_l_service_interchange_wall_02.obj",
+    "wall_010_l_service_interchange_wall_02.obj",
+    "wall_011_l_service_interchange_wall_02.obj",
+    "wall_012_l_service_interchange_wall_03.obj",
+    "wall_013_l_service_interchange_wall_03.obj",
+    "wall_014_l_service_interchange_wall_03.obj",
+    "wall_015_l_service_interchange_wall_03.obj",
+    "wall_016_l_service_interchange_wall_04.obj",
+    "wall_017_l_service_interchange_wall_04.obj",
+    "wall_018_l_service_interchange_wall_04.obj",
+    "wall_019_l_service_interchange_wall_05.obj",
+    "wall_020_l_service_interchange_wall_05.obj",
+    "wall_021_l_service_interchange_wall_06.obj",
+    "wall_022_l_service_interchange_wall_06.obj",
+    "wall_023_l_service_interchange_wall_07.obj",
+    "wall_024_l_service_interchange_wall_07.obj",
+    "wall_025_l_service_interchange_wall_08.obj",
+    "wall_026_l_service_interchange_wall_08.obj",
     "conversion_report.json"
   ]
 }

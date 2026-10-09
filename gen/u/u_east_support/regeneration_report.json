@@ -4,14 +4,14 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "U-EAST-SUPPORT",
-  "generation_id": "sha256:a167d6482b22c2168a4d19ace491acdff5fc1d04e550a544eb6f2cc13788b5b9",
+  "generation_id": "sha256:8eae7e9753e67ec766ff59d5f787f79926e72c8492b7da1b8473e66acf588c23",
   "commands": [
     {
       "stage": "inspect",
       "argv": [
         "$PYTHON",
         "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
-        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_east_support.svg",
+        "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/upper/u_east_support.svg",
         "--profile",
         "generic",
         "--scale",
@@ -42,7 +42,7 @@
       "argv": [
         "$PYTHON",
         "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
-        "$PROJECT_ROOT/docs/design/complex_v3/plans/generation/upper/u_east_support.svg",
+        "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/upper/u_east_support.svg",
         "$STAGING/Generated/Architecture",
         "--profile",
         "generic",
@@ -69,15 +69,66 @@
         "--strict"
       ],
       "exit_code": 0
+    },
+    {
+      "stage": "stairs",
+      "generator_id": "east_stair_lu",
+      "argv": [
+        "$PYTHON",
+        "$STAIR_TOOL_ROOT/scripts/generate_godot_stairs.py",
+        "$STAGING/Generated/Stairs/east_stair_lu",
+        "--shaft-width",
+        "9.98",
+        "--shaft-length",
+        "7.889",
+        "--floor-height",
+        "6",
+        "--layout",
+        "u-turn",
+        "--stair-width",
+        "1.8",
+        "--lower-entry-side",
+        "south",
+        "--upper-exit-side",
+        "south",
+        "--shaft-wall-bottom",
+        "4",
+        "--shaft-wall-top",
+        "6",
+        "--target-riser",
+        "0.15",
+        "--max-riser",
+        "0.15",
+        "--target-tread",
+        "0.25",
+        "--min-tread",
+        "0.25",
+        "--minimum-headroom",
+        "2.4",
+        "--landing-depth",
+        "2",
+        "--flight-gap",
+        "0.7",
+        "--railings",
+        "auto",
+        "--wall-thickness",
+        "0.09",
+        "--scene-name",
+        "east_stair_lu",
+        "--resource-dir",
+        "res://gen/u/u_east_support/Generated/Stairs/east_stair_lu"
+      ],
+      "exit_code": 0
     }
   ],
-  "anchor_count": 56,
+  "anchor_count": 53,
   "errors": [],
   "warnings": [],
   "files": [
     "anchor_frames.json",
     "generation_manifest.json",
     "preflight_report.json",
-    "Generated/Architecture/conversion_report.json"
+    "Generated/Architecture/conversion_report.json",
+    "Generated/Stairs/east_stair_lu/generation_report.json"
   ]
 }
