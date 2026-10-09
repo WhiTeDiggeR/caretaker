@@ -10,6 +10,7 @@ const CASES: Array[String] = [
 	"res://tests/opening/cases/interaction_case.gd",
 	"res://tests/opening/cases/door_case.gd",
 	"res://tests/opening/cases/power_case.gd",
+	"res://tests/opening/cases/terminal_case.gd",
 ]
 
 

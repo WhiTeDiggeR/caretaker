@@ -38,6 +38,8 @@ const CLEARANCE_SKIN := 0.03
 
 var is_crouching := false
 var is_mantling := false
+## Set while a full-screen UI (terminal, document) owns the input.
+var controls_locked := false
 
 var _shape: CapsuleShape3D
 var _current_height := STAND_HEIGHT
@@ -45,6 +47,7 @@ var _forced_crouch := false
 
 
 func _ready() -> void:
+	add_to_group(&"player")
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	interactor.prompt_label = interact_label
 	interactor.hold_bar = hold_progress_bar
@@ -54,7 +57,16 @@ func _ready() -> void:
 	_apply_height(STAND_HEIGHT)
 
 
+func set_controls_locked(locked: bool) -> void:
+	controls_locked = locked
+	interactor.set_physics_process(not locked)
+	if locked and interact_label:
+		interact_label.visible = false
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if controls_locked:
+		return
 	if event is InputEventMouseMotion:
 		var mouse_event := event as InputEventMouseMotion
 		rotate_y(-mouse_event.relative.x * MOUSE_SENS)
@@ -72,6 +84,12 @@ func _physics_process(delta: float) -> void:
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+
+	if controls_locked:
+		velocity.x = move_toward(velocity.x, 0, WALK_SPEED)
+		velocity.z = move_toward(velocity.z, 0, WALK_SPEED)
+		move_and_slide()
+		return
 
 	_update_crouch(delta)
 
@@ -211,7 +229,7 @@ func _perform_mantle(target: Vector3) -> void:
 	tween.tween_property(self, "global_position", target, MANTLE_MOVE_TIME)
 	await tween.finished
 	is_mantling = false
-	interactor.set_physics_process(true)
+	interactor.set_physics_process(not controls_locked)
 	mantle_finished.emit()
 
 
