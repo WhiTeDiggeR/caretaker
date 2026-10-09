@@ -6,6 +6,7 @@ extends Node
 const CASES: Array[String] = [
 	"res://tests/opening/cases/game_state_case.gd",
 	"res://tests/opening/cases/sandbox_case.gd",
+	"res://tests/opening/cases/movement_case.gd",
 ]
 
 

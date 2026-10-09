@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/sandbox/opening_sandbox.gd" id="1_sandbox"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stations/movement_station.tscn" id="4_movement"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
@@ -53,6 +54,9 @@ mesh = SubResource("floor_mesh")
 shape = SubResource("floor_shape")
 
 [node name="Stations" type="Node3D" parent="."]
+
+[node name="MovementStation" parent="Stations" instance=ExtResource("4_movement")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
