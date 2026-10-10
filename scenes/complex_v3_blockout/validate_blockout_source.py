@@ -26,8 +26,6 @@ def main() -> int:
         "sector_catalog.json",
         "complex_v3_blockout_test.gd",
         "complex_v3_blockout_test.tscn",
-        "complex_v3_blockout_check.gd",
-        "complex_v3_portal_check.gd",
         "complex_v3_sector_check.gd",
         "complex_v3_visual_check.gd",
         "complex_v3_editor_preview_check.gd",
