@@ -48,6 +48,9 @@ class HeightTests(unittest.TestCase):
     def test_slab_between_floors_is_at_least_one_metre(self) -> None:
         self.assertEqual(heights.slab_errors(self.sectors), [])
 
+    def test_every_floor_has_its_policy_height(self) -> None:
+        self.assertEqual(heights.uniform_height_errors(self.sectors), [])
+
     def test_every_canonical_sector_has_a_wall_height(self) -> None:
         self.assertEqual(len(self.sectors), 32)
         for sector_id, sector in self.sectors.items():

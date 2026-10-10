@@ -2,6 +2,7 @@
 
 Hard rule (D-43): the slab between two floors is at least 1.0 m thick, i.e. level spacing minus the highest wall of the lower
 floor stays >= MIN_SLAB_M.
+Hard rule (D-46): every sector of a floor has the floor wall height (U/L 5.0 m, T 4.5 m).
 Warning: sectors of one floor have different wall heights (the height is a per-sector setting, so rooms of equal purpose next to
 each other can end up with ceilings of different height). Neighbouring sectors that touch each other with different heights are listed.
 """
@@ -15,6 +16,7 @@ DATA = ROOT / "docs/design/complex_v4/review/data"
 ELEVATION = {"LV-U": 0.0, "LV-L": -6.0, "LV-T": -11.5}
 ORDER = ["LV-U", "LV-L", "LV-T"]
 MIN_SLAB_M = 1.0
+FLOOR_HEIGHT_M = {"LV-U": 5.0, "LV-L": 5.0, "LV-T": 4.5}  # D-46: one wall height per floor
 TOUCH_M = 0.05
 
 
@@ -30,6 +32,11 @@ def slab_errors(sectors: dict[str, dict]) -> list[str]:
         if slab < MIN_SLAB_M - 1e-9:
             errors.append(f"slab between {upper} and {lower} is {slab:.2f} m (< {MIN_SLAB_M} m): tallest wall of {lower} is {tallest} m")
     return errors
+
+
+def uniform_height_errors(sectors: dict[str, dict]) -> list[str]:
+    return [f"{sid}: wall height {s['wall_height_m']} m, the policy for {s['level']} is {FLOOR_HEIGHT_M[s['level']]} m"
+            for sid, s in sectors.items() if abs(s["wall_height_m"] - FLOOR_HEIGHT_M[s["level"]]) > 1e-9]
 
 
 def _touch(a: list[float], b: list[float]) -> bool:
@@ -59,7 +66,7 @@ def height_warnings(sectors: dict[str, dict]) -> list[str]:
 
 def main() -> int:
     sectors = load()
-    errors = slab_errors(sectors)
+    errors = slab_errors(sectors) + uniform_height_errors(sectors)
     warnings = height_warnings(sectors)
     for line in errors:
         print("ERROR  ", line)

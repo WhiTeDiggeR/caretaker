@@ -1,6 +1,6 @@
 # L-CIRCULATION
 
-Этаж: нижний (LV-L). Источник: `synthetic: overview of the level`. Высота стен 4.5 м. Габарит 103.3×50.0 м, x -72.2…31.1, z 19.6…69.6.
+Этаж: нижний (LV-L). Источник: `synthetic: overview of the level`. Высота стен 5.0 м. Габарит 103.3×50.0 м, x -72.2…31.1, z 19.6…69.6.
 
 ![L-CIRCULATION](img/l-circulation.png)
 

@@ -1,6 +1,6 @@
 # L-OLD-CORE
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_old_core.svg`. Высота стен 3.4 м. Габарит 43.3×57.7 м, x -102.2…-58.9, z -9.3…48.4.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_old_core.svg`. Высота стен 5.0 м. Габарит 43.3×57.7 м, x -102.2…-58.9, z -9.3…48.4.
 
 ![L-OLD-CORE](img/l-old-core.png)
 

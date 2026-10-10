@@ -1,6 +1,6 @@
 # U-EMERGENCY
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_emergency.svg`. Высота стен 3.8 м. Габарит 45.6×27.8 м, x -107.8…-62.2, z -8.2…19.6.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_emergency.svg`. Высота стен 5.0 м. Габарит 45.6×27.8 м, x -107.8…-62.2, z -8.2…19.6.
 
 ![U-EMERGENCY](img/u-emergency.png)
 

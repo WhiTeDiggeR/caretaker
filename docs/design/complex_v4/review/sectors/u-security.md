@@ -1,6 +1,6 @@
 # U-SECURITY
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_security.svg`. Высота стен 3.4 м. Габарит 20.4×36.7 м, x -28.2…-7.9, z 25.1…61.8.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_security.svg`. Высота стен 5.0 м. Габарит 20.4×36.7 м, x -28.2…-7.9, z 25.1…61.8.
 
 ![U-SECURITY](img/u-security.png)
 

@@ -1,6 +1,6 @@
 # U-DOMESTIC
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_domestic.svg`. Высота стен 3.4 м. Габарит 26.7×31.1 м, x -60.0…-33.3, z -11.6…19.5.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_domestic.svg`. Высота стен 5.0 м. Габарит 26.7×31.1 м, x -60.0…-33.3, z -11.6…19.5.
 
 ![U-DOMESTIC](img/u-domestic.png)
 

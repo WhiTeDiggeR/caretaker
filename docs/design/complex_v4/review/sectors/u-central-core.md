@@ -1,6 +1,6 @@
 # U-CENTRAL-CORE
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_central_core.svg`. Высота стен 3.4 м. Габарит 14.1×19.6 м, x -7.0…7.0, z 0.0…19.6.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_central_core.svg`. Высота стен 5.0 м. Габарит 14.1×19.6 м, x -7.0…7.0, z 0.0…19.6.
 
 ![U-CENTRAL-CORE](img/u-central-core.png)
 
