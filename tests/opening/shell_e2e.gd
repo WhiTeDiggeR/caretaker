@@ -32,6 +32,7 @@ func _run() -> void:
 	await _frames(5)
 	var menu := tree.current_scene
 	_check(menu.continue_button != null, "main menu has the continue button")
+	_check(menu.load_button.disabled, "loading is unavailable without saves")
 	await _capture("shell_1_menu")
 
 	_check(_has_button(menu, "Полигон (отладка)"), "debug builds offer the test range")
@@ -83,7 +84,12 @@ func _run() -> void:
 	await _frames(3)
 	var menu_again := tree.current_scene
 	_check(not menu_again.continue_button.disabled, "continue is available with a save")
-	menu_again._on_continue()
+	_check(not menu_again.load_button.disabled, "loading is available with a save")
+	var menu_slots: SaveSlotsScreen = menu_again.open_load()
+	await _frames(2)
+	await _capture("shell_5_menu_load")
+	_check(not menu_slots.slot_buttons["slot_1"].disabled and menu_slots.slot_buttons["slot_2"].disabled, "the menu lists only existing saves for loading")
+	menu_slots.choose("slot_1")
 	await _until(func() -> bool: return _scene_is(SANDBOX))
 	await _frames(5)
 	var loaded_door := tree.current_scene.get_node(^"Stations/DoorStation/Hermetic") as FacilityDoor

@@ -1,8 +1,10 @@
 extends Control
 
-## Main menu: new game, continue, settings, quit; the test range in debug builds.
+## Main menu: continue, load a chosen save, new game, settings, quit; the test range in
+## debug builds.
 
 var continue_button: Button
+var load_button: Button
 var buttons: VBoxContainer
 
 
@@ -39,6 +41,7 @@ func _ready() -> void:
 	buttons.add_theme_constant_override(&"separation", 10)
 	column.add_child(buttons)
 	continue_button = ShellUI.button(buttons, "Продолжить", _on_continue)
+	load_button = ShellUI.button(buttons, "Загрузить игру", open_load)
 	var new_game := ShellUI.button(buttons, "Новая игра", Shell.new_game)
 	if OS.is_debug_build():
 		ShellUI.button(buttons, "Полигон (отладка)", Shell.start_sandbox)
@@ -50,6 +53,16 @@ func _ready() -> void:
 
 func refresh() -> void:
 	continue_button.disabled = Saves.latest().is_empty()
+	load_button.disabled = continue_button.disabled
+
+
+## Slot list for loading; focus returns to the menu when it is closed.
+func open_load() -> SaveSlotsScreen:
+	var screen := SaveSlotsScreen.open(self, SaveSlotsScreen.Mode.LOAD)
+	screen.closed.connect(func() -> void:
+		if is_inside_tree():
+			load_button.grab_focus())
+	return screen
 
 
 func _on_continue() -> void:
