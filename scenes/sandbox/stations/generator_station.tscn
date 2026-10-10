@@ -1,0 +1,155 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/sandbox/stations/generator_station.gd" id="1_station"]
+[ext_resource type="Script" path="res://objects/repair/repair_control.gd" id="2_control"]
+[ext_resource type="Script" path="res://objects/repair/repair_gauge.gd" id="3_gauge"]
+[ext_resource type="Script" path="res://objects/repair/repair_procedure.gd" id="4_procedure"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="5_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="machine"]
+albedo_color = Color(0.3, 0.34, 0.31, 1)
+metallic = 0.6
+roughness = 0.45
+
+[sub_resource type="BoxMesh" id="generator_mesh"]
+material = SubResource("machine")
+size = Vector3(3, 2, 2)
+
+[sub_resource type="BoxShape3D" id="generator_shape"]
+size = Vector3(3, 2, 2)
+
+[sub_resource type="StandardMaterial3D" id="cabinet"]
+albedo_color = Color(0.2, 0.22, 0.23, 1)
+
+[sub_resource type="BoxMesh" id="cabinet_mesh"]
+material = SubResource("cabinet")
+size = Vector3(1.2, 1.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="cabinet_shape"]
+size = Vector3(1.2, 1.8, 0.3)
+
+[node name="GeneratorStation" type="Node3D"]
+script = ExtResource("1_station")
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+pixel_size = 0.006
+text = "ЗАПУСК ГЕНЕРАТОРА
+диагностика → охлаждение → защита → пуск"
+font_size = 48
+outline_size = 12
+
+[node name="Generator" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2.2)
+
+[node name="Mesh" type="MeshInstance3D" parent="Generator"]
+mesh = SubResource("generator_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Generator"]
+shape = SubResource("generator_shape")
+
+[node name="ShieldPanel" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.9, -0.4)
+
+[node name="Mesh" type="MeshInstance3D" parent="ShieldPanel"]
+mesh = SubResource("cabinet_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="ShieldPanel"]
+shape = SubResource("cabinet_shape")
+
+[node name="Interactable" type="Node" parent="ShieldPanel"]
+script = ExtResource("5_interactable")
+mode = 2
+prompt = "ПРОЧИТАТЬ ЖУРНАЛ ЩИТА"
+inspect_title = "ЩИТ ГЕНЕРАТОРА · ЖУРНАЛ"
+inspect_text = "Аварийный останов Г-1.
+Причина: перегрев.
+Контур охлаждения: давление 0.
+Защита: сработала (2 автомата)."
+sets_flag = &"sandbox_gen_diagnosed"
+
+[node name="ShieldLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 2.0, -0.2)
+pixel_size = 0.004
+text = "ЩИТ"
+font_size = 48
+outline_size = 10
+
+[node name="Schema" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.5, -0.4)
+pixel_size = 0.004
+text = "СХЕМА ОХЛАЖДЕНИЯ
+1) В-2   2) В-1"
+font_size = 44
+outline_size = 10
+
+[node name="Valve2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 1.2, 0)
+script = ExtResource("2_control")
+kind = 1
+control_id = &"valve_2"
+hold_time = 1.0
+fixed_prompt = "ВЕНТИЛЬ ОТКРЫТ"
+
+[node name="Valve2Label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 0.8, 0.05)
+pixel_size = 0.004
+text = "В-2"
+font_size = 44
+outline_size = 10
+
+[node name="Valve1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 1.2, 0)
+script = ExtResource("2_control")
+kind = 1
+control_id = &"valve_1"
+hold_time = 1.0
+fixed_prompt = "ВЕНТИЛЬ ОТКРЫТ"
+
+[node name="Valve1Label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0.8, 0.05)
+pixel_size = 0.004
+text = "В-1"
+font_size = 44
+outline_size = 10
+
+[node name="PressureGauge" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.85, 0)
+script = ExtResource("3_gauge")
+caption = "ДАВЛЕНИЕ"
+
+[node name="BreakerCabinet" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0.9, -0.25)
+mesh = SubResource("cabinet_mesh")
+
+[node name="Breaker1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 1.3, -0.05)
+script = ExtResource("2_control")
+kind = 3
+control_id = &"breaker_1"
+fixed_prompt = "АВТОМАТ ВЗВЕДЁН"
+
+[node name="Breaker2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 1.3, -0.05)
+script = ExtResource("2_control")
+kind = 3
+control_id = &"breaker_2"
+fixed_prompt = "АВТОМАТ ВЗВЕДЁН"
+
+[node name="StartLever" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.6, 0)
+script = ExtResource("2_control")
+kind = 0
+control_id = &"start_lever"
+prompt_on = "УДЕРЖИВАТЬ РЫЧАГ ПУСКА"
+hold_time = 3.0
+fixed_prompt = "ГЕНЕРАТОР РАБОТАЕТ"
+
+[node name="RpmGauge" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.9, 0)
+script = ExtResource("3_gauge")
+caption = "ОБОРОТЫ"
+
+[node name="Procedure" type="Node" parent="."]
+script = ExtResource("4_procedure")
+procedure_path = "res://data/procedures/sandbox_generator.json"

@@ -1,0 +1,57 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/terminal/terminal.gd" id="1_terminal"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="console_material"]
+albedo_color = Color(0.26, 0.28, 0.27, 1)
+metallic = 0.4
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="desk_mesh"]
+material = SubResource("console_material")
+size = Vector3(1.2, 0.95, 0.7)
+
+[sub_resource type="BoxMesh" id="monitor_mesh"]
+material = SubResource("console_material")
+size = Vector3(0.75, 0.55, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="screen_material"]
+emission_enabled = true
+emission_energy_multiplier = 1.6
+
+[sub_resource type="QuadMesh" id="screen_mesh"]
+size = Vector2(0.64, 0.44)
+
+[sub_resource type="BoxShape3D" id="desk_shape"]
+size = Vector3(1.2, 0.95, 0.7)
+
+[sub_resource type="BoxShape3D" id="monitor_shape"]
+size = Vector3(0.75, 0.55, 0.14)
+
+[node name="Terminal" type="StaticBody3D"]
+script = ExtResource("1_terminal")
+
+[node name="Desk" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475, 0)
+mesh = SubResource("desk_mesh")
+
+[node name="Monitor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.25, -0.15)
+mesh = SubResource("monitor_mesh")
+
+[node name="Screen" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.25, -0.085)
+mesh = SubResource("screen_mesh")
+surface_material_override/0 = SubResource("screen_material")
+
+[node name="DeskCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.475, 0)
+shape = SubResource("desk_shape")
+
+[node name="MonitorCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.25, -0.15)
+shape = SubResource("monitor_shape")
+
+[node name="Interactable" type="Node" parent="."]
+script = ExtResource("2_interactable")
