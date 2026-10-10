@@ -15,6 +15,18 @@ func run(c: OpeningCheck) -> void:
 	c.equal(occupied.panel_interactable.get_inspect_title(), "КАПСУЛА АВАРИЙНОГО СНА", "capsule panel is inspected")
 	c.is_true(occupied.panel_interactable.get_inspect_text().contains("Штатное пробуждение: нет команды"), "occupied capsule tells why the staff stays asleep")
 	c.is_true(not occupied.is_open() and empty.is_open(), "occupied capsule is closed, empty one is open")
+	# Р-16: a large occupant (2.0 m, 0.6 m shoulders) lies under the closed lid with room to
+	# turn and raise the head.
+	await c.tree.physics_frame
+	await c.tree.physics_frame
+	var bed_top := StaffCapsule.BASE_HEIGHT + StaffCapsule.BED_THICKNESS
+	var occupant := BoxShape3D.new()
+	occupant.size = Vector3(StaffCapsule.DESIGN_OCCUPANT_SHOULDERS + 0.3, 0.7, StaffCapsule.DESIGN_OCCUPANT_HEIGHT + 0.25)
+	var query := PhysicsShapeQueryParameters3D.new()
+	query.shape = occupant
+	query.transform = Transform3D(Basis.IDENTITY, occupied.global_position + Vector3(0, bed_top + 0.37, 0))
+	c.is_true(occupied.get_world_3d().direct_space_state.intersect_shape(query, 1).is_empty(), "a large occupant fits in the closed capsule with room to move")
+	c.is_true(StaffCapsule.BED_LENGTH >= StaffCapsule.DESIGN_OCCUPANT_HEIGHT + 0.3 and StaffCapsule.BED_WIDTH >= StaffCapsule.DESIGN_OCCUPANT_SHOULDERS + 0.4, "the bed is sized for the design occupant")
 	c.is_true(hero.panel_interactable.get_inspect_text().contains("ОШИБКА КОНТУРА"), "hero capsule shows the damaged contour")
 	c.equal(hero.lid_interactable.mode, Interactable.Mode.HOLD, "hero lid is pushed open by holding")
 	hero.lid_interactable.trigger()

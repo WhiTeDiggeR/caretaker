@@ -2,15 +2,29 @@
 class_name StaffCapsule
 extends StaticBody3D
 
-## Emergency sleep capsule of the staff block (≈1.0 × 1.2 × 2.4 m, lying). The status panel
+## Emergency sleep capsule of the staff block (≈1.2 × 1.35 × 2.6 m, lying). The status panel
 ## at the foot end is inspected; the hero's damaged capsule has a jammed lid that is pushed
 ## open by holding the interact key.
+## Sized for a large occupant (docs/game_design/02-prop-standard.md): up to 2.0 m tall and
+## 0.6 m across the shoulders, plus room to turn and to raise the head. The lid is a hollow
+## frosted shell, so the sleeper inside stays visible as a silhouette only.
 
 enum Variant { OCCUPIED, EMPTY, HERO }
 
-const LENGTH := 2.4
-const WIDTH := 1.0
-const BASE_HEIGHT := 0.55
+const LENGTH := 2.6
+const WIDTH := 1.2
+const BASE_HEIGHT := 0.5
+## Inner bed (mattress) and the free height above it under the closed lid.
+const BED_LENGTH := 2.3
+const BED_WIDTH := 1.0
+const BED_THICKNESS := 0.06
+const LID_HEIGHT := 0.85
+const LID_WALL := 0.04
+## Largest occupant the capsule is designed for.
+const DESIGN_OCCUPANT_HEIGHT := 2.0
+const DESIGN_OCCUPANT_SHOULDERS := 0.6
+## Placeholder sleeper: an average adult for scale.
+const SLEEPER_HEIGHT := 1.75
 const LID_OPEN_ANGLE := deg_to_rad(-75.0)  # negative lifts the free edge (hinge on +X)
 const HERO_LID_FLAG := &"opening/hero_capsule_open"
 const PANEL_TEXT := {Variant.OCCUPIED: "pod_staff_occupied", Variant.EMPTY: "pod_staff_empty", Variant.HERO: "pod_hero"}
@@ -57,23 +71,15 @@ func _build() -> void:
 	var shell := PropKit.material(Color(0.62, 0.64, 0.64))
 	var dark := PropKit.material(Color(0.18, 0.19, 0.2))
 	PropKit.box(self, Vector3(0, BASE_HEIGHT * 0.5, 0), Vector3(WIDTH, BASE_HEIGHT, LENGTH), shell, true)
-	PropKit.box(self, Vector3(0, BASE_HEIGHT + 0.03, 0), Vector3(WIDTH * 0.86, 0.06, LENGTH * 0.92), dark)
+	PropKit.box(self, Vector3(0, BASE_HEIGHT + BED_THICKNESS * 0.5, 0), Vector3(BED_WIDTH, BED_THICKNESS, BED_LENGTH), dark)
 	if variant == Variant.OCCUPIED:
-		var body := MeshInstance3D.new()
-		var capsule := CapsuleMesh.new()
-		capsule.radius = 0.2
-		capsule.height = 1.7
-		capsule.material = PropKit.material(Color(0.3, 0.32, 0.35))
-		body.mesh = capsule
-		body.position = Vector3(0, BASE_HEIGHT + 0.22, -0.05)
-		body.rotation = Vector3(PI * 0.5, 0, 0)
-		add_child(body)
+		_build_sleeper(BASE_HEIGHT + BED_THICKNESS)
 	# Lid hinged on the +X side, frosted so faces stay unreadable (opening doc, Р-6).
 	lid = AnimatableBody3D.new()
 	lid.sync_to_physics = false
 	lid.position = Vector3(WIDTH * 0.5, BASE_HEIGHT, 0)
 	add_child(lid)
-	PropKit.box(lid, Vector3(-WIDTH * 0.45, 0.32, 0), Vector3(WIDTH * 0.9, 0.62, LENGTH * 0.94), PropKit.material(Color(0.78, 0.88, 0.92), false, 0.42), true)
+	_build_lid()
 	if variant == Variant.EMPTY:
 		lid.rotation.z = LID_OPEN_ANGLE
 	if variant == Variant.HERO:
@@ -88,3 +94,38 @@ func _build() -> void:
 	PropKit.box(panel, Vector3(0, 1.1, 0.02), Vector3(0.42, 0.3, 0.06), dark, true, Vector3(deg_to_rad(-20.0), 0, 0))
 	PropKit.box(panel, Vector3(0.14, 1.18, 0.07), Vector3(0.06, 0.06, 0.02), PropKit.material(LAMP[variant], true))
 	panel_interactable = PropKit.interactable(panel, Interactable.Mode.INSPECT, "ОСМОТРЕТЬ ПАНЕЛЬ КАПСУЛЫ", PANEL_TEXT[variant])
+
+
+## Hollow frosted shell in the lid's frame (hinge line at the origin, the shell towards -X):
+## top plate, two long walls and two end walls, each with its own thin collision.
+func _build_lid() -> void:
+	var glass := PropKit.material(Color(0.78, 0.88, 0.92), false, 0.42)
+	var frame := PropKit.material(Color(0.5, 0.52, 0.53))
+	var centre_x := -WIDTH * 0.5
+	PropKit.box(lid, Vector3(centre_x, LID_HEIGHT - LID_WALL * 0.5, 0), Vector3(WIDTH, LID_WALL, LENGTH), glass, true)
+	for side: float in [-1.0, 1.0]:
+		PropKit.box(lid, Vector3(centre_x + side * (WIDTH - LID_WALL) * 0.5, LID_HEIGHT * 0.5, 0), Vector3(LID_WALL, LID_HEIGHT, LENGTH), glass, true)
+		PropKit.box(lid, Vector3(centre_x, LID_HEIGHT * 0.5, side * (LENGTH - LID_WALL) * 0.5), Vector3(WIDTH, LID_HEIGHT, LID_WALL), frame, true)
+
+
+## Lying adult on its back, head towards -Z (the panel is at the feet, +Z).
+func _build_sleeper(bed_top: float) -> void:
+	var cloth := PropKit.material(Color(0.3, 0.32, 0.35))
+	var skin := PropKit.material(Color(0.55, 0.5, 0.47))
+	var k := SLEEPER_HEIGHT / 1.75  # proportions below are for a 1.75 m adult
+	var head_z := -SLEEPER_HEIGHT * 0.5 + 0.12 * k
+	var head := MeshInstance3D.new()
+	var sphere := SphereMesh.new()
+	sphere.radius = 0.11 * k
+	sphere.height = 0.22 * k
+	sphere.material = skin
+	head.mesh = sphere
+	head.position = Vector3(0, bed_top + 0.11 * k, head_z)
+	add_child(head)
+	var torso_length := 0.62 * k
+	var torso_z := head_z + 0.14 * k + torso_length * 0.5
+	PropKit.box(self, Vector3(0, bed_top + 0.11 * k, torso_z), Vector3(0.46 * k, 0.22 * k, torso_length), cloth)
+	var leg_length := SLEEPER_HEIGHT * 0.5 - (torso_z + torso_length * 0.5)
+	for side: float in [-1.0, 1.0]:
+		PropKit.box(self, Vector3(side * 0.11 * k, bed_top + 0.07 * k, torso_z + torso_length * 0.5 + leg_length * 0.5), Vector3(0.16 * k, 0.14 * k, leg_length), cloth)
+		PropKit.box(self, Vector3(side * 0.29 * k, bed_top + 0.06 * k, torso_z), Vector3(0.1 * k, 0.12 * k, 0.6 * k), cloth)
