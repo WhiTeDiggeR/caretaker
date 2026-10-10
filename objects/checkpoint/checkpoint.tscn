@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/checkpoint/checkpoint.gd" id="1_checkpoint"]
+
+[sub_resource type="BoxShape3D" id="area"]
+size = Vector3(3, 3, 3)
+
+[node name="Checkpoint" type="Area3D"]
+script = ExtResource("1_checkpoint")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("area")

@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/dream/dream_seal.gd" id="1_seal"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="stone"]
+albedo_color = Color(0.3, 0.27, 0.25, 1)
+
+[sub_resource type="CylinderMesh" id="disc"]
+material = SubResource("stone")
+top_radius = 1.4
+bottom_radius = 1.5
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="glow"]
+emission_enabled = true
+emission_energy_multiplier = 2.5
+
+[sub_resource type="TorusMesh" id="ring"]
+inner_radius = 0.9
+outer_radius = 1.05
+
+[sub_resource type="CylinderShape3D" id="shape"]
+height = 0.4
+radius = 1.5
+
+[node name="DreamSeal" type="StaticBody3D"]
+script = ExtResource("1_seal")
+
+[node name="Disc" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("disc")
+
+[node name="Glow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42, 0)
+mesh = SubResource("ring")
+surface_material_override/0 = SubResource("glow")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("shape")
+
+[node name="Interactable" type="Node" parent="."]
+script = ExtResource("2_interactable")
+mode = 1
+prompt = "ВОССТАНОВИТЬ ПЕЧАТЬ"
+hold_time = 2.5
+one_shot = true
