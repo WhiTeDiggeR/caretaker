@@ -1,0 +1,313 @@
+{
+  "sector_id": "L-SLEEP-LAB",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_sleep_lab.svg",
+  "registration": {
+    "plan_px_per_m_x": 26.1,
+    "plan_px_per_m_y": 20.842,
+    "anisotropy_percent": 22.4,
+    "world_envelope_m": [
+      -33.33,
+      -1.51,
+      22.22,
+      21.11
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 3.4,
+  "rooms": [
+    {
+      "id": "l-sleep-lab-floor-01",
+      "space_id": "L-SLEEP-LAB/vnutrenniy-koridor",
+      "label": "ВНУТРЕННИЙ КОРИДОР / отдельные двери во все помещения",
+      "class": "corridor",
+      "source_id": "l_sleep_lab-space-001",
+      "plan_px": [
+        390.0,
+        350.0,
+        350.0,
+        160.0
+      ],
+      "world_m": [
+        -24.521,
+        11.923,
+        13.41,
+        7.677
+      ],
+      "size_m": [
+        13.41,
+        7.68
+      ],
+      "area_m2": 102.9
+    },
+    {
+      "id": "l-sleep-lab-floor-02",
+      "space_id": "L-SLEEP-LAB/neyromonitoring",
+      "label": "НЕЙРОМОНИТОРИНГ / ранние стенды наблюдения сна",
+      "class": "lab",
+      "source_id": "l_sleep_lab-geometry-002",
+      "plan_px": [
+        160.0,
+        70.0,
+        360.0,
+        280.0
+      ],
+      "world_m": [
+        -33.333,
+        -1.511,
+        13.793,
+        13.434
+      ],
+      "size_m": [
+        13.79,
+        13.43
+      ],
+      "area_m2": 185.3
+    },
+    {
+      "id": "l-sleep-lab-floor-03",
+      "space_id": "L-SLEEP-LAB/nablyudenie",
+      "label": "НАБЛЮДЕНИЕ / анализ / журналирование",
+      "class": "support",
+      "source_id": "l_sleep_lab-space-002",
+      "plan_px": [
+        520.0,
+        70.0,
+        110.0,
+        280.0
+      ],
+      "world_m": [
+        -19.54,
+        -1.511,
+        4.214,
+        13.434
+      ],
+      "size_m": [
+        4.21,
+        13.43
+      ],
+      "area_m2": 56.6
+    },
+    {
+      "id": "l-sleep-lab-floor-04",
+      "space_id": "L-SLEEP-LAB/apparatnaya",
+      "label": "АППАРАТНАЯ / питание · запись / кабельные стойки",
+      "class": "support",
+      "source_id": "l_sleep_lab-space-003",
+      "plan_px": [
+        630.0,
+        70.0,
+        110.0,
+        280.0
+      ],
+      "world_m": [
+        -15.326,
+        -1.511,
+        4.215,
+        13.434
+      ],
+      "size_m": [
+        4.21,
+        13.43
+      ],
+      "area_m2": 56.6
+    },
+    {
+      "id": "l-sleep-lab-floor-05",
+      "space_id": "L-SLEEP-LAB/podgotovka",
+      "label": "ПОДГОТОВКА / осмотр · седативы / ВОССТАНОВЛЕНИЕ",
+      "class": "lab",
+      "source_id": "l_sleep_lab-geometry-003",
+      "plan_px": [
+        160.0,
+        350.0,
+        230.0,
+        160.0
+      ],
+      "world_m": [
+        -33.333,
+        11.923,
+        8.812,
+        7.677
+      ],
+      "size_m": [
+        8.81,
+        7.68
+      ],
+      "area_m2": 67.6
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-sleep-lab-window-01",
+      "type": "window",
+      "source": "window",
+      "source_id": "l_sleep_lab-annotation-001",
+      "width_m": 3.84,
+      "rooms": [
+        "L-SLEEP-LAB/nablyudenie",
+        "L-SLEEP-LAB/neyromonitoring"
+      ],
+      "world_m": [
+        -19.54,
+        0.888,
+        -19.54,
+        4.726
+      ]
+    },
+    {
+      "id": "l-sleep-lab-door-02",
+      "type": "door",
+      "source": "room-gap",
+      "source_id": "l_sleep_lab-opening-001",
+      "width_m": 1.8,
+      "rooms": [
+        "L-SLEEP-LAB/podgotovka",
+        "L-SLEEP-LAB/vnutrenniy-koridor"
+      ],
+      "world_m": [
+        -24.521,
+        14.86,
+        -24.521,
+        16.66
+      ]
+    },
+    {
+      "id": "l-sleep-lab-door-03",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_sleep_lab-opening-002",
+      "width_m": 1.8,
+      "rooms": [
+        "L-SLEEP-LAB/nablyudenie",
+        "L-SLEEP-LAB/vnutrenniy-koridor"
+      ],
+      "world_m": [
+        -18.34,
+        11.923,
+        -16.54,
+        11.923
+      ]
+    },
+    {
+      "id": "l-sleep-lab-door-04",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_sleep_lab-opening-005",
+      "width_m": 1.8,
+      "rooms": [
+        "L-SLEEP-LAB/apparatnaya",
+        "L-SLEEP-LAB/vnutrenniy-koridor"
+      ],
+      "world_m": [
+        -14.13,
+        11.923,
+        -12.33,
+        11.923
+      ]
+    },
+    {
+      "id": "l-sleep-lab-door-05",
+      "type": "door",
+      "source": "room-gap",
+      "source_id": "l_sleep_lab-opening-008",
+      "width_m": 1.8,
+      "rooms": [
+        "L-SLEEP-LAB/neyromonitoring",
+        "L-SLEEP-LAB/podgotovka"
+      ],
+      "world_m": [
+        -29.8,
+        11.923,
+        -28.0,
+        11.923
+      ]
+    },
+    {
+      "id": "l-sleep-lab-opening-06",
+      "type": "opening",
+      "source": "door-gap",
+      "source_id": "l_sleep_lab-opening-011",
+      "width_m": 3.0,
+      "rooms": [
+        "L-SLEEP-LAB/vnutrenniy-koridor"
+      ],
+      "world_m": [
+        -23.7,
+        19.6,
+        -20.7,
+        19.6
+      ]
+    },
+    {
+      "id": "l-sleep-lab-door-07",
+      "type": "door",
+      "source": "amendment D-25f",
+      "source_id": "amendment-D-25f",
+      "width_m": 1.8,
+      "rooms": [
+        "L-SLEEP-LAB/neyromonitoring",
+        "L-SLEEP-LAB/vnutrenniy-koridor"
+      ],
+      "world_m": [
+        -22.93,
+        11.923,
+        -21.13,
+        11.923
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_sleep_lab-geometry-001",
+      "role": "envelope",
+      "class": "lab",
+      "label": "НЕЙРОМОНИТОРИНГ / НАБЛЮДЕНИЕ / АППАРАТНАЯ / ранние стенды наблюдения сна / анализ / питание · запись / журналирование / кабельные стойки / ПОДГОТОВКА / осмотр · седативы / ВНУТРЕННИЙ КОРИДОР / отдельные двери во все помещения / ВОССТАНОВЛЕНИЕ",
+      "reason": "outline of a room group (inner rooms cover 100%)",
+      "world_m": [
+        -33.33,
+        -1.51,
+        22.22,
+        21.11
+      ]
+    },
+    {
+      "source_id": "l_sleep_lab-space-004",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ПАССАЖИРСКАЯ МАГИСТРАЛЬ",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -26.63,
+        19.6,
+        8.81,
+        3.6
+      ]
+    },
+    {
+      "source_id": "l_sleep_lab-space-005",
+      "role": "context",
+      "class": "support",
+      "label": "К КАМЕРЕ №3 / только кабели",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -9.96,
+        15.76,
+        3.83,
+        3.84
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 8,
+  "amendments": [
+    "D-25a",
+    "D-25b",
+    "D-25c",
+    "D-25d",
+    "D-25e",
+    "D-25f"
+  ],
+  "feature_rects_ignored": 5,
+  "unmapped_other_elements": 1
+}

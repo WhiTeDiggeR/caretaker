@@ -1,0 +1,208 @@
+{
+  "sector_id": "T-OLD-ACCESS",
+  "level": "LV-T",
+  "source_plan": "docs/design/complex_v3/plans/sectors/technical/t_old_access.svg",
+  "registration": {
+    "plan_px_per_m_x": 15.289,
+    "plan_px_per_m_y": 15.433,
+    "anisotropy_percent": 0.9,
+    "world_envelope_m": [
+      -102.4,
+      24.24,
+      28.12,
+      31.75
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 4.2,
+  "rooms": [
+    {
+      "id": "t-old-access-floor-01",
+      "space_id": "T-OLD-ACCESS/staraya-lestnica",
+      "label": "СТАРАЯ ЛЕСТНИЦА / ↑ в холл старого ядра",
+      "class": "shaft",
+      "source_id": "t_old_access-space-002",
+      "plan_px": [
+        83.1,
+        224.2,
+        152.9,
+        206.8
+      ],
+      "world_m": [
+        -102.2,
+        28.4,
+        10.0,
+        13.4
+      ],
+      "size_m": [
+        10.0,
+        13.4
+      ],
+      "area_m2": 134.0
+    },
+    {
+      "id": "t-old-access-floor-02",
+      "space_id": "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul",
+      "label": "СТАРЫЙ СЛУЖЕБНЫЙ ВЕСТИБЮЛЬ",
+      "class": "corridor",
+      "source_id": "t_old_access-space-003",
+      "plan_px": [
+        235.9,
+        173.3,
+        150.0,
+        257.7
+      ],
+      "world_m": [
+        -92.2,
+        25.1,
+        9.81,
+        16.7
+      ],
+      "size_m": [
+        9.81,
+        16.7
+      ],
+      "area_m2": 163.8
+    },
+    {
+      "id": "t-old-access-floor-03",
+      "space_id": "T-OLD-ACCESS/podstanciya",
+      "label": "ПОДСТАНЦИЯ / старого ядра · тупиковая",
+      "class": "energy",
+      "source_id": "t_old_access-geometry-002",
+      "plan_px": [
+        83.1,
+        431.0,
+        302.9,
+        140.0
+      ],
+      "world_m": [
+        -102.2,
+        41.8,
+        19.81,
+        9.07
+      ],
+      "size_m": [
+        19.81,
+        9.07
+      ],
+      "area_m2": 179.7
+    }
+  ],
+  "openings": [
+    {
+      "id": "t-old-access-opening-01",
+      "type": "opening",
+      "source": "amendment D-30e",
+      "source_id": "amendment-D-30e",
+      "width_m": 4.0,
+      "rooms": [
+        "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -89.3,
+        25.1,
+        -85.3,
+        25.1
+      ]
+    },
+    {
+      "id": "t-old-access-opening-02",
+      "type": "opening",
+      "source": "amendment D-30f",
+      "source_id": "amendment-D-30f",
+      "width_m": 4.5,
+      "rooms": [
+        "T-OLD-ACCESS/staraya-lestnica",
+        "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -92.2,
+        30.85,
+        -92.2,
+        35.35
+      ]
+    },
+    {
+      "id": "t-old-access-door-03",
+      "type": "door",
+      "source": "amendment D-30g",
+      "source_id": "amendment-D-30g",
+      "width_m": 1.8,
+      "rooms": [
+        "T-OLD-ACCESS/podstanciya",
+        "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -88.2,
+        41.8,
+        -86.4,
+        41.8
+      ]
+    },
+    {
+      "id": "t-old-access-door-04",
+      "type": "door",
+      "source": "amendment D-41d",
+      "source_id": "amendment-D-41d",
+      "width_m": 1.4,
+      "rooms": [
+        "T-OLD-ACCESS/podstanciya",
+        "T-OLD-ACCESS/staraya-lestnica",
+        "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
+      ],
+      "world_m": [
+        -94.0,
+        32.4,
+        -94.0,
+        33.8
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "t_old_access-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -102.4,
+        17.76,
+        48.4,
+        6.48
+      ]
+    },
+    {
+      "source_id": "t_old_access-space-004",
+      "role": "context",
+      "class": "corridor",
+      "label": "БОКОВОЙ ДОСТУП",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -88.01,
+        42.38,
+        13.73,
+        4.54
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 7,
+  "amendments": [
+    "D-30a",
+    "D-30b",
+    "D-30c",
+    "D-30d0",
+    "D-30d1",
+    "D-30d2",
+    "D-30d3",
+    "D-30e",
+    "D-30f",
+    "D-30g",
+    "D-41c",
+    "D-41d"
+  ],
+  "feature_rects_ignored": 1,
+  "unmapped_other_elements": 1
+}

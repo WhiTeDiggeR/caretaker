@@ -1,0 +1,57 @@
+{
+  "id": "sandbox_console",
+  "title": "ПОЛИГОН · ТЕСТОВЫЙ ПУЛЬТ",
+  "start": "main",
+  "screens": {
+    "main": {
+      "redirects": [{"if": {"access": "caretaker"}, "goto": "main_caretaker"}],
+      "lines": [
+        "АВАРИЙНЫЙ РЕЖИМ. ПИТАНИЕ ОТ РЕЗЕРВНОЙ ЛИНИИ.",
+        {"text": "Основное питание секции: подано.", "if": {"power": {"section": "sandbox_a", "min": "main"}}},
+        {"text": "Основное питание секции: отсутствует.", "if": {"power": {"section": "sandbox_a", "max": "emergency"}}},
+        "Оператор: не авторизован."
+      ],
+      "options": [
+        {"text": "Сводка состояния", "goto": "status"},
+        {"text": "Протокол преемственности", "goto": "protocol", "requires": {"power": {"section": "sandbox_a", "min": "main"}}, "locked_text": "требуется основное питание (F1)"},
+        {"text": "Выход", "action": "exit"}
+      ]
+    },
+    "status": {
+      "lines": [
+        "СВОДКА",
+        "Генератор Г-1: аварийный останов.",
+        "Связь с поздними секторами: нет.",
+        "Модуль 4: нет данных."
+      ],
+      "options": [{"text": "Назад", "goto": "main"}]
+    },
+    "protocol": {
+      "lines": [
+        "ПРОТОКОЛ ПРЕЕМСТВЕННОСТИ",
+        {"text": "Поиск штатных операторов…", "wait": 0.8},
+        {"text": "Найдено: 0", "wait": 1.2},
+        {"text": "Поиск резервных операторов…", "wait": 0.8},
+        {"text": "Найдено: 0", "wait": 1.2},
+        {"text": "Назначение: ВРЕМЕННЫЙ СМОТРИТЕЛЬ.", "wait": 1.0}
+      ],
+      "effects": [
+        {"grant_access": "caretaker"},
+        {"set_objective": {"id": "sandbox_gate", "text": "Пройти через шлюз позднего сектора"}},
+        {"event": "caretaker_assigned"}
+      ],
+      "next": "main"
+    },
+    "main_caretaker": {
+      "lines": [
+        "ВРЕМЕННЫЙ СМОТРИТЕЛЬ — АВАРИЙНЫЕ ПОЛНОМОЧИЯ.",
+        "Доступ выдан: модули с опасной нестабильностью."
+      ],
+      "options": [
+        {"text": "Сводка состояния", "goto": "status"},
+        {"text": "Отозвать полномочия (полигон)", "goto": "main", "effects": [{"revoke_access": "caretaker"}]},
+        {"text": "Выход", "action": "exit"}
+      ]
+    }
+  }
+}

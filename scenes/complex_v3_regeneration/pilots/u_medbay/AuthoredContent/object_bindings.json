@@ -1,0 +1,45 @@
+{
+  "schema_id": "caretaker.object_bindings",
+  "schema_version": "1.0.0",
+  "map_id": "caretaker-complex-v3",
+  "sector_id": "U-MEDBAY",
+  "bindings": [
+    {
+      "binding_id": "BIND-U-MEDBAY-DOOR-BEACON-01",
+      "object_ref": {"object_id": "OBJ-U-MEDBAY-DOOR-BEACON-01", "scene": "res://scenes/complex_v3_regeneration/pilots/u_medbay/pilot_scene.tscn", "node_path_hint": "AuthoredContent/DoorBeacon"},
+      "anchor_ref": {"anchor_id": "svg:u-medbay-door-external-east:door:threshold_inside", "expected_type": "door"},
+      "placement": {
+        "mode": "linear", "linear": {"along": {"policy": "centered", "offset_m": 0.0}},
+        "normal_offset_m": 0.75, "height_m": 1.2,
+        "rotation": {"representation": "euler_deg", "order": "YXZ", "yaw_pitch_roll": [0.0, 0.0, 0.0]}
+      },
+      "footprint_m": [0.2, 0.5, 0.2], "footprint_center_m": [0.0, 0.0, 0.0],
+      "constraints": {"inside_anchor_bounds": true, "collision_free": true}, "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-MEDBAY-FLOOR-CART-01",
+      "object_ref": {"object_id": "OBJ-U-MEDBAY-FLOOR-CART-01", "scene": "res://scenes/complex_v3_regeneration/pilots/u_medbay/pilot_scene.tscn", "node_path_hint": "AuthoredContent/FloorCart"},
+      "anchor_ref": {"anchor_id": "svg:u-medbay-floor-procedure-room:floor", "expected_type": "floor"},
+      "placement": {
+        "mode": "surface",
+        "surface": {"u": {"policy": "normalized", "value": 0.3}, "v": {"policy": "normalized", "value": 0.5}},
+        "normal_offset_m": 0.0, "height_m": 0.0,
+        "rotation": {"representation": "euler_deg", "order": "YXZ", "yaw_pitch_roll": [0.0, 0.0, 0.0]}
+      },
+      "footprint_m": [0.8, 0.8, 0.8], "footprint_center_m": [0.0, 0.4, 0.0],
+      "constraints": {"inside_anchor_bounds": true, "collision_free": true}, "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-MEDBAY-WALL-TERMINAL-01",
+      "object_ref": {"object_id": "OBJ-U-MEDBAY-WALL-TERMINAL-01", "scene": "res://scenes/complex_v3_regeneration/pilots/u_medbay/pilot_scene.tscn", "node_path_hint": "AuthoredContent/WallTerminal"},
+      "anchor_ref": {"anchor_id": "svg:u-medbay-wall-west-corridor:wall", "expected_type": "wall"},
+      "placement": {
+        "mode": "linear", "linear": {"along": {"policy": "normalized", "value": 0.48}},
+        "normal_offset_m": 0.1, "height_m": 1.4,
+        "rotation": {"representation": "euler_deg", "order": "YXZ", "yaw_pitch_roll": [0.0, 0.0, 0.0]}
+      },
+      "footprint_m": [0.5, 0.4, 0.1], "footprint_center_m": [0.0, 0.0, 0.0],
+      "constraints": {"inside_anchor_bounds": true, "collision_free": true}, "on_missing_anchor": "block"
+    }
+  ]
+}

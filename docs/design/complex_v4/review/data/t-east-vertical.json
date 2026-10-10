@@ -1,0 +1,337 @@
+{
+  "sector_id": "T-EAST-VERTICAL",
+  "level": "LV-T",
+  "source_plan": "docs/design/complex_v3/plans/sectors/technical/t_east_vertical.svg",
+  "registration": {
+    "plan_px_per_m_x": 24.533,
+    "plan_px_per_m_y": 21.486,
+    "anisotropy_percent": 13.2,
+    "world_envelope_m": [
+      -15.53,
+      -4.89,
+      28.12,
+      21.88
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 4.5,
+  "rooms": [
+    {
+      "id": "t-east-vertical-floor-01",
+      "space_id": "T-EAST-VERTICAL/shahta",
+      "label": "ШАХТА / пассажирский лифт / остановки нет",
+      "class": "shaft",
+      "source_id": "t_east_vertical-space-001",
+      "plan_px": [
+        278.4,
+        79.9,
+        172.5,
+        360.1
+      ],
+      "world_m": [
+        -7.03,
+        -4.89,
+        7.03,
+        16.76
+      ],
+      "size_m": [
+        7.03,
+        16.76
+      ],
+      "area_m2": 117.8
+    },
+    {
+      "id": "t-east-vertical-floor-02",
+      "space_id": "T-EAST-VERTICAL/servis-shahty",
+      "label": "СЕРВИС ШАХТЫ / защищённый люк",
+      "class": "room",
+      "source_id": "t_east_vertical-space-002",
+      "plan_px": [
+        278.4,
+        440.0,
+        172.5,
+        166.1
+      ],
+      "world_m": [
+        -7.03,
+        11.87,
+        7.03,
+        7.73
+      ],
+      "size_m": [
+        7.03,
+        7.73
+      ],
+      "area_m2": 54.3
+    },
+    {
+      "id": "t-east-vertical-floor-03",
+      "space_id": "T-EAST-VERTICAL/podstanciya-novogo-sektora",
+      "label": "ПОДСТАНЦИЯ НОВОГО СЕКТОРА",
+      "class": "energy",
+      "source_id": "t_east_vertical-geometry-001",
+      "plan_px": [
+        509.8,
+        79.9,
+        458.9,
+        270.2
+      ],
+      "world_m": [
+        2.4,
+        -4.89,
+        18.703,
+        12.575
+      ],
+      "size_m": [
+        18.7,
+        12.57
+      ],
+      "area_m2": 235.2
+    },
+    {
+      "id": "t-east-vertical-floor-04",
+      "space_id": "T-EAST-VERTICAL/otdelnyy-sluzhebnyy-podhod",
+      "label": "ОТДЕЛЬНЫЙ СЛУЖЕБНЫЙ ПОДХОД",
+      "class": "corridor",
+      "source_id": "t_east_vertical-space-003",
+      "plan_px": [
+        509.8,
+        350.1,
+        90.0,
+        256.0
+      ],
+      "world_m": [
+        2.4,
+        7.685,
+        3.67,
+        11.915
+      ],
+      "size_m": [
+        3.67,
+        11.91
+      ],
+      "area_m2": 43.7
+    },
+    {
+      "id": "t-east-vertical-floor-05",
+      "space_id": "T-EAST-VERTICAL/zakrytyy-kabelnyy",
+      "label": "ЗАКРЫТЫЙ КАБЕЛЬНЫЙ / ПРИЯМОК / непроходной конструктивный объём",
+      "class": "room",
+      "source_id": "t_east_vertical-space-004",
+      "plan_px": [
+        599.8,
+        350.1,
+        368.8,
+        256.0
+      ],
+      "world_m": [
+        6.07,
+        7.685,
+        15.033,
+        11.915
+      ],
+      "size_m": [
+        15.03,
+        11.91
+      ],
+      "area_m2": 179.1
+    },
+    {
+      "id": "t-east-vertical-floor-06",
+      "space_id": "T-EAST-VERTICAL/vostochnaya",
+      "label": "ВОСТОЧНАЯ / АВАРИЙНАЯ ЛЕСТНИЦА",
+      "class": "shaft",
+      "source_id": "t_east_vertical-space-005",
+      "plan_px": [
+        968.6,
+        350.1,
+        245.4,
+        169.6
+      ],
+      "world_m": [
+        21.103,
+        7.685,
+        10.002,
+        7.895
+      ],
+      "size_m": [
+        10.0,
+        7.89
+      ],
+      "area_m2": 79.0
+    },
+    {
+      "id": "t-east-vertical-floor-07",
+      "space_id": "T-EAST-VERTICAL/protivopozharnyy-tambur",
+      "label": "ПРОТИВОПОЖАРНЫЙ ТАМБУР",
+      "class": "corridor",
+      "source_id": "t_east_vertical-space-006",
+      "plan_px": [
+        968.6,
+        519.8,
+        245.4,
+        86.4
+      ],
+      "world_m": [
+        21.103,
+        15.58,
+        10.002,
+        4.02
+      ],
+      "size_m": [
+        10.0,
+        4.02
+      ],
+      "area_m2": 40.2
+    }
+  ],
+  "openings": [
+    {
+      "id": "t-east-vertical-opening-01",
+      "type": "opening",
+      "source": "amendment D-31j",
+      "source_id": "amendment-D-31j",
+      "width_m": 4.0,
+      "rooms": [
+        "T-EAST-VERTICAL/servis-shahty"
+      ],
+      "world_m": [
+        -5.5,
+        19.6,
+        -1.5,
+        19.6
+      ]
+    },
+    {
+      "id": "t-east-vertical-door-02",
+      "type": "door",
+      "source": "amendment D-31k",
+      "source_id": "amendment-D-31k",
+      "width_m": 1.0,
+      "rooms": [
+        "T-EAST-VERTICAL/servis-shahty",
+        "T-EAST-VERTICAL/shahta"
+      ],
+      "world_m": [
+        -4.0,
+        11.87,
+        -3.0,
+        11.87
+      ]
+    },
+    {
+      "id": "t-east-vertical-door-03",
+      "type": "door",
+      "source": "amendment D-31l",
+      "source_id": "amendment-D-31l",
+      "width_m": 1.8,
+      "rooms": [
+        "T-EAST-VERTICAL/otdelnyy-sluzhebnyy-podhod",
+        "T-EAST-VERTICAL/podstanciya-novogo-sektora"
+      ],
+      "world_m": [
+        3.3,
+        7.685,
+        5.1,
+        7.685
+      ]
+    },
+    {
+      "id": "t-east-vertical-opening-04",
+      "type": "opening",
+      "source": "amendment D-31m",
+      "source_id": "amendment-D-31m",
+      "width_m": 3.5,
+      "rooms": [
+        "T-EAST-VERTICAL/otdelnyy-sluzhebnyy-podhod"
+      ],
+      "world_m": [
+        2.4,
+        19.6,
+        5.9,
+        19.6
+      ]
+    },
+    {
+      "id": "t-east-vertical-door-05",
+      "type": "door",
+      "source": "amendment D-31n",
+      "source_id": "amendment-D-31n",
+      "width_m": 1.8,
+      "rooms": [
+        "T-EAST-VERTICAL/protivopozharnyy-tambur",
+        "T-EAST-VERTICAL/vostochnaya"
+      ],
+      "world_m": [
+        24.7,
+        15.58,
+        26.5,
+        15.58
+      ]
+    },
+    {
+      "id": "t-east-vertical-door-06",
+      "type": "door",
+      "source": "amendment D-31o",
+      "source_id": "amendment-D-31o",
+      "width_m": 1.8,
+      "rooms": [
+        "T-EAST-VERTICAL/protivopozharnyy-tambur"
+      ],
+      "world_m": [
+        24.7,
+        19.6,
+        26.5,
+        19.6
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "t_east_vertical-space-007",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -15.53,
+        16.99,
+        30.98,
+        4.19
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "room_without_drawn_opening",
+      "space": "T-EAST-VERTICAL/zakrytyy-kabelnyy",
+      "label": "ЗАКРЫТЫЙ КАБЕЛЬНЫЙ / ПРИЯМОК / непроходной конструктивный объём"
+    }
+  ],
+  "wall_segments": 15,
+  "amendments": [
+    "D-31a",
+    "D-31b",
+    "D-31c",
+    "D-31d",
+    "D-31e",
+    "D-31f",
+    "D-31g",
+    "D-31h",
+    "D-31i0",
+    "D-31i1",
+    "D-31i2",
+    "D-31i3",
+    "D-31i4",
+    "D-31j",
+    "D-31k",
+    "D-31l",
+    "D-31m",
+    "D-31n",
+    "D-31o",
+    "D-38a",
+    "D-41g"
+  ],
+  "feature_rects_ignored": 2,
+  "unmapped_other_elements": 0
+}

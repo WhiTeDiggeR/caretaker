@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/documents/document_pickup.tscn" id="1_doc"]
+
+[sub_resource type="StandardMaterial3D" id="table"]
+albedo_color = Color(0.33, 0.3, 0.27, 1)
+
+[sub_resource type="BoxMesh" id="table_mesh"]
+material = SubResource("table")
+size = Vector3(1.6, 0.75, 0.8)
+
+[sub_resource type="BoxShape3D" id="table_shape"]
+size = Vector3(1.6, 0.75, 0.8)
+
+[node name="DocumentStation" type="Node3D"]
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+pixel_size = 0.005
+text = "ДОКУМЕНТЫ
+E — прочитать, J — журнал"
+font_size = 48
+outline_size = 12
+
+[node name="Table" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Table"]
+mesh = SubResource("table_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Table"]
+shape = SubResource("table_shape")
+
+[node name="Memo" parent="." instance=ExtResource("1_doc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.76, 0)
+document_id = "sandbox_memo"
+
+[node name="Log" parent="." instance=ExtResource("1_doc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.76, 0.05)
+document_id = "sandbox_log"

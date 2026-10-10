@@ -1,0 +1,642 @@
+[gd_scene load_steps=69 format=3]
+
+[ext_resource type="Material" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_material.tres" id="1_floor_material"]
+
+[ext_resource type="Material" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_material.tres" id="7_ceiling_material"]
+
+[ext_resource type="Material" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_material.tres" id="3_wall_material"]
+
+[ext_resource type="Material" path="res://scenes/cv3_route_a/l/Generated/Architecture/obstacle_material.tres" id="5_obstacle_material"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_001_l_archive_a_floor_main.obj" id="floor_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_002_l_archive_a_floor_passage.obj" id="floor_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_003_l_archive_a_floor_passage.obj" id="floor_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_004_l_archive_a_floor_passage.obj" id="floor_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_005_l_archive_a_floor_passage.obj" id="floor_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_006_l_archive_a_floor_lobby.obj" id="floor_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_007_l_archive_a_floor_stair.obj" id="floor_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_008_l_archive_a_floor_partition.obj" id="floor_part_8_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/floor_009_l_archive_a_floor_partition.obj" id="floor_part_9_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_001_l_archive_a_ceiling_main.obj" id="ceiling_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_002_l_archive_a_ceiling_passage.obj" id="ceiling_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_003_l_archive_a_ceiling_passage.obj" id="ceiling_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_004_l_archive_a_ceiling_passage.obj" id="ceiling_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_005_l_archive_a_ceiling_passage.obj" id="ceiling_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_006_l_archive_a_ceiling_lobby.obj" id="ceiling_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_007_l_archive_a_ceiling_partition.obj" id="ceiling_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/ceiling_008_l_archive_a_ceiling_partition.obj" id="ceiling_part_8_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_001_l_archive_a_wall_west.obj" id="box_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_002_l_archive_a_wall_west.obj" id="box_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_003_l_archive_a_wall_west.obj" id="box_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_004_l_archive_a_wall_east.obj" id="box_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_005_l_archive_a_wall_north.obj" id="box_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_006_l_archive_a_wall_south.obj" id="box_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_007_l_archive_a_wall_passage_lobby.obj" id="box_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_008_l_archive_a_wall_passage_lobby.obj" id="box_part_8_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_009_l_archive_a_wall_passage_lobby.obj" id="box_part_9_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_010_l_archive_a_wall_stair_threshold.obj" id="box_part_10_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_011_l_archive_a_wall_stair_threshold.obj" id="box_part_11_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_012_l_archive_a_wall_stair_threshold.obj" id="box_part_12_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_013_l_archive_a_wall_shaft_west.obj" id="box_part_13_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_014_l_archive_a_wall_shaft_east.obj" id="box_part_14_mesh"]
+
+[ext_resource type="Mesh" path="res://scenes/cv3_route_a/l/Generated/Architecture/wall_015_l_archive_a_wall_shaft_south.obj" id="box_part_15_mesh"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_1"]
+data = PackedVector3Array(-61, -6, 0.5, -61, -6, -14, -41, -6, -14, -41, -6, -14, -41, -6, 0.5, -61, -6, 0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_2"]
+data = PackedVector3Array(-61, -6, 13, -61, -6, 0.5, -55.74, -6, 0.5, -55.74, -6, 0.5, -55.74, -6, 13, -61, -6, 13, -55.74, -6, 6, -55.74, -6, 0.5, -55.635, -6, 0.5, -55.635, -6, 0.5, -55.635, -6, 6, -55.74, -6, 6, -55.74, -6, 13, -55.74, -6, 6, -55.545, -6, 6, -55.545, -6, 6, -55.545, -6, 13, -55.74, -6, 13)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_3"]
+data = PackedVector3Array(-55.635, -6, 6, -55.635, -6, 0.5, -55.545, -6, 0.5, -55.545, -6, 0.5, -55.545, -6, 6, -55.635, -6, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_4"]
+data = PackedVector3Array(-55.545, -6, 6, -55.545, -6, 0.5, -55.5, -6, 0.5, -55.5, -6, 0.5, -55.5, -6, 6, -55.545, -6, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_5"]
+data = PackedVector3Array(-55.545, -6, 13, -55.545, -6, 6, -55.5, -6, 6, -55.5, -6, 6, -55.5, -6, 13, -55.545, -6, 13)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_6"]
+data = PackedVector3Array(-55.5, -6, 6, -55.5, -6, 0.5, -49.5, -6, 0.5, -49.5, -6, 0.5, -49.5, -6, 6, -55.5, -6, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_7"]
+data = PackedVector3Array(-55.5, -6, 13, -55.5, -6, 6, -54.35, -6, 6, -54.35, -6, 6, -54.35, -6, 13, -55.5, -6, 13, -54.35, -6, 13, -54.35, -6, 6.25, -52.85, -6, 6.25, -52.85, -6, 6.25, -52.85, -6, 13, -54.35, -6, 13, -52.85, -6, 13, -52.85, -6, 6, -49.5, -6, 6, -49.5, -6, 6, -49.5, -6, 13, -52.85, -6, 13)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_8"]
+data = PackedVector3Array(-49.5, -6, 6, -49.5, -6, 0.5, -49.26, -6, 0.5, -49.26, -6, 0.5, -49.26, -6, 6, -49.5, -6, 6, -49.5, -6, 15, -49.5, -6, 13.045, -49.365, -6, 13.045, -49.365, -6, 13.045, -49.365, -6, 15, -49.5, -6, 15, -49.455, -6, 13.045, -49.455, -6, 6, -49.365, -6, 6, -49.365, -6, 6, -49.365, -6, 13.045, -49.455, -6, 13.045, -49.365, -6, 15, -49.365, -6, 6, -49.26, -6, 6, -49.26, -6, 6, -49.26, -6, 15, -49.365, -6, 15, -49.26, -6, 15, -49.26, -6, 0.5, -41, -6, 0.5, -41, -6, 0.5, -41, -6, 15, -49.26, -6, 15)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_9"]
+data = PackedVector3Array(-49.5, -6, 13.045, -49.5, -6, 6, -49.455, -6, 6, -49.455, -6, 6, -49.455, -6, 13.045, -49.5, -6, 13.045)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_1"]
+data = PackedVector3Array(-61, -2.6, 0.5, -41, -2.6, -14, -61, -2.6, -14, -41, -2.6, -14, -61, -2.6, 0.5, -41, -2.6, 0.5)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_2"]
+data = PackedVector3Array(-61, -2.6, 13, -55.74, -2.6, 0.5, -61, -2.6, 0.5, -55.74, -2.6, 0.5, -61, -2.6, 13, -55.74, -2.6, 13, -55.74, -2.6, 6, -55.635, -2.6, 0.5, -55.74, -2.6, 0.5, -55.635, -2.6, 0.5, -55.74, -2.6, 6, -55.635, -2.6, 6, -55.74, -2.6, 13, -55.545, -2.6, 6, -55.74, -2.6, 6, -55.545, -2.6, 6, -55.74, -2.6, 13, -55.545, -2.6, 13)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_3"]
+data = PackedVector3Array(-55.635, -2.6, 6, -55.545, -2.6, 0.5, -55.635, -2.6, 0.5, -55.545, -2.6, 0.5, -55.635, -2.6, 6, -55.545, -2.6, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_4"]
+data = PackedVector3Array(-55.545, -2.6, 6, -55.5, -2.6, 0.5, -55.545, -2.6, 0.5, -55.5, -2.6, 0.5, -55.545, -2.6, 6, -55.5, -2.6, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_5"]
+data = PackedVector3Array(-55.545, -2.6, 13, -55.5, -2.6, 6, -55.545, -2.6, 6, -55.5, -2.6, 6, -55.545, -2.6, 13, -55.5, -2.6, 13)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_6"]
+data = PackedVector3Array(-55.5, -2.6, 6, -49.5, -2.6, 0.5, -55.5, -2.6, 0.5, -49.5, -2.6, 0.5, -55.5, -2.6, 6, -49.5, -2.6, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_7"]
+data = PackedVector3Array(-49.5, -2.6, 6, -49.26, -2.6, 0.5, -49.5, -2.6, 0.5, -49.26, -2.6, 0.5, -49.5, -2.6, 6, -49.26, -2.6, 6, -49.5, -2.6, 15, -49.365, -2.6, 13.045, -49.5, -2.6, 13.045, -49.365, -2.6, 13.045, -49.5, -2.6, 15, -49.365, -2.6, 15, -49.455, -2.6, 13.045, -49.365, -2.6, 6, -49.455, -2.6, 6, -49.365, -2.6, 6, -49.455, -2.6, 13.045, -49.365, -2.6, 13.045, -49.365, -2.6, 15, -49.26, -2.6, 6, -49.365, -2.6, 6, -49.26, -2.6, 6, -49.365, -2.6, 15, -49.26, -2.6, 15, -49.26, -2.6, 15, -41, -2.6, 0.5, -49.26, -2.6, 0.5, -41, -2.6, 0.5, -49.26, -2.6, 15, -41, -2.6, 15)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_8"]
+data = PackedVector3Array(-49.5, -2.6, 13.045, -49.455, -2.6, 6, -49.5, -2.6, 6, -49.455, -2.6, 6, -49.5, -2.6, 13.045, -49.455, -2.6, 13.045)
+
+[sub_resource type="BoxShape3D" id="Box_1"]
+size = Vector3(21.15, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_2"]
+size = Vector3(4.5165, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_3"]
+size = Vector3(3.333, 1, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_4"]
+size = Vector3(29.3, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_5"]
+size = Vector3(19.699, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_6"]
+size = Vector3(19.9995, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_7"]
+size = Vector3(1.6, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_8"]
+size = Vector3(1.95, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_9"]
+size = Vector3(1.8, 0.6, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_10"]
+size = Vector3(1.24, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_11"]
+size = Vector3(3.44, 3.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_12"]
+size = Vector3(1.5, 0.6, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_13"]
+size = Vector3(6.85, 3.4, 0.09)
+
+[sub_resource type="BoxShape3D" id="Box_14"]
+size = Vector3(6.85, 3.4, 0.09)
+
+[sub_resource type="BoxShape3D" id="Box_15"]
+size = Vector3(6.18, 3.4, 0.09)
+
+[node name="l_archive_a_pilot_generated" type="Node3D"]
+
+metadata/source_file = "$PROJECT_ROOT\\scenes\\complex_v3_regeneration\\pilots\\route_a_vertical\\source\\l_archive_a_pilot.svg"
+
+metadata/generator = "svg_to_godot3d 1.19.0"
+
+[node name="Floors" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Floors"]
+
+[node name="Ceilings" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Ceilings"]
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Walls"]
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Obstacles"]
+
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Floors"]
+
+[node name="Visual" type="Node3D" parent="Ceilings"]
+
+[node name="Visual" type="Node3D" parent="Walls"]
+
+[node name="Visual" type="Node3D" parent="Obstacles"]
+
+[node name="Floor_001_l_archive_a_floor_main" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_1_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-main"
+
+[node name="Floor_002_l_archive_a_floor_passage" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_2_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-passage"
+
+[node name="Floor_003_l_archive_a_floor_passage" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_3_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-passage"
+
+[node name="Floor_004_l_archive_a_floor_passage" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_4_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-passage"
+
+[node name="Floor_005_l_archive_a_floor_passage" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_5_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-passage"
+
+[node name="Floor_006_l_archive_a_floor_lobby" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_6_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-lobby"
+
+[node name="Floor_007_l_archive_a_floor_stair" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_7_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-stair"
+
+[node name="Floor_008_l_archive_a_floor_partition" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_8_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-partition"
+
+[node name="Floor_009_l_archive_a_floor_partition" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_9_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "l-archive-a-floor-partition"
+
+[node name="Ceiling_001_l_archive_a_ceiling_main" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_1_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "l-archive-a-ceiling-main"
+
+[node name="Ceiling_002_l_archive_a_ceiling_passage" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_2_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "l-archive-a-ceiling-passage"
+
+[node name="Ceiling_003_l_archive_a_ceiling_passage" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_3_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "l-archive-a-ceiling-passage"
+
+[node name="Ceiling_004_l_archive_a_ceiling_passage" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_4_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "l-archive-a-ceiling-passage"
+
+[node name="Ceiling_005_l_archive_a_ceiling_passage" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_5_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "l-archive-a-ceiling-passage"
+
+[node name="Ceiling_006_l_archive_a_ceiling_lobby" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_6_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "l-archive-a-ceiling-lobby"
+
+[node name="Ceiling_007_l_archive_a_ceiling_partition" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_7_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "l-archive-a-ceiling-partition"
+
+[node name="Ceiling_008_l_archive_a_ceiling_partition" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_8_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "l-archive-a-ceiling-partition"
+
+[node name="Wall_001_l_archive_a_wall_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_1_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-west"
+
+[node name="Wall_002_l_archive_a_wall_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_2_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-west"
+
+[node name="Wall_003_l_archive_a_wall_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_3_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-west"
+
+[node name="Wall_004_l_archive_a_wall_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_4_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-east"
+
+[node name="Wall_005_l_archive_a_wall_north" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_5_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-north"
+
+[node name="Wall_006_l_archive_a_wall_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_6_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-south"
+
+[node name="Wall_007_l_archive_a_wall_passage_lobby" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_7_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-passage-lobby"
+
+[node name="Wall_008_l_archive_a_wall_passage_lobby" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_8_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-passage-lobby"
+
+[node name="Wall_009_l_archive_a_wall_passage_lobby" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_9_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-passage-lobby"
+
+[node name="Wall_010_l_archive_a_wall_stair_threshold" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_10_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-stair-threshold"
+
+[node name="Wall_011_l_archive_a_wall_stair_threshold" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_11_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-stair-threshold"
+
+[node name="Wall_012_l_archive_a_wall_stair_threshold" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_12_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-stair-threshold"
+
+[node name="Wall_013_l_archive_a_wall_shaft_west" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_13_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-shaft-west"
+
+[node name="Wall_014_l_archive_a_wall_shaft_east" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_14_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-shaft-east"
+
+[node name="Wall_015_l_archive_a_wall_shaft_south" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_15_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "l-archive-a-wall-shaft-south"
+
+[node name="Floor_001_l_archive_a_floor_main" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-main"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_001_l_archive_a_floor_main"]
+shape = SubResource("ConcaveFloor_1")
+
+[node name="Floor_002_l_archive_a_floor_passage" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-passage"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_002_l_archive_a_floor_passage"]
+shape = SubResource("ConcaveFloor_2")
+
+[node name="Floor_003_l_archive_a_floor_passage" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-passage"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_003_l_archive_a_floor_passage"]
+shape = SubResource("ConcaveFloor_3")
+
+[node name="Floor_004_l_archive_a_floor_passage" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-passage"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_004_l_archive_a_floor_passage"]
+shape = SubResource("ConcaveFloor_4")
+
+[node name="Floor_005_l_archive_a_floor_passage" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-passage"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_005_l_archive_a_floor_passage"]
+shape = SubResource("ConcaveFloor_5")
+
+[node name="Floor_006_l_archive_a_floor_lobby" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-lobby"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_006_l_archive_a_floor_lobby"]
+shape = SubResource("ConcaveFloor_6")
+
+[node name="Floor_007_l_archive_a_floor_stair" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-stair"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_007_l_archive_a_floor_stair"]
+shape = SubResource("ConcaveFloor_7")
+
+[node name="Floor_008_l_archive_a_floor_partition" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-partition"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_008_l_archive_a_floor_partition"]
+shape = SubResource("ConcaveFloor_8")
+
+[node name="Floor_009_l_archive_a_floor_partition" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-floor-partition"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_009_l_archive_a_floor_partition"]
+shape = SubResource("ConcaveFloor_9")
+
+[node name="Ceiling_001_l_archive_a_ceiling_main" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-ceiling-main"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_001_l_archive_a_ceiling_main"]
+shape = SubResource("ConcaveCeiling_1")
+
+[node name="Ceiling_002_l_archive_a_ceiling_passage" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-ceiling-passage"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_002_l_archive_a_ceiling_passage"]
+shape = SubResource("ConcaveCeiling_2")
+
+[node name="Ceiling_003_l_archive_a_ceiling_passage" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-ceiling-passage"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_003_l_archive_a_ceiling_passage"]
+shape = SubResource("ConcaveCeiling_3")
+
+[node name="Ceiling_004_l_archive_a_ceiling_passage" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-ceiling-passage"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_004_l_archive_a_ceiling_passage"]
+shape = SubResource("ConcaveCeiling_4")
+
+[node name="Ceiling_005_l_archive_a_ceiling_passage" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-ceiling-passage"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_005_l_archive_a_ceiling_passage"]
+shape = SubResource("ConcaveCeiling_5")
+
+[node name="Ceiling_006_l_archive_a_ceiling_lobby" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-ceiling-lobby"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_006_l_archive_a_ceiling_lobby"]
+shape = SubResource("ConcaveCeiling_6")
+
+[node name="Ceiling_007_l_archive_a_ceiling_partition" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-ceiling-partition"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_007_l_archive_a_ceiling_partition"]
+shape = SubResource("ConcaveCeiling_7")
+
+[node name="Ceiling_008_l_archive_a_ceiling_partition" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-ceiling-partition"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_008_l_archive_a_ceiling_partition"]
+shape = SubResource("ConcaveCeiling_8")
+
+[node name="Wall_001_l_archive_a_wall_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-61, -4.3, -3.575)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_001_l_archive_a_wall_west"]
+shape = SubResource("Box_1")
+
+[node name="Wall_002_l_archive_a_wall_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-61, -4.3, 12.5912)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_002_l_archive_a_wall_west"]
+shape = SubResource("Box_2")
+
+[node name="Wall_003_l_archive_a_wall_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-61, -3.1, 8.6665)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_003_l_archive_a_wall_west"]
+shape = SubResource("Box_3")
+
+[node name="Wall_004_l_archive_a_wall_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-41, -4.3, 0.5)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_004_l_archive_a_wall_east"]
+shape = SubResource("Box_4")
+
+[node name="Wall_005_l_archive_a_wall_north" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-51, -4.3, -14)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-north"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_005_l_archive_a_wall_north"]
+shape = SubResource("Box_5")
+
+[node name="Wall_006_l_archive_a_wall_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-51.1502, -4.3, 15)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_006_l_archive_a_wall_south"]
+shape = SubResource("Box_6")
+
+[node name="Wall_007_l_archive_a_wall_passage_lobby" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-55.5, -4.3, 1.3)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-passage-lobby"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_007_l_archive_a_wall_passage_lobby"]
+shape = SubResource("Box_7")
+
+[node name="Wall_008_l_archive_a_wall_passage_lobby" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-55.5, -4.3, 4.875)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-passage-lobby"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_008_l_archive_a_wall_passage_lobby"]
+shape = SubResource("Box_8")
+
+[node name="Wall_009_l_archive_a_wall_passage_lobby" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-55.5, -2.9, 3)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-passage-lobby"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_009_l_archive_a_wall_passage_lobby"]
+shape = SubResource("Box_9")
+
+[node name="Wall_010_l_archive_a_wall_stair_threshold" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-54.97, -4.3, 6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-stair-threshold"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_010_l_archive_a_wall_stair_threshold"]
+shape = SubResource("Box_10")
+
+[node name="Wall_011_l_archive_a_wall_stair_threshold" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-51.13, -4.3, 6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-stair-threshold"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_011_l_archive_a_wall_stair_threshold"]
+shape = SubResource("Box_11")
+
+[node name="Wall_012_l_archive_a_wall_stair_threshold" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-53.6, -2.9, 6)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-stair-threshold"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_012_l_archive_a_wall_stair_threshold"]
+shape = SubResource("Box_12")
+
+[node name="Wall_013_l_archive_a_wall_shaft_west" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-55.545, -4.3, 9.575)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-shaft-west"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_013_l_archive_a_wall_shaft_west"]
+shape = SubResource("Box_13")
+
+[node name="Wall_014_l_archive_a_wall_shaft_east" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-49.455, -4.3, 9.575)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-shaft-east"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_014_l_archive_a_wall_shaft_east"]
+shape = SubResource("Box_14")
+
+[node name="Wall_015_l_archive_a_wall_shaft_south" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-52.5, -4.3, 13.045)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "l-archive-a-wall-shaft-south"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_015_l_archive_a_wall_shaft_south"]
+shape = SubResource("Box_15")
+
+[node name="Marker_l_archive_a_marker_shaft" type="Marker3D" parent="Markers"]
+position = Vector3(-52.5, -6, 9.5)
+metadata/type = "marker"
+metadata/source_id = "l-archive-a-marker-shaft"
+metadata/anchor_role = "shaft_reference"
+
+[node name="Door_l_archive_a_door_passage_lobby" type="Marker3D" parent="Markers"]
+position = Vector3(-55.5, -4.6, 3)
+metadata/type = "door"
+metadata/source_id = "l-archive-a-door-passage-lobby"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "2.8"
+
+[node name="Door_l_archive_a_door_stair" type="Marker3D" parent="Markers"]
+position = Vector3(-53.6, -4.6, 6)
+metadata/type = "door"
+metadata/source_id = "l-archive-a-door-stair"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "2.8"
+
+[node name="Door_l_archive_a_door_external" type="Marker3D" parent="Markers"]
+position = Vector3(-61, -4.8, 8.6665)
+metadata/type = "door"
+metadata/source_id = "l-archive-a-door-external"
+metadata/opening_bottom = "0.0"
+metadata/opening_height = "2.4"

@@ -1,0 +1,68 @@
+{
+  "schema_id": "caretaker.composition_validation_report",
+  "schema_version": "1.0.0",
+  "map_id": "fixture-map",
+  "sector_id": "FIXTURE",
+  "generation_id": "sha256:missing",
+  "status": "blocked",
+  "summary": {
+    "blocking_count": 1,
+    "warning_count": 1,
+    "static_count": 2,
+    "runtime_physics_count": 0
+  },
+  "issues": [
+    {
+      "issue_id": "CV-MISSING-ANCHOR-069945E1ED91",
+      "severity": "blocking",
+      "status": "open",
+      "code": "missing_anchor",
+      "object_id": "OBJ-MISSING",
+      "binding_id": "BIND-MISSING",
+      "anchor_id": "AF-REMOVED",
+      "expected_anchor_type": "wall",
+      "subject_owner": "authored",
+      "responsible_owner": "authored_bindings",
+      "measurement": {
+        "actual": "missing",
+        "limit": "active anchor exists",
+        "units": "state",
+        "relation": "must_equal"
+      },
+      "evidence": {
+        "proof_kind": "static_geometry",
+        "message": "Referenced stable anchor ID is absent."
+      },
+      "allowed_actions": [
+        "restore_anchor",
+        "rebind_explicit",
+        "remove_binding"
+      ]
+    },
+    {
+      "issue_id": "CV-REVIEW-MATERIAL-CAB5DBF08DF1",
+      "severity": "warning",
+      "status": "open",
+      "code": "review_material",
+      "object_id": "OBJ-MISSING",
+      "binding_id": null,
+      "anchor_id": null,
+      "expected_anchor_type": null,
+      "subject_owner": "authored",
+      "responsible_owner": "authored_content",
+      "measurement": {
+        "actual": "review",
+        "limit": "review",
+        "units": "state",
+        "relation": "must_equal"
+      },
+      "evidence": {
+        "proof_kind": "static_geometry",
+        "message": "Non-blocking review remains visible beside the blocker."
+      },
+      "allowed_actions": [
+        "review"
+      ]
+    }
+  ]
+}

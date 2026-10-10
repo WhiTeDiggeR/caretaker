@@ -1,0 +1,1028 @@
+{
+  "schema_id": "caretaker.godot_stairs.generation_report",
+  "schema_version": "1.1.0",
+  "contract_version": "1.0.0",
+  "generator_version": "2.9.0",
+  "status": "ok",
+  "scene": "$STAGING/Generated/Stairs/east_stair_lu/east_stair_lu.tscn",
+  "resource_dir": "res://gen/u/u_east_support/Generated/Stairs/east_stair_lu",
+  "settings": {
+    "output_dir": "$STAGING/Generated/Stairs/east_stair_lu",
+    "shaft_width": 9.98,
+    "shaft_length": 7.889,
+    "floor_height": 6.0,
+    "layout": "u-turn",
+    "perimeter_flights": "auto",
+    "turn_direction": "auto",
+    "stair_width": 1.8,
+    "target_riser": 0.15,
+    "max_riser": 0.15,
+    "target_tread": 0.25,
+    "min_tread": 0.25,
+    "min_stair_width": 0.9,
+    "landing_depth": 2.0,
+    "flight_gap": 0.7,
+    "step_thickness": 0.15,
+    "minimum_headroom": 2.4,
+    "wall_thickness": 0.09,
+    "shaft_wall_bottom": 4.0,
+    "shaft_wall_top": 6.0,
+    "no_shaft": false,
+    "railings": "auto",
+    "rail_height": 1.0,
+    "rail_post_spacing": 1.0,
+    "rail_post_size": 0.05,
+    "handrail_size": 0.05,
+    "midrail_size": 0.035,
+    "debug_geometry": false,
+    "lower_entry_side": "south",
+    "upper_exit_side": "south",
+    "scene_name": "east_stair_lu",
+    "collision_layer": 1,
+    "include_preview": false,
+    "origin": "center",
+    "invert_z": false
+  },
+  "selected_layout": {
+    "type": "u-turn",
+    "turn_direction": null,
+    "stair_width": 1.8,
+    "tread_depth": 0.25,
+    "riser_height": 0.15,
+    "lower_entry_side": "south",
+    "upper_exit_side": "south",
+    "shaft_walls_generated": true,
+    "flights": [
+      {
+        "name": "Flight_01",
+        "risers": 20,
+        "run": 5.0,
+        "base_y": 0.0,
+        "top_y": 3.0
+      },
+      {
+        "name": "Flight_02",
+        "risers": 20,
+        "run": 5.0,
+        "base_y": 3.0,
+        "top_y": 6.0
+      }
+    ]
+  },
+  "anchor_coordinate_space": {
+    "units": "m",
+    "horizontal_plane": "XZ",
+    "up_axis": "+Y",
+    "space": "generated_scene_local",
+    "origin_mode": "center",
+    "invert_z": false
+  },
+  "anchor_frames": [
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-ENTRY-LOWER",
+      "type": "stair_entry",
+      "role": "lower_entry",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        -1.25,
+        0.0,
+        -3.0555
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "clear_width_m": 1.8,
+        "level_id": "LOWER",
+        "transition_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          -0.9,
+          0.9
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:9511e881de6203e952cbfad0e22f3376e55d6a4c844e9ac99e6c3c4bc083311f"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-EXIT-UPPER",
+      "type": "stair_exit",
+      "role": "upper_exit",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        1.25,
+        6.0,
+        -3.0555
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "clear_width_m": 1.8,
+        "level_id": "UPPER",
+        "transition_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          -0.9,
+          0.9
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:8cc5927fd14e5835064f2ef1657a766cc55f9ddb12c92328f2fe5e9d08effec7"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-LANDING-01",
+      "type": "floor",
+      "role": "landing",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        -2.15,
+        3.0,
+        1.9445
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "polygon_xz": [
+          [
+            -2.15,
+            1.9445
+          ],
+          [
+            2.15,
+            1.9445
+          ],
+          [
+            2.15,
+            3.9445
+          ],
+          [
+            -2.15,
+            3.9445
+          ]
+        ],
+        "elevation_m": 3.0,
+        "landing_id": "Landing_01"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0.0,
+          0.0
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:d4e17f0e8066ea44a8a04f805b4fc9d463f22269ce8c911f92ba78958dacbf39"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-PASSAGE-FLIGHT-01",
+      "type": "point",
+      "role": "flight_passage",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        -1.25,
+        1.5,
+        -0.5555
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "radius_m": 0.0,
+        "flight_id": "Flight_01",
+        "run_m": 5.0,
+        "rise_m": 3.0,
+        "clear_width_m": 1.8
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          -0.9,
+          0.9
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:658646142b667e36ad0aa2792d6b94696c335a3051206041a2399942f96880f8"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-PASSAGE-FLIGHT-02",
+      "type": "point",
+      "role": "flight_passage",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        1.25,
+        4.5,
+        -0.5555
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "radius_m": 0.0,
+        "flight_id": "Flight_02",
+        "run_m": 5.0,
+        "rise_m": 3.0,
+        "clear_width_m": 1.8
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          -0.9,
+          0.9
+        ],
+        "height_m": [
+          0.0,
+          0.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:098e6fdb9acfb2ee96305ed587efbe2112826dfd1633da27e785041cc27230da"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-SHAFT-CLEAR",
+      "type": "shaft",
+      "role": "clear_volume",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "clear_bounds_xz": [
+          -4.99,
+          -3.9445,
+          4.99,
+          3.9445
+        ],
+        "bottom_y": 0.0,
+        "top_y": 6.0
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0.0,
+          0.0
+        ],
+        "height_m": [
+          0.0,
+          6.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:d9a309507889a12183afa5bbbfd2a84942704e6272cc720695646f2c9d7ffc97"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-SHAFT-FACE-EAST",
+      "type": "wall",
+      "role": "shaft_face",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        4.99,
+        4.0,
+        3.9445
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 7.889,
+        "height_m": 2.0,
+        "thickness_m": 0.09,
+        "surface_side_id": "STAIRS-EAST-STAIR-LU/SHAFT/EAST"
+      },
+      "placement_limits": {
+        "along_normalized": [
+          0.0,
+          1.0
+        ],
+        "normal_offset_m": [
+          0.0,
+          0.09
+        ],
+        "height_m": [
+          0.0,
+          2.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:3175ccb03f39af95a28ee04adea212f0a4f20908b198b9e1292b2bbc8f413282"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-SHAFT-FACE-NORTH",
+      "type": "wall",
+      "role": "shaft_face",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        -4.99,
+        4.0,
+        3.9445
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 9.98,
+        "height_m": 2.0,
+        "thickness_m": 0.09,
+        "surface_side_id": "STAIRS-EAST-STAIR-LU/SHAFT/NORTH"
+      },
+      "placement_limits": {
+        "along_normalized": [
+          0.0,
+          1.0
+        ],
+        "normal_offset_m": [
+          0.0,
+          0.09
+        ],
+        "height_m": [
+          0.0,
+          2.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:7e23f1c4d9631d0c3d67e017e4b0e81856c8042c7aa89f0b0ea78aa4e7af9e74"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-SHAFT-FACE-SOUTH",
+      "type": "wall",
+      "role": "shaft_face",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        4.99,
+        4.0,
+        -3.9445
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 9.98,
+        "height_m": 2.0,
+        "thickness_m": 0.09,
+        "surface_side_id": "STAIRS-EAST-STAIR-LU/SHAFT/SOUTH"
+      },
+      "placement_limits": {
+        "along_normalized": [
+          0.0,
+          1.0
+        ],
+        "normal_offset_m": [
+          0.0,
+          0.09
+        ],
+        "height_m": [
+          0.0,
+          2.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:ae048d21e26325b011f4f63d8469e8a122af2df001572a3a91febbb9494317e4"
+    },
+    {
+      "anchor_id": "AF-STAIRS-EAST-STAIR-LU-SHAFT-FACE-WEST",
+      "type": "wall",
+      "role": "shaft_face",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "generation-report",
+        "source_id": "STAIRS-EAST-STAIR-LU"
+      },
+      "origin": [
+        -4.99,
+        4.0,
+        -3.9445
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 7.889,
+        "height_m": 2.0,
+        "thickness_m": 0.09,
+        "surface_side_id": "STAIRS-EAST-STAIR-LU/SHAFT/WEST"
+      },
+      "placement_limits": {
+        "along_normalized": [
+          0.0,
+          1.0
+        ],
+        "normal_offset_m": [
+          0.0,
+          0.09
+        ],
+        "height_m": [
+          0.0,
+          2.0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180.0,
+            180.0
+          ],
+          "pitch": [
+            0.0,
+            0.0
+          ],
+          "roll": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:d9d5f1c5a31a48b8a8cbb80d5a7acd0b613018f458de326be7093b03dda97a16"
+    }
+  ],
+  "counts": {
+    "stairs": 80,
+    "landings": 1,
+    "railings": 66,
+    "shaft": 4,
+    "debug": 0,
+    "flights": 2,
+    "risers": 40,
+    "tread_nodes": 40,
+    "riser_nodes": 40,
+    "railing_posts": 46,
+    "railing_joints": 0,
+    "railing_joint_fittings": 0,
+    "visual_nodes": 151,
+    "debug_nodes": 0,
+    "collision_shapes": 151,
+    "static_bodies": 4
+  },
+  "geometry_validation": {
+    "ok": true,
+    "connection_count": 46,
+    "maximum_position_error": 0.0,
+    "maximum_angle_error_degrees": 0.0,
+    "issues": [],
+    "compiled": {
+      "ok": true,
+      "connection_count": 46,
+      "maximum_position_error": 0.0,
+      "maximum_angle_error_degrees": 0.0,
+      "issues": [],
+      "joint_finish": {
+        "surface_union_elements": [
+          "Flight_01_Left_Handrail",
+          "Flight_01_Left_Midrail",
+          "Flight_01_Left_Post_001.terminal_adapter",
+          "Flight_01_Right_Handrail",
+          "Flight_01_Right_Midrail",
+          "Flight_01_Right_Post_006.terminal_adapter",
+          "Flight_02_Left_Handrail",
+          "Flight_02_Left_Midrail",
+          "Flight_02_Left_Post_015.terminal_adapter",
+          "Flight_02_Right_Handrail",
+          "Flight_02_Right_Midrail",
+          "Flight_02_Right_Post_020.terminal_adapter",
+          "Landing_01_East_01_Handrail",
+          "Landing_01_East_01_Midrail",
+          "Landing_01_North_01_Handrail",
+          "Landing_01_North_01_Midrail",
+          "Landing_01_South_01_Handrail",
+          "Landing_01_South_01_Handrail_Transition_01",
+          "Landing_01_South_01_Handrail_Transition_02",
+          "Landing_01_South_01_Midrail",
+          "Landing_01_South_01_Midrail_Transition_01",
+          "Landing_01_South_01_Midrail_Transition_02",
+          "Landing_01_West_01_Handrail",
+          "Landing_01_West_01_Midrail"
+        ],
+        "operation_count": 20,
+        "operations": [
+          {
+            "connection_id": "joint:001:node:handrail:Flight_01_Left_Handrail.end",
+            "through_id": "Landing_01_West_01_Handrail",
+            "member_ids": [
+              "Flight_01_Left_Handrail",
+              "Landing_01_West_01_Handrail"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:002:node:handrail:Flight_01_Right_Handrail.end",
+            "through_id": "Landing_01_South_01_Handrail_Transition_01",
+            "member_ids": [
+              "Flight_01_Right_Handrail",
+              "Landing_01_South_01_Handrail_Transition_01"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:003:node:handrail:Flight_02_Left_Handrail.start",
+            "through_id": "Landing_01_East_01_Handrail",
+            "member_ids": [
+              "Flight_02_Left_Handrail",
+              "Landing_01_East_01_Handrail"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:004:node:handrail:Flight_02_Right_Handrail.start",
+            "through_id": "Landing_01_South_01_Handrail_Transition_02",
+            "member_ids": [
+              "Flight_02_Right_Handrail",
+              "Landing_01_South_01_Handrail_Transition_02"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:005:node:handrail:Landing_01_East_01_Handrail.end",
+            "through_id": "Landing_01_North_01_Handrail",
+            "member_ids": [
+              "Landing_01_East_01_Handrail",
+              "Landing_01_North_01_Handrail"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:006:node:handrail:Landing_01_North_01_Handrail.start",
+            "through_id": "Landing_01_North_01_Handrail",
+            "member_ids": [
+              "Landing_01_North_01_Handrail",
+              "Landing_01_West_01_Handrail"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:007:node:handrail:Landing_01_South_01_Handrail_Transition_01.end",
+            "through_id": "Landing_01_South_01_Handrail",
+            "member_ids": [
+              "Landing_01_South_01_Handrail",
+              "Landing_01_South_01_Handrail_Transition_01"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:008:node:handrail:Landing_01_South_01_Handrail_Transition_02.end",
+            "through_id": "Landing_01_South_01_Handrail",
+            "member_ids": [
+              "Landing_01_South_01_Handrail",
+              "Landing_01_South_01_Handrail_Transition_02"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:009:node:midrail:Flight_01_Left_Midrail.end",
+            "through_id": "Landing_01_West_01_Midrail",
+            "member_ids": [
+              "Flight_01_Left_Midrail",
+              "Landing_01_West_01_Midrail"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:010:node:midrail:Flight_01_Right_Midrail.end",
+            "through_id": "Landing_01_South_01_Midrail_Transition_01",
+            "member_ids": [
+              "Flight_01_Right_Midrail",
+              "Landing_01_South_01_Midrail_Transition_01"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:011:node:midrail:Flight_02_Left_Midrail.start",
+            "through_id": "Landing_01_East_01_Midrail",
+            "member_ids": [
+              "Flight_02_Left_Midrail",
+              "Landing_01_East_01_Midrail"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:012:node:midrail:Flight_02_Right_Midrail.start",
+            "through_id": "Landing_01_South_01_Midrail_Transition_02",
+            "member_ids": [
+              "Flight_02_Right_Midrail",
+              "Landing_01_South_01_Midrail_Transition_02"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:013:node:midrail:Landing_01_East_01_Midrail.end",
+            "through_id": "Landing_01_North_01_Midrail",
+            "member_ids": [
+              "Landing_01_East_01_Midrail",
+              "Landing_01_North_01_Midrail"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:014:node:midrail:Landing_01_North_01_Midrail.start",
+            "through_id": "Landing_01_North_01_Midrail",
+            "member_ids": [
+              "Landing_01_North_01_Midrail",
+              "Landing_01_West_01_Midrail"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:015:node:midrail:Landing_01_South_01_Midrail_Transition_01.end",
+            "through_id": "Landing_01_South_01_Midrail",
+            "member_ids": [
+              "Landing_01_South_01_Midrail",
+              "Landing_01_South_01_Midrail_Transition_01"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "joint:016:node:midrail:Landing_01_South_01_Midrail_Transition_02.end",
+            "through_id": "Landing_01_South_01_Midrail",
+            "member_ids": [
+              "Landing_01_South_01_Midrail",
+              "Landing_01_South_01_Midrail_Transition_02"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "terminal:Flight_01_Left_Post_001",
+            "through_id": "Flight_01_Left_Post_001.terminal_adapter",
+            "member_ids": [
+              "Flight_01_Left_Handrail",
+              "Flight_01_Left_Post_001.terminal_adapter"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "terminal:Flight_01_Right_Post_006",
+            "through_id": "Flight_01_Right_Post_006.terminal_adapter",
+            "member_ids": [
+              "Flight_01_Right_Handrail",
+              "Flight_01_Right_Post_006.terminal_adapter"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "terminal:Flight_02_Left_Post_015",
+            "through_id": "Flight_02_Left_Post_015.terminal_adapter",
+            "member_ids": [
+              "Flight_02_Left_Handrail",
+              "Flight_02_Left_Post_015.terminal_adapter"
+            ],
+            "operation": "surface_union"
+          },
+          {
+            "connection_id": "terminal:Flight_02_Right_Post_020",
+            "through_id": "Flight_02_Right_Post_020.terminal_adapter",
+            "member_ids": [
+              "Flight_02_Right_Handrail",
+              "Flight_02_Right_Post_020.terminal_adapter"
+            ],
+            "operation": "surface_union"
+          }
+        ],
+        "ports_changed": 0,
+        "connections_changed": 0
+      }
+    },
+    "shaft": {
+      "ok": true,
+      "wall_count": 4,
+      "checked_element_count": 147,
+      "maximum_penetration": 0.0,
+      "issues": []
+    }
+  },
+  "materials": {
+    "created": [
+      "stair_material.tres",
+      "railing_material.tres",
+      "shaft_material.tres"
+    ],
+    "preserved": []
+  },
+  "assumptions": [],
+  "warnings": [],
+  "errors": [],
+  "solutions": [],
+  "layout_failures_before_selection": [],
+  "files": [
+    "east_stair_lu.tscn",
+    "stair_material.tres",
+    "railing_material.tres",
+    "shaft_material.tres",
+    "joint_meshes/0001_Flight_01_Left_Handrail.obj",
+    "joint_meshes/0002_Flight_01_Left_Midrail.obj",
+    "joint_meshes/0003_Flight_01_Right_Handrail.obj",
+    "joint_meshes/0004_Flight_01_Right_Midrail.obj",
+    "joint_meshes/0005_Flight_02_Left_Handrail.obj",
+    "joint_meshes/0006_Flight_02_Left_Midrail.obj",
+    "joint_meshes/0007_Flight_02_Right_Handrail.obj",
+    "joint_meshes/0008_Flight_02_Right_Midrail.obj",
+    "joint_meshes/0009_Landing_01_West_01_Handrail.obj",
+    "joint_meshes/0010_Landing_01_West_01_Midrail.obj",
+    "joint_meshes/0011_Landing_01_East_01_Handrail.obj",
+    "joint_meshes/0012_Landing_01_East_01_Midrail.obj",
+    "joint_meshes/0013_Landing_01_South_01_Handrail.obj",
+    "joint_meshes/0014_Landing_01_South_01_Midrail.obj",
+    "joint_meshes/0015_Landing_01_North_01_Handrail.obj",
+    "joint_meshes/0016_Landing_01_North_01_Midrail.obj",
+    "joint_meshes/0017_Landing_01_South_01_Handrail_Transition_01.obj",
+    "joint_meshes/0018_Landing_01_South_01_Handrail_Transition_02.obj",
+    "joint_meshes/0019_Landing_01_South_01_Midrail_Transition_01.obj",
+    "joint_meshes/0020_Landing_01_South_01_Midrail_Transition_02.obj",
+    "joint_meshes/0021_Flight_01_Left_Post_001_terminal_adapter.obj",
+    "joint_meshes/0022_Flight_01_Right_Post_006_terminal_adapter.obj",
+    "joint_meshes/0023_Flight_02_Left_Post_015_terminal_adapter.obj",
+    "joint_meshes/0024_Flight_02_Right_Post_020_terminal_adapter.obj",
+    "generation_report.json"
+  ]
+}

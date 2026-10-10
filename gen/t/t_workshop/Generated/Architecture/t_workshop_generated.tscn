@@ -1,0 +1,443 @@
+[gd_scene load_steps=49 format=3]
+
+[ext_resource type="Material" path="res://gen/t/t_workshop/Generated/Architecture/floor_material.tres" id="1_floor_material"]
+
+[ext_resource type="Material" path="res://gen/t/t_workshop/Generated/Architecture/ceiling_material.tres" id="7_ceiling_material"]
+
+[ext_resource type="Material" path="res://gen/t/t_workshop/Generated/Architecture/wall_material.tres" id="3_wall_material"]
+
+[ext_resource type="Material" path="res://gen/t/t_workshop/Generated/Architecture/obstacle_material.tres" id="5_obstacle_material"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/floor_001_t_workshop_floor_01.obj" id="floor_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/floor_002_t_workshop_floor_03.obj" id="floor_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/floor_003_t_workshop_floor_02.obj" id="floor_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/floor_004_t_workshop_floor_04.obj" id="floor_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/ceiling_001_t_workshop_ceiling_01.obj" id="ceiling_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/ceiling_002_t_workshop_ceiling_03.obj" id="ceiling_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/ceiling_003_t_workshop_ceiling_02.obj" id="ceiling_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/ceiling_004_t_workshop_ceiling_04.obj" id="ceiling_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_001_t_workshop_wall_01.obj" id="box_part_1_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_002_t_workshop_wall_01.obj" id="box_part_2_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_003_t_workshop_wall_02.obj" id="box_part_3_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_004_t_workshop_wall_02.obj" id="box_part_4_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_005_t_workshop_wall_02.obj" id="box_part_5_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_006_t_workshop_wall_02.obj" id="box_part_6_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_007_t_workshop_wall_05.obj" id="box_part_7_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_008_t_workshop_wall_06.obj" id="box_part_8_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_009_t_workshop_wall_07.obj" id="box_part_9_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_010_t_workshop_wall_08.obj" id="box_part_10_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_011_t_workshop_wall_08.obj" id="box_part_11_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_012_t_workshop_wall_09.obj" id="box_part_12_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_013_t_workshop_wall_10.obj" id="box_part_13_mesh"]
+
+[ext_resource type="Mesh" path="res://gen/t/t_workshop/Generated/Architecture/wall_014_t_workshop_wall_11.obj" id="box_part_14_mesh"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_1"]
+data = PackedVector3Array(-55.525, -11.5, 10.739, -55.525, -11.5, -4.887, -32.65, -11.5, -4.887, -32.65, -11.5, -4.887, -32.65, -11.5, 10.739, -55.525, -11.5, 10.739)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_2"]
+data = PackedVector3Array(-47.74, -11.5, 19.6, -47.74, -11.5, 10.739, -43.74, -11.5, 10.739, -43.74, -11.5, 10.739, -43.74, -11.5, 19.6, -47.74, -11.5, 19.6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_3"]
+data = PackedVector3Array(-32.65, -11.5, 10.739, -32.65, -11.5, -4.887, -17.4, -11.5, -4.887, -17.4, -11.5, -4.887, -17.4, -11.5, 10.739, -32.65, -11.5, 10.739)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveFloor_4"]
+data = PackedVector3Array(-27.15, -11.5, 19.6, -27.15, -11.5, 10.739, -23.15, -11.5, 10.739, -23.15, -11.5, 10.739, -23.15, -11.5, 19.6, -27.15, -11.5, 19.6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_1"]
+data = PackedVector3Array(-55.525, -7, 10.739, -32.65, -7, -4.887, -55.525, -7, -4.887, -32.65, -7, -4.887, -55.525, -7, 10.739, -32.65, -7, 10.739)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_2"]
+data = PackedVector3Array(-47.74, -7, 19.6, -43.74, -7, 10.739, -47.74, -7, 10.739, -43.74, -7, 10.739, -47.74, -7, 19.6, -43.74, -7, 19.6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_3"]
+data = PackedVector3Array(-32.65, -7, 10.739, -17.4, -7, -4.887, -32.65, -7, -4.887, -17.4, -7, -4.887, -32.65, -7, 10.739, -17.4, -7, 10.739)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcaveCeiling_4"]
+data = PackedVector3Array(-27.15, -7, 19.6, -23.15, -7, 10.739, -27.15, -7, 10.739, -23.15, -7, 10.739, -27.15, -7, 19.6, -23.15, -7, 19.6)
+
+[sub_resource type="BoxShape3D" id="Box_1"]
+size = Vector3(23.025, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_2"]
+size = Vector3(15.0995, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_3"]
+size = Vector3(7.484, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_4"]
+size = Vector3(11.24, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_5"]
+size = Vector3(5.3495, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_6"]
+size = Vector3(5.449, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_7"]
+size = Vector3(15.6255, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_8"]
+size = Vector3(9.011, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_9"]
+size = Vector3(8.7105, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_10"]
+size = Vector3(7.1365, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_11"]
+size = Vector3(4.5885, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_12"]
+size = Vector3(9.011, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_13"]
+size = Vector3(9.011, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="Box_14"]
+size = Vector3(15.926, 4.5, 0.3)
+
+[node name="t_workshop_generated" type="Node3D"]
+
+metadata/source_file = "$PROJECT_ROOT\\docs\\design\\complex_v4\\plans\\generation\\technical\\t_workshop.svg"
+
+metadata/generator = "svg_to_godot3d 1.19.0"
+
+[node name="Floors" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Floors"]
+
+[node name="Ceilings" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Ceilings"]
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Walls"]
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[node name="Collisions" type="Node3D" parent="Obstacles"]
+
+[node name="Markers" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Floors"]
+
+[node name="Visual" type="Node3D" parent="Ceilings"]
+
+[node name="Visual" type="Node3D" parent="Walls"]
+
+[node name="Visual" type="Node3D" parent="Obstacles"]
+
+[node name="Floor_001_t_workshop_floor_01" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_1_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-workshop-floor-01"
+
+[node name="Floor_002_t_workshop_floor_03" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_2_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-workshop-floor-03"
+
+[node name="Floor_003_t_workshop_floor_02" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_3_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-workshop-floor-02"
+
+[node name="Floor_004_t_workshop_floor_04" type="MeshInstance3D" parent="Floors/Visual"]
+mesh = ExtResource("floor_part_4_mesh")
+material_override = ExtResource("1_floor_material")
+metadata/source_id = "t-workshop-floor-04"
+
+[node name="Ceiling_001_t_workshop_ceiling_01" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_1_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-workshop-ceiling-01"
+
+[node name="Ceiling_002_t_workshop_ceiling_03" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_2_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-workshop-ceiling-03"
+
+[node name="Ceiling_003_t_workshop_ceiling_02" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_3_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-workshop-ceiling-02"
+
+[node name="Ceiling_004_t_workshop_ceiling_04" type="MeshInstance3D" parent="Ceilings/Visual"]
+mesh = ExtResource("ceiling_part_4_mesh")
+material_override = ExtResource("7_ceiling_material")
+metadata/source_id = "t-workshop-ceiling-04"
+
+[node name="Wall_001_t_workshop_wall_01" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_1_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-01"
+
+[node name="Wall_002_t_workshop_wall_01" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_2_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-01"
+
+[node name="Wall_003_t_workshop_wall_02" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_3_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-02"
+
+[node name="Wall_004_t_workshop_wall_02" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_4_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-02"
+
+[node name="Wall_005_t_workshop_wall_02" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_5_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-02"
+
+[node name="Wall_006_t_workshop_wall_02" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_6_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-02"
+
+[node name="Wall_007_t_workshop_wall_05" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_7_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-05"
+
+[node name="Wall_008_t_workshop_wall_06" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_8_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-06"
+
+[node name="Wall_009_t_workshop_wall_07" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_9_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-07"
+
+[node name="Wall_010_t_workshop_wall_08" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_10_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-08"
+
+[node name="Wall_011_t_workshop_wall_08" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_11_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-08"
+
+[node name="Wall_012_t_workshop_wall_09" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_12_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-09"
+
+[node name="Wall_013_t_workshop_wall_10" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_13_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-10"
+
+[node name="Wall_014_t_workshop_wall_11" type="MeshInstance3D" parent="Walls/Visual"]
+mesh = ExtResource("box_part_14_mesh")
+material_override = ExtResource("3_wall_material")
+metadata/source_id = "t-workshop-wall-11"
+
+[node name="Floor_001_t_workshop_floor_01" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-floor-01"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_001_t_workshop_floor_01"]
+shape = SubResource("ConcaveFloor_1")
+
+[node name="Floor_002_t_workshop_floor_03" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-floor-03"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_002_t_workshop_floor_03"]
+shape = SubResource("ConcaveFloor_2")
+
+[node name="Floor_003_t_workshop_floor_02" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-floor-02"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_003_t_workshop_floor_02"]
+shape = SubResource("ConcaveFloor_3")
+
+[node name="Floor_004_t_workshop_floor_04" type="StaticBody3D" parent="Floors/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-floor-04"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floors/Collisions/Floor_004_t_workshop_floor_04"]
+shape = SubResource("ConcaveFloor_4")
+
+[node name="Ceiling_001_t_workshop_ceiling_01" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-ceiling-01"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_001_t_workshop_ceiling_01"]
+shape = SubResource("ConcaveCeiling_1")
+
+[node name="Ceiling_002_t_workshop_ceiling_03" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-ceiling-03"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_002_t_workshop_ceiling_03"]
+shape = SubResource("ConcaveCeiling_2")
+
+[node name="Ceiling_003_t_workshop_ceiling_02" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-ceiling-02"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_003_t_workshop_ceiling_02"]
+shape = SubResource("ConcaveCeiling_3")
+
+[node name="Ceiling_004_t_workshop_ceiling_04" type="StaticBody3D" parent="Ceilings/Collisions"]
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-ceiling-04"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ceilings/Collisions/Ceiling_004_t_workshop_ceiling_04"]
+shape = SubResource("ConcaveCeiling_4")
+
+[node name="Wall_001_t_workshop_wall_01" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-44.1625, -9.25, -4.887)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-01"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_001_t_workshop_wall_01"]
+shape = SubResource("Box_1")
+
+[node name="Wall_002_t_workshop_wall_01" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-25.1003, -9.25, -4.887)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-01"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_002_t_workshop_wall_01"]
+shape = SubResource("Box_2")
+
+[node name="Wall_003_t_workshop_wall_02" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-51.6325, -9.25, 10.739)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-02"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_003_t_workshop_wall_02"]
+shape = SubResource("Box_3")
+
+[node name="Wall_004_t_workshop_wall_02" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-38.27, -9.25, 10.739)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-02"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_004_t_workshop_wall_02"]
+shape = SubResource("Box_4")
+
+[node name="Wall_005_t_workshop_wall_02" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-29.9752, -9.25, 10.739)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-02"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_005_t_workshop_wall_02"]
+shape = SubResource("Box_5")
+
+[node name="Wall_006_t_workshop_wall_02" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-20.275, -9.25, 10.739)
+rotation = Vector3(0, -0, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-02"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_006_t_workshop_wall_02"]
+shape = SubResource("Box_6")
+
+[node name="Wall_007_t_workshop_wall_05" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-55.525, -9.25, 3.07625)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-05"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_007_t_workshop_wall_05"]
+shape = SubResource("Box_7")
+
+[node name="Wall_008_t_workshop_wall_06" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-47.74, -9.25, 15.0945)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-06"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_008_t_workshop_wall_06"]
+shape = SubResource("Box_8")
+
+[node name="Wall_009_t_workshop_wall_07" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-43.74, -9.25, 15.2447)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-07"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_009_t_workshop_wall_07"]
+shape = SubResource("Box_9")
+
+[node name="Wall_010_t_workshop_wall_08" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-32.65, -9.25, -1.16825)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-08"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_010_t_workshop_wall_08"]
+shape = SubResource("Box_10")
+
+[node name="Wall_011_t_workshop_wall_08" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-32.65, -9.25, 8.29425)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-08"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_011_t_workshop_wall_08"]
+shape = SubResource("Box_11")
+
+[node name="Wall_012_t_workshop_wall_09" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-27.15, -9.25, 15.0945)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-09"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_012_t_workshop_wall_09"]
+shape = SubResource("Box_12")
+
+[node name="Wall_013_t_workshop_wall_10" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-23.15, -9.25, 15.0945)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-10"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_013_t_workshop_wall_10"]
+shape = SubResource("Box_13")
+
+[node name="Wall_014_t_workshop_wall_11" type="StaticBody3D" parent="Walls/Collisions"]
+position = Vector3(-17.4, -9.25, 2.926)
+rotation = Vector3(0, -1.5707963, 0)
+collision_layer = 1
+collision_mask = 1
+metadata/source_id = "t-workshop-wall-11"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Collisions/Wall_014_t_workshop_wall_11"]
+shape = SubResource("Box_14")

@@ -1,0 +1,364 @@
+{
+  "sector_id": "U-MEDBAY",
+  "level": "LV-U",
+  "source_plan": "docs/design/complex_v3/plans/sectors/upper/u_medbay.svg",
+  "registration": {
+    "plan_px_per_m_x": 42.75,
+    "plan_px_per_m_y": 50.143,
+    "anisotropy_percent": 15.9,
+    "world_envelope_m": [
+      -97.78,
+      11.77,
+      13.33,
+      7.78
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 3.4,
+  "rooms": [
+    {
+      "id": "u-medbay-floor-01",
+      "space_id": "U-MEDBAY/procedurnaya",
+      "label": "ПРОЦЕДУРНАЯ / осмотр · малая операция · стабилизация",
+      "class": "medical",
+      "source_id": "u_medbay-geometry-002",
+      "plan_px": [
+        70.0,
+        120.0,
+        347.5,
+        205.0
+      ],
+      "world_m": [
+        -97.778,
+        11.767,
+        8.129,
+        4.088
+      ],
+      "size_m": [
+        8.13,
+        4.09
+      ],
+      "area_m2": 33.2
+    },
+    {
+      "id": "u-medbay-floor-02",
+      "space_id": "U-MEDBAY/palata-nablyudeniya",
+      "label": "ПАЛАТА НАБЛЮДЕНИЯ / две койки · краткое пребывание",
+      "class": "medical",
+      "source_id": "u_medbay-geometry-003",
+      "plan_px": [
+        70.0,
+        325.0,
+        347.5,
+        185.0
+      ],
+      "world_m": [
+        -97.778,
+        15.855,
+        8.129,
+        3.689
+      ],
+      "size_m": [
+        8.13,
+        3.69
+      ],
+      "area_m2": 30.0
+    },
+    {
+      "id": "u-medbay-floor-03",
+      "space_id": "U-MEDBAY/korotkiy-chistyy-koridor-2-2",
+      "label": "КОРОТКИЙ ЧИСТЫЙ КОРИДОР · 2,2 М",
+      "class": "corridor",
+      "source_id": "u_medbay-space-002",
+      "plan_px": [
+        417.5,
+        120.0,
+        95.0,
+        390.0
+      ],
+      "world_m": [
+        -89.649,
+        11.767,
+        2.222,
+        7.777
+      ],
+      "size_m": [
+        2.22,
+        7.78
+      ],
+      "area_m2": 17.3
+    },
+    {
+      "id": "u-medbay-floor-04",
+      "space_id": "U-MEDBAY/chistyy",
+      "label": "ЧИСТЫЙ / СКЛАД / лекарства / расходники",
+      "class": "support",
+      "source_id": "u_medbay-space-003",
+      "plan_px": [
+        512.5,
+        120.0,
+        90.0,
+        130.0
+      ],
+      "world_m": [
+        -87.427,
+        11.767,
+        2.105,
+        2.592
+      ],
+      "size_m": [
+        2.1,
+        2.59
+      ],
+      "area_m2": 5.5
+    },
+    {
+      "id": "u-medbay-floor-05",
+      "space_id": "U-MEDBAY/sanitarnyy",
+      "label": "САНИТАРНЫЙ / ШЛЮЗ / мойка / грязное бельё",
+      "class": "support",
+      "source_id": "u_medbay-space-004",
+      "plan_px": [
+        602.5,
+        120.0,
+        85.0,
+        130.0
+      ],
+      "world_m": [
+        -85.322,
+        11.767,
+        1.989,
+        2.592
+      ],
+      "size_m": [
+        1.99,
+        2.59
+      ],
+      "area_m2": 5.2
+    },
+    {
+      "id": "u-medbay-floor-06",
+      "space_id": "U-MEDBAY/priemnaya-triazh",
+      "label": "ПРИЁМНАЯ · ТРИАЖ / контроль входа и первичный осмотр",
+      "class": "medical",
+      "source_id": "u_medbay-geometry-004",
+      "plan_px": [
+        512.5,
+        250.0,
+        175.0,
+        150.0
+      ],
+      "world_m": [
+        -87.427,
+        14.359,
+        4.094,
+        2.992
+      ],
+      "size_m": [
+        4.09,
+        2.99
+      ],
+      "area_m2": 12.2
+    },
+    {
+      "id": "u-medbay-floor-07",
+      "space_id": "U-MEDBAY/medpost-zapisi",
+      "label": "МЕДПОСТ · ЗАПИСИ / рабочее место дежурного",
+      "class": "support",
+      "source_id": "u_medbay-space-005",
+      "plan_px": [
+        512.5,
+        400.0,
+        175.0,
+        110.0
+      ],
+      "world_m": [
+        -87.427,
+        17.351,
+        4.094,
+        2.193
+      ],
+      "size_m": [
+        4.09,
+        2.19
+      ],
+      "area_m2": 9.0
+    }
+  ],
+  "openings": [
+    {
+      "id": "u-medbay-door-01",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "u_medbay-opening-001",
+      "width_m": 1.0,
+      "rooms": [
+        "U-MEDBAY/korotkiy-chistyy-koridor-2-2",
+        "U-MEDBAY/procedurnaya"
+      ],
+      "world_m": [
+        -89.649,
+        13.421,
+        -89.649,
+        14.421
+      ]
+    },
+    {
+      "id": "u-medbay-door-02",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "u_medbay-opening-004",
+      "width_m": 1.0,
+      "rooms": [
+        "U-MEDBAY/korotkiy-chistyy-koridor-2-2",
+        "U-MEDBAY/palata-nablyudeniya"
+      ],
+      "world_m": [
+        -89.649,
+        17.13,
+        -89.649,
+        18.13
+      ]
+    },
+    {
+      "id": "u-medbay-door-03",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "u_medbay-opening-007",
+      "width_m": 1.0,
+      "rooms": [
+        "U-MEDBAY/chistyy",
+        "U-MEDBAY/korotkiy-chistyy-koridor-2-2"
+      ],
+      "world_m": [
+        -87.427,
+        12.463,
+        -87.427,
+        13.463
+      ]
+    },
+    {
+      "id": "u-medbay-door-04",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "u_medbay-opening-010",
+      "width_m": 1.0,
+      "rooms": [
+        "U-MEDBAY/korotkiy-chistyy-koridor-2-2",
+        "U-MEDBAY/priemnaya-triazh"
+      ],
+      "world_m": [
+        -87.427,
+        15.016,
+        -87.427,
+        16.016
+      ]
+    },
+    {
+      "id": "u-medbay-door-05",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "u_medbay-opening-013",
+      "width_m": 1.0,
+      "rooms": [
+        "U-MEDBAY/korotkiy-chistyy-koridor-2-2",
+        "U-MEDBAY/medpost-zapisi"
+      ],
+      "world_m": [
+        -87.427,
+        17.908,
+        -87.427,
+        18.908
+      ]
+    },
+    {
+      "id": "u-medbay-opening-06",
+      "type": "opening",
+      "source": "room-gap",
+      "source_id": "u_medbay-opening-016",
+      "width_m": 1.0,
+      "rooms": [
+        "U-MEDBAY/priemnaya-triazh",
+        "U-MEDBAY/sanitarnyy"
+      ],
+      "world_m": [
+        -84.816,
+        14.359,
+        -83.816,
+        14.359
+      ]
+    },
+    {
+      "id": "u-medbay-door-07",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "u_medbay-opening-019",
+      "width_m": 1.8,
+      "rooms": [
+        "U-MEDBAY/priemnaya-triazh"
+      ],
+      "world_m": [
+        -83.333,
+        14.95,
+        -83.333,
+        16.75
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "u_medbay-space-001",
+      "role": "context",
+      "class": "context-zone",
+      "label": "АВАРИЙНЫЙ БЛОК / смежная зона верхнего этажа · без прямой двери в медотсек",
+      "reason": "neighbouring sector drawn for orientation",
+      "world_m": [
+        -97.78,
+        10.07,
+        7.25,
+        1.2
+      ]
+    },
+    {
+      "source_id": "u_medbay-geometry-001",
+      "role": "envelope",
+      "class": "shell",
+      "label": "ПРОЦЕДУРНАЯ / ЧИСТЫЙ / САНИТАРНЫЙ / осмотр · малая операция · стабилизация / СКЛАД / ШЛЮЗ / лекарства / мойка / расходники / грязное бельё / ПРИЁМНАЯ · ТРИАЖ / контроль входа и первичный осмотр / КОРОТКИЙ ЧИСТЫЙ КОРИДОР · 2,2 М / ПАЛАТА НАБЛЮДЕНИЯ / две койки · краткое пребывание / МЕДПОСТ · ЗАПИСИ / рабочее место дежурного",
+      "reason": "outline of a room group",
+      "world_m": [
+        -97.78,
+        11.77,
+        13.33,
+        7.78
+      ]
+    },
+    {
+      "source_id": "u_medbay-space-006",
+      "role": "context",
+      "class": "corridor",
+      "label": "РАСПРЕДЕЛИТЕЛЬНЫЙ ХОЛЛ ПЕРСОНАЛА / единственный штатный вход",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -83.33,
+        11.77,
+        2.57,
+        7.78
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 10,
+  "amendments": [
+    "D-11a",
+    "D-11b",
+    "D-11c",
+    "D-11d",
+    "D-11e",
+    "D-11f",
+    "D-11g",
+    "D-11h",
+    "D-11i"
+  ],
+  "feature_rects_ignored": 9,
+  "unmapped_other_elements": 0
+}

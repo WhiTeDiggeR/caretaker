@@ -1,0 +1,394 @@
+{
+  "sector_id": "L-EAST-STAIR",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_east_stair.svg",
+  "registration": {
+    "plan_px_per_m_x": 22.5,
+    "plan_px_per_m_y": 22.5,
+    "anisotropy_percent": 0.0,
+    "world_envelope_m": [
+      21.11,
+      10.67,
+      10.0,
+      8.89
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 3.8,
+  "rooms": [
+    {
+      "id": "l-east-stair-floor-01",
+      "space_id": "L-EAST-STAIR/avariynaya-lestnica",
+      "label": "АВАРИЙНАЯ ЛЕСТНИЦА ↓ / внутренняя вертикальная связь",
+      "class": "stair",
+      "source_id": "l_east_stair-geometry-002",
+      "plan_px": [
+        320.0,
+        382.5,
+        225.0,
+        177.5
+      ],
+      "world_m": [
+        21.111,
+        7.667,
+        10.0,
+        7.889
+      ],
+      "size_m": [
+        10.0,
+        7.89
+      ],
+      "area_m2": 78.9
+    },
+    {
+      "id": "l-east-stair-floor-02",
+      "space_id": "L-EAST-STAIR/protivopozharnyy-tambur",
+      "label": "ПРОТИВОПОЖАРНЫЙ ТАМБУР / отдельный вход из коридора",
+      "class": "stair",
+      "source_id": "l_east_stair-geometry-003",
+      "plan_px": [
+        320.0,
+        560.0,
+        225.0,
+        90.0
+      ],
+      "world_m": [
+        21.111,
+        15.556,
+        10.0,
+        4.0
+      ],
+      "size_m": [
+        10.0,
+        4.0
+      ],
+      "area_m2": 40.0
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-east-stair-door-01",
+      "type": "door",
+      "source": "stair-gap",
+      "source_id": "l_east_stair-opening-016",
+      "width_m": 1.8,
+      "rooms": [
+        "L-EAST-STAIR/protivopozharnyy-tambur"
+      ],
+      "world_m": [
+        25.233,
+        19.556,
+        27.033,
+        19.556
+      ]
+    },
+    {
+      "id": "l-east-stair-door-02",
+      "type": "door",
+      "source": "gate",
+      "source_id": "l_east_stair-annotation-001",
+      "width_m": 1.8,
+      "rooms": [
+        "L-EAST-STAIR/avariynaya-lestnica",
+        "L-EAST-STAIR/protivopozharnyy-tambur"
+      ],
+      "world_m": [
+        27.8,
+        15.556,
+        29.6,
+        15.556
+      ]
+    },
+    {
+      "id": "l-east-stair-door-03",
+      "type": "door",
+      "source": "amendment D-41f",
+      "source_id": "amendment-D-41f",
+      "width_m": 1.8,
+      "rooms": [
+        "L-EAST-STAIR/avariynaya-lestnica",
+        "L-EAST-STAIR/protivopozharnyy-tambur"
+      ],
+      "world_m": [
+        24.7,
+        15.556,
+        26.5,
+        15.556
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_east_stair-geometry-001",
+      "role": "context",
+      "class": "shell",
+      "label": "СКЛАД СНАБЖЕНИЯ / расходники · бельё / бытовая химия отдельно / УБОРОЧНАЯ / тележки · инвентарь / ВНУТРЕННИЙ СЛУЖЕБНЫЙ КОРИДОР · 2 М / мойка / ДЕЖУРНАЯ ПЕРСОНАЛА / рабочее место · шкаф",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        10.0,
+        -7.11,
+        10.0,
+        20.0
+      ]
+    },
+    {
+      "source_id": "l_east_stair-space-001",
+      "role": "context",
+      "class": "support",
+      "label": "СКЛАД СНАБЖЕНИЯ / расходники · бельё / бытовая химия отдельно",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        10.0,
+        -7.11,
+        6.44,
+        7.11
+      ]
+    },
+    {
+      "source_id": "l_east_stair-equipment-001",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        10.8,
+        -3.02,
+        1.87,
+        2.13
+      ]
+    },
+    {
+      "source_id": "l_east_stair-equipment-002",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        13.29,
+        -3.02,
+        2.31,
+        2.13
+      ]
+    },
+    {
+      "source_id": "l_east_stair-space-002",
+      "role": "context",
+      "class": "support",
+      "label": "УБОРОЧНАЯ / тележки · инвентарь / мойка",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        10.0,
+        -0.0,
+        6.44,
+        6.22
+      ]
+    },
+    {
+      "source_id": "l_east_stair-equipment-003",
+      "role": "context",
+      "class": "equipment",
+      "label": "мойка",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        10.8,
+        3.2,
+        2.22,
+        2.13
+      ]
+    },
+    {
+      "source_id": "l_east_stair-equipment-004",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        13.6,
+        3.2,
+        2.0,
+        2.13
+      ]
+    },
+    {
+      "source_id": "l_east_stair-space-003",
+      "role": "context",
+      "class": "support",
+      "label": "ДЕЖУРНАЯ ПЕРСОНАЛА / рабочее место · шкаф",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        10.0,
+        6.22,
+        6.44,
+        6.67
+      ]
+    },
+    {
+      "source_id": "l_east_stair-equipment-005",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        10.89,
+        9.56,
+        4.44,
+        1.24
+      ]
+    },
+    {
+      "source_id": "l_east_stair-equipment-006",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        10.89,
+        11.38,
+        2.0,
+        0.89
+      ]
+    },
+    {
+      "source_id": "l_east_stair-space-004",
+      "role": "context",
+      "class": "corridor",
+      "label": "ВНУТРЕННИЙ СЛУЖЕБНЫЙ КОРИДОР · 2 М",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        16.44,
+        -7.11,
+        3.56,
+        20.0
+      ]
+    },
+    {
+      "source_id": "l_east_stair-space-005",
+      "role": "context",
+      "class": "corridor",
+      "label": "СЛУЖЕБНЫЙ ТАМБУР",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        13.33,
+        12.89,
+        4.45,
+        6.67
+      ]
+    },
+    {
+      "source_id": "l_east_stair-space-006",
+      "role": "context",
+      "class": "corridor",
+      "label": "ГЛАВНЫЙ ПАССАЖИРСКИЙ КОРИДОР · 4 М / ← к центральному ядру / восточный конец этажа",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        9.11,
+        19.56,
+        28.89,
+        4.0
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_east_stair-opening-001",
+      "source": "door-gap",
+      "plan_px": [
+        215.0,
+        126.0,
+        158.0
+      ],
+      "world_m": [
+        16.444,
+        -3.733,
+        16.444,
+        -2.311
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_east_stair-opening-004",
+      "source": "door-gap",
+      "plan_px": [
+        215.0,
+        260.0,
+        292.0
+      ],
+      "world_m": [
+        16.444,
+        2.222,
+        16.444,
+        3.644
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_east_stair-opening-007",
+      "source": "door-gap",
+      "plan_px": [
+        215.0,
+        404.0,
+        436.0
+      ],
+      "world_m": [
+        16.444,
+        8.622,
+        16.444,
+        10.044
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_east_stair-opening-010",
+      "source": "door-gap",
+      "plan_px": [
+        500.0,
+        220.0,
+        245.0
+      ],
+      "world_m": [
+        16.667,
+        12.889,
+        17.778,
+        12.889
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_east_stair-opening-013",
+      "source": "door-gap",
+      "plan_px": [
+        650.0,
+        172.0,
+        218.0
+      ],
+      "world_m": [
+        14.533,
+        19.556,
+        16.578,
+        19.556
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    }
+  ],
+  "wall_segments": 5,
+  "amendments": [
+    "D-15k",
+    "D-15h",
+    "D-15i",
+    "D-15j",
+    "D-41e",
+    "D-41f"
+  ],
+  "feature_rects_ignored": 0,
+  "unmapped_other_elements": 2
+}

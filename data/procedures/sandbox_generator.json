@@ -1,0 +1,31 @@
+{
+  "id": "sandbox_generator",
+  "title": "ГЕНЕРАТОР Г-1 · ПОЛИГОН",
+  "steps": [
+    {"id": "diagnose", "hint": "Выяснить причину аварийного останова (журнал щита)", "done_when": {"flag": "sandbox_gen_diagnosed"}},
+    {
+      "id": "coolant",
+      "hint": "Открыть вентили охлаждения по схеме на стене",
+      "sequence": ["valve_2", "valve_1"],
+      "order_error": "Давление скачет: вентиль В-1 открыт раньше В-2. Вентиль закрыт.",
+      "early_error": "Сначала нужно понять, почему генератор остановился."
+    },
+    {
+      "id": "protection",
+      "hint": "Сбросить защиту: взвести оба автомата",
+      "all_on": ["breaker_1", "breaker_2"],
+      "early_error": "Защита сработает снова: контур охлаждения без давления."
+    },
+    {
+      "id": "start",
+      "hint": "Удерживать рычаг пуска",
+      "all_on": ["start_lever"],
+      "early_error": "Пуск заблокирован: защита не сброшена."
+    }
+  ],
+  "completion_effects": [
+    {"set_flag": "sandbox_generator_started"},
+    {"set_power": {"section": "sandbox_b", "power": "main"}},
+    {"set_objective": {"id": "sandbox", "text": "Проверить станции полигона"}}
+  ]
+}
