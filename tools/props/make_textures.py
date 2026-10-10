@@ -196,11 +196,53 @@ def paper_aged(size):
     return albedo, height, T.cavity(height, 2), rough, np.zeros_like(rough), 2.5
 
 
+def wood_old(size):
+    planks = 4
+    yy = np.arange(size, dtype=np.float32)[:, None] / size * planks
+    plank_id = np.floor(yy)
+    edge = np.abs((yy % 1.0) - 0.5) * 2  # 1 at the plank joints
+    seam = T.smoothstep(0.96, 1.0, edge) * np.ones((1, size), np.float32)
+    grain_a = T.fbm(111, 1.6, stretch=(0.04, 1.0))
+    grain_b = T.fbm(112, 0.9, stretch=(0.08, 1.0))
+    rng_ = T.rng(113).random(planks)
+    shade = rng_[(plank_id.astype(int) % planks)] * np.ones((1, size), np.float32)
+    blot = T.fbm(114, 2.6)
+    rings = 0.5 + 0.5 * np.sin((grain_a * 18 + blot * 3) * 2 * np.pi)
+    base = T.lerp(_c(0.15, 0.11, 0.075), _c(0.31, 0.24, 0.17), (0.5 * grain_a + 0.3 * rings * 0.4 + 0.3 * shade)[..., None])
+    grey = T.smoothstep(0.55, 0.85, T.fbm(115, 2.4))  # weathered, silvered patches
+    albedo = base * (1 - 0.4 * grey[..., None]) + _c(0.2, 0.19, 0.18) * (0.4 * grey[..., None])
+    albedo = albedo * (1 - 0.7 * seam[..., None])
+    nails = T.rivets(size, 1, 40, 4.0, per_edge=2)
+    albedo = albedo * (1 - 0.3 * nails[..., None])
+    scr_fine, _ = _scratches(116, 220, 10, 0.0, 0.1)
+    albedo = np.clip(albedo + scr_fine[..., None] * 0.04, 0, 1)
+    height = 0.5 + grain_b * 0.08 + rings * 0.04 - seam * 0.3 + nails * 0.1
+    rough = np.clip(0.78 + grain_b * 0.15 - grey * 0.1, 0.4, 1)
+    return albedo, height, T.cavity(height, 3) * (1 - seam * 0.6), rough, np.zeros_like(rough), 3.0
+
+
+def fabric_dark(size):
+    yy, xx = np.mgrid[0:size, 0:size].astype(np.float32)
+    n = 96  # threads per tile
+    wx = 0.5 + 0.5 * np.sin(xx / size * n * 2 * np.pi)
+    wy = 0.5 + 0.5 * np.sin(yy / size * n * 2 * np.pi)
+    over = ((np.floor(xx / size * n) + np.floor(yy / size * n)) % 2) == 0
+    weave = np.where(over, wx, wy)
+    fine, mid = T.fbm(121, 1.0), T.fbm(122, 2.6)
+    dirt = T.smoothstep(0.5, 0.85, T.fbm(123, 2.6))
+    fray = T.smoothstep(0.78, 0.9, T.fbm(124, 1.4))
+    base = T.lerp(_c(0.07, 0.075, 0.07), _c(0.15, 0.155, 0.14), mid[..., None])
+    albedo = base * (0.75 + 0.5 * weave[..., None]) * (1 - 0.35 * dirt[..., None]) + fray[..., None] * 0.03
+    height = 0.5 + weave * 0.2 + fine * 0.05
+    rough = np.clip(0.88 + fine * 0.08, 0.6, 1)
+    return albedo, height, T.cavity(height, 2), rough, np.zeros_like(rough), 4.0
+
+
 RECIPES = {
     "painted_metal": painted_metal, "steel_bare": steel_bare, "rusted_steel": rusted_steel,
     "diamond_plate": diamond_plate, "rubber_black": rubber_black, "plastic_panel": plastic_panel,
     "vinyl_worn": vinyl_worn, "duct_galvanized": duct_galvanized, "concrete_rubble": concrete_rubble,
-    "paper_aged": paper_aged,
+    "paper_aged": paper_aged, "wood_old": wood_old, "fabric_dark": fabric_dark,
 }
 
 

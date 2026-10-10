@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://loads/props/locker_tall/locker_tall.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="Shape0"]
+size = Vector3(0.5, 1.9, 0.528)
+
+[node name="LockerTall" type="StaticBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0.0, 0.95, 0.014)
+shape = SubResource("Shape0")

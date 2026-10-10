@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://loads/props/cable_tray_straight/cable_tray_straight.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="Shape0"]
+size = Vector3(2.0113, 0.3206, 0.37)
+
+[node name="CableTrayStraight" type="StaticBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0.9956, -0.1147, 0.0)
+shape = SubResource("Shape0")

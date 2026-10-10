@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://loads/props/pipe_straight/pipe_straight.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="Shape0"]
+size = Vector3(2.0, 0.2294, 0.2287)
+
+[node name="PipeStraight" type="StaticBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(1.0, 0.0003, 0.0)
+shape = SubResource("Shape0")

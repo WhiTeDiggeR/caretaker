@@ -318,6 +318,37 @@ def make_screens(out: Path):
     save(atlas, out / "decals" / "screens.png", uv)
 
 
+# ---------------------------------------------------------------- floor markings
+def make_floor_markings(out: Path):
+    """Floor decals: lane lines, arrows, section numbers. Cells are 512x512."""
+    cell, cols = 512, 4
+    names = ["line_yellow", "line_dashed", "arrow_yellow", "arrow_white", "square_corner", "section_a", "section_b", "stop_bar"]
+    atlas = Image.new("RGBA", (cell * cols, cell * 2), (0, 0, 0, 0))
+    yel, wht = (172, 138, 24, 255), (200, 198, 188, 255)
+    uv = {}
+    for i, name in enumerate(names):
+        im = Image.new("RGBA", (cell, cell), (0, 0, 0, 0))
+        d = ImageDraw.Draw(im)
+        if name == "line_yellow":
+            d.rectangle((0, cell // 2 - 22, cell, cell // 2 + 22), fill=yel)
+        elif name == "line_dashed":
+            for x in range(0, cell, 128):
+                d.rectangle((x + 16, cell // 2 - 18, x + 96, cell // 2 + 18), fill=yel)
+        elif name.startswith("arrow"):
+            arrow(d, cell / 2, cell / 2, 200, "right", yel if name.endswith("yellow") else wht)
+        elif name == "square_corner":
+            d.line([(40, 472), (40, 40), (472, 40)], fill=yel, width=36)
+        elif name.startswith("section"):
+            d.rectangle((20, 140, cell - 20, 372), outline=wht, width=14)
+            centered(d, (20, 140, cell - 20, 372), name[-1].upper(), font(FONT_BOLD, 220), wht)
+        elif name == "stop_bar":
+            stripes(d, (0, 180, cell, 332), 90, wht, (0, 0, 0, 0))
+        x, y = (i % cols) * cell, (i // cols) * cell
+        atlas.paste(weather(im, 960 + i * 5, 1.6, 0), (x, y))
+        uv[name] = [x / atlas.width, y / atlas.height, (x + cell) / atlas.width, (y + cell) / atlas.height]
+    save(atlas, out / "decals" / "floor_markings.png", uv)
+
+
 # ---------------------------------------------------------------- grime decals
 def make_grime(out: Path):
     n = 1024
@@ -357,7 +388,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="loads/textures")
     out = Path(ap.parse_args().out)
-    for fn in (make_signs, make_hazard, make_labels, make_gauges, make_screens, make_grime):
+    for fn in (make_signs, make_hazard, make_labels, make_gauges, make_screens, make_floor_markings, make_grime):
         fn(out)
     return 0
 

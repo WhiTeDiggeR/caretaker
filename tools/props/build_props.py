@@ -16,7 +16,7 @@ from propkit import Kit  # noqa: E402
 from registry import PROPS, dump_specs  # noqa: E402
 import props_start  # noqa: E402,F401  (registers wave 1)
 
-for _mod in ("props_repair", "props_set", "props_fix"):
+for _mod in ("props_repair", "props_set", "props_fix", "props_kits"):
     try:
         __import__(_mod)
     except ModuleNotFoundError:
@@ -29,6 +29,7 @@ def main() -> int:
     ap.add_argument("--preview", help="directory for contact-sheet renders")
     ap.add_argument("--out", default=None)
     ap.add_argument("--samples", type=int, default=24)
+    ap.add_argument("--views", type=int, default=0, help="render only the first N preview views")
     a = ap.parse_args()
     ids = a.ids or list(PROPS)
     for pid in ids:
@@ -37,9 +38,10 @@ def main() -> int:
         spec.builder(kit)
         out = Path(a.out) / pid if a.out else None
         path = propkit.export_gltf(kit, out)
-        print(f"{pid}: {kit.tri_count()} tris -> {path.relative_to(propkit.REPO) if path.is_relative_to(propkit.REPO) else path}")
+        lo, hi = kit.bbox
+        print(f"{pid}: size {hi.x - lo.x:.2f} x {hi.y - lo.y:.2f} x {hi.z - lo.z:.2f}  y[{lo.y:.2f}..{hi.y:.2f}] z[{lo.z:.2f}..{hi.z:.2f}]  {kit.tri_count()} tris -> {path.relative_to(propkit.REPO) if path.is_relative_to(propkit.REPO) else path}")
         if a.preview and spec.views:
-            propkit.render_preview(kit, Path(a.preview) / f"{pid}.png", spec.views, samples=a.samples)
+            propkit.render_preview(kit, Path(a.preview) / f"{pid}.png", spec.views[: a.views or None], samples=a.samples)
     dump_specs(ids)
     return 0
 
