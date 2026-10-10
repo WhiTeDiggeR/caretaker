@@ -1,0 +1,111 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/props/staff_capsule_occupied.tscn" id="1_staff_capsule_occupied"]
+[ext_resource type="PackedScene" path="res://objects/props/staff_capsule_empty.tscn" id="2_staff_capsule_empty"]
+[ext_resource type="PackedScene" path="res://objects/props/staff_capsule_hero.tscn" id="3_staff_capsule_hero"]
+[ext_resource type="PackedScene" path="res://objects/props/emergency_cabinet.tscn" id="4_emergency_cabinet"]
+[ext_resource type="PackedScene" path="res://objects/props/debris_blockage.tscn" id="5_debris_blockage"]
+[ext_resource type="PackedScene" path="res://objects/props/fallen_duct.tscn" id="6_fallen_duct"]
+[ext_resource type="PackedScene" path="res://objects/props/evac_sign.tscn" id="7_evac_sign"]
+[ext_resource type="PackedScene" path="res://objects/props/mnemonic_board.tscn" id="8_mnemonic_board"]
+[ext_resource type="PackedScene" path="res://objects/props/key_pickup.tscn" id="9_key_pickup"]
+[ext_resource type="PackedScene" path="res://objects/props/personal_items.tscn" id="10_personal_items"]
+[ext_resource type="PackedScene" path="res://objects/doors/service_door.tscn" id="20_door"]
+
+[sub_resource type="BoxMesh" id="desk"]
+size = Vector3(1.4, 0.95, 0.7)
+
+[node name="PropStation" type="Node3D"]
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
+pixel_size = 0.006
+text = "ПРОПЫ НАЧАЛА ИГРЫ\nзаготовки с финальными габаритами"
+font_size = 48
+outline_size = 12
+
+[node name="CapsuleOccupied" parent="." instance=ExtResource("1_staff_capsule_occupied")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4, 0, 0)
+
+[node name="CapsuleEmpty" parent="." instance=ExtResource("2_staff_capsule_empty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6, 0, 0)
+
+[node name="CapsuleHero" parent="." instance=ExtResource("3_staff_capsule_hero")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.8, 0, 0)
+
+[node name="EmergencyCabinet" parent="." instance=ExtResource("4_emergency_cabinet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6, 0, -0.8)
+
+[node name="Debris" parent="." instance=ExtResource("5_debris_blockage")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -0.5)
+
+[node name="FallenDuct" parent="." instance=ExtResource("6_fallen_duct")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0, 0)
+
+[node name="EvacSign" parent="." instance=ExtResource("7_evac_sign")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3, 2.2, 0)
+
+[node name="Mnemonic" parent="." instance=ExtResource("8_mnemonic_board")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1.6, -0.6)
+
+[node name="Desk" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3, 0.475, 0)
+mesh = SubResource("desk")
+
+[node name="Key" parent="." instance=ExtResource("9_key_pickup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0, 0.95, 0.05)
+
+[node name="PersonalItems" parent="." instance=ExtResource("10_personal_items")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6, 0.95, 0)
+
+[node name="ServiceDoor" parent="." instance=ExtResource("20_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2, 0, 0)
+
+[node name="Lm10_4" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.4, 3.2, 0.5)
+pixel_size = 0.004
+text = "КАПСУЛЫ ПЕРСОНАЛА\nзанятая · пустая · героя"
+font_size = 40
+outline_size = 10
+
+[node name="Lm6_6" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6, 3.2, 0.5)
+pixel_size = 0.004
+text = "АВАРИЙНЫЙ ШКАФ"
+font_size = 40
+outline_size = 10
+
+[node name="Lm2_5" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.2, 0.5)
+pixel_size = 0.004
+text = "ЗАВАЛ 4,5 м"
+font_size = 40
+outline_size = 10
+
+[node name="L2_8" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 3.2, 0.5)
+pixel_size = 0.004
+text = "ВОЗДУХОВОД\n(присед)"
+font_size = 40
+outline_size = 10
+
+[node name="L7_5" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.2, 0.5)
+pixel_size = 0.004
+text = "МНЕМОСХЕМА"
+font_size = 40
+outline_size = 10
+
+[node name="L10_3" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3, 3.2, 0.5)
+pixel_size = 0.004
+text = "КЛЮЧ И ЛИЧНЫЕ ВЕЩИ"
+font_size = 40
+outline_size = 10
+
+[node name="L13_2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2, 3.2, 0.5)
+pixel_size = 0.004
+text = "СЛУЖЕБНАЯ ДВЕРЬ 1,0×2,1"
+font_size = 40
+outline_size = 10

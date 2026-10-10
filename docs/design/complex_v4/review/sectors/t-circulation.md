@@ -1,6 +1,6 @@
 # T-CIRCULATION
 
-Этаж: технический (LV-T). Источник: `docs/design/complex_v3/plans/sectors/technical/t_circulation.svg`. Высота стен 4.2 м. Габарит 133.5×50.0 м, x -102.4…31.1, z 19.6…69.6.
+Этаж: технический (LV-T). Источник: `docs/design/complex_v4/sources/plans/sectors/technical/t_circulation.svg`. Высота стен 4.5 м. Габарит 133.5×50.0 м, x -102.4…31.1, z 19.6…69.6.
 
 ![T-CIRCULATION](img/t-circulation.png)
 

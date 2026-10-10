@@ -20,7 +20,7 @@
     "target_tread": 0.3,
     "min_tread": 0.3,
     "min_stair_width": 0.9,
-    "landing_depth": 2.0,
+    "landing_depth": 5.88,
     "flight_gap": 0.7,
     "step_thickness": 0.15,
     "minimum_headroom": 2.4,
@@ -90,7 +90,7 @@
       "origin": [
         -1.25,
         0.0,
-        -2.05
+        -5.93
       ],
       "forward": [
         0.0,
@@ -136,7 +136,7 @@
           ]
         }
       },
-      "geometry_hash": "sha256:d4ce94d51a8a15ef6f02a411315c47b22c57d709b294e762f20e30ae91bd73e5"
+      "geometry_hash": "sha256:bd544c22748352144107a9f9ec9ebfa7fcd4e8001bd23fcda0262d7fa0dd26a8"
     },
     {
       "anchor_id": "AF-STAIRS-MAIN-STAIR-EXIT-UPPER",
@@ -150,7 +150,7 @@
       "origin": [
         1.25,
         6.0,
-        -2.05
+        -5.93
       ],
       "forward": [
         0.0,
@@ -196,7 +196,7 @@
           ]
         }
       },
-      "geometry_hash": "sha256:cd6f095801591b2c15dbb5c0aa8c9b8e40b07ed48c2a553c925bf252a106f9fc"
+      "geometry_hash": "sha256:e3be11ed2af24534f4dcafe3f320db4c001ca4742c00077cf1eb037e7a5cad96"
     },
     {
       "anchor_id": "AF-STAIRS-MAIN-STAIR-LANDING-01",
@@ -210,7 +210,7 @@
       "origin": [
         -2.15,
         3.0,
-        3.95
+        0.07
       ],
       "forward": [
         0.0,
@@ -231,11 +231,11 @@
         "polygon_xz": [
           [
             -2.15,
-            3.95
+            0.07
           ],
           [
             2.15,
-            3.95
+            0.07
           ],
           [
             2.15,
@@ -273,7 +273,7 @@
           ]
         }
       },
-      "geometry_hash": "sha256:3302d7f508c90b67d607b2d02065d4ea8c713fdd25b038ac9ba0a56c4fe0504e"
+      "geometry_hash": "sha256:6cd7286f2b50e486ddc5dd478ad4a36492ef973f5a542e1072a291bf9f912c13"
     },
     {
       "anchor_id": "AF-STAIRS-MAIN-STAIR-PASSAGE-FLIGHT-01",
@@ -287,7 +287,7 @@
       "origin": [
         -1.25,
         1.5,
-        0.95
+        -2.93
       ],
       "forward": [
         0.0,
@@ -335,7 +335,7 @@
           ]
         }
       },
-      "geometry_hash": "sha256:ee86238e846717fc5fb0529abea86d40943825978a5c7f0cf97ae5793892832e"
+      "geometry_hash": "sha256:d37a40f96a28d012d27466f1e548f85148182446c0d048a88a1d43def22e7269"
     },
     {
       "anchor_id": "AF-STAIRS-MAIN-STAIR-PASSAGE-FLIGHT-02",
@@ -349,7 +349,7 @@
       "origin": [
         1.25,
         4.5,
-        0.95
+        -2.93
       ],
       "forward": [
         0.0,
@@ -397,7 +397,7 @@
           ]
         }
       },
-      "geometry_hash": "sha256:325ba7b066974c95145469fd5dea2923634d625e5de8c983bce868402056fb81"
+      "geometry_hash": "sha256:30e6e1130669c2391516b2ce7e9866524a47c94916756faa36e3fbcd026ed519"
     },
     {
       "anchor_id": "AF-STAIRS-MAIN-STAIR-SHAFT-CLEAR",
@@ -732,30 +732,30 @@
   "counts": {
     "stairs": 80,
     "landings": 1,
-    "railings": 74,
+    "railings": 82,
     "shaft": 4,
     "debug": 0,
     "flights": 2,
     "risers": 40,
     "tread_nodes": 40,
     "riser_nodes": 40,
-    "railing_posts": 54,
+    "railing_posts": 62,
     "railing_joints": 0,
     "railing_joint_fittings": 0,
-    "visual_nodes": 159,
+    "visual_nodes": 167,
     "debug_nodes": 0,
-    "collision_shapes": 159,
+    "collision_shapes": 167,
     "static_bodies": 4
   },
   "geometry_validation": {
     "ok": true,
-    "connection_count": 50,
+    "connection_count": 58,
     "maximum_position_error": 0.0,
     "maximum_angle_error_degrees": 0.0,
     "issues": [],
     "compiled": {
       "ok": true,
-      "connection_count": 50,
+      "connection_count": 58,
       "maximum_position_error": 0.0,
       "maximum_angle_error_degrees": 0.0,
       "issues": [],
@@ -826,7 +826,7 @@
           },
           {
             "connection_id": "joint:005:node:handrail:Landing_01_East_01_Handrail.end",
-            "through_id": "Landing_01_North_01_Handrail",
+            "through_id": "Landing_01_East_01_Handrail",
             "member_ids": [
               "Landing_01_East_01_Handrail",
               "Landing_01_North_01_Handrail"
@@ -835,7 +835,7 @@
           },
           {
             "connection_id": "joint:006:node:handrail:Landing_01_North_01_Handrail.start",
-            "through_id": "Landing_01_North_01_Handrail",
+            "through_id": "Landing_01_West_01_Handrail",
             "member_ids": [
               "Landing_01_North_01_Handrail",
               "Landing_01_West_01_Handrail"
@@ -898,7 +898,7 @@
           },
           {
             "connection_id": "joint:013:node:midrail:Landing_01_East_01_Midrail.end",
-            "through_id": "Landing_01_North_01_Midrail",
+            "through_id": "Landing_01_East_01_Midrail",
             "member_ids": [
               "Landing_01_East_01_Midrail",
               "Landing_01_North_01_Midrail"
@@ -907,7 +907,7 @@
           },
           {
             "connection_id": "joint:014:node:midrail:Landing_01_North_01_Midrail.start",
-            "through_id": "Landing_01_North_01_Midrail",
+            "through_id": "Landing_01_West_01_Midrail",
             "member_ids": [
               "Landing_01_North_01_Midrail",
               "Landing_01_West_01_Midrail"
@@ -976,7 +976,7 @@
     "shaft": {
       "ok": true,
       "wall_count": 4,
-      "checked_element_count": 155,
+      "checked_element_count": 163,
       "maximum_penetration": 0.0,
       "issues": []
     }

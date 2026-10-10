@@ -1,6 +1,6 @@
 # U-FREIGHT
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v3/plans/sectors/upper/u_freight.svg`. Высота стен 5.0 м. Габарит 45.4×10.0 м, x -17.7…27.8, z 69.6…79.6.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_freight.svg`. Высота стен 5.0 м. Габарит 45.4×10.0 м, x -17.7…27.8, z 69.6…79.6.
 
 ![U-FREIGHT](img/u-freight.png)
 

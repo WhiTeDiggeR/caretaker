@@ -1,6 +1,6 @@
 # T-EAST-VERTICAL
 
-Этаж: технический (LV-T). Источник: `docs/design/complex_v3/plans/sectors/technical/t_east_vertical.svg`. Высота стен 4.5 м. Габарит 38.1×24.5 м, x -7.0…31.1, z -4.9…19.6.
+Этаж: технический (LV-T). Источник: `docs/design/complex_v4/sources/plans/sectors/technical/t_east_vertical.svg`. Высота стен 4.5 м. Габарит 38.1×24.5 м, x -7.0…31.1, z -4.9…19.6.
 
 ![T-EAST-VERTICAL](img/t-east-vertical.png)
 

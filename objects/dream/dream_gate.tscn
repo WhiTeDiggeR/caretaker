@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/dream/dream_gate.gd" id="1_gate"]
+
+[sub_resource type="StandardMaterial3D" id="iron"]
+albedo_color = Color(0.12, 0.1, 0.1, 1)
+metallic = 0.7
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="light"]
+shading_mode = 0
+albedo_color = Color(0.92, 0.97, 1, 0.85)
+transparency = 1
+
+[sub_resource type="BoxMesh" id="pillar"]
+material = SubResource("iron")
+size = Vector3(0.6, 4.4, 0.6)
+
+[sub_resource type="BoxMesh" id="lintel"]
+material = SubResource("iron")
+size = Vector3(3.8, 0.6, 0.6)
+
+[sub_resource type="QuadMesh" id="portal"]
+material = SubResource("light")
+size = Vector2(2.6, 3.9)
+
+[sub_resource type="BoxShape3D" id="trigger"]
+size = Vector3(2.6, 3.9, 0.6)
+
+[sub_resource type="BoxShape3D" id="pillar_shape"]
+size = Vector3(0.6, 4.4, 0.6)
+
+[node name="DreamGate" type="Area3D"]
+script = ExtResource("1_gate")
+
+[node name="Trigger" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
+shape = SubResource("trigger")
+
+[node name="PillarL" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 2.2, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="PillarL"]
+mesh = SubResource("pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="PillarL"]
+shape = SubResource("pillar_shape")
+
+[node name="PillarR" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 2.2, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="PillarR"]
+mesh = SubResource("pillar")
+
+[node name="Collision" type="CollisionShape3D" parent="PillarR"]
+shape = SubResource("pillar_shape")
+
+[node name="Lintel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
+mesh = SubResource("lintel")
+
+[node name="Portal" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95, 0)
+mesh = SubResource("portal")

@@ -52,12 +52,13 @@ godot_check() { # resource, marker-regex, [extra godot args]
 }
 
 echo "== Python suites"
-python_suite tools/complex_v3_regeneration/tests
-python_suite tools/complex_v3_composition_validator/tests
-python_suite tools/complex_v3_repair_package/tests
-python_script "scene index matches the passports" scenes/complex_v3_blockout/validate_sector_scenes.py
+python_suite tools/complex_v4/tests
+python_suite tools/complex_v4/composition_validator/tests
+python_suite tools/complex_v4/repair_package/tests
+python_suite tools/complex_v3_pilots/tests
+python_script "scene index matches the passports" scenes/complex_v4/validate_sector_scenes.py
 # The registry exits 2 while verticals are unresolved; it must still build (exit 0 or 2) and list them.
-registry_output=$(python tools/complex_v3_regeneration/vertical_registry.py --json 2>&1); registry_code=$?
+registry_output=$(python tools/complex_v4/vertical_registry.py --json 2>&1); registry_code=$?
 if [ $registry_code -le 2 ] && echo "$registry_output" | grep -q '"verticals"'; then record "vertical registry builds" 0; else echo "$registry_output" | tail -15; record "vertical registry builds" 1; fi
 
 echo "== Godot import"
@@ -69,21 +70,22 @@ while IFS='|' read -r resource marker; do
   [ -z "$resource" ] && continue
   godot_check "$resource" "$marker"
 done <<'CHECKS'
-res://addons/complex_v3_regeneration_editor/regeneration_editor_check.gd|COMPLEX_V3_REGENERATION_EDITOR_CHECK_OK
-res://addons/complex_v3_anchor_editor/editor_operations_check.gd|COMPLEX_V3_EDITOR_BINDING_OK
-res://scenes/complex_v3_regeneration/anchor_runtime_check.gd|COMPLEX_V3_ANCHOR_RUNTIME_OK
-res://scenes/complex_v3_regeneration/anchor_surface_check.gd|COMPLEX_V3_SURFACE_CHECK checks=[0-9]+ failures=0
-res://scenes/complex_v3_regeneration/sector_anchor_controller_check.tscn|COMPLEX_V3_SECTOR_ANCHOR_CONTROLLER_OK
-res://scenes/complex_v3_regeneration/production_anchor_binding_check.tscn|COMPLEX_V3_PRODUCTION_ANCHOR_BINDINGS_OK
-res://scenes/complex_v3_regeneration/door_binding_check.gd|DOOR_BINDING_CHECK doors=0 errors=0
-res://scenes/complex_v3_regeneration/door_frame_prefab_check.gd|DOOR_FRAME_PREFAB_CHECK doors=0 .* errors=0
-res://scenes/complex_v3_regeneration/surface_conflict_check.gd|SURFACE_CONFLICT_CHECK sectors=32 findings=[0-9]+ errors=0
-res://scenes/complex_v3_regeneration/rollout/shared/combined_check.gd|SHARED_COMBINED checks=[0-9]+ errors=0
-res://tools/complex_v3_regeneration/tests/production_matrix_check.gd|PRODUCTION_MATRIX generated=32 sectors=32 errors=0
-res://scenes/complex_v3_blockout/sector_wrapper_contract_check.gd|COMPLEX_V3_SECTOR_WRAPPER_CONTRACT_OK
-res://scenes/complex_v3_blockout/set_dressing/set_dressing_scene_check.gd|SET_DRESSING_GODOT_SCENES_OK
-res://scenes/complex_v3_blockout/complex_v3_sector_check.gd|COMPLEX_V3_SECTORS_OK sectors=32
+res://addons/complex_v4_regeneration_editor/regeneration_editor_check.gd|COMPLEX_V4_REGENERATION_EDITOR_CHECK_OK
+res://addons/complex_v4_anchor_editor/editor_operations_check.gd|COMPLEX_V4_EDITOR_BINDING_OK
+res://scenes/complex_v4/regeneration/anchor_runtime_check.gd|COMPLEX_V4_ANCHOR_RUNTIME_OK
+res://scenes/complex_v4/regeneration/anchor_surface_check.gd|COMPLEX_V4_SURFACE_CHECK checks=[0-9]+ failures=0
+res://scenes/complex_v4/regeneration/sector_anchor_controller_check.tscn|COMPLEX_V4_SECTOR_ANCHOR_CONTROLLER_OK
+res://scenes/complex_v4/regeneration/production_anchor_binding_check.tscn|COMPLEX_V4_PRODUCTION_ANCHOR_BINDINGS_OK
+res://scenes/complex_v4/regeneration/door_binding_check.gd|DOOR_BINDING_CHECK doors=0 errors=0
+res://scenes/complex_v4/regeneration/door_frame_prefab_check.gd|DOOR_FRAME_PREFAB_CHECK doors=0 .* errors=0
+res://scenes/complex_v4/regeneration/surface_conflict_check.gd|SURFACE_CONFLICT_CHECK sectors=32 findings=[0-9]+ errors=0
+res://scenes/complex_v4/regeneration/rollout/shared/combined_check.gd|SHARED_COMBINED checks=[0-9]+ errors=0
+res://tools/complex_v4/tests/production_matrix_check.gd|PRODUCTION_MATRIX generated=32 sectors=32 errors=0
+res://scenes/complex_v4/sector_wrapper_contract_check.gd|COMPLEX_V4_SECTOR_WRAPPER_CONTRACT_OK
+res://scenes/complex_v4/set_dressing/set_dressing_scene_check.gd|SET_DRESSING_GODOT_SCENES_OK
+res://scenes/complex_v4/complex_v4_sector_check.gd|COMPLEX_V4_SECTORS_OK sectors=32
 res://tests/opening/opening_checks.tscn|OPENING_CHECKS checks=[0-9]+ failures=0
+res://tests/opening/dream_e2e.tscn|DREAM_E2E_OK
 res://tests/opening/shell_e2e.tscn|SHELL_E2E_OK
 CHECKS
 

@@ -1,6 +1,6 @@
 # L-OLD-RECEIVING
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_old_receiving.svg`. Высота стен 5.0 м. Габарит 38.4×21.1 м, x -110.6…-72.2, z 48.4…69.6.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_old_receiving.svg`. Высота стен 5.0 м. Габарит 38.4×21.1 м, x -110.6…-72.2, z 48.4…69.6.
 
 ![L-OLD-RECEIVING](img/l-old-receiving.png)
 
