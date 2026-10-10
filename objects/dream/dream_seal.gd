@@ -16,7 +16,7 @@ func _ready() -> void:
 	_material = (_glow.get_surface_override_material(0) as StandardMaterial3D).duplicate()
 	_glow.set_surface_override_material(0, _material)
 	_interactable.interacted.connect(_on_restored)
-	_show(Dreams.is_seal_restored(Dreams.module_id))
+	_show(Dreams.in_dream and Dreams.seal_restored)
 
 
 func _on_restored() -> void:

@@ -72,11 +72,11 @@ func run(c: OpeningCheck) -> void:
 	var original_loader := Dreams.scene_loader
 	Dreams.scene_loader = func(path: String) -> void: loads.append(path)
 	Dreams.in_dream = true
-	Dreams.module_id = &"module_5"
-	Containment.add_instability(&"module_5", 95.0 - Containment.get_instability(&"module_5"))
+	Dreams.module_id = C
+	Containment.add_instability(C, 95.0 - Containment.get_instability(C))
 	Containment.tick(0.1)
 	Containment.tick(10.0)
-	c.near(Containment.chemical_timer(&"module_5"), 72.0, 0.001, "woken hero gets 40 % of the window")
+	c.near(Containment.chemical_timer(C), 72.0, 0.001, "woken hero gets 40 % of the window")
 	c.is_true(not Dreams.in_dream, "the session ends when object 2 wakes the hero")
 	c.equal(Dreams.return_title(Dreams.Exit.WOKEN), "ЭКСТРЕННОЕ ПРОБУЖДЕНИЕ", "emergency wake-up message")
 	await c.tree.create_timer(Dreams.FADE_SECONDS * 2.0 + 0.2).timeout
@@ -85,14 +85,14 @@ func run(c: OpeningCheck) -> void:
 
 	# Without reagent the next crisis wakes the prisoner.
 	Containment.tick(73.0)
-	Containment.add_instability(&"module_5", 10.0)
+	Containment.add_instability(C, 10.0)
 	Containment.tick(1.0)
-	c.equal(Containment.recharge_lock_reason(&"module_5"), Containment.REASON_GAS, "spent module cannot fire again")
-	Containment.add_instability(&"module_5", 100.0)
-	c.is_true(Containment.is_awake(&"module_5"), "a second crisis without service wakes the prisoner")
+	c.equal(Containment.recharge_lock_reason(C), Containment.REASON_GAS, "spent module cannot fire again")
+	Containment.add_instability(C, 100.0)
+	c.is_true(Containment.is_awake(C), "a second crisis without service wakes the prisoner")
 
 	c.equal(events, ["warning:module_4", "sealed:module_4", "window:module_4", "warning:module_3", "sealed:module_3", "gassed:module_3",
-			"warning:module_5", "sealed:module_5", "woken:module_5", "window:module_5"] as Array[String], "protocol events in order")
+			"warning:module_4", "sealed:module_4", "woken:module_4", "window:module_4"] as Array[String], "protocol events in order")
 
 	var panel: ReagentPanel = c.add((load("res://objects/containment/reagent_panel.tscn") as PackedScene).instantiate())
 	panel.module_id = C

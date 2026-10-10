@@ -8,7 +8,7 @@ extends Node
 
 signal entered(module_id: StringName)
 signal left(module_id: StringName, reason: Exit)
-signal seal_restored(module_id: StringName)
+signal seal_restored_signal(module_id: StringName)
 
 ## GATE — voluntary exit, DEATH — killed in the dream, WOKEN — the module was gassed and
 ## object 2 pulled the connected hero out (chemical protocol).
@@ -19,7 +19,6 @@ const CHAIR_GROUP := &"immersion_chairs"
 const PLAYER_GROUP := &"player"
 const MESSAGE_GROUP := &"message_display"
 const FADE_SECONDS := 0.6
-const SEAL_FLAG_PREFIX := "dream/seal/"
 
 var time_ratio := 15.0
 var entry_cost := 8.0
@@ -31,6 +30,9 @@ var in_dream := false
 var module_id: StringName = &""
 var real_seconds := 0.0
 var subjective_seconds := 0.0
+## The main task of the current visit (restoring the seal) is done. Every visit has its own
+## main task; how many visits there are is decided by the story, not counted here.
+var seal_restored := false
 ## Changes the scene; replaced in tests. Receives a scene path.
 var scene_loader: Callable = _change_scene
 
@@ -85,6 +87,7 @@ func enter(id: StringName, chair_id: StringName, dream_scene: String = "") -> bo
 	_return_chair = chair_id
 	module_id = id
 	in_dream = true
+	seal_restored = false
 	real_seconds = 0.0
 	subjective_seconds = 0.0
 	Containment.add_instability(id, entry_cost)
@@ -107,17 +110,13 @@ func die() -> void:
 	_leave(Exit.DEATH)
 
 
-## A restored seal calms the dream.
+## The main task of the visit (a restored seal) calms and prolongs the sleep, once per visit.
 func restore_seal() -> void:
-	if not in_dream or is_seal_restored(module_id):
+	if not in_dream or seal_restored:
 		return
-	GameState.set_flag(StringName(SEAL_FLAG_PREFIX + String(module_id)))
+	seal_restored = true
 	Containment.stabilize(module_id, seal_relief)
-	seal_restored.emit(module_id)
-
-
-func is_seal_restored(id: StringName) -> bool:
-	return GameState.has_flag(StringName(SEAL_FLAG_PREFIX + String(id)))
+	seal_restored_signal.emit(module_id)
 
 
 ## Places the player at the chair after returning to the complex. Called once the

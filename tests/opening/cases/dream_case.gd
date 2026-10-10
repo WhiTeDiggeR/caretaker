@@ -54,8 +54,8 @@ func run(c: OpeningCheck) -> void:
 	var before_seal := Containment.get_instability(&"module_4")
 	Dreams.restore_seal()
 	Dreams.restore_seal()
-	c.near(Containment.get_instability(&"module_4"), before_seal - Dreams.seal_relief, 0.001, "a seal calms the dream once")
-	c.is_true(Dreams.is_seal_restored(&"module_4"), "restored seal is remembered")
+	c.near(Containment.get_instability(&"module_4"), before_seal - Dreams.seal_relief, 0.001, "a seal calms the dream once per visit")
+	c.is_true(Dreams.seal_restored, "the visit's main task is done")
 
 	var reasons: Array[int] = []
 	Dreams.left.connect(func(_id: StringName, reason: int) -> void: reasons.append(reason))
@@ -71,6 +71,7 @@ func run(c: OpeningCheck) -> void:
 
 	var before_death := Containment.get_instability(&"module_4")
 	await Dreams.enter(&"module_4", &"test_chair")
+	c.is_true(not Dreams.seal_restored, "a new visit has its own main task")
 	Dreams.die()
 	await c.tree.create_timer(Dreams.FADE_SECONDS * 2.0 + 0.3).timeout
 	c.near(Containment.get_instability(&"module_4"), before_death + Dreams.entry_cost + Dreams.death_penalty, 0.001, "death in the dream raises the instability")

@@ -1,7 +1,12 @@
 extends Node
 
 ## Containment modules (autoload `Containment`): instability 0–100 % of every prisoner's
-## sleep, its stages, awakening and the catastrophe of a forbidden pair waking together,
+## sleep, its stages, awakening and the catastrophe of a forbidden pair waking together.
+## Canon (docs/world/02-world-rules.md, #32): a fully stable sleep (0 %) never worsens by
+## itself and has no forecast. External causes (damage, story events, Herobrine, failed
+## dives — `add_instability`) disturb it; a disturbed sleep keeps worsening until the hero
+## intervenes, and the damaged system shows an approximate, dynamically recalculated
+## forecast of the awakening. Its expiry starts the emergency phase, not a defeat:
 ## and the emergency chemical protocol of modules 3–6 (canon, docs/world/02-world-rules.md):
 ## at the trigger threshold the module warns, seals and fills with sleeping gas; the prisoner
 ## is held in chemical sleep for a repair window. Reagent is limited: the module must be
@@ -31,6 +36,7 @@ const SYSTEM := &"containment"
 const MAX_INSTABILITY := 100.0
 const CATASTROPHE_FLAG := &"containment/catastrophe"
 const MONITOR_HIDDEN_LINE := "Прочие модули — засекречено / нет связи."
+const STABLE_NAME := "СТАБИЛЬНЫЙ СОН — прогноза нет"
 const GASSED_FLAG := &"containment/hero_gassed"
 const STOCK_KEY := "_reagent_stock"
 const CHEMICAL_NAMES: Array[String] = ["ПРОТОКОЛ ГОТОВ", "ВНИМАНИЕ: ГЕРМЕТИЗАЦИЯ", "ХИМИЧЕСКИЙ СОН", "РЕАГЕНТ ИЗРАСХОДОВАН"]
@@ -87,7 +93,7 @@ func tick(seconds: float) -> void:
 		_tick_chemical(id, seconds)
 	for id: StringName in modules:
 		var config: Dictionary = modules[id]
-		if is_held(id) or is_awake(id) or not StateRules.check(config.get("active_when", {})):
+		if is_stable(id) or is_held(id) or is_awake(id) or not StateRules.check(config.get("active_when", {})):
 			continue
 		var growth := float(config.get("growth_per_minute", 0.0)) * seconds / 60.0
 		if growth > 0.0:
@@ -96,6 +102,38 @@ func tick(seconds: float) -> void:
 
 func get_instability(id: StringName) -> float:
 	return float((_state.get(String(id), {}) as Dictionary).get("value", 0.0))
+
+
+## A fully stable sleep: no growth and no forecast.
+func is_stable(id: StringName) -> bool:
+	return get_instability(id) <= 0.0
+
+
+## Seconds until the forecast expires (the chemical protocol fires, or the prisoner wakes
+## when the protocol cannot fire), or -1 when there is no forecast.
+func forecast_seconds(id: StringName) -> float:
+	if is_stable(id) or is_held(id) or is_awake(id):
+		return -1.0
+	var rate := float((modules.get(id, {}) as Dictionary).get("growth_per_minute", 0.0)) / 60.0
+	if rate <= 0.0 or not StateRules.check((modules.get(id, {}) as Dictionary).get("active_when", {})):
+		return -1.0
+	var limit := MAX_INSTABILITY
+	if has_chemical_protocol(id) and chemical_phase(id) == Chemical.READY and is_charged(id) and not has_gas(id):
+		limit = float(chemical.get("trigger_at", 95.0))
+	return maxf(limit - get_instability(id), 0.0) / rate
+
+
+## Approximate forecast for monitors: the damaged system does not give exact numbers.
+func forecast_text(id: StringName) -> String:
+	var seconds := forecast_seconds(id)
+	if seconds < 0.0:
+		return "прогноза нет"
+	if seconds < 60.0:
+		return "меньше минуты"
+	var minutes := int(round(seconds / 60.0))
+	if minutes < 60:
+		return "около %d мин" % minutes
+	return "около %d ч %d мин" % [minutes / 60, minutes % 60]
 
 
 func get_stage(id: StringName) -> int:
@@ -155,7 +193,9 @@ func monitor_lines() -> PackedStringArray:
 		if not is_visible_on_monitor(id):
 			continue
 		var label := str(modules[id].get("label", id))
-		var line := "%s — %d %% — %s" % [label, roundi(get_instability(id)), stage_name(get_stage(id))]
+		var line := "%s — %s" % [label, STABLE_NAME if is_stable(id) else stage_name(get_stage(id))]
+		if not is_stable(id) and not is_awake(id):
+			line += " — прогноз пробуждения: " + forecast_text(id)
 		if has_chemical_protocol(id) and chemical_phase(id) != Chemical.READY:
 			line += " — " + CHEMICAL_NAMES[chemical_phase(id)]
 			if chemical_phase(id) in [Chemical.WARNING, Chemical.SEALED]:
