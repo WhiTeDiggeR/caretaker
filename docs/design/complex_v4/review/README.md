@@ -1,6 +1,6 @@
 # Комплекс v4 — итоги ревизии
 
-Канонические SVG построены из утверждённых планов v3 (`tools/complex_v3_regeneration/build_canonical_from_approved.py`, привязка — `approved_registration.json`). Каждое исправление принято пользователем и записано в [decisions.md](decisions.md) (D-01…D-43).
+Канонические SVG построены из утверждённых планов v3 (`tools/complex_v3_regeneration/build_canonical_from_approved.py`, привязка — `approved_registration.json`). Каждое исправление принято пользователем и записано в [decisions.md](decisions.md) (D-01…D-44).
 
 ## Статус сквозных вопросов
 
@@ -69,5 +69,5 @@
 
 ## Открыто
 
-- VT-OLD-INCLINE (разрушенный наклонный тоннель) — отдельная геометрия.
+- VT-OLD-INCLINE: тоннель обрушен, геометрии нет (D-44), в реестре статус `closed`.
 - G-05, G-12 — см. таблицу.
