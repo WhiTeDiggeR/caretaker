@@ -55,8 +55,13 @@ func run(c: OpeningCheck) -> void:
 	c.near(Containment.get_instability(&"module_4"), held, 0.001, "a held module does not grow")
 	Containment.set_held(&"module_4", false)
 
-	Containment.add_instability(&"module_4", 200.0)
-	c.is_true(Containment.is_awake(&"module_4"), "module 4 wakes at 100 %")
+	# Slow growth reaches 100 % and wakes the prisoner (no endless 99.99 %). The chemical
+	# protocol is disarmed so it does not hold the module.
+	Containment._chem(&"module_4")["charged"] = false
+	Containment.add_instability(&"module_4", 99.0 - Containment.get_instability(&"module_4"))
+	for i in 120:
+		Containment.tick(1.0)
+	c.is_true(Containment.is_awake(&"module_4"), "growth by small steps wakes module 4 at 100 %")
 	c.equal(awakened, [&"module_4"] as Array[StringName], "awakening is announced once")
 	c.near(Containment.stabilize(&"module_4", 50.0), 100.0, 0.001, "an awakened prisoner stays awake")
 	c.equal(catastrophes[0], 0, "one awake module is not the catastrophe")
@@ -76,20 +81,24 @@ func run(c: OpeningCheck) -> void:
 	c.equal(Containment.monitor_lines(), PackedStringArray([Containment.MONITOR_HIDDEN_LINE]), "no access shows only the hidden line")
 	GameState.grant_access(&"module_4")
 	var lines := Containment.monitor_lines()
-	c.equal(lines.size(), 2, "one visible module and the hidden line")
-	c.equal(lines[0], "МОДУЛЬ 4 — БЕСПОКОЙСТВО — прогноз пробуждения: прогноза нет", "monitor shows the stage, never exact percents")
+	c.equal(lines.size(), 3, "module header, its status line and the hidden line")
+	c.equal(lines[0], "МОДУЛЬ 4 — БЕСПОКОЙСТВО", "monitor shows the stage, never exact percents")
+	c.equal(lines[1], Containment.LINE_INDENT + Containment.OFFLINE_LINE, "an offline system gives no forecast and says why")
 	GameState.set_flag(&"containment_online")
-	c.is_true(Containment.monitor_lines()[0].contains("прогноз пробуждения: около "), "an active disturbed module shows an approximate forecast")
+	c.is_true(Containment.monitor_lines()[1].begins_with(Containment.LINE_INDENT + "Прогноз пробуждения: около "), "an active disturbed module shows an approximate forecast")
+	c.is_true(Containment.monitor_lines()[1].ends_with("Затем — химический протокол."), "an armed module says the protocol follows the forecast")
 	GameState.grant_access(&"module_3")
-	c.is_true(Containment.monitor_lines()[0].contains("СТАБИЛЬНЫЙ СОН — прогноза нет"), "a stable module shows no forecast")
+	c.equal(Containment.monitor_lines()[0], "МОДУЛЬ 3 — СТАБИЛЬНЫЙ СОН", "a stable module is named stable")
+	c.equal(Containment.monitor_lines()[1], Containment.LINE_INDENT + Containment.STABLE_LINE, "a stable module has no awakening threat")
 	GameState.revoke_access(&"module_3")
 	lines = Containment.monitor_lines()
 
 	var program := TerminalProgram.new()
 	program.load_data({"id": "m", "start": "a", "screens": {"a": {"lines": ["Заголовок", "{containment_monitor}"]}}})
 	var texts: Array = (program.enter("a")["lines"] as Array).map(func(line: Dictionary) -> String: return line["text"])
-	c.equal(texts.size(), 3, "terminal expands the monitor lines")
+	c.equal(texts.size(), 4, "terminal expands the monitor lines")
 	c.equal(texts[1], lines[0], "terminal shows the module line")
+	c.equal(texts[2], lines[1], "terminal shows the module status")
 
 	var monitor: ModuleMonitor = c.add((load("res://objects/containment/module_monitor.tscn") as PackedScene).instantiate())
 	monitor.section = &"mon"

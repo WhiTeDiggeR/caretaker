@@ -14,7 +14,7 @@ extends Node
 ## chair falls asleep (defeat); a hero connected to the chair is woken by object 2 and gets
 ## a shorter window.
 ## Runs in real time whatever scene is loaded, so the complex keeps living while the
-## hero is inside a dream. Parameters: data/containment/modules.json.
+## hero is inside a dream. `time_scale` speeds it up for debugging only. Parameters: data/containment/modules.json.
 ## State is saved through GameState.set_system_data(&"containment", …).
 
 signal instability_changed(module_id: StringName, value: float)
@@ -36,7 +36,18 @@ const SYSTEM := &"containment"
 const MAX_INSTABILITY := 100.0
 const CATASTROPHE_FLAG := &"containment/catastrophe"
 const MONITOR_HIDDEN_LINE := "Прочие модули — засекречено / нет связи."
-const STABLE_NAME := "СТАБИЛЬНЫЙ СОН — прогноза нет"
+const STABLE_NAME := "СТАБИЛЬНЫЙ СОН"
+const LINE_INDENT := "    "
+const STABLE_LINE := "Сон стабилен. Угрозы пробуждения нет."
+const OFFLINE_LINE := "Прогноза нет: система наблюдения не в сети."
+const AWAKE_LINE := "ОБЪЕКТ БОДРСТВУЕТ. Содержание нарушено."
+const FORECAST_ARMED := "Прогноз пробуждения: %s. Затем — химический протокол."
+const FORECAST_PLAIN := "Прогноз пробуждения: %s."
+const WARNING_LINE := "ВНИМАНИЕ: герметизация и подача газа через %s."
+const SEALED_LINE := "Химический сон: окно ремонта %s. Нестабильность не растёт."
+const SPENT_LINE := "Реагент израсходован: нужна вентиляция и перезарядка."
+const VENTING_LINE := "Идёт вентиляция модуля."
+const UNCHARGED_LINE := "Химический протокол не заряжен."
 const GASSED_FLAG := &"containment/hero_gassed"
 const STOCK_KEY := "_reagent_stock"
 const CHEMICAL_NAMES: Array[String] = ["ПРОТОКОЛ ГОТОВ", "ВНИМАНИЕ: ГЕРМЕТИЗАЦИЯ", "ХИМИЧЕСКИЙ СОН", "РЕАГЕНТ ИЗРАСХОДОВАН"]
@@ -55,6 +66,8 @@ var modules: Dictionary[StringName, Dictionary] = {}
 ## Chemical protocol parameters: trigger_at, warning_seconds, repair_window_seconds,
 ## woken_window_factor, vent_seconds, initial_reagent_stock.
 var chemical: Dictionary = {}
+## Debug multiplier of the real time (sandbox); 1 in the game.
+var time_scale := 1.0
 
 ## Modules whose chamber the hero is standing in (set by ModuleChamber areas).
 var _hero_inside: Dictionary[StringName, bool] = {}
@@ -84,7 +97,7 @@ func load_config(data: Dictionary) -> void:
 
 
 func _process(delta: float) -> void:
-	tick(delta)
+	tick(delta * time_scale)
 
 
 ## Advances every active module by `seconds` of real time.
@@ -186,22 +199,46 @@ func is_visible_on_monitor(id: StringName) -> bool:
 
 
 ## Lines for monitors and terminals: only visible modules, the rest hidden in one line so
-## the number of cells is never revealed.
+## the number of cells is never revealed. Each module gets a header with its stage and
+## indented lines saying what happens next; exact percents are never shown.
 func monitor_lines() -> PackedStringArray:
 	var lines := PackedStringArray()
 	for id: StringName in modules:
 		if not is_visible_on_monitor(id):
 			continue
 		var label := str(modules[id].get("label", id))
-		var line := "%s — %s" % [label, STABLE_NAME if is_stable(id) else stage_name(get_stage(id))]
-		if not is_stable(id) and not is_awake(id):
-			line += " — прогноз пробуждения: " + forecast_text(id)
-		if has_chemical_protocol(id) and chemical_phase(id) != Chemical.READY:
-			line += " — " + CHEMICAL_NAMES[chemical_phase(id)]
-			if chemical_phase(id) in [Chemical.WARNING, Chemical.SEALED]:
-				line += " %s" % _clock(chemical_timer(id))
-		lines.append(line)
+		lines.append("%s — %s" % [label, STABLE_NAME if is_stable(id) else stage_name(get_stage(id))])
+		for detail in _status_lines(id):
+			lines.append(LINE_INDENT + detail)
 	lines.append(MONITOR_HIDDEN_LINE)
+	return lines
+
+
+func _status_lines(id: StringName) -> PackedStringArray:
+	if is_awake(id):
+		return PackedStringArray([AWAKE_LINE])
+	if is_stable(id):
+		return PackedStringArray([STABLE_LINE])
+	var protocol := has_chemical_protocol(id)
+	var phase := chemical_phase(id) if protocol else Chemical.READY
+	if phase == Chemical.WARNING:
+		return PackedStringArray([WARNING_LINE % _clock(chemical_timer(id))])
+	if phase == Chemical.SEALED:
+		return PackedStringArray([SEALED_LINE % _clock(chemical_timer(id))])
+	var lines := PackedStringArray()
+	if forecast_seconds(id) < 0.0:
+		lines.append(OFFLINE_LINE)
+	elif protocol and is_charged(id) and not has_gas(id):
+		lines.append(FORECAST_ARMED % forecast_text(id))
+	else:
+		lines.append(FORECAST_PLAIN % forecast_text(id))
+	if protocol and not is_charged(id):
+		if is_venting(id):
+			lines.append(VENTING_LINE)
+		elif has_gas(id):
+			lines.append(SPENT_LINE)
+		else:
+			lines.append(UNCHARGED_LINE)
 	return lines
 
 
@@ -329,17 +366,20 @@ func _seal(id: StringName) -> void:
 	chem["phase"] = Chemical.SEALED
 	chem["charged"] = false
 	chem["gas"] = true
+	# Connected to the chair: object 2 reaches the hero through the dream.
+	var woken := Dreams.in_dream and Dreams.module_id == id
 	var window := float(chemical.get("repair_window_seconds", 180.0))
+	if woken:
+		window *= float(chemical.get("woken_window_factor", 0.4))
+	# The timer is set before the signals so listeners see the real repair window.
+	chem["timer"] = window
 	set_held(id, true)
 	module_sealed.emit(id)
-	if Dreams.in_dream and Dreams.module_id == id:
-		# Connected to the chair: object 2 reaches the hero through the dream.
-		window *= float(chemical.get("woken_window_factor", 0.4))
+	if woken:
 		hero_woken.emit(id)
 	elif is_hero_inside(id):
 		GameState.set_flag(GASSED_FLAG)
 		hero_gassed.emit(id)
-	chem["timer"] = window
 	_save()
 
 
@@ -353,7 +393,8 @@ func _chem(id: StringName) -> Dictionary:
 func _set_value(id: StringName, value: float) -> void:
 	value = clampf(value, 0.0, MAX_INSTABILITY)
 	var entry := _ensure(id)
-	if is_equal_approx(float(entry["value"]), value):
+	# Exact comparison: an approximate one stops slow growth just below 100 % for ever.
+	if float(entry["value"]) == value:
 		return
 	entry["value"] = value
 	_save()
