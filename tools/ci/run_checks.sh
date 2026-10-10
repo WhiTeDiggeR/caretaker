@@ -84,6 +84,7 @@ res://scenes/complex_v3_blockout/sector_wrapper_contract_check.gd|COMPLEX_V3_SEC
 res://scenes/complex_v3_blockout/set_dressing/set_dressing_scene_check.gd|SET_DRESSING_GODOT_SCENES_OK
 res://scenes/complex_v3_blockout/complex_v3_sector_check.gd|COMPLEX_V3_SECTORS_OK sectors=32
 res://tests/opening/opening_checks.tscn|OPENING_CHECKS checks=[0-9]+ failures=0
+res://tests/opening/dream_e2e.tscn|DREAM_E2E_OK
 CHECKS
 
 echo
