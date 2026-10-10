@@ -6,8 +6,11 @@ extends StaticBody3D
 ## at the foot end is inspected; the hero's damaged capsule has a jammed lid that is pushed
 ## open by holding the interact key.
 ## Sized for a large occupant (docs/game_design/02-prop-standard.md): up to 2.0 m tall and
-## 0.6 m across the shoulders, plus room to turn and to raise the head. The lid is a hollow
-## frosted shell, so the sleeper inside stays visible as a silhouette only.
+## 0.6 m across the shoulders, plus room to turn and to raise the head. A fixed tub rises
+## RIM_HEIGHT above the floor; the lid is a low hollow frosted canopy on top of it, so the
+## sleeper inside stays visible as a silhouette only. The canopy opens upright on its +X
+## hinge and stays inside the 0.6 m gap of the hall pitch (1.8 m): it never reaches the
+## neighbour and never hangs over the bed.
 
 enum Variant { OCCUPIED, EMPTY, HERO }
 
@@ -18,14 +21,19 @@ const BASE_HEIGHT := 0.5
 const BED_LENGTH := 2.3
 const BED_WIDTH := 1.0
 const BED_THICKNESS := 0.06
-const LID_HEIGHT := 0.85
+## Fixed tub walls up to RIM_HEIGHT, the canopy lid of LID_HEIGHT above them.
+const RIM_HEIGHT := 0.8
+const TUB_WALL := 0.06
+const LID_HEIGHT := 0.55
 const LID_WALL := 0.04
+## Hall pitch of the capsules (Р-11): the open lid must stay inside the gap.
+const HALL_PITCH := 1.8
 ## Largest occupant the capsule is designed for.
 const DESIGN_OCCUPANT_HEIGHT := 2.0
 const DESIGN_OCCUPANT_SHOULDERS := 0.6
 ## Placeholder sleeper: an average adult for scale.
 const SLEEPER_HEIGHT := 1.75
-const LID_OPEN_ANGLE := deg_to_rad(-75.0)  # negative lifts the free edge (hinge on +X)
+const LID_OPEN_ANGLE := deg_to_rad(-90.0)  # negative lifts the free edge (hinge on +X)
 const HERO_LID_FLAG := &"opening/hero_capsule_open"
 const PANEL_TEXT := {Variant.OCCUPIED: "pod_staff_occupied", Variant.EMPTY: "pod_staff_empty", Variant.HERO: "pod_hero"}
 const LAMP := {Variant.OCCUPIED: Color(0.2, 0.85, 0.35), Variant.EMPTY: Color(0.08, 0.08, 0.08), Variant.HERO: Color(0.95, 0.2, 0.1)}
@@ -71,13 +79,14 @@ func _build() -> void:
 	var shell := PropKit.material(Color(0.62, 0.64, 0.64))
 	var dark := PropKit.material(Color(0.18, 0.19, 0.2))
 	PropKit.box(self, Vector3(0, BASE_HEIGHT * 0.5, 0), Vector3(WIDTH, BASE_HEIGHT, LENGTH), shell, true)
-	PropKit.box(self, Vector3(0, BASE_HEIGHT + BED_THICKNESS * 0.5, 0), Vector3(BED_WIDTH, BED_THICKNESS, BED_LENGTH), dark)
+	PropKit.box(self, Vector3(0, BASE_HEIGHT + BED_THICKNESS * 0.5, 0), Vector3(BED_WIDTH, BED_THICKNESS, BED_LENGTH), dark, true)
+	_build_tub(shell)
 	if variant == Variant.OCCUPIED:
 		_build_sleeper(BASE_HEIGHT + BED_THICKNESS)
 	# Lid hinged on the +X side, frosted so faces stay unreadable (opening doc, Р-6).
 	lid = AnimatableBody3D.new()
 	lid.sync_to_physics = false
-	lid.position = Vector3(WIDTH * 0.5, BASE_HEIGHT, 0)
+	lid.position = Vector3(WIDTH * 0.5, RIM_HEIGHT, 0)
 	add_child(lid)
 	_build_lid()
 	if variant == Variant.EMPTY:
@@ -96,7 +105,16 @@ func _build() -> void:
 	panel_interactable = PropKit.interactable(panel, Interactable.Mode.INSPECT, "ОСМОТРЕТЬ ПАНЕЛЬ КАПСУЛЫ", PANEL_TEXT[variant])
 
 
-## Hollow frosted shell in the lid's frame (hinge line at the origin, the shell towards -X):
+## Fixed walls around the bed from the base up to the rim.
+func _build_tub(mat: Material) -> void:
+	var height := RIM_HEIGHT - BASE_HEIGHT
+	var y := BASE_HEIGHT + height * 0.5
+	for side: float in [-1.0, 1.0]:
+		PropKit.box(self, Vector3(side * (WIDTH - TUB_WALL) * 0.5, y, 0), Vector3(TUB_WALL, height, LENGTH), mat, true)
+		PropKit.box(self, Vector3(0, y, side * (LENGTH - TUB_WALL) * 0.5), Vector3(WIDTH, height, TUB_WALL), mat, true)
+
+
+## Hollow frosted canopy in the lid's frame (hinge line at the origin, the shell towards -X):
 ## top plate, two long walls and two end walls, each with its own thin collision.
 func _build_lid() -> void:
 	var glass := PropKit.material(Color(0.78, 0.88, 0.92), false, 0.42)

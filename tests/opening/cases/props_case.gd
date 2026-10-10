@@ -59,6 +59,26 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(not player._capsule_fits(under_duct, player.STAND_HEIGHT), "standing hero does not fit under the fallen duct")
 	c.is_true(player._capsule_fits(under_duct, player.CROUCH_HEIGHT), "crouching hero fits under the fallen duct")
 
+	# Open capsules at the hall pitch: the upright lid stays in the gap, and the hero stands
+	# steadily on the bed (no sinking, no bouncing, no forced crouch).
+	var left := _add(c, "staff_capsule_empty", Vector3(10, 0, 6)) as StaffCapsule
+	var right := _add(c, "staff_capsule_empty", Vector3(10 + StaffCapsule.HALL_PITCH, 0, 6)) as StaffCapsule
+	await c.physics_frames(2)
+	var lid_box := AABB()
+	for mesh: MeshInstance3D in left.lid.find_children("*", "MeshInstance3D", false, false):
+		var box := mesh.global_transform * mesh.get_aabb()
+		lid_box = box if lid_box.size == Vector3.ZERO else lid_box.merge(box)
+	var neighbour_edge := right.global_position.x - StaffCapsule.WIDTH * 0.5
+	c.is_true(lid_box.end.x < neighbour_edge, "an open lid does not reach the neighbouring capsule")
+	c.is_true(lid_box.position.x >= left.global_position.x + StaffCapsule.WIDTH * 0.5 - 0.01, "an open lid does not hang over the bed")
+	var bed_y := StaffCapsule.BASE_HEIGHT + StaffCapsule.BED_THICKNESS
+	player.global_position = left.global_position + Vector3(0, bed_y + player.STAND_HEIGHT * 0.5 + 0.05, 0)
+	player.velocity = Vector3.ZERO
+	await c.physics_frames(30)
+	var feet: float = player.global_position.y - player.STAND_HEIGHT * 0.5
+	c.near(feet, bed_y, 0.02, "the hero stands on the bed of an open capsule")
+	c.is_true(player.is_on_floor() and player.can_stand() and not player.is_crouching, "standing on the bed is steady and upright")
+
 	var debris := _add(c, "debris_blockage", Vector3(20, 0, 0)) as SimpleProp
 	var blocking := false
 	for node in debris.get_children():
