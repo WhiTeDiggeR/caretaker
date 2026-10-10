@@ -1,0 +1,115 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/doors/hermetic_door.tscn" id="1_hermetic"]
+[ext_resource type="PackedScene" path="res://objects/doors/mechanical_door.tscn" id="2_mechanical"]
+[ext_resource type="PackedScene" path="res://objects/doors/historic_door.tscn" id="3_historic"]
+[ext_resource type="PackedScene" path="res://objects/doors/access_gate.tscn" id="4_gate"]
+[ext_resource type="PackedScene" path="res://objects/doors/airlock.tscn" id="5_airlock"]
+[ext_resource type="PackedScene" path="res://objects/terminal/terminal.tscn" id="6_terminal"]
+
+[node name="DoorStation" type="Node3D"]
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, 0)
+pixel_size = 0.006
+text = "ДВЕРИ
+F1 — питание секций, F2 — допуск смотрителя"
+font_size = 48
+outline_size = 12
+
+[node name="Hermetic" parent="." instance=ExtResource("1_hermetic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0, 0)
+section = &"sandbox_a"
+
+[node name="HermeticLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 3.4, 0.2)
+pixel_size = 0.004
+text = "ГЕРМОДВЕРЬ 1,8×2,8
+пульт, питание секции"
+font_size = 40
+outline_size = 10
+
+[node name="Mechanical" parent="." instance=ExtResource("2_mechanical")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+
+
+[node name="MechanicalLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3.4, 0.2)
+pixel_size = 0.004
+text = "МЕХАНИЧЕСКАЯ 1,8×2,8
+штурвал, без питания"
+font_size = 40
+outline_size = 10
+
+[node name="Historic" parent="." instance=ExtResource("3_historic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 0)
+
+
+[node name="HistoricLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 3.4, 0.2)
+pixel_size = 0.004
+text = "HISTORIC 1,4×2,3
+старое ядро"
+font_size = 40
+outline_size = 10
+
+[node name="AccessGate" parent="." instance=ExtResource("4_gate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+section = &"sandbox_a"
+
+[node name="AccessGateLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3.4, 0.2)
+pixel_size = 0.004
+text = "ШЛЮЗ ПОЗДНЕГО СЕКТОРА
+нужен допуск (F2)"
+font_size = 40
+outline_size = 10
+
+[node name="EmergencyLocked" parent="." instance=ExtResource("1_hermetic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+section = &"sandbox_a"
+emergency_lock = true
+
+[node name="EmergencyLockedLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3.4, 0.2)
+pixel_size = 0.004
+text = "АВАРИЙНАЯ БЛОКИРОВКА"
+font_size = 40
+outline_size = 10
+
+[node name="Unpowered" parent="." instance=ExtResource("1_hermetic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+section = &"sandbox_off"
+
+[node name="UnpoweredLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3.4, 0.2)
+pixel_size = 0.004
+text = "ОБЕСТОЧЕНА"
+font_size = 40
+outline_size = 10
+
+[node name="Airlock" parent="." instance=ExtResource("5_airlock")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+section = &"sandbox_a"
+cycle_time = 3.0
+
+[node name="AirlockLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3.4, 0.2)
+pixel_size = 0.004
+text = "ШЛЮЗ (ГЕРМОТАМБУР)
+пульт цикла внутри"
+font_size = 40
+outline_size = 10
+
+[node name="Terminal" parent="." instance=ExtResource("6_terminal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 3.5)
+program_path = "res://data/terminals/sandbox_console.json"
+section = &"sandbox_a"
+
+[node name="TerminalLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.1, 3.5)
+pixel_size = 0.004
+text = "ТЕРМИНАЛ
+протокол → допуск к шлюзу"
+font_size = 40
+outline_size = 10
