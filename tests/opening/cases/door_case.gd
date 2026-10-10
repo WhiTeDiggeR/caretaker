@@ -46,6 +46,18 @@ func run(c: OpeningCheck) -> void:
 	await manual.opened
 	c.is_true(manual.is_open(), "wheel opens the mechanical door")
 
+	# The old-core «historic» door is hinged.
+	var historic := _door(c, "res://objects/doors/historic_door.tscn", &"")
+	var historic_leaf := historic.get_node(^"Leaf") as Node3D
+	c.equal(historic.slide_axis, FacilityDoor.SlideAxis.SWING, "historic door swings on hinges")
+	c.is_true(historic.open(), "historic door opens")
+	await historic.opened
+	c.near(historic_leaf.rotation.y, -FacilityDoor.SWING_ANGLE, 0.001, "leaf swung around the hinge")
+	c.near(historic_leaf.position.x, -historic.width * 0.5, 0.001, "hinge stays at the frame edge")
+	c.is_true(historic.close(), "historic door closes")
+	await historic.closed
+	c.near(historic_leaf.rotation.y, 0.0, 0.001, "leaf returned to the frame")
+
 	# Access gate requires the caretaker grant.
 	var gate := _door(c, GATE, &"sec_a")
 	c.equal(gate.lock_reason(), FacilityDoor.REASON_NO_ACCESS, "gate needs access")

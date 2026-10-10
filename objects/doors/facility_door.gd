@@ -14,7 +14,10 @@ signal closed
 
 enum Kind { POWERED, MECHANICAL }
 enum State { CLOSED, OPENING, OPEN, CLOSING }
-enum SlideAxis { SIDE, UP }
+## How the leaf opens (decision R-10, docs/game_design/02-prop-standard.md):
+## SIDE — slides into a wall pocket (hermetic and mechanical doors),
+## UP — rises like a shutter (late sectors), SWING — hinged leaf (old core «historic»).
+enum SlideAxis { SIDE, UP, SWING }
 
 const REASON_NO_POWER := "НЕТ ПИТАНИЯ"
 const REASON_NO_ACCESS := "НЕТ ДОПУСКА"
@@ -28,6 +31,7 @@ const FRAME_POST := 0.2
 const LEAF_DEPTH := 0.12
 const CONTROL_OFFSET := 0.45  # from the frame edge to the control centre
 const CONTROL_HEIGHT := 1.25
+const SWING_ANGLE := deg_to_rad(95.0)
 const LAMP_OFF := Color(0.05, 0.05, 0.05)
 const LAMP_READY := Color(0.15, 0.85, 0.3)
 const LAMP_LOCKED := Color(0.9, 0.15, 0.1)
@@ -60,6 +64,11 @@ var operator: Callable
 
 var state: State = State.CLOSED
 var _leaf: AnimatableBody3D
+## 0 — closed, 1 — open; drives the leaf pose.
+var _open_amount := 0.0:
+	set(value):
+		_open_amount = value
+		_apply_leaf_pose()
 var _controls: Array[Interactable] = []
 var _lamps: Array[StandardMaterial3D] = []
 var _tween: Tween
@@ -69,7 +78,7 @@ func _ready() -> void:
 	_build()
 	if starts_open:
 		state = State.OPEN
-		_leaf.position = _open_position()
+		_open_amount = 1.0
 	if Engine.is_editor_hint():
 		return
 	GameState.section_power_changed.connect(func(_section: StringName, _power: int) -> void: refresh())
@@ -177,11 +186,11 @@ func _move(open_door: bool) -> void:
 	if interlock_partner:
 		interlock_partner.refresh()
 	state_changed.emit(state)
-	var target := _open_position() if open_door else Vector3.ZERO
-	var duration := open_time * (_leaf.position.distance_to(target) / maxf(_open_position().length(), 0.001))
+	var target := 1.0 if open_door else 0.0
+	var duration := open_time * absf(target - _open_amount)
 	_tween = create_tween()
 	_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	_tween.tween_property(_leaf, "position", target, maxf(duration, 0.01))
+	_tween.tween_property(self, "_open_amount", target, maxf(duration, 0.01))
 	_tween.finished.connect(_on_move_finished.bind(open_door))
 
 
@@ -195,6 +204,17 @@ func _on_move_finished(open_door: bool) -> void:
 		opened.emit()
 	else:
 		closed.emit()
+
+
+func _apply_leaf_pose() -> void:
+	if _leaf == null:
+		return
+	if slide_axis == SlideAxis.SWING:
+		_leaf.position = Vector3(-width * 0.5, 0, 0)
+		_leaf.rotation.y = -SWING_ANGLE * _open_amount
+	else:
+		_leaf.position = _open_position() * _open_amount
+		_leaf.rotation.y = 0.0
 
 
 func _open_position() -> Vector3:
@@ -231,8 +251,11 @@ func _build() -> void:
 	_leaf.name = "Leaf"
 	_leaf.sync_to_physics = false
 	_generated(_leaf)
-	_box(_leaf, Vector3(0, height * 0.5, 0), Vector3(width, height, LEAF_DEPTH), _material(leaf_color), true)
-	_box(_leaf, Vector3(0, height * 0.5, 0), Vector3(width * 0.9, 0.12, LEAF_DEPTH + 0.02), _material(Color(0.75, 0.6, 0.15)), false)
+	# A hinged leaf turns around its left edge, so its geometry is offset from the hinge.
+	var leaf_x := width * 0.5 if slide_axis == SlideAxis.SWING else 0.0
+	_box(_leaf, Vector3(leaf_x, height * 0.5, 0), Vector3(width, height, LEAF_DEPTH), _material(leaf_color), true)
+	_box(_leaf, Vector3(leaf_x, height * 0.5, 0), Vector3(width * 0.9, 0.12, LEAF_DEPTH + 0.02), _material(Color(0.75, 0.6, 0.15)), false)
+	_apply_leaf_pose()
 
 	for side in [1.0, -1.0]:
 		var control := StaticBody3D.new()
