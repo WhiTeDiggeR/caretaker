@@ -1,6 +1,6 @@
 # L-SLEEP-LAB
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_sleep_lab.svg`. Высота стен 3.4 м. Габарит 22.2×21.1 м, x -33.3…-11.1, z -1.5…19.6.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_sleep_lab.svg`. Высота стен 3.4 м. Габарит 22.2×21.1 м, x -33.3…-11.1, z -1.5…19.6.
 
 ![L-SLEEP-LAB](img/l-sleep-lab.png)
 

@@ -1,6 +1,6 @@
 # T-UTILITIES
 
-Этаж: технический (LV-T). Источник: `docs/design/complex_v3/plans/sectors/technical/t_utilities.svg`. Высота стен 4.2 м. Габарит 80.0×36.7 м, x -67.4…12.6, z 25.1…61.8.
+Этаж: технический (LV-T). Источник: `docs/design/complex_v4/sources/plans/sectors/technical/t_utilities.svg`. Высота стен 4.2 м. Габарит 80.0×36.7 м, x -67.4…12.6, z 25.1…61.8.
 
 ![T-UTILITIES](img/t-utilities.png)
 

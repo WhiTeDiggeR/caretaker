@@ -1,6 +1,6 @@
 # L-CENTRAL-CORE
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_central_core.svg`. Высота стен 3.4 м. Габарит 14.1×19.6 м, x -7.0…7.0, z 0.0…19.6.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_central_core.svg`. Высота стен 3.4 м. Габарит 14.1×19.6 м, x -7.0…7.0, z 0.0…19.6.
 
 ![L-CENTRAL-CORE](img/l-central-core.png)
 

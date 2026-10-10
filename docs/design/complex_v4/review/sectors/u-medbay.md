@@ -1,6 +1,6 @@
 # U-MEDBAY
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v3/plans/sectors/upper/u_medbay.svg`. Высота стен 3.4 м. Габарит 14.4×7.8 м, x -97.8…-83.3, z 11.8…19.5.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_medbay.svg`. Высота стен 3.4 м. Габарит 14.4×7.8 м, x -97.8…-83.3, z 11.8…19.5.
 
 ![U-MEDBAY](img/u-medbay.png)
 

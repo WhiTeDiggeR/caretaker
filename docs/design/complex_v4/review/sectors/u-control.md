@@ -1,6 +1,6 @@
 # U-CONTROL
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v3/plans/sectors/upper/u_control.svg`. Высота стен 3.4 м. Габарит 23.8×27.8 м, x -31.1…-7.3, z -8.2…19.6.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_control.svg`. Высота стен 3.4 м. Габарит 23.8×27.8 м, x -31.1…-7.3, z -8.2…19.6.
 
 ![U-CONTROL](img/u-control.png)
 

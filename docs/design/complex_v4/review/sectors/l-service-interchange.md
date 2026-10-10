@@ -1,6 +1,6 @@
 # L-SERVICE-INTERCHANGE
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_service_interchange.svg`. Высота стен 3.8 м. Габарит 13.3×13.3 м, x -47.8…-34.4, z 48.4…61.8.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_service_interchange.svg`. Высота стен 3.8 м. Габарит 13.3×13.3 м, x -47.8…-34.4, z 48.4…61.8.
 
 ![L-SERVICE-INTERCHANGE](img/l-service-interchange.png)
 

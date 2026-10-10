@@ -1,6 +1,6 @@
 # T-OLD-ACCESS
 
-Этаж: технический (LV-T). Источник: `docs/design/complex_v3/plans/sectors/technical/t_old_access.svg`. Высота стен 4.2 м. Габарит 19.8×25.8 м, x -102.2…-82.4, z 25.1…50.9.
+Этаж: технический (LV-T). Источник: `docs/design/complex_v4/sources/plans/sectors/technical/t_old_access.svg`. Высота стен 4.2 м. Габарит 19.8×25.8 м, x -102.2…-82.4, z 25.1…50.9.
 
 ![T-OLD-ACCESS](img/t-old-access.png)
 

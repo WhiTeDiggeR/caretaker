@@ -1,6 +1,6 @@
 # L-EAST-STAIR
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_east_stair.svg`. Высота стен 3.8 м. Габарит 10.0×11.9 м, x 21.1…31.1, z 7.7…19.6.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_east_stair.svg`. Высота стен 3.8 м. Габарит 10.0×11.9 м, x 21.1…31.1, z 7.7…19.6.
 
 ![L-EAST-STAIR](img/l-east-stair.png)
 
