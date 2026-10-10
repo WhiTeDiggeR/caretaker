@@ -24,6 +24,9 @@ var objective_text := ""
 var _flags: Dictionary[StringName, Variant] = {}
 var _section_power: Dictionary[StringName, int] = {}
 var _access: Dictionary[StringName, bool] = {}
+## Saved data of subsystems that change continuously (e.g. instability every frame);
+## written without signals, read back by the subsystem on `state_loaded`.
+var _systems: Dictionary[StringName, Dictionary] = {}
 
 
 func reset() -> void:
@@ -32,6 +35,7 @@ func reset() -> void:
 	_flags.clear()
 	_section_power.clear()
 	_access.clear()
+	_systems.clear()
 	state_loaded.emit()
 
 
@@ -113,6 +117,16 @@ func has_access(access: StringName) -> bool:
 	return access == &"" or bool(_access.get(access, false))
 
 
+# --- Subsystem data --------------------------------------------------------
+
+func get_system_data(system: StringName) -> Dictionary:
+	return _systems.get(system, {})
+
+
+func set_system_data(system: StringName, data: Dictionary) -> void:
+	_systems[system] = data
+
+
 # --- Serialization ---------------------------------------------------------
 
 func to_dict() -> Dictionary:
@@ -132,6 +146,7 @@ func to_dict() -> Dictionary:
 		"flags": flags,
 		"section_power": power,
 		"access": access,
+		"systems": _systems.duplicate(true),
 	}
 
 
@@ -143,6 +158,10 @@ func from_dict(data: Dictionary) -> bool:
 	_flags.clear()
 	_section_power.clear()
 	_access.clear()
+	_systems.clear()
+	var systems: Dictionary = data.get("systems", {})
+	for system: String in systems:
+		_systems[StringName(system)] = (systems[system] as Dictionary).duplicate(true)
 	var objective: Dictionary = data.get("objective", {})
 	objective_id = StringName(str(objective.get("id", "")))
 	objective_text = str(objective.get("text", ""))
