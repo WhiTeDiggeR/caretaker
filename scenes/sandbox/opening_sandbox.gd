@@ -8,8 +8,18 @@ const SECTIONS: Array[StringName] = [&"sandbox_a", &"sandbox_b"]
 const CARETAKER_ACCESS := &"caretaker"
 
 
+const INITIALIZED_FLAG := &"sandbox/initialized"
+
+
 func _ready() -> void:
+	# A loaded save already holds the state of the range: keep it.
+	if not GameState.has_flag(INITIALIZED_FLAG):
+		reset_state()
+
+
+func reset_state() -> void:
 	GameState.reset()
+	GameState.set_flag(INITIALIZED_FLAG)
 	for section in SECTIONS:
 		GameState.set_section_power(section, GameState.Power.EMERGENCY)
 	GameState.set_objective(&"sandbox", "Проверить станции полигона")
@@ -31,7 +41,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				GameState.grant_access(CARETAKER_ACCESS)
 			print("Sandbox caretaker access: ", GameState.has_access(CARETAKER_ACCESS))
 		KEY_F3:
-			_ready()
+			reset_state()
 			print("Sandbox state reset")
 		_:
 			return

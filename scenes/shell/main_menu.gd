@@ -1,6 +1,6 @@
 extends Control
 
-## Main menu: new game, continue, settings, quit.
+## Main menu: new game, continue, settings, quit; the test range in debug builds.
 
 var continue_button: Button
 var buttons: VBoxContainer
@@ -40,6 +40,8 @@ func _ready() -> void:
 	column.add_child(buttons)
 	continue_button = ShellUI.button(buttons, "Продолжить", _on_continue)
 	var new_game := ShellUI.button(buttons, "Новая игра", Shell.new_game)
+	if OS.is_debug_build():
+		ShellUI.button(buttons, "Полигон (отладка)", Shell.start_sandbox)
 	ShellUI.button(buttons, "Настройки", func() -> void: SettingsScreen.open(self))
 	ShellUI.button(buttons, "Выход", Shell.quit_game)
 	refresh()

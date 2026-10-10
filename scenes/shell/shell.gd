@@ -8,6 +8,8 @@ signal scene_changed(path: String)
 signal paused_changed(paused: bool)
 
 const MAIN_MENU := "res://scenes/shell/main_menu.tscn"
+## Test range of the opening systems, offered by the main menu in debug builds.
+const SANDBOX_SCENE := "res://scenes/sandbox/opening_sandbox.tscn"
 const PLAYER_GROUP := &"player"
 
 ## Scene a new game starts in. The complex scene until the opening scene exists.
@@ -77,6 +79,12 @@ func _process(_delta: float) -> void:
 func new_game() -> void:
 	GameState.reset()
 	change_scene(new_game_scene)
+
+
+## Starts the test range from a clean state (debug builds only).
+func start_sandbox() -> void:
+	GameState.reset()
+	change_scene(SANDBOX_SCENE)
 
 
 ## Loads a save: GameState first (so the scene starts from it), then the scene, then the

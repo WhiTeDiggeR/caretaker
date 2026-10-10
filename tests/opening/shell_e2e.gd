@@ -34,9 +34,9 @@ func _run() -> void:
 	_check(menu.continue_button != null, "main menu has the continue button")
 	await _capture("shell_1_menu")
 
-	Shell.new_game_scene = SANDBOX
+	_check(_has_button(menu, "Полигон (отладка)"), "debug builds offer the test range")
 	GameState.set_flag(&"left_over")
-	Shell.new_game()
+	Shell.start_sandbox()
 	await _until(func() -> bool: return _scene_is(SANDBOX))
 	await _frames(10)
 	_check(not GameState.has_flag(&"left_over"), "new game starts from a clean state")
@@ -69,6 +69,8 @@ func _run() -> void:
 	await door.opened
 	var player := tree.current_scene.get_node(^"Player") as Node3D
 	player.global_position = Vector3(2, 0.9, -1)
+	GameState.set_section_power(&"sandbox_a", GameState.Power.MAIN)
+	GameState.set_flag(&"e2e_marker")
 	_check(Saves.write("slot_1", tree) == OK, "game saved to slot 1")
 	Shell.pause()
 	var slots := SaveSlotsScreen.open(Shell, SaveSlotsScreen.Mode.LOAD)
@@ -86,6 +88,8 @@ func _run() -> void:
 	await _frames(5)
 	var loaded_door := tree.current_scene.get_node(^"Stations/DoorStation/Hermetic") as FacilityDoor
 	_check(loaded_door.is_open(), "continue restores the open door")
+	_check(GameState.get_section_power(&"sandbox_a") == GameState.Power.MAIN, "the range keeps the loaded power instead of resetting it")
+	_check(GameState.has_flag(&"e2e_marker"), "the range keeps the loaded flags")
 	var loaded_player := tree.current_scene.get_node(^"Player") as Node3D
 	_check(loaded_player.global_position.distance_to(Vector3(2, 0.9, -1)) < 0.2, "continue restores the hero position")
 	for slot in Saves.SLOTS:
@@ -96,6 +100,10 @@ func _run() -> void:
 	if _errors.is_empty():
 		print("SHELL_E2E_OK")
 	tree.quit(0 if _errors.is_empty() else 1)
+
+
+func _has_button(root: Node, text: String) -> bool:
+	return root.find_children("*", "Button", true, false).any(func(button: Button) -> bool: return button.text == text)
 
 
 func _press_cancel() -> void:
