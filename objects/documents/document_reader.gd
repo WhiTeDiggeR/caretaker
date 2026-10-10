@@ -107,7 +107,7 @@ func _input(event: InputEvent) -> void:
 			scroll.scroll_vertical += SCROLL_STEP * (1 if button.button_index == MOUSE_BUTTON_WHEEL_DOWN else -1)
 			get_viewport().set_input_as_handled()
 		return
-	if not event is InputEventKey or not event.is_pressed():
+	if not (event is InputEventKey or event is InputEventAction or event is InputEventJoypadButton) or not event.is_pressed():
 		return
 	get_viewport().set_input_as_handled()
 	var down := event.is_action_pressed(&"ui_down") or event.is_action_pressed(&"move_back")
