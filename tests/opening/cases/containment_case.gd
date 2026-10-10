@@ -24,7 +24,8 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(Containment.is_stable(&"module_3") and Containment.forecast_seconds(&"module_3") < 0.0, "full stabilisation removes the forecast")
 	GameState.reset()
 	c.near(Containment.get_instability(&"module_4"), 55.0, 0.001, "module 4 starts from its configured value")
-	c.equal(Containment.get_stage(&"module_4"), Containment.Stage.UNREST, "55 % is the unrest stage")
+	c.equal(Containment.get_stage(&"module_4"), Containment.Stage.ANXIOUS, "55 % is the anxious sleep stage")
+	c.equal(Containment.stage_names, ["СПОКОЙНЫЙ СОН", "БЕСПОКОЙНЫЙ СОН", "ТРЕВОЖНЫЙ СОН", "ПРЕДПРОБУЖДЕНИЕ", "ПРОБУЖДЕНИЕ"], "stage names grow in severity")
 
 	Containment.tick(60.0)
 	c.near(Containment.get_instability(&"module_4"), 55.0, 0.001, "inactive modules do not grow")
@@ -47,7 +48,7 @@ func run(c: OpeningCheck) -> void:
 	Containment.add_instability(&"module_4", 20.0)
 	c.equal(stages, [Containment.Stage.PRE_WAKE] as Array[int], "stage change is announced")
 	Containment.stabilize(&"module_4", 30.0)
-	c.equal(Containment.get_stage(&"module_4"), Containment.Stage.ALARM, "stabilising lowers the stage")
+	c.equal(Containment.get_stage(&"module_4"), Containment.Stage.RESTLESS, "stabilising lowers the stage")
 
 	Containment.set_held(&"module_4", true)
 	var held := Containment.get_instability(&"module_4")
@@ -82,7 +83,7 @@ func run(c: OpeningCheck) -> void:
 	GameState.grant_access(&"module_4")
 	var lines := Containment.monitor_lines()
 	c.equal(lines.size(), 3, "module header, its status line and the hidden line")
-	c.equal(lines[0], "МОДУЛЬ 4 — БЕСПОКОЙСТВО", "monitor shows the stage, never exact percents")
+	c.equal(lines[0], "МОДУЛЬ 4 — ТРЕВОЖНЫЙ СОН", "monitor shows the stage, never exact percents")
 	c.equal(lines[1], Containment.LINE_INDENT + Containment.OFFLINE_LINE, "an offline system gives no forecast and says why")
 	GameState.set_flag(&"containment_online")
 	c.is_true(Containment.monitor_lines()[1].begins_with(Containment.LINE_INDENT + "Прогноз пробуждения: около "), "an active disturbed module shows an approximate forecast")

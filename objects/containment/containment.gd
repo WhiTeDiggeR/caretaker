@@ -28,7 +28,7 @@ signal hero_gassed(module_id: StringName)
 signal hero_woken(module_id: StringName)
 signal reagent_changed
 
-enum Stage { CALM, ALARM, UNREST, PRE_WAKE, AWAKE }
+enum Stage { CALM, RESTLESS, ANXIOUS, PRE_WAKE, AWAKE }
 enum Chemical { READY, WARNING, SEALED, SPENT }
 
 const DATA_PATH := "res://data/containment/modules.json"
