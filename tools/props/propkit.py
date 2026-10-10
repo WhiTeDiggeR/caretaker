@@ -22,29 +22,7 @@ REPO = Path(__file__).resolve().parents[2]
 TEX_DIR = REPO / "loads" / "textures"
 PROPS_DIR = REPO / "loads" / "props"
 
-# Tile size in metres of every tiling PBR material (docs/art/texture-catalog.md).
-TILE = {"painted_metal": 1.0, "steel_bare": 1.0, "rusted_steel": 1.0, "diamond_plate": 1.0, "rubber_black": 0.5,
-        "plastic_panel": 0.5, "vinyl_worn": 0.5, "duct_galvanized": 1.0, "concrete_rubble": 2.0, "paper_aged": 0.4}
-
-# name -> (base colour rgb, emission rgb, emission strength). Parameter-only materials (no textures).
-EMIT = {
-    "emit_screen_cyan": ((0.0, 0.0, 0.0), (0.12, 0.71, 0.78), 1.6),
-    "emit_led_green": ((0.0, 0.0, 0.0), (0.24, 0.83, 0.42), 2.5),
-    "emit_led_amber": ((0.0, 0.0, 0.0), (0.91, 0.64, 0.11), 2.5),
-    "emit_led_red": ((0.0, 0.0, 0.0), (0.85, 0.2, 0.12), 3.0),
-    "emit_lamp_warm": ((0.0, 0.0, 0.0), (1.0, 0.62, 0.28), 3.0),
-    "emit_lamp_cold": ((0.0, 0.0, 0.0), (0.75, 0.88, 1.0), 3.0),
-    "crystal_core": ((0.35, 0.65, 0.95), (0.3, 0.6, 1.0), 2.0),
-}
-# name -> (rgb, roughness, metallic, alpha)
-PLAIN = {"glass_dirty": ((0.08, 0.1, 0.11), 0.25, 0.0, 0.28), "chrome_dull": ((0.55, 0.56, 0.58), 0.35, 1.0, 1.0),
-         "white_paint_worn": ((0.55, 0.55, 0.52), 0.7, 0.0, 1.0),
-         "red_paint_worn": ((0.36, 0.07, 0.05), 0.65, 0.0, 1.0)}
-# decal / atlas materials: name -> (texture path under loads/textures, blend?, emissive strength or 0)
-ATLAS = {"signs_ru": ("decals/signs_ru.png", True, 0.0), "hazard_stripes": ("decals/hazard_stripes.png", True, 0.0),
-         "panel_labels": ("decals/panel_labels.png", True, 0.0), "instrument_faces": ("decals/instrument_faces.png", True, 0.0),
-         "screens": ("decals/screens.png", False, 1.4), "grime_streaks": ("decals/grime_streaks.png", True, 0.0),
-         "rust_bleed": ("decals/rust_bleed.png", True, 0.0), "scuffs": ("decals/scuffs.png", True, 0.0)}
+from materials_def import ATLAS, EMIT, PLAIN, TILE  # noqa: E402
 
 
 def g2b(v) -> Vector:
@@ -177,8 +155,11 @@ class Kit:
         self._xf(bm, center, (0, 0, 0))
         self._commit(bm, m, uv_offset=(self.rnd.random(), self.rnd.random()))
 
-    def prism(self, pts, depth, center=(0, 0, 0), m="painted_metal", axis="z", bevel=0.0):
+    def prism(self, pts, depth, center=(0, 0, 0), m="painted_metal", axis="z", bevel=0.0, seg=2):
         """Extrudes the polygon `pts` (2D, counter-clockwise, in the plane perpendicular to `axis`) by `depth`."""
+        area = sum(pts[i][0] * pts[(i + 1) % len(pts)][1] - pts[(i + 1) % len(pts)][0] * pts[i][1] for i in range(len(pts)))
+        if area < 0:
+            pts = list(reversed(pts))
         bm = bmesh.new()
         top = [bm.verts.new((x, y, depth / 2)) for x, y in pts]
         bot = [bm.verts.new((x, y, -depth / 2)) for x, y in pts]
@@ -189,11 +170,34 @@ class Kit:
             bm.faces.new((bot[i], bot[(i + 1) % n], top[(i + 1) % n], top[i]))
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
         if bevel > 0:
-            bmesh.ops.bevel(bm, geom=bm.edges[:], offset=bevel, segments=2, affect="EDGES")
+            bmesh.ops.bevel(bm, geom=bm.edges[:], offset=bevel, segments=seg, affect="EDGES")
         rot = {"z": (0, 0, 0), "y": (90, 0, 0), "x": (0, 90, 0)}[axis]
         bmesh.ops.transform(bm, matrix=Euler(tuple(math.radians(a) for a in rot), "XYZ").to_matrix().to_4x4(), verts=bm.verts)
         self._xf(bm, center, (0, 0, 0))
         self._commit(bm, m, uv_offset=(self.rnd.random(), self.rnd.random()))
+
+    def prism_x(self, zy, width, center_x=0.0, m="painted_metal", bevel=0.004):
+        """Extrudes a side profile given as (z, y) points along X (a console body, a wedge, a ramp)."""
+        self.prism([(-z, y) for z, y in zy], width, (center_x, 0, 0), m, axis="x", bevel=bevel)
+
+    def chunk(self, center, radii, seed=0, m="concrete_rubble", points=11, rot=(0, 0, 0)):
+        """A random convex rock/concrete lump (convex hull of jittered points on an ellipsoid)."""
+        g = random.Random(seed)
+        bm = bmesh.new()
+        for _ in range(points):
+            v = Vector((g.gauss(0, 1), g.gauss(0, 1), g.gauss(0, 1)))
+            v.normalize()
+            v *= g.uniform(0.72, 1.0)
+            bm.verts.new((v.x * radii[0], v.y * radii[1], v.z * radii[2]))
+        res = bmesh.ops.convex_hull(bm, input=bm.verts[:], use_existing_faces=False)
+        junk = [e for e in set(res["geom_interior"]) | set(res["geom_unused"]) if isinstance(e, bmesh.types.BMVert)]
+        if junk:
+            bmesh.ops.delete(bm, geom=junk, context="VERTS")
+        self._xf(bm, center, rot)
+        self._commit(bm, m, tile=2.0, uv_offset=(g.random(), g.random()))
+
+    def hex_bolt(self, center, r=0.01, h=0.006, axis="z", m="steel_bare"):
+        self.cyl(r, h, center, axis, m, seg=6)
 
     def tube(self, pts, r, m="steel_bare", seg=10, caps=True, tile=None):
         """Sweeps a circle (radius r, or per-point list) along the polyline `pts` with rotation-minimising frames."""
@@ -250,7 +254,7 @@ class Kit:
         rot = {"y": Matrix.Identity(3), "z": Matrix.Rotation(math.radians(90), 3, "X"), "x": Matrix.Rotation(math.radians(90), 3, "Z")}[axis]
         self.tube([c + rot @ p for p in circle], r, m=m, seg=rseg, caps=saved_caps)
 
-    def decal(self, center, size, atlas: str, rect, normal="+z", offset=0.0015, flip_u=False):
+    def decal(self, center, size, atlas: str, rect, normal="+z", offset=0.0015, flip_u=False, tilt=0.0, roll=0.0):
         """A flat quad textured with a rect (u0, v0, u1, v1; v from the top of the image) of an atlas material."""
         w, h = size
         bm = bmesh.new()
@@ -259,6 +263,12 @@ class Kit:
                 "+x": ((0, 0, -1), (0, 1, 0), (1, 0, 0)), "-x": ((0, 0, 1), (0, 1, 0), (-1, 0, 0)),
                 "+y": ((1, 0, 0), (0, 0, -1), (0, 1, 0)), "-y": ((1, 0, 0), (0, 0, 1), (0, -1, 0))}[normal]
         ux, uy, un = (Vector(a) for a in axes)
+        if tilt:  # rotate the quad about its own u axis (positive tilts the top away from the viewer)
+            r = Matrix.Rotation(math.radians(tilt), 3, ux)
+            uy, un = r @ uy, r @ un
+        if roll:
+            r = Matrix.Rotation(math.radians(roll), 3, un)
+            ux, uy = r @ ux, r @ uy
         c = Vector(center) + un * offset
         corners = [(-1, -1), (1, -1), (1, 1), (-1, 1)]
         vs = [bm.verts.new(c + ux * (sx * w / 2) + uy * (sy * h / 2)) for sx, sy in corners]
@@ -272,6 +282,19 @@ class Kit:
         self._commit(bm, atlas, uv="given")
 
     # ------------------------------------------------------------ output
+    def rescale(self, sx=1.0, sy=1.0, sz=1.0, centre_xz=False, ground=False):
+        """Scales every group (vertices and pivots) and optionally recentres on x/z and drops the lowest point to y = 0."""
+        for g in self.groups.values():
+            for v in g.bm.verts:
+                v.co = Vector((v.co.x * sx, v.co.y * sy, v.co.z * sz))
+            g.pivot = Vector((g.pivot.x * sx, g.pivot.y * sy, g.pivot.z * sz))
+        lo, hi = self.bounds()
+        dx = -(lo.x + hi.x) / 2 if centre_xz else 0.0
+        dz = -(lo.z + hi.z) / 2 if centre_xz else 0.0
+        dy = -lo.y if ground else 0.0
+        for g in self.groups.values():   # vertices are stored relative to their group pivot, so only pivots move
+            g.pivot += Vector((dx, dy, dz))
+
     def tri_count(self) -> int:
         return sum(len(f.verts) - 2 for g in self.groups.values() for f in g.bm.faces)
 
@@ -464,6 +487,8 @@ def render_preview(kit: Kit, path: Path, views, size=(720, 540), samples=24, gro
     if ground:
         bm = bmesh.new()
         bmesh.ops.create_grid(bm, x_segments=1, y_segments=1, size=8)
+        for v in bm.verts:
+            v.co.z = kit.bbox[0].y - 0.001
         me = bpy.data.meshes.new("ground")
         bm.to_mesh(me)
         ob = bpy.data.objects.new("ground", me)

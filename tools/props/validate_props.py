@@ -70,8 +70,13 @@ def analyse(gltf: Path):
     return data, lo, hi, tris
 
 
+class Spec:
+    def __init__(self, pid, d):
+        self.id, self.catalog, self.size, self.anchor = pid, d["catalog"], tuple(d["size"]), d["anchor"]
+        self.tris_max, self.tolerance, self.center_z = d["tris_max"], d["tolerance"], d["center_z"]
+
+
 def check_prop(spec, errors, notes):
-    from registry import PropSpec  # noqa: F401
     gltf = REPO / "loads" / "props" / spec.id / f"{spec.id}.gltf"
     if not gltf.exists():
         errors.append(f"{spec.id}: {gltf.relative_to(REPO)} is missing (run build_props.py)")
@@ -86,7 +91,7 @@ def check_prop(spec, errors, notes):
     if spec.anchor == "floor":
         if abs(lo[1]) > 0.012:
             errors.append(f"{spec.id}: floor prop must sit on y = 0, min y = {lo[1]:.3f}")
-        if abs(cx) > 0.05 * max(spec.size[0], 1) or abs(cz) > 0.05 * max(spec.size[2], 1):
+        if abs(cx) > 0.05 * max(spec.size[0], 1) or (spec.center_z and abs(cz) > 0.05 * max(spec.size[2], 1)):
             errors.append(f"{spec.id}: floor prop must be centred on x/z, centre = ({cx:.3f}, {cz:.3f})")
     elif spec.anchor == "wall":
         if abs(lo[2]) > 0.012:
@@ -98,7 +103,7 @@ def check_prop(spec, errors, notes):
             errors.append(f"{spec.id}: ceiling prop must hang from y = 0, max y = {hi[1]:.3f}")
     if tris > spec.tris_max:
         errors.append(f"{spec.id}: {tris} triangles exceed the budget {spec.tris_max}")
-    from propkit import ATLAS, EMIT, PLAIN, TILE
+    from materials_def import ATLAS, EMIT, PLAIN, TILE
     known = set(TILE) | set(ATLAS) | set(EMIT) | set(PLAIN)
     for m in data.get("materials", []):
         if m["name"] not in known:
@@ -109,7 +114,8 @@ def check_prop(spec, errors, notes):
     if re.search(r"\.\d{3}$", json.dumps([m["name"] for m in data.get("materials", [])])):
         errors.append(f"{spec.id}: duplicated material names")
     kb = sum(p.stat().st_size for p in gltf.parent.iterdir()) / 1024
-    notes.append(f"{spec.id:20s} {size[0]:.2f} x {size[1]:.2f} x {size[2]:.2f} m  {tris:6d} tris  {kb:6.0f} KB")
+    low = f"  lowest point y = {lo[1]:.2f}" if spec.anchor == "free" else ""
+    notes.append(f"{spec.id:20s} {size[0]:.2f} x {size[1]:.2f} x {size[2]:.2f} m  {tris:6d} tris  {kb:6.0f} KB{low}")
 
 
 def check_manifest(errors):
@@ -137,17 +143,17 @@ def check_manifest(errors):
 
 
 def main() -> int:
-    import props_start  # noqa: F401
-    for mod in ("props_repair", "props_set", "props_fix"):
-        try:
-            __import__(mod)
-        except ModuleNotFoundError:
-            pass
-    from registry import PROPS
-    ids = sys.argv[1:] or list(PROPS)
+    specs = {pid: Spec(pid, d) for pid, d in json.loads((Path(__file__).with_name("specs.json")).read_text(encoding="utf-8")).items()}
+    ids = sys.argv[1:] or list(specs)
     errors, notes = [], []
     for pid in ids:
-        check_prop(PROPS[pid], errors, notes)
+        if pid not in specs:
+            errors.append(f"{pid}: not in specs.json")
+            continue
+        check_prop(specs[pid], errors, notes)
+    present = {p.name for p in (REPO / "loads" / "props").iterdir() if p.is_dir()} if (REPO / "loads" / "props").exists() else set()
+    for extra in sorted(present - set(specs)):
+        errors.append(f"{extra}: model in loads/props has no specification in specs.json")
     check_manifest(errors)
     print("\n".join(notes))
     if errors:

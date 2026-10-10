@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import propkit  # noqa: E402
 from propkit import Kit  # noqa: E402
-from registry import PROPS  # noqa: E402
+from registry import PROPS, dump_specs  # noqa: E402
 import props_start  # noqa: E402,F401  (registers wave 1)
 
 for _mod in ("props_repair", "props_set", "props_fix"):
@@ -40,6 +40,7 @@ def main() -> int:
         print(f"{pid}: {kit.tri_count()} tris -> {path.relative_to(propkit.REPO) if path.is_relative_to(propkit.REPO) else path}")
         if a.preview and spec.views:
             propkit.render_preview(kit, Path(a.preview) / f"{pid}.png", spec.views, samples=a.samples)
+    dump_specs(ids)
     return 0
 
 

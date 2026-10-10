@@ -57,6 +57,7 @@ python_suite tools/complex_v4/composition_validator/tests
 python_suite tools/complex_v4/repair_package/tests
 python_suite tools/complex_v3_pilots/tests
 python_script "scene index matches the passports" scenes/complex_v4/validate_sector_scenes.py
+python_script "art props: sizes, anchors, budgets, provenance" tools/props/validate_props.py
 # The registry exits 2 while verticals are unresolved; it must still build (exit 0 or 2) and list them.
 registry_output=$(python tools/complex_v4/vertical_registry.py --json 2>&1); registry_code=$?
 if [ $registry_code -le 2 ] && echo "$registry_output" | grep -q '"verticals"'; then record "vertical registry builds" 0; else echo "$registry_output" | tail -15; record "vertical registry builds" 1; fi
@@ -85,6 +86,7 @@ res://scenes/complex_v4/sector_wrapper_contract_check.gd|COMPLEX_V4_SECTOR_WRAPP
 res://scenes/complex_v4/set_dressing/set_dressing_scene_check.gd|SET_DRESSING_GODOT_SCENES_OK
 res://scenes/complex_v4/complex_v4_sector_check.gd|COMPLEX_V4_SECTORS_OK sectors=32
 res://tests/opening/opening_checks.tscn|OPENING_CHECKS checks=[0-9]+ failures=0
+res://tools/props/check_props.gd|PROPS_CHECK props=[0-9]+ errors=0
 CHECKS
 
 echo
