@@ -4,6 +4,8 @@ extends SceneTree
 ## Prints "PROPS_CHECK props=<n> errors=<n>" (run_checks.sh looks for errors=0).
 
 const PROPS_DIR := "res://loads/props"
+const WRAPPERS_DIR := "res://objects/art"
+const NO_COLLISION := ["chain_hanging", "cable_hang", "document_sheet", "personal_key"]
 const TEXTURED_MATERIALS := [
 	"painted_metal", "steel_bare", "rusted_steel", "diamond_plate", "rubber_black", "plastic_panel",
 	"vinyl_worn", "duct_galvanized", "concrete_rubble", "paper_aged",
@@ -46,5 +48,23 @@ func _init() -> void:
 					printerr("PROPS_CHECK texture not resolved: ", dir_name, " ", material.resource_name)
 					errors += 1
 		root.free()
+	# wrapper scenes: instantiate and require a collision shape unless the prop is a hanging decoration
+	for file_name in DirAccess.get_files_at(WRAPPERS_DIR):
+		if not file_name.ends_with(".tscn"):
+			continue
+		var wrapper := load("%s/%s" % [WRAPPERS_DIR, file_name]) as PackedScene
+		if wrapper == null:
+			printerr("PROPS_CHECK cannot load wrapper ", file_name)
+			errors += 1
+			continue
+		var node := wrapper.instantiate()
+		var has_shape := not node.find_children("*", "CollisionShape3D", true, false).is_empty()
+		if not has_shape and not NO_COLLISION.has(file_name.get_basename()):
+			printerr("PROPS_CHECK wrapper without collision: ", file_name)
+			errors += 1
+		if node.find_child("Model", false, false) == null:
+			printerr("PROPS_CHECK wrapper without Model: ", file_name)
+			errors += 1
+		node.free()
 	print("PROPS_CHECK props=%d errors=%d" % [count, errors])
 	quit(1 if errors > 0 else 0)
