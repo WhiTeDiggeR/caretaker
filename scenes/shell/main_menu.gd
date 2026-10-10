@@ -47,8 +47,8 @@ func _ready() -> void:
 
 
 func refresh() -> void:
-	continue_button.disabled = true
+	continue_button.disabled = Saves.latest().is_empty()
 
 
 func _on_continue() -> void:
-	pass
+	Shell.load_game(Saves.latest())

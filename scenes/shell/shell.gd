@@ -18,6 +18,8 @@ var _loading_layer: CanvasLayer
 var _loading_bar: ProgressBar
 var _pause_layer: CanvasLayer
 var _loading_path := ""
+## Save being loaded: applied to the scene once it is in the tree.
+var _pending_save: Dictionary = {}
 
 
 func _ready() -> void:
@@ -63,12 +65,30 @@ func _process(_delta: float) -> void:
 		push_error("Shell: cannot load %s" % _loading_path)
 		return
 	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(_loading_path))
+	if not _pending_save.is_empty():
+		var save := _pending_save
+		_pending_save = {}
+		await get_tree().process_frame
+		await get_tree().process_frame
+		Saves.apply_to_scene(get_tree(), save)
 	scene_changed.emit(_loading_path)
 
 
 func new_game() -> void:
 	GameState.reset()
 	change_scene(new_game_scene)
+
+
+## Loads a save: GameState first (so the scene starts from it), then the scene, then the
+## saved objects and the hero.
+func load_game(slot: String) -> bool:
+	var data := Saves.read(slot)
+	if data.is_empty() or str(data.get("scene", "")).is_empty():
+		return false
+	GameState.from_dict(data["state"])
+	_pending_save = data
+	change_scene(str(data["scene"]))
+	return true
 
 
 func main_menu() -> void:
@@ -107,6 +127,8 @@ func pause() -> void:
 
 
 func _add_pause_items(column: VBoxContainer) -> void:
+	ShellUI.button(column, "Сохранить игру", func() -> void: SaveSlotsScreen.open(self, SaveSlotsScreen.Mode.SAVE))
+	ShellUI.button(column, "Загрузить игру", func() -> void: SaveSlotsScreen.open(self, SaveSlotsScreen.Mode.LOAD))
 	ShellUI.button(column, "Настройки", open_settings)
 
 
@@ -128,7 +150,7 @@ func resume() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed(&"ui_cancel"):
 		return
-	if find_children("*", "SettingsScreen", false, false).size() > 0:
+	if find_children("*", "SettingsScreen", false, false).size() > 0 or find_children("*", "SaveSlotsScreen", false, false).size() > 0:
 		return
 	if is_paused():
 		resume()

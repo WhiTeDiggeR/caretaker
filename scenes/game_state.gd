@@ -148,7 +148,11 @@ func from_dict(data: Dictionary) -> bool:
 	objective_text = str(objective.get("text", ""))
 	var flags: Dictionary = data.get("flags", {})
 	for flag: String in flags:
-		_flags[StringName(flag)] = flags[flag]
+		var value: Variant = flags[flag]
+		# JSON turns every number into a float; keep whole numbers integers.
+		if value is float and is_equal_approx(value, roundf(value)) and absf(value) < 1e15:
+			value = int(value)
+		_flags[StringName(flag)] = value
 	var power: Dictionary = data.get("section_power", {})
 	for section: String in power:
 		var index := POWER_NAMES.find(str(power[section]))

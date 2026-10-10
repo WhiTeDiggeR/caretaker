@@ -23,6 +23,9 @@ func _ready() -> void:
 func _run() -> void:
 	var tree := get_tree()
 	tree.current_scene = null
+	Saves.directory = "user://e2e_saves"
+	for slot in Saves.SLOTS:
+		Saves.delete(slot)
 	Shell.main_menu()
 	_check(Shell.loading, "main menu loads behind the loading screen")
 	await _until(func() -> bool: return _scene_is(Shell.MAIN_MENU))
@@ -61,10 +64,32 @@ func _run() -> void:
 	_check(not Shell.is_paused(), "Esc closes a document instead of pausing")
 	_check(memo.reader == null, "the document was closed by Esc")
 
+	var door := tree.current_scene.get_node(^"Stations/DoorStation/Hermetic") as FacilityDoor
+	door.open()
+	await door.opened
+	var player := tree.current_scene.get_node(^"Player") as Node3D
+	player.global_position = Vector3(2, 0.9, -1)
+	_check(Saves.write("slot_1", tree) == OK, "game saved to slot 1")
 	Shell.pause()
+	var slots := SaveSlotsScreen.open(Shell, SaveSlotsScreen.Mode.LOAD)
+	await _frames(2)
+	await _capture("shell_4_slots")
+	slots.close()
 	Shell.main_menu()
 	_check(not tree.paused, "leaving to the menu unpauses the tree")
 	await _until(func() -> bool: return _scene_is(Shell.MAIN_MENU))
+	await _frames(3)
+	var menu_again := tree.current_scene
+	_check(not menu_again.continue_button.disabled, "continue is available with a save")
+	menu_again._on_continue()
+	await _until(func() -> bool: return _scene_is(SANDBOX))
+	await _frames(5)
+	var loaded_door := tree.current_scene.get_node(^"Stations/DoorStation/Hermetic") as FacilityDoor
+	_check(loaded_door.is_open(), "continue restores the open door")
+	var loaded_player := tree.current_scene.get_node(^"Player") as Node3D
+	_check(loaded_player.global_position.distance_to(Vector3(2, 0.9, -1)) < 0.2, "continue restores the hero position")
+	for slot in Saves.SLOTS:
+		Saves.delete(slot)
 
 	for error in _errors:
 		printerr("FAIL ", error)
