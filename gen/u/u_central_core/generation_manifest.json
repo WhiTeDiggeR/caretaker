@@ -4,10 +4,10 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "sector_id": "U-CENTRAL-CORE",
-  "generation_id": "sha256:e00807cc4bdcecf6e632c5063cb13dad362f27e674ddd14c12a96429efd2bee3",
+  "generation_id": "sha256:ebf0f904940e1eeb43aae24c695973ac88fbee513eb4b6befd8751c5c41bfe0a",
   "source": {
     "path": "docs/design/complex_v4/plans/generation/upper/u_central_core.svg",
-    "sha256": "sha256:73248b90abea9ebe3669a15413e3ff317a56c521f87e366f17ac0c9987a4f58e"
+    "sha256": "sha256:07aa8d1482fa4e20baac6555d6c98d44354c892622c3ad9ee9475b83a4c5a299"
   },
   "output_resource_dir": "res://gen/u/u_central_core",
   "local_to_world": {
@@ -88,6 +88,8 @@
         "3.6",
         "--shaft-wall-top",
         "6",
+        "--landing-depth",
+        "5.88",
         "--target-riser",
         "0.15",
         "--max-riser",
@@ -98,8 +100,6 @@
         "0.3",
         "--minimum-headroom",
         "2.4",
-        "--landing-depth",
-        "2",
         "--flight-gap",
         "0.7",
         "--railings",
@@ -142,7 +142,35 @@
         ],
         "stair_width_m": 1.8,
         "floor_height_m": 6.0,
-        "clearance_m": 0.01
+        "clearance_m": 0.01,
+        "door_targets": {
+          "entry": {
+            "door_id": "l-central-core-door-07",
+            "sector_id": "L-CENTRAL-CORE",
+            "axis": "x",
+            "actual_center": 4.75,
+            "expected_center": 4.75,
+            "line": [
+              3.85,
+              12.069,
+              5.65,
+              12.069
+            ]
+          },
+          "exit": {
+            "door_id": "u-central-core-door-07",
+            "sector_id": "U-CENTRAL-CORE",
+            "axis": "x",
+            "actual_center": 2.25,
+            "expected_center": 2.25,
+            "line": [
+              1.35,
+              12.069,
+              3.15,
+              12.069
+            ]
+          }
+        }
       }
     }
   ],

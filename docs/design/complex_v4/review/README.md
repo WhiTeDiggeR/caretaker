@@ -1,6 +1,6 @@
 # Комплекс v4 — итоги ревизии
 
-Канонические SVG построены из утверждённых планов v3 (`tools/complex_v3_regeneration/build_canonical_from_approved.py`, привязка — `approved_registration.json`). Каждое исправление принято пользователем и записано в [decisions.md](decisions.md) (D-01…D-44).
+Канонические SVG построены из утверждённых планов v3 (`tools/complex_v3_regeneration/build_canonical_from_approved.py`, привязка — `approved_registration.json`). Каждое исправление принято пользователем и записано в [decisions.md](decisions.md) (D-01…D-45).
 
 ## Статус сквозных вопросов
 

@@ -36,7 +36,7 @@ class ResolverTests(unittest.TestCase):
         }
         self.entry = {
             "vertical_id": "VT-X", "source": "svg", "generator_id": "x",
-            "levels": {"upper": {"sector_id": "U"}, "lower": {"sector_id": "L"}}, "args": ["--scene-name", "x"],
+            "levels": {"upper": {"sector_id": "U"}, "lower": {"sector_id": "L"}}, "args": ["--scene-name", "x", "--target-riser", "0.15", "--max-riser", "0.15", "--target-tread", "0.25", "--flight-gap", "0.7"],
         }
 
     def tearDown(self) -> None:
@@ -67,7 +67,10 @@ class ResolverTests(unittest.TestCase):
         self.assertEqual(result["local_to_world"]["basis_x"], [-1, 0, 0])
 
     def test_east_and_west_swap_in_the_generator_frame_and_the_clearance_follows_the_passage(self) -> None:
-        self.write((-49.5, 7.0, -49.5, 8.5), (-49.5, 9.0, -49.5, 10.5))
+        # the along-axis length is the shaft width (6 m): a smaller tread keeps the u-turn landing deep enough
+        self.entry["args"] = ["--scene-name", "x", "--target-riser", "0.15", "--max-riser", "0.15", "--target-tread", "0.2", "--flight-gap", "0.7"]
+        # flights sit at 9.5 +- 1.1; for an entry on the world east side the entry flight is on the north half
+        self.write((-49.5, 9.85, -49.5, 11.35), (-49.5, 7.65, -49.5, 9.15))
         values = self.pairs(self.resolve()["args"])
         self.assertEqual((values["--lower-entry-side"], values["--upper-exit-side"]), ("west", "west"))
         self.assertEqual((values["--shaft-width"], values["--shaft-length"]), ("6", "6.98"))

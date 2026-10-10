@@ -4,10 +4,10 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "sector_id": "L-SERVICE-INTERCHANGE",
-  "generation_id": "sha256:a20216949ef8118f901b251aaa362890548641c0e08ef3904d8849b8ba11c91d",
+  "generation_id": "sha256:025442e178e87be2fd72ed09db51d866262dca18a28f93808500fec4a33e5fad",
   "source": {
     "path": "docs/design/complex_v4/plans/generation/lower/l_service_interchange.svg",
-    "sha256": "sha256:66006d378881e1cbef6ad8ddb4ead4c383691e000d0258c30befdf2c47f16805"
+    "sha256": "sha256:acc09e90a3ce7f5925a0ab0bcc6e32c08f4b6776ed20bd4c4465d035535b7969"
   },
   "output_resource_dir": "res://gen/l/l_service_interchange",
   "local_to_world": {
@@ -88,6 +88,8 @@
         "4.4",
         "--shaft-wall-top",
         "5.5",
+        "--landing-depth",
+        "2.829",
         "--target-riser",
         "0.15",
         "--max-riser",
@@ -98,8 +100,6 @@
         "0.3",
         "--minimum-headroom",
         "2.4",
-        "--landing-depth",
-        "2",
         "--flight-gap",
         "0.7",
         "--railings",
@@ -142,7 +142,35 @@
         ],
         "stair_width_m": 1.8,
         "floor_height_m": 5.5,
-        "clearance_m": 0.01
+        "clearance_m": 0.01,
+        "door_targets": {
+          "entry": {
+            "door_id": "t-utilities-door-08",
+            "sector_id": "T-UTILITIES",
+            "axis": "x",
+            "actual_center": -46.695,
+            "expected_center": -46.695,
+            "line": [
+              -47.595,
+              53.21,
+              -45.795,
+              53.21
+            ]
+          },
+          "exit": {
+            "door_id": "l-service-interchange-door-02",
+            "sector_id": "L-SERVICE-INTERCHANGE",
+            "axis": "x",
+            "actual_center": -44.195,
+            "expected_center": -44.195,
+            "line": [
+              -45.095,
+              53.208,
+              -43.295,
+              53.208
+            ]
+          }
+        }
       }
     }
   ],

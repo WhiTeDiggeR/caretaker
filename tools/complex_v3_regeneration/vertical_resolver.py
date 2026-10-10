@@ -29,7 +29,7 @@ ROTATION = {"basis_x": [-1, 0, 0], "basis_y": [0, 1, 0], "basis_z": [0, 0, -1]}
 GEOMETRIC_ARGS = {
     "--shaft-width", "--shaft-length", "--floor-height", "--layout", "--stair-width",
     "--lower-entry-side", "--upper-exit-side", "--shaft-wall-bottom", "--shaft-wall-top",
-    "--turn-direction", "--invert-z", "--origin", "--no-shaft",
+    "--turn-direction", "--invert-z", "--origin", "--no-shaft", "--landing-depth",
 }
 
 
@@ -124,7 +124,53 @@ def _shared_value(sector: dict[str, Any], flag: str) -> float:
     return float(arguments[arguments.index(flag) + 1])
 
 
-def resolve_stair(entry: dict[str, Any], sectors: dict[str, dict[str, Any]], project_root: Path) -> dict[str, Any]:
+
+# Lateral half of the shaft used by the lower entry flight of a u-turn stair, per entry side, as the generator lays it out
+# (calibrated against generated packages; check_stair_fit.py verifies it on the result).
+ENTRY_HALF = {"north": -1.0, "south": 1.0, "east": -1.0, "west": 1.0}
+DEFAULT_FLIGHT_GAP_M = 0.10  # generate_godot_stairs default of --flight-gap
+DOOR_CENTER_TOLERANCE_M = 0.15
+MIN_LANDING_DEPTH_FACTOR = 1.0
+
+
+def _arg(arguments: list[str], flag: str, default: float) -> float:
+    if flag in arguments and arguments.index(flag) + 1 < len(arguments):
+        return float(arguments[arguments.index(flag) + 1])
+    return default
+
+
+def u_turn_fit(rect: tuple[float, float, float, float], entry_side: str, floor_height: float, stair_width: float,
+               arguments: list[str], clearance: float) -> dict[str, Any]:
+    """Landing depth that makes a u-turn stair span the whole shaft, and the lateral centres of its two flights.
+
+    The generator lays flights of ``ceil(risers / 2) * tread`` plus one landing along the entry axis, so a shaft longer than that leaves
+    a gap between the stair and the entry door. The landing absorbs the difference; the lateral centres are where the entry and exit
+    doors must be.
+    """
+    x0, z0, x1, z1 = rect
+    along_ns = entry_side in {"north", "south"}
+    along = (z1 - z0 if along_ns else x1 - x0) - 2 * clearance
+    across_lo, across_hi = (x0, x1) if along_ns else (z0, z1)
+    target_riser = _arg(arguments, "--target-riser", 0.17)  # generator defaults
+    max_riser = _arg(arguments, "--max-riser", 0.19)
+    tread = _arg(arguments, "--target-tread", 0.28)
+    gap = _arg(arguments, "--flight-gap", DEFAULT_FLIGHT_GAP_M)
+    risers = max(2, round(floor_height / target_riser), math.ceil(floor_height / max_riser - 1e-9))
+    run = math.ceil(risers / 2) * tread
+    landing = math.floor((along - run) * 1000.0) / 1000.0
+    if landing < stair_width * MIN_LANDING_DEPTH_FACTOR:
+        raise VerticalError(f"shaft is too short for a u-turn stair: along-axis length {along:.3f} m, flight run {run:.3f} m, "
+                            f"landing would be {landing:.3f} m (< {stair_width:.3f} m)")
+    across = across_hi - across_lo
+    if 2 * stair_width + gap > across + 1e-6:
+        raise VerticalError(f"shaft is too narrow for two flights: across-axis width {across:.3f} m, needs {2 * stair_width + gap:.3f} m")
+    centre = (across_lo + across_hi) / 2
+    offset = (stair_width + gap) / 2
+    entry_c = centre + ENTRY_HALF[entry_side] * offset
+    return {"landing_depth": landing, "flight_run": run, "entry_center": entry_c, "exit_center": 2 * centre - entry_c, "lateral_axis": "x" if along_ns else "z"}
+
+
+def resolve_stair(entry: dict[str, Any], sectors: dict[str, dict[str, Any]], project_root: Path, strict: bool = True) -> dict[str, Any]:
     vertical_id = str(entry.get("vertical_id", ""))
     if not vertical_id:
         raise VerticalError("a vertical generator with source=svg requires vertical_id")
@@ -173,11 +219,28 @@ def resolve_stair(entry: dict[str, Any], sectors: dict[str, dict[str, Any]], pro
         length -= 2 * clearance
     dx, dz = INWARD[entry_side]
     centre = ((x0 + x1) / 2 + dx * clearance, (z0 + z1) / 2 + dz * clearance)
+    fit_args: list[str] = []
+    door_targets: dict[str, Any] = {}
+    if layout == "u-turn":
+        fit = u_turn_fit(upper_rect, entry_side, floor_height, entry_width, entry.get("args", []), clearance)
+        axis = 0 if fit["lateral_axis"] == "x" else 1
+        for role, door, key in (("entry", entry_door, "entry_center"), ("exit", exit_door, "exit_center")):
+            line = door["line"]
+            centre_door = (line[axis] + line[axis + 2]) / 2
+            door_targets[role] = {"door_id": door["id"], "sector_id": (lower if role == "entry" else upper)["sector_id"], "axis": fit["lateral_axis"],
+                                  "actual_center": round(centre_door, 3), "expected_center": round(fit[key], 3), "line": list(line)}
+            if strict and abs(centre_door - fit[key]) > DOOR_CENTER_TOLERANCE_M:
+                raise VerticalError(
+                    f"{vertical_id}: {role} door {door['id']} is centred at {centre_door:.3f} but the {role} flight of the stair is at "
+                    f"{fit[key]:.3f} ({fit['lateral_axis']}); move the door or the stair will not meet it"
+                )
+        fit_args = ["--landing-depth", _format(fit["landing_depth"])]
     arguments = [
         "--shaft-width", _format(width), "--shaft-length", _format(length), "--floor-height", _format(floor_height),
         "--layout", layout, "--stair-width", _format(entry_width),
         "--lower-entry-side", LOCAL_SIDE[entry_side], "--upper-exit-side", LOCAL_SIDE[exit_side],
         "--shaft-wall-bottom", _format(bottom), "--shaft-wall-top", _format(floor_height),
+        *fit_args,
         *entry.get("args", []),
     ]
     transform = {"origin": [round(centre[0], 6), lower_y, round(centre[1], 6)], **copy.deepcopy(ROTATION)}
@@ -185,6 +248,7 @@ def resolve_stair(entry: dict[str, Any], sectors: dict[str, dict[str, Any]], pro
         "vertical_id": vertical_id, "layout": layout, "entry_side": entry_side, "exit_side": exit_side,
         "shaft_m": [round(x1 - x0, 6), round(z1 - z0, 6)], "stair_width_m": round(entry_width, 6),
         "floor_height_m": round(floor_height, 6), "clearance_m": clearance,
+        "door_targets": door_targets,
     }
     return {"args": arguments, "local_to_world": transform, "summary": summary}
 

@@ -94,15 +94,17 @@ class FlightChainTests(unittest.TestCase):
             {"sector_id": "U", "level": "LV-U", "source_svg": "u.svg", "metric_settings": {"elevation_m": 0.0}, "shared_args": wall},
         ]}
         self.transitions = {"level_datums": {"LV-U": 0.0, "LV-L": -3.0, "LV-T": -6.0}, "transitions": [{"id": "VT-CHAIN", "kind": "continuous_emergency_stair", "connects": ["LV-U", "LV-L", "LV-T"]}]}
-        north, south = (2.25, 0.0, 3.75, 0.0), (2.25, 7.0, 3.75, 7.0)
+        # u-turn flights sit at centre +- (stair width + flight gap) / 2 = 1.9 and 4.1; the entry flight is on the west half for a north entry
+        north_entry, north_exit = (1.15, 0.0, 2.65, 0.0), (3.35, 0.0, 4.85, 0.0)
+        south_entry, south_exit = (3.35, 7.0, 4.85, 7.0), (1.15, 7.0, 2.65, 7.0)
         wrap = lambda body: f'<svg xmlns="http://www.w3.org/2000/svg">{body}</svg>'  # noqa: E731
-        (self.root / "t.svg").write_text(wrap(shaft_and_door("ceiling-opening", "entry", north, "VT-CHAIN-A")), encoding="utf-8")
+        (self.root / "t.svg").write_text(wrap(shaft_and_door("ceiling-opening", "entry", north_entry, "VT-CHAIN-A")), encoding="utf-8")
         (self.root / "l.svg").write_text(wrap(
-            shaft_and_door("floor-opening", "exit", north, "VT-CHAIN-A") + shaft_and_door("ceiling-opening", "entry", south, "VT-CHAIN-B").replace('id="shaft0"', 'id="shaftB"').replace('id="door"', 'id="doorB"')), encoding="utf-8")
-        (self.root / "u.svg").write_text(wrap(shaft_and_door("floor-opening", "exit", south, "VT-CHAIN-B")), encoding="utf-8")
+            shaft_and_door("floor-opening", "exit", north_exit, "VT-CHAIN-A") + shaft_and_door("ceiling-opening", "entry", south_entry, "VT-CHAIN-B").replace('id="shaft0"', 'id="shaftB"').replace('id="door"', 'id="doorB"')), encoding="utf-8")
+        (self.root / "u.svg").write_text(wrap(shaft_and_door("floor-opening", "exit", south_exit, "VT-CHAIN-B")), encoding="utf-8")
         self.definitions = {
-            "VT-CHAIN-A": {"host_sector_id": "L", "generator": {"generator_id": "a", "source": "svg", "vertical_id": "VT-CHAIN-A", "transition_id": "VT-CHAIN", "levels": {"upper": {"sector_id": "L"}, "lower": {"sector_id": "T"}}, "args": []}},
-            "VT-CHAIN-B": {"host_sector_id": "U", "generator": {"generator_id": "b", "source": "svg", "vertical_id": "VT-CHAIN-B", "transition_id": "VT-CHAIN", "levels": {"upper": {"sector_id": "U"}, "lower": {"sector_id": "L"}}, "args": []}},
+            "VT-CHAIN-A": {"host_sector_id": "L", "generator": {"generator_id": "a", "source": "svg", "vertical_id": "VT-CHAIN-A", "transition_id": "VT-CHAIN", "levels": {"upper": {"sector_id": "L"}, "lower": {"sector_id": "T"}}, "args": ["--target-riser", "0.15", "--max-riser", "0.15", "--target-tread", "0.25", "--flight-gap", "0.7"]}},
+            "VT-CHAIN-B": {"host_sector_id": "U", "generator": {"generator_id": "b", "source": "svg", "vertical_id": "VT-CHAIN-B", "transition_id": "VT-CHAIN", "levels": {"upper": {"sector_id": "U"}, "lower": {"sector_id": "L"}}, "args": ["--target-riser", "0.15", "--max-riser", "0.15", "--target-tread", "0.25", "--flight-gap", "0.7"]}},
         }
 
     def tearDown(self) -> None:

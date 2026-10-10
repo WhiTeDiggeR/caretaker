@@ -4,10 +4,10 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "sector_id": "L-OLD-CORE",
-  "generation_id": "sha256:563749c21f5829a852db91ae8ee27cc0f307b633537fdc0801221793c79c9349",
+  "generation_id": "sha256:13fab6230f9394b3e8e7f74910b4be3feefb188f5b113bf9d9ad26b661e969b1",
   "source": {
     "path": "docs/design/complex_v4/plans/generation/lower/l_old_core.svg",
-    "sha256": "sha256:c498e831147d204a0181d82ef98c38f9ea0762c4dcd9fa92a2d6ec1392cf683e"
+    "sha256": "sha256:389dddb56f4ff6efa8fb582b11e862412c05b6e97f2f1a4803a86bc7255ee53b"
   },
   "output_resource_dir": "res://gen/l/l_old_core",
   "local_to_world": {
@@ -88,6 +88,8 @@
         "4.4",
         "--shaft-wall-top",
         "5.5",
+        "--landing-depth",
+        "2.66",
         "--target-riser",
         "0.15",
         "--max-riser",
@@ -98,8 +100,6 @@
         "0.28",
         "--minimum-headroom",
         "2.4",
-        "--landing-depth",
-        "2",
         "--flight-gap",
         "0.7",
         "--railings",
@@ -142,7 +142,35 @@
         ],
         "stair_width_m": 1.4,
         "floor_height_m": 5.5,
-        "clearance_m": 0.01
+        "clearance_m": 0.01,
+        "door_targets": {
+          "entry": {
+            "door_id": "t-old-access-door-04",
+            "sector_id": "T-OLD-ACCESS",
+            "axis": "z",
+            "actual_center": 32.05,
+            "expected_center": 32.05,
+            "line": [
+              -94.0,
+              31.35,
+              -94.0,
+              32.75
+            ]
+          },
+          "exit": {
+            "door_id": "l-old-core-door-14",
+            "sector_id": "L-OLD-CORE",
+            "axis": "z",
+            "actual_center": 34.15,
+            "expected_center": 34.15,
+            "line": [
+              -94.0,
+              33.45,
+              -94.0,
+              34.85
+            ]
+          }
+        }
       }
     }
   ],

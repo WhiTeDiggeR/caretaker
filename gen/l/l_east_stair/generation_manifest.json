@@ -4,10 +4,10 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v3",
   "sector_id": "L-EAST-STAIR",
-  "generation_id": "sha256:6c95891f293400af4ad4710317645eb0776193df6dde34b732224eb8d63a3245",
+  "generation_id": "sha256:bd26b1bbd5ec215f35c6028a867d176f8811fdf60226151e8f7b4c9f2bbbded6",
   "source": {
     "path": "docs/design/complex_v4/plans/generation/lower/l_east_stair.svg",
-    "sha256": "sha256:036c29083479d354ff52bd7a3fa8b728604f5486c64703e2dd780e9f5acc638b"
+    "sha256": "sha256:75e60a9668565fbae7a37a22a2049381b9e057449450beeeaa5eec189625238d"
   },
   "output_resource_dir": "res://gen/l/l_east_stair",
   "local_to_world": {
@@ -88,6 +88,8 @@
         "5.2",
         "--shaft-wall-top",
         "5.5",
+        "--landing-depth",
+        "3.08",
         "--target-riser",
         "0.15",
         "--max-riser",
@@ -98,8 +100,6 @@
         "0.25",
         "--minimum-headroom",
         "2.4",
-        "--landing-depth",
-        "2",
         "--flight-gap",
         "0.7",
         "--railings",
@@ -143,7 +143,35 @@
         ],
         "stair_width_m": 1.8,
         "floor_height_m": 5.5,
-        "clearance_m": 0.01
+        "clearance_m": 0.01,
+        "door_targets": {
+          "entry": {
+            "door_id": "t-east-vertical-door-05",
+            "sector_id": "T-EAST-VERTICAL",
+            "axis": "x",
+            "actual_center": 27.355,
+            "expected_center": 27.355,
+            "line": [
+              26.455,
+              15.58,
+              28.255,
+              15.58
+            ]
+          },
+          "exit": {
+            "door_id": "l-east-stair-door-03",
+            "sector_id": "L-EAST-STAIR",
+            "axis": "x",
+            "actual_center": 24.855,
+            "expected_center": 24.855,
+            "line": [
+              23.955,
+              15.556,
+              25.755,
+              15.556
+            ]
+          }
+        }
       }
     }
   ],

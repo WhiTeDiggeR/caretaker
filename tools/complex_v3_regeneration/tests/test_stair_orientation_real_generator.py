@@ -24,9 +24,13 @@ OPPOSITE = {"north": "south", "south": "north", "east": "west", "west": "east"}
 SIDES = ("north", "east", "south", "west")
 
 
-def door_line(side: str, width: float = 1.5) -> tuple:
+def door_line(side: str, width: float = 1.5, shift: float = 0.0) -> tuple:
     x0, z0, x1, z1 = RECT
     centre_x, centre_z = (x0 + x1) / 2, (z0 + z1) / 2
+    if side in ("north", "south"):
+        centre_x += shift
+    else:
+        centre_z += shift
     if side == "north":
         return (centre_x - width / 2, z0, centre_x + width / 2, z0)
     if side == "south":
@@ -72,8 +76,10 @@ class StairOrientationTests(unittest.TestCase):
         cls.temp.cleanup()
 
     def generate(self, entry_side: str, exit_side: str) -> tuple[list, dict, dict]:
-        (self.root / "u.svg").write_text(plan("floor-opening", "exit", door_line(exit_side)), encoding="utf-8")
-        (self.root / "l.svg").write_text(plan("ceiling-opening", "entry", door_line(entry_side)), encoding="utf-8")
+        # A u-turn has two flights side by side: the doors sit on their own flights (width 1.5 + default gap 0.1 -> +-0.8 m from the centre).
+        shift = resolver.ENTRY_HALF[entry_side] * 0.8 if entry_side == exit_side else 0.0
+        (self.root / "u.svg").write_text(plan("floor-opening", "exit", door_line(exit_side, shift=-shift)), encoding="utf-8")
+        (self.root / "l.svg").write_text(plan("ceiling-opening", "entry", door_line(entry_side, shift=shift)), encoding="utf-8")
         resolved = resolver.resolve_stair(self.entry, self.sectors, self.root)
         output = self.root / f"out-{entry_side}-{exit_side}"
         process = subprocess.run(
@@ -105,6 +111,10 @@ class StairOrientationTests(unittest.TestCase):
             # A U-turn returns to the same edge: entry and exit share the passage-axis coordinate.
             axis = 2 if entry_side in ("north", "south") else 0
             self.assertAlmostEqual(entry["origin"][axis], exit_["origin"][axis], delta=0.02, msg=f"{label}: entry and exit are on different edges")
+            # The generator puts the entry flight on the half the resolver (and the door check) expects.
+            lateral = 0 if entry_side in ("north", "south") else 2
+            self.assertAlmostEqual(entry["origin"][lateral], 5.0 + resolver.ENTRY_HALF[entry_side] * 0.8, delta=0.02, msg=f"{label}: entry flight is on the other half")
+            self.assertAlmostEqual(exit_["origin"][lateral], 5.0 - resolver.ENTRY_HALF[entry_side] * 0.8, delta=0.02, msg=f"{label}: exit flight is on the other half")
         self.assertAlmostEqual(entry["origin"][1], -3.0, places=3)
         self.assertAlmostEqual(exit_["origin"][1], 0.0, places=3)
 

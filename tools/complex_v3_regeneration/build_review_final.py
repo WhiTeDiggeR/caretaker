@@ -87,7 +87,7 @@ def main() -> int:
         (REVIEW / "sectors" / f"{sid.lower()}.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     readme = ["# Комплекс v4 — итоги ревизии", "",
               "Канонические SVG построены из утверждённых планов v3 (`tools/complex_v3_regeneration/build_canonical_from_approved.py`, "
-              "привязка — `approved_registration.json`). Каждое исправление принято пользователем и записано в [decisions.md](decisions.md) (D-01…D-44).", "",
+              "привязка — `approved_registration.json`). Каждое исправление принято пользователем и записано в [decisions.md](decisions.md) (D-01…D-45).", "",
               "## Статус сквозных вопросов", "", "| № | Вопрос | Статус | Чем закрыт |", "|---|---|---|---|"]
     readme += [f"| {g} | {t} | {s} | {n} |" for g, t, s, n in GLOBAL]
     readme += ["", "## Правила, принятые по ходу", "",
