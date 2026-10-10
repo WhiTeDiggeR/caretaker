@@ -83,10 +83,26 @@ func _ready() -> void:
 		_open_amount = 1.0
 	if Engine.is_editor_hint():
 		return
+	add_to_group(&"persist")
 	GameState.section_power_changed.connect(func(_section: StringName, _power: int) -> void: refresh())
 	GameState.access_changed.connect(func(_access: StringName, _granted: bool) -> void: refresh())
 	GameState.state_loaded.connect(refresh)
 	refresh()
+
+
+func save_state() -> Dictionary:
+	return {"open": state == State.OPEN or state == State.OPENING}
+
+
+## Restores a saved door at once, without the opening animation.
+func load_state(data: Dictionary) -> void:
+	if _tween:
+		_tween.kill()
+	var open_door := bool(data.get("open", false))
+	state = State.OPEN if open_door else State.CLOSED
+	_open_amount = 1.0 if open_door else 0.0
+	refresh()
+	state_changed.emit(state)
 
 
 func is_open() -> bool:

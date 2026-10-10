@@ -22,7 +22,7 @@ var _overlay_elapsed := 0.0
 
 
 func _ready() -> void:
-	# Returning from a dream reloads this scene: keep the state of the running session.
+	# Returning from a dream or loading a save reloads this scene: keep the state.
 	if not GameState.has_flag(INITIALIZED_FLAG):
 		reset_state()
 	_build_overlay()

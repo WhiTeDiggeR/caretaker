@@ -7,6 +7,8 @@ const STEREO_FRAME_BYTES := 4
 
 
 func _ready() -> void:
+	if AudioServer.get_bus_index(&"Ambience") >= 0:
+		bus = &"Ambience"
 	stream = _create_ambience_stream()
 	play()
 

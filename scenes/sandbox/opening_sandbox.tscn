@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" path="res://objects/containment/reagent_panel.tscn" id="12_reagent"]
 [ext_resource type="Script" path="res://objects/containment/module_chamber.gd" id="13_chamber"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/prop_station.tscn" id="14_props"]
+[ext_resource type="PackedScene" path="res://objects/checkpoint/checkpoint.tscn" id="15_checkpoint"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
@@ -108,6 +109,17 @@ script = ExtResource("13_chamber")
 shape = SubResource("chamber_shape")
 [node name="PropStation" parent="Stations" instance=ExtResource("14_props")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24, 0, -22)
+[node name="Checkpoint" parent="Stations" instance=ExtResource("15_checkpoint")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, 6)
+checkpoint_id = &"sandbox_doors"
+
+[node name="CheckpointLabel" type="Label3D" parent="Stations"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 2.6, 6)
+pixel_size = 0.004
+text = "КОНТРОЛЬНАЯ ТОЧКА
+(автосохранение)"
+font_size = 40
+outline_size = 10
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
