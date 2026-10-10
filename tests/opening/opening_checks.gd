@@ -20,13 +20,17 @@ func _ready() -> void:
 	var total_checks := 0
 	var failures := PackedStringArray()
 	for path in CASES:
+		var script := load(path) as GDScript
+		if script == null or not script.can_instantiate():
+			failures.append("%s: script does not load" % path)
+			continue
 		var case_root := Node3D.new()
 		case_root.name = path.get_file().get_basename()
 		add_child(case_root)
 		var context := OpeningCheck.new(get_tree(), case_root)
 		context.begin_case(case_root.name)
 		GameState.reset()
-		var case: Object = load(path).new()
+		var case: Object = script.new()
 		await case.run(context)
 		total_checks += context.checks
 		failures.append_array(context.failures)

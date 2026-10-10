@@ -54,6 +54,9 @@ const LAMP_LOCKED := Color(0.9, 0.15, 0.1)
 var interlock_partner: FacilityDoor
 ## Set by an airlock while its cycle runs.
 var cycle_lock := false
+## Set by an airlock: the door's controls ask it to open the door instead of moving
+## the door directly (receives this door).
+var operator: Callable
 
 var state: State = State.CLOSED
 var _leaf: AnimatableBody3D
@@ -99,9 +102,13 @@ func lock_reason() -> String:
 		return REASON_CYCLE
 	if state == State.OPENING or state == State.CLOSING:
 		return REASON_MOVING
-	if state == State.CLOSED and interlock_partner and not interlock_partner.is_closed():
+	if not operator.is_valid() and _interlocked():
 		return REASON_INTERLOCK
 	return ""
+
+
+func _interlocked() -> bool:
+	return state == State.CLOSED and interlock_partner != null and not interlock_partner.is_closed()
 
 
 func can_operate() -> bool:
@@ -109,7 +116,7 @@ func can_operate() -> bool:
 
 
 func open() -> bool:
-	if state != State.CLOSED or not can_operate():
+	if state != State.CLOSED or not can_operate() or _interlocked():
 		return false
 	_move(true)
 	return true
@@ -157,6 +164,8 @@ func _prompt() -> String:
 		return "ЗАКРЫТЬ ДВЕРЬ" if kind == Kind.POWERED else "ПОВЕРНУТЬ ШТУРВАЛ: ЗАКРЫТЬ"
 	if not open_prompt.is_empty():
 		return open_prompt
+	if operator.is_valid():
+		return "ОТКРЫТЬ ШЛЮЗ"
 	return "ОТКРЫТЬ ДВЕРЬ" if kind == Kind.POWERED else "ПОВЕРНУТЬ ШТУРВАЛ"
 
 
@@ -195,7 +204,10 @@ func _open_position() -> Vector3:
 
 
 func _on_control_used() -> void:
-	toggle()
+	if operator.is_valid():
+		operator.call(self)
+	else:
+		toggle()
 
 
 # --- Placeholder geometry ----------------------------------------------------

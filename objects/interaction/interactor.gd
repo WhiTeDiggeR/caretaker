@@ -17,11 +17,27 @@ const MESSAGE_GROUP := &"message_display"
 
 var target: Object
 var hold_progress := 0.0
+## After a full-screen UI closes, the key that closed it must be released first.
+var _wait_release := false
 
 
 func _physics_process(delta: float) -> void:
 	var collider: Object = ray.get_collider() if ray and ray.is_colliding() else null
-	step(find_target(collider), Input.is_action_pressed(&"interact"), Input.is_action_just_pressed(&"interact"), delta)
+	var pressed := Input.is_action_pressed(&"interact")
+	var just_pressed := Input.is_action_just_pressed(&"interact")
+	if _wait_release:
+		if pressed:
+			pressed = false
+			just_pressed = false
+		else:
+			_wait_release = false
+	step(find_target(collider), pressed, just_pressed, delta)
+
+
+## Ignores the interact action until it is released (the press closed a UI).
+func suppress_until_release() -> void:
+	_wait_release = true
+	_cancel_hold()
 
 
 ## The interactable behind a collider: its `Interactable` component or a legacy node.

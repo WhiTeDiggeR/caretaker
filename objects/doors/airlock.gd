@@ -3,6 +3,8 @@ extends Node3D
 
 ## Two interlocked doors and a cycle panel between them. A door opens only while the other
 ## is closed; the cycle closes the open door, waits for the ventilation and opens the other.
+## The door panels call the airlock too: a closed door is opened at once when the other one
+## is closed, otherwise through a full cycle. Doors can never be opened around the airlock.
 
 signal cycle_started
 signal cycle_finished
@@ -25,6 +27,8 @@ func _ready() -> void:
 	door_b.section = section
 	door_a.interlock_partner = door_b
 	door_b.interlock_partner = door_a
+	door_a.operator = request_door
+	door_b.operator = request_door
 	door_a.opened.connect(func() -> void: _last_opened = door_a)
 	door_b.opened.connect(func() -> void: _last_opened = door_b)
 	_panel = $CyclePanel/Interactable
@@ -55,6 +59,24 @@ func start_cycle() -> bool:
 	return true
 
 
+## Called by a door panel: opens that door (through a cycle when the other one is open)
+## or closes it when it is open.
+func request_door(door: FacilityDoor) -> bool:
+	if not lock_reason().is_empty():
+		return false
+	if door.is_open():
+		door.force(false)
+		return true
+	if not door.is_closed():
+		return false
+	var other := door.interlock_partner
+	if other.is_closed():
+		door.force(true)
+	else:
+		_run_cycle(other, door)
+	return true
+
+
 func _run_cycle(from: FacilityDoor, to: FacilityDoor) -> void:
 	cycling = true
 	_set_cycle_lock(true)
@@ -65,8 +87,8 @@ func _run_cycle(from: FacilityDoor, to: FacilityDoor) -> void:
 	await get_tree().create_timer(cycle_time).timeout
 	to.force(true)
 	await to.opened
-	_set_cycle_lock(false)
 	cycling = false
+	_set_cycle_lock(false)
 	cycle_finished.emit()
 
 

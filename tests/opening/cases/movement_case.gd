@@ -44,6 +44,10 @@ func run(c: OpeningCheck) -> void:
 	await c.physics_frames(5)
 	c.equal(high.find_mantle_target(), Vector3.INF, "1.6 m wall cannot be climbed")
 	c.is_true(not high.try_mantle(), "mantle is refused for a high wall")
+	high.velocity.y = high.JUMP_VELOCITY
+	await c.physics_frames(8)
+	c.is_true(not high.is_on_floor(), "hero is in the air after a jump")
+	c.is_true(not high.try_mantle(), "no climbing from a jump (double space)")
 
 	# A low gap above the crate forces a crouch after climbing.
 	var gap := _spawn_player(c, Vector3(-10, 0.9, 0))

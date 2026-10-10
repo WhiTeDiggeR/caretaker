@@ -44,6 +44,27 @@ func run(c: OpeningCheck) -> void:
 	await c.tree.process_frame
 	c.is_true(not player.controls_locked and memo.reader == null, "closing the reader unlocks the player")
 
+	# The key that closes the reader must not reopen the document under the crosshair.
+	player.global_position = Vector3(memo.global_position.x, 0.9, memo.global_position.z + 1.0)
+	player.rotation = Vector3.ZERO
+	(player.get_node(^"Camera3D") as Node3D).rotation.x = deg_to_rad(-40.0)
+	await c.physics_frames(4)
+	c.equal(player.interactor.target, memo.get_node(^"Interactable"), "player looks at the document")
+	Input.action_press(&"interact")
+	await c.physics_frames(2)
+	c.is_true(memo.reader != null, "pressing E opens the document")
+	memo.reader.close()
+	await c.physics_frames(4)
+	c.is_true(memo.reader == null, "holding the closing key does not reopen the document")
+	Input.action_release(&"interact")
+	await c.physics_frames(2)
+	Input.action_press(&"interact")
+	await c.physics_frames(2)
+	c.is_true(memo.reader != null, "a new press opens it again")
+	Input.action_release(&"interact")
+	memo.reader.close()
+	await c.physics_frames(2)
+
 	var journal := DocumentReader.open_journal_scene(c.tree)
 	c.is_true(journal.in_journal and journal.list_box.get_child_count() == 1, "journal lists read documents")
 	c.is_true((journal.list_box.get_child(0) as Label).text.ends_with("ПАМЯТКА ПОЛИГОНА"), "journal shows titles")

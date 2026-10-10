@@ -60,6 +60,8 @@ func _ready() -> void:
 func set_controls_locked(locked: bool) -> void:
 	controls_locked = locked
 	interactor.set_physics_process(not locked)
+	if not locked:
+		interactor.suppress_until_release()
 	if locked and interact_label:
 		interact_label.visible = false
 
@@ -172,7 +174,8 @@ func _capsule_fits(origin: Vector3, height: float) -> bool:
 ## Climbs onto the obstacle in front of the hero when it is low enough and there is room
 ## on top. Returns false and changes nothing otherwise.
 func try_mantle() -> bool:
-	if is_mantling:
+	# Only from the floor: a jump must not add height to the climb (no parkour, canon).
+	if is_mantling or not is_on_floor():
 		return false
 	var target := find_mantle_target()
 	if target == Vector3.INF:
