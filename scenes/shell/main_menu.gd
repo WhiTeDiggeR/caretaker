@@ -40,6 +40,7 @@ func _ready() -> void:
 	column.add_child(buttons)
 	continue_button = ShellUI.button(buttons, "Продолжить", _on_continue)
 	var new_game := ShellUI.button(buttons, "Новая игра", Shell.new_game)
+	ShellUI.button(buttons, "Настройки", func() -> void: SettingsScreen.open(self))
 	ShellUI.button(buttons, "Выход", Shell.quit_game)
 	refresh()
 	(continue_button if not continue_button.disabled else new_game).grab_focus.call_deferred()

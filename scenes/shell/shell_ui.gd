@@ -27,6 +27,11 @@ static func theme() -> Theme:
 	_theme.set_color(&"font_hover_color", &"Button", ACCENT)
 	_theme.set_color(&"font_focus_color", &"Button", ACCENT)
 	_theme.set_color(&"font_disabled_color", &"Button", MUTED)
+	for state in ["normal", "hover", "pressed", "focus", "hover_pressed"]:
+		_theme.set_stylebox(state, &"CheckBox", StyleBoxEmpty.new())
+	_theme.set_color(&"font_color", &"CheckBox", TEXT)
+	_theme.set_color(&"font_hover_color", &"CheckBox", ACCENT)
+	_theme.set_color(&"font_pressed_color", &"CheckBox", TEXT)
 	_theme.set_color(&"font_color", &"Label", TEXT)
 	_theme.set_stylebox(&"panel", &"PanelContainer", _box(PANEL, Color(0.25, 0.27, 0.28)))
 	return _theme

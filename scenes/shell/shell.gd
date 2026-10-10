@@ -106,9 +106,12 @@ func pause() -> void:
 	paused_changed.emit(true)
 
 
-## Extension point for later menu items (settings, saves).
-func _add_pause_items(_column: VBoxContainer) -> void:
-	pass
+func _add_pause_items(column: VBoxContainer) -> void:
+	ShellUI.button(column, "Настройки", open_settings)
+
+
+func open_settings() -> SettingsScreen:
+	return SettingsScreen.open(self)
 
 
 func resume() -> void:
@@ -124,6 +127,8 @@ func resume() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed(&"ui_cancel"):
+		return
+	if find_children("*", "SettingsScreen", false, false).size() > 0:
 		return
 	if is_paused():
 		resume()
