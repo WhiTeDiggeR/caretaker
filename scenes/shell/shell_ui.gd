@@ -3,7 +3,7 @@ extends RefCounted
 
 ## Shared look and small builders of the shell screens (menu, pause, settings, saves).
 
-const TITLE := "СМОТРИТЕЛЬ"  # working title, not fixed by the world bible
+const TITLE := "СМОТРИТЕЛЬ"  # working title approved by the author
 const ACCENT := Color(0.95, 0.72, 0.32)
 const TEXT := Color(0.86, 0.87, 0.85)
 const MUTED := Color(0.55, 0.58, 0.57)
