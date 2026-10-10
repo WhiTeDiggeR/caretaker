@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "note": "Every file under loads/props and loads/textures must be covered by an entry. Downloaded assets get one entry each (url, author, licence); procedural assets are covered by their generator.",
+  "entries": [
+    {
+      "glob": "loads/textures/*/*_{albedo,normal,orm}.*",
+      "kind": "texture",
+      "source": "procedural",
+      "generator": "tools/props/make_textures.py",
+      "author": "project",
+      "license": "project-original"
+    },
+    {
+      "glob": "loads/textures/decals/*",
+      "kind": "decal",
+      "source": "procedural",
+      "generator": "tools/props/make_decals.py",
+      "author": "project",
+      "license": "project-original (text rendered with DejaVu, free licence)"
+    },
+    {
+      "glob": "loads/props/**",
+      "kind": "model",
+      "source": "procedural",
+      "generator": "tools/props/build_props.py",
+      "author": "project",
+      "license": "project-original"
+    }
+  ]
+}
