@@ -111,7 +111,13 @@ func run(c: OpeningCheck) -> void:
 	await b.closed
 	var a_panel := a.get_node(^"ControlBack").get_meta(Interactable.META) as Interactable
 	a_panel.trigger()
-	c.is_true(not airlock.cycling and a.state == FacilityDoor.State.OPENING, "with both doors closed a panel opens its door at once")
+	c.is_true(airlock.cycling, "closing the inner door does not skip the ventilation to the outer side")
+	await airlock.cycle_finished
+	c.is_true(a.is_open() and b.is_closed() and airlock.synced_door == a, "outer door opens only after ventilation")
+	a_panel.trigger()
+	await a.closed
+	a_panel.trigger()
+	c.is_true(not airlock.cycling and a.state == FacilityDoor.State.OPENING, "the equalised side opens at once")
 	await a.opened
 	c.is_true(not both_open[0], "airlock doors are never open together")
 

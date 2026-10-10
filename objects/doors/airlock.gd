@@ -1,10 +1,11 @@
 class_name Airlock
 extends Node3D
 
-## Two interlocked doors and a cycle panel between them. A door opens only while the other
-## is closed; the cycle closes the open door, waits for the ventilation and opens the other.
-## The door panels call the airlock too: a closed door is opened at once when the other one
-## is closed, otherwise through a full cycle. Doors can never be opened around the airlock.
+## Two interlocked doors and a cycle panel between them. The chamber is equalised with one
+## side at a time (`synced_door`): only that door opens at once. Reaching the other side
+## always takes a cycle — close the open door, ventilate, open the other — even when both
+## doors are already closed. Door panels and the inner panel both go through the airlock;
+## a door never opens around it and never while the other one is open.
 
 signal cycle_started
 signal cycle_finished
@@ -15,11 +16,14 @@ const PROMPT := "ЗАПУСТИТЬ ШЛЮЗОВОЙ ЦИКЛ"
 @export var door_b: FacilityDoor
 @export var cycle_time := 4.0
 @export var section: StringName = &""
+## Side the chamber is equalised with at start: true — door A, false — door B.
+@export var starts_synced_with_a := true
 
 var cycling := false
+## The door whose side the chamber was last ventilated for.
+var synced_door: FacilityDoor
 
 var _panel: Interactable
-var _last_opened: FacilityDoor
 
 
 func _ready() -> void:
@@ -29,8 +33,9 @@ func _ready() -> void:
 	door_b.interlock_partner = door_a
 	door_a.operator = request_door
 	door_b.operator = request_door
-	door_a.opened.connect(func() -> void: _last_opened = door_a)
-	door_b.opened.connect(func() -> void: _last_opened = door_b)
+	synced_door = door_a if starts_synced_with_a else door_b
+	if door_b.is_open() and not door_a.is_open():
+		synced_door = door_b
 	_panel = $CyclePanel/Interactable
 	_panel.prompt = PROMPT
 	_panel.interacted.connect(start_cycle)
@@ -51,16 +56,12 @@ func lock_reason() -> String:
 func start_cycle() -> bool:
 	if not lock_reason().is_empty():
 		return false
-	var from := door_a if not door_a.is_closed() else door_b
-	if from.is_closed():
-		from = door_a if _last_opened == door_b or _last_opened == null else door_b
-	var to := door_b if from == door_a else door_a
-	_run_cycle(from, to)
+	_run_cycle(synced_door, synced_door.interlock_partner)
 	return true
 
 
-## Called by a door panel: opens that door (through a cycle when the other one is open)
-## or closes it when it is open.
+## Called by a door panel: closes the door when it is open; opens it at once when the
+## chamber is equalised with its side, otherwise through a full cycle.
 func request_door(door: FacilityDoor) -> bool:
 	if not lock_reason().is_empty():
 		return false
@@ -69,11 +70,10 @@ func request_door(door: FacilityDoor) -> bool:
 		return true
 	if not door.is_closed():
 		return false
-	var other := door.interlock_partner
-	if other.is_closed():
+	if door == synced_door:
 		door.force(true)
 	else:
-		_run_cycle(other, door)
+		_run_cycle(door.interlock_partner, door)
 	return true
 
 
@@ -85,6 +85,7 @@ func _run_cycle(from: FacilityDoor, to: FacilityDoor) -> void:
 		from.force(false)
 		await from.closed
 	await get_tree().create_timer(cycle_time).timeout
+	synced_door = to
 	to.force(true)
 	await to.opened
 	cycling = false
