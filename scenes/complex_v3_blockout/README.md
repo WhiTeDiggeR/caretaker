@@ -5,20 +5,18 @@
 ## Состав
 
 - `complex_v3_blockout.tscn` — переиспользуемая подсцена без игрока, света и UI.
-- `complex_v3_assembly.gd` — собирает 30 секторных сцен и единственную общую infrastructure-сцену.
+- `complex_v3_assembly.gd` — собирает 32 секторных сцен и единственную общую infrastructure-сцену.
 - `complex_v3_blockout.gd` — контроллер сектора с production-режимом `REGENERATED_PACKAGE` и диагностическим `HANDOFF_PREVIEW`.
 - `complex_v3_sector_wrapper.gd` — контракт владельцев: заменяемый `Generated` с внешними слоями `Architecture`/`Stairs`, отдельный persistent `AuthoredContent` и transient `EditorPreview` без physics.
 - `../complex_v3_regeneration/sector_anchor_controller.gd` — транзакционно применяет `object_bindings.json` к `AnchoredObject3D`, блокируя пропавшие/неоднозначные ID и placement за границами anchor.
-- `complex_v3_zone.tscn` и `zones/{upper,lower,technical}/` — общая база и 30 тонких сцен по stable sector ID.
+- `complex_v3_zone.tscn` и `zones/{upper,lower,technical}/` — общая база и 32 тонких сцен по stable sector ID.
 - `complex_v3_infrastructure.tscn` — магистрали, межзонные соединители и вертикальные переходы без дублирования по зонам.
 - `res://objects/complex_v3/main_core_switchback_stair.tscn` — самостоятельная редактируемая лестница главного ядра; зональные сцены содержат только совпадающий с ней монтажный проём.
 - `sector_catalog.json` — проверяемый индекс сцен, уровней, количества помещений и непосредственных соседей.
 - `complex_v3_blockout_test.tscn` — автономная сцена проверки с игроком, окружением и обзорной камерой.
-- `complex_v3_blockout_check.gd` — headless runtime-проверка количества построенных сущностей.
-- `complex_v3_portal_check.gd` — физическая проверка капсулой всех открытых внутренних и внешних порталов.
-- `complex_v3_sector_check.gd` — runtime-проверка всех 30 сцен, их суммарного состава и трёх режимов просмотра.
+- `complex_v3_sector_check.gd` — runtime-проверка всех 32 сцен, их суммарного состава и трёх режимов просмотра.
 - `review/u_emergency_plan_assembly.tscn` — обзорная сцена фрагмента плана аварийного блока: `U-EMERGENCY`, `U-MEDBAY`, `U-ROUTE-A`, локальный участок `U-PAX`, соединители и отдельная лестница маршрута A без потолков.
-- `complex_v3_visual_check.gd` — воспроизводимые контрольные рендеры всех 30 зон в `user://complex_v3_sector_captures` при запуске с полноценным renderer.
+- `complex_v3_visual_check.gd` — воспроизводимые контрольные рендеры всех 32 зон в `user://complex_v3_sector_captures` при запуске с полноценным renderer.
 - `scripts/render_plan_previews.cjs`, `render_scene_topdowns.py` и `compose_scene_plan_comparisons.py` — полностью фоновые SVG/source-data сравнения без управления пользовательским экраном.
 - `complex_v3_editor_preview_check.tscn` / `.gd` — editor-only проверка временной геометрии, отсутствия collision и сохранности `AuthoredContent`.
 - `main_core_switchback_stair_check.gd` и `main_core_switchback_stair_visual_check.tscn` — отдельная проверка размеров, коллизий и четырёх воспроизводимых ракурсов лестницы.
@@ -32,7 +30,7 @@
 
 Ручные объекты конкретной зоны следует добавлять только в отдельную authored-сцену `set_dressing/sectors/<slug>_dressing.tscn`, подключённую как `AuthoredContent/SetDressing`. Генератор детерминированно пересобирает тонкие sector wrappers, но не записывает authored-сцены. Узел `Generated` полностью принадлежит регенератору и содержит отдельные слои `Architecture` и `Stairs` из `res://gen/**`.
 
-Regeneration wrapper принимает `PackedScene` для generated-архитектуры, generated-лестниц и ручного слоя. `AuthoredContent` обязан быть корнем отдельной сцены; rebuild собирает `GeneratedStaging`, заменяет только прежний `Generated` и валидирует прямые sibling-корни. Все 30 production-сцен используют `REGENERATED_PACKAGE`; старый handoff-builder доступен только как диагностический preview и тестовый fallback.
+Regeneration wrapper принимает `PackedScene` для generated-архитектуры, generated-лестниц и ручного слоя. `AuthoredContent` обязан быть корнем отдельной сцены; rebuild собирает `GeneratedStaging`, заменяет только прежний `Generated` и валидирует прямые sibling-корни. Все 32 production-сцен используют `REGENERATED_PACKAGE`; старый handoff-builder доступен только как диагностический preview и тестовый fallback.
 
 `AnchorController` загружает promoted `anchor_frames.json` и sector-owned `object_bindings.json`, рекурсивно индексирует только стабильные `object_id` и сначала разрешает весь набор привязок без изменения сцены. Если проверка полностью успешна, он применяет placement и сохраняемую `author_correction`, затем вызывает `AnchorRegistry.refresh_registered_objects()`. При любой blocking-ошибке authored transforms остаются прежними; ближайший якорь автоматически не выбирается.
 

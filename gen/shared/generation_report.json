@@ -1,7 +1,7 @@
 {
   "schema_id": "caretaker.shared_generation_report",
   "schema_version": "1.0.0",
-  "status": "ready_with_blocking_vertical_diagnostics",
+  "status": "ready",
   "map_id": "caretaker-complex-v3",
   "generated_scene": "Generated/Infrastructure/shared_infrastructure_generated.tscn",
   "geometry_policy": "external_single_owner",
@@ -26,10 +26,11 @@
     "VT-ROUTE-A",
     "VT-SERVICE-STAIR"
   ],
-  "unresolved_vertical_geometry": [
+  "unresolved_vertical_geometry": [],
+  "closed_vertical_geometry": [
     "VT-OLD-INCLINE"
   ],
-  "blocking_reason": "Verticals still without resolved geometry: VT-OLD-INCLINE (unresolved)",
+  "blocking_reason": "",
   "verticals": [
     {
       "id": "VT-MAIN-ELEVATOR",
@@ -83,9 +84,9 @@
     {
       "id": "VT-OLD-INCLINE",
       "kind": "historic_inclined_freight_tunnel",
-      "status": "unresolved",
+      "status": "closed",
       "owner": "complex_v3_infrastructure",
-      "detail": "non-port transition: separate geometry is required"
+      "detail": "story: the old inclined tunnel is collapsed and impassable; no geometry between the end platforms (D-44)"
     }
   ],
   "connector_aliases": [

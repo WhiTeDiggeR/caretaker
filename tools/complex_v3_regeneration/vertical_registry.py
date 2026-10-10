@@ -37,6 +37,7 @@ OPENINGS_READY = "openings_ready"
 MARKUP_INCOMPLETE = "markup_incomplete"
 UNRESOLVED = "unresolved"
 INVALID = "invalid"
+CLOSED = "closed"  # story-closed transition: deliberately has no geometry (decision D-44)
 RESOLVED_STATUSES = {GENERATED, OPENINGS_READY}
 
 
@@ -90,6 +91,8 @@ def build_registry(
                 entry.update(status=MARKUP_INCOMPLETE, detail="; ".join(missing), missing=missing)
             else:
                 entry.update(status=OPENINGS_READY)
+        elif transition.get("closed"):
+            entry.update(status=CLOSED, detail=str(transition.get("closed_reason", "closed transition without geometry")))
         elif kind.endswith("incline") or "incline" in kind:
             entry.update(status=UNRESOLVED, detail="non-port transition: separate geometry is required")
         else:
@@ -107,17 +110,19 @@ def load_registry(project_root: Path = ROOT) -> list[dict[str, Any]]:
 def summarize(registry: list[dict[str, Any]]) -> dict[str, Any]:
     """Fields for the shared infrastructure report, derived from the registry."""
     resolved = sorted(item["id"] for item in registry if item["status"] in RESOLVED_STATUSES)
-    unresolved = sorted(item["id"] for item in registry if item["status"] not in RESOLVED_STATUSES)
+    closed = sorted(item["id"] for item in registry if item["status"] == CLOSED)
+    unresolved = sorted(item["id"] for item in registry if item["status"] not in RESOLVED_STATUSES | {CLOSED})
     owners = {item["id"]: item["owner"] for item in registry}
     reason = ""
     if unresolved:
         reason = "Verticals still without resolved geometry: " + ", ".join(
-            f"{item['id']} ({item['status']})" for item in registry if item["status"] not in RESOLVED_STATUSES
+            f"{item['id']} ({item['status']})" for item in registry if item["status"] not in RESOLVED_STATUSES | {CLOSED}
         )
     return {
         "status": "ready" if not unresolved else "ready_with_blocking_vertical_diagnostics",
         "generated_vertical_geometry": resolved,
         "unresolved_vertical_geometry": unresolved,
+        "closed_vertical_geometry": closed,
         "owners": owners,
         "blocking_reason": reason,
         "verticals": [{key: item[key] for key in ("id", "kind", "status", "owner", "detail") if key in item} for item in registry],

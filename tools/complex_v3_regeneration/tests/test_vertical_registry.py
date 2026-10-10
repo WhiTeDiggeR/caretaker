@@ -33,7 +33,7 @@ class VerticalRegistryTests(unittest.TestCase):
         self.assertEqual(self.items["VT-FREIGHT-LIFT"]["status"], registry.OPENINGS_READY)
         for vertical_id in ("VT-MAIN-STAIR", "VT-OLD-STAIR", "VT-SERVICE-STAIR", "VT-EAST-STAIR"):
             self.assertEqual(self.items[vertical_id]["status"], registry.GENERATED, vertical_id)
-        self.assertEqual(self.items["VT-OLD-INCLINE"]["status"], registry.UNRESOLVED)
+        self.assertEqual(self.items["VT-OLD-INCLINE"]["status"], registry.CLOSED)
 
     def test_a_broken_definition_is_reported_as_invalid_not_ignored(self) -> None:
         definitions = copy.deepcopy(self.definitions)
@@ -42,14 +42,17 @@ class VerticalRegistryTests(unittest.TestCase):
         self.assertEqual(items["VT-ROUTE-A"]["status"], registry.INVALID)
         self.assertIn("NO-SUCH-SECTOR", items["VT-ROUTE-A"]["detail"])
 
-    def test_summary_is_blocking_until_everything_is_resolved(self) -> None:
+    def test_summary_is_ready_when_the_only_open_vertical_is_story_closed(self) -> None:
         summary = registry.summarize(list(self.items.values()))
-        self.assertEqual(summary["status"], "ready_with_blocking_vertical_diagnostics")
+        self.assertEqual((summary["status"], summary["blocking_reason"]), ("ready", ""))
         self.assertEqual(summary["generated_vertical_geometry"], ["VT-EAST-STAIR", "VT-FREIGHT-LIFT", "VT-MAIN-ELEVATOR", "VT-MAIN-STAIR", "VT-OLD-STAIR", "VT-ROUTE-A", "VT-SERVICE-STAIR"])
+        self.assertEqual((summary["unresolved_vertical_geometry"], summary["closed_vertical_geometry"]), ([], ["VT-OLD-INCLINE"]))
+
+    def test_summary_is_blocking_while_a_vertical_is_unresolved(self) -> None:
+        items = [dict(item, status=registry.UNRESOLVED) if item["id"] == "VT-OLD-INCLINE" else item for item in self.items.values()]
+        summary = registry.summarize(items)
+        self.assertEqual(summary["status"], "ready_with_blocking_vertical_diagnostics")
         self.assertIn("VT-OLD-INCLINE (unresolved)", summary["blocking_reason"])
-        done = [dict(item, status=registry.GENERATED) for item in self.items.values()]
-        ready = registry.summarize(done)
-        self.assertEqual((ready["status"], ready["unresolved_vertical_geometry"], ready["blocking_reason"]), ("ready", [], ""))
 
     def test_shared_report_matches_the_registry(self) -> None:
         report = read(ROOT / "gen/shared/generation_report.json")

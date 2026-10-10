@@ -117,6 +117,7 @@ def main() -> int:
             "geometry_owners":{"horizontal_routes":"sector_rollouts","connectors":"sector_rollouts",**summary["owners"]},
             "generated_vertical_geometry":summary["generated_vertical_geometry"],
             "unresolved_vertical_geometry":summary["unresolved_vertical_geometry"],
+            "closed_vertical_geometry":summary["closed_vertical_geometry"],
             "blocking_reason":summary["blocking_reason"],
             "verticals":summary["verticals"],
             "connector_aliases":[item for item in audit.get("connectors", []) if item.get("zero_length")],

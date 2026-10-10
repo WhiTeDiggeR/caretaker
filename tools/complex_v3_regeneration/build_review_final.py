@@ -87,7 +87,7 @@ def main() -> int:
         (REVIEW / "sectors" / f"{sid.lower()}.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     readme = ["# Комплекс v4 — итоги ревизии", "",
               "Канонические SVG построены из утверждённых планов v3 (`tools/complex_v3_regeneration/build_canonical_from_approved.py`, "
-              "привязка — `approved_registration.json`). Каждое исправление принято пользователем и записано в [decisions.md](decisions.md) (D-01…D-43).", "",
+              "привязка — `approved_registration.json`). Каждое исправление принято пользователем и записано в [decisions.md](decisions.md) (D-01…D-44).", "",
               "## Статус сквозных вопросов", "", "| № | Вопрос | Статус | Чем закрыт |", "|---|---|---|---|"]
     readme += [f"| {g} | {t} | {s} | {n} |" for g, t, s, n in GLOBAL]
     readme += ["", "## Правила, принятые по ходу", "",
@@ -100,7 +100,7 @@ def main() -> int:
     for sid, rep in sorted(R.items()):
         readme.append(f"| [{sid}](sectors/{sid.lower()}.md) | {rep['level']} | {len(rep['rooms'])} | {rep['registration']['anisotropy_percent']}% |")
     readme += ["", "## Открыто", "",
-               "- VT-OLD-INCLINE (разрушенный наклонный тоннель) — отдельная геометрия.",
+               "- VT-OLD-INCLINE: тоннель обрушен, геометрии нет (D-44), в реестре статус `closed`.",
                "- G-05, G-12 — см. таблицу."]
     (REVIEW / "README.md").write_text("\n".join(readme) + "\n", encoding="utf-8", newline="\n")
     return 0
