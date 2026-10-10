@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -64,6 +65,25 @@ def circulation_entry(sector_id: str, parameterization: dict[str, Any]) -> dict[
     }
 
 
+
+def canonical_wall_height(source_svg: str) -> float:
+    """Wall height drawn in the canonical SVG (data-wall-height); every wall of a sector must carry the same value."""
+    text = (ROOT / source_svg).read_text(encoding="utf-8")
+    heights = {float(value) for value in re.findall(r'data-wall-height="([0-9.]+)"', text)}
+    if len(heights) != 1:
+        raise ValueError(f"{source_svg}: expected one wall height, found {sorted(heights)}")
+    return heights.pop()
+
+
+def set_shared_wall_height(sector: dict[str, Any], height: float) -> None:
+    arguments = sector["shared_args"]
+    value = f"{height:g}"
+    if "--wall-height" in arguments:
+        arguments[arguments.index("--wall-height") + 1] = value
+    else:
+        arguments[:0] = ["--wall-height", value]
+
+
 def apply_vertical_definitions(source_by_id: dict[str, dict[str, Any]]) -> None:
     """Replace the static stair configuration with the SVG-derived definitions."""
     hosts: dict[str, bool] = {}
@@ -117,6 +137,8 @@ def main(argv: list[str] | None = None) -> int:
             "sector_scene": catalog_entry["scene"],
             "authored_scene": f"res://scenes/complex_v4/set_dressing/sectors/{slug}_dressing.tscn",
         })
+        # The stair shaft walls start above the lower ceiling: use the wall height the plan really draws, not a legacy setting.
+        set_shared_wall_height(sector, canonical_wall_height(sector["source_svg"]))
         sectors.append(sector)
 
     document = {
