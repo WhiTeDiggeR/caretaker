@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/complex_v4/complex_v4_zone.tscn" id="1_zone"]
+[ext_resource type="PackedScene" path="res://scenes/complex_v4/set_dressing/sectors/l_old_receiving_dressing.tscn" id="2_dressing"]
+[ext_resource type="PackedScene" path="res://gen/l/l_old_receiving/Generated/Architecture/l_old_receiving_generated.tscn" id="3_architecture"]
+[ext_resource type="Script" path="res://scenes/complex_v4/regeneration/anchor_registry.gd" id="4_anchor_registry"]
+[ext_resource type="Script" path="res://scenes/complex_v4/regeneration/sector_anchor_controller.gd" id="5_anchor_controller"]
+
+
+[node name="L_OLD_RECEIVING" instance=ExtResource("1_zone")]
+sector_ids = PackedStringArray("L-OLD-RECEIVING")
+geometry_source = 1
+generated_architecture_scene = ExtResource("3_architecture")
+
+authored_content_scene = ExtResource("2_dressing")
+editor_preview_enabled = false
+metadata/complex_v4_sector_id = "L-OLD-RECEIVING"
+metadata/sector_id = "L-OLD-RECEIVING"
+
+[node name="Generated" type="Node3D" parent="."]
+metadata/content_owner = "regenerator"
+metadata/contract_version = "1.0.0"
+
+[node name="Architecture" parent="Generated" instance=ExtResource("3_architecture")]
+metadata/content_owner = "regenerator"
+
+[node name="Stairs" type="Node3D" parent="Generated"]
+metadata/content_owner = "regenerator"
+
+[node name="AuthoredContent" type="Node3D" parent="."]
+metadata/sector_id = "L-OLD-RECEIVING"
+metadata/content_owner = "author"
+
+[node name="SetDressing" parent="AuthoredContent" instance=ExtResource("2_dressing")]
+
+[node name="AnchorRegistry" type="Node" parent="."]
+script = ExtResource("4_anchor_registry")
+anchor_frames_path = "res://gen/l/l_old_receiving/anchor_frames.json"
+
+[node name="AnchorController" type="Node" parent="."]
+script = ExtResource("5_anchor_controller")
+anchor_frames_path = "res://gen/l/l_old_receiving/anchor_frames.json"
+object_bindings_path = "res://scenes/complex_v4/regeneration/rollout/lower/AuthoredContent/l_old_receiving/object_bindings.json"
+authored_scene_path = "res://scenes/complex_v4/set_dressing/sectors/l_old_receiving_dressing.tscn"

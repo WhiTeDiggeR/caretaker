@@ -1,6 +1,6 @@
 # U-EAST-SUPPORT
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v3/plans/sectors/upper/u_east_support.svg`. Высота стен 3.4 м. Габарит 21.1×26.7 м, x 10.0…31.1, z -7.1…19.6.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_east_support.svg`. Высота стен 5.0 м. Габарит 21.1×26.7 м, x 10.0…31.1, z -7.1…19.6.
 
 ![U-EAST-SUPPORT](img/u-east-support.png)
 

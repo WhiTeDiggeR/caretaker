@@ -1,6 +1,6 @@
 # U-CIRCULATION
 
-Этаж: верхний (LV-U). Источник: `synthetic: overview of the level`. Высота стен 4.5 м. Габарит 130.0×50.0 м, x -98.9…31.1, z 19.6…69.6.
+Этаж: верхний (LV-U). Источник: `synthetic: overview of the level`. Высота стен 5.0 м. Габарит 130.0×50.0 м, x -98.9…31.1, z 19.6…69.6.
 
 ![U-CIRCULATION](img/u-circulation.png)
 

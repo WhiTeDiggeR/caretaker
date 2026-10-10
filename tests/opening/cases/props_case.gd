@@ -13,7 +13,7 @@ func run(c: OpeningCheck) -> void:
 	var hero := _add(c, "staff_capsule_hero", Vector3(-2, 0, 0)) as StaffCapsule
 	await c.tree.process_frame
 	c.equal(occupied.panel_interactable.get_inspect_title(), "КАПСУЛА АВАРИЙНОГО СНА", "capsule panel is inspected")
-	c.is_true(occupied.panel_interactable.get_inspect_text().contains("Штатное пробуждение: нет команды"), "occupied capsule tells why the staff stays asleep")
+	c.is_true(occupied.panel_interactable.get_inspect_text().contains("безопасный маршрут эвакуации не подтверждён"), "occupied capsule tells why the staff stays asleep")
 	c.is_true(not occupied.is_open() and empty.is_open(), "occupied capsule is closed, empty one is open")
 	# Р-16: a large occupant (2.0 m, 0.6 m shoulders) lies under the closed lid with room to
 	# turn and raise the head.

@@ -1,0 +1,73 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/containment/reagent_panel.gd" id="1_panel"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="cabinet"]
+albedo_color = Color(0.22, 0.25, 0.23, 1)
+
+[sub_resource type="BoxMesh" id="cabinet_mesh"]
+material = SubResource("cabinet")
+size = Vector3(1.0, 1.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="cabinet_shape"]
+size = Vector3(1.0, 1.4, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="vent"]
+albedo_color = Color(0.2, 0.5, 0.75, 1)
+
+[sub_resource type="StandardMaterial3D" id="charge"]
+albedo_color = Color(0.8, 0.6, 0.12, 1)
+
+[sub_resource type="BoxMesh" id="vent_mesh"]
+material = SubResource("vent")
+size = Vector3(0.18, 0.18, 0.08)
+
+[sub_resource type="BoxMesh" id="charge_mesh"]
+material = SubResource("charge")
+size = Vector3(0.18, 0.18, 0.08)
+
+[sub_resource type="BoxShape3D" id="button_shape"]
+size = Vector3(0.22, 0.22, 0.1)
+
+[node name="ReagentPanel" type="StaticBody3D"]
+script = ExtResource("1_panel")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("cabinet_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("cabinet_shape")
+
+[node name="Status" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0.16)
+pixel_size = 0.0025
+modulate = Color(0.55, 1, 0.75, 1)
+font_size = 40
+outline_size = 8
+
+[node name="VentButton" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.22, 1.15, 0.18)
+
+[node name="Mesh" type="MeshInstance3D" parent="VentButton"]
+mesh = SubResource("vent_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="VentButton"]
+shape = SubResource("button_shape")
+
+[node name="Interactable" type="Node" parent="VentButton"]
+script = ExtResource("2_interactable")
+
+[node name="RechargeButton" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.22, 1.15, 0.18)
+
+[node name="Mesh" type="MeshInstance3D" parent="RechargeButton"]
+mesh = SubResource("charge_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="RechargeButton"]
+shape = SubResource("button_shape")
+
+[node name="Interactable" type="Node" parent="RechargeButton"]
+script = ExtResource("2_interactable")

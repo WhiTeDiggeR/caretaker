@@ -1,6 +1,6 @@
 # U-CHAMBER-6
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v3/plans/sectors/upper/u_chamber_6.svg`. Высота стен 5.0 м. Габарит 29.0×36.7 м, x 4.4…33.4, z 25.1…61.8.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_chamber_6.svg`. Высота стен 5.0 м. Габарит 29.0×36.7 м, x 4.4…33.4, z 25.1…61.8.
 
 ![U-CHAMBER-6](img/u-chamber-6.png)
 

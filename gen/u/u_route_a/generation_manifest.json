@@ -2,12 +2,12 @@
   "schema_id": "caretaker.sector_generation_result",
   "schema_version": "1.0.0",
   "contract_version": "1.0.0",
-  "map_id": "caretaker-complex-v3",
+  "map_id": "caretaker-complex-v4",
   "sector_id": "U-ROUTE-A",
-  "generation_id": "sha256:97357c2b8ee157587ea7d70f7e808641a84295bc8d30a380d6d90dcb846caa28",
+  "generation_id": "sha256:3f8fa269184cab3b14a15586bf4f2dc5056e115b255506d0631ad11b44bb47f7",
   "source": {
     "path": "docs/design/complex_v4/plans/generation/upper/u_route_a.svg",
-    "sha256": "sha256:79dece76e7bd848e815cc0d6271d7127a9fc26c05561767d69b2b86c49b83176"
+    "sha256": "sha256:7be5db07d8ca18191bc76925a2342dbafc124dfab89e0f14cff0ecc1b8fbce79"
   },
   "output_resource_dir": "res://gen/u/u_route_a",
   "local_to_world": {
@@ -88,6 +88,8 @@
         "3.6",
         "--shaft-wall-top",
         "6",
+        "--landing-depth",
+        "2.757",
         "--target-riser",
         "0.15",
         "--max-riser",
@@ -98,8 +100,6 @@
         "0.25",
         "--minimum-headroom",
         "2.4",
-        "--landing-depth",
-        "2",
         "--flight-gap",
         "0.7",
         "--railings",
@@ -142,7 +142,35 @@
         ],
         "stair_width_m": 1.8,
         "floor_height_m": 6.0,
-        "clearance_m": 0.01
+        "clearance_m": 0.01,
+        "door_targets": {
+          "entry": {
+            "door_id": "l-archive-a-door-03",
+            "sector_id": "L-ARCHIVE-A",
+            "axis": "x",
+            "actual_center": -53.472,
+            "expected_center": -53.472,
+            "line": [
+              -54.372,
+              11.867,
+              -52.572,
+              11.867
+            ]
+          },
+          "exit": {
+            "door_id": "u-route-a-door-03",
+            "sector_id": "U-ROUTE-A",
+            "axis": "x",
+            "actual_center": -50.972,
+            "expected_center": -50.972,
+            "line": [
+              -51.872,
+              11.867,
+              -50.072,
+              11.867
+            ]
+          }
+        }
       }
     }
   ],

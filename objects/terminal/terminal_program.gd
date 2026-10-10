@@ -7,6 +7,10 @@ extends RefCounted
 
 signal event_triggered(event: StringName)
 
+## Dynamic lines: a line whose whole text is `{name}` is replaced by the lines returned by
+## the Callable registered here (e.g. `{containment_monitor}`).
+static var text_providers: Dictionary[StringName, Callable] = {}
+
 var id := ""
 var title := ""
 var start := ""
@@ -91,11 +95,23 @@ func enter(screen_id: String) -> Dictionary:
 	var lines: Array[Dictionary] = []
 	for entry: Variant in screen.get("lines", []):
 		if entry is String:
-			lines.append({"text": entry, "wait": 0.0})
+			_append_line(lines, entry, 0.0)
 		elif check((entry as Dictionary).get("if", {})):
-			lines.append({"text": str(entry.get("text", "")), "wait": float(entry.get("wait", 0.0))})
+			_append_line(lines, str(entry.get("text", "")), float(entry.get("wait", 0.0)))
 	var options := _options_for(screen)
 	return {"id": screen_id, "lines": lines, "options": options, "next": str(screen.get("next", ""))}
+
+
+func _append_line(lines: Array[Dictionary], text: String, wait: float) -> void:
+	if text.begins_with("{") and text.ends_with("}"):
+		var provider: Callable = text_providers.get(StringName(text.substr(1, text.length() - 2)), Callable())
+		if provider.is_valid():
+			var first := true
+			for line: String in provider.call():
+				lines.append({"text": line, "wait": wait if first else 0.0})
+				first = false
+			return
+	lines.append({"text": text, "wait": wait})
 
 
 ## Applies the effects of a screen after its lines were shown and returns its options
