@@ -12,7 +12,9 @@ signal state_changed(state: State)
 signal opened
 signal closed
 
-enum Kind { POWERED, MECHANICAL }
+## POWERED — panel, needs section power; MECHANICAL — hand wheel (hold), no power;
+## MANUAL — ordinary handle (press), no power (service room doors).
+enum Kind { POWERED, MECHANICAL, MANUAL }
 enum State { CLOSED, OPENING, OPEN, CLOSING }
 ## How the leaf opens (decision R-10, docs/game_design/02-prop-standard.md):
 ## SIDE — slides into a wall pocket (hermetic and mechanical doors),
@@ -96,7 +98,7 @@ func is_closed() -> bool:
 
 
 func is_powered() -> bool:
-	return kind == Kind.MECHANICAL or GameState.is_section_powered(section)
+	return kind != Kind.POWERED or GameState.is_section_powered(section)
 
 
 ## Why the door cannot be operated now, or an empty string when it can.
@@ -170,12 +172,12 @@ func _prompt() -> String:
 	if state == State.OPEN:
 		if not close_prompt.is_empty():
 			return close_prompt
-		return "ЗАКРЫТЬ ДВЕРЬ" if kind == Kind.POWERED else "ПОВЕРНУТЬ ШТУРВАЛ: ЗАКРЫТЬ"
+		return "ПОВЕРНУТЬ ШТУРВАЛ: ЗАКРЫТЬ" if kind == Kind.MECHANICAL else "ЗАКРЫТЬ ДВЕРЬ"
 	if not open_prompt.is_empty():
 		return open_prompt
 	if operator.is_valid():
 		return "ОТКРЫТЬ ШЛЮЗ"
-	return "ОТКРЫТЬ ДВЕРЬ" if kind == Kind.POWERED else "ПОВЕРНУТЬ ШТУРВАЛ"
+	return "ПОВЕРНУТЬ ШТУРВАЛ" if kind == Kind.MECHANICAL else "ОТКРЫТЬ ДВЕРЬ"
 
 
 func _move(open_door: bool) -> void:
@@ -267,6 +269,10 @@ func _build() -> void:
 		if kind == Kind.POWERED:
 			_box(control, Vector3.ZERO, Vector3(0.28, 0.4, 0.08), _material(Color(0.12, 0.13, 0.14)), true)
 			_box(control, Vector3(0, 0.1, side * 0.045), Vector3(0.1, 0.1, 0.02), lamp_material, false)
+		elif kind == Kind.MANUAL:
+			control.position = Vector3(-(post_x + 0.12), CONTROL_HEIGHT - 0.2, side * (FRAME_DEPTH * 0.5 + 0.05))
+			_box(control, Vector3.ZERO, Vector3(0.06, 0.16, 0.06), _material(Color(0.55, 0.55, 0.5)), true)
+			_box(control, Vector3(0.07, 0.05, side * 0.03), Vector3(0.14, 0.03, 0.03), _material(Color(0.55, 0.55, 0.5)), false)
 		else:
 			var wheel := MeshInstance3D.new()
 			var torus := TorusMesh.new()
@@ -285,7 +291,7 @@ func _build() -> void:
 			control.add_child(shape)
 			_box(control, Vector3(0, 0.36, 0), Vector3(0.08, 0.08, 0.04), lamp_material, false)
 		var interactable := Interactable.new()
-		interactable.mode = Interactable.Mode.PRESS if kind == Kind.POWERED else Interactable.Mode.HOLD
+		interactable.mode = Interactable.Mode.HOLD if kind == Kind.MECHANICAL else Interactable.Mode.PRESS
 		interactable.hold_time = hold_time
 		interactable.prompt = _prompt()
 		control.add_child(interactable)
