@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/power_station.tscn" id="7_power"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/generator_station.tscn" id="8_generator"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/document_station.tscn" id="9_documents"]
+[ext_resource type="PackedScene" path="res://objects/containment/module_monitor.tscn" id="10_monitor"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
@@ -73,6 +74,9 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 22, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
 [node name="DocumentStation" parent="Stations" instance=ExtResource("9_documents")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3)
+[node name="ModuleMonitor" parent="Stations" instance=ExtResource("10_monitor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.8, 2)
+section = &"sandbox_a"
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)

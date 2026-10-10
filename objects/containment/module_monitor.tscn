@@ -1,0 +1,50 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/containment/module_monitor.gd" id="1_monitor"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="frame"]
+albedo_color = Color(0.18, 0.19, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="frame_mesh"]
+material = SubResource("frame")
+size = Vector3(2.0, 1.2, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="screen"]
+albedo_color = Color(0.02, 0.07, 0.06, 1)
+emission_enabled = true
+emission = Color(0.02, 0.1, 0.08, 1)
+
+[sub_resource type="QuadMesh" id="screen_mesh"]
+material = SubResource("screen")
+size = Vector2(1.84, 1.04)
+
+[sub_resource type="BoxShape3D" id="shape"]
+size = Vector3(2.0, 1.2, 0.14)
+
+[node name="ModuleMonitor" type="StaticBody3D"]
+script = ExtResource("1_monitor")
+
+[node name="Frame" type="MeshInstance3D" parent="."]
+mesh = SubResource("frame_mesh")
+
+[node name="Screen" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.065)
+mesh = SubResource("screen_mesh")
+
+[node name="Text" type="Label3D" parent="Screen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.005)
+pixel_size = 0.0022
+modulate = Color(0.55, 1, 0.75, 1)
+font_size = 30
+outline_size = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+width = 800.0
+autowrap_mode = 3
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("shape")
+
+[node name="Interactable" type="Node" parent="."]
+script = ExtResource("2_interactable")

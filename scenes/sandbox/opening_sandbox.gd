@@ -2,7 +2,8 @@ extends Node3D
 
 ## Test range for the opening systems, isolated from the startup scene.
 ## Each system adds its own station under `Stations`. Debug keys:
-## F1 — cycle power of every sandbox section, F2 — toggle caretaker access, F3 — reset state.
+## F1 — cycle power of every sandbox section, F2 — toggle caretaker access, F3 — reset state,
+## F4 — module 4 instability +10 %, F5 — module 4 stabilised by 20 %.
 
 const SECTIONS: Array[StringName] = [&"sandbox_a", &"sandbox_b"]
 const CARETAKER_ACCESS := &"caretaker"
@@ -13,6 +14,8 @@ func _ready() -> void:
 	for section in SECTIONS:
 		GameState.set_section_power(section, GameState.Power.EMERGENCY)
 	GameState.set_objective(&"sandbox", "Проверить станции полигона")
+	GameState.set_flag(&"containment_online")
+	GameState.grant_access(&"module_4")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -33,6 +36,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_F3:
 			_ready()
 			print("Sandbox state reset")
+		KEY_F4:
+			print("Module 4: ", Containment.add_instability(&"module_4", 10.0))
+		KEY_F5:
+			print("Module 4: ", Containment.stabilize(&"module_4", 20.0))
 		_:
 			return
 	get_viewport().set_input_as_handled()

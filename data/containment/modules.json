@@ -1,0 +1,39 @@
+{
+  "stage_thresholds": [25, 50, 75, 100],
+  "stage_names": ["СПОКОЙНЫЙ СОН", "ТРЕВОГА", "БЕСПОКОЙСТВО", "ПРЕДПРОБУЖДЕНИЕ", "ПРОБУЖДЕНИЕ"],
+  "catastrophe_pairs": [["module_3", "module_4"]],
+  "modules": {
+    "module_3": {
+      "label": "МОДУЛЬ 3",
+      "start": 30,
+      "growth_per_minute": 0.6,
+      "active_when": {"flag": "containment_online"},
+      "visible_when": {"access": "module_3"},
+      "chemical_protocol": true
+    },
+    "module_4": {
+      "label": "МОДУЛЬ 4",
+      "start": 55,
+      "growth_per_minute": 1.2,
+      "active_when": {"flag": "containment_online"},
+      "visible_when": {"access": "module_4"},
+      "chemical_protocol": true
+    },
+    "module_5": {
+      "label": "МОДУЛЬ 5",
+      "start": 12,
+      "growth_per_minute": 0.2,
+      "active_when": {"flag": "containment_online"},
+      "visible_when": {"access": "module_5"},
+      "chemical_protocol": true
+    },
+    "module_6": {
+      "label": "МОДУЛЬ 6",
+      "start": 8,
+      "growth_per_minute": 0.15,
+      "active_when": {"flag": "containment_online"},
+      "visible_when": {"access": "module_6"},
+      "chemical_protocol": true
+    }
+  }
+}
