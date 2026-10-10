@@ -103,8 +103,8 @@ def main() -> int:
         expected_neighbors = sorted(passport_by_sector[item["sector_id"]].get("neighbors", []))
         if item["neighbors"] != expected_neighbors:
             errors.append(f"neighbor mismatch for {item['sector_id']}")
-    if assembly.count("complex_v3_infrastructure.tscn") != 1:
-        errors.append("assembly must instance shared infrastructure exactly once")
+    if assembly.count("complex_v3_infrastructure.tscn") != 0:
+        errors.append("assembly must not instance the v3 handoff infrastructure preview")
     builder = (SCENE_DIR / "complex_v3_blockout.gd").read_text(encoding="utf-8")
     wrapper = (SCENE_DIR / "complex_v3_sector_wrapper.gd").read_text(encoding="utf-8")
     zone_template = (SCENE_DIR / "complex_v3_zone.tscn").read_text(encoding="utf-8")
@@ -128,7 +128,7 @@ def main() -> int:
             print(f"ERROR: {error}")
         print(f"FAILED: {len(errors)} issue(s)")
         return 1
-    print(f"OK: 32 sector scenes match passports, {expected_space_count} spaces and one shared infrastructure scene")
+    print(f"OK: 32 sector scenes match passports, {expected_space_count} spaces and no v3 handoff infrastructure")
     return 0
 
 

@@ -1,7 +1,6 @@
-[gd_scene load_steps=35 format=3]
+[gd_scene load_steps=34 format=3]
 
 [ext_resource type="Script" path="res://scenes/complex_v3_blockout/complex_v3_assembly.gd" id="1_assembly"]
-[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/complex_v3_infrastructure.tscn" id="2_infrastructure"]
 [ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/zones/lower/l_archive_a.tscn" id="03_l_archive_a"]
 [ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/zones/lower/l_central_core.tscn" id="04_l_central_core"]
 [ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/zones/lower/l_chamber_1.tscn" id="05_l_chamber_1"]
@@ -72,5 +71,3 @@ script = ExtResource("1_assembly")
 [node name="U_MEDBAY" parent="Zones" instance=ExtResource("32_u_medbay")]
 [node name="U_ROUTE_A" parent="Zones" instance=ExtResource("33_u_route_a")]
 [node name="U_SECURITY" parent="Zones" instance=ExtResource("34_u_security")]
-
-[node name="Infrastructure" parent="." instance=ExtResource("2_infrastructure")]

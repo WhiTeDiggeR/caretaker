@@ -5,9 +5,9 @@ class_name ComplexV3Blockout
 const HANDOFF_PATH := "res://docs/design/complex_v3/handoff/geometry/complex-handoff.json"
 const SECTOR_CATALOG_PATH := "res://scenes/complex_v3_blockout/sector_catalog.json"
 const EXPECTED_COUNTS := {
-	"route_spaces": 7,
-	"anchors": 7,
-	"transitions": 8,
+	"route_spaces": 0,
+	"anchors": 0,
+	"transitions": 0,
 }
 
 @export var include_ceilings := true
@@ -31,7 +31,7 @@ func _ready() -> void:
 	_compile_sector_catalog()
 	set_meta("map_id", str(_handoff.get("map_id", "")))
 	set_meta("units", str(_handoff.get("units", "")))
-	set_meta("composition", "32 sector scenes + shared infrastructure")
+	set_meta("composition", "32 production sector scenes")
 	show_full_complex()
 
 

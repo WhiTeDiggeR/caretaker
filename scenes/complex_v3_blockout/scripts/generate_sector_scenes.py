@@ -103,7 +103,6 @@ def main() -> None:
     created_scenes = 0
     assembly_resources = [
         '[ext_resource type="Script" path="res://scenes/complex_v3_blockout/complex_v3_assembly.gd" id="1_assembly"]',
-        '[ext_resource type="PackedScene" path="res://scenes/complex_v3_blockout/complex_v3_infrastructure.tscn" id="2_infrastructure"]',
     ]
     assembly_nodes: list[str] = []
     for index, passport in enumerate(passports, start=3):
@@ -232,8 +231,6 @@ def main() -> None:
             '[node name="Zones" type="Node3D" parent="."]',
             "",
             *assembly_nodes,
-            "",
-            '[node name="Infrastructure" parent="." instance=ExtResource("2_infrastructure")]',
             "",
         ]
     )
