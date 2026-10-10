@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/document_station.tscn" id="9_documents"]
 [ext_resource type="PackedScene" path="res://objects/containment/module_monitor.tscn" id="10_monitor"]
 [ext_resource type="PackedScene" path="res://objects/dream/immersion_chair.tscn" id="11_chair"]
+[ext_resource type="PackedScene" path="res://objects/containment/reagent_panel.tscn" id="12_reagent"]
+[ext_resource type="Script" path="res://objects/containment/module_chamber.gd" id="13_chamber"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
@@ -36,6 +38,9 @@ uv1_scale = Vector3(0.5, 0.5, 0.5)
 [sub_resource type="BoxMesh" id="floor_mesh"]
 material = SubResource("floor_material")
 size = Vector3(80, 0.2, 80)
+
+[sub_resource type="BoxShape3D" id="chamber_shape"]
+size = Vector3(4, 3, 4)
 
 [sub_resource type="BoxShape3D" id="floor_shape"]
 size = Vector3(80, 0.2, 80)
@@ -91,6 +96,15 @@ text = "КРЕСЛО ПОГРУЖЕНИЯ · МОДУЛЬ 4
 тестовый сон: печать, врата, лава"
 font_size = 44
 outline_size = 10
+[node name="ReagentPanel" parent="Stations" instance=ExtResource("12_reagent")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5.5, 0, 9.5)
+
+[node name="ModuleChamber" type="Area3D" parent="Stations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.5, 9.5)
+script = ExtResource("13_chamber")
+
+[node name="Collision" type="CollisionShape3D" parent="Stations/ModuleChamber"]
+shape = SubResource("chamber_shape")
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)

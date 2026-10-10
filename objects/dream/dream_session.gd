@@ -10,7 +10,9 @@ signal entered(module_id: StringName)
 signal left(module_id: StringName, reason: Exit)
 signal seal_restored(module_id: StringName)
 
-enum Exit { GATE, DEATH }
+## GATE — voluntary exit, DEATH — killed in the dream, WOKEN — the module was gassed and
+## object 2 pulled the connected hero out (chemical protocol).
+enum Exit { GATE, DEATH, WOKEN }
 
 const DATA_PATH := "res://data/dreams/dreams.json"
 const CHAIR_GROUP := &"immersion_chairs"
@@ -47,6 +49,9 @@ func _ready() -> void:
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.add_child(_fade)
+	Containment.hero_woken.connect(func(id: StringName) -> void:
+		if in_dream and id == module_id:
+			_leave(Exit.WOKEN))
 
 
 func load_config(data: Dictionary) -> void:
@@ -128,13 +133,20 @@ func arrive_in_reality(scene_root: Node, reason: Exit) -> void:
 
 
 func return_title(reason: Exit) -> String:
-	return "ПОГРУЖЕНИЕ ЗАВЕРШЕНО" if reason == Exit.GATE else "ВЫБРОС ИЗ СНА"
+	match reason:
+		Exit.GATE:
+			return "ПОГРУЖЕНИЕ ЗАВЕРШЕНО"
+		Exit.WOKEN:
+			return "ЭКСТРЕННОЕ ПРОБУЖДЕНИЕ"
+	return "ВЫБРОС ИЗ СНА"
 
 
 func return_text(reason: Exit) -> String:
 	var text := "В реальности прошло %s; во сне — около %s." % [_duration(real_seconds), _duration(subjective_seconds)]
 	if reason == Exit.DEATH:
 		text = "Связь со сном прервана. Нестабильность модуля выросла.\n" + text
+	elif reason == Exit.WOKEN:
+		text = "Модуль заполнен снотворным. Силуэт из сна вытолкнул вас наружу — времени на ремонт меньше.\n" + text
 	return text
 
 

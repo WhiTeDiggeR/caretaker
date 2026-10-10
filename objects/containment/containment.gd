@@ -1,7 +1,13 @@
 extends Node
 
 ## Containment modules (autoload `Containment`): instability 0–100 % of every prisoner's
-## sleep, its stages, awakening and the catastrophe of a forbidden pair waking together.
+## sleep, its stages, awakening and the catastrophe of a forbidden pair waking together,
+## and the emergency chemical protocol of modules 3–6 (canon, docs/world/02-world-rules.md):
+## at the trigger threshold the module warns, seals and fills with sleeping gas; the prisoner
+## is held in chemical sleep for a repair window. Reagent is limited: the module must be
+## vented and recharged from the stock before it can fire again. Anyone inside without the
+## chair falls asleep (defeat); a hero connected to the chair is woken by object 2 and gets
+## a shorter window.
 ## Runs in real time whatever scene is loaded, so the complex keeps living while the
 ## hero is inside a dream. Parameters: data/containment/modules.json.
 ## State is saved through GameState.set_system_data(&"containment", …).
@@ -10,20 +16,42 @@ signal instability_changed(module_id: StringName, value: float)
 signal stage_changed(module_id: StringName, stage: int)
 signal module_awakened(module_id: StringName)
 signal catastrophe(module_ids: Array[StringName])
+signal chemical_warning(module_id: StringName, seconds: float)
+signal module_sealed(module_id: StringName)
+signal repair_window_ended(module_id: StringName)
+signal hero_gassed(module_id: StringName)
+signal hero_woken(module_id: StringName)
+signal reagent_changed
 
 enum Stage { CALM, ALARM, UNREST, PRE_WAKE, AWAKE }
+enum Chemical { READY, WARNING, SEALED, SPENT }
 
 const DATA_PATH := "res://data/containment/modules.json"
 const SYSTEM := &"containment"
 const MAX_INSTABILITY := 100.0
 const CATASTROPHE_FLAG := &"containment/catastrophe"
 const MONITOR_HIDDEN_LINE := "Прочие модули — засекречено / нет связи."
+const GASSED_FLAG := &"containment/hero_gassed"
+const STOCK_KEY := "_reagent_stock"
+const CHEMICAL_NAMES: Array[String] = ["ПРОТОКОЛ ГОТОВ", "ВНИМАНИЕ: ГЕРМЕТИЗАЦИЯ", "ХИМИЧЕСКИЙ СОН", "РЕАГЕНТ ИЗРАСХОДОВАН"]
+const REASON_NO_GAS := "ВЕНТИЛЯЦИЯ НЕ ТРЕБУЕТСЯ"
+const REASON_VENTING := "ИДЁТ ВЕНТИЛЯЦИЯ"
+const REASON_GAS := "СНАЧАЛА ВЕНТИЛЯЦИЯ"
+const REASON_CHARGED := "ПРОТОКОЛ ЗАРЯЖЕН"
+const REASON_NO_STOCK := "НЕТ ЗАПАСА РЕАГЕНТА"
+const REASON_SEALED := "МОДУЛЬ ГЕРМЕТИЗИРОВАН"
 
 var thresholds: Array = [25.0, 50.0, 75.0, 100.0]
 var stage_names: Array = []
 var catastrophe_pairs: Array = []
 ## Module parameters by id (label, start, growth_per_minute, active_when, visible_when...).
 var modules: Dictionary[StringName, Dictionary] = {}
+## Chemical protocol parameters: trigger_at, warning_seconds, repair_window_seconds,
+## woken_window_factor, vent_seconds, initial_reagent_stock.
+var chemical: Dictionary = {}
+
+## Modules whose chamber the hero is standing in (set by ModuleChamber areas).
+var _hero_inside: Dictionary[StringName, bool] = {}
 
 ## String(id) -> {"value": float, "held": bool}; String keys survive the JSON round trip.
 var _state: Dictionary = {}
@@ -41,6 +69,7 @@ func load_config(data: Dictionary) -> void:
 	thresholds = (data.get("stage_thresholds", thresholds) as Array).map(func(v: Variant) -> float: return float(v))
 	stage_names = data.get("stage_names", [])
 	catastrophe_pairs = data.get("catastrophe_pairs", [])
+	chemical = data.get("chemical", {})
 	modules.clear()
 	var raw: Dictionary = data.get("modules", {})
 	for id: String in raw:
@@ -54,6 +83,8 @@ func _process(delta: float) -> void:
 
 ## Advances every active module by `seconds` of real time.
 func tick(seconds: float) -> void:
+	for id: StringName in modules:
+		_tick_chemical(id, seconds)
 	for id: StringName in modules:
 		var config: Dictionary = modules[id]
 		if is_held(id) or is_awake(id) or not StateRules.check(config.get("active_when", {})):
@@ -124,9 +155,159 @@ func monitor_lines() -> PackedStringArray:
 		if not is_visible_on_monitor(id):
 			continue
 		var label := str(modules[id].get("label", id))
-		lines.append("%s — %d %% — %s" % [label, roundi(get_instability(id)), stage_name(get_stage(id))])
+		var line := "%s — %d %% — %s" % [label, roundi(get_instability(id)), stage_name(get_stage(id))]
+		if has_chemical_protocol(id) and chemical_phase(id) != Chemical.READY:
+			line += " — " + CHEMICAL_NAMES[chemical_phase(id)]
+			if chemical_phase(id) in [Chemical.WARNING, Chemical.SEALED]:
+				line += " %s" % _clock(chemical_timer(id))
+		lines.append(line)
 	lines.append(MONITOR_HIDDEN_LINE)
 	return lines
+
+
+# --- Chemical protocol -------------------------------------------------------
+
+func has_chemical_protocol(id: StringName) -> bool:
+	return bool((modules.get(id, {}) as Dictionary).get("chemical_protocol", false))
+
+
+func chemical_phase(id: StringName) -> int:
+	return int(_chem(id)["phase"])
+
+
+## Seconds left of the warning or of the repair window; 0 otherwise.
+func chemical_timer(id: StringName) -> float:
+	return float(_chem(id)["timer"])
+
+
+func has_gas(id: StringName) -> bool:
+	return bool(_chem(id)["gas"])
+
+
+func is_venting(id: StringName) -> bool:
+	return float(_chem(id)["venting"]) > 0.0
+
+
+func is_charged(id: StringName) -> bool:
+	return bool(_chem(id)["charged"])
+
+
+func reagent_stock() -> int:
+	return int(_state.get(STOCK_KEY, int(chemical.get("initial_reagent_stock", 0))))
+
+
+func add_reagent_stock(amount: int) -> void:
+	_state[STOCK_KEY] = reagent_stock() + amount
+	_save()
+	reagent_changed.emit()
+
+
+func set_hero_inside(id: StringName, inside: bool) -> void:
+	_hero_inside[id] = inside
+
+
+func is_hero_inside(id: StringName) -> bool:
+	return _hero_inside.get(id, false)
+
+
+func vent_lock_reason(id: StringName) -> String:
+	if chemical_phase(id) == Chemical.SEALED or chemical_phase(id) == Chemical.WARNING:
+		return REASON_SEALED
+	if is_venting(id):
+		return REASON_VENTING
+	if not has_gas(id):
+		return REASON_NO_GAS
+	return ""
+
+
+## Starts the ventilation of a sealed-off module after its repair window.
+func vent(id: StringName) -> bool:
+	if not vent_lock_reason(id).is_empty():
+		return false
+	_chem(id)["venting"] = float(chemical.get("vent_seconds", 30.0))
+	_save()
+	reagent_changed.emit()
+	return true
+
+
+func recharge_lock_reason(id: StringName) -> String:
+	if chemical_phase(id) == Chemical.SEALED or chemical_phase(id) == Chemical.WARNING:
+		return REASON_SEALED
+	if is_charged(id):
+		return REASON_CHARGED
+	if has_gas(id) or is_venting(id):
+		return REASON_GAS
+	if reagent_stock() <= 0:
+		return REASON_NO_STOCK
+	return ""
+
+
+## Loads one reagent charge from the stock into a vented module.
+func recharge(id: StringName) -> bool:
+	if not recharge_lock_reason(id).is_empty():
+		return false
+	_state[STOCK_KEY] = reagent_stock() - 1
+	var chem := _chem(id)
+	chem["charged"] = true
+	chem["phase"] = Chemical.READY
+	_save()
+	reagent_changed.emit()
+	return true
+
+
+func _tick_chemical(id: StringName, seconds: float) -> void:
+	if not has_chemical_protocol(id) or is_awake(id):
+		return
+	var chem := _chem(id)
+	if float(chem["venting"]) > 0.0:
+		chem["venting"] = maxf(float(chem["venting"]) - seconds, 0.0)
+		if float(chem["venting"]) <= 0.0:
+			chem["gas"] = false
+			reagent_changed.emit()
+	match int(chem["phase"]):
+		Chemical.READY:
+			if is_charged(id) and not has_gas(id) and get_instability(id) >= float(chemical.get("trigger_at", 95.0)):
+				chem["phase"] = Chemical.WARNING
+				chem["timer"] = float(chemical.get("warning_seconds", 10.0))
+				chemical_warning.emit(id, chem["timer"])
+		Chemical.WARNING:
+			chem["timer"] = float(chem["timer"]) - seconds
+			if float(chem["timer"]) <= 0.0:
+				_seal(id)
+		Chemical.SEALED:
+			chem["timer"] = float(chem["timer"]) - seconds
+			if float(chem["timer"]) <= 0.0:
+				chem["timer"] = 0.0
+				chem["phase"] = Chemical.SPENT
+				set_held(id, false)
+				repair_window_ended.emit(id)
+	_save()
+
+
+func _seal(id: StringName) -> void:
+	var chem := _chem(id)
+	chem["phase"] = Chemical.SEALED
+	chem["charged"] = false
+	chem["gas"] = true
+	var window := float(chemical.get("repair_window_seconds", 180.0))
+	set_held(id, true)
+	module_sealed.emit(id)
+	if Dreams.in_dream and Dreams.module_id == id:
+		# Connected to the chair: object 2 reaches the hero through the dream.
+		window *= float(chemical.get("woken_window_factor", 0.4))
+		hero_woken.emit(id)
+	elif is_hero_inside(id):
+		GameState.set_flag(GASSED_FLAG)
+		hero_gassed.emit(id)
+	chem["timer"] = window
+	_save()
+
+
+func _chem(id: StringName) -> Dictionary:
+	var entry := _ensure(id)
+	if not entry.has("chem"):
+		entry["chem"] = {"phase": Chemical.READY, "timer": 0.0, "gas": false, "charged": has_chemical_protocol(id), "venting": 0.0}
+	return entry["chem"]
 
 
 func _set_value(id: StringName, value: float) -> void:
@@ -184,6 +365,11 @@ func _on_state_loaded() -> void:
 	for id: StringName in modules:
 		_stages[id] = get_stage(id)
 	_save()
+
+
+static func _clock(seconds: float) -> String:
+	var total := maxi(ceili(seconds), 0)
+	return "%02d:%02d" % [total / 60, total % 60]
 
 
 static func _read(path: String) -> Dictionary:

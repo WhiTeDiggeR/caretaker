@@ -3,7 +3,8 @@ extends Node3D
 ## Test range for the opening systems, isolated from the startup scene.
 ## Each system adds its own station under `Stations`. Debug keys:
 ## F1 — cycle power of every sandbox section, F2 — toggle caretaker access, F3 — reset state,
-## F4 — module 4 instability +10 %, F5 — module 4 stabilised by 20 %.
+## F4 — module 4 instability +10 %, F5 — module 4 stabilised by 20 %,
+## F6 — module 4 straight to the chemical protocol threshold.
 
 const SECTIONS: Array[StringName] = [&"sandbox_a", &"sandbox_b"]
 const CARETAKER_ACCESS := &"caretaker"
@@ -50,6 +51,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			print("Module 4: ", Containment.add_instability(&"module_4", 10.0))
 		KEY_F5:
 			print("Module 4: ", Containment.stabilize(&"module_4", 20.0))
+		KEY_F6:
+			var trigger := float(Containment.chemical.get("trigger_at", 95.0))
+			Containment.add_instability(&"module_4", maxf(trigger - Containment.get_instability(&"module_4"), 0.0))
+			print("Module 4 at the chemical threshold")
 		_:
 			return
 	get_viewport().set_input_as_handled()
