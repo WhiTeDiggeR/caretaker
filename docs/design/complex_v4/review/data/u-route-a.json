@@ -1,0 +1,628 @@
+{
+  "sector_id": "U-ROUTE-A",
+  "level": "LV-U",
+  "source_plan": "docs/design/complex_v3/plans/sectors/upper/u_emergency.svg",
+  "registration": {
+    "plan_px_per_m_x": 13.5,
+    "plan_px_per_m_y": 13.5,
+    "anisotropy_percent": 0.0,
+    "world_envelope_m": [
+      -55.56,
+      11.87,
+      6.67,
+      7.78
+    ],
+    "check_pairs": [
+      {
+        "plan_px": [
+          670,
+          140,
+          90,
+          180
+        ],
+        "overview_px": [
+          450,
+          100,
+          60,
+          120
+        ],
+        "plan_size_m": [
+          6.67,
+          13.33
+        ],
+        "overview_size_m": [
+          6.67,
+          13.33
+        ]
+      },
+      {
+        "plan_px": [
+          760,
+          140,
+          90,
+          180
+        ],
+        "overview_px": [
+          510,
+          100,
+          60,
+          120
+        ],
+        "plan_size_m": [
+          6.67,
+          13.33
+        ],
+        "overview_size_m": [
+          6.67,
+          13.33
+        ]
+      }
+    ]
+  },
+  "wall_height_m": 3.4,
+  "rooms": [
+    {
+      "id": "u-route-a-floor-01",
+      "space_id": "U-ROUTE-A/dver-iz-holla",
+      "label": "ДВЕРЬ ИЗ ХОЛЛА",
+      "class": "corridor",
+      "source_id": "u_emergency-space-006",
+      "plan_px": [
+        640.0,
+        253.0,
+        30.0,
+        60.0
+      ],
+      "world_m": [
+        -62.222,
+        6.904,
+        2.222,
+        4.444
+      ],
+      "size_m": [
+        2.22,
+        4.44
+      ],
+      "area_m2": 9.9
+    },
+    {
+      "id": "u-route-a-floor-02",
+      "space_id": "U-ROUTE-A/sluzhebnyy",
+      "label": "СЛУЖЕБНЫЙ / СКЛАД / штатное помещение",
+      "class": "support",
+      "source_id": "u_emergency-space-007",
+      "plan_px": [
+        670.0,
+        140.0,
+        90.0,
+        180.0
+      ],
+      "world_m": [
+        -60.0,
+        -1.467,
+        6.667,
+        13.334
+      ],
+      "size_m": [
+        6.67,
+        13.33
+      ],
+      "area_m2": 88.9
+    },
+    {
+      "id": "u-route-a-floor-03",
+      "space_id": "U-ROUTE-A/ventilyaciya",
+      "label": "ВЕНТИЛЯЦИЯ / коммуникации · трубы / поздний проём / проём к лестнице",
+      "class": "support",
+      "source_id": "u_emergency-space-008",
+      "plan_px": [
+        760.0,
+        140.0,
+        90.0,
+        180.0
+      ],
+      "world_m": [
+        -53.333,
+        -1.467,
+        6.666,
+        13.334
+      ],
+      "size_m": [
+        6.67,
+        13.33
+      ],
+      "area_m2": 88.9
+    },
+    {
+      "id": "u-route-a-floor-04",
+      "space_id": "U-ROUTE-A/lestnica-a",
+      "label": "ЛЕСТНИЦА A ↓ / вход из вентиляции",
+      "class": "support",
+      "source_id": "u_emergency-space-009",
+      "plan_px": [
+        730.0,
+        320.0,
+        90.0,
+        105.0
+      ],
+      "world_m": [
+        -55.556,
+        11.867,
+        6.667,
+        7.777
+      ],
+      "size_m": [
+        6.67,
+        7.78
+      ],
+      "area_m2": 51.8
+    }
+  ],
+  "openings": [
+    {
+      "id": "u-route-a-door-01",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "u_emergency-opening-005",
+      "width_m": 2.81,
+      "rooms": [
+        "U-ROUTE-A/dver-iz-holla",
+        "U-ROUTE-A/sluzhebnyy"
+      ],
+      "world_m": [
+        -60.0,
+        7.719,
+        -60.0,
+        10.533
+      ]
+    },
+    {
+      "id": "u-route-a-door-02",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "u_emergency-opening-006",
+      "width_m": 3.26,
+      "rooms": [
+        "U-ROUTE-A/sluzhebnyy",
+        "U-ROUTE-A/ventilyaciya"
+      ],
+      "world_m": [
+        -53.333,
+        5.793,
+        -53.333,
+        9.052
+      ]
+    },
+    {
+      "id": "u-route-a-door-03",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "u_emergency-opening-008",
+      "width_m": 1.8,
+      "rooms": [
+        "U-ROUTE-A/lestnica-a",
+        "U-ROUTE-A/ventilyaciya"
+      ],
+      "world_m": [
+        -51.493,
+        11.867,
+        -49.693,
+        11.867
+      ]
+    },
+    {
+      "id": "u-route-a-door-04",
+      "type": "door",
+      "source": "amendment D-40f",
+      "source_id": "amendment-D-40f",
+      "width_m": 1.8,
+      "rooms": [
+        "U-ROUTE-A/dver-iz-holla"
+      ],
+      "world_m": [
+        -62.222,
+        7.03,
+        -62.222,
+        8.83
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "u_emergency-geometry-001",
+      "role": "context",
+      "class": "shell",
+      "label": "КАПСУЛЬНЫЙ ЗАЛ АВАРИЙНОГО БЛОКА / изолированный сон персонала · автономные системы / повреждённая",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -107.78,
+        -7.02,
+        21.11,
+        18.89
+      ]
+    },
+    {
+      "source_id": "u_emergency-geometry-002",
+      "role": "context",
+      "class": "personnel",
+      "label": "КАПСУЛЬНЫЙ ЗАЛ АВАРИЙНОГО БЛОКА / изолированный сон персонала · автономные системы / повреждённая",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -107.78,
+        -7.02,
+        21.11,
+        18.89
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-001",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -105.85,
+        -1.02,
+        4.74,
+        3.19
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-002",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -99.56,
+        -1.02,
+        4.74,
+        3.19
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-003",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -93.26,
+        -1.02,
+        4.74,
+        3.19
+      ]
+    },
+    {
+      "source_id": "u_emergency-geometry-003",
+      "role": "context",
+      "class": "damaged",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -105.85,
+        5.35,
+        4.74,
+        3.19
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-004",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -99.56,
+        5.35,
+        4.74,
+        3.19
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-005",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -93.26,
+        5.35,
+        4.74,
+        3.19
+      ]
+    },
+    {
+      "source_id": "u_emergency-space-001",
+      "role": "context",
+      "class": "support",
+      "label": "ВНУТРЕННЕЕ / ТЕХПОМЕЩЕНИЕ / питание · вентиляция",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -107.78,
+        11.87,
+        7.78,
+        7.78
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-006",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -106.44,
+        17.87,
+        1.41,
+        1.11
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-007",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -104.59,
+        17.87,
+        1.41,
+        1.11
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-008",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -102.74,
+        17.87,
+        1.41,
+        1.11
+      ]
+    },
+    {
+      "source_id": "u_emergency-space-002",
+      "role": "context",
+      "class": "corridor",
+      "label": "ГЕРМОТАМБУР",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -86.67,
+        2.46,
+        3.33,
+        4.96
+      ]
+    },
+    {
+      "source_id": "u_emergency-geometry-004",
+      "role": "context",
+      "class": "shell",
+      "label": "РАСПРЕДЕЛИТЕЛЬНЫЙ ХОЛЛ ПЕРСОНАЛА / самостоятельный хаб · не часть аварийного блока / доступно вручную / остров навигации / локальная связь · контроль дверей / медотсек заблокирован / проход из холла завален",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -83.33,
+        -2.58,
+        21.11,
+        23.33
+      ]
+    },
+    {
+      "source_id": "u_emergency-geometry-005",
+      "role": "context",
+      "class": "personnel",
+      "label": "РАСПРЕДЕЛИТЕЛЬНЫЙ ХОЛЛ ПЕРСОНАЛА / самостоятельный хаб · не часть аварийного блока / доступно вручную / остров навигации / локальная связь · контроль дверей / медотсек заблокирован / проход из холла завален",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -83.33,
+        -2.58,
+        21.11,
+        23.33
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-009",
+      "role": "context",
+      "class": "equipment",
+      "label": "остров навигации / локальная связь · контроль дверей",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -77.48,
+        6.09,
+        9.48,
+        5.04
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-010",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -81.26,
+        13.13,
+        3.33,
+        4.59
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-011",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -67.63,
+        13.13,
+        3.33,
+        4.59
+      ]
+    },
+    {
+      "source_id": "u_emergency-space-003",
+      "role": "context",
+      "class": "context-zone",
+      "label": "МЕДОТСЕК / приёмная · триаж / положение сохранено",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -97.78,
+        11.87,
+        13.33,
+        7.78
+      ]
+    },
+    {
+      "source_id": "u_emergency-space-004",
+      "role": "context",
+      "class": "corridor",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -84.44,
+        14.68,
+        1.11,
+        3.85
+      ]
+    },
+    {
+      "source_id": "u_emergency-space-005",
+      "role": "context",
+      "class": "corridor",
+      "label": "ГЛАВНЫЙ ПАССАЖИРСКИЙ КОРИДОР · К БЫТОВОМУ КРЫЛУ И ПЕРСОНАЛЬНЫМ МАРШРУТАМ",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -94.44,
+        20.76,
+        47.78,
+        5.55
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-012",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -58.52,
+        6.83,
+        3.7,
+        3.56
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-013",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -51.85,
+        5.2,
+        1.33,
+        4.44
+      ]
+    },
+    {
+      "source_id": "u_emergency-equipment-014",
+      "role": "context",
+      "class": "equipment",
+      "label": "",
+      "reason": "outside this sector's rooms (shared drawing)",
+      "world_m": [
+        -49.48,
+        5.2,
+        1.33,
+        4.44
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "u_emergency-opening-010",
+      "source": "support-gap",
+      "plan_px": [
+        320.0,
+        70.0,
+        104.0
+      ],
+      "world_m": [
+        -104.444,
+        11.867,
+        -101.926,
+        11.867
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "u_emergency-annotation-001",
+      "source": "gate",
+      "plan_px": [
+        310.0,
+        202.0,
+        251.0
+      ],
+      "world_m": [
+        -86.667,
+        3.126,
+        -86.667,
+        6.756
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "u_emergency-annotation-002",
+      "source": "gate",
+      "plan_px": [
+        355.0,
+        202.0,
+        251.0
+      ],
+      "world_m": [
+        -83.333,
+        3.126,
+        -83.333,
+        6.756
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    },
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "u_emergency-annotation-003",
+      "source": "gate",
+      "plan_px": [
+        355.0,
+        363.0,
+        405.0
+      ],
+      "world_m": [
+        -83.333,
+        15.052,
+        -83.333,
+        18.163
+      ],
+      "gtype": "door",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    }
+  ],
+  "wall_segments": 11,
+  "amendments": [
+    "D-03",
+    "D-06a",
+    "D-06b",
+    "D-40e",
+    "D-40f"
+  ],
+  "feature_rects_ignored": 0,
+  "unmapped_other_elements": 4
+}

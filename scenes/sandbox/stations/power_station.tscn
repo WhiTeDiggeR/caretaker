@@ -1,0 +1,176 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/power/section_light.gd" id="1_light"]
+[ext_resource type="Script" path="res://objects/power/section_sound.gd" id="2_sound"]
+[ext_resource type="Script" path="res://objects/power/power_cascade.gd" id="3_cascade"]
+
+[sub_resource type="StandardMaterial3D" id="concrete"]
+albedo_color = Color(0.36, 0.36, 0.35, 1)
+
+[sub_resource type="StandardMaterial3D" id="glow"]
+albedo_color = Color(1, 0.95, 0.85, 1)
+emission_enabled = true
+emission = Color(1, 0.93, 0.8, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="BoxMesh" id="glow_mesh"]
+material = SubResource("glow")
+size = Vector3(0.9, 0.06, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="generator"]
+albedo_color = Color(0.3, 0.33, 0.3, 1)
+metallic = 0.5
+
+[sub_resource type="BoxMesh" id="generator_mesh"]
+material = SubResource("generator")
+size = Vector3(1.6, 1.6, 2.4)
+
+[node name="PowerStation" type="Node3D"]
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, 3)
+pixel_size = 0.006
+text = "ПИТАНИЕ СЕКЦИИ
+F1: авария → основное → нет питания"
+font_size = 48
+outline_size = 12
+
+[node name="Room" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Shell" type="CSGBox3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+size = Vector3(16.4, 3.6, 6.4)
+material = SubResource("concrete")
+
+[node name="Hollow" type="CSGBox3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0.2)
+operation = 2
+size = Vector3(16, 3.4, 6.6)
+
+[node name="Cascade" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1, -1.5)
+script = ExtResource("3_cascade")
+
+[node name="Generator" type="MeshInstance3D" parent="Cascade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+mesh = SubResource("generator_mesh")
+
+[node name="Speaker" type="AudioStreamPlayer3D" parent="Cascade"]
+volume_db = -10.0
+
+[node name="SectionSound" type="Node" parent="Cascade/Speaker"]
+script = ExtResource("2_sound")
+section = &"sandbox_b"
+
+[node name="Lamp1" type="OmniLight3D" parent="Cascade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2.2, 1.5)
+light_color = Color(1, 0.93, 0.8, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Glow" type="MeshInstance3D" parent="Cascade/Lamp1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("glow_mesh")
+
+[node name="SectionLight" type="Node" parent="Cascade/Lamp1" node_paths=PackedStringArray("glow")]
+script = ExtResource("1_light")
+glow = NodePath("../Glow")
+section = &"sandbox_b"
+emergency_energy = 1.2
+
+[node name="Lamp2" type="OmniLight3D" parent="Cascade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.2, 1.5)
+light_color = Color(1, 0.93, 0.8, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Glow" type="MeshInstance3D" parent="Cascade/Lamp2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("glow_mesh")
+
+[node name="SectionLight" type="Node" parent="Cascade/Lamp2" node_paths=PackedStringArray("glow")]
+script = ExtResource("1_light")
+glow = NodePath("../Glow")
+section = &"sandbox_b"
+emergency_energy = 0.0
+
+[node name="Lamp3" type="OmniLight3D" parent="Cascade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.2, 1.5)
+light_color = Color(1, 0.93, 0.8, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Glow" type="MeshInstance3D" parent="Cascade/Lamp3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("glow_mesh")
+
+[node name="SectionLight" type="Node" parent="Cascade/Lamp3" node_paths=PackedStringArray("glow")]
+script = ExtResource("1_light")
+glow = NodePath("../Glow")
+section = &"sandbox_b"
+emergency_energy = 0.0
+
+[node name="Lamp4" type="OmniLight3D" parent="Cascade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2.2, 1.5)
+light_color = Color(1, 0.93, 0.8, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Glow" type="MeshInstance3D" parent="Cascade/Lamp4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("glow_mesh")
+
+[node name="SectionLight" type="Node" parent="Cascade/Lamp4" node_paths=PackedStringArray("glow")]
+script = ExtResource("1_light")
+glow = NodePath("../Glow")
+section = &"sandbox_b"
+emergency_energy = 1.2
+
+[node name="Lamp5" type="OmniLight3D" parent="Cascade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2.2, 1.5)
+light_color = Color(1, 0.93, 0.8, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Glow" type="MeshInstance3D" parent="Cascade/Lamp5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("glow_mesh")
+
+[node name="SectionLight" type="Node" parent="Cascade/Lamp5" node_paths=PackedStringArray("glow")]
+script = ExtResource("1_light")
+glow = NodePath("../Glow")
+section = &"sandbox_b"
+emergency_energy = 0.0
+
+[node name="Lamp6" type="OmniLight3D" parent="Cascade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 2.2, 1.5)
+light_color = Color(1, 0.93, 0.8, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Glow" type="MeshInstance3D" parent="Cascade/Lamp6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("glow_mesh")
+
+[node name="SectionLight" type="Node" parent="Cascade/Lamp6" node_paths=PackedStringArray("glow")]
+script = ExtResource("1_light")
+glow = NodePath("../Glow")
+section = &"sandbox_b"
+emergency_energy = 0.0
+
+[node name="Lamp7" type="OmniLight3D" parent="Cascade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2.2, 1.5)
+light_color = Color(1, 0.93, 0.8, 1)
+light_energy = 2.0
+omni_range = 5.0
+
+[node name="Glow" type="MeshInstance3D" parent="Cascade/Lamp7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 0)
+mesh = SubResource("glow_mesh")
+
+[node name="SectionLight" type="Node" parent="Cascade/Lamp7" node_paths=PackedStringArray("glow")]
+script = ExtResource("1_light")
+glow = NodePath("../Glow")
+section = &"sandbox_b"
+emergency_energy = 1.2

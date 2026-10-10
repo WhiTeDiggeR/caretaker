@@ -1,0 +1,284 @@
+{
+  "sector_id": "T-ENERGY",
+  "level": "LV-T",
+  "source_plan": "docs/design/complex_v3/plans/sectors/technical/t_energy.svg",
+  "registration": {
+    "plan_px_per_m_x": 15.086,
+    "plan_px_per_m_y": 21.818,
+    "anisotropy_percent": 36.5,
+    "world_envelope_m": [
+      -102.4,
+      -4.89,
+      43.75,
+      20.62
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 4.5,
+  "rooms": [
+    {
+      "id": "t-energy-floor-01",
+      "space_id": "T-ENERGY/generatornyy-zal",
+      "label": "ГЕНЕРАТОРНЫЙ ЗАЛ / главный генератор · рабочий обход / только трубные вводы / непрерывный обход вокруг агрегата",
+      "class": "energy",
+      "source_id": "t_energy-geometry-001",
+      "plan_px": [
+        70.0,
+        70.0,
+        410.0,
+        450.1
+      ],
+      "world_m": [
+        -102.4,
+        -4.889,
+        27.178,
+        20.628
+      ],
+      "size_m": [
+        27.18,
+        20.63
+      ],
+      "area_m2": 560.6
+    },
+    {
+      "id": "t-energy-floor-02",
+      "space_id": "T-ENERGY/pozharnyy-tambur",
+      "label": "ПОЖАРНЫЙ ТАМБУР",
+      "class": "energy",
+      "source_id": "t_energy-geometry-002",
+      "plan_px": [
+        210.0,
+        520.0,
+        130.0,
+        84.2
+      ],
+      "world_m": [
+        -93.12,
+        15.739,
+        8.62,
+        3.861
+      ],
+      "size_m": [
+        8.62,
+        3.86
+      ],
+      "area_m2": 33.3
+    },
+    {
+      "id": "t-energy-floor-03",
+      "space_id": "T-ENERGY/schitovaya",
+      "label": "ЩИТОВАЯ / операторская",
+      "class": "energy",
+      "source_id": "t_energy-geometry-003",
+      "plan_px": [
+        480.0,
+        70.0,
+        250.0,
+        190.0
+      ],
+      "world_m": [
+        -75.222,
+        -4.889,
+        16.572,
+        8.71
+      ],
+      "size_m": [
+        16.57,
+        8.71
+      ],
+      "area_m2": 144.3
+    },
+    {
+      "id": "t-energy-floor-04",
+      "space_id": "T-ENERGY/ohlazhdenie",
+      "label": "ОХЛАЖДЕНИЕ / насосы · теплообмен",
+      "class": "utility",
+      "source_id": "t_energy-geometry-004",
+      "plan_px": [
+        480.0,
+        260.0,
+        250.0,
+        260.0
+      ],
+      "world_m": [
+        -75.222,
+        3.821,
+        16.572,
+        11.918
+      ],
+      "size_m": [
+        16.57,
+        11.92
+      ],
+      "area_m2": 197.5
+    },
+    {
+      "id": "t-energy-floor-05",
+      "space_id": "T-ENERGY/sluzhebnyy-podhod",
+      "label": "СЛУЖЕБНЫЙ ПОДХОД",
+      "class": "corridor",
+      "source_id": "t_energy-space-001",
+      "plan_px": [
+        730.0,
+        70.0,
+        46.8,
+        534.3
+      ],
+      "world_m": [
+        -58.65,
+        -4.889,
+        3.1,
+        24.489
+      ],
+      "size_m": [
+        3.1,
+        24.49
+      ],
+      "area_m2": 75.9
+    }
+  ],
+  "openings": [
+    {
+      "id": "t-energy-window-01",
+      "type": "window",
+      "source": "window",
+      "source_id": "t_energy-annotation-001",
+      "width_m": 4.35,
+      "rooms": [
+        "T-ENERGY/generatornyy-zal",
+        "T-ENERGY/schitovaya"
+      ],
+      "world_m": [
+        -75.222,
+        -2.596,
+        -75.222,
+        1.758
+      ]
+    },
+    {
+      "id": "t-energy-door-02",
+      "type": "door",
+      "source": "energy-gap",
+      "source_id": "t_energy-opening-001",
+      "width_m": 4.5,
+      "rooms": [
+        "T-ENERGY/generatornyy-zal",
+        "T-ENERGY/pozharnyy-tambur"
+      ],
+      "world_m": [
+        -91.06,
+        15.739,
+        -86.56,
+        15.739
+      ]
+    },
+    {
+      "id": "t-energy-door-03",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "t_energy-opening-003",
+      "width_m": 1.8,
+      "rooms": [
+        "T-ENERGY/schitovaya",
+        "T-ENERGY/sluzhebnyy-podhod"
+      ],
+      "world_m": [
+        -58.65,
+        -1.43,
+        -58.65,
+        0.37
+      ]
+    },
+    {
+      "id": "t-energy-door-04",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "t_energy-opening-004",
+      "width_m": 1.8,
+      "rooms": [
+        "T-ENERGY/ohlazhdenie",
+        "T-ENERGY/sluzhebnyy-podhod"
+      ],
+      "world_m": [
+        -58.65,
+        8.88,
+        -58.65,
+        10.68
+      ]
+    },
+    {
+      "id": "t-energy-opening-05",
+      "type": "opening",
+      "source": "amendment D-28f",
+      "source_id": "amendment-D-28f",
+      "width_m": 3.1,
+      "rooms": [
+        "T-ENERGY/sluzhebnyy-podhod"
+      ],
+      "world_m": [
+        -58.65,
+        19.6,
+        -55.55,
+        19.6
+      ]
+    },
+    {
+      "id": "t-energy-door-06",
+      "type": "door",
+      "source": "amendment D-28h",
+      "source_id": "amendment-D-28h",
+      "width_m": 4.5,
+      "rooms": [
+        "T-ENERGY/pozharnyy-tambur"
+      ],
+      "world_m": [
+        -91.06,
+        19.6,
+        -86.56,
+        19.6
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "t_energy-space-002",
+      "role": "context",
+      "class": "corridor",
+      "label": "служебный карман перед инженерными помещениями",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -84.5,
+        15.74,
+        25.85,
+        3.21
+      ]
+    },
+    {
+      "source_id": "t_energy-space-003",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -102.4,
+        18.95,
+        49.72,
+        3.44
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 11,
+  "amendments": [
+    "D-28a",
+    "D-28b",
+    "D-28d",
+    "D-28e",
+    "D-28f",
+    "D-28c",
+    "D-28g",
+    "D-28h"
+  ],
+  "feature_rects_ignored": 4,
+  "unmapped_other_elements": 2
+}

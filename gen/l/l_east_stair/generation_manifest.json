@@ -1,0 +1,156 @@
+{
+  "schema_id": "caretaker.sector_generation_result",
+  "schema_version": "1.0.0",
+  "contract_version": "1.0.0",
+  "map_id": "caretaker-complex-v3",
+  "sector_id": "L-EAST-STAIR",
+  "generation_id": "sha256:6c95891f293400af4ad4710317645eb0776193df6dde34b732224eb8d63a3245",
+  "source": {
+    "path": "docs/design/complex_v4/plans/generation/lower/l_east_stair.svg",
+    "sha256": "sha256:036c29083479d354ff52bd7a3fa8b728604f5486c64703e2dd780e9f5acc638b"
+  },
+  "output_resource_dir": "res://gen/l/l_east_stair",
+  "local_to_world": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "basis_x": [
+      1,
+      0,
+      0
+    ],
+    "basis_y": [
+      0,
+      1,
+      0
+    ],
+    "basis_z": [
+      0,
+      0,
+      1
+    ]
+  },
+  "geometry_settings": {
+    "profile": "generic",
+    "metric_settings": {
+      "scale_m_per_svg_unit": 1.0,
+      "origin": "none",
+      "elevation_m": -6.0
+    },
+    "shared_args": [
+      "--wall-height",
+      "3.8",
+      "--wall-thickness",
+      "0.3",
+      "--floor-thickness",
+      "0.2",
+      "--ceiling-thickness",
+      "0.2",
+      "--strict-wall-overlaps",
+      "--strict-ceiling-alignment"
+    ],
+    "semantic_mappings": [],
+    "material_mappings": {}
+  },
+  "vertical_generators": [
+    {
+      "generator_id": "east_stair_tl",
+      "source": "svg",
+      "vertical_id": "VT-EAST-STAIR-TL",
+      "kind": "stair",
+      "levels": {
+        "upper": {
+          "sector_id": "L-EAST-STAIR"
+        },
+        "lower": {
+          "sector_id": "T-EAST-VERTICAL"
+        }
+      },
+      "clearance_m": 0.01,
+      "args": [
+        "--shaft-width",
+        "9.95",
+        "--shaft-length",
+        "7.85",
+        "--floor-height",
+        "5.5",
+        "--layout",
+        "u-turn",
+        "--stair-width",
+        "1.8",
+        "--lower-entry-side",
+        "south",
+        "--upper-exit-side",
+        "south",
+        "--shaft-wall-bottom",
+        "5.2",
+        "--shaft-wall-top",
+        "5.5",
+        "--target-riser",
+        "0.15",
+        "--max-riser",
+        "0.15",
+        "--target-tread",
+        "0.25",
+        "--min-tread",
+        "0.25",
+        "--minimum-headroom",
+        "2.4",
+        "--landing-depth",
+        "2",
+        "--flight-gap",
+        "0.7",
+        "--railings",
+        "auto",
+        "--wall-thickness",
+        "0.09",
+        "--scene-name",
+        "east_stair_tl"
+      ],
+      "transition_id": "VT-EAST-STAIR",
+      "local_to_world": {
+        "origin": [
+          26.105,
+          -11.5,
+          11.615
+        ],
+        "basis_x": [
+          -1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          -1
+        ]
+      },
+      "resolved": {
+        "vertical_id": "VT-EAST-STAIR-TL",
+        "layout": "u-turn",
+        "entry_side": "south",
+        "exit_side": "south",
+        "shaft_m": [
+          9.97,
+          7.85
+        ],
+        "stair_width_m": 1.8,
+        "floor_height_m": 5.5,
+        "clearance_m": 0.01
+      }
+    }
+  ],
+  "generated_paths": {
+    "package_root": ".",
+    "architecture": "Generated/Architecture",
+    "stairs": "Generated/Stairs",
+    "anchors": "anchor_frames.json"
+  }
+}

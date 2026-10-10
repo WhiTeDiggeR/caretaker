@@ -1,0 +1,155 @@
+{
+  "schema_id": "caretaker.sector_generation_result",
+  "schema_version": "1.0.0",
+  "contract_version": "1.0.0",
+  "map_id": "caretaker-complex-v3",
+  "sector_id": "L-SERVICE-INTERCHANGE",
+  "generation_id": "sha256:a20216949ef8118f901b251aaa362890548641c0e08ef3904d8849b8ba11c91d",
+  "source": {
+    "path": "docs/design/complex_v4/plans/generation/lower/l_service_interchange.svg",
+    "sha256": "sha256:66006d378881e1cbef6ad8ddb4ead4c383691e000d0258c30befdf2c47f16805"
+  },
+  "output_resource_dir": "res://gen/l/l_service_interchange",
+  "local_to_world": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "basis_x": [
+      1,
+      0,
+      0
+    ],
+    "basis_y": [
+      0,
+      1,
+      0
+    ],
+    "basis_z": [
+      0,
+      0,
+      1
+    ]
+  },
+  "geometry_settings": {
+    "profile": "generic",
+    "metric_settings": {
+      "scale_m_per_svg_unit": 1.0,
+      "origin": "none",
+      "elevation_m": -6.0
+    },
+    "shared_args": [
+      "--wall-height",
+      "3.8",
+      "--wall-thickness",
+      "0.3",
+      "--floor-thickness",
+      "0.2",
+      "--ceiling-thickness",
+      "0.2",
+      "--strict-wall-overlaps",
+      "--strict-ceiling-alignment"
+    ],
+    "semantic_mappings": [],
+    "material_mappings": {}
+  },
+  "vertical_generators": [
+    {
+      "generator_id": "service_stair",
+      "source": "svg",
+      "vertical_id": "VT-SERVICE-STAIR",
+      "kind": "stair",
+      "levels": {
+        "upper": {
+          "sector_id": "L-SERVICE-INTERCHANGE"
+        },
+        "lower": {
+          "sector_id": "T-UTILITIES"
+        }
+      },
+      "clearance_m": 0.01,
+      "args": [
+        "--shaft-width",
+        "4.63",
+        "--shaft-length",
+        "8.55",
+        "--floor-height",
+        "5.5",
+        "--layout",
+        "u-turn",
+        "--stair-width",
+        "1.8",
+        "--lower-entry-side",
+        "north",
+        "--upper-exit-side",
+        "north",
+        "--shaft-wall-bottom",
+        "4.4",
+        "--shaft-wall-top",
+        "5.5",
+        "--target-riser",
+        "0.15",
+        "--max-riser",
+        "0.15",
+        "--target-tread",
+        "0.3",
+        "--min-tread",
+        "0.3",
+        "--minimum-headroom",
+        "2.4",
+        "--landing-depth",
+        "2",
+        "--flight-gap",
+        "0.7",
+        "--railings",
+        "auto",
+        "--wall-thickness",
+        "0.09",
+        "--scene-name",
+        "service_stair"
+      ],
+      "local_to_world": {
+        "origin": [
+          -45.445,
+          -11.5,
+          57.505
+        ],
+        "basis_x": [
+          -1,
+          0,
+          0
+        ],
+        "basis_y": [
+          0,
+          1,
+          0
+        ],
+        "basis_z": [
+          0,
+          0,
+          -1
+        ]
+      },
+      "resolved": {
+        "vertical_id": "VT-SERVICE-STAIR",
+        "layout": "u-turn",
+        "entry_side": "north",
+        "exit_side": "north",
+        "shaft_m": [
+          4.65,
+          8.55
+        ],
+        "stair_width_m": 1.8,
+        "floor_height_m": 5.5,
+        "clearance_m": 0.01
+      }
+    }
+  ],
+  "generated_paths": {
+    "package_root": ".",
+    "architecture": "Generated/Architecture",
+    "stairs": "Generated/Stairs",
+    "anchors": "anchor_frames.json"
+  }
+}

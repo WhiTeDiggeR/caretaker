@@ -1,0 +1,249 @@
+{
+  "schema_id": "caretaker.vertical_definitions",
+  "schema_version": "1.0.0",
+  "description": "Stair generators whose geometry is derived from SVG markup (data-vertical-*). Only non-geometric choices are stored here; shaft size, position, entry/exit sides, stair width, floor height and shaft walls come from the plans. See docs/design/complex_v3/regeneration/vertical-markup.md.",
+  "stairs": [
+    {
+      "host_sector_id": "U-ROUTE-A",
+      "generator": {
+        "generator_id": "route_a_stair",
+        "source": "svg",
+        "vertical_id": "VT-ROUTE-A",
+        "kind": "stair",
+        "levels": {
+          "upper": {
+            "sector_id": "U-ROUTE-A"
+          },
+          "lower": {
+            "sector_id": "L-ARCHIVE-A"
+          }
+        },
+        "clearance_m": 0.01,
+        "args": [
+          "--target-riser",
+          "0.15",
+          "--max-riser",
+          "0.15",
+          "--target-tread",
+          "0.25",
+          "--min-tread",
+          "0.25",
+          "--minimum-headroom",
+          "2.4",
+          "--landing-depth",
+          "2",
+          "--flight-gap",
+          "0.7",
+          "--railings",
+          "auto",
+          "--wall-thickness",
+          "0.09",
+          "--scene-name",
+          "route_a_stair"
+        ]
+      }
+    },
+    {
+      "host_sector_id": "U-CENTRAL-CORE",
+      "generator": {
+        "generator_id": "main_stair",
+        "source": "svg",
+        "vertical_id": "VT-MAIN-STAIR",
+        "kind": "stair",
+        "levels": {
+          "upper": {
+            "sector_id": "U-CENTRAL-CORE"
+          },
+          "lower": {
+            "sector_id": "L-CENTRAL-CORE"
+          }
+        },
+        "clearance_m": 0.01,
+        "args": [
+          "--target-riser",
+          "0.15",
+          "--max-riser",
+          "0.15",
+          "--target-tread",
+          "0.3",
+          "--min-tread",
+          "0.3",
+          "--minimum-headroom",
+          "2.4",
+          "--landing-depth",
+          "2",
+          "--flight-gap",
+          "0.7",
+          "--railings",
+          "auto",
+          "--wall-thickness",
+          "0.09",
+          "--scene-name",
+          "main_stair"
+        ]
+      }
+    },
+    {
+      "host_sector_id": "U-EAST-SUPPORT",
+      "generator": {
+        "generator_id": "east_stair_lu",
+        "source": "svg",
+        "vertical_id": "VT-EAST-STAIR-LU",
+        "transition_id": "VT-EAST-STAIR",
+        "kind": "stair",
+        "levels": {
+          "upper": {
+            "sector_id": "U-EAST-SUPPORT"
+          },
+          "lower": {
+            "sector_id": "L-EAST-STAIR"
+          }
+        },
+        "clearance_m": 0.01,
+        "args": [
+          "--target-riser",
+          "0.15",
+          "--max-riser",
+          "0.15",
+          "--target-tread",
+          "0.25",
+          "--min-tread",
+          "0.25",
+          "--minimum-headroom",
+          "2.4",
+          "--landing-depth",
+          "2",
+          "--flight-gap",
+          "0.7",
+          "--railings",
+          "auto",
+          "--wall-thickness",
+          "0.09",
+          "--scene-name",
+          "east_stair_lu"
+        ]
+      }
+    },
+    {
+      "host_sector_id": "L-OLD-CORE",
+      "generator": {
+        "generator_id": "old_stair",
+        "source": "svg",
+        "vertical_id": "VT-OLD-STAIR",
+        "kind": "stair",
+        "levels": {
+          "upper": {
+            "sector_id": "L-OLD-CORE"
+          },
+          "lower": {
+            "sector_id": "T-OLD-ACCESS"
+          }
+        },
+        "clearance_m": 0.01,
+        "args": [
+          "--target-riser",
+          "0.15",
+          "--max-riser",
+          "0.15",
+          "--target-tread",
+          "0.28",
+          "--min-tread",
+          "0.28",
+          "--minimum-headroom",
+          "2.4",
+          "--landing-depth",
+          "2",
+          "--flight-gap",
+          "0.7",
+          "--railings",
+          "auto",
+          "--wall-thickness",
+          "0.09",
+          "--scene-name",
+          "old_stair"
+        ]
+      }
+    },
+    {
+      "host_sector_id": "L-EAST-STAIR",
+      "generator": {
+        "generator_id": "east_stair_tl",
+        "source": "svg",
+        "vertical_id": "VT-EAST-STAIR-TL",
+        "kind": "stair",
+        "levels": {
+          "upper": {
+            "sector_id": "L-EAST-STAIR"
+          },
+          "lower": {
+            "sector_id": "T-EAST-VERTICAL"
+          }
+        },
+        "clearance_m": 0.01,
+        "args": [
+          "--target-riser",
+          "0.15",
+          "--max-riser",
+          "0.15",
+          "--target-tread",
+          "0.25",
+          "--min-tread",
+          "0.25",
+          "--minimum-headroom",
+          "2.4",
+          "--landing-depth",
+          "2",
+          "--flight-gap",
+          "0.7",
+          "--railings",
+          "auto",
+          "--wall-thickness",
+          "0.09",
+          "--scene-name",
+          "east_stair_tl"
+        ],
+        "transition_id": "VT-EAST-STAIR"
+      }
+    },
+    {
+      "host_sector_id": "L-SERVICE-INTERCHANGE",
+      "generator": {
+        "generator_id": "service_stair",
+        "source": "svg",
+        "vertical_id": "VT-SERVICE-STAIR",
+        "kind": "stair",
+        "levels": {
+          "upper": {
+            "sector_id": "L-SERVICE-INTERCHANGE"
+          },
+          "lower": {
+            "sector_id": "T-UTILITIES"
+          }
+        },
+        "clearance_m": 0.01,
+        "args": [
+          "--target-riser",
+          "0.15",
+          "--max-riser",
+          "0.15",
+          "--target-tread",
+          "0.3",
+          "--min-tread",
+          "0.3",
+          "--minimum-headroom",
+          "2.4",
+          "--landing-depth",
+          "2",
+          "--flight-gap",
+          "0.7",
+          "--railings",
+          "auto",
+          "--wall-thickness",
+          "0.09",
+          "--scene-name",
+          "service_stair"
+        ]
+      }
+    }
+  ]
+}

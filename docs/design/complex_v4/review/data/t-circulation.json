@@ -1,0 +1,686 @@
+{
+  "sector_id": "T-CIRCULATION",
+  "level": "LV-T",
+  "source_plan": "docs/design/complex_v3/plans/sectors/technical/t_circulation.svg",
+  "registration": {
+    "plan_px_per_m_x": 9.783,
+    "plan_px_per_m_y": 13.085,
+    "anisotropy_percent": 28.9,
+    "world_envelope_m": [
+      -85.53,
+      18.24,
+      98.12,
+      47.0
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 4.2,
+  "rooms": [
+    {
+      "id": "t-circulation-floor-01",
+      "space_id": "T-CIRCULATION/glavnyy-sluzhebnyy-koridor",
+      "label": "ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР",
+      "class": "corridor",
+      "source_id": "amendment-D-37a",
+      "plan_px": [
+        -95.1,
+        117.8,
+        1306.1,
+        72.0
+      ],
+      "world_m": [
+        -102.4,
+        19.6,
+        133.5,
+        5.5
+      ],
+      "size_m": [
+        133.5,
+        5.5
+      ],
+      "area_m2": 734.2
+    },
+    {
+      "id": "t-circulation-floor-02",
+      "space_id": "T-CIRCULATION/kontroliruemyy-perehod-zapad",
+      "label": "КОНТРОЛИРУЕМЫЙ ПЕРЕХОД ЗАПАД",
+      "class": "corridor",
+      "source_id": "amendment-D-37b",
+      "plan_px": [
+        203.3,
+        189.8,
+        44.0,
+        480.2
+      ],
+      "world_m": [
+        -71.9,
+        25.1,
+        4.5,
+        36.7
+      ],
+      "size_m": [
+        4.5,
+        36.7
+      ],
+      "area_m2": 165.2
+    },
+    {
+      "id": "t-circulation-floor-03",
+      "space_id": "T-CIRCULATION/tyazhelaya-gruzovaya-magistr",
+      "label": "ТЯЖЁЛАЯ ГРУЗОВАЯ МАГИСТРАЛЬ",
+      "class": "corridor",
+      "source_id": "amendment-D-37c",
+      "plan_px": [
+        203.3,
+        670.0,
+        975.4,
+        102.1
+      ],
+      "world_m": [
+        -71.9,
+        61.8,
+        99.7,
+        7.8
+      ],
+      "size_m": [
+        99.7,
+        7.8
+      ],
+      "area_m2": 777.7
+    }
+  ],
+  "openings": [
+    {
+      "id": "t-circulation-opening-01",
+      "type": "opening",
+      "source": "amendment D-37d",
+      "source_id": "amendment-D-37d",
+      "width_m": 4.5,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor",
+        "T-CIRCULATION/kontroliruemyy-perehod-zapad"
+      ],
+      "world_m": [
+        -71.9,
+        25.1,
+        -67.4,
+        25.1
+      ]
+    },
+    {
+      "id": "t-circulation-door-02",
+      "type": "door",
+      "source": "amendment D-37e",
+      "source_id": "amendment-D-37e",
+      "width_m": 4.5,
+      "rooms": [
+        "T-CIRCULATION/kontroliruemyy-perehod-zapad",
+        "T-CIRCULATION/tyazhelaya-gruzovaya-magistr"
+      ],
+      "world_m": [
+        -71.9,
+        61.8,
+        -67.4,
+        61.8
+      ]
+    },
+    {
+      "id": "t-circulation-opening-03",
+      "type": "opening",
+      "source": "amendment AUTO-01",
+      "source_id": "amendment-AUTO-01",
+      "width_m": 3.1,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -58.65,
+        19.6,
+        -55.55,
+        19.6
+      ]
+    },
+    {
+      "id": "t-circulation-door-04",
+      "type": "door",
+      "source": "amendment AUTO-02",
+      "source_id": "amendment-AUTO-02",
+      "width_m": 4.5,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -91.06,
+        19.6,
+        -86.56,
+        19.6
+      ]
+    },
+    {
+      "id": "t-circulation-opening-05",
+      "type": "opening",
+      "source": "amendment AUTO-03",
+      "source_id": "amendment-AUTO-03",
+      "width_m": 4.0,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -47.74,
+        19.6,
+        -43.74,
+        19.6
+      ]
+    },
+    {
+      "id": "t-circulation-opening-06",
+      "type": "opening",
+      "source": "amendment AUTO-04",
+      "source_id": "amendment-AUTO-04",
+      "width_m": 4.0,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -27.15,
+        19.6,
+        -23.15,
+        19.6
+      ]
+    },
+    {
+      "id": "t-circulation-opening-07",
+      "type": "opening",
+      "source": "amendment AUTO-05",
+      "source_id": "amendment-AUTO-05",
+      "width_m": 4.0,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -89.3,
+        25.1,
+        -85.3,
+        25.1
+      ]
+    },
+    {
+      "id": "t-circulation-opening-08",
+      "type": "opening",
+      "source": "amendment AUTO-06",
+      "source_id": "amendment-AUTO-06",
+      "width_m": 4.0,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -5.5,
+        19.6,
+        -1.5,
+        19.6
+      ]
+    },
+    {
+      "id": "t-circulation-opening-09",
+      "type": "opening",
+      "source": "amendment AUTO-07",
+      "source_id": "amendment-AUTO-07",
+      "width_m": 3.5,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        2.4,
+        19.6,
+        5.9,
+        19.6
+      ]
+    },
+    {
+      "id": "t-circulation-door-10",
+      "type": "door",
+      "source": "amendment AUTO-08",
+      "source_id": "amendment-AUTO-08",
+      "width_m": 1.8,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        24.7,
+        19.6,
+        26.5,
+        19.6
+      ]
+    },
+    {
+      "id": "t-circulation-door-11",
+      "type": "door",
+      "source": "amendment AUTO-09",
+      "source_id": "amendment-AUTO-09",
+      "width_m": 1.8,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -60.8,
+        25.1,
+        -59.0,
+        25.1
+      ]
+    },
+    {
+      "id": "t-circulation-door-12",
+      "type": "door",
+      "source": "amendment AUTO-10",
+      "source_id": "amendment-AUTO-10",
+      "width_m": 1.8,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -33.3,
+        25.1,
+        -31.5,
+        25.1
+      ]
+    },
+    {
+      "id": "t-circulation-door-13",
+      "type": "door",
+      "source": "amendment AUTO-11",
+      "source_id": "amendment-AUTO-11",
+      "width_m": 1.8,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -17.05,
+        25.1,
+        -15.25,
+        25.1
+      ]
+    },
+    {
+      "id": "t-circulation-door-14",
+      "type": "door",
+      "source": "amendment AUTO-12",
+      "source_id": "amendment-AUTO-12",
+      "width_m": 1.8,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        3.6,
+        25.1,
+        5.4,
+        25.1
+      ]
+    },
+    {
+      "id": "t-circulation-door-15",
+      "type": "door",
+      "source": "amendment AUTO-13",
+      "source_id": "amendment-AUTO-13",
+      "width_m": 4.5,
+      "rooms": [
+        "T-CIRCULATION/glavnyy-sluzhebnyy-koridor"
+      ],
+      "world_m": [
+        -8.05,
+        25.1,
+        -3.55,
+        25.1
+      ]
+    },
+    {
+      "id": "t-circulation-door-16",
+      "type": "door",
+      "source": "amendment AUTO-14",
+      "source_id": "amendment-AUTO-14",
+      "width_m": 4.5,
+      "rooms": [
+        "T-CIRCULATION/tyazhelaya-gruzovaya-magistr"
+      ],
+      "world_m": [
+        -8.05,
+        61.8,
+        -3.55,
+        61.8
+      ]
+    },
+    {
+      "id": "t-circulation-door-17",
+      "type": "door",
+      "source": "amendment AUTO-15",
+      "source_id": "amendment-AUTO-15",
+      "width_m": 1.8,
+      "rooms": [
+        "T-CIRCULATION/tyazhelaya-gruzovaya-magistr"
+      ],
+      "world_m": [
+        -49.68,
+        61.8,
+        -47.88,
+        61.8
+      ]
+    },
+    {
+      "id": "t-circulation-door-18",
+      "type": "door",
+      "source": "amendment AUTO-16",
+      "source_id": "amendment-AUTO-16",
+      "width_m": 4.5,
+      "rooms": [
+        "T-CIRCULATION/tyazhelaya-gruzovaya-magistr"
+      ],
+      "world_m": [
+        -4.55,
+        69.6,
+        -0.05,
+        69.6
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "t_circulation-space-001",
+      "role": "context",
+      "class": "corridor",
+      "label": "ГЛАВНЫЙ СЛУЖЕБНЫЙ КОРИДОР",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -85.53,
+        18.24,
+        98.12,
+        7.64
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-002",
+      "role": "context",
+      "class": "corridor",
+      "label": "КАБЕЛЬНО-ТРУБОПРОВОДНАЯ ГАЛЕРЕЯ",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -77.35,
+        36.58,
+        81.77,
+        6.11
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-003",
+      "role": "context",
+      "class": "corridor",
+      "label": "ТЯЖЁЛАЯ ГРУЗОВАЯ МАГИСТРАЛЬ / связь с персональным контуром только через два контролируемых перехода",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -85.53,
+        56.45,
+        98.12,
+        8.79
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-004",
+      "role": "context",
+      "class": "corridor",
+      "label": "ДОСТУП В ГАЛЕРЕЮ 1",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -82.97,
+        25.88,
+        9.2,
+        10.7
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-005",
+      "role": "context",
+      "class": "corridor",
+      "label": "ДОСТУП В ГАЛЕРЕЮ 2",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        0.84,
+        25.88,
+        9.2,
+        10.7
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-006",
+      "role": "context",
+      "class": "corridor",
+      "label": "",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -68.15,
+        25.88,
+        9.2,
+        10.7
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-007",
+      "role": "context",
+      "class": "room",
+      "label": "КОНТРОЛИРУЕМЫЙ / ПЕРЕХОД ЗАПАД",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -70.19,
+        42.69,
+        13.29,
+        6.11
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-008",
+      "role": "context",
+      "class": "corridor",
+      "label": "",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -68.15,
+        48.81,
+        9.2,
+        7.64
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-009",
+      "role": "context",
+      "class": "corridor",
+      "label": "",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -12.95,
+        25.88,
+        9.2,
+        10.7
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-010",
+      "role": "context",
+      "class": "room",
+      "label": "КОНТРОЛИРУЕМЫЙ / ПЕРЕХОД ВОСТОК",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -15.0,
+        42.69,
+        13.29,
+        6.11
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-011",
+      "role": "context",
+      "class": "corridor",
+      "label": "",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -12.95,
+        48.81,
+        9.2,
+        7.64
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-012",
+      "role": "context",
+      "class": "room",
+      "label": "ИНЖЕНЕРНЫЕ ПОМЕЩЕНИЯ ВНЕ СХЕМЫ ЦИРКУЛЯЦИИ / не являются проходом между галереей и грузовой магистралью",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -56.91,
+        42.69,
+        41.91,
+        13.76
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-013",
+      "role": "context",
+      "class": "shaft",
+      "label": "СТАРАЯ ЛЕСТНИЦА",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -83.99,
+        12.12,
+        15.33,
+        6.11
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-014",
+      "role": "context",
+      "class": "shaft",
+      "label": "ЛЕСТНИЦА / СЛУЖ. РАЗВЯЗКИ",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -45.15,
+        12.12,
+        13.8,
+        6.11
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-015",
+      "role": "context",
+      "class": "shaft",
+      "label": "ГЛАВНЫЙ ЛИФТ / ОСТАНОВКИ НЕТ",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -11.93,
+        12.12,
+        11.75,
+        5.35
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-016",
+      "role": "context",
+      "class": "shaft",
+      "label": "АВАР. / ЛЕСТНИЦА",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        7.49,
+        12.12,
+        7.16,
+        6.11
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-017",
+      "role": "context",
+      "class": "room",
+      "label": "T1 / T2",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -55.88,
+        25.88,
+        13.29,
+        6.5
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-018",
+      "role": "context",
+      "class": "room",
+      "label": "T5",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -37.48,
+        25.88,
+        13.29,
+        6.5
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-019",
+      "role": "context",
+      "class": "room",
+      "label": "T4",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -22.15,
+        25.88,
+        9.2,
+        6.5
+      ]
+    },
+    {
+      "source_id": "t_circulation-equipment-001",
+      "role": "context",
+      "class": "work",
+      "label": "T6 · ПРИЁМКА",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -15.0,
+        65.24,
+        17.38,
+        6.5
+      ]
+    },
+    {
+      "source_id": "t_circulation-space-020",
+      "role": "context",
+      "class": "shaft",
+      "label": "ГРУЗОВОЙ / ЛИФТ",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        2.38,
+        65.24,
+        10.22,
+        6.5
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 9,
+  "amendments": [
+    "D-37a",
+    "D-37b",
+    "D-37c",
+    "D-37d",
+    "D-37e",
+    "AUTO-01",
+    "AUTO-02",
+    "AUTO-03",
+    "AUTO-04",
+    "AUTO-05",
+    "AUTO-06",
+    "AUTO-07",
+    "AUTO-08",
+    "AUTO-09",
+    "AUTO-10",
+    "AUTO-11",
+    "AUTO-12",
+    "AUTO-13",
+    "AUTO-14",
+    "AUTO-15",
+    "AUTO-16"
+  ],
+  "feature_rects_ignored": 0,
+  "unmapped_other_elements": 0
+}

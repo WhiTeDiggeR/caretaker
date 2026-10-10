@@ -1,0 +1,98 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/cv3_route_a/u/Generated/Architecture/u_route_a_pilot_generated.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/cv3_route_a/l/Generated/Architecture/l_archive_a_pilot_generated.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/cv3_route_a/u/Generated/Stairs/route_a_stair/route_a_stair.tscn" id="3"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_registry.gd" id="4"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchored_object_3d.gd" id="5"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_placement.gd" id="6"]
+[ext_resource type="Script" path="res://scenes/complex_v3_regeneration/anchor_axis_placement.gd" id="7"]
+
+[sub_resource type="Resource" id="Axis_center"]
+script = ExtResource("7")
+policy = "centered"
+
+[sub_resource type="Resource" id="Placement_landing"]
+script = ExtResource("6")
+mode = "surface"
+surface_u = SubResource("Axis_center")
+surface_v = SubResource("Axis_center")
+footprint_m = Vector3(0.4, 0.4, 0.4)
+footprint_center_m = Vector3(0, 0.2, 0)
+
+[sub_resource type="Resource" id="Placement_beacon"]
+script = ExtResource("6")
+policy = "centered"
+normal_offset_m = 0.09
+height_m = 1.5
+footprint_m = Vector3(0.4, 0.4, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="Material_authored"]
+albedo_color = Color(0.95, 0.48, 0.08, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_kit"]
+material = SubResource("Material_authored")
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="BoxMesh" id="Mesh_beacon"]
+material = SubResource("Material_authored")
+size = Vector3(0.4, 0.4, 0.1)
+
+[sub_resource type="BoxMesh" id="Mesh_crate"]
+material = SubResource("Material_authored")
+size = Vector3(0.6, 0.6, 0.6)
+
+[node name="RouteAVerticalPilot" type="Node3D"]
+
+[node name="Generated" type="Node3D" parent="."]
+
+[node name="Upper" parent="Generated" instance=ExtResource("1")]
+
+[node name="Lower" parent="Generated" instance=ExtResource("2")]
+
+[node name="Stair" parent="Generated" instance=ExtResource("3")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -52.5, -6, 9.5)
+
+[node name="AnchorRegistry" type="Node" parent="."]
+script = ExtResource("4")
+anchor_frames_path = "res://scenes/cv3_route_a/u/anchor_frames.json"
+
+[node name="AuthoredContent" type="Node3D" parent="."]
+
+[node name="ShaftBeacon" type="Node3D" parent="AuthoredContent" node_paths=PackedStringArray("anchor_registry")]
+script = ExtResource("5")
+object_id = "OBJ-ROUTE-A-SHAFT-BEACON"
+anchor_id = "svg:u-route-a-wall-east:wall"
+expected_anchor_type = "wall"
+placement = SubResource("Placement_beacon")
+anchor_registry = NodePath("../../AnchorRegistry")
+
+[node name="Visual" type="MeshInstance3D" parent="AuthoredContent/ShaftBeacon"]
+mesh = SubResource("Mesh_beacon")
+
+[node name="LandingKit" type="Node3D" parent="AuthoredContent" node_paths=PackedStringArray("anchor_registry")]
+script = ExtResource("5")
+object_id = "OBJ-ROUTE-A-LANDING-KIT"
+anchor_id = "AF-STAIRS-ROUTE-A-STAIR-LANDING-01"
+expected_anchor_type = "floor"
+placement = SubResource("Placement_landing")
+anchor_registry = NodePath("../../AnchorRegistry")
+
+[node name="Visual" type="MeshInstance3D" parent="AuthoredContent/LandingKit"]
+position = Vector3(0, 0.2, 0)
+mesh = SubResource("Mesh_kit")
+
+[node name="FreeCrate" type="MeshInstance3D" parent="AuthoredContent"]
+position = Vector3(-60.6, 0.3, 2.6)
+mesh = SubResource("Mesh_crate")
+
+[node name="Light" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-55, -35, 0)
+light_energy = 1.8
+
+[node name="Camera3D" type="Camera3D" parent="."]
+position = Vector3(-52.5, 16, 9.5)
+rotation_degrees = Vector3(-90, 0, 0)
+projection = 1
+size = 24.0
+current = true

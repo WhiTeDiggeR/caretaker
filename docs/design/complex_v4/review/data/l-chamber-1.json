@@ -1,0 +1,168 @@
+{
+  "sector_id": "L-CHAMBER-1",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_chamber_1.svg",
+  "registration": {
+    "plan_px_per_m_x": 22.765,
+    "plan_px_per_m_y": 21.429,
+    "anisotropy_percent": 6.0,
+    "world_envelope_m": [
+      -107.78,
+      -2.67,
+      18.89,
+      23.33
+    ],
+    "check_pairs": [
+      {
+        "plan_px": [
+          485,
+          205,
+          170,
+          230
+        ],
+        "overview_px": [
+          190,
+          200,
+          70,
+          100
+        ],
+        "plan_size_m": [
+          7.47,
+          10.73
+        ],
+        "overview_size_m": [
+          7.78,
+          11.11
+        ]
+      }
+    ]
+  },
+  "wall_height_m": 5.0,
+  "rooms": [
+    {
+      "id": "l-chamber-1-floor-01",
+      "space_id": "L-CHAMBER-1/kamera-1-mehanicheskaya-klet",
+      "label": "КАМЕРА №1 · МЕХАНИЧЕСКАЯ КЛЕТКА / первая очередь · многократные разновременные усиления / зона фиксации / оковы · цепи · напряжение",
+      "class": "containment",
+      "source_id": "l_chamber_1-geometry-001",
+      "plan_px": [
+        55.0,
+        70.0,
+        430.0,
+        500.0
+      ],
+      "world_m": [
+        -107.778,
+        -2.667,
+        18.889,
+        23.334
+      ],
+      "size_m": [
+        18.89,
+        23.33
+      ],
+      "area_m2": 440.8
+    },
+    {
+      "id": "l-chamber-1-floor-02",
+      "space_id": "L-CHAMBER-1/edinyy-tambur",
+      "label": "ЕДИНЫЙ ТАМБУР / И ПОСТ / совмещённый старый порог / дежурный пост / силовая панель ворот",
+      "class": "support",
+      "source_id": "l_chamber_1-space-001",
+      "plan_px": [
+        485.0,
+        205.0,
+        177.1,
+        230.0
+      ],
+      "world_m": [
+        -88.889,
+        3.633,
+        7.778,
+        10.734
+      ],
+      "size_m": [
+        7.78,
+        10.73
+      ],
+      "area_m2": 83.5
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-chamber-1-window-01",
+      "type": "window",
+      "source": "window",
+      "source_id": "l_chamber_1-annotation-007",
+      "width_m": 2.8,
+      "rooms": [
+        "L-CHAMBER-1/edinyy-tambur",
+        "L-CHAMBER-1/kamera-1-mehanicheskaya-klet"
+      ],
+      "world_m": [
+        -88.889,
+        7.367,
+        -88.889,
+        10.167
+      ]
+    },
+    {
+      "id": "l-chamber-1-door-02",
+      "type": "door",
+      "source": "gate",
+      "source_id": "l_chamber_1-annotation-008",
+      "width_m": 5.6,
+      "rooms": [
+        "L-CHAMBER-1/edinyy-tambur",
+        "L-CHAMBER-1/kamera-1-mehanicheskaya-klet"
+      ],
+      "world_m": [
+        -88.889,
+        7.2,
+        -88.889,
+        12.8
+      ]
+    },
+    {
+      "id": "l-chamber-1-door-03",
+      "type": "door",
+      "source": "amendment D-22c",
+      "source_id": "amendment-D-22c",
+      "width_m": 5.6,
+      "rooms": [
+        "L-CHAMBER-1/edinyy-tambur"
+      ],
+      "world_m": [
+        -81.111,
+        7.2,
+        -81.111,
+        12.8
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_chamber_1-space-002",
+      "role": "context",
+      "class": "corridor",
+      "label": "ХОЛЛ СТАРОГО ЯДРА",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -81.42,
+        5.5,
+        5.27,
+        7.0
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 7,
+  "amendments": [
+    "D-22a",
+    "D-22b",
+    "D-22c",
+    "D-22d"
+  ],
+  "feature_rects_ignored": 6,
+  "unmapped_other_elements": 0
+}

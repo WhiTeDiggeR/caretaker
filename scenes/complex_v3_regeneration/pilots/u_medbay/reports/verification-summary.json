@@ -1,0 +1,46 @@
+{
+  "schema_id": "caretaker.u_medbay_pilot_acceptance",
+  "schema_version": "1.0.0",
+  "date": "2026-09-04",
+  "status": "passed",
+  "generation_id": "sha256:0515903ca6a696dbcbb673e66a7be2658215cbd346939f68a734cd188b6fc518",
+  "safe_regeneration": {
+    "clean_status": "success",
+    "noop_status": "noop",
+    "ready": true,
+    "agent_invoked": false,
+    "live_hash": "sha256:52dc767044cb187aba62d7828787b27d053cf023dfa2fd2a3f447aeec54af611"
+  },
+  "source_and_generation": {
+    "handoff_verification": "passed",
+    "converter_version": "1.19.0",
+    "input_floors": 7,
+    "input_ceilings": 7,
+    "input_walls": 10,
+    "input_doors": 7,
+    "anchor_frames": 45,
+    "anchor_frame_issues": 0,
+    "generated_wall_parts": 36,
+    "wall_volume_overlaps": 0,
+    "ceiling_wall_alignment_issues": 0
+  },
+  "composition": {
+    "status": "clean",
+    "objects": 4,
+    "bound_objects": 3,
+    "free_objects": 1,
+    "infrastructure_records": 32,
+    "blocking_count": 0,
+    "warning_count": 0,
+    "repair_items": 0
+  },
+  "regressions": {
+    "complex_v3_regeneration_python": "33 passed",
+    "composition_validator_python": "7 passed",
+    "surface_runtime": "39 checks, 0 failures",
+    "pilot_runtime": "loaded meshes and collisions; wall, door and floor follow; free fixed; missing blocked",
+    "editor_workflow": "passed",
+    "scenarios": ["move_wall", "resize_wall", "move_door", "remove_anchor", "forced_generation_failure"],
+    "visuals": ["visuals/baseline.png", "visuals/anchors-moved.png"]
+  }
+}

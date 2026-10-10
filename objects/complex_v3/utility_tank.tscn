@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3]
+
+[sub_resource type="StandardMaterial3D" id="TankMat"]
+albedo_color = Color(0.18, 0.28, 0.29, 1)
+metallic = 0.38
+roughness = 0.62
+
+[sub_resource type="CylinderMesh" id="Tank"]
+material = SubResource("TankMat")
+top_radius = 0.58
+bottom_radius = 0.58
+height = 1.9
+radial_segments = 18
+
+[sub_resource type="TorusMesh" id="Band"]
+material = SubResource("TankMat")
+inner_radius = 0.54
+outer_radius = 0.65
+rings = 18
+ring_segments = 8
+
+[sub_resource type="CylinderShape3D" id="Shape"]
+radius = 0.6
+height = 1.9
+
+[node name="UtilityTank" type="StaticBody3D"]
+
+[node name="Tank" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("Tank")
+
+[node name="BandLow" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.48, 0)
+mesh = SubResource("Band")
+
+[node name="BandHigh" type="MeshInstance3D" parent="."]
+position = Vector3(0, 1.42, 0)
+mesh = SubResource("Band")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.95, 0)
+shape = SubResource("Shape")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[sub_resource type="BoxMesh" id="BoxMesh_stair"]
+size = Vector3(1.2, 0.2, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape_stair"]
+size = Vector3(1.2, 0.2, 0.8)
+
+[node name="Stairs" type="Node3D"]
+metadata/fixture_generation = 1
+
+[node name="Visual" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.2, 0)
+mesh = SubResource("BoxMesh_stair")
+
+[node name="Collision" type="StaticBody3D" parent="."]
+
+[node name="Shape" type="CollisionShape3D" parent="Collision"]
+shape = SubResource("BoxShape_stair")

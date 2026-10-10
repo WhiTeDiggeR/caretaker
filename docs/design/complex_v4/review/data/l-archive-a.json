@@ -1,0 +1,230 @@
+{
+  "sector_id": "L-ARCHIVE-A",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_archive_a.svg",
+  "registration": {
+    "plan_px_per_m_x": 24.188,
+    "plan_px_per_m_y": 24.065,
+    "anisotropy_percent": 0.5,
+    "world_envelope_m": [
+      -58.89,
+      -8.13,
+      17.78,
+      25.56
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 3.4,
+  "rooms": [
+    {
+      "id": "l-archive-a-floor-01",
+      "space_id": "L-ARCHIVE-A/otgorozhennaya-chast-arhiva",
+      "label": "ОТГОРОЖЕННАЯ ЧАСТЬ АРХИВА · НИЖНЯЯ ПЛОЩАДКА ЛЕСТНИЦЫ A",
+      "class": "support",
+      "source_id": "amendment-D-07b",
+      "plan_px": [
+        290.0,
+        476.9,
+        241.9,
+        246.5
+      ],
+      "world_m": [
+        -58.889,
+        9.4,
+        10.0,
+        10.244
+      ],
+      "size_m": [
+        10.0,
+        10.24
+      ],
+      "area_m2": 102.4
+    },
+    {
+      "id": "l-archive-a-floor-02",
+      "space_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy",
+      "label": "СТАРЫЙ АРХИВ · ЕДИНЫЙ ИСХОДНЫЙ КОНТУР / штатный вход · пожарные проходы между стеллажами / учёт / ПОЗДНЯЯ ПЕРЕГОРОДКА МАРШРУТА A / нижняя часть всё ещё читается как бывший архив / ЛЕСТНИЦА A ↑ / к вентиляции и складу верхнего этажа",
+      "class": "old",
+      "source_id": "l_archive_a-geometry-001",
+      "plan_px": [
+        290.0,
+        55.0,
+        430.0,
+        421.9
+      ],
+      "world_m": [
+        -58.889,
+        -8.133,
+        17.778,
+        17.533
+      ],
+      "size_m": [
+        17.78,
+        17.53
+      ],
+      "area_m2": 311.7
+    },
+    {
+      "id": "l-archive-a-floor-03",
+      "space_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy-2",
+      "label": "СТАРЫЙ АРХИВ · ЕДИНЫЙ ИСХОДНЫЙ КОНТУР / штатный вход · пожарные проходы между стеллажами / учёт / ПОЗДНЯЯ ПЕРЕГОРОДКА МАРШРУТА A / нижняя часть всё ещё читается как бывший архив / ЛЕСТНИЦА A ↑ / к вентиляции и складу верхнего этажа",
+      "class": "old",
+      "source_id": "l_archive_a-geometry-001",
+      "plan_px": [
+        531.9,
+        476.9,
+        188.1,
+        246.5
+      ],
+      "world_m": [
+        -48.889,
+        9.4,
+        7.778,
+        10.244
+      ],
+      "size_m": [
+        7.78,
+        10.24
+      ],
+      "area_m2": 79.7
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-archive-a-door-01",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_archive_a-opening-001",
+      "width_m": 1.4,
+      "rooms": [
+        "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy"
+      ],
+      "world_m": [
+        -41.111,
+        -2.891,
+        -41.111,
+        -1.491
+      ]
+    },
+    {
+      "id": "l-archive-a-door-02",
+      "type": "door",
+      "source": "door-gap",
+      "source_id": "l_archive_a-opening-004",
+      "width_m": 1.4,
+      "rooms": [
+        "L-ARCHIVE-A/otgorozhennaya-chast-arhiva"
+      ],
+      "world_m": [
+        -58.889,
+        12.2,
+        -58.889,
+        13.6
+      ]
+    },
+    {
+      "id": "l-archive-a-door-03",
+      "type": "door",
+      "source": "amendment D-06d",
+      "source_id": "amendment-D-06d",
+      "width_m": 1.8,
+      "rooms": [
+        "L-ARCHIVE-A/otgorozhennaya-chast-arhiva",
+        "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy",
+        "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy-2"
+      ],
+      "world_m": [
+        -51.49,
+        11.867,
+        -49.69,
+        11.867
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_archive_a-space-001",
+      "role": "trunk",
+      "class": "corridor",
+      "label": "ПАССАЖИРСКИЙ / КОРИДОР",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -41.11,
+        -4.19,
+        4.96,
+        4.16
+      ]
+    },
+    {
+      "source_id": "l_archive_a-space-002",
+      "role": "context",
+      "class": "corridor",
+      "label": "СЛУЖЕБНЫЙ ПРОХОД МАРШРУТА A / поздняя перестройка · двустороннее движение персонала / старые архивные шкафы сдвинуты к стене",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -58.89,
+        8.49,
+        14.47,
+        5.19
+      ]
+    },
+    {
+      "source_id": "l_archive_a-space-003",
+      "role": "context",
+      "class": "corridor",
+      "label": "ХОЛЛ СТАРОГО ЯДРА / механическая дверь",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -66.33,
+        8.9,
+        7.44,
+        3.95
+      ]
+    },
+    {
+      "source_id": "l_archive_a-space-004",
+      "role": "context",
+      "class": "support",
+      "label": "ЛЕСТНИЦА A ↑ / к вентиляции и складу верхнего этажа",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -51.45,
+        13.68,
+        7.03,
+        3.74
+      ]
+    }
+  ],
+  "anomalies": [
+    {
+      "type": "opening_not_on_sector_wall",
+      "source_id": "l_archive_a-opening-007",
+      "source": "room-gap",
+      "plan_px": [
+        580.0,
+        495.0,
+        615.0
+      ],
+      "world_m": [
+        -50.413,
+        13.682,
+        -45.452,
+        13.682
+      ],
+      "gtype": "opening",
+      "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
+    }
+  ],
+  "wall_segments": 6,
+  "amendments": [
+    "D-07a",
+    "D-07b",
+    "D-06c",
+    "D-06d",
+    "D-08a",
+    "D-08b",
+    "D-10"
+  ],
+  "feature_rects_ignored": 7,
+  "unmapped_other_elements": 1
+}

@@ -1,0 +1,81 @@
+{
+  "schema_id": "caretaker.sector_regeneration_report",
+  "schema_version": "1.0.0",
+  "contract_version": "1.0.0",
+  "status": "ok",
+  "sector_id": "U-CIRCULATION",
+  "generation_id": "sha256:ee4002b0ecfc220dd2ede9112a4bb7fc5068b8c04f152a1ae0c6335d2b94775a",
+  "commands": [
+    {
+      "stage": "inspect",
+      "argv": [
+        "$PYTHON",
+        "$SVG_TOOL_ROOT/scripts/inspect_svg_plan.py",
+        "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/upper/u_circulation.svg",
+        "--profile",
+        "generic",
+        "--scale",
+        "1.0",
+        "--origin",
+        "none",
+        "--elevation",
+        "0.0",
+        "--wall-height",
+        "2.8",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--json",
+        "--output-json",
+        "$STAGING/preflight_report.json",
+        "--strict"
+      ],
+      "exit_code": 0
+    },
+    {
+      "stage": "convert",
+      "argv": [
+        "$PYTHON",
+        "$SVG_TOOL_ROOT/scripts/svg_to_godot3d.py",
+        "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/upper/u_circulation.svg",
+        "$STAGING/Generated/Architecture",
+        "--profile",
+        "generic",
+        "--scale",
+        "1.0",
+        "--origin",
+        "none",
+        "--elevation",
+        "0.0",
+        "--wall-height",
+        "2.8",
+        "--wall-thickness",
+        "0.3",
+        "--floor-thickness",
+        "0.2",
+        "--ceiling-thickness",
+        "0.2",
+        "--strict-wall-overlaps",
+        "--resource-dir",
+        "res://gen/u/u_circulation/Generated/Architecture",
+        "--scene-name",
+        "u_circulation_generated",
+        "--strict"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "anchor_count": 30,
+  "errors": [],
+  "warnings": [],
+  "files": [
+    "anchor_frames.json",
+    "generation_manifest.json",
+    "preflight_report.json",
+    "Generated/Architecture/conversion_report.json"
+  ]
+}

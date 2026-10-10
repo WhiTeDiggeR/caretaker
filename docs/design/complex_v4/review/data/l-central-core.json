@@ -1,0 +1,474 @@
+{
+  "sector_id": "L-CENTRAL-CORE",
+  "level": "LV-L",
+  "source_plan": "docs/design/complex_v3/plans/sectors/lower/l_central_core.svg",
+  "registration": {
+    "plan_px_per_m_x": 23.914,
+    "plan_px_per_m_y": 23.874,
+    "anisotropy_percent": 0.2,
+    "world_envelope_m": [
+      -7.78,
+      -1.0,
+      15.56,
+      21.11
+    ],
+    "check_pairs": []
+  },
+  "wall_height_m": 3.4,
+  "rooms": [
+    {
+      "id": "l-central-core-floor-01",
+      "space_id": "L-CENTRAL-CORE/elektroschitovaya",
+      "label": "Электрощитовая / привод · связь · аварийное / питание вертикального узла",
+      "class": "service",
+      "source_id": "l_central_core-space-001",
+      "plan_px": [
+        158.0,
+        94.0,
+        120.0,
+        114.0
+      ],
+      "world_m": [
+        -7.025,
+        0.005,
+        5.018,
+        4.775
+      ],
+      "size_m": [
+        5.02,
+        4.78
+      ],
+      "area_m2": 24.0
+    },
+    {
+      "id": "l-central-core-floor-02",
+      "space_id": "L-CENTRAL-CORE/sluzhebnyy-dostup-1-5-m",
+      "label": "СЛУЖЕБНЫЙ ДОСТУП · 1,5 М",
+      "class": "passenger",
+      "source_id": "l_central_core-geometry-004",
+      "plan_px": [
+        278.0,
+        94.0,
+        48.0,
+        240.0
+      ],
+      "world_m": [
+        -2.007,
+        0.005,
+        2.007,
+        10.053
+      ],
+      "size_m": [
+        2.01,
+        10.05
+      ],
+      "area_m2": 20.2
+    },
+    {
+      "id": "l-central-core-floor-03",
+      "space_id": "L-CENTRAL-CORE/lift",
+      "label": "ЛИФТ / кабина ≈ 2,6 × 2,8 м",
+      "class": "vertical",
+      "source_id": "l_central_core-geometry-005",
+      "plan_px": [
+        158.0,
+        208.0,
+        120.0,
+        126.0
+      ],
+      "world_m": [
+        -7.025,
+        4.78,
+        5.018,
+        5.278
+      ],
+      "size_m": [
+        5.02,
+        5.28
+      ],
+      "area_m2": 26.5
+    },
+    {
+      "id": "l-central-core-floor-04",
+      "space_id": "L-CENTRAL-CORE/liftovoy-holl",
+      "label": "Лифтовой холл / разворот носилок · шкаф связи",
+      "class": "passenger",
+      "source_id": "l_central_core-geometry-007",
+      "plan_px": [
+        158.0,
+        334.0,
+        168.0,
+        108.0
+      ],
+      "world_m": [
+        -7.025,
+        10.058,
+        7.025,
+        4.524
+      ],
+      "size_m": [
+        7.03,
+        4.52
+      ],
+      "area_m2": 31.8
+    },
+    {
+      "id": "l-central-core-floor-05",
+      "space_id": "L-CENTRAL-CORE/glavnaya-lestnica",
+      "label": "ГЛАВНАЯ ЛЕСТНИЦА / промежуточная площадка / МАРШ 1 · ВНИЗ / МАРШ 2 · К НИЖНЕМУ ЭТАЖУ / верхняя площадка",
+      "class": "vertical",
+      "source_id": "l_central_core-geometry-009",
+      "plan_px": [
+        326.0,
+        94.0,
+        168.0,
+        348.0
+      ],
+      "world_m": [
+        -0.0,
+        0.005,
+        7.025,
+        14.577
+      ],
+      "size_m": [
+        7.03,
+        14.58
+      ],
+      "area_m2": 102.4
+    },
+    {
+      "id": "l-central-core-floor-06",
+      "space_id": "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno",
+      "label": "ОБЩИЙ ВЕСТИБЮЛЬ ВЕРТИКАЛЬНОГО УЗЛА / лифт и лестница читаются одновременно / свободная полоса движения ≥ 2,4 м",
+      "class": "passenger",
+      "source_id": "l_central_core-geometry-016",
+      "plan_px": [
+        158.0,
+        442.0,
+        336.0,
+        120.0
+      ],
+      "world_m": [
+        -7.025,
+        14.582,
+        14.05,
+        5.026
+      ],
+      "size_m": [
+        14.05,
+        5.03
+      ],
+      "area_m2": 70.6
+    }
+  ],
+  "openings": [
+    {
+      "id": "l-central-core-door-01",
+      "type": "door",
+      "source": "opening",
+      "source_id": "l_central_core-opening-001",
+      "width_m": 1.0,
+      "rooms": [
+        "L-CENTRAL-CORE/elektroschitovaya",
+        "L-CENTRAL-CORE/sluzhebnyy-dostup-1-5-m"
+      ],
+      "world_m": [
+        -2.007,
+        1.851,
+        -2.007,
+        2.851
+      ]
+    },
+    {
+      "id": "l-central-core-opening-02",
+      "type": "opening",
+      "source": "opening",
+      "source_id": "l_central_core-opening-004",
+      "width_m": 2.01,
+      "rooms": [
+        "L-CENTRAL-CORE/lift",
+        "L-CENTRAL-CORE/liftovoy-holl"
+      ],
+      "world_m": [
+        -5.52,
+        10.058,
+        -3.513,
+        10.058
+      ]
+    },
+    {
+      "id": "l-central-core-door-03",
+      "type": "door",
+      "source": "opening",
+      "source_id": "l_central_core-opening-006",
+      "width_m": 1.0,
+      "rooms": [
+        "L-CENTRAL-CORE/lift",
+        "L-CENTRAL-CORE/liftovoy-holl",
+        "L-CENTRAL-CORE/sluzhebnyy-dostup-1-5-m"
+      ],
+      "world_m": [
+        -1.504,
+        10.058,
+        -0.504,
+        10.058
+      ]
+    },
+    {
+      "id": "l-central-core-opening-04",
+      "type": "opening",
+      "source": "opening",
+      "source_id": "l_central_core-opening-007",
+      "width_m": 6.52,
+      "rooms": [
+        "L-CENTRAL-CORE/glavnaya-lestnica",
+        "L-CENTRAL-CORE/liftovoy-holl",
+        "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno"
+      ],
+      "world_m": [
+        -6.774,
+        14.582,
+        -0.251,
+        14.582
+      ]
+    },
+    {
+      "id": "l-central-core-opening-05",
+      "type": "opening",
+      "source": "opening",
+      "source_id": "l_central_core-opening-008",
+      "width_m": 3.0,
+      "rooms": [
+        "L-CENTRAL-CORE/glavnaya-lestnica",
+        "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno"
+      ],
+      "world_m": [
+        2.013,
+        14.582,
+        5.013,
+        14.582
+      ]
+    },
+    {
+      "id": "l-central-core-opening-06",
+      "type": "opening",
+      "source": "opening",
+      "source_id": "l_central_core-opening-011",
+      "width_m": 4.52,
+      "rooms": [
+        "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno"
+      ],
+      "world_m": [
+        -2.258,
+        19.608,
+        2.258,
+        19.608
+      ]
+    },
+    {
+      "id": "l-central-core-door-07",
+      "type": "door",
+      "source": "amendment D-14f",
+      "source_id": "amendment-D-14f",
+      "width_m": 1.8,
+      "rooms": [
+        "L-CENTRAL-CORE/elektroschitovaya",
+        "L-CENTRAL-CORE/glavnaya-lestnica",
+        "L-CENTRAL-CORE/lift",
+        "L-CENTRAL-CORE/liftovoy-holl",
+        "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno",
+        "L-CENTRAL-CORE/sluzhebnyy-dostup-1-5-m"
+      ],
+      "world_m": [
+        4.6,
+        12.069,
+        6.4,
+        12.069
+      ]
+    }
+  ],
+  "ignored": [
+    {
+      "source_id": "l_central_core-geometry-001",
+      "role": "context",
+      "class": "command",
+      "label": "Новый центр / управления / ≈ 21 м — исходная глубина сохранена",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -12.88,
+        5.03,
+        3.85,
+        6.28
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-002",
+      "role": "context",
+      "class": "passenger",
+      "label": "",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -9.03,
+        7.38,
+        1.25,
+        2.01
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-003",
+      "role": "context",
+      "class": "security",
+      "label": "Главная / безопасность",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        8.2,
+        5.03,
+        4.35,
+        6.28
+      ]
+    },
+    {
+      "source_id": "l_central_core-wall-001",
+      "role": "envelope",
+      "class": "wall",
+      "label": "ГЛАВНАЯ ЛЕСТНИЦА / Электрощитовая / привод · связь · аварийное / промежуточная площадка / питание вертикального узла / СЛУЖЕБНЫЙ ДОСТУП · 1,5 М / ЛИФТ / МАРШ 1 · ВНИЗ / МАРШ 2 · К НИЖНЕМУ ЭТАЖУ / кабина ≈ 2,6 × 2,8 м / Лифтовой холл / разворот носилок · шкаф связи / верхняя площадка / ОБЩИЙ ВЕСТИБЮЛЬ ВЕРТИКАЛЬНОГО УЗЛА / лифт и лестница читаются одновременно / свободная полоса движения ≥ 2,4 м",
+      "reason": "outline of a room group",
+      "world_m": [
+        -7.78,
+        -1.0,
+        15.56,
+        21.11
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-006",
+      "role": "envelope",
+      "class": "void",
+      "label": "ЛИФТ / кабина ≈ 2,6 × 2,8 м",
+      "reason": "outline of a room group",
+      "world_m": [
+        -6.27,
+        5.53,
+        3.51,
+        3.69
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-010",
+      "role": "context",
+      "class": "passenger",
+      "label": "промежуточная площадка",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        0.75,
+        1.51,
+        5.52,
+        2.26
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-011",
+      "role": "envelope",
+      "class": "void",
+      "label": "МАРШ 1 · ВНИЗ",
+      "reason": "outline of a room group",
+      "world_m": [
+        0.75,
+        3.77,
+        2.42,
+        7.79
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-013",
+      "role": "envelope",
+      "class": "void",
+      "label": "МАРШ 2 · К НИЖНЕМУ ЭТАЖУ",
+      "reason": "outline of a room group",
+      "world_m": [
+        3.85,
+        3.77,
+        2.42,
+        7.79
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-015",
+      "role": "context",
+      "class": "passenger",
+      "label": "верхняя площадка",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        0.75,
+        12.07,
+        5.52,
+        2.01
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-017",
+      "role": "context",
+      "class": "passenger",
+      "label": "",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -2.26,
+        19.61,
+        4.52,
+        2.51
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-018",
+      "role": "trunk",
+      "class": "passenger",
+      "label": "ГЛАВНЫЙ ПАССАЖИРСКИЙ КОРИДОР · 4 М / запад: центр управления · восток: главный пост безопасности",
+      "reason": "shared route space owned by no sector",
+      "world_m": [
+        -10.12,
+        22.12,
+        20.24,
+        4.02
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-019",
+      "role": "context",
+      "class": "vertical",
+      "label": "кабина",
+      "reason": "neighbour / foreign element drawn in the plan",
+      "world_m": [
+        -6.52,
+        28.91,
+        3.26,
+        12.82
+      ]
+    },
+    {
+      "source_id": "l_central_core-geometry-020",
+      "role": "envelope",
+      "class": "void",
+      "label": "кабина",
+      "reason": "outline of a room group",
+      "world_m": [
+        -5.94,
+        31.67,
+        2.09,
+        3.44
+      ]
+    }
+  ],
+  "anomalies": [],
+  "wall_segments": 9,
+  "amendments": [
+    "D-14b",
+    "D-14c",
+    "D-14d",
+    "D-14e",
+    "D-14f",
+    "D-14g",
+    "D-14h"
+  ],
+  "feature_rects_ignored": 0,
+  "unmapped_other_elements": 4
+}
