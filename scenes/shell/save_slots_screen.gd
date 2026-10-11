@@ -45,6 +45,9 @@ func refresh() -> void:
 
 func choose(slot: String) -> void:
 	if mode == Mode.SAVE:
+		if not Shell.can_save():
+			_note.text = Shell.save_block_reason()
+			return
 		var result := Saves.write(slot, get_tree())
 		_note.text = "Сохранено: %s." % Saves.slot_title(slot) if result == OK else "Не удалось сохранить (ошибка %d)." % result
 		refresh()

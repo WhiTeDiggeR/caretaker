@@ -5,7 +5,7 @@ extends Node3D
 ## F1 — cycle power of every sandbox section, F2 — toggle caretaker access, F3 — reset state,
 ## F4 — module 4 instability +10 %, F5 — module 4 stabilised by 20 %,
 ## F6 — module 4 straight to the chemical protocol threshold,
-## F7 — containment time speed x1 / x10 / x60.
+## F7 — containment time speed x1 / x10 / x60, F8 — catastrophe (modules 3 and 4 awake).
 ## A debug overlay shows the exact state of module 4; containment events go to the console.
 
 const SECTIONS: Array[StringName] = [&"sandbox_a", &"sandbox_b"]
@@ -88,7 +88,7 @@ func _refresh_overlay() -> void:
 		text += " %.0f с" % Containment.chemical_timer(id)
 	var forecast := Containment.forecast_seconds(id)
 	text += " · прогноз: %s" % ("нет" if forecast < 0.0 else "%.0f с" % forecast)
-	text += "\nF4 +10 %  F5 −20 %  F6 к порогу  F7 скорость времени"
+	text += "\nF4 +10 %  F5 −20 %  F6 к порогу  F7 скорость времени  F8 катастрофа"
 	_overlay.text = text
 
 
@@ -128,6 +128,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			var trigger := float(Containment.chemical.get("trigger_at", 95.0))
 			Containment.add_instability(&"module_4", maxf(trigger - Containment.get_instability(&"module_4"), 0.0))
 			print("Module 4 at the chemical threshold")
+		KEY_F8:
+			Containment.add_instability(&"module_3", Containment.MAX_INSTABILITY)
+			Containment.add_instability(&"module_4", Containment.MAX_INSTABILITY)
+			print("Modules 3 and 4 awake")
 		KEY_F7:
 			var index := (TIME_SCALES.find(Containment.time_scale) + 1) % TIME_SCALES.size()
 			Containment.time_scale = TIME_SCALES[index]
