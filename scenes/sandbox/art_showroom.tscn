@@ -1,0 +1,2696 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="hud"]
+[ext_resource type="Material" path="res://materials/hangar_concrete_floor.tres" id="floor_mat"]
+[ext_resource type="PackedScene" path="res://objects/art/cable_hang.tscn" id="p4"]
+[ext_resource type="PackedScene" path="res://objects/art/cable_tray_straight.tscn" id="p5"]
+[ext_resource type="PackedScene" path="res://objects/art/chain_hanging.tscn" id="p6"]
+[ext_resource type="PackedScene" path="res://objects/art/chamber1_gate.tscn" id="p7"]
+[ext_resource type="PackedScene" path="res://objects/art/control_desk.tscn" id="p8"]
+[ext_resource type="PackedScene" path="res://objects/art/document_sheet.tscn" id="p9"]
+[ext_resource type="PackedScene" path="res://objects/art/duct_straight.tscn" id="p10"]
+[ext_resource type="PackedScene" path="res://objects/art/emergency_beacon.tscn" id="p11"]
+[ext_resource type="PackedScene" path="res://objects/art/emergency_cabinet.tscn" id="p12"]
+[ext_resource type="PackedScene" path="res://objects/art/evac_sign.tscn" id="p13"]
+[ext_resource type="PackedScene" path="res://objects/art/fallen_duct.tscn" id="p14"]
+[ext_resource type="PackedScene" path="res://objects/art/file_cabinet.tscn" id="p15"]
+[ext_resource type="PackedScene" path="res://objects/art/floor_grate.tscn" id="p16"]
+[ext_resource type="PackedScene" path="res://objects/art/fluorescent_light.tscn" id="p17"]
+[ext_resource type="PackedScene" path="res://objects/art/generator_panel.tscn" id="p18"]
+[ext_resource type="PackedScene" path="res://objects/art/immersion_chair.tscn" id="p19"]
+[ext_resource type="PackedScene" path="res://objects/art/locker_tall.tscn" id="p20"]
+[ext_resource type="PackedScene" path="res://objects/art/mnemonic_panel.tscn" id="p21"]
+[ext_resource type="PackedScene" path="res://objects/art/personal_key.tscn" id="p22"]
+[ext_resource type="PackedScene" path="res://objects/art/pipe_elbow.tscn" id="p23"]
+[ext_resource type="PackedScene" path="res://objects/art/pipe_straight.tscn" id="p24"]
+[ext_resource type="PackedScene" path="res://objects/art/pipe_tee.tscn" id="p25"]
+[ext_resource type="PackedScene" path="res://objects/art/pressure_gauge.tscn" id="p26"]
+[ext_resource type="PackedScene" path="res://objects/art/rubble_set.tscn" id="p27"]
+[ext_resource type="PackedScene" path="res://objects/art/staff_pod.tscn" id="p28"]
+[ext_resource type="PackedScene" path="res://objects/art/start_lever.tscn" id="p29"]
+[ext_resource type="PackedScene" path="res://objects/art/terminal_console.tscn" id="p30"]
+[ext_resource type="PackedScene" path="res://objects/art/valve_wheel.tscn" id="p31"]
+[ext_resource type="PackedScene" path="res://objects/art/ventilation_unit.tscn" id="p32"]
+[ext_resource type="PackedScene" path="res://objects/art/wall_breaker.tscn" id="p33"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_ammo_box.tscn" id="p34"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_barrel_fuel.tscn" id="p35"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_barrel_oil.tscn" id="p36"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_bed_frame.tscn" id="p37"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_bench_vice.tscn" id="p38"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_bolt_cutters.tscn" id="p39"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_cardboard_box.tscn" id="p40"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_clipboard.tscn" id="p41"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_crowbar.tscn" id="p42"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_crt_television.tscn" id="p43"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_drill_press.tscn" id="p44"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_flashlight.tscn" id="p45"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_gas_mask.tscn" id="p46"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_hand_truck.tscn" id="p47"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_hanging_lamp.tscn" id="p48"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_jerrycan.tscn" id="p49"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_ladder.tscn" id="p50"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_lpg_tank.tscn" id="p51"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_manhole_cover.tscn" id="p52"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_medical_box.tscn" id="p53"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_metal_chair.tscn" id="p54"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_metal_rack.tscn" id="p55"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_metal_stool.tscn" id="p56"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_military_crate.tscn" id="p57"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_multimeter.tscn" id="p58"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_office_desk.tscn" id="p59"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_oil_tin.tscn" id="p60"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_pipe_wrench.tscn" id="p61"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_plastic_crate.tscn" id="p62"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_power_box.tscn" id="p63"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_propane_tank.tscn" id="p64"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_radio_transceiver.tscn" id="p65"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_security_camera.tscn" id="p66"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_sledgehammer.tscn" id="p67"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_spacecraft_instrument.tscn" id="p68"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_tool_cart.tscn" id="p69"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_tool_chest.tscn" id="p70"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_toolbox.tscn" id="p71"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_trash_can.tscn" id="p72"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_utility_box.tscn" id="p73"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_wall_lamp.tscn" id="p74"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_welding_cart.tscn" id="p75"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__bend_01.tscn" id="p76"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__bend_02.tscn" id="p77"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__brace_01.tscn" id="p78"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__brace_wire_01.tscn" id="p79"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__connector_01.tscn" id="p80"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__corner_01.tscn" id="p81"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__corner_02.tscn" id="p82"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__double_01.tscn" id="p83"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__fastener_01_025.tscn" id="p84"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__half_01.tscn" id="p85"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__single_01.tscn" id="p86"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__splitter_01.tscn" id="p87"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__transition_double_01.tscn" id="p88"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__transition_double_02.tscn" id="p89"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__tripple_01.tscn" id="p90"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__vent_01.tscn" id="p91"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__vent_02.tscn" id="p92"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_rect__vent_closed_01.tscn" id="p93"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_bend_half.tscn" id="p94"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_bend_quater.tscn" id="p95"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_brace.tscn" id="p96"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_brace_extention.tscn" id="p97"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_brace_extention_wires.tscn" id="p98"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_double.tscn" id="p99"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_fan.tscn" id="p100"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_single.tscn" id="p101"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_smooth_bend_half.tscn" id="p102"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_smooth_bend_quater.tscn" id="p103"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_smooth_double.tscn" id="p104"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_smooth_single.tscn" id="p105"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_smooth_triple.tscn" id="p106"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__circular_triple.tscn" id="p107"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__rectangular_converter.tscn" id="p108"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_airduct_round__rectangular_vent_fan.tscn" id="p109"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_10cm.tscn" id="p110"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_2cm.tscn" id="p111"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_3way_junction.tscn" id="p112"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_5cm.tscn" id="p113"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_box_3way.tscn" id="p114"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_box_4way.tscn" id="p115"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_box_double.tscn" id="p116"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_box_double_to_single.tscn" id="p117"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_box_double_to_single_2.tscn" id="p118"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_box_turn.tscn" id="p119"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_bridge_1.tscn" id="p120"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_bridge_2.tscn" id="p121"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_bridge_3.tscn" id="p122"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_corner_away.tscn" id="p123"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_corner_towards.tscn" id="p124"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double.tscn" id="p125"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_10cm.tscn" id="p126"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_alt_long.tscn" id="p127"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_alt_short.tscn" id="p128"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_alt_turn.tscn" id="p129"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_end.tscn" id="p130"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_junction.tscn" id="p131"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_mount.tscn" id="p132"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_scurve.tscn" id="p133"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_turn_long.tscn" id="p134"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_turn_short.tscn" id="p135"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_double_uturn.tscn" id="p136"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_end.tscn" id="p137"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_lightswitch.tscn" id="p138"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_lightswitch_2.tscn" id="p139"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_lightswitch_double.tscn" id="p140"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_mount.tscn" id="p141"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_plug_4x.tscn" id="p142"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_plug_covered.tscn" id="p143"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_plug_covered_2.tscn" id="p144"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_scurve_1.tscn" id="p145"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_scurve_2.tscn" id="p146"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_scurve_3.tscn" id="p147"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_scurve_4.tscn" id="p148"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_straight_long.tscn" id="p149"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_straight_medium.tscn" id="p150"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_straight_short.tscn" id="p151"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_switch.tscn" id="p152"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_to_double_1.tscn" id="p153"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_to_double_2.tscn" id="p154"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_to_double_3.tscn" id="p155"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_to_double_4.tscn" id="p156"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_turn_long.tscn" id="p157"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_electric_cables__cable_turn_short.tscn" id="p158"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_industrial_pipes__pipe01.tscn" id="p159"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_industrial_pipes__pipe02.tscn" id="p160"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_industrial_pipes__pipe03.tscn" id="p161"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_industrial_pipes__pipe04.tscn" id="p162"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_industrial_pipes__pipe05.tscn" id="p163"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_industrial_pipes__pipe06.tscn" id="p164"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_industrial_pipes__pipe07.tscn" id="p165"]
+[ext_resource type="PackedScene" path="res://objects/art/ph_industrial_pipes__pipe08.tscn" id="p166"]
+[ext_resource type="Texture2D" path="res://loads/textures/concrete_rubble/concrete_rubble_albedo.jpg" id="t167"]
+[ext_resource type="Texture2D" path="res://loads/textures/concrete_rubble/concrete_rubble_normal.png" id="t168"]
+[ext_resource type="Texture2D" path="res://loads/textures/concrete_rubble/concrete_rubble_orm.jpg" id="t169"]
+[ext_resource type="Texture2D" path="res://loads/textures/diamond_plate/diamond_plate_albedo.jpg" id="t170"]
+[ext_resource type="Texture2D" path="res://loads/textures/diamond_plate/diamond_plate_normal.png" id="t171"]
+[ext_resource type="Texture2D" path="res://loads/textures/diamond_plate/diamond_plate_orm.jpg" id="t172"]
+[ext_resource type="Texture2D" path="res://loads/textures/duct_galvanized/duct_galvanized_albedo.jpg" id="t173"]
+[ext_resource type="Texture2D" path="res://loads/textures/duct_galvanized/duct_galvanized_normal.png" id="t174"]
+[ext_resource type="Texture2D" path="res://loads/textures/duct_galvanized/duct_galvanized_orm.jpg" id="t175"]
+[ext_resource type="Texture2D" path="res://loads/textures/fabric_dark/fabric_dark_albedo.jpg" id="t176"]
+[ext_resource type="Texture2D" path="res://loads/textures/fabric_dark/fabric_dark_normal.png" id="t177"]
+[ext_resource type="Texture2D" path="res://loads/textures/fabric_dark/fabric_dark_orm.jpg" id="t178"]
+[ext_resource type="Texture2D" path="res://loads/textures/painted_metal/painted_metal_albedo.jpg" id="t179"]
+[ext_resource type="Texture2D" path="res://loads/textures/painted_metal/painted_metal_normal.png" id="t180"]
+[ext_resource type="Texture2D" path="res://loads/textures/painted_metal/painted_metal_orm.jpg" id="t181"]
+[ext_resource type="Texture2D" path="res://loads/textures/painted_metal_green/painted_metal_green_albedo.jpg" id="t182"]
+[ext_resource type="Texture2D" path="res://loads/textures/painted_metal_green/painted_metal_green_normal.png" id="t183"]
+[ext_resource type="Texture2D" path="res://loads/textures/painted_metal_green/painted_metal_green_orm.jpg" id="t184"]
+[ext_resource type="Texture2D" path="res://loads/textures/paper_aged/paper_aged_albedo.jpg" id="t185"]
+[ext_resource type="Texture2D" path="res://loads/textures/paper_aged/paper_aged_normal.png" id="t186"]
+[ext_resource type="Texture2D" path="res://loads/textures/paper_aged/paper_aged_orm.jpg" id="t187"]
+[ext_resource type="Texture2D" path="res://loads/textures/plastic_panel/plastic_panel_albedo.jpg" id="t188"]
+[ext_resource type="Texture2D" path="res://loads/textures/plastic_panel/plastic_panel_normal.png" id="t189"]
+[ext_resource type="Texture2D" path="res://loads/textures/plastic_panel/plastic_panel_orm.jpg" id="t190"]
+[ext_resource type="Texture2D" path="res://loads/textures/rubber_black/rubber_black_albedo.jpg" id="t191"]
+[ext_resource type="Texture2D" path="res://loads/textures/rubber_black/rubber_black_normal.png" id="t192"]
+[ext_resource type="Texture2D" path="res://loads/textures/rubber_black/rubber_black_orm.jpg" id="t193"]
+[ext_resource type="Texture2D" path="res://loads/textures/rusted_steel/rusted_steel_albedo.jpg" id="t194"]
+[ext_resource type="Texture2D" path="res://loads/textures/rusted_steel/rusted_steel_normal.png" id="t195"]
+[ext_resource type="Texture2D" path="res://loads/textures/rusted_steel/rusted_steel_orm.jpg" id="t196"]
+[ext_resource type="Texture2D" path="res://loads/textures/steel_bare/steel_bare_albedo.jpg" id="t197"]
+[ext_resource type="Texture2D" path="res://loads/textures/steel_bare/steel_bare_normal.png" id="t198"]
+[ext_resource type="Texture2D" path="res://loads/textures/steel_bare/steel_bare_orm.jpg" id="t199"]
+[ext_resource type="Texture2D" path="res://loads/textures/vinyl_worn/vinyl_worn_albedo.jpg" id="t200"]
+[ext_resource type="Texture2D" path="res://loads/textures/vinyl_worn/vinyl_worn_normal.png" id="t201"]
+[ext_resource type="Texture2D" path="res://loads/textures/vinyl_worn/vinyl_worn_orm.jpg" id="t202"]
+[ext_resource type="Texture2D" path="res://loads/textures/wood_old/wood_old_albedo.jpg" id="t203"]
+[ext_resource type="Texture2D" path="res://loads/textures/wood_old/wood_old_normal.png" id="t204"]
+[ext_resource type="Texture2D" path="res://loads/textures/wood_old/wood_old_orm.jpg" id="t205"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.02, 0.022, 0.026, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.32, 0.34, 0.38, 1)
+ambient_light_energy = 0.35
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.05, 0.055, 0.06, 1)
+fog_density = 0.008
+
+[sub_resource type="PlaneMesh" id="floor_mesh"]
+material = ExtResource("floor_mat")
+size = Vector2(120, 120)
+
+[sub_resource type="BoxShape3D" id="floor_shape"]
+size = Vector3(120, 0.2, 120)
+
+[sub_resource type="BoxMesh" id="swatch_mesh"]
+size = Vector3(1, 1, 0.1)
+
+[sub_resource type="ORMMaterial3D" id="m_concrete_rubble"]
+albedo_texture = ExtResource("t167")
+orm_texture = ExtResource("t169")
+normal_enabled = true
+normal_texture = ExtResource("t168")
+uv1_scale = Vector3(0.500, 0.500, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_diamond_plate"]
+albedo_texture = ExtResource("t170")
+orm_texture = ExtResource("t172")
+normal_enabled = true
+normal_texture = ExtResource("t171")
+uv1_scale = Vector3(2.000, 2.000, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_duct_galvanized"]
+albedo_texture = ExtResource("t173")
+orm_texture = ExtResource("t175")
+normal_enabled = true
+normal_texture = ExtResource("t174")
+uv1_scale = Vector3(1.000, 1.000, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_fabric_dark"]
+albedo_texture = ExtResource("t176")
+orm_texture = ExtResource("t178")
+normal_enabled = true
+normal_texture = ExtResource("t177")
+uv1_scale = Vector3(3.623, 3.623, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_painted_metal"]
+albedo_texture = ExtResource("t179")
+orm_texture = ExtResource("t181")
+normal_enabled = true
+normal_texture = ExtResource("t180")
+uv1_scale = Vector3(0.800, 0.800, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_painted_metal_green"]
+albedo_texture = ExtResource("t182")
+orm_texture = ExtResource("t184")
+normal_enabled = true
+normal_texture = ExtResource("t183")
+uv1_scale = Vector3(1.000, 1.000, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_paper_aged"]
+albedo_texture = ExtResource("t185")
+orm_texture = ExtResource("t187")
+normal_enabled = true
+normal_texture = ExtResource("t186")
+uv1_scale = Vector3(2.500, 2.500, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_plastic_panel"]
+albedo_texture = ExtResource("t188")
+orm_texture = ExtResource("t190")
+normal_enabled = true
+normal_texture = ExtResource("t189")
+uv1_scale = Vector3(2.000, 2.000, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_rubber_black"]
+albedo_texture = ExtResource("t191")
+orm_texture = ExtResource("t193")
+normal_enabled = true
+normal_texture = ExtResource("t192")
+uv1_scale = Vector3(2.000, 2.000, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_rusted_steel"]
+albedo_texture = ExtResource("t194")
+orm_texture = ExtResource("t196")
+normal_enabled = true
+normal_texture = ExtResource("t195")
+uv1_scale = Vector3(0.800, 0.800, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_steel_bare"]
+albedo_texture = ExtResource("t197")
+orm_texture = ExtResource("t199")
+normal_enabled = true
+normal_texture = ExtResource("t198")
+uv1_scale = Vector3(1.000, 1.000, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_vinyl_worn"]
+albedo_texture = ExtResource("t200")
+orm_texture = ExtResource("t202")
+normal_enabled = true
+normal_texture = ExtResource("t201")
+uv1_scale = Vector3(2.000, 2.000, 1)
+
+[sub_resource type="ORMMaterial3D" id="m_wood_old"]
+albedo_texture = ExtResource("t203")
+orm_texture = ExtResource("t205")
+normal_enabled = true
+normal_texture = ExtResource("t204")
+uv1_scale = Vector3(0.556, 0.556, 1)
+
+[node name="ArtShowroom" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 12, 0)
+light_color = Color(0.75, 0.82, 0.95, 1)
+light_energy = 0.35
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("floor_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("floor_shape")
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="Title0" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3.2, 0.00)
+text = "Скрипт (tools/props)"
+font_size = 96
+outline_size = 12
+modulate = Color(1, 0.85, 0.45, 1)
+
+[node name="cable_hang" parent="Props" instance=ExtResource("p4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.180, 1.940, 0.000)
+
+[node name="cable_hang_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.180, 3.730, 0.110)
+text = "cable_hang\nP-014b  0.36×1.54×0.12"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp0" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.180, 3.2, 1.200)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="cable_tray_straight" parent="Props" instance=ExtResource("p5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.565, 0.915, 0.000)
+
+[node name="cable_tray_straight_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.565, 1.495, 0.240)
+text = "cable_tray_straight\nP-202a  2.01×0.33×0.38"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="chain_hanging" parent="Props" instance=ExtResource("p6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.805, 1.600, 0.000)
+
+[node name="chain_hanging_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.805, 3.050, 0.085)
+text = "chain_hanging\nP-014a  0.07×1.20×0.07"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="chamber1_gate" parent="Props" instance=ExtResource("p7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.840, 0.000, 0.000)
+
+[node name="chamber1_gate_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.840, 4.750, 0.715)
+text = "chamber1_gate\nP-017  5.60×4.50×1.33"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp3" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.840, 3.2, 1.200)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="control_desk" parent="Props" instance=ExtResource("p8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.650, 0.000, 0.000)
+
+[node name="control_desk_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.650, 1.330, 0.460)
+text = "control_desk\nP-007  1.62×1.08×0.82"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="document_sheet" parent="Props" instance=ExtResource("p9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.870, 0.756, 0.000)
+
+[node name="document_sheet_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.870, 1.018, 0.200)
+text = "document_sheet\nP-019  0.42×0.01×0.30"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="duct_straight" parent="Props" instance=ExtResource("p10")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.280, 1.165, 0.000)
+
+[node name="duct_straight_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.280, 2.245, 0.380)
+text = "duct_straight\nP-203a  2.00×0.83×0.66"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp6" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.280, 3.2, 1.200)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="emergency_beacon" parent="Props" instance=ExtResource("p11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.560, 0.000, 0.000)
+
+[node name="emergency_beacon_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.560, 0.450, 0.105)
+text = "emergency_beacon\nP-206b  0.16×0.20×0.11"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="emergency_cabinet" parent="Props" instance=ExtResource("p12")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.240, 0.000, 0.000)
+
+[node name="emergency_cabinet_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.240, 2.150, 0.275)
+text = "emergency_cabinet\nP-001  0.80×1.90×0.45"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="evac_sign" parent="Props" instance=ExtResource("p13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.040, 0.000, 0.000)
+
+[node name="evac_sign_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.040, 0.450, 0.075)
+text = "evac_sign\nP-002  0.40×0.20×0.05"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp9" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.040, 3.2, 1.200)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="fallen_duct" parent="Props" instance=ExtResource("p14")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.340, 1.550, 0.000)
+
+[node name="fallen_duct_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.340, 3.400, 0.395)
+text = "fallen_duct\nP-005  3.80×1.60×0.69"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="file_cabinet" parent="Props" instance=ExtResource("p15")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.690, 0.000, 0.000)
+
+[node name="file_cabinet_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.690, 1.550, 0.290)
+text = "file_cabinet\nP-102  0.50×1.30×0.48"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="floor_grate" parent="Props" instance=ExtResource("p16")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.640, 0.000, 0.000)
+
+[node name="floor_grate_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.640, 0.400, 0.550)
+text = "floor_grate\nP-205  1.00×0.05×1.00"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp12" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.640, 3.2, 1.200)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="fluorescent_light" parent="Props" instance=ExtResource("p17")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.600, 0.490, 3.830)
+
+[node name="fluorescent_light_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.600, 0.830, 3.950)
+text = "fluorescent_light\nP-206a  1.20×0.09×0.14"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="generator_panel" parent="Props" instance=ExtResource("p18")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.000, 0.000, 3.830)
+
+[node name="generator_panel_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.000, 2.050, 4.050)
+text = "generator_panel\nP-009  1.20×1.80×0.34"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="immersion_chair" parent="Props" instance=ExtResource("p19")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.300, 0.000, 3.830)
+
+[node name="immersion_chair_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.300, 2.450, 4.480)
+text = "immersion_chair\nP-016  1.00×2.20×1.20"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp15" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.300, 3.2, 5.030)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="locker_tall" parent="Props" instance=ExtResource("p20")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.250, 0.000, 3.830)
+
+[node name="locker_tall_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.250, 2.150, 4.145)
+text = "locker_tall\nP-101  0.50×1.90×0.53"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="mnemonic_panel" parent="Props" instance=ExtResource("p21")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.700, 0.000, 3.830)
+
+[node name="mnemonic_panel_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.700, 1.450, 3.965)
+text = "mnemonic_panel\nP-003  2.00×1.20×0.17"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="personal_key" parent="Props" instance=ExtResource("p22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.945, 0.762, 3.830)
+
+[node name="personal_key_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.945, 1.038, 3.883)
+text = "personal_key\nP-018  0.09×0.03×0.01"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp18" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.945, 3.2, 5.030)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="pipe_elbow" parent="Props" instance=ExtResource("p23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.495, 1.055, 3.830)
+
+[node name="pipe_elbow_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.495, 1.915, 3.995)
+text = "pipe_elbow\nP-201b  0.61×0.61×0.23"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="pipe_straight" parent="Props" instance=ExtResource("p24")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.000, 0.865, 3.830)
+
+[node name="pipe_straight_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.000, 1.345, 3.995)
+text = "pipe_straight\nP-201a  2.00×0.23×0.23"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="pipe_tee" parent="Props" instance=ExtResource("p25")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.700, 1.105, 3.830)
+
+[node name="pipe_tee_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.700, 2.065, 3.995)
+text = "pipe_tee\nP-201c  1.00×0.71×0.23"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp21" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.700, 3.2, 5.030)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="pressure_gauge" parent="Props" instance=ExtResource("p26")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.500, 0.000, 3.830)
+
+[node name="pressure_gauge_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.500, 0.450, 3.925)
+text = "pressure_gauge\nP-011  0.20×0.20×0.09"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="rubble_set" parent="Props" instance=ExtResource("p27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.050, 0.000, 3.830)
+
+[node name="rubble_set_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.050, 2.750, 4.780)
+text = "rubble_set\nP-004  4.50×2.50×1.80"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="staff_pod" parent="Props" instance=ExtResource("p28")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.125, 0.000, 3.830)
+
+[node name="staff_pod_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.125, 1.600, 5.380)
+text = "staff_pod\nP-015  1.25×1.35×3.00"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp24" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.125, 3.2, 5.030)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="start_lever" parent="Props" instance=ExtResource("p29")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.150, 0.000, 3.830)
+
+[node name="start_lever_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.150, 1.450, 4.030)
+text = "start_lever\nP-012  0.40×1.20×0.30"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="terminal_console" parent="Props" instance=ExtResource("p30")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.150, 0.000, 3.830)
+
+[node name="terminal_console_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.150, 1.750, 4.240)
+text = "terminal_console\nP-008  1.20×1.50×0.72"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="valve_wheel" parent="Props" instance=ExtResource("p31")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.200, 0.900, 9.330)
+
+[node name="valve_wheel_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.200, 1.450, 9.510)
+text = "valve_wheel\nP-010  0.40×0.30×0.26"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp27" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.200, 3.2, 10.530)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ventilation_unit" parent="Props" instance=ExtResource("p32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.350, 0.000, 9.330)
+
+[node name="ventilation_unit_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.350, 1.750, 9.895)
+text = "ventilation_unit\nP-006  1.50×1.50×1.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="wall_breaker" parent="Props" instance=ExtResource("p33")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.425, 0.000, 9.330)
+
+[node name="wall_breaker_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.425, 0.600, 9.440)
+text = "wall_breaker\nP-013  0.25×0.35×0.12"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Title30" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3.2, 14.36)
+text = "Poly Haven"
+font_size = 96
+outline_size = 12
+modulate = Color(1, 0.85, 0.45, 1)
+
+[node name="ph_ammo_box" parent="Props" instance=ExtResource("p34")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.043, 0.000, 14.360)
+
+[node name="ph_ammo_box_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.043, 0.427, 14.539)
+text = "ph_ammo_box\nP-301  0.09×0.18×0.26"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp30" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.043, 3.2, 15.560)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_barrel_fuel" parent="Props" instance=ExtResource("p35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.604, 0.000, 14.360)
+
+[node name="ph_barrel_fuel_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.604, 1.180, 14.729)
+text = "ph_barrel_fuel\nP-301  0.63×0.93×0.64"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_barrel_oil" parent="Props" instance=ExtResource("p36")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.402, 0.000, 14.360)
+
+[node name="ph_barrel_oil_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.402, 1.130, 14.691)
+text = "ph_barrel_oil\nP-301  0.56×0.88×0.56"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_bed_frame" parent="Props" instance=ExtResource("p37")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.337, 0.000, 14.360)
+
+[node name="ph_bed_frame_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.337, 1.454, 15.411)
+text = "ph_bed_frame\nP-301  0.91×1.20×2.00"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp33" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.337, 3.2, 15.560)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_bench_vice" parent="Props" instance=ExtResource("p38")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.089, 0.000, 14.360)
+
+[node name="ph_bench_vice_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.089, 0.535, 14.608)
+text = "ph_bench_vice\nP-301  0.20×0.28×0.40"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_bolt_cutters" parent="Props" instance=ExtResource("p39")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.465, 1.151, 14.360)
+
+[node name="ph_bolt_cutters_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.465, 2.204, 14.428)
+text = "ph_bolt_cutters\nP-301  0.15×0.80×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_cardboard_box" parent="Props" instance=ExtResource("p40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.934, 0.000, 14.360)
+
+[node name="ph_cardboard_box_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.934, 0.591, 14.668)
+text = "ph_cardboard_box\nP-301  0.39×0.34×0.52"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp36" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.934, 3.2, 15.560)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_clipboard" parent="Props" instance=ExtResource("p41")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.441, 0.771, 14.360)
+
+[node name="ph_clipboard_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.441, 1.063, 14.578)
+text = "ph_clipboard\nP-019  0.23×0.04×0.34"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_crowbar" parent="Props" instance=ExtResource("p42")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.775, 1.028, 14.360)
+
+[node name="ph_crowbar_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.775, 1.833, 14.474)
+text = "ph_crowbar\nP-301  0.04×0.56×0.13"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_crt_television" parent="Props" instance=ExtResource("p43")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.195, 0.000, 14.360)
+
+[node name="ph_crt_television_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.195, 0.661, 14.585)
+text = "ph_crt_television\nP-008  0.40×0.41×0.35"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp39" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.195, 3.2, 15.560)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_drill_press" parent="Props" instance=ExtResource("p44")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.859, 0.000, 14.360)
+
+[node name="ph_drill_press_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.859, 1.300, 14.715)
+text = "ph_drill_press\nP-301  0.53×1.05×0.61"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_flashlight" parent="Props" instance=ExtResource("p45")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.371, 0.822, 14.360)
+
+[node name="ph_flashlight_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.371, 1.216, 14.563)
+text = "ph_flashlight\nP-018  0.10×0.14×0.31"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_gas_mask" parent="Props" instance=ExtResource("p46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.725, 1.313, 14.360)
+
+[node name="ph_gas_mask_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.725, 2.689, 14.565)
+text = "ph_gas_mask\nP-301  0.21×1.13×0.31"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp42" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.725, 3.2, 15.560)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_hand_truck" parent="Props" instance=ExtResource("p47")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.328, 0.000, 14.360)
+
+[node name="ph_hand_truck_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.328, 1.654, 14.757)
+text = "ph_hand_truck\nP-301  0.59×1.40×0.69"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_hanging_lamp" parent="Props" instance=ExtResource("p48")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.099, 1.756, 14.360)
+
+[node name="ph_hanging_lamp_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.099, 3.362, 14.685)
+text = "ph_hanging_lamp\nP-206  0.55×1.36×0.55"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_jerrycan" parent="Props" instance=ExtResource("p49")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.749, 0.000, 14.360)
+
+[node name="ph_jerrycan_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.749, 0.705, 14.496)
+text = "ph_jerrycan\nP-301  0.35×0.46×0.17"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp45" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.749, 3.2, 15.560)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_ladder" parent="Props" instance=ExtResource("p50")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.455, 0.000, 14.360)
+
+[node name="ph_ladder_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.455, 2.384, 14.499)
+text = "ph_ladder\nP-301  0.66×2.13×0.18"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_lpg_tank" parent="Props" instance=ExtResource("p51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.192, 0.000, 14.360)
+
+[node name="ph_lpg_tank_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.192, 0.892, 14.614)
+text = "ph_lpg_tank\nP-301  0.41×0.64×0.41"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_manhole_cover" parent="Props" instance=ExtResource("p52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.943, 0.000, 14.360)
+
+[node name="ph_manhole_cover_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.943, 0.400, 14.755)
+text = "ph_manhole_cover\nP-205  0.69×0.07×0.69"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp48" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.943, 3.2, 15.560)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_medical_box" parent="Props" instance=ExtResource("p53")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.751, 0.000, 14.360)
+
+[node name="ph_medical_box_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.751, 0.400, 14.585)
+text = "ph_medical_box\nP-001  0.53×0.10×0.35"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_metal_chair" parent="Props" instance=ExtResource("p54")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.444, 0.000, 14.360)
+
+[node name="ph_metal_chair_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.444, 1.273, 14.646)
+text = "ph_metal_chair\nP-301  0.46×1.02×0.47"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_metal_rack" parent="Props" instance=ExtResource("p55")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.458, 0.000, 18.862)
+
+[node name="ph_metal_rack_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.458, 2.150, 19.212)
+text = "ph_metal_rack\nP-301  0.92×1.90×0.60"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp51" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.458, 3.2, 20.062)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_metal_stool" parent="Props" instance=ExtResource("p56")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.339, 0.000, 18.862)
+
+[node name="ph_metal_stool_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.339, 0.708, 19.148)
+text = "ph_metal_stool\nP-301  0.45×0.46×0.47"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_military_crate" parent="Props" instance=ExtResource("p57")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.383, 0.000, 18.862)
+
+[node name="ph_military_crate_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.383, 0.715, 19.172)
+text = "ph_military_crate\nP-301  1.24×0.47×0.52"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_multimeter" parent="Props" instance=ExtResource("p58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.312, 0.000, 18.862)
+
+[node name="ph_multimeter_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.312, 0.529, 19.014)
+text = "ph_multimeter\nP-011  0.22×0.28×0.20"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp54" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.312, 3.2, 20.062)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_office_desk" parent="Props" instance=ExtResource("p59")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.620, 0.000, 18.862)
+
+[node name="ph_office_desk_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.620, 1.038, 19.386)
+text = "ph_office_desk\nP-301  2.00×0.79×0.95"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_oil_tin" parent="Props" instance=ExtResource("p60")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.877, 0.000, 18.862)
+
+[node name="ph_oil_tin_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.877, 0.455, 18.989)
+text = "ph_oil_tin\nP-301  0.11×0.20×0.15"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_pipe_wrench" parent="Props" instance=ExtResource("p61")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.176, 0.953, 18.862)
+
+[node name="ph_pipe_wrench_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.176, 1.607, 18.929)
+text = "ph_pipe_wrench\nP-301  0.08×0.41×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp57" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.176, 3.2, 20.062)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_plastic_crate" parent="Props" instance=ExtResource("p62")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.659, 0.000, 18.862)
+
+[node name="ph_plastic_crate_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.659, 0.517, 19.045)
+text = "ph_plastic_crate\nP-301  0.48×0.27×0.27"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_power_box" parent="Props" instance=ExtResource("p63")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.329, 0.000, 18.862)
+
+[node name="ph_power_box_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.329, 0.754, 19.111)
+text = "ph_power_box\nP-013  0.46×0.50×0.40"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_propane_tank" parent="Props" instance=ExtResource("p64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.929, 0.000, 18.862)
+
+[node name="ph_propane_tank_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.929, 0.804, 19.081)
+text = "ph_propane_tank\nP-301  0.34×0.55×0.34"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp60" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.929, 3.2, 20.062)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_radio_transceiver" parent="Props" instance=ExtResource("p65")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.584, 0.000, 18.862)
+
+[node name="ph_radio_transceiver_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.584, 0.684, 19.119)
+text = "ph_radio_transceiver\nP-008  0.57×0.43×0.41"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_security_camera" parent="Props" instance=ExtResource("p66")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.156, 0.893, 18.862)
+
+[node name="ph_security_camera_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.156, 1.429, 19.189)
+text = "ph_security_camera\nP-301  0.17×0.29×0.55"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_sledgehammer" parent="Props" instance=ExtResource("p67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.545, 1.253, 18.862)
+
+[node name="ph_sledgehammer_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.545, 2.509, 18.957)
+text = "ph_sledgehammer\nP-301  0.21×1.01×0.09"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp63" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.545, 3.2, 20.062)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_spacecraft_instrument" parent="Props" instance=ExtResource("p68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.054, 0.000, 18.862)
+
+[node name="ph_spacecraft_instrument_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.054, 0.520, 19.014)
+text = "ph_spacecraft_instrument\nP-007  0.41×0.27×0.20"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_tool_cart" parent="Props" instance=ExtResource("p69")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.095, 0.000, 18.862)
+
+[node name="ph_tool_cart_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.095, 1.217, 19.289)
+text = "ph_tool_cart\nP-301  1.27×0.97×0.75"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_tool_chest" parent="Props" instance=ExtResource("p70")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.274, 0.000, 18.862)
+
+[node name="ph_tool_chest_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.274, 0.902, 19.115)
+text = "ph_tool_chest\nP-301  0.69×0.65×0.41"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp66" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.274, 3.2, 20.062)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_toolbox" parent="Props" instance=ExtResource("p71")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.016, 0.000, 18.862)
+
+[node name="ph_toolbox_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.016, 0.555, 19.047)
+text = "ph_toolbox\nP-301  0.40×0.30×0.27"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_trash_can" parent="Props" instance=ExtResource("p72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.305, 0.000, 18.862)
+
+[node name="ph_trash_can_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.305, 1.156, 19.190)
+text = "ph_trash_can\nP-301  1.78×0.91×0.56"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_utility_box" parent="Props" instance=ExtResource("p73")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.654, 0.000, 18.862)
+
+[node name="ph_utility_box_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.654, 1.370, 19.128)
+text = "ph_utility_box\nP-009  0.52×1.12×0.43"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp69" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.654, 3.2, 20.062)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_wall_lamp" parent="Props" instance=ExtResource("p74")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.137, 0.000, 22.309)
+
+[node name="ph_wall_lamp_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.137, 0.680, 22.429)
+text = "ph_wall_lamp\nP-206  0.27×0.43×0.14"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_welding_cart" parent="Props" instance=ExtResource("p75")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.892, 0.000, 22.309)
+
+[node name="ph_welding_cart_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.892, 1.812, 22.686)
+text = "ph_welding_cart\nP-301  0.84×1.56×0.66"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Title72" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3.2, 26.96)
+text = "Poly Haven: модульные наборы"
+font_size = 96
+outline_size = 12
+modulate = Color(1, 0.85, 0.45, 1)
+
+[node name="ph_airduct_rect_bend_01" parent="Props" instance=ExtResource("p76")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.332, 0.365, 26.964)
+
+[node name="ph_airduct_rect_bend_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.332, 1.246, 27.329)
+text = "ph_airduct_rect__bend_01\nP-203  0.66×0.63×0.63"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp72" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.332, 3.2, 28.164)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_airduct_rect_bend_02" parent="Props" instance=ExtResource("p77")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.279, 0.306, 26.964)
+
+[node name="ph_airduct_rect_bend_02_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.279, 1.070, 27.430)
+text = "ph_airduct_rect__bend_02\nP-203  0.83×0.51×0.83"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_brace_01" parent="Props" instance=ExtResource("p78")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.240, 0.073, 26.964)
+
+[node name="ph_airduct_rect_brace_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.240, 0.400, 27.034)
+text = "ph_airduct_rect__brace_01\nP-203  0.69×0.04×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_brace_wire_01" parent="Props" instance=ExtResource("p79")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.114, 0.600, 26.964)
+
+[node name="ph_airduct_rect_brace_wire_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.114, 1.949, 27.019)
+text = "ph_airduct_rect__brace_wire_01\nP-203  0.66×1.10×0.01"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp75" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.114, 3.2, 28.164)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_airduct_rect_connector_01" parent="Props" instance=ExtResource("p80")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.975, 0.306, 26.964)
+
+[node name="ph_airduct_rect_connector_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.975, 1.070, 27.062)
+text = "ph_airduct_rect__connector_01\nP-203  0.66×0.51×0.10"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_corner_01" parent="Props" instance=ExtResource("p81")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.838, 0.365, 26.964)
+
+[node name="ph_airduct_rect_corner_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.838, 1.246, 27.329)
+text = "ph_airduct_rect__corner_01\nP-203  0.66×0.63×0.63"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_corner_02" parent="Props" instance=ExtResource("p82")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.785, 0.306, 26.964)
+
+[node name="ph_airduct_rect_corner_02_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.785, 1.070, 27.430)
+text = "ph_airduct_rect__corner_02\nP-203  0.83×0.51×0.83"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp78" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.785, 3.2, 28.164)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_airduct_rect_double_01" parent="Props" instance=ExtResource("p83")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.732, 0.306, 26.964)
+
+[node name="ph_airduct_rect_double_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.732, 1.070, 27.614)
+text = "ph_airduct_rect__double_01\nP-203  0.66×0.51×1.20"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_fastener_01_025" parent="Props" instance=ExtResource("p84")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.595, 0.306, 26.964)
+
+[node name="ph_airduct_rect_fastener_01_025_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.595, 1.070, 27.040)
+text = "ph_airduct_rect__fastener_01_025\nP-203  0.66×0.51×0.05"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_half_01" parent="Props" instance=ExtResource("p85")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.458, 0.306, 26.964)
+
+[node name="ph_airduct_rect_half_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.458, 1.070, 27.214)
+text = "ph_airduct_rect__half_01\nP-203  0.66×0.51×0.40"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp81" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.458, 3.2, 28.164)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_airduct_rect_single_01" parent="Props" instance=ExtResource("p86")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.321, 0.306, 26.964)
+
+[node name="ph_airduct_rect_single_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.321, 1.070, 27.314)
+text = "ph_airduct_rect__single_01\nP-203  0.66×0.51×0.60"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_splitter_01" parent="Props" instance=ExtResource("p87")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.253, 0.306, 26.964)
+
+[node name="ph_airduct_rect_splitter_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.253, 1.070, 27.414)
+text = "ph_airduct_rect__splitter_01\nP-203  0.80×0.51×0.80"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_transition_double_01" parent="Props" instance=ExtResource("p88")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.184, 0.531, 26.964)
+
+[node name="ph_airduct_rect_transition_double_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.184, 1.744, 27.614)
+text = "ph_airduct_rect__transition_double_01\nP-203  0.66×0.96×1.20"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp84" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.184, 3.2, 28.164)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_airduct_rect_transition_double_02" parent="Props" instance=ExtResource("p89")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.047, 0.531, 26.964)
+
+[node name="ph_airduct_rect_transition_double_02_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.047, 1.744, 27.614)
+text = "ph_airduct_rect__transition_double_02\nP-203  0.66×0.96×1.20"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_tripple_01" parent="Props" instance=ExtResource("p90")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.910, 0.306, 26.964)
+
+[node name="ph_airduct_rect_tripple_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.910, 1.070, 27.914)
+text = "ph_airduct_rect__tripple_01\nP-203  0.66×0.51×1.80"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_vent_01" parent="Props" instance=ExtResource("p91")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.718, 0.260, 26.964)
+
+[node name="ph_airduct_rect_vent_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.718, 0.930, 27.044)
+text = "ph_airduct_rect__vent_01\nP-203  0.55×0.42×0.06"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp87" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.718, 3.2, 28.164)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_airduct_rect_vent_02" parent="Props" instance=ExtResource("p92")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.470, 0.260, 26.964)
+
+[node name="ph_airduct_rect_vent_02_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.470, 0.930, 27.043)
+text = "ph_airduct_rect__vent_02\nP-203  0.55×0.42×0.06"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_rect_vent_closed_01" parent="Props" instance=ExtResource("p93")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.222, 0.260, 26.964)
+
+[node name="ph_airduct_rect_vent_closed_01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.222, 0.930, 27.047)
+text = "ph_airduct_rect__vent_closed_01\nP-203  0.55×0.42×0.07"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_bend_half" parent="Props" instance=ExtResource("p94")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.185, 0.242, 31.264)
+
+[node name="ph_airduct_round_circular_bend_half_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.185, 0.876, 31.462)
+text = "ph_airduct_round__circular_bend_half\nP-203  0.37×0.38×0.30"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp90" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.185, 3.2, 32.464)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_airduct_round_circular_bend_quater" parent="Props" instance=ExtResource("p95")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.756, 0.238, 31.264)
+
+[node name="ph_airduct_round_circular_bend_quater_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.756, 0.865, 31.403)
+text = "ph_airduct_round__circular_bend_quater\nP-203  0.37×0.38×0.18"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_brace" parent="Props" instance=ExtResource("p96")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.329, 0.386, 31.264)
+
+[node name="ph_airduct_round_circular_brace_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.329, 1.308, 31.334)
+text = "ph_airduct_round__circular_brace\nP-203  0.37×0.67×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_brace_extention" parent="Props" instance=ExtResource("p97")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.840, 0.073, 31.264)
+
+[node name="ph_airduct_round_circular_brace_extention_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.840, 0.400, 31.334)
+text = "ph_airduct_round__circular_brace_extention\nP-203  0.25×0.04×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp93" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.840, 3.2, 32.464)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_airduct_round_circular_brace_extention_wires" parent="Props" instance=ExtResource("p98")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.270, 0.352, 31.264)
+
+[node name="ph_airduct_round_circular_brace_extention_wires_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.270, 1.206, 31.317)
+text = "ph_airduct_round__circular_brace_extention_wires\nP-203  0.21×0.60×0.01"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_double" parent="Props" instance=ExtResource("p99")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.762, 0.235, 31.264)
+
+[node name="ph_airduct_round_circular_double_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.762, 0.857, 31.788)
+text = "ph_airduct_round__circular_double\nP-203  0.37×0.37×0.95"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_fan" parent="Props" instance=ExtResource("p100")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.418, 0.322, 31.264)
+
+[node name="ph_airduct_round_circular_fan_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.418, 1.115, 31.390)
+text = "ph_airduct_round__circular_fan\nP-203  0.54×0.54×0.15"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp96" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.418, 3.2, 32.464)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_airduct_round_circular_single" parent="Props" instance=ExtResource("p101")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.075, 0.235, 31.264)
+
+[node name="ph_airduct_round_circular_single_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.075, 0.857, 31.551)
+text = "ph_airduct_round__circular_single\nP-203  0.37×0.37×0.47"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_smooth_bend_half" parent="Props" instance=ExtResource("p102")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.646, 0.242, 31.264)
+
+[node name="ph_airduct_round_circular_smooth_bend_half_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.646, 0.876, 31.462)
+text = "ph_airduct_round__circular_smooth_bend_half\nP-203  0.37×0.38×0.30"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_smooth_bend_quater" parent="Props" instance=ExtResource("p103")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.216, 0.238, 31.264)
+
+[node name="ph_airduct_round_circular_smooth_bend_quater_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.216, 0.865, 31.403)
+text = "ph_airduct_round__circular_smooth_bend_quater\nP-203  0.37×0.38×0.18"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp99" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.216, 3.2, 32.464)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_airduct_round_circular_smooth_double" parent="Props" instance=ExtResource("p104")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.787, 0.235, 31.264)
+
+[node name="ph_airduct_round_circular_smooth_double_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.787, 0.857, 31.529)
+text = "ph_airduct_round__circular_smooth_double\nP-203  0.37×0.37×0.43"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_smooth_single" parent="Props" instance=ExtResource("p105")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.359, 0.235, 31.264)
+
+[node name="ph_airduct_round_circular_smooth_single_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.359, 0.857, 31.428)
+text = "ph_airduct_round__circular_smooth_single\nP-203  0.37×0.37×0.23"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_circular_smooth_triple" parent="Props" instance=ExtResource("p106")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.930, 0.235, 31.264)
+
+[node name="ph_airduct_round_circular_smooth_triple_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.930, 0.857, 31.739)
+text = "ph_airduct_round__circular_smooth_triple\nP-203  0.37×0.37×0.85"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp102" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.930, 3.2, 32.464)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_airduct_round_circular_triple" parent="Props" instance=ExtResource("p107")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.500, 0.235, 31.264)
+
+[node name="ph_airduct_round_circular_triple_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.500, 0.857, 32.025)
+text = "ph_airduct_round__circular_triple\nP-203  0.37×0.37×1.42"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_rectangular_converter" parent="Props" instance=ExtResource("p108")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.161, 0.260, 31.264)
+
+[node name="ph_airduct_round_rectangular_converter_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.161, 0.930, 31.494)
+text = "ph_airduct_round__rectangular_converter\nP-203  0.55×0.42×0.36"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_airduct_round_rectangular_vent_fan" parent="Props" instance=ExtResource("p109")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.913, 0.260, 31.264)
+
+[node name="ph_airduct_round_rectangular_vent_fan_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.913, 0.930, 31.369)
+text = "ph_airduct_round__rectangular_vent_fan\nP-203  0.55×0.42×0.11"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp105" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.913, 3.2, 32.464)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_10cm" parent="Props" instance=ExtResource("p110")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.394, 0.100, 31.264)
+
+[node name="ph_electric_cables_cable_10cm_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.394, 0.450, 31.320)
+text = "ph_electric_cables__cable_10cm\nP-202  0.01×0.10×0.01"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_2cm" parent="Props" instance=ExtResource("p111")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.604, 0.060, 31.264)
+
+[node name="ph_electric_cables_cable_2cm_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.604, 0.400, 31.320)
+text = "ph_electric_cables__cable_2cm\nP-202  0.01×0.02×0.01"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_3way_junction" parent="Props" instance=ExtResource("p112")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.903, 0.154, 31.264)
+
+[node name="ph_electric_cables_cable_3way_junction_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.903, 0.613, 31.329)
+text = "ph_electric_cables__cable_3way_junction\nP-202  0.19×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp108" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.903, 3.2, 32.464)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_electric_cables_cable_5cm" parent="Props" instance=ExtResource("p113")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.201, 0.075, 31.264)
+
+[node name="ph_electric_cables_cable_5cm_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.201, 0.400, 31.320)
+text = "ph_electric_cables__cable_5cm\nP-202  0.01×0.05×0.01"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_box_3way" parent="Props" instance=ExtResource("p114")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.472, 0.150, 31.264)
+
+[node name="ph_electric_cables_cable_box_3way_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.472, 0.600, 31.332)
+text = "ph_electric_cables__cable_box_3way\nP-202  0.13×0.20×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_box_4way" parent="Props" instance=ExtResource("p115")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.838, 0.150, 31.264)
+
+[node name="ph_electric_cables_cable_box_4way_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.838, 0.600, 31.332)
+text = "ph_electric_cables__cable_box_4way\nP-202  0.20×0.20×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp111" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.838, 3.2, 32.464)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_box_double" parent="Props" instance=ExtResource("p116")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.171, 0.150, 31.264)
+
+[node name="ph_electric_cables_cable_box_double_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.171, 0.600, 31.332)
+text = "ph_electric_cables__cable_box_double\nP-202  0.07×0.20×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_box_double_to_single" parent="Props" instance=ExtResource("p117")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033, 0.150, 35.186)
+
+[node name="ph_electric_cables_cable_box_double_to_single_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033, 0.600, 35.255)
+text = "ph_electric_cables__cable_box_double_to_single\nP-202  0.07×0.20×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_box_double_to_single_2" parent="Props" instance=ExtResource("p118")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.326, 0.116, 35.186)
+
+[node name="ph_electric_cables_cable_box_double_to_single_2_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.326, 0.498, 35.255)
+text = "ph_electric_cables__cable_box_double_to_single_2\nP-202  0.12×0.13×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp114" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.326, 3.2, 36.386)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_box_turn" parent="Props" instance=ExtResource("p119")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.653, 0.116, 35.186)
+
+[node name="ph_electric_cables_cable_box_turn_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.653, 0.498, 35.255)
+text = "ph_electric_cables__cable_box_turn\nP-202  0.13×0.13×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_bridge_1" parent="Props" instance=ExtResource("p120")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.940, 0.153, 35.186)
+
+[node name="ph_electric_cables_cable_bridge_1_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.940, 0.611, 35.259)
+text = "ph_electric_cables__cable_bridge_1\nP-202  0.04×0.21×0.05"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_bridge_2" parent="Props" instance=ExtResource("p121")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.182, 0.153, 35.186)
+
+[node name="ph_electric_cables_cable_bridge_2_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.182, 0.611, 35.250)
+text = "ph_electric_cables__cable_bridge_2\nP-202  0.04×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp117" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.182, 3.2, 36.386)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_electric_cables_cable_bridge_3" parent="Props" instance=ExtResource("p122")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.424, 0.104, 35.186)
+
+[node name="ph_electric_cables_cable_bridge_3_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.424, 0.461, 35.249)
+text = "ph_electric_cables__cable_bridge_3\nP-202  0.04×0.11×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_corner_away" parent="Props" instance=ExtResource("p123")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.666, 0.113, 35.186)
+
+[node name="ph_electric_cables_cable_corner_away_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.666, 0.489, 35.297)
+text = "ph_electric_cables__cable_corner_away\nP-202  0.04×0.13×0.12"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_corner_towards" parent="Props" instance=ExtResource("p124")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.908, 0.100, 35.186)
+
+[node name="ph_electric_cables_cable_corner_towards_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.908, 0.450, 35.287)
+text = "ph_electric_cables__cable_corner_towards\nP-202  0.04×0.10×0.10"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp120" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.908, 3.2, 36.386)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_double" parent="Props" instance=ExtResource("p125")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.157, 0.153, 35.186)
+
+[node name="ph_electric_cables_cable_double_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.157, 0.611, 35.249)
+text = "ph_electric_cables__cable_double\nP-202  0.06×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_double_10cm" parent="Props" instance=ExtResource("p126")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.400, 0.100, 35.186)
+
+[node name="ph_electric_cables_cable_double_10cm_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.400, 0.450, 35.241)
+text = "ph_electric_cables__cable_double_10cm\nP-202  0.03×0.10×0.01"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_double_alt_long" parent="Props" instance=ExtResource("p127")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.665, 0.357, 35.186)
+
+[node name="ph_electric_cables_cable_double_alt_long_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.665, 1.221, 35.247)
+text = "ph_electric_cables__cable_double_alt_long\nP-202  0.10×0.61×0.02"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp123" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.665, 3.2, 36.386)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_double_alt_short" parent="Props" instance=ExtResource("p128")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.964, 0.157, 35.186)
+
+[node name="ph_electric_cables_cable_double_alt_short_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.964, 0.621, 35.247)
+text = "ph_electric_cables__cable_double_alt_short\nP-202  0.10×0.21×0.02"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_double_alt_turn" parent="Props" instance=ExtResource("p129")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.272, 0.124, 35.186)
+
+[node name="ph_electric_cables_cable_double_alt_turn_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.272, 0.523, 35.247)
+text = "ph_electric_cables__cable_double_alt_turn\nP-202  0.12×0.15×0.02"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_double_end" parent="Props" instance=ExtResource("p130")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.550, 0.102, 35.186)
+
+[node name="ph_electric_cables_cable_double_end_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.550, 0.456, 35.248)
+text = "ph_electric_cables__cable_double_end\nP-202  0.04×0.10×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp126" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.550, 3.2, 36.386)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_electric_cables_cable_double_junction" parent="Props" instance=ExtResource("p131")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.842, 0.153, 35.186)
+
+[node name="ph_electric_cables_cable_double_junction_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.842, 0.611, 35.249)
+text = "ph_electric_cables__cable_double_junction\nP-202  0.15×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_double_mount" parent="Props" instance=ExtResource("p132")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.144, 0.058, 35.186)
+
+[node name="ph_electric_cables_cable_double_mount_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.144, 0.400, 35.249)
+text = "ph_electric_cables__cable_double_mount\nP-202  0.06×0.01×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_double_scurve" parent="Props" instance=ExtResource("p133")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.444, 0.153, 35.186)
+
+[node name="ph_electric_cables_cable_double_scurve_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.444, 0.611, 35.249)
+text = "ph_electric_cables__cable_double_scurve\nP-202  0.14×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp129" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.444, 3.2, 36.386)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_double_turn_long" parent="Props" instance=ExtResource("p134")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.821, 0.159, 35.186)
+
+[node name="ph_electric_cables_cable_double_turn_long_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.821, 0.627, 35.249)
+text = "ph_electric_cables__cable_double_turn_long\nP-202  0.21×0.22×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_double_turn_short" parent="Props" instance=ExtResource("p135")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.183, 0.109, 35.186)
+
+[node name="ph_electric_cables_cable_double_turn_short_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.183, 0.477, 35.249)
+text = "ph_electric_cables__cable_double_turn_short\nP-202  0.11×0.12×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_double_uturn" parent="Props" instance=ExtResource("p136")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.456, 0.073, 35.186)
+
+[node name="ph_electric_cables_cable_double_uturn_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.456, 0.400, 35.241)
+text = "ph_electric_cables__cable_double_uturn\nP-202  0.04×0.05×0.01"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp132" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.456, 3.2, 36.386)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_end" parent="Props" instance=ExtResource("p137")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.683, 0.102, 35.186)
+
+[node name="ph_electric_cables_cable_end_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.683, 0.456, 35.248)
+text = "ph_electric_cables__cable_end\nP-202  0.02×0.10×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_lightswitch" parent="Props" instance=ExtResource("p138")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.925, 0.118, 35.186)
+
+[node name="ph_electric_cables_cable_lightswitch_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.925, 0.504, 35.264)
+text = "ph_electric_cables__cable_lightswitch\nP-202  0.07×0.14×0.06"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_lightswitch_2" parent="Props" instance=ExtResource("p139")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.188, 0.116, 35.186)
+
+[node name="ph_electric_cables_cable_lightswitch_2_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.188, 0.496, 35.262)
+text = "ph_electric_cables__cable_lightswitch_2\nP-202  0.06×0.13×0.05"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp135" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.188, 3.2, 36.386)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_electric_cables_cable_lightswitch_double" parent="Props" instance=ExtResource("p140")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.463, 0.153, 35.186)
+
+[node name="ph_electric_cables_cable_lightswitch_double_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.463, 0.611, 35.264)
+text = "ph_electric_cables__cable_lightswitch_double\nP-202  0.10×0.21×0.06"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_mount" parent="Props" instance=ExtResource("p141")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.732, 0.058, 35.186)
+
+[node name="ph_electric_cables_cable_mount_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.732, 0.400, 35.249)
+text = "ph_electric_cables__cable_mount\nP-202  0.04×0.01×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_plug_4x" parent="Props" instance=ExtResource("p142")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.000, 0.127, 35.186)
+
+[node name="ph_electric_cables_cable_plug_4x_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.000, 0.531, 35.257)
+text = "ph_electric_cables__cable_plug_4x\nP-202  0.09×0.15×0.04"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp138" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.000, 3.2, 36.386)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_plug_covered" parent="Props" instance=ExtResource("p143")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.279, 0.121, 35.186)
+
+[node name="ph_electric_cables_cable_plug_covered_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.279, 0.513, 35.264)
+text = "ph_electric_cables__cable_plug_covered\nP-202  0.06×0.14×0.06"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_plug_covered_2" parent="Props" instance=ExtResource("p144")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.029, 0.142, 37.808)
+
+[node name="ph_electric_cables_cable_plug_covered_2_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.029, 0.575, 37.893)
+text = "ph_electric_cables__cable_plug_covered_2\nP-202  0.06×0.18×0.07"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_scurve_1" parent="Props" instance=ExtResource("p145")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.320, 0.104, 37.808)
+
+[node name="ph_electric_cables_cable_scurve_1_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.320, 0.461, 37.871)
+text = "ph_electric_cables__cable_scurve_1\nP-202  0.13×0.11×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp141" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.320, 3.2, 39.008)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_scurve_2" parent="Props" instance=ExtResource("p146")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.646, 0.153, 37.808)
+
+[node name="ph_electric_cables_cable_scurve_2_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.646, 0.611, 37.871)
+text = "ph_electric_cables__cable_scurve_2\nP-202  0.13×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_scurve_3" parent="Props" instance=ExtResource("p147")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.947, 0.153, 37.808)
+
+[node name="ph_electric_cables_cable_scurve_3_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.947, 0.611, 37.871)
+text = "ph_electric_cables__cable_scurve_3\nP-202  0.08×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_scurve_4" parent="Props" instance=ExtResource("p148")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.223, 0.104, 37.808)
+
+[node name="ph_electric_cables_cable_scurve_4_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.223, 0.461, 37.871)
+text = "ph_electric_cables__cable_scurve_4\nP-202  0.08×0.11×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp144" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.223, 3.2, 39.008)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_electric_cables_cable_straight_long" parent="Props" instance=ExtResource("p149")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.482, 0.353, 37.808)
+
+[node name="ph_electric_cables_cable_straight_long_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.482, 1.210, 37.871)
+text = "ph_electric_cables__cable_straight_long\nP-202  0.04×0.61×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_straight_medium" parent="Props" instance=ExtResource("p150")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.724, 0.153, 37.808)
+
+[node name="ph_electric_cables_cable_straight_medium_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.724, 0.611, 37.871)
+text = "ph_electric_cables__cable_straight_medium\nP-202  0.04×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_straight_short" parent="Props" instance=ExtResource("p151")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.966, 0.104, 37.808)
+
+[node name="ph_electric_cables_cable_straight_short_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.966, 0.461, 37.871)
+text = "ph_electric_cables__cable_straight_short\nP-202  0.04×0.11×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp147" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.966, 3.2, 39.008)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_switch" parent="Props" instance=ExtResource("p152")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.261, 0.239, 37.808)
+
+[node name="ph_electric_cables_cable_switch_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.261, 0.869, 37.884)
+text = "ph_electric_cables__cable_switch\nP-202  0.15×0.38×0.05"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_to_double_1" parent="Props" instance=ExtResource("p153")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.575, 0.104, 37.808)
+
+[node name="ph_electric_cables_cable_to_double_1_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.575, 0.461, 37.871)
+text = "ph_electric_cables__cable_to_double_1\nP-202  0.08×0.11×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_to_double_2" parent="Props" instance=ExtResource("p154")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.848, 0.104, 37.808)
+
+[node name="ph_electric_cables_cable_to_double_2_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.848, 0.461, 37.871)
+text = "ph_electric_cables__cable_to_double_2\nP-202  0.06×0.11×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp150" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.848, 3.2, 39.008)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_electric_cables_cable_to_double_3" parent="Props" instance=ExtResource("p155")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.146, 0.153, 37.808)
+
+[node name="ph_electric_cables_cable_to_double_3_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.146, 0.611, 37.871)
+text = "ph_electric_cables__cable_to_double_3\nP-202  0.13×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_to_double_4" parent="Props" instance=ExtResource("p156")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.472, 0.153, 37.808)
+
+[node name="ph_electric_cables_cable_to_double_4_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.472, 0.611, 37.871)
+text = "ph_electric_cables__cable_to_double_4\nP-202  0.12×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_electric_cables_cable_turn_long" parent="Props" instance=ExtResource("p157")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.841, 0.157, 37.808)
+
+[node name="ph_electric_cables_cable_turn_long_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.841, 0.619, 37.871)
+text = "ph_electric_cables__cable_turn_long\nP-202  0.22×0.21×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp153" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.841, 3.2, 39.008)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="ph_electric_cables_cable_turn_short" parent="Props" instance=ExtResource("p158")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.208, 0.111, 37.808)
+
+[node name="ph_electric_cables_cable_turn_short_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.208, 0.481, 37.871)
+text = "ph_electric_cables__cable_turn_short\nP-202  0.11×0.12×0.03"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_industrial_pipes_pipe01" parent="Props" instance=ExtResource("p159")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.568, 0.479, 37.808)
+
+[node name="ph_industrial_pipes_pipe01_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.568, 1.589, 37.961)
+text = "ph_industrial_pipes__pipe01\nP-201  0.21×0.86×0.21"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_industrial_pipes_pipe02" parent="Props" instance=ExtResource("p160")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.975, 1.028, 37.808)
+
+[node name="ph_industrial_pipes_pipe02_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.975, 3.232, 37.961)
+text = "ph_industrial_pipes__pipe02\nP-201  0.21×1.96×0.21"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp156" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.975, 3.2, 39.008)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_industrial_pipes_pipe03" parent="Props" instance=ExtResource("p161")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.578, 0.707, 37.808)
+
+[node name="ph_industrial_pipes_pipe03_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.578, 2.271, 37.961)
+text = "ph_industrial_pipes__pipe03\nP-201  0.60×1.31×0.21"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_industrial_pipes_pipe04" parent="Props" instance=ExtResource("p162")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.289, 0.273, 37.808)
+
+[node name="ph_industrial_pipes_pipe04_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.289, 0.968, 37.961)
+text = "ph_industrial_pipes__pipe04\nP-201  0.42×0.45×0.21"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_industrial_pipes_pipe05" parent="Props" instance=ExtResource("p163")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.000, 0.267, 37.808)
+
+[node name="ph_industrial_pipes_pipe05_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.000, 0.950, 37.961)
+text = "ph_industrial_pipes__pipe05\nP-201  0.60×0.43×0.21"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp159" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.000, 3.2, 39.008)
+light_color = Color(0.72, 0.85, 1, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = false
+
+[node name="ph_industrial_pipes_pipe06" parent="Props" instance=ExtResource("p164")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.654, 0.229, 37.808)
+
+[node name="ph_industrial_pipes_pipe06_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.654, 0.837, 37.961)
+text = "ph_industrial_pipes__pipe06\nP-201  0.31×0.36×0.21"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_industrial_pipes_pipe07" parent="Props" instance=ExtResource("p165")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.187, 0.256, 37.808)
+
+[node name="ph_industrial_pipes_pipe07_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.187, 0.916, 37.961)
+text = "ph_industrial_pipes__pipe07\nP-201  0.36×0.41×0.21"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="ph_industrial_pipes_pipe08" parent="Props" instance=ExtResource("p166")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.698, 0.239, 37.808)
+
+[node name="ph_industrial_pipes_pipe08_label" type="Label3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.698, 0.869, 38.011)
+text = "ph_industrial_pipes__pipe08\nP-201  0.27×0.38×0.31"
+font_size = 28
+outline_size = 6
+billboard = 1
+modulate = Color(0.85, 0.88, 0.9, 1)
+
+[node name="Lamp162" type="OmniLight3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.698, 3.2, 39.008)
+light_color = Color(1, 0.72, 0.45, 1)
+light_energy = 1.6
+omni_range = 7.0
+shadow_enabled = true
+
+[node name="Swatch_concrete_rubble" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -4.00, 0.80, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_concrete_rubble")
+
+[node name="Swatch_concrete_rubble_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.00, 0.08, -2.9)
+text = "concrete_rubble (Poly Haven)"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_diamond_plate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -5.50, 0.80, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_diamond_plate")
+
+[node name="Swatch_diamond_plate_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.50, 0.08, -2.9)
+text = "diamond_plate (Poly Haven)"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_duct_galvanized" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -7.00, 0.80, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_duct_galvanized")
+
+[node name="Swatch_duct_galvanized_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.00, 0.08, -2.9)
+text = "duct_galvanized"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_fabric_dark" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -8.50, 0.80, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_fabric_dark")
+
+[node name="Swatch_fabric_dark_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.50, 0.08, -2.9)
+text = "fabric_dark (Poly Haven)"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_painted_metal" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -10.00, 0.80, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_painted_metal")
+
+[node name="Swatch_painted_metal_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.00, 0.08, -2.9)
+text = "painted_metal (Poly Haven)"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_painted_metal_green" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -11.50, 0.80, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_painted_metal_green")
+
+[node name="Swatch_painted_metal_green_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.50, 0.08, -2.9)
+text = "painted_metal_green (Poly Haven)"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_paper_aged" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -13.00, 0.80, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_paper_aged")
+
+[node name="Swatch_paper_aged_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.00, 0.08, -2.9)
+text = "paper_aged"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_plastic_panel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -4.00, 2.20, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_plastic_panel")
+
+[node name="Swatch_plastic_panel_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.00, 1.48, -2.9)
+text = "plastic_panel"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_rubber_black" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -5.50, 2.20, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_rubber_black")
+
+[node name="Swatch_rubber_black_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.50, 1.48, -2.9)
+text = "rubber_black"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_rusted_steel" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -7.00, 2.20, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_rusted_steel")
+
+[node name="Swatch_rusted_steel_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.00, 1.48, -2.9)
+text = "rusted_steel (Poly Haven)"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_steel_bare" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -8.50, 2.20, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_steel_bare")
+
+[node name="Swatch_steel_bare_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.50, 1.48, -2.9)
+text = "steel_bare"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_vinyl_worn" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -10.00, 2.20, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_vinyl_worn")
+
+[node name="Swatch_vinyl_worn_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.00, 1.48, -2.9)
+text = "vinyl_worn (Poly Haven)"
+font_size = 24
+outline_size = 6
+
+[node name="Swatch_wood_old" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -11.50, 2.20, -3)
+mesh = SubResource("swatch_mesh")
+surface_material_override/0 = SubResource("m_wood_old")
+
+[node name="Swatch_wood_old_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.50, 1.48, -2.9)
+text = "wood_old (Poly Haven)"
+font_size = 24
+outline_size = 6
+
+[node name="SwatchLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 2.5, -1)
+light_energy = 1.4
+omni_range = 8.0
+
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 2)
+interact_label = NodePath("../OpeningHud/InteractLabel")
+hold_progress_bar = NodePath("../OpeningHud/HoldProgress")
+
+[node name="OpeningHud" parent="." instance=ExtResource("hud")]
