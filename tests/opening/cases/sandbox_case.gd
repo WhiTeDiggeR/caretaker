@@ -12,6 +12,19 @@ func run(c: OpeningCheck) -> void:
 	var hud := sandbox.get_node(^"OpeningHud") as OpeningHud
 	c.equal(hud.objective_label.text, "ЦЕЛЬ: Проверить станции полигона", "HUD shows the objective from GameState")
 	c.equal(GameState.get_section_power(&"sandbox_a"), GameState.Power.EMERGENCY, "sandbox sections start on emergency power")
+	# Debug keys 7 and 8 (F7/F8 belong to the editor: pause and stop the project).
+	sandbox._unhandled_input(_key(KEY_7))
+	c.near(Containment.time_scale, 10.0, 0.001, "key 7 speeds up containment time")
+	Containment.time_scale = 1.0
+	sandbox._unhandled_input(_key(KEY_8))
+	c.is_true(GameState.has_flag(Containment.CATASTROPHE_FLAG), "key 8 wakes modules 3 and 4 (catastrophe)")
 	GameState.set_objective(&"next", "Следующая цель")
 	c.equal(hud.objective_label.text, "ЦЕЛЬ: Следующая цель", "HUD follows objective changes")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _key(code: Key) -> InputEventKey:
+	var event := InputEventKey.new()
+	event.keycode = code
+	event.pressed = true
+	return event
