@@ -150,7 +150,7 @@ func _clear_options() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not event is InputEventKey or not event.is_pressed():
+	if not (event is InputEventKey or event is InputEventAction or event is InputEventJoypadButton) or not event.is_pressed():
 		return
 	get_viewport().set_input_as_handled()
 	if event.is_action_pressed(&"ui_cancel"):
@@ -172,7 +172,7 @@ func _input(event: InputEvent) -> void:
 		_refresh_options()
 	elif confirm:
 		choose(selected)
-	else:
+	elif event is InputEventKey:
 		var key := (event as InputEventKey).keycode
 		if key >= KEY_1 and key <= KEY_9:
 			choose(key - KEY_1)

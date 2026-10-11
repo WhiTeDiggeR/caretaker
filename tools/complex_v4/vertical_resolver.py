@@ -149,7 +149,8 @@ def u_turn_fit(rect: tuple[float, float, float, float], entry_side: str, floor_h
     """
     x0, z0, x1, z1 = rect
     along_ns = entry_side in {"north", "south"}
-    along = (z1 - z0 if along_ns else x1 - x0) - 2 * clearance
+    # the clearance is taken off the across-axis only (see resolve_stair), the along-axis keeps the full plan length
+    along = z1 - z0 if along_ns else x1 - x0
     across_lo, across_hi = (x0, x1) if along_ns else (z0, z1)
     target_riser = _arg(arguments, "--target-riser", 0.17)  # generator defaults
     max_riser = _arg(arguments, "--max-riser", 0.19)
@@ -207,9 +208,11 @@ def resolve_stair(entry: dict[str, Any], sectors: dict[str, dict[str, Any]], pro
     floor_height = upper_y - lower_y
     if floor_height <= 0:
         raise VerticalError(f"{vertical_id}: the upper level must be above the lower level")
-    bottom = _shared_value(lower, "--wall-height") + _shared_value(lower, "--ceiling-thickness")
+    # The shaft walls start at the top of the lower walls (the underside of its ceiling) so they overlap the ceiling slab:
+    # there is no gap at the joint when the ceilings are hidden or cut.
+    bottom = _shared_value(lower, "--wall-height")
     if bottom >= floor_height:
-        raise VerticalError(f"{vertical_id}: lower walls plus ceiling ({bottom}) reach the upper floor ({floor_height})")
+        raise VerticalError(f"{vertical_id}: lower walls ({bottom}) reach the upper floor ({floor_height})")
     clearance = float(entry.get("clearance_m", DEFAULT_CLEARANCE_M))
     x0, z0, x1, z1 = upper_rect
     width, length = x1 - x0, z1 - z0

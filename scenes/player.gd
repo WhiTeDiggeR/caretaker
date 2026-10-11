@@ -12,7 +12,6 @@ const WALK_SPEED = 5.0
 const SPRINT_SPEED = 8.5
 const CROUCH_SPEED = 2.5
 const JUMP_VELOCITY = 4.5
-const MOUSE_SENS = 0.002
 
 const STAND_HEIGHT := 1.8
 const CROUCH_HEIGHT := 1.0
@@ -49,12 +48,18 @@ var _forced_crouch := false
 func _ready() -> void:
 	add_to_group(&"player")
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Settings.changed.connect(_apply_settings)
+	_apply_settings()
 	interactor.prompt_label = interact_label
 	interactor.hold_bar = hold_progress_bar
 	# The capsule changes height at runtime, so every player owns its shape.
 	_shape = (_collision.shape as CapsuleShape3D).duplicate()
 	_collision.shape = _shape
 	_apply_height(STAND_HEIGHT)
+
+
+func _apply_settings() -> void:
+	camera.fov = Settings.fov
 
 
 func set_controls_locked(locked: bool) -> void:
@@ -71,9 +76,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseMotion:
 		var mouse_event := event as InputEventMouseMotion
-		rotate_y(-mouse_event.relative.x * MOUSE_SENS)
+		var sensitivity := Settings.mouse_sensitivity()
+		rotate_y(-mouse_event.relative.x * sensitivity)
 
-		camera.rotate_x(-mouse_event.relative.y * MOUSE_SENS)
+		var vertical := -1.0 if Settings.invert_y else 1.0
+		camera.rotate_x(-mouse_event.relative.y * sensitivity * vertical)
 		camera.rotation.x = clamp(
 			camera.rotation.x,
 			deg_to_rad(-89),

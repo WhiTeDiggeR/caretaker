@@ -1,0 +1,132 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/dream/dream_mood.gd" id="1_mood"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="3_hud"]
+[ext_resource type="PackedScene" path="res://objects/dream/dream_gate.tscn" id="4_gate"]
+[ext_resource type="PackedScene" path="res://objects/dream/dream_seal.tscn" id="5_seal"]
+[ext_resource type="Script" path="res://objects/dream/dream_hazard.gd" id="6_hazard"]
+[ext_resource type="Script" path="res://scenes/dreams/test_dream.gd" id="7_dream"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.85, 0.55, 0.3, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.9, 0.7, 0.5, 1)
+fog_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="rock"]
+albedo_color = Color(0.25, 0.2, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="lava"]
+shading_mode = 0
+albedo_color = Color(1, 0.35, 0.05, 1)
+
+[sub_resource type="BoxMesh" id="plat_mesh"]
+material = SubResource("rock")
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxShape3D" id="plat_shape"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="bridge_mesh"]
+material = SubResource("rock")
+size = Vector3(2, 0.4, 8)
+
+[sub_resource type="BoxShape3D" id="bridge_shape"]
+size = Vector3(2, 0.4, 8)
+
+[sub_resource type="PlaneMesh" id="lava_mesh"]
+material = SubResource("lava")
+size = Vector2(80, 80)
+
+[sub_resource type="BoxShape3D" id="lava_shape"]
+size = Vector3(80, 1, 80)
+
+[node name="TestDream" type="Node3D"]
+script = ExtResource("7_dream")
+
+[node name="Mood" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+script = ExtResource("1_mood")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 10, 0)
+light_color = Color(1, 0.75, 0.55, 1)
+shadow_enabled = true
+
+[node name="Start" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Start"]
+mesh = SubResource("plat_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Start"]
+shape = SubResource("plat_shape")
+
+[node name="Middle" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -18)
+
+[node name="Mesh" type="MeshInstance3D" parent="Middle"]
+mesh = SubResource("plat_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Middle"]
+shape = SubResource("plat_shape")
+
+[node name="Far" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -36)
+
+[node name="Mesh" type="MeshInstance3D" parent="Far"]
+mesh = SubResource("plat_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Far"]
+shape = SubResource("plat_shape")
+
+[node name="Bridge1" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -9)
+
+[node name="Mesh" type="MeshInstance3D" parent="Bridge1"]
+mesh = SubResource("bridge_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Bridge1"]
+shape = SubResource("bridge_shape")
+
+[node name="Bridge2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, -27)
+
+[node name="Mesh" type="MeshInstance3D" parent="Bridge2"]
+mesh = SubResource("bridge_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Bridge2"]
+shape = SubResource("bridge_shape")
+
+[node name="LavaSurface" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, -18)
+mesh = SubResource("lava_mesh")
+
+[node name="Lava" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, -18)
+script = ExtResource("6_hazard")
+
+[node name="Collision" type="CollisionShape3D" parent="Lava"]
+shape = SubResource("lava_shape")
+
+[node name="Seal" parent="." instance=ExtResource("5_seal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+
+[node name="Gate" parent="." instance=ExtResource("4_gate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -39)
+
+[node name="Hint" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -4)
+pixel_size = 0.006
+text = "ТЕСТОВЫЙ СОН\nпечать — в центре, врата — в конце; лава смертельна"
+font_size = 48
+outline_size = 12
+
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2)
+interact_label = NodePath("../OpeningHud/InteractLabel")
+hold_progress_bar = NodePath("../OpeningHud/HoldProgress")
+
+[node name="OpeningHud" parent="." instance=ExtResource("3_hud")]

@@ -61,7 +61,7 @@ class ResolverTests(unittest.TestCase):
         self.assertEqual(values["--shaft-length"], "7")
         self.assertEqual((values["--floor-height"], values["--layout"], values["--stair-width"]), ("6", "u-turn", "1.5"))
         self.assertEqual((values["--lower-entry-side"], values["--upper-exit-side"]), ("north", "north"))
-        self.assertEqual((values["--shaft-wall-bottom"], values["--shaft-wall-top"]), ("3.6", "6"))
+        self.assertEqual((values["--shaft-wall-bottom"], values["--shaft-wall-top"]), ("3.4", "6"))
         self.assertEqual(values["--scene-name"], "x")
         self.assertEqual(result["local_to_world"]["origin"], [-52.5, -6.0, 9.51])
         self.assertEqual(result["local_to_world"]["basis_x"], [-1, 0, 0])
@@ -131,7 +131,7 @@ class RouteARegressionTests(unittest.TestCase):
         self.assertEqual(
             {key: values[key] for key in ("--shaft-width", "--shaft-length", "--floor-height", "--layout", "--stair-width", "--lower-entry-side", "--upper-exit-side", "--shaft-wall-bottom", "--shaft-wall-top")},
             {"--shaft-width": "6.647", "--shaft-length": "7.777", "--floor-height": "6", "--layout": "u-turn", "--stair-width": "1.8",
-             "--lower-entry-side": "north", "--upper-exit-side": "north", "--shaft-wall-bottom": "3.6", "--shaft-wall-top": "6"},
+             "--lower-entry-side": "north", "--upper-exit-side": "north", "--shaft-wall-bottom": "5", "--shaft-wall-top": "6"},
         )
         self.assertEqual(resolved["local_to_world"]["origin"], [-52.2225, -6.0, 15.7655])
 
