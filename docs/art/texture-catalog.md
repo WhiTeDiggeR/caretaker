@@ -23,6 +23,23 @@
 | T-13 | `concrete_*` Бетон стен и пола | 2–4 м | уже есть: `loads/cracked_concrete`, `concrete_layers`, `concrete_slab_wall_02`, `floor_hangar` | есть | есть |
 | T-14 | `metal_0069`, `metal_15_crm` | 1 м | уже есть, оцениваем на пригодность к T-01/T-02 | есть | оценка |
 
+## 1а. Заменено сканами Poly Haven (CC0)
+
+Скрипт `tools/props/import_textures.py` скачивает 1K-наборы и тонирует их в палитру; файлы лежат по тем же путям, поэтому модели подхватывают их без пересборки. Процедурный рецепт остаётся в `make_textures.py`, но для этих материалов не запускается.
+
+| Материал | Скан | Плитка, м |
+|---|---|---|
+| `painted_metal` | [blue_metal_plate](https://polyhaven.com/a/blue_metal_plate) | 1.25 |
+| `painted_metal_green` | [green_metal_rust](https://polyhaven.com/a/green_metal_rust) | 1.0 |
+| `rusted_steel` | [rusty_metal_05](https://polyhaven.com/a/rusty_metal_05) | 1.25 |
+| `diamond_plate` | [metal_plate](https://polyhaven.com/a/metal_plate) | 0.5 |
+| `vinyl_worn` | [fabric_leather_02](https://polyhaven.com/a/fabric_leather_02) | 0.5 |
+| `concrete_rubble` | [concrete_debris](https://polyhaven.com/a/concrete_debris) | 2.0 |
+| `wood_old` | [weathered_brown_planks](https://polyhaven.com/a/weathered_brown_planks) | 1.8 |
+| `fabric_dark` | [poly_wool_herringbone](https://polyhaven.com/a/poly_wool_herringbone) | 0.276 |
+
+Новый материал `painted_metal_green` — зелёная краска с ржавчиной, для акцентов модуля Боузера. Остались процедурными: `steel_bare`, `rubber_black`, `plastic_panel`, `duct_galvanized`, `paper_aged` — на Poly Haven подходящих нет, проверить на ambientCG после открытия доменов.
+
 ## 2. Материалы без текстур (параметры)
 
 | ID | Материал | Параметры |

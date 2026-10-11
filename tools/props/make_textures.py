@@ -271,7 +271,8 @@ def main() -> int:
     ap.add_argument("--size", type=int, default=T.SIZE)
     a = ap.parse_args()
     T.SIZE = a.size
-    for n in a.materials or list(RECIPES):
+    from materials_def import SOURCED
+    for n in a.materials or [r for r in RECIPES if r not in SOURCED]:  # downloaded scans are not overwritten
         paths = write_material(n, Path(a.out), a.size)
         print(n, [f"{p.name} {p.stat().st_size // 1024}K" for p in paths])
     return 0

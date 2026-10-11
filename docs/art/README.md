@@ -21,6 +21,15 @@
 
 Любая модель проходит `tools/props/validate_props.py` (габарит, опора, треугольники, материалы) до коммита.
 
+## Как посмотреть в Godot
+
+1. Получите ветку с ассетами (`git fetch origin ccr-b87fde9f-5fqcbt && git checkout ccr-b87fde9f-5fqcbt`) и откройте проект в Godot 4.7. Первый запуск импортирует новые модели и текстуры (несколько минут).
+2. Откройте сцену `res://scenes/sandbox/art_showroom.tscn` и нажмите **F6** (запустить текущую сцену). Игрок стоит у стенда материалов; ряды — «Скрипт», «Poly Haven», «Poly Haven: модульные наборы». Над каждой моделью подпись: id, номер в каталоге, габарит.
+3. Отдельная модель: двойной щелчок по `objects/art/<id>.tscn` (обёртка с коллизией) или по `loads/props/<id>/<id>.gltf` (только модель) в панели «Файловая система».
+4. Подвижные части (`Door`, `Lid`, `Switch`, `Breaker*`, `Drawer*`, `Fan`, `Crystal`, `Hoop*`, `Needle`, `Wheel`, `Lever`) — отдельные узлы в дереве сцены модели; их можно повернуть в инспекторе.
+
+Витрина генерируется: `python3 tools/props/make_showroom.py` (не править руками).
+
 ## Команды
 
 ```bash
@@ -30,6 +39,10 @@ python3 tools/props/make_decals.py                      # атласы знак�
 python3 tools/props/build_props.py [проп ...]           # модели → loads/props/<id>/ и tools/props/specs.json
 python3 tools/props/build_props.py эскиз --preview DIR  # + рендер превью Cycles (≈ 20 с на кадр)
 python3 tools/props/make_wrappers.py                    # сцены-обёртки objects/art/<id>.tscn
+python3 tools/props/import_textures.py                  # материалы Poly Haven → те же пути, тонировка в палитру
+python3 tools/props/import_models.py [id ...]           # модели Poly Haven → loads/props/ph_<id>/ (опора, бюджет, тонировка)
+python3 tools/props/preview_models.py OUT.jpg [glob]    # лист превью любых glTF
+python3 tools/props/make_showroom.py                    # витрина scenes/sandbox/art_showroom.tscn
 python3 tools/props/validate_props.py                   # габариты, опора, бюджет, происхождение (без Blender)
 godot --headless --path . --script res://tools/props/check_props.gd
 ```

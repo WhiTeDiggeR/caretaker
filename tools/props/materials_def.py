@@ -25,3 +25,15 @@ ATLAS = {"signs_ru": ("decals/signs_ru.png", True, 0.0), "hazard_stripes": ("dec
          "screens": ("decals/screens.png", False, 1.4), "signs_lit": ("decals/signs_ru.png", False, 0.9), "grime_streaks": ("decals/grime_streaks.png", True, 0.0),
          "rust_bleed": ("decals/rust_bleed.png", True, 0.0), "scuffs": ("decals/scuffs.png", True, 0.0),
          "floor_markings": ("decals/floor_markings.png", True, 0.0)}
+
+
+# Materials replaced by downloaded scans (import_textures.py) carry their real-world tile size.
+import json as _json  # noqa: E402
+from pathlib import Path as _Path  # noqa: E402
+
+_SOURCED = _Path(__file__).with_name("sourced_tiles.json")
+SOURCED = set()
+if _SOURCED.exists():
+    for _name, _tile in _json.loads(_SOURCED.read_text(encoding="utf-8")).items():
+        TILE[_name] = _tile
+        SOURCED.add(_name)

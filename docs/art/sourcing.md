@@ -1,20 +1,17 @@
 # Источники готовых ассетов
 
-Состояние на 2026-10-10: **скачивание из облачного окружения заблокировано** политикой сети. Открыт PyPI, `api.github.com`, GitHub (релизы), npm. Закрыты все ассет-сайты.
+Состояние на 2026-10-11 (домены открыты автором):
 
-## Домены, которые нужно добавить в Allowed domains окружения
+| Источник | Состояние | Что нужно |
+|---|---|---|
+| Poly Haven (`api.polyhaven.com`, `dl.polyhaven.org`) | **работает**: материалы и модели скачиваются | — |
+| Poly Haven превью (`cdn.polyhaven.com`) | закрыт | не обязателен; для быстрого просмотра кандидатов добавить домен |
+| ambientCG API (`ambientcg.com`) | работает (поиск) | — |
+| ambientCG файлы и превью | **закрыты**: файлы раздаются с `acg-download.struffelproductions.com`, превью — с `acg-media.struffelproductions.com` | добавить оба домена в Allowed domains |
+| Sketchfab API (`api.sketchfab.com`) | поиск работает | скачивание требует токен: секрет окружения `SKETCHFAB_TOKEN`; `media.sketchfab.com` отвечает 403 |
+| `kenney.nl`, `quaternius.com`, `opengameart.org` | закрыты | запасные, не обязательны |
 
-| Домен | Зачем |
-|---|---|
-| `polyhaven.com`, `api.polyhaven.com`, `dl.polyhaven.org` | CC0 модели и PBR-текстуры (основной источник) |
-| `ambientcg.com` | CC0 PBR-материалы, декали |
-| `sketchfab.com`, `api.sketchfab.com`, `media.sketchfab.com` | модели CC0/CC-BY через API (нужен API-токен как секрет окружения `SKETCHFAB_TOKEN`) |
-| `kenney.nl` | CC0 наборы (только как запасной) |
-| `quaternius.com` | CC0 модели (запасной) |
-| `opengameart.org` | CC0/CC-BY мелочь (запасной) |
-| `fonts.google.com`, `fonts.gstatic.com` | шрифты для знаков (запасной; локальные DejaVu/Liberation уже есть) |
-
-Инструкция для окружения: `https://code.claude.com/docs/en/cloud-environments#network-access`.
+Скачанное приводится к стандарту скриптами `tools/props/import_textures.py` (материалы) и `tools/props/import_models.py` (модели); источник, авторы и правки записываются в `tools/props/manifest.json`.
 
 ## Лицензии
 

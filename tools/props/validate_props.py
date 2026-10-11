@@ -74,10 +74,12 @@ class Spec:
     def __init__(self, pid, d):
         self.id, self.catalog, self.size, self.anchor = pid, d["catalog"], tuple(d["size"]), d["anchor"]
         self.tris_max, self.tolerance, self.center_z = d["tris_max"], d["tolerance"], d["center_z"]
+        self.external = d.get("external", False)          # downloaded model with its own materials
+        self.gltf = d.get("gltf", f"{pid}/{pid}.gltf")    # path under loads/props
 
 
 def check_prop(spec, errors, notes):
-    gltf = REPO / "loads" / "props" / spec.id / f"{spec.id}.gltf"
+    gltf = REPO / "loads" / "props" / spec.gltf
     if not gltf.exists():
         errors.append(f"{spec.id}: {gltf.relative_to(REPO)} is missing (run build_props.py)")
         return
@@ -106,7 +108,7 @@ def check_prop(spec, errors, notes):
     from materials_def import ATLAS, EMIT, PLAIN, TILE
     known = set(TILE) | set(ATLAS) | set(EMIT) | set(PLAIN)
     for m in data.get("materials", []):
-        if m["name"] not in known:
+        if m["name"] not in known and not spec.external:
             errors.append(f"{spec.id}: unknown material '{m['name']}'")
     for im in data.get("images", []):
         if not (gltf.parent / im["uri"]).resolve().exists():
@@ -152,7 +154,7 @@ def main() -> int:
             continue
         check_prop(specs[pid], errors, notes)
     present = {p.name for p in (REPO / "loads" / "props").iterdir() if p.is_dir()} if (REPO / "loads" / "props").exists() else set()
-    for extra in sorted(present - set(specs)):
+    for extra in sorted(present - {s.gltf.split("/")[0] for s in specs.values()}):
         errors.append(f"{extra}: model in loads/props has no specification in specs.json")
     check_manifest(errors)
     print("\n".join(notes))

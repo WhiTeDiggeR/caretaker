@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from validate_props import REPO, analyse  # noqa: E402
 
 NO_COLLISION = {"chain_hanging", "cable_hang", "document_sheet", "personal_key"}
+NO_COLLISION_PREFIXES = ("ph_electric_cables__",)  # loose cable runs
 # id -> list of (centre, size, rotation_z_degrees); replaces the bounding-box collision
 OVERRIDES = {
     # tilted duct body (3.4 m long, 0.5 x 0.6 section) hanging from x = -1.7 at y = 2.55, sagging 18 degrees
@@ -28,19 +29,20 @@ OVERRIDES = {
 
 
 def pascal(pid: str) -> str:
-    return "".join(p.capitalize() for p in pid.split("_"))
+    return "".join(p.capitalize() for p in pid.replace("__", "_").split("_"))
 
 
 def write(pid: str):
-    gltf = REPO / "loads" / "props" / pid / f"{pid}.gltf"
+    rel = SPECS[pid].get("gltf", f"{pid}/{pid}.gltf")
+    gltf = REPO / "loads" / "props" / rel
     _, lo, hi, _ = analyse(gltf)
     shapes = OVERRIDES.get(pid)
-    if shapes is None and pid not in NO_COLLISION:
+    if shapes is None and pid not in NO_COLLISION and not pid.startswith(NO_COLLISION_PREFIXES):
         size = [hi[i] - lo[i] for i in range(3)]
         centre = [(hi[i] + lo[i]) / 2 for i in range(3)]
         shapes = [(tuple(round(c, 4) for c in centre), tuple(round(s, 4) for s in size), 0.0)]
     lines = ["[gd_scene format=3]", "",
-             f'[ext_resource type="PackedScene" path="res://loads/props/{pid}/{pid}.gltf" id="1_model"]', ""]
+             f'[ext_resource type="PackedScene" path="res://loads/props/{rel}" id="1_model"]', ""]
     for i, (_, size, _) in enumerate(shapes or []):
         lines += [f'[sub_resource type="BoxShape3D" id="Shape{i}"]', f"size = Vector3({size[0]}, {size[1]}, {size[2]})", ""]
     lines += [f'[node name="{pascal(pid)}" type="StaticBody3D"]', "",
@@ -61,9 +63,11 @@ def write(pid: str):
     return out
 
 
+SPECS = json.loads((Path(__file__).with_name("specs.json")).read_text(encoding="utf-8"))
+
+
 def main() -> int:
-    specs = json.loads((Path(__file__).with_name("specs.json")).read_text(encoding="utf-8"))
-    for pid in sys.argv[1:] or specs:
+    for pid in sys.argv[1:] or SPECS:
         print(write(pid).relative_to(REPO))
     return 0
 

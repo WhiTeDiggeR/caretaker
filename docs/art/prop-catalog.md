@@ -97,6 +97,97 @@
 
 Оценка по рендерам (Blender, Cycles): аварийный шкаф, мнемосхема, щит генератора, вентагрегат, капсула, кресло — читаются и вписываются в скетчи; завал, ворота камеры №1 и воздуховод — рабочие, но «героев» (ворота, капсула, кресло) стоит показать автору до обработки: это пункт О-4 в `decisions.md`.
 
+## 4б. Скачанные модели (Poly Haven, CC0)
+
+Импорт — `tools/props/import_models.py` по списку `tools/props/sourced_models.json`: опора по стандарту, бюджет треугольников, тонировка альбедо в палитру (насыщенность ×0,7, яркость ×0,85 по умолчанию). Обёртки — `objects/art/ph_*.tscn`, превью — `docs/art/previews/polyhaven_models.jpg`, `polyhaven_kits.jpg`.
+
+### Аналоги наших моделей — что выбрано
+
+| Наше | Poly Haven | Решение |
+|---|---|---|
+| `duct_straight` (P-203) | `ph_airduct_rect` (24 детали: колена, тройники, переходы, решётки), `ph_airduct_round` (21 деталь, с вентилятором) | **основной — Poly Haven**: богаче и закрывает колена, которых у нас нет; наш прямой участок оставлен для `fallen_duct` |
+| `pipe_straight/elbow/tee` (P-201) | `ph_industrial_pipes` (8 деталей, вентиль с маховиком и манометром) | **основной — Poly Haven**; наши — запасные длинные прямые |
+| кабели (P-202, P-014b) | `ph_electric_cables` (≈40 деталей: короба, выключатели, розетки) | **Poly Haven** для настенной проводки; наши свисающие обрывки остаются |
+| `fluorescent_light` (P-206) | mounted_fluorescent_lights | **наш**: у Poly Haven голые трубки без корпуса |
+| `wall_breaker` (P-013), `generator_panel` (P-009) | `ph_power_box`, `ph_utility_box` | оба: наши — сюжетные пульты с подписями, Poly Haven — фоновые щитки |
+| `emergency_cabinet` (P-001) | `ph_medical_box` | дополнение (аптечка на полке/стене) |
+| `locker_tall`, `file_cabinet` (P-101/102) | — | наши |
+| остальные наши пропы начала | аналогов нет | наши |
+
+### Принятые модели
+
+| id | Источник | Габарит, м / состав | Каталог |
+|---|---|---|---|
+| `ph_airduct_rect` | [modular_airduct_rectangular_01](https://polyhaven.com/a/modular_airduct_rectangular_01) | набор: 18 деталей | P-203 |
+| `ph_airduct_round` | [modular_airduct_circular_01](https://polyhaven.com/a/modular_airduct_circular_01) | набор: 16 деталей | P-203 |
+| `ph_industrial_pipes` | [modular_industrial_pipes_01](https://polyhaven.com/a/modular_industrial_pipes_01) | набор: 8 деталей | P-201 |
+| `ph_electric_cables` | [modular_electric_cables](https://polyhaven.com/a/modular_electric_cables) | набор: 49 деталей | P-202 |
+| `ph_power_box` | [power_box_01](https://polyhaven,com/a/power_box_01) | 0,46×0,50×0,40 | P-013 |
+| `ph_utility_box` | [utility_box_01](https://polyhaven,com/a/utility_box_01) | 0,52×1,12×0,43 | P-009 |
+| `ph_hanging_lamp` | [hanging_industrial_lamp](https://polyhaven,com/a/hanging_industrial_lamp) | 0,55×1,36×0,55 | P-206 |
+| `ph_wall_lamp` | [industrial_wall_lamp](https://polyhaven,com/a/industrial_wall_lamp) | 0,27×0,43×0,14 | P-206 |
+| `ph_medical_box` | [medical_box](https://polyhaven,com/a/medical_box) | 0,53×0,10×0,35 | P-001 |
+| `ph_spacecraft_instrument` | [vintage_spacecraft_instrument](https://polyhaven,com/a/vintage_spacecraft_instrument) | 0,41×0,27×0,20 | P-007 |
+| `ph_radio_transceiver` | [vintage_radio_transceiver](https://polyhaven,com/a/vintage_radio_transceiver) | 0,57×0,43×0,41 | P-008 |
+| `ph_multimeter` | [retro_multimeter](https://polyhaven,com/a/retro_multimeter) | 0,22×0,28×0,20 | P-011 |
+| `ph_office_desk` | [metal_office_desk](https://polyhaven,com/a/metal_office_desk) | 2,00×0,79×0,95 | P-301 |
+| `ph_tool_chest` | [metal_tool_chest](https://polyhaven,com/a/metal_tool_chest) | 0,69×0,65×0,41 | P-301 |
+| `ph_tool_cart` | [tool_cart](https://polyhaven,com/a/tool_cart) | 1,27×0,97×0,75 | P-301 |
+| `ph_metal_rack` | [worn_metal_rack](https://polyhaven,com/a/worn_metal_rack) | 0,92×1,90×0,60 | P-301 |
+| `ph_barrel_oil` | [Barrel_01](https://polyhaven,com/a/Barrel_01) | 0,56×0,88×0,56 | P-301 |
+| `ph_barrel_fuel` | [barrel_03](https://polyhaven,com/a/barrel_03) | 0,63×0,93×0,64 | P-301 |
+| `ph_propane_tank` | [propane_tank](https://polyhaven,com/a/propane_tank) | 0,34×0,55×0,34 | P-301 |
+| `ph_lpg_tank` | [small_lpg_tank](https://polyhaven,com/a/small_lpg_tank) | 0,41×0,64×0,41 | P-301 |
+| `ph_welding_cart` | [portable_welding_cart](https://polyhaven,com/a/portable_welding_cart) | 0,84×1,56×0,66 | P-301 |
+| `ph_cardboard_box` | [cardboard_box_01](https://polyhaven,com/a/cardboard_box_01) | 0,39×0,34×0,52 | P-301 |
+| `ph_plastic_crate` | [plastic_crate_03](https://polyhaven,com/a/plastic_crate_03) | 0,48×0,27×0,27 | P-301 |
+| `ph_military_crate` | [wooden_military_crate](https://polyhaven,com/a/wooden_military_crate) | 1,24×0,47×0,52 | P-301 |
+| `ph_jerrycan` | [metal_jerrycan](https://polyhaven,com/a/metal_jerrycan) | 0,35×0,46×0,17 | P-301 |
+| `ph_trash_can` | [metal_trash_can](https://polyhaven,com/a/metal_trash_can) | 1,78×0,91×0,56 | P-301 |
+| `ph_hand_truck` | [hand_truck](https://polyhaven,com/a/hand_truck) | 0,59×1,40×0,69 | P-301 |
+| `ph_bench_vice` | [bench_vice_01](https://polyhaven,com/a/bench_vice_01) | 0,20×0,28×0,40 | P-301 |
+| `ph_drill_press` | [old_drill_press](https://polyhaven,com/a/old_drill_press) | 0,53×1,05×0,61 | P-301 |
+| `ph_ladder` | [ladder_sectioned_01](https://polyhaven,com/a/ladder_sectioned_01) | 0,66×2,13×0,18 | P-301 |
+| `ph_metal_stool` | [metal_stool_02](https://polyhaven,com/a/metal_stool_02) | 0,45×0,46×0,47 | P-301 |
+| `ph_metal_chair` | [metal_stool_03](https://polyhaven,com/a/metal_stool_03) | 0,46×1,02×0,47 | P-301 |
+| `ph_bed_frame` | [old_bed_frame](https://polyhaven,com/a/old_bed_frame) | 0,91×1,20×2,00 | P-301 |
+| `ph_clipboard` | [clipboard](https://polyhaven,com/a/clipboard) | 0,23×0,04×0,34 | P-019 |
+| `ph_gas_mask` | [old_gas_mask](https://polyhaven,com/a/old_gas_mask) | 0,21×1,13×0,31 | P-301 |
+| `ph_security_camera` | [security_camera_01](https://polyhaven,com/a/security_camera_01) | 0,17×0,29×0,55 | P-301 |
+| `ph_crt_television` | [television_02](https://polyhaven,com/a/television_02) | 0,40×0,41×0,35 | P-008 |
+| `ph_manhole_cover` | [water_manhole_cover](https://polyhaven,com/a/water_manhole_cover) | 0,69×0,07×0,69 | P-205 |
+| `ph_pipe_wrench` | [pipe_wrench](https://polyhaven,com/a/pipe_wrench) | 0,08×0,41×0,04 | P-301 |
+| `ph_crowbar` | [crowbar_01](https://polyhaven,com/a/crowbar_01) | 0,04×0,56×0,13 | P-301 |
+| `ph_bolt_cutters` | [bolt_cutters_01](https://polyhaven,com/a/bolt_cutters_01) | 0,15×0,80×0,04 | P-301 |
+| `ph_sledgehammer` | [sledgehammer_01](https://polyhaven,com/a/sledgehammer_01) | 0,21×1,01×0,09 | P-301 |
+| `ph_toolbox` | [metal_toolbox](https://polyhaven,com/a/metal_toolbox) | 0,40×0,30×0,27 | P-301 |
+| `ph_ammo_box` | [ammo_box](https://polyhaven,com/a/ammo_box) | 0,09×0,18×0,26 | P-301 |
+| `ph_oil_tin` | [oil_tin](https://polyhaven,com/a/oil_tin) | 0,11×0,20×0,15 | P-301 |
+| `ph_flashlight` | [vintage_flashlight](https://polyhaven,com/a/vintage_flashlight) | 0,10×0,14×0,31 | P-018 |
+
+Надписи на английском на крышке `ph_medical_box` («FIRST AID») и наклейке `ph_utility_box` («DANGER») нужно перекрыть нашими декалями (`signs_ru`) — мелкая доработка при расстановке.
+
+### Отклонено
+
+| Ассет | Причина |
+|---|---|
+| industrial_caged_sconce | набор разрозненных деталей |
+| fire_alarm | английский текст FIRE ALARM |
+| korean_fire_extinguisher_01 | корейский текст |
+| steel_frame_shelves_01 | современная мебель |
+| drawer_cabinet | современная деревянная мебель |
+| industrial_pastic_container | современный бытовой пластик |
+| SchoolChair_01 | современный пластик |
+| exterior_aircon_unit | бытовые внешние блоки |
+| portable_generator | современный брендированный |
+| mounted_fluorescent_lights | голые трубки без корпуса; наш fluorescent_light лучше |
+
+Правило: модели с крупным нерусским текстом, современным брендированным или бытовым видом не принимаются (канон: русский текст, старая техническая эстетика).
+
+### Чего нет на Poly Haven
+
+Медблок (стойка капельницы, хирургический светильник, шкаф-витрина), операторские кресла, серверные стойки, оружейный шкаф. Это кандидаты для ambientCG/Sketchfab (нужны домены и токен, см. `sourcing.md`) или для скрипта.
+
 ## 5. Бюджет первой партии
 
 Фактически 19 моделей ≈ 55 000 треугольников и ≈ 2,6 МБ суммарно (самый тяжёлый — щит генератора 326 КБ), текстуры общие (см. `texture-catalog.md`). Допустимый вес: до 1 МБ на малый проп, до 3 МБ на интерактив, до 10 МБ на «героя».
