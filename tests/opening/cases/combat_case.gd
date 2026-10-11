@@ -115,8 +115,18 @@ func run(c: OpeningCheck) -> void:
 	c.equal(c.tree.get_nodes_in_group(DreamEnemy.GROUP).size(), 4, "four shades: three in the arena, one at the gate")
 	var hud := dream.get_node(^"Combat").get("hud") as DreamCombatHud
 	c.equal(hud.weapons_text(), "Оружия нет — ищите образы сна", "the HUD asks to find images")
-	(dream.get_node(^"BladeImage") as DreamWeaponPickup).take()
+	# Taken the way the player does it: look at the crystal and press interact.
+	var hero := dream.get_node(^"Player") as CharacterBody3D
+	hero.global_position = Vector3(-2.5, 0.9, -0.6)
+	hero.rotation.y = 0.0
+	hero.camera.rotation.x = deg_to_rad(-15.0)
+	await c.physics_frames(5)
+	Input.action_press(&"interact")
+	await c.physics_frames(3)
+	Input.action_release(&"interact")
+	await c.physics_frames(10)
 	c.equal(hud.weapons_text(), "ЛКМ — Клинок сна", "taking an image arms the hero and names the key")
+	c.is_true(hero.interactor.target == null, "the interactor lets go of the taken image (no freed target)")
 	dream.queue_free()
 	await c.physics_frames(2)
 
