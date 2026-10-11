@@ -126,10 +126,15 @@ def ventilation_unit(k: Kit):
 
 
 # ----------------------------------------------------------------------------- P-015
-@prop("staff_pod", "P-015", (1.0, 1.2, 2.56), "floor", 14000, tolerance=0.08, center_z=False)
+# Matches the gameplay placeholder objects/props/staff_capsule.gd (Р-16): base 1.2 x 0.5 x 2.6, tub walls up to the
+# rim at 0.8, bed 1.0 x 2.3, lid 0.55 high hinged on the +X rim (rotation about Z), panel stand at the feet (+Z).
+POD_L, POD_W, POD_BASE, POD_RIM, POD_LID = 2.6, 1.2, 0.5, 0.8, 0.55
+
+
+@prop("staff_pod", "P-015", (1.25, 1.35, 3.0), "floor", 14000, tolerance=0.05, center_z=False)
 def staff_pod(k: Kit):
-    """Emergency staff sleep capsule: lying pod on a pedestal, hinged glass lid (Lid), status panel at the foot end."""
-    L = 2.4
+    """Emergency staff sleep capsule (Р-16 sizes): base, tub, bed, hinged glass lid (Lid), panel stand at the feet."""
+    L, W = POD_L, POD_W
 
     def rrect(w, h, r, n=5):
         pts = []
@@ -139,43 +144,51 @@ def staff_pod(k: Kit):
                 pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
         return pts
 
-    k.box((0.8, 0.3, 2.1), (0, 0.15, 0), "painted_metal", 0.01)                                    # pedestal
-    k.box((1.0, 0.04, 2.4), (0, 0.32, 0), "painted_metal", 0.008)
-    k.prism(rrect(1.0, 0.62, 0.16), L, (0, 0.63, 0), "painted_metal", "z", bevel=0.012, seg=2)      # lower shell
-    k.box((0.8, 0.02, 2.2), (0, 0.93, 0.0), "painted_metal", 0.004)                                 # rim plate under the lid
-    k.box((0.66, 0.1, 2.0), (0, 0.95, 0.0), "vinyl_worn", 0.03)                                     # mattress
-    k.box((0.5, 0.08, 0.34), (0, 1.0, -0.8), "vinyl_worn", 0.03)                                    # pillow
+    k.box((W - 0.1, 0.08, L - 0.1), (0, 0.04, 0), "painted_metal", 0.008)                          # recessed plinth
+    k.box((W, POD_BASE - 0.08, L), (0, 0.08 + (POD_BASE - 0.08) / 2, 0), "painted_metal", 0.012)  # base
+    k.box((1.0, 0.06, 2.3), (0, POD_BASE + 0.03, 0), "vinyl_worn", 0.02)                            # bed
+    k.box((0.5, 0.07, 0.32), (0, POD_BASE + 0.095, -0.92), "vinyl_worn", 0.03)                      # pillow
+    tub_h = POD_RIM - POD_BASE
     for sx in (-1, 1):
-        k.box((0.06, 0.06, 2.2), (sx * 0.4, 0.95, 0), "steel_bare", 0.008)                          # side rails
-    # lid hinged on the left rim, opens about +Z (pivot axis along z)
-    k.group("Lid", pivot=(-0.5, 0.95, 0))
-    k.prism(rrect(0.96, 0.5, 0.2), 2.26, (0.0, 1.2, 0), "glass_dirty", "z")                          # glass canopy
-    # frame arches hugging the outside of the canopy (glass: 0.96 x 0.5, corner radius 0.2, centre y 1.2)
-    gap, hw, hh, rr = 0.025, 0.48, 0.25, 0.2
-    arch = [(hw + gap, 1.0)]
+        k.box((0.06, tub_h, L), (sx * (W / 2 - 0.03), POD_BASE + tub_h / 2, 0), "painted_metal", 0.008)
+    for sz in (-1, 1):
+        k.box((W, tub_h, 0.06), (0, POD_BASE + tub_h / 2, sz * (L / 2 - 0.03)), "painted_metal", 0.008)
+    k.box((W + 0.01, 0.025, L + 0.01), (0, POD_RIM - 0.0125, 0), "steel_bare", 0.004)              # rim seal
+    for sz in (-1, 1):                                                                               # hinge blocks
+        k.box((0.05, 0.06, 0.12), (W / 2 + 0.01, POD_RIM - 0.03, sz * 0.9), "steel_bare", 0.006)
+    # lid: hinge line on the +X rim; frosted canopy in a frame
+    k.group("Lid", pivot=(W / 2, POD_RIM, 0))
+    cy = POD_RIM + POD_LID / 2
+    k.prism(rrect(W - 0.08, POD_LID - 0.04, 0.18), L - 0.12, (0, cy - 0.01, 0), "glass_dirty", "z")
+    for sz in (-1, 1):
+        k.box((W, POD_LID, 0.05), (0, cy, sz * (L / 2 - 0.025)), "painted_metal", 0.01)               # end frames
+    for sx in (-1, 1):
+        k.box((0.05, 0.05, L), (sx * (W / 2 - 0.025), POD_RIM + 0.025, 0), "painted_metal", 0.008)   # lower frame rails
+    gap, hw, hh, rr = 0.012, (W - 0.08) / 2, (POD_LID - 0.04) / 2, 0.18
+    arch = [(hw + gap, POD_RIM + 0.05)]
     for cx, a0 in ((hw - rr, 0), (-(hw - rr), 90)):
         for i in range(9):
             a = math.radians(a0 + 90 * i / 8)
-            arch.append((cx + (rr + gap) * math.cos(a), 1.2 + (hh - rr) + (rr + gap) * math.sin(a)))
-    arch.append((-(hw + gap), 1.0))
-    for z in (-1.1, -0.55, 0.0, 0.55, 1.1):
-        k.tube([(x, y, z) for x, y in arch], 0.02, "painted_metal", 8)
-    for sx in (-1, 1):
-        k.box((0.05, 0.06, 2.3), (sx * 0.48, 0.99, 0), "painted_metal", 0.008)
-    k.box((0.04, 0.1, 0.5), (0.43, 0.97, 0.3), "steel_bare", 0.004)                                 # latch
+            arch.append((cx + (rr + gap) * math.cos(a), cy - 0.01 + (hh - rr) + (rr + gap) * math.sin(a)))
+    arch.append((-(hw + gap), POD_RIM + 0.05))
+    for z in (-0.65, 0.0, 0.65):                                                                      # frame hoops
+        k.tube([(x, y, z) for x, y in arch], 0.016, "painted_metal", 8)
+    k.box((0.04, 0.08, 0.3), (-W / 2 - 0.0, POD_RIM + 0.06, 0.4), "steel_bare", 0.006)                # latch (free edge)
     k.body()
-    # status panel at the foot end and head-end hoses
-    k.box((0.5, 0.36, 0.06), (0, 0.55, L / 2 + 0.01), "painted_metal", 0.008)
-    k.decal((0, 0.58, L / 2 + 0.041), (0.38, 0.19), "screens", uv("screens", "terminal_boot"), offset=0.0)
+    # panel stand at the feet (as in the placeholder: post 1.0 high, panel at 1.1 tilted 20 degrees)
+    pz = L / 2 + 0.12
+    k.box((0.12, 1.0, 0.12), (0, 0.5, pz), "painted_metal", 0.01)
+    k.box((0.46, 0.34, 0.07), (0, 1.1, pz + 0.02), "painted_metal", 0.012, rot=(-20, 0, 0))
+    k.decal((0, 1.115, pz + 0.055 + 0.0), (0.34, 0.17), "screens", uv("screens", "terminal_boot"), tilt=20, offset=0.003)
     for i, m in enumerate(("emit_led_green", "emit_led_amber", "emit_led_red")):
-        led(k, -0.12 + i * 0.12, 0.43, L / 2 + 0.041, m, 0.01)
-    k.decal((0, 0.74, L / 2 + 0.041), (0.3, 0.075), "panel_labels", uv("panel_labels", "КАПСУЛА"), offset=0.0)
-    for x in (-0.18, 0.0, 0.18):
-        pts = [(x, 0.62, -L / 2), (x * 1.5, 0.45, -L / 2 - 0.06), (x * 2.2, 0.15, -L / 2 - 0.1), (x * 2.4, 0.04, -L / 2 - 0.12)]
+        k.cyl(0.011, 0.012, (-0.12 + i * 0.12, 0.99, pz + 0.1), "z", m, 10, rot=(-20, 0, 0))
+    k.decal((0, 1.25, pz + 0.004), (0.26, 0.06), "panel_labels", uv("panel_labels", "КАПСУЛА"), tilt=20, offset=0.06)
+    # service hoses at the head end
+    for x in (-0.25, 0.0, 0.25):
+        pts = [(x, 0.4, -L / 2), (x * 1.2, 0.3, -L / 2 - 0.08), (x * 1.3, 0.1, -L / 2 - 0.12), (x * 1.3, 0.03, -L / 2 - 0.13)]
         k.tube(pts, 0.035, "rubber_black", 8)
-    k.box((0.45, 0.04, 0.02), (0.0, 0.2, L / 2 + 0.04), "emit_led_amber", 0.003)
-    k.decal((0.38, 0.46, L / 2 + 0.041), (0.12, 0.06), "signs_ru", uv("signs_ru", "danger"), offset=0.0)
-    k.rescale(1.0, 1.2 / 1.45, 1.0)
+    k.decal((0.45, 0.3, L / 2), (0.16, 0.08), "signs_ru", uv("signs_ru", "danger"))
+    k.decal((0, 0.3, L / 2), (0.36, 0.06), "hazard_stripes", uv("hazard_stripes", "yellow_black"))
 
 
 # ----------------------------------------------------------------------------- P-016
