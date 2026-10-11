@@ -11,6 +11,9 @@ size = Vector3(4, 2, 2)
 [sub_resource type="BoxShape3D" id="wide_strip"]
 size = Vector3(8, 2, 2)
 
+[sub_resource type="BoxShape3D" id="tunnel"]
+size = Vector3(6, 2, 3)
+
 [node name="HintTriggers" type="Node3D"]
 
 [node name="Hold" type="Area3D" parent="."]
@@ -44,3 +47,19 @@ hint_id = &"access"
 
 [node name="Shape" type="CollisionShape3D" parent="Access"]
 shape = SubResource("station")
+
+[node name="Crawl" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, -9)
+script = ExtResource("1_trigger")
+hint_id = &"crawl"
+
+[node name="Shape" type="CollisionShape3D" parent="Crawl"]
+shape = SubResource("tunnel")
+
+[node name="Ladder" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -9.5)
+script = ExtResource("1_trigger")
+hint_id = &"ladder"
+
+[node name="Shape" type="CollisionShape3D" parent="Ladder"]
+shape = SubResource("wide_strip")
