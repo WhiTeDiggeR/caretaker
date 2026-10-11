@@ -150,9 +150,16 @@ def staff_pod(k: Kit):
     # lid hinged on the left rim, opens about +Z (pivot axis along z)
     k.group("Lid", pivot=(-0.5, 0.95, 0))
     k.prism(rrect(0.96, 0.5, 0.2), 2.26, (0.0, 1.2, 0), "glass_dirty", "z")                          # glass canopy
-    loop = [(x, 1.2 + y) for x, y in rrect(0.98, 0.52, 0.2)]
-    for z in (-1.1, -0.55, 0.0, 0.55, 1.1):                                                       # frame hoops
-        k.tube([(x, y - 0.25 + 0.05, z) for x, y in loop] + [(loop[0][0], loop[0][1] - 0.2, z)], 0.022, "painted_metal", 8, caps=False)
+    # frame arches hugging the outside of the canopy (glass: 0.96 x 0.5, corner radius 0.2, centre y 1.2)
+    gap, hw, hh, rr = 0.025, 0.48, 0.25, 0.2
+    arch = [(hw + gap, 1.0)]
+    for cx, a0 in ((hw - rr, 0), (-(hw - rr), 90)):
+        for i in range(9):
+            a = math.radians(a0 + 90 * i / 8)
+            arch.append((cx + (rr + gap) * math.cos(a), 1.2 + (hh - rr) + (rr + gap) * math.sin(a)))
+    arch.append((-(hw + gap), 1.0))
+    for z in (-1.1, -0.55, 0.0, 0.55, 1.1):
+        k.tube([(x, y, z) for x, y in arch], 0.02, "painted_metal", 8)
     for sx in (-1, 1):
         k.box((0.05, 0.06, 2.3), (sx * 0.48, 0.99, 0), "painted_metal", 0.008)
     k.box((0.04, 0.1, 0.5), (0.43, 0.97, 0.3), "steel_bare", 0.004)                                 # latch
@@ -250,7 +257,7 @@ def chamber1_gate(k: Kit):
         for seg in ((-W / 2 + 0.5, -0.9), (0.9, W / 2 - 0.5)):
             pts = [(seg[0] + (seg[1] - seg[0]) * t / 10, y + 0.05 * math.sin(t), 0.02 + 0.2 * max(0, 1 - abs((seg[0] + (seg[1] - seg[0]) * t / 10)) / 1.9)) for t in range(11)]
             k.tube(pts, 0.05, "painted_metal", 8)
-    # torn lock mechanism and a bent crossbeam on the floor
-    k.box((0.5, 0.9, 0.3), (-0.5, 1.2, 0.5), "steel_bare", 0.03, rot=(18, 14, 25))
+    # torn-off lock housing lying on the floor in front of the gate, and a bent crossbeam
+    k.box((0.5, 0.3, 0.9), (-0.7, 0.15, 0.45), "steel_bare", 0.03, rot=(0, 24, 0))
     k.box((2.4, 0.22, 0.22), (1.4, 0.18, 0.55), "painted_metal", 0.015, rot=(0, -16, 4))
     k.decal((-W / 2 + 0.25, 3.6, 0.301), (0.4, 0.2), "signs_ru", uv("signs_ru", "module_1"), offset=0.0)

@@ -25,6 +25,9 @@ PROPS_DIR = REPO / "loads" / "props"
 from materials_def import ATLAS, EMIT, PLAIN, TILE  # noqa: E402
 
 
+DECAL_MIN_OFFSET = 0.003  # metres between a decal and the surface it labels
+
+
 def g2b(v) -> Vector:
     """Godot (x, y up, z front) -> Blender (X, Y, Z up); glTF export maps it straight back."""
     return Vector((v[0], -v[2], v[1]))
@@ -255,7 +258,10 @@ class Kit:
         self.tube([c + rot @ p for p in circle], r, m=m, seg=rseg, caps=saved_caps)
 
     def decal(self, center, size, atlas: str, rect, normal="+z", offset=0.0015, flip_u=False, tilt=0.0, roll=0.0):
-        """A flat quad textured with a rect (u0, v0, u1, v1; v from the top of the image) of an atlas material."""
+        """A flat quad textured with a rect (u0, v0, u1, v1; v from the top of the image) of an atlas material.
+        It always floats at least DECAL_MIN_OFFSET above `center` along its normal: closer than that, the quad and
+        the surface under it fight for the depth buffer in Godot at a distance (flickering labels)."""
+        offset = max(offset, DECAL_MIN_OFFSET)
         w, h = size
         bm = bmesh.new()
         uvl = bm.loops.layers.uv.verify()

@@ -197,8 +197,8 @@ def generator_panel(k: Kit):
         x = -0.43 if i % 2 == 0 else -0.17
         k.cyl(0.085, 0.03, (x, y, 0.035), "z", "painted_metal", 24, cap_bevel=0.006)
         k.cyl(0.078, 0.004, (x, y, 0.05), "z", "plastic_panel", 24)
-        k.decal((x, y, 0.0525), (0.15, 0.15), "instrument_faces", uv("instrument_faces", face), offset=0.0)
-        k.cyl(0.078, 0.003, (x, y, 0.0555), "z", "glass_dirty", 24)
+        k.decal((x, y, 0.052), (0.15, 0.15), "instrument_faces", uv("instrument_faces", face))   # face at 0.055
+        k.cyl(0.078, 0.003, (x, y, 0.059), "z", "glass_dirty", 24)
     for i, name in enumerate(("ДАВЛЕНИЕ", "ОБОРОТЫ", "НАПРЯЖЕНИЕ", "ТЕМПЕРАТУРА")):
         pass
     k.decal((-0.3, 1.36, 0.0215), (0.42, 0.06), "panel_labels", uv("panel_labels", "ДАВЛЕНИЕ"), offset=0.0)
@@ -219,10 +219,10 @@ def generator_panel(k: Kit):
             k.body()
     k.decal((0.33, 1.52, 0.021), (0.4, 0.05), "panel_labels", uv("panel_labels", "ПИТАНИЕ"), offset=0.0)
     k.decal((0.33, 0.43, 0.021), (0.4, 0.05), "panel_labels", uv("panel_labels", "ЗАЩИТА"), offset=0.0)
-    # log book (журнал) hanging on a hook, hazard stripe and warning plate
-    k.cyl(0.006, 0.03, (-0.08, 1.7, 0.03), "z", "steel_bare", 8)
-    k.box((0.2, 0.28, 0.012), (-0.08, 1.56, 0.04), "vinyl_worn", 0.003)
-    k.box((0.18, 0.26, 0.006), (-0.08, 1.56, 0.0475), "paper_aged", 0.0)
+    # log book (журнал) hanging on a hook on the outside of the right side wall, clear of the instruments
+    k.cyl(0.006, 0.03, (w / 2 + 0.015, 1.5, 0.0), "x", "steel_bare", 8)
+    k.box((0.012, 0.28, 0.2), (w / 2 + 0.006, 1.34, 0.0), "vinyl_worn", 0.003)
+    k.box((0.004, 0.26, 0.18), (w / 2 + 0.014, 1.34, 0.0), "paper_aged", 0.0)
     k.decal((0, 0.16, d / 2 - 0.15 + 0.15), (1.1, 0.1), "hazard_stripes", uv("hazard_stripes", "yellow_black"), offset=0.0)
     k.decal((0.33, 1.7, 0.021), (0.2, 0.1), "signs_ru", uv("signs_ru", "high_voltage"), offset=0.0)
     k.cyl(0.07, 0.5, (0.45, 1.55, -0.12), "y", "rubber_black", 12)                                 # cable bundle going up

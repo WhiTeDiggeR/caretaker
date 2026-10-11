@@ -41,13 +41,15 @@ def pressure_gauge(k: Kit):
     k.cyl(r, 0.05, (0, 0, 0.045), "z", "painted_metal", 28, cap_bevel=0.004)               # case
     k.cyl(r + 0.004, 0.012, (0, 0, 0.068), "z", "chrome_dull", 28, cap_bevel=0.003)        # bezel
     k.cyl(r - 0.012, 0.004, (0, 0, 0.0738), "z", "plastic_panel", 28)
-    k.decal((0, 0, 0.0765), (2 * r - 0.008, 2 * r - 0.008), "instrument_faces", uv("instrument_faces", "pressure"), offset=0.0)
-    k.cyl(r - 0.004, 0.003, (0, 0, 0.0795), "z", "glass_dirty", 28)
-    k.group("Needle", pivot=(0, 0, 0.0765))
-    k.box((0.006, 0.075, 0.003), (0, 0.025, 0.0775), "red_paint_worn", 0.0, rot=(0, 0, -50))
-    k.box((0.006, 0.02, 0.003), (0, -0.01, 0.0775), "red_paint_worn", 0.0, rot=(0, 0, -50))
+    # stack along +Z, each layer clear of the next: dial plate 0.0758, face decal 0.0788, needle 0.079-0.082,
+    # hub cap 0.0795-0.0835, glass 0.0835-0.0865
+    k.decal((0, 0, 0.0758), (2 * r - 0.008, 2 * r - 0.008), "instrument_faces", uv("instrument_faces", "pressure"))
+    k.cyl(r - 0.004, 0.003, (0, 0, 0.085), "z", "glass_dirty", 28)
+    k.group("Needle", pivot=(0, 0, 0.0805))
+    k.box((0.006, 0.075, 0.003), (0, 0.025, 0.0805), "red_paint_worn", 0.0, rot=(0, 0, -50))
+    k.box((0.006, 0.02, 0.003), (0, -0.01, 0.0805), "red_paint_worn", 0.0, rot=(0, 0, -50))
     k.body()
-    k.cyl(0.012, 0.012, (0, 0, 0.082), "z", "steel_bare", 10)
+    k.cyl(0.012, 0.004, (0, 0, 0.0815), "z", "steel_bare", 10)
 
 
 # ----------------------------------------------------------------------------- P-012
