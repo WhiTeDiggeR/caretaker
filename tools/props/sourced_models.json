@@ -1,0 +1,380 @@
+{
+ "note": "Poly Haven models (CC0) brought into the project by import_models.py. id gets the ph_ prefix. anchor: floor | wall | ceiling | free. tris: budget (decimated above it). split: export every mesh object as its own piece (modular kits). sat/val: albedo grade (saturation multiplier, brightness multiplier). rot: degrees about the vertical axis so that the front faces +Z in Godot. strip: prefix removed from piece names.",
+ "defaults": {
+  "sat": 0.7,
+  "val": 0.85,
+  "rot": 0
+ },
+ "models": [
+  {
+   "id": "airduct_rect",
+   "asset": "modular_airduct_rectangular_01",
+   "anchor": "free",
+   "tris": 6000,
+   "split": true,
+   "catalog": "P-203"
+  },
+  {
+   "id": "airduct_round",
+   "asset": "modular_airduct_circular_01",
+   "anchor": "free",
+   "tris": 4000,
+   "split": true,
+   "catalog": "P-203",
+   "strip": "modular_airduct_"
+  },
+  {
+   "id": "industrial_pipes",
+   "asset": "modular_industrial_pipes_01",
+   "anchor": "free",
+   "tris": 4000,
+   "split": true,
+   "catalog": "P-201"
+  },
+  {
+   "id": "electric_cables",
+   "asset": "modular_electric_cables",
+   "anchor": "free",
+   "tris": 5000,
+   "split": true,
+   "catalog": "P-202"
+  },
+  {
+   "id": "power_box",
+   "asset": "power_box_01",
+   "anchor": "wall",
+   "tris": 8000,
+   "catalog": "P-013"
+  },
+  {
+   "id": "utility_box",
+   "asset": "utility_box_01",
+   "anchor": "floor",
+   "tris": 5000,
+   "catalog": "P-009"
+  },
+  {
+   "id": "hanging_lamp",
+   "asset": "hanging_industrial_lamp",
+   "anchor": "ceiling",
+   "tris": 5000,
+   "catalog": "P-206"
+  },
+  {
+   "id": "wall_lamp",
+   "asset": "industrial_wall_lamp",
+   "anchor": "wall",
+   "tris": 4500,
+   "catalog": "P-206"
+  },
+  {
+   "id": "medical_box",
+   "asset": "medical_box",
+   "anchor": "floor",
+   "tris": 3800,
+   "catalog": "P-001"
+  },
+  {
+   "id": "spacecraft_instrument",
+   "asset": "vintage_spacecraft_instrument",
+   "anchor": "floor",
+   "tris": 8000,
+   "catalog": "P-007"
+  },
+  {
+   "id": "radio_transceiver",
+   "asset": "vintage_radio_transceiver",
+   "anchor": "floor",
+   "tris": 9000,
+   "catalog": "P-008"
+  },
+  {
+   "id": "multimeter",
+   "asset": "retro_multimeter",
+   "anchor": "floor",
+   "tris": 4000,
+   "catalog": "P-011"
+  },
+  {
+   "id": "office_desk",
+   "asset": "metal_office_desk",
+   "anchor": "floor",
+   "tris": 7000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "tool_chest",
+   "asset": "metal_tool_chest",
+   "anchor": "floor",
+   "tris": 6000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "tool_cart",
+   "asset": "tool_cart",
+   "anchor": "floor",
+   "tris": 9000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "metal_rack",
+   "asset": "worn_metal_rack",
+   "anchor": "floor",
+   "tris": 6400,
+   "catalog": "P-301"
+  },
+  {
+   "id": "barrel_oil",
+   "asset": "Barrel_01",
+   "anchor": "floor",
+   "tris": 2700,
+   "catalog": "P-301"
+  },
+  {
+   "id": "barrel_fuel",
+   "asset": "barrel_03",
+   "anchor": "floor",
+   "tris": 1500,
+   "catalog": "P-301"
+  },
+  {
+   "id": "propane_tank",
+   "asset": "propane_tank",
+   "anchor": "floor",
+   "tris": 5300,
+   "catalog": "P-301"
+  },
+  {
+   "id": "lpg_tank",
+   "asset": "small_lpg_tank",
+   "anchor": "floor",
+   "tris": 5000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "welding_cart",
+   "asset": "portable_welding_cart",
+   "anchor": "floor",
+   "tris": 9000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "cardboard_box",
+   "asset": "cardboard_box_01",
+   "anchor": "floor",
+   "tris": 2000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "plastic_crate",
+   "asset": "plastic_crate_03",
+   "anchor": "floor",
+   "tris": 4000,
+   "catalog": "P-301",
+   "sat": 0.5
+  },
+  {
+   "id": "military_crate",
+   "asset": "wooden_military_crate",
+   "anchor": "floor",
+   "tris": 6000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "jerrycan",
+   "asset": "metal_jerrycan",
+   "anchor": "floor",
+   "tris": 4000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "trash_can",
+   "asset": "metal_trash_can",
+   "anchor": "floor",
+   "tris": 5000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "hand_truck",
+   "asset": "hand_truck",
+   "anchor": "floor",
+   "tris": 5000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "bench_vice",
+   "asset": "bench_vice_01",
+   "anchor": "floor",
+   "tris": 2900,
+   "catalog": "P-301"
+  },
+  {
+   "id": "drill_press",
+   "asset": "old_drill_press",
+   "anchor": "floor",
+   "tris": 8000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "ladder",
+   "asset": "ladder_sectioned_01",
+   "anchor": "floor",
+   "tris": 6000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "metal_stool",
+   "asset": "metal_stool_02",
+   "anchor": "floor",
+   "tris": 3500,
+   "catalog": "P-301"
+  },
+  {
+   "id": "metal_chair",
+   "asset": "metal_stool_03",
+   "anchor": "floor",
+   "tris": 3500,
+   "catalog": "P-301"
+  },
+  {
+   "id": "bed_frame",
+   "asset": "old_bed_frame",
+   "anchor": "floor",
+   "tris": 9000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "clipboard",
+   "asset": "clipboard",
+   "anchor": "free",
+   "tris": 2000,
+   "catalog": "P-019"
+  },
+  {
+   "id": "gas_mask",
+   "asset": "old_gas_mask",
+   "anchor": "free",
+   "tris": 6000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "security_camera",
+   "asset": "security_camera_01",
+   "anchor": "free",
+   "tris": 5000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "crt_television",
+   "asset": "television_02",
+   "anchor": "floor",
+   "tris": 2400,
+   "catalog": "P-008"
+  },
+  {
+   "id": "manhole_cover",
+   "asset": "water_manhole_cover",
+   "anchor": "floor",
+   "tris": 3000,
+   "catalog": "P-205"
+  },
+  {
+   "id": "pipe_wrench",
+   "asset": "pipe_wrench",
+   "anchor": "free",
+   "tris": 2500,
+   "catalog": "P-301"
+  },
+  {
+   "id": "crowbar",
+   "asset": "crowbar_01",
+   "anchor": "free",
+   "tris": 2300,
+   "catalog": "P-301"
+  },
+  {
+   "id": "bolt_cutters",
+   "asset": "bolt_cutters_01",
+   "anchor": "free",
+   "tris": 3000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "sledgehammer",
+   "asset": "sledgehammer_01",
+   "anchor": "free",
+   "tris": 2600,
+   "catalog": "P-301"
+  },
+  {
+   "id": "toolbox",
+   "asset": "metal_toolbox",
+   "anchor": "floor",
+   "tris": 4000,
+   "catalog": "P-301"
+  },
+  {
+   "id": "ammo_box",
+   "asset": "ammo_box",
+   "anchor": "floor",
+   "tris": 2200,
+   "catalog": "P-301"
+  },
+  {
+   "id": "oil_tin",
+   "asset": "oil_tin",
+   "anchor": "floor",
+   "tris": 1500,
+   "catalog": "P-301"
+  },
+  {
+   "id": "flashlight",
+   "asset": "vintage_flashlight",
+   "anchor": "free",
+   "tris": 3000,
+   "catalog": "P-018"
+  }
+ ],
+ "rejected": [
+  {
+   "asset": "industrial_caged_sconce",
+   "reason": "набор разрозненных деталей"
+  },
+  {
+   "asset": "fire_alarm",
+   "reason": "английский текст FIRE ALARM"
+  },
+  {
+   "asset": "korean_fire_extinguisher_01",
+   "reason": "корейский текст"
+  },
+  {
+   "asset": "steel_frame_shelves_01",
+   "reason": "современная мебель"
+  },
+  {
+   "asset": "drawer_cabinet",
+   "reason": "современная деревянная мебель"
+  },
+  {
+   "asset": "industrial_pastic_container",
+   "reason": "современный бытовой пластик"
+  },
+  {
+   "asset": "SchoolChair_01",
+   "reason": "современный пластик"
+  },
+  {
+   "asset": "exterior_aircon_unit",
+   "reason": "бытовые внешние блоки"
+  },
+  {
+   "asset": "portable_generator",
+   "reason": "современный брендированный"
+  },
+  {
+   "asset": "mounted_fluorescent_lights",
+   "reason": "голые трубки без корпуса; наш fluorescent_light лучше"
+  }
+ ]
+}
