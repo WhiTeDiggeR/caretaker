@@ -11,6 +11,7 @@ func run(c: OpeningCheck) -> void:
 	_box(c, Vector3(0, -0.1, 0), Vector3(60, 0.2, 60))
 	await _crawl(c)
 	await _ladder(c)
+	await _stairs(c)
 	for action: StringName in [&"crawl", &"crouch", &"jump", &"move_forward", &"move_back"]:
 		Input.action_release(action)
 
@@ -100,6 +101,59 @@ func _ladder(c: OpeningCheck) -> void:
 	player.is_crawling = true
 	c.is_true(not await player.attach_ladder(ladder), "a crawling hero cannot grab a ladder")
 	player.is_crawling = false
+
+
+## Box steps like the complex stairs: 0.19 m risers, 0.28 m treads.
+func _stairs(c: OpeningCheck) -> void:
+	const RISER := 0.19
+	const TREAD := 0.28
+	const STEPS := 8
+	var origin := Vector3(-20, 0, 10)
+	for index in STEPS:
+		var top := RISER * (index + 1)
+		_box(c, origin + Vector3(0, top * 0.5, -TREAD * (index + 0.5)), Vector3(1.5, top, TREAD))
+	var landing_top := RISER * STEPS
+	_box(c, origin + Vector3(0, landing_top * 0.5, -TREAD * STEPS - 1.5), Vector3(1.5, landing_top, 3.0))
+	var player := _spawn_player(c, origin + Vector3(0, 0.9, 1.0))
+	await c.physics_frames(5)
+	Input.action_press(&"move_forward")
+	var airborne := 0
+	for _i in 150:
+		await c.physics_frames(1)
+		if not player.is_grounded():
+			airborne += 1
+		if _feet(player) >= landing_top - 0.01 and player.global_position.z < origin.z - TREAD * STEPS - 0.5:
+			break
+	Input.action_release(&"move_forward")
+	c.near(_feet(player), landing_top, 0.03, "walking forward climbs 0.19 m box steps onto the landing")
+	c.is_true(airborne < 10, "the climb is a walk, not a series of hops (%d frames in the air)" % airborne)
+
+	player.rotation.y = PI
+	await c.physics_frames(2)
+	Input.action_press(&"move_forward")
+	airborne = 0
+	for _i in 150:
+		await c.physics_frames(1)
+		if not player.is_grounded():
+			airborne += 1
+		if player.global_position.z > origin.z + 0.6:
+			break
+	Input.action_release(&"move_forward")
+	await c.physics_frames(5)
+	c.near(_feet(player), 0.0, 0.03, "walking down the stairs returns to the floor")
+	c.is_true(airborne < 10, "walking down sticks to the steps (%d frames in the air)" % airborne)
+
+	# A 0.4 m edge is not a step: it needs a jump or a climb.
+	var wall_origin := Vector3(-26, 0, 10)
+	_box(c, wall_origin + Vector3(0, 0.2, -1.0), Vector3(1.5, 0.4, 1.0))
+	var blocked := _spawn_player(c, wall_origin + Vector3(0, 0.9, 0.3))
+	player.queue_free()
+	await c.physics_frames(5)
+	Input.action_press(&"move_forward")
+	await c.physics_frames(40)
+	Input.action_release(&"move_forward")
+	c.near(_feet(blocked), 0.0, 0.03, "a 0.4 m edge stops walking")
+	blocked.queue_free()
 
 
 func _feet(player: CharacterBody3D) -> float:
