@@ -1,5 +1,7 @@
 [gd_scene format=3]
 
+[ext_resource type="PackedScene" path="res://objects/movement/ladder.tscn" id="1_ladder"]
+
 [sub_resource type="StandardMaterial3D" id="obstacle_material"]
 albedo_color = Color(0.45, 0.42, 0.36, 1)
 
@@ -12,7 +14,8 @@ albedo_color = Color(0.55, 0.2, 0.18, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 0)
 pixel_size = 0.006
 text = "ПЕРЕДВИЖЕНИЕ
-Ctrl/C — присед, Пробел у препятствия — перелезть"
+Ctrl/C — присед, Пробел у препятствия — перелезть
+Z — ползком, E у лестницы — взяться"
 font_size = 48
 outline_size = 12
 
@@ -63,3 +66,56 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0.8, 0)
 use_collision = true
 size = Vector3(1.2, 1.6, 1.2)
 material = SubResource("limit_material")
+
+[node name="CrawlCeiling" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.9, -5)
+use_collision = true
+size = Vector3(3, 0.2, 1.4)
+material = SubResource("obstacle_material")
+
+[node name="CrawlWallL" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.4, -5.65)
+use_collision = true
+size = Vector3(3, 0.8, 0.1)
+material = SubResource("obstacle_material")
+
+[node name="CrawlWallR" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.4, -4.35)
+use_collision = true
+size = Vector3(3, 0.8, 0.1)
+material = SubResource("obstacle_material")
+
+[node name="CrawlLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1.6, -5)
+pixel_size = 0.005
+text = "ЛАЗ 0,8 м — только ползком"
+font_size = 40
+outline_size = 10
+
+[node name="Platform3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, -8.5)
+use_collision = true
+size = Vector3(3, 3, 3)
+material = SubResource("obstacle_material")
+
+[node name="Ladder3" parent="." instance=ExtResource("1_ladder")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -6.97)
+height = 3.0
+
+[node name="Platform6" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3, -8.5)
+use_collision = true
+size = Vector3(3, 6, 3)
+material = SubResource("obstacle_material")
+
+[node name="Ladder6" parent="." instance=ExtResource("1_ladder")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, -6.97)
+height = 6.0
+
+[node name="LadderLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3.6, -6.9)
+pixel_size = 0.005
+text = "ЛЕСТНИЦЫ 3 м и 6 м
+E — взяться, W/S — вверх/вниз, Пробел — отпустить"
+font_size = 40
+outline_size = 10

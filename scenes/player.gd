@@ -1,20 +1,26 @@
 extends CharacterBody3D
 
-## First-person hero: walking, sprinting, jumping, crouching and climbing over low obstacles.
+## First-person hero: walking, sprinting, jumping, crouching, crawling, climbing over low
+## obstacles and up and down vertical ladders (canon: docs/world/03-complex.md).
 ## The body origin is the centre of the standing capsule; feet stay at -STAND_HEIGHT / 2
-## while crouching because the collision shape is lowered together with its height.
+## while crouching or crawling because the collision shape is lowered with its height.
 
 signal crouch_changed(crouching: bool)
+signal crawl_changed(crawling: bool)
+signal ladder_changed(climbing: bool)
 signal mantle_started(target: Vector3)
 signal mantle_finished
 
 const WALK_SPEED = 5.0
 const SPRINT_SPEED = 8.5
 const CROUCH_SPEED = 2.5
+const CRAWL_SPEED = 1.2
 const JUMP_VELOCITY = 4.5
 
 const STAND_HEIGHT := 1.8
 const CROUCH_HEIGHT := 1.0
+## The smallest capsule (2 × radius): a crawl passage needs 0.75 m (prop standard).
+const CRAWL_HEIGHT := 0.7
 const CROUCH_TRANSITION_SPEED := 5.0  # metres of capsule height per second
 const STAND_CAMERA_Y := 0.7  # eyes 1.6 m above the floor (docs/game_design/02-prop-standard.md)
 
@@ -27,6 +33,13 @@ const MANTLE_RISE_TIME := 0.3
 const MANTLE_MOVE_TIME := 0.2
 const CLEARANCE_SKIN := 0.03
 
+const CLIMB_SPEED := 2.0
+const LADDER_SNAP := 10.0  # how fast the hero is pulled onto the ladder line, 1/s
+const LADDER_GRAB_TIME := 0.25
+const LADDER_TOP_START := 1.0  # feet below the top when climbing down from the landing
+const LADDER_EXIT_MARGIN := 0.35  # feet this close to the top step onto the landing
+const LADDER_RELEASE_PUSH := 2.0
+
 @onready var camera: Camera3D = $Camera3D
 @onready var ray: RayCast3D = $Camera3D/RayCast3D
 @onready var _collision: CollisionShape3D = $CollisionShape3D
@@ -36,13 +49,17 @@ const CLEARANCE_SKIN := 0.03
 @export var hold_progress_bar: Range
 
 var is_crouching := false
+var is_crawling := false
 var is_mantling := false
+var is_climbing := false
 ## Set while a full-screen UI (terminal, document) owns the input.
 var controls_locked := false
 
 var _shape: CapsuleShape3D
 var _current_height := STAND_HEIGHT
 var _forced_crouch := false
+var _leave_crawl := false
+var _ladder: Ladder
 
 
 func _ready() -> void:
@@ -90,6 +107,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if is_mantling:
 		return
+	if is_climbing:
+		_climb()
+		return
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -102,7 +122,7 @@ func _physics_process(delta: float) -> void:
 
 	_update_crouch(delta)
 
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and not is_crawling:
 		if not try_mantle() and is_on_floor() and not is_crouching:
 			velocity.y = JUMP_VELOCITY
 
@@ -118,7 +138,9 @@ func _physics_process(delta: float) -> void:
 		Vector3(input_dir.x, 0, input_dir.y)
 	).normalized()
 	var speed := WALK_SPEED
-	if is_crouching:
+	if is_crawling:
+		speed = CRAWL_SPEED
+	elif is_crouching:
 		speed = CROUCH_SPEED
 	elif Input.is_action_pressed("sprint"):
 		speed = SPRINT_SPEED
@@ -136,6 +158,10 @@ func _physics_process(delta: float) -> void:
 # --- Crouch ----------------------------------------------------------------
 
 func _update_crouch(delta: float) -> void:
+	_update_crawl()
+	if is_crawling:
+		_approach_height(CRAWL_HEIGHT, delta)
+		return
 	var wants_crouch := Input.is_action_pressed("crouch") or _forced_crouch
 	if not wants_crouch and is_crouching and not can_stand():
 		wants_crouch = true
@@ -146,9 +172,40 @@ func _update_crouch(delta: float) -> void:
 		is_crouching = wants_crouch
 		crouch_changed.emit(is_crouching)
 
-	var target_height := CROUCH_HEIGHT if is_crouching else STAND_HEIGHT
+	_approach_height(CROUCH_HEIGHT if is_crouching else STAND_HEIGHT, delta)
+
+
+func _approach_height(target_height: float, delta: float) -> void:
 	if not is_equal_approx(_current_height, target_height):
 		_apply_height(move_toward(_current_height, target_height, CROUCH_TRANSITION_SPEED * delta))
+
+
+# --- Crawl -------------------------------------------------------------------
+
+## The crawl action toggles lying down; crouch while crawling also asks to get up. Getting up
+## waits until there is room for a crouch, then the usual crouch rules raise the hero further.
+func _update_crawl() -> void:
+	if Input.is_action_just_pressed("crawl") or (is_crawling and Input.is_action_just_pressed("crouch")):
+		if is_crawling:
+			_leave_crawl = true
+		else:
+			_set_crawling(true)
+	if is_crawling and _leave_crawl and _capsule_fits(global_position, CROUCH_HEIGHT):
+		_set_crawling(false)
+		is_crouching = true
+		crouch_changed.emit(true)
+
+
+func _set_crawling(crawling: bool) -> void:
+	_leave_crawl = false
+	if is_crawling == crawling:
+		return
+	is_crawling = crawling
+	if crawling and is_crouching:
+		is_crouching = false
+		_forced_crouch = false
+		crouch_changed.emit(false)
+	crawl_changed.emit(crawling)
 
 
 func _apply_height(height: float) -> void:
@@ -176,13 +233,74 @@ func _capsule_fits(origin: Vector3, height: float) -> bool:
 	return get_world_3d().direct_space_state.intersect_shape(query, 1).is_empty()
 
 
+# --- Ladder ----------------------------------------------------------------
+
+## Grabs a vertical ladder: from below, or from its landing when the feet are near the top.
+func attach_ladder(ladder: Ladder) -> bool:
+	if is_climbing or is_mantling or is_crawling or controls_locked:
+		return false
+	var feet := global_position.y - STAND_HEIGHT * 0.5
+	var from_top := feet >= ladder.top_y() - LADDER_EXIT_MARGIN
+	var start_feet := ladder.top_y() - LADDER_TOP_START if from_top else maxf(feet, ladder.bottom_y())
+	var start := ladder.body_position(start_feet, STAND_HEIGHT * 0.5)
+	if is_crouching:
+		is_crouching = false
+		_forced_crouch = false
+		crouch_changed.emit(false)
+	_apply_height(STAND_HEIGHT)
+	_ladder = ladder
+	is_climbing = true
+	velocity = Vector3.ZERO
+	rotation.y = ladder.global_rotation.y
+	ladder_changed.emit(true)
+	is_mantling = true
+	var tween := create_tween()
+	tween.tween_property(self, "global_position", start, LADDER_GRAB_TIME)
+	await tween.finished
+	is_mantling = false
+	return true
+
+
+## Lets go of the ladder; `push` moves the hero away from it (a jump).
+func detach_ladder(push: float = 0.0) -> void:
+	if not is_climbing:
+		return
+	if push > 0.0:
+		velocity = _ladder.global_basis.z * push
+	is_climbing = false
+	_ladder = null
+	ladder_changed.emit(false)
+
+
+func _climb() -> void:
+	if Input.is_action_just_pressed("jump"):
+		detach_ladder(LADDER_RELEASE_PUSH)
+		return
+	var climb := Input.get_axis("move_back", "move_forward")
+	var feet := global_position.y - STAND_HEIGHT * 0.5
+	if climb > 0.0 and feet >= _ladder.top_y() - LADDER_EXIT_MARGIN:
+		_exit_ladder_top()
+		return
+	var line := _ladder.body_position(feet, STAND_HEIGHT * 0.5)
+	velocity = Vector3((line.x - global_position.x) * LADDER_SNAP, climb * CLIMB_SPEED, (line.z - global_position.z) * LADDER_SNAP)
+	move_and_slide()
+	if climb < 0.0 and (is_on_floor() or feet <= _ladder.bottom_y() + 0.01):
+		detach_ladder()
+
+
+func _exit_ladder_top() -> void:
+	var target := _ladder.exit_position(STAND_HEIGHT * 0.5)
+	detach_ladder()
+	_perform_mantle(target)
+
+
 # --- Mantle ----------------------------------------------------------------
 
 ## Climbs onto the obstacle in front of the hero when it is low enough and there is room
 ## on top. Returns false and changes nothing otherwise.
 func try_mantle() -> bool:
 	# Only from the floor: a jump must not add height to the climb (no parkour, canon).
-	if is_mantling or not is_on_floor():
+	if is_mantling or is_crawling or not is_on_floor():
 		return false
 	var target := find_mantle_target()
 	if target == Vector3.INF:

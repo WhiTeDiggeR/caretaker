@@ -14,10 +14,10 @@ const SENSITIVITY_RANGE := Vector2(0.25, 3.0)
 const FOV_RANGE := Vector2(60.0, 100.0)
 const DEFAULT_FOV := 75.0
 ## Remappable actions and their names in the settings screen.
-const ACTIONS: Array[StringName] = [&"move_forward", &"move_back", &"move_left", &"move_right", &"jump", &"sprint", &"crouch", &"interact", &"journal"]
+const ACTIONS: Array[StringName] = [&"move_forward", &"move_back", &"move_left", &"move_right", &"jump", &"sprint", &"crouch", &"crawl", &"interact", &"journal"]
 const ACTION_NAMES := {
 	&"move_forward": "Вперёд", &"move_back": "Назад", &"move_left": "Влево", &"move_right": "Вправо",
-	&"jump": "Прыжок / перелезть", &"sprint": "Бег", &"crouch": "Присед", &"interact": "Взаимодействие", &"journal": "Журнал",
+	&"jump": "Прыжок / перелезть", &"sprint": "Бег", &"crouch": "Присед", &"crawl": "Ползком (вкл/выкл)", &"interact": "Взаимодействие", &"journal": "Журнал",
 }
 
 var config_path := DEFAULT_PATH
