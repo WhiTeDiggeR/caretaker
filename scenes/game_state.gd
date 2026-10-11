@@ -62,8 +62,18 @@ func get_flag(flag: StringName, default: Variant = false) -> Variant:
 	return _flags.get(flag, default)
 
 
+## A flag holds when it is set to a truthy value: true, a non-zero number or a non-empty
+## string, array or dictionary (e.g. the journal keeps its list of read documents).
 func has_flag(flag: StringName) -> bool:
-	return bool(_flags.get(flag, false))
+	var value: Variant = _flags.get(flag, false)
+	match typeof(value):
+		TYPE_NIL:
+			return false
+		TYPE_BOOL, TYPE_INT, TYPE_FLOAT:
+			return bool(value)
+		TYPE_STRING, TYPE_STRING_NAME, TYPE_ARRAY, TYPE_DICTIONARY:
+			return not value.is_empty()
+	return true
 
 
 func clear_flag(flag: StringName) -> void:

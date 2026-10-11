@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/prop_station.tscn" id="14_props"]
 [ext_resource type="PackedScene" path="res://objects/checkpoint/checkpoint.tscn" id="15_checkpoint"]
 
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stations/hint_triggers.tscn" id="16_hints"]
+
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
 sky_horizon_color = Color(0.32, 0.33, 0.35, 1)
@@ -120,6 +122,8 @@ text = "КОНТРОЛЬНАЯ ТОЧКА
 (автосохранение)"
 font_size = 40
 outline_size = 10
+
+[node name="HintTriggers" parent="Stations" instance=ExtResource("16_hints")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)

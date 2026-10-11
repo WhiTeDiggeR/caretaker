@@ -97,7 +97,7 @@ func reset_state() -> void:
 	GameState.set_flag(INITIALIZED_FLAG)
 	for section in SECTIONS:
 		GameState.set_section_power(section, GameState.Power.EMERGENCY)
-	GameState.set_objective(&"sandbox", "Проверить станции полигона")
+	Objectives.start(&"sandbox_tour")
 	GameState.set_flag(&"containment_online")
 	GameState.grant_access(&"module_4")
 
