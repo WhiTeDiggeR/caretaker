@@ -25,7 +25,7 @@ static func alarm() -> AudioStreamWAV:
 				return 0.0
 			var frequency := 620.0 if fmod(t, 0.6) < 0.3 else 820.0
 			var envelope := minf(1.0, minf(t, 1.2 - t) * 40.0)
-			return signf(sin(TAU * frequency * t)) * 0.08 * envelope)
+			return signf(sin(TAU * frequency * t)) * 0.05 * envelope)
 	return _alarm
 
 
