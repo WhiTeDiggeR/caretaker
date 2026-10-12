@@ -93,7 +93,7 @@ func _ready() -> void:
 
 
 func save_state() -> Dictionary:
-	return {"open": state == State.OPEN or state == State.OPENING}
+	return {"open": state == State.OPEN or state == State.OPENING, "emergency_lock": emergency_lock}
 
 
 ## Restores a saved door at once, without the opening animation.
@@ -101,6 +101,9 @@ func load_state(data: Dictionary) -> void:
 	if _tween:
 		_tween.kill()
 	var open_door := bool(data.get("open", false))
+	# Scripted events lock doors (#133); older saves have no lock key and keep the authored one.
+	if data.has("emergency_lock"):
+		emergency_lock = bool(data["emergency_lock"])
 	state = State.OPEN if open_door else State.CLOSED
 	_open_amount = 1.0 if open_door else 0.0
 	refresh()
