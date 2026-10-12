@@ -215,4 +215,3 @@ func _update_view(delta: float) -> void:
 	var target_roll := -clampf(lateral / ROLL_REFERENCE_SPEED, -1.0, 1.0) * MAX_ROLL * strength
 	roll = move_toward(roll, target_roll, ROLL_SPEED * MAX_ROLL * delta)
 	_player.call(&"set_view_motion", bob_offset, roll)
-
