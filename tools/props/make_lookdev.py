@@ -156,10 +156,10 @@ def build() -> Scene:
     s.block("C_S", (ax1, 0, cz), (bx0, ch, cz + T), "wall_concrete")
     s.block("C_N_band", (ax1 + T, 0, -cz), (bx0, pb, -cz + pt), "paint_band", collide=False)
     s.block("C_S_band", (ax1 + T, 0, cz - pt), (bx0, pb, cz), "paint_band", collide=False)
-    px = 0.5
-    s.block("Door_N", (px - 0.25, 0, -cz), (px + 0.25, ch, -0.9), "wall_concrete")
-    s.block("Door_S", (px - 0.25, 0, 0.9), (px + 0.25, ch, cz), "wall_concrete")
-    s.block("Door_Top", (px - 0.25, 2.8, -0.9), (px + 0.25, ch, 0.9), "wall_concrete")
+    px = 0.5  # as thick as the door frame (FacilityDoor.FRAME_DEPTH), so its controls sit on the wall face
+    s.block("Door_N", (px - 0.15, 0, -cz), (px + 0.15, ch, -0.9), "wall_concrete")
+    s.block("Door_S", (px - 0.15, 0, 0.9), (px + 0.15, ch, cz), "wall_concrete")
+    s.block("Door_Top", (px - 0.15, 2.8, -0.9), (px + 0.15, ch, 0.9), "wall_concrete")
     # east room walls
     s.block("B_N", (bx0 - T, 0, -bz - T), (bx1 + T, bh, -bz), "wall_layers")
     s.block("B_S", (bx0 - T, 0, bz), (bx1 + T, bh, bz + T), "wall_layers")
@@ -204,8 +204,10 @@ def build() -> Scene:
         s.prop(f"CableA{i}", "ph_electric_cables__cable_straight_long", (ax0 + 0.03, 2.6, z), 90)
     # ------------------------------------------------------------ corridor
     s.prop("TubeC", "fluorescent_light", (-0.9, ch, 0), 90)
-    s.prop("TrayC1", "cable_tray_straight", (-1.7, 2.75, -cz + 0.25), 0)
-    s.prop("TrayC2", "cable_tray_straight", (0.8, 2.75, -cz + 0.25), 0)
+    # ceiling-hung trays: the anchor plates touch the ceiling 0.55 m above the tray origin
+    s.prop("TrayC1", "cable_tray_straight", (-1.7, ch - 0.55, -cz + 0.3), 0)
+    s.prop("TrayC2", "cable_tray_straight", (0.8, ch - 0.55, -cz + 0.3), 0)
+    s.prop("TrayW", "cable_tray_wall", (0.3, 2.35, cz), 180)
     s.prop("ExitSignC", "evac_sign", (bx0 - 0.05, 2.9, cz - 0.6), -90)
     # ------------------------------------------------------------ east room: machine hall
     s.prop("GenPanel", "generator_panel", (bx0 + 0.25, 0, -3.6), 90)
