@@ -58,26 +58,20 @@ def pipe_tee(k: Kit):
 
 
 # ----------------------------------------------------------------------------- P-202
-def tray(k: Kit, length=2.0, x0=0.0, cables=5):
+def tray(k: Kit, length=2.0, x0=0.0, cables=5, z0=0.0):
     w = 0.3
-    k.box((length, 0.012, w), (x0 + length / 2, -0.006, 0), "painted_metal", 0.003)
+    k.box((length, 0.012, w), (x0 + length / 2, -0.006, z0), "painted_metal", 0.003)
     for sz in (-1, 1):
-        k.box((length, 0.05, 0.012), (x0 + length / 2, 0.019, sz * (w / 2 - 0.006)), "painted_metal", 0.003)
+        k.box((length, 0.05, 0.012), (x0 + length / 2, 0.019, z0 + sz * (w / 2 - 0.006)), "painted_metal", 0.003)
     for i in range(int(length / 0.5) + 1):
-        k.box((0.02, 0.012, w), (x0 + i * 0.5 * (length / (int(length / 0.5) or 1)) / 0.5 * 0.5, -0.003, 0), "steel_bare", 0.002)
+        k.box((0.02, 0.012, w), (x0 + i * 0.5 * (length / (int(length / 0.5) or 1)) / 0.5 * 0.5, -0.003, z0), "steel_bare", 0.002)
     for c in range(cables):
-        z = -0.1 + c * 0.05
+        z = z0 - 0.1 + c * 0.05
         pts = [(x0 + length * t / 12, 0.02 + 0.012 * math.sin(t * 1.3 + c), z + 0.01 * math.sin(t * 0.7 + c * 2)) for t in range(13)]
         k.tube(pts, 0.011 if c % 2 else 0.014, "rubber_black", 7, caps=False)
 
 
-@prop("cable_tray_straight", "P-202a", (2.01, 0.33, 0.38), "free", 3500, tolerance=0.1)
-def cable_tray_straight(k: Kit):
-    tray(k)
-    for x in (0.5, 1.5):
-        k.box((0.03, 0.06, 0.34), (x, -0.03, 0), "steel_bare", 0.003)
-        for sz in (-1, 1):
-            k.box((0.03, 0.25, 0.03), (x, -0.15, sz * 0.17), "steel_bare", 0.003)
+# P-202a/b cable_tray_straight and cable_tray_wall live in props_doors.py (issue #157).
 
 
 # ----------------------------------------------------------------------------- P-203

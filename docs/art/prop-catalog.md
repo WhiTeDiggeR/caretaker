@@ -42,7 +42,7 @@
 | P-102 | `loaded_cabinet` / `loads/3D_cabinet_3.fbx` | 0,4 м, нужен картотечный 0,5×1,3 | новая модель `file_cabinet` 0,5×1,3×0,48, ящики `Drawer1–4` | Скр | **v1 готов** (в сцены не подставлялась) |
 | P-103 | `wall_terminal` | опора в центре | пересобрать с креплением к плоскости стены | Скр | план |
 | P-104 | `emergency_light`, `caged_light` | опора в центре / принять | опора по стандарту | Скр | план |
-| P-105 | `temporary_blast_door` | заменяется семейством дверей | модель рамы и створки под `objects/doors/` | Скр | план |
+| P-105 | `temporary_blast_door` | заменяется семейством дверей | рама и створка строятся `objects/doors/door_art.gd` по размерам двери; пульт `door_panel`, штурвал `door_wheel`, ручка `door_handle`, петля `door_hinge` (P-210a–d, #157) | Скр | **готово** |
 | P-106 | `bowser_pod`, `herobrine_pod` (по 84–88 МБ) | непомерный вес | три варианта на выбор автора (#130): облегчённая копия `loads/*_capsule/lod/` (40 тыс., нормали запечены с исходника, 2,3–2,5 МБ; `tools/props/lighten_capsules.py --bake`), скриптовые `capsule_bowser`, `capsule_herobrine` (`tools/props/props_capsules.py`); сравнение — `scenes/sandbox/capsule_compare.tscn`, `docs/art/previews/capsules_compare.jpg`. Исходники не тронуты | Прав | **решено (О-5): облегчённые копии в `scenes/bowser_pod.tscn`, `scenes/herobrine_pod.tscn`**; скриптовые остаются в репозитории для сравнения |
 | P-107 | `debris_pile` | низкий для завала | заменяется P-004 | — | план |
 
@@ -51,7 +51,7 @@
 | ID | Набор | Состав | Ист. |
 |---|---|---|---|
 | P-201 | `pipe_kit` | **готово:** `pipe_straight` 2 м, `pipe_elbow`, `pipe_tee` (фланцы, хомут); вентиль — `valve_wheel` | Скр |
-| P-202 | `cable_tray_kit` | **готово:** `cable_tray_straight` 2 м с кабелями и кронштейнами; повороты — план (первая попытка убрана как неряшливая) | Скр |
+| P-202 | `cable_tray_kit` | **готово:** `cable_tray_straight` 2 м на потолочных шпильках с траверсами (ставится на высоту потолка − 0,55 м), `cable_tray_wall` 2 м на настенных консолях с подкосами (#157); повороты — план | Скр |
 | P-203 | `duct_kit` | **готово:** `duct_straight` 2 м с фланцами и подвесами; колено и решётки — план | Скр |
 | P-204 | `door_frame_kit` | рамы дверей уже делает генератор комплекса (`objects/complex_v4/open_door_frame.tscn`); створки и пульты — семейство `objects/doors/` | не нужен |
 | P-205 | `floor_grates` | **готово:** `floor_grate` 1×1; люки и жёлоба — план | Скр |
