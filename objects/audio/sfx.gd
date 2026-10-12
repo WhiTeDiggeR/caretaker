@@ -11,7 +11,7 @@ const DATA_PATH := "res://data/audio/sfx.json"
 const MAX_FLAT := 6
 const MAX_SPATIAL := 12
 
-## id -> {"file", "bus", "volume_db", "positional", "max_distance"}
+## id -> {"file", "bus", "volume_db", "positional", "max_distance", "pitch_jitter"}
 var sounds: Dictionary[StringName, Dictionary] = {}
 
 var _streams: Dictionary[StringName, AudioStream] = {}
@@ -60,7 +60,8 @@ func validate() -> PackedStringArray:
 
 
 ## Plays a sound; `at` is a Node3D or a Vector3 for positional sounds, null for flat ones.
-func play(id: StringName, at: Variant = null) -> void:
+## `volume_offset_db` is added to the catalogue volume (quiet steps, soft landings).
+func play(id: StringName, at: Variant = null, volume_offset_db: float = 0.0) -> void:
 	requested.emit(id)
 	var stream := _stream(id)
 	if stream == null:
@@ -75,15 +76,18 @@ func play(id: StringName, at: Variant = null) -> void:
 		var player := _free_spatial()
 		player.global_position = position
 		player.max_distance = float(entry.get("max_distance", 25.0))
-		_start(player, stream, entry)
+		_start(player, stream, entry, volume_offset_db)
 	else:
-		_start(_free_flat(), stream, entry)
+		_start(_free_flat(), stream, entry, volume_offset_db)
 
 
-func _start(player: Node, stream: AudioStream, entry: Dictionary) -> void:
+## Repeated sounds (footsteps) vary their pitch by up to `pitch_jitter` either way.
+func _start(player: Node, stream: AudioStream, entry: Dictionary, volume_offset_db: float) -> void:
+	var jitter := float(entry.get("pitch_jitter", 0.0))
 	player.set("stream", stream)
 	player.set("bus", StringName(str(entry.get("bus", "SFX"))))
-	player.set("volume_db", float(entry.get("volume_db", 0.0)))
+	player.set("volume_db", float(entry.get("volume_db", 0.0)) + volume_offset_db)
+	player.set("pitch_scale", 1.0 + randf_range(-jitter, jitter))
 	player.call("play")
 
 

@@ -278,6 +278,54 @@ def hint(rng):
     return mul(beep(1500, 0.18), 0.25)
 
 
+# --- First-person feel (#134) ----------------------------------------------------
+
+def ring(rng, partials, duration: float, seconds: float) -> Signal:
+    n = samples(duration)
+    tones = [mul(sine(freq * (1.0 + rng.uniform(-0.02, 0.02)), duration), level) for freq, level in partials]
+    return mul(add(*tones), decay(n, seconds))
+
+
+def step_concrete(rng):
+    d = 0.18
+    grit = mul(lowpass(noise(d, rng), 1400), decay(samples(d), 0.025), 1.6)
+    return add(grit, mul(thud(d, rng, 85), 0.7))
+
+
+def step_metal(rng):
+    d = 0.35
+    return add(mul(thud(d, rng, 110), 0.6), ring(rng, [(420, 0.5), (1130, 0.3), (1870, 0.15)], d, 0.07))
+
+
+def step_grate(rng):
+    d = 0.3
+    rattle = place(d, [(i * 0.022 + rng.uniform(0, 0.01), mul(click(rng, 0.015, 2000), 0.6 - i * 0.1)) for i in range(5)])
+    return add(mul(thud(d, rng, 95), 0.5), rattle, ring(rng, [(760, 0.25), (1540, 0.12)], d, 0.05))
+
+
+def step_crawl(rng):
+    d = 0.3
+    rustle = highpass(lowpass(noise(d, rng), 3000), 700)
+    return mul(rustle, envelope(samples(d), 0.06, 0.18), 0.5)
+
+
+def step_ladder(rng):
+    d = 0.3
+    return add(mul(thud(d, rng, 120), 0.4), ring(rng, [(650, 0.5), (1600, 0.25), (2900, 0.1)], d, 0.06))
+
+
+def land(rng):
+    d = 0.45
+    grit = mul(lowpass(noise(d, rng), 1100), decay(samples(d), 0.05), 1.4)
+    return add(thud(d, rng, 60), grit)
+
+
+def breath(rng):
+    d = 0.9
+    air = highpass(lowpass(noise(d, rng), 1800), 250)
+    return mul(air, envelope(samples(d), 0.18, 0.55), lfo(1.3, d, 0.8, 0.2), 0.6)
+
+
 RECIPES = {
     "door_motor": door_motor,
     "door_mech": door_mech,
@@ -304,11 +352,29 @@ RECIPES = {
     "dream_exit": dream_exit,
     "defeat": defeat,
     "hint": hint,
+    "step_concrete": step_concrete,
+    "step_metal": step_metal,
+    "step_grate": step_grate,
+    "step_crawl": step_crawl,
+    "step_ladder": step_ladder,
+    "land": land,
+    "breath": breath,
 }
+
+# Each sound's random generator is seeded by its place here: new sounds are appended so
+# the sounds generated before them keep their samples.
+SEED_ORDER = [
+    "airlock_cycle", "alarm_stage", "breaker", "checkpoint", "chem_warning", "defeat",
+    "door_mech", "door_motor", "door_stop", "door_swing", "dream_enter", "dream_exit",
+    "gas_release", "hint", "hold_done", "interact_click", "interact_denied", "lever",
+    "recharge", "switch", "terminal_beep", "terminal_error", "terminal_type", "valve", "vent",
+    # #134
+    "step_concrete", "step_metal", "step_grate", "step_crawl", "step_ladder", "land", "breath",
+]
 
 
 def render_pcm(name: str) -> array:
-    rng = random.Random(SEED * 1000 + sorted(RECIPES).index(name))
+    rng = random.Random(SEED * 1000 + SEED_ORDER.index(name))
     signal = RECIPES[name](rng)
     peak = max((abs(v) for v in signal), default=0.0) or 1.0
     return array("h", (int(round(v / peak * PEAK * 32767)) for v in signal))
@@ -346,7 +412,7 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    problems = []
+    problems = [f"{name} has no place in SEED_ORDER" for name in RECIPES if name not in SEED_ORDER]
     total = 0
     for name in sorted(RECIPES):
         pcm = render_pcm(name)
