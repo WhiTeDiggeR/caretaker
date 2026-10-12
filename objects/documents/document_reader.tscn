@@ -36,6 +36,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("paper_style")
 
+[node name="Grain" type="TextureRect" parent="Paper"]
+layout_mode = 2
+mouse_filter = 2
+stretch_mode = 1
+
 [node name="Margin" type="MarginContainer" parent="Paper"]
 layout_mode = 2
 theme_override_constants/margin_left = 44
@@ -46,6 +51,25 @@ theme_override_constants/margin_bottom = 28
 [node name="Rows" type="VBoxContainer" parent="Paper/Margin"]
 layout_mode = 2
 theme_override_constants/separation = 12
+
+[node name="Form" type="HBoxContainer" parent="Paper/Margin/Rows"]
+visible = false
+layout_mode = 2
+
+[node name="Office" type="Label" parent="Paper/Margin/Rows/Form"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Number" type="Label" parent="Paper/Margin/Rows/Form"]
+layout_mode = 2
+horizontal_alignment = 2
+
+[node name="FormRule" type="ColorRect" parent="Paper/Margin/Rows"]
+visible = false
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.13, 0.12, 0.11, 0.5)
 
 [node name="Title" type="Label" parent="Paper/Margin/Rows"]
 layout_mode = 2
@@ -67,8 +91,6 @@ horizontal_scroll_mode = 0
 custom_minimum_size = Vector2(740, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.15, 0.14, 0.12, 1)
-theme_override_font_sizes/font_size = 21
 autowrap_mode = 3
 
 [node name="List" type="VBoxContainer" parent="Paper/Margin/Rows"]
@@ -82,3 +104,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.36, 0.3, 1)
 theme_override_font_sizes/font_size = 15
 horizontal_alignment = 2
+
+[node name="Marks" type="Control" parent="Paper"]
+layout_mode = 2
+mouse_filter = 2
