@@ -1,0 +1,54 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/containment/resync_panel.gd" id="1_panel"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="cabinet"]
+albedo_color = Color(0.2, 0.22, 0.27, 1)
+
+[sub_resource type="BoxMesh" id="cabinet_mesh"]
+material = SubResource("cabinet")
+size = Vector3(1.0, 1.4, 0.3)
+
+[sub_resource type="BoxShape3D" id="cabinet_shape"]
+size = Vector3(1.0, 1.4, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="reset"]
+albedo_color = Color(0.7, 0.2, 0.15, 1)
+
+[sub_resource type="BoxMesh" id="reset_mesh"]
+material = SubResource("reset")
+size = Vector3(0.18, 0.12, 0.06)
+
+[sub_resource type="BoxShape3D" id="reset_shape"]
+size = Vector3(0.2, 0.14, 0.1)
+
+[node name="ResyncPanel" type="StaticBody3D"]
+script = ExtResource("1_panel")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("cabinet_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("cabinet_shape")
+
+[node name="Status" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0.16)
+pixel_size = 0.0025
+modulate = Color(0.75, 0.85, 1, 1)
+font_size = 40
+outline_size = 8
+
+[node name="ResetButton" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.18)
+
+[node name="Mesh" type="MeshInstance3D" parent="ResetButton"]
+mesh = SubResource("reset_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="ResetButton"]
+shape = SubResource("reset_shape")
+
+[node name="Interactable" type="Node" parent="ResetButton"]
+script = ExtResource("2_interactable")

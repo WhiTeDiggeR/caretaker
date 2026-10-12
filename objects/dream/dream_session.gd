@@ -20,6 +20,7 @@ const PLAYER_GROUP := &"player"
 const MESSAGE_GROUP := &"message_display"
 const FADE_SECONDS := 0.6
 const RETURNED_PREFIX := "dream/returned/"
+const RESYNC_LINE := "Печать восстановлена. Требуется ресинхронизация капсулы — знаки записаны в журнале."
 
 var time_ratio := 15.0
 var entry_cost := 8.0
@@ -147,6 +148,8 @@ func return_text(reason: Exit) -> String:
 		text = "Связь со сном прервана. Нестабильность модуля выросла.\n" + text
 	elif reason == Exit.WOKEN:
 		text = "Модуль заполнен снотворным. Силуэт из сна вытолкнул вас наружу — времени на ремонт меньше.\n" + text
+	if not DreamKnowledge.active_for(module_id).is_empty():
+		text += "\n" + RESYNC_LINE
 	return text
 
 
