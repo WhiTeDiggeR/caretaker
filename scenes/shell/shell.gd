@@ -33,6 +33,7 @@ var _starting_new_game := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	BuildInfo.log_once()
 	_loading_layer = CanvasLayer.new()
 	_loading_layer.layer = 90
 	_loading_layer.visible = false
