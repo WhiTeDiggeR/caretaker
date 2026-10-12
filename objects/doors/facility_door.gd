@@ -39,7 +39,7 @@ const LAMP_READY := Color(0.15, 0.85, 0.3)
 const LAMP_LOCKED := Color(0.9, 0.15, 0.1)
 const SOUND_MOVE: Dictionary[Kind, StringName] = {Kind.POWERED: &"door_motor", Kind.MECHANICAL: &"door_mech", Kind.MANUAL: &"door_swing"}
 const SOUND_STOP := &"door_stop"
-## A locked handle or wheel rattles; powered doors keep the common refusal of their panel.
+## A locked handle rattles (manual doors only); wheels and powered panels keep the common refusal.
 const SOUND_LOCKED := &"door_locked"
 
 @export var kind: Kind = Kind.POWERED
@@ -182,7 +182,7 @@ func refresh() -> void:
 	for control in _controls:
 		control.available = available
 		control.unavailable_prompt = reason
-		var rattles := kind != Kind.POWERED and not reason.is_empty() and reason != REASON_MOVING
+		var rattles := kind == Kind.MANUAL and not reason.is_empty() and reason != REASON_MOVING
 		control.denied_sound = SOUND_LOCKED if rattles else &""
 		control.prompt = _prompt()
 	var lamp_color := LAMP_READY if available else LAMP_LOCKED
