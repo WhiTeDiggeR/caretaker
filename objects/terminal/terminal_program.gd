@@ -13,6 +13,8 @@ static var text_providers: Dictionary[StringName, Callable] = {}
 
 var id := ""
 var title := ""
+## Era of the screen the program runs on (ScreenStyle.ERAS): decides its look only.
+var era: StringName = ScreenStyle.DEFAULT_ERA
 var start := ""
 var screens: Dictionary = {}
 var errors := PackedStringArray()
@@ -34,6 +36,7 @@ static func load_file(path: String) -> TerminalProgram:
 func load_data(data: Dictionary) -> void:
 	id = str(data.get("id", ""))
 	title = str(data.get("title", ""))
+	era = StringName(str(data.get("era", ScreenStyle.DEFAULT_ERA)))
 	start = str(data.get("start", ""))
 	screens = data.get("screens", {})
 	errors.append_array(validate())
@@ -44,6 +47,8 @@ func validate() -> PackedStringArray:
 	var found := PackedStringArray()
 	if id.is_empty():
 		found.append("program has no id")
+	if not ScreenStyle.is_known(era):
+		found.append("%s: unknown era '%s' (one of %s)" % [id, era, ScreenStyle.ERAS])
 	if not screens.has(start):
 		found.append("%s: start screen '%s' is missing" % [id, start])
 	for screen_id: String in screens:

@@ -32,10 +32,31 @@ static func reload() -> void:
 			if str(document.get("title", "")).is_empty() or str(document.get("body", "")).is_empty():
 				_errors.append("%s/%s: title and body are required" % [file, id])
 			_errors.append_array(StateRules.validate_effects(document.get("on_read", []), "%s/%s" % [file, id]))
+			_errors.append_array(_validate_paper(document, "%s/%s" % [file, id]))
 			if not bool(document.get("journal", true)) and document.has("on_read"):
 				_errors.append("%s/%s: an inspect text (journal: false) never runs on_read; use Interactable.sets_flag" % [file, id])
 			document["id"] = id
 			_documents[id] = document
+
+
+## Paper fields (issue #148): `form` {office, number, copy}, `stamps` [text], `note` text,
+## `handwritten` flag.
+static func _validate_paper(document: Dictionary, where: String) -> PackedStringArray:
+	var found := PackedStringArray()
+	if document.has("form") and not document["form"] is Dictionary:
+		found.append("%s: form must be an object {office, number, copy}" % where)
+	if document.has("stamps"):
+		if not document["stamps"] is Array:
+			found.append("%s: stamps must be a list of strings" % where)
+		else:
+			for stamp: Variant in document["stamps"]:
+				if not stamp is String or str(stamp).is_empty():
+					found.append("%s: every stamp is a non-empty string" % where)
+	if document.has("note") and not document["note"] is String:
+		found.append("%s: note must be a string" % where)
+	if document.has("handwritten") and not document["handwritten"] is bool:
+		found.append("%s: handwritten must be true or false" % where)
+	return found
 
 
 static func errors() -> PackedStringArray:
@@ -48,7 +69,8 @@ static func has(id: String) -> bool:
 	return _documents.has(id)
 
 
-## {id, title, meta, body, on_read, journal}; an empty dictionary for an unknown id.
+## {id, title, meta, body, on_read, journal, form, stamps, note, handwritten}; an empty
+## dictionary for an unknown id.
 static func get_document(id: String) -> Dictionary:
 	_ensure()
 	return _documents.get(id, {})

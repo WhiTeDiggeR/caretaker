@@ -20,6 +20,11 @@ const PLAYER_GROUP := &"player"
 const MESSAGE_GROUP := &"message_display"
 const FADE_SECONDS := 0.6
 const RETURNED_PREFIX := "dream/returned/"
+const ENTER_LINE := "СИНХРОНИЗАЦИЯ 100%% · %s"
+const GATE_LINE := "ВЫХОД ЧЕРЕЗ ВРАТА · СИНХРОНИЗАЦИЯ ЗАВЕРШЕНА"
+const DEATH_LINE := "ПРИНУДИТЕЛЬНОЕ ВОЗВРАЩЕНИЕ · НЕСТАБИЛЬНОСТЬ +%d %%"
+const WOKEN_LINE := "МОДУЛЬ ЗАПОЛНЕН СНОТВОРНЫМ · ВРЕМЯ НА РЕМОНТ СОКРАЩЕНО"
+const TRANSITION_BY_EXIT: Array[DreamTransition.Mode] = [DreamTransition.Mode.GATE, DreamTransition.Mode.DEATH, DreamTransition.Mode.WOKEN]
 const RESYNC_LINE := "Печать восстановлена. Требуется ресинхронизация капсулы — знаки записаны в журнале."
 
 var time_ratio := 15.0
@@ -40,19 +45,14 @@ var scene_loader: Callable = _change_scene
 
 var _return_scene := ""
 var _return_chair: StringName = &""
-var _fade: ColorRect
+var _fade: DreamTransition
 
 
 func _ready() -> void:
 	load_config(_read(DATA_PATH))
-	var layer := CanvasLayer.new()
-	layer.layer = 50
-	add_child(layer)
-	_fade = ColorRect.new()
-	_fade.color = Color(1, 1, 1, 0)
-	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
-	layer.add_child(_fade)
+	# The veil between the worlds: white on entry and at the gate, noise on death.
+	_fade = DreamTransition.new()
+	add_child(_fade)
 	Containment.hero_woken.connect(func(id: StringName) -> void:
 		if in_dream and id == module_id:
 			_leave(Exit.WOKEN))
@@ -93,6 +93,7 @@ func enter(id: StringName, chair_id: StringName, dream_scene: String = "") -> bo
 	real_seconds = 0.0
 	subjective_seconds = 0.0
 	Containment.add_instability(id, entry_cost)
+	_fade.show_mode(DreamTransition.Mode.ENTER, ENTER_LINE % _module_label(id))
 	entered.emit(id)
 	await _fade_to(1.0)
 	scene_loader.call(path)
@@ -133,6 +134,20 @@ func arrive_in_reality(scene_root: Node, reason: Exit) -> void:
 	scene_root.get_tree().call_group(MESSAGE_GROUP, "show_message", return_title(reason), return_text(reason))
 
 
+## System line of the veil when leaving the dream.
+func exit_line(reason: Exit) -> String:
+	match reason:
+		Exit.DEATH:
+			return DEATH_LINE % roundi(death_penalty)
+		Exit.WOKEN:
+			return WOKEN_LINE
+	return GATE_LINE
+
+
+func _module_label(id: StringName) -> String:
+	return str((Containment.modules.get(id, {}) as Dictionary).get("label", id)).to_upper()
+
+
 func return_title(reason: Exit) -> String:
 	match reason:
 		Exit.GATE:
@@ -160,6 +175,7 @@ func _leave(reason: Exit) -> void:
 	var id := module_id
 	# Story conditions (objectives) need to know a module's dream was visited.
 	GameState.set_flag(StringName(RETURNED_PREFIX + String(id)))
+	_fade.show_mode(TRANSITION_BY_EXIT[reason], exit_line(reason))
 	left.emit(id, reason)
 	await _fade_to(1.0)
 	if not _return_scene.is_empty():
@@ -179,7 +195,7 @@ func _fade_to(alpha: float) -> void:
 	if _fade == null or not is_inside_tree():
 		return
 	var tween := create_tween()
-	tween.tween_property(_fade, "color:a", alpha, FADE_SECONDS)
+	tween.tween_property(_fade, "veil", alpha, FADE_SECONDS)
 	await tween.finished
 
 

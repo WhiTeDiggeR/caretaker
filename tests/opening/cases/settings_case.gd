@@ -37,6 +37,8 @@ func run(c: OpeningCheck) -> void:
 	c.equal(InputMap.action_get_events(&"crouch").size(), crouch_events, "remap keeps the secondary keys")
 
 	Settings.set_invert_y(true)
+	Settings.set_crt_effects(false)
+	c.is_true(ScreenStyle.for_era(ScreenStyle.ERA_OLD_CORE).crt_material() == null, "world screens drop the CRT picture when it is off")
 	c.equal(Settings.save_settings(), OK, "settings are saved")
 	Settings.reset_all()
 	c.equal(Settings.primary_key(&"interact"), interact_default, "reset restores the default keys")
@@ -45,6 +47,7 @@ func run(c: OpeningCheck) -> void:
 	c.equal(Settings.primary_key(&"crouch"), KEY_V, "crouch key is loaded back")
 	c.is_true(Settings.invert_y and is_equal_approx(Settings.mouse_multiplier, 1.5) and is_equal_approx(Settings.fov, 90.0), "controls are loaded back")
 	c.near(Settings.volume[&"SFX"], 50.0, 0.001, "volume is loaded back")
+	c.is_true(not Settings.crt_effects, "the CRT effect setting is loaded back")
 
 	var screen := SettingsScreen.open(c.root)
 	await c.tree.process_frame

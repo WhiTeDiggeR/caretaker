@@ -13,6 +13,14 @@ func run(c: OpeningCheck) -> void:
 
 	c.equal(Dreams.dream_scene_for(&"module_4"), TEST_DREAM, "module 4 dream scene is configured")
 	c.near(Dreams.time_ratio, 15.0, 0.001, "default dream time ratio 1:15")
+	c.equal(DreamProfile.for_module(&"module_4").id, &"bowser", "module 4 dreams in Bowser's colours")
+	c.equal(DreamProfile.for_module(&"module_3").id, &"herobrine", "module 3 dreams in Herobrine's colours")
+	c.equal(DreamProfile.for_module(&"module_9").id, DreamProfile.FALLBACK, "an unknown dream gets the neutral look")
+	c.near(DreamProfile.leak_strength(), 0.0, 0.001, "a calm Herobrine does not leak into other dreams")
+	Containment.add_instability(&"module_3", 90.0)
+	c.is_true(DreamProfile.leak_strength() > 0.0, "Herobrine close to waking leaks into other dreams and late screens")
+	Containment.stabilize(&"module_3", 100.0)
+	c.is_true(Dreams.exit_line(Dreams.Exit.DEATH).contains("+%d" % roundi(Dreams.death_penalty)), "the death veil names the instability penalty")
 
 	var chair := (load(CHAIR) as PackedScene).instantiate() as ImmersionChair
 	chair.chair_id = &"test_chair"
@@ -39,6 +47,7 @@ func run(c: OpeningCheck) -> void:
 	await c.tree.process_frame
 	c.is_true(player.controls_locked, "the hero is locked while the hoop lowers")
 	await Dreams.entered
+	c.equal(Dreams._fade.word_text(), "погружение", "the veil of the entry speaks in the dream's word")
 	c.near(Containment.get_instability(&"module_4"), start + Dreams.entry_cost, 0.001, "entering raises the instability")
 	await c.tree.create_timer(ImmersionChair.SEQUENCE_SECONDS + Dreams.FADE_SECONDS * 2.0 + 0.3).timeout
 	c.equal(loads, [TEST_DREAM] as Array[String], "the dream scene is loaded")

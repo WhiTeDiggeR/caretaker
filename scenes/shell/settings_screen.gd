@@ -3,11 +3,13 @@ extends CanvasLayer
 
 ## Settings screen of the main menu and the pause menu. Changes apply at once and are
 ## saved when the screen closes. A key row waits for the next key (Esc cancels).
+## Look: variant A of the shell (docs/ui/style-guide.md, issue #144).
 
 signal closed
 
 var waiting_action: StringName = &""
 var key_buttons: Dictionary[StringName, Button] = {}
+var crt_toggle: CheckBox
 var _note: Label
 
 
@@ -20,7 +22,7 @@ static func open(parent: Node) -> SettingsScreen:
 
 
 func _ready() -> void:
-	var column := ShellUI.screen(self, "НАСТРОЙКИ", 760.0)
+	var column := ShellUI.screen(self, "Настройки", 820.0)
 	var scroll := ScrollContainer.new()
 	scroll.custom_minimum_size = Vector2(0, 560)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -46,6 +48,14 @@ func _ready() -> void:
 	_slider(rows, "Покачивание камеры", 0.0, 100.0, 5.0, Settings.head_bob * 100.0, "%d %%",
 			func(value: float) -> void: Settings.set_head_bob(value / 100.0))
 
+	_section(rows, "Экраны")
+	crt_toggle = CheckBox.new()
+	crt_toggle.text = "Эффект ЭЛТ на экранах мира"
+	crt_toggle.button_pressed = Settings.crt_effects
+	crt_toggle.toggled.connect(Settings.set_crt_effects)
+	rows.add_child(crt_toggle)
+	ShellUI.label(rows, "Скан-линии, свечение и помехи терминалов и мониторов комплекса.", &"ShellNote")
+
 	_section(rows, "Клавиши")
 	var grid := GridContainer.new()
 	grid.columns = 2
@@ -58,13 +68,12 @@ func _ready() -> void:
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		grid.add_child(label)
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(220, 40)
+		button.theme_type_variation = &"KeyButton"
+		button.custom_minimum_size = Vector2(200, 38)
 		button.pressed.connect(begin_remap.bind(action))
 		grid.add_child(button)
 		key_buttons[action] = button
-	_note = Label.new()
-	_note.add_theme_color_override(&"font_color", ShellUI.MUTED)
-	rows.add_child(_note)
+	_note = ShellUI.label(rows, "", &"ShellNote")
 	ShellUI.button(rows, "Сбросить клавиши", func() -> void:
 		Settings.reset_keys()
 		_refresh_keys())
@@ -117,9 +126,12 @@ func _refresh_keys() -> void:
 
 func _section(parent: Control, title: String) -> void:
 	var label := Label.new()
-	label.text = title
-	label.add_theme_color_override(&"font_color", ShellUI.ACCENT)
-	label.add_theme_font_size_override(&"font_size", 24)
+	label.text = title.to_upper()
+	label.theme_type_variation = &"ShellSection"
+	if parent.get_child_count() > 0:
+		var gap := Control.new()
+		gap.custom_minimum_size = Vector2(0, 10)
+		parent.add_child(gap)
 	parent.add_child(label)
 
 
@@ -139,10 +151,10 @@ func _slider(parent: Control, title: String, from: float, to: float, step: float
 	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(slider)
-	var shown := Label.new()
+	var shown := ShellUI.label(row, format % value, &"ShellNote")
 	shown.custom_minimum_size = Vector2(80, 0)
-	shown.text = format % value
-	row.add_child(shown)
+	shown.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	shown.add_theme_color_override(&"font_color", UiStyle.ACCENT)
 	slider.value_changed.connect(func(new_value: float) -> void:
 		shown.text = format % new_value
 		apply.call(new_value))

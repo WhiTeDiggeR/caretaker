@@ -67,6 +67,8 @@ func _on_catastrophe(ids: Array[StringName]) -> void:
 
 func _build_overlay() -> void:
 	var layer := CanvasLayer.new()
+	# The debug overlay stays out of save thumbnails like the HUD.
+	layer.add_to_group(Saves.HUD_GROUP)
 	add_child(layer)
 	_overlay = Label.new()
 	layer.add_child(_overlay)
