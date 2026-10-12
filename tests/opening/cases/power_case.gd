@@ -47,7 +47,14 @@ func run(c: OpeningCheck) -> void:
 	GameState.set_section_power(&"p3", GameState.Power.EMERGENCY)
 	c.equal(speaker.stream, PlaceholderTones.alarm(), "alarm on emergency power")
 	GameState.set_section_power(&"p3", GameState.Power.MAIN)
-	c.equal(speaker.stream, PlaceholderTones.hum(), "hum on main power")
+	c.is_true(speaker.stream == null, "main power is quiet: no generated lamp hum by default")
+	var humming := AudioStreamPlayer.new()
+	var hum_sound := SectionSound.new()
+	hum_sound.section = &"p3"
+	hum_sound.use_placeholder_hum = true
+	humming.add_child(hum_sound)
+	c.add(humming)
+	c.equal(humming.stream, PlaceholderTones.hum(), "the hum can still be switched on")
 	c.is_true(PlaceholderTones.alarm().data.size() > 0, "alarm tone is generated")
 
 	# Cascade delays grow with distance.

@@ -37,6 +37,8 @@ const SWING_ANGLE := deg_to_rad(95.0)
 const LAMP_OFF := Color(0.05, 0.05, 0.05)
 const LAMP_READY := Color(0.15, 0.85, 0.3)
 const LAMP_LOCKED := Color(0.9, 0.15, 0.1)
+const SOUND_MOVE: Dictionary[Kind, StringName] = {Kind.POWERED: &"door_motor", Kind.MECHANICAL: &"door_mech", Kind.MANUAL: &"door_swing"}
+const SOUND_STOP := &"door_stop"
 
 @export var kind: Kind = Kind.POWERED
 @export var width := 1.8
@@ -91,7 +93,7 @@ func _ready() -> void:
 
 
 func save_state() -> Dictionary:
-	return {"open": state == State.OPEN or state == State.OPENING}
+	return {"open": state == State.OPEN or state == State.OPENING, "emergency_lock": emergency_lock}
 
 
 ## Restores a saved door at once, without the opening animation.
@@ -99,6 +101,9 @@ func load_state(data: Dictionary) -> void:
 	if _tween:
 		_tween.kill()
 	var open_door := bool(data.get("open", false))
+	# Scripted events lock doors (#133); older saves have no lock key and keep the authored one.
+	if data.has("emergency_lock"):
+		emergency_lock = bool(data["emergency_lock"])
 	state = State.OPEN if open_door else State.CLOSED
 	_open_amount = 1.0 if open_door else 0.0
 	refresh()
@@ -204,6 +209,8 @@ func _move(open_door: bool) -> void:
 	if interlock_partner:
 		interlock_partner.refresh()
 	state_changed.emit(state)
+	if not Engine.is_editor_hint():
+		Sfx.play(SOUND_MOVE[kind], self)
 	var target := 1.0 if open_door else 0.0
 	var duration := open_time * absf(target - _open_amount)
 	_tween = create_tween()
@@ -214,6 +221,8 @@ func _move(open_door: bool) -> void:
 
 func _on_move_finished(open_door: bool) -> void:
 	state = State.OPEN if open_door else State.CLOSED
+	if kind != Kind.MANUAL:
+		Sfx.play(SOUND_STOP, self)
 	refresh()
 	if interlock_partner:
 		interlock_partner.refresh()

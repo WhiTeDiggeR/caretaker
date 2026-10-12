@@ -13,6 +13,7 @@ const SCROLL_STEP := 60
 const SELECT_MARK := "▶ "
 const OBJECTIVES_TITLE := "ЦЕЛИ"
 const DOCUMENTS_TITLE := "ДОКУМЕНТЫ"
+const KNOWLEDGE_TITLE := "ЗНАНИЯ ИЗ СНА"
 const CURRENT_MARK := "▶  "
 const DONE_MARK := "✓  "
 const MUTED := Color(0.6, 0.62, 0.6)
@@ -92,7 +93,10 @@ func _fill_list() -> void:
 	for child in list_box.get_children():
 		list_box.remove_child(child)
 		child.queue_free()
-	_add_objectives()
+	var sections := _add_objectives()
+	sections = _add_knowledge() or sections
+	if sections:
+		_add_line(DOCUMENTS_TITLE, 20, MUTED)
 	var ids := DocumentLibrary.read_ids()
 	if ids.is_empty():
 		var empty := Label.new()
@@ -108,22 +112,36 @@ func _fill_list() -> void:
 
 
 ## Objectives section above the documents: the current one and the finished ones.
-func _add_objectives() -> void:
+## Returns true when the section was added.
+func _add_objectives() -> bool:
 	var current := GameState.objective_text
 	var done := Objectives.completed_texts()
 	if current.is_empty() and done.is_empty():
-		return
+		return false
 	_add_line(OBJECTIVES_TITLE, 20, MUTED)
 	if not current.is_empty():
 		_add_line(CURRENT_MARK + current, 22, Color.WHITE)
 	for index in range(done.size() - 1, -1, -1):
 		_add_line(DONE_MARK + done[index], 20, MUTED)
-	_add_line(DOCUMENTS_TITLE, 20, MUTED)
+	return true
+
+
+## Knowledge remembered in dreams (DreamKnowledge), newest first; spent entries are muted.
+func _add_knowledge() -> bool:
+	var entries := DreamKnowledge.journal_entries()
+	if entries.is_empty():
+		return false
+	_add_line(KNOWLEDGE_TITLE, 20, MUTED)
+	for entry in entries:
+		var used := bool(entry["used"])
+		_add_line((DONE_MARK if used else CURRENT_MARK) + str(entry["text"]), 20 if used else 22, MUTED if used else Color.WHITE)
+	return true
 
 
 func _add_line(text: String, size: int, color: Color) -> void:
 	var label := Label.new()
 	label.text = text
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.add_theme_font_size_override(&"font_size", size)
 	label.add_theme_color_override(&"font_color", color)
 	label.set_meta(OBJECTIVE_META, true)

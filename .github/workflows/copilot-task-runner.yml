@@ -47,6 +47,8 @@ jobs:
         with:
           ref: ${{ env.BASE_BRANCH }}
           fetch-depth: 0
+          # New binary assets are stored in Git LFS (issue #140).
+          lfs: true
 
       - name: Select task
         id: select

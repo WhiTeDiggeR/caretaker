@@ -37,6 +37,7 @@
 - Prefer reusable sub-scenes and scripts over adding more inline resources to the large startup scene.
 - Do not hand-edit `.uid` or `.import` files. Let Godot generate metadata when source assets change.
 - Do not add or replace large binary assets unless the issue explicitly authorizes it and records licensing/provenance.
+- New binary assets go through Git LFS (`docs/LFS.md`): run `git lfs install` once; `tools/ci/lfs_check.py` rejects binaries committed without it.
 
 ## GDScript and scene conventions
 
