@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://loads/props/chamber1_gate/chamber1_gate.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="Shape0"]
+size = Vector3(0.5, 4.5, 0.6)
+
+[sub_resource type="BoxShape3D" id="Shape1"]
+size = Vector3(0.5, 4.5, 0.6)
+
+[sub_resource type="BoxShape3D" id="Shape2"]
+size = Vector3(5.6, 0.55, 0.7)
+
+[node name="Chamber1Gate" type="StaticBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Collision1" type="CollisionShape3D" parent="."]
+position = Vector3(-2.55, 2.25, 0.0)
+shape = SubResource("Shape0")
+
+[node name="Collision2" type="CollisionShape3D" parent="."]
+position = Vector3(2.55, 2.25, 0.0)
+shape = SubResource("Shape1")
+
+[node name="Collision3" type="CollisionShape3D" parent="."]
+position = Vector3(0.0, 4.225, 0.0)
+shape = SubResource("Shape2")

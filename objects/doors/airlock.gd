@@ -92,6 +92,7 @@ func _run_cycle(from: FacilityDoor, to: FacilityDoor) -> void:
 	cycling = true
 	_set_cycle_lock(true)
 	cycle_started.emit()
+	Sfx.play(&"airlock_cycle", self)
 	if not from.is_closed():
 		from.force(false)
 		await from.closed

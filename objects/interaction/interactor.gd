@@ -10,6 +10,9 @@ signal message_requested(title: String, text: String)
 
 const LEGACY_PROMPT := "ВЗАИМОДЕЙСТВОВАТЬ"
 const MESSAGE_GROUP := &"message_display"
+const SOUND_CLICK := &"interact_click"
+const SOUND_DENIED := &"interact_denied"
+const SOUND_HOLD_DONE := &"hold_done"
 
 @export var ray: RayCast3D
 @export var prompt_label: Label
@@ -77,11 +80,14 @@ func step(new_target: Object, pressed: bool, just_pressed: bool, delta: float) -
 		return
 	if not interactable.is_available():
 		_cancel_hold()
+		if just_pressed:
+			Sfx.play(SOUND_DENIED)
 		return
 
 	match interactable.mode:
 		Interactable.Mode.PRESS:
 			if just_pressed:
+				Sfx.play(SOUND_CLICK)
 				interactable.trigger()
 		Interactable.Mode.INSPECT:
 			if just_pressed:
@@ -97,6 +103,7 @@ func step(new_target: Object, pressed: bool, just_pressed: bool, delta: float) -
 			if hold_progress >= 1.0:
 				hold_progress = 0.0
 				_update_hold_bar()
+				Sfx.play(SOUND_HOLD_DONE)
 				interactable.trigger()
 
 

@@ -13,11 +13,13 @@ const BASE_MOUSE_SENSITIVITY := 0.002
 const SENSITIVITY_RANGE := Vector2(0.25, 3.0)
 const FOV_RANGE := Vector2(60.0, 100.0)
 const DEFAULT_FOV := 75.0
+## Head bob, strafe roll and landing dip of the camera (#134): 0 = off, 1 = full.
+const DEFAULT_HEAD_BOB := 1.0
 ## Remappable actions and their names in the settings screen.
-const ACTIONS: Array[StringName] = [&"move_forward", &"move_back", &"move_left", &"move_right", &"jump", &"sprint", &"crouch", &"interact", &"journal"]
+const ACTIONS: Array[StringName] = [&"move_forward", &"move_back", &"move_left", &"move_right", &"jump", &"sprint", &"crouch", &"crawl", &"interact", &"journal"]
 const ACTION_NAMES := {
 	&"move_forward": "Вперёд", &"move_back": "Назад", &"move_left": "Влево", &"move_right": "Вправо",
-	&"jump": "Прыжок / перелезть", &"sprint": "Бег", &"crouch": "Присед", &"interact": "Взаимодействие", &"journal": "Журнал",
+	&"jump": "Прыжок / перелезть", &"sprint": "Бег", &"crouch": "Присед", &"crawl": "Ползком (вкл/выкл)", &"interact": "Взаимодействие", &"journal": "Журнал",
 }
 
 var config_path := DEFAULT_PATH
@@ -25,6 +27,7 @@ var volume: Dictionary[StringName, float] = {&"Master": 100.0, &"SFX": 100.0, &"
 var mouse_multiplier := 1.0
 var invert_y := false
 var fov := DEFAULT_FOV
+var head_bob := DEFAULT_HEAD_BOB
 
 ## Physical keycode of the primary key of each action as configured by the project.
 var _default_keys: Dictionary[StringName, int] = {}
@@ -59,6 +62,11 @@ func set_invert_y(value: bool) -> void:
 
 func set_fov(value: float) -> void:
 	fov = clampf(value, FOV_RANGE.x, FOV_RANGE.y)
+	changed.emit()
+
+
+func set_head_bob(value: float) -> void:
+	head_bob = clampf(value, 0.0, 1.0)
 	changed.emit()
 
 
@@ -126,6 +134,7 @@ func save_settings() -> Error:
 	file.set_value("controls", "mouse_multiplier", mouse_multiplier)
 	file.set_value("controls", "invert_y", invert_y)
 	file.set_value("video", "fov", fov)
+	file.set_value("video", "head_bob", head_bob)
 	for action in ACTIONS:
 		file.set_value("keys", String(action), primary_key(action))
 	return file.save(config_path)
@@ -139,6 +148,7 @@ func load_settings() -> void:
 		mouse_multiplier = float(file.get_value("controls", "mouse_multiplier", 1.0))
 		invert_y = bool(file.get_value("controls", "invert_y", false))
 		fov = float(file.get_value("video", "fov", DEFAULT_FOV))
+		head_bob = clampf(float(file.get_value("video", "head_bob", DEFAULT_HEAD_BOB)), 0.0, 1.0)
 		for action in ACTIONS:
 			var key := int(file.get_value("keys", String(action), _default_keys[action]))
 			if key != primary_key(action):
@@ -156,6 +166,7 @@ func reset_all() -> void:
 	mouse_multiplier = 1.0
 	invert_y = false
 	fov = DEFAULT_FOV
+	head_bob = DEFAULT_HEAD_BOB
 	reset_keys()
 
 

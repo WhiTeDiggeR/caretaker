@@ -7,6 +7,7 @@ const CASES: Array[String] = [
 	"res://tests/opening/cases/game_state_case.gd",
 	"res://tests/opening/cases/sandbox_case.gd",
 	"res://tests/opening/cases/movement_case.gd",
+	"res://tests/opening/cases/climb_case.gd",
 	"res://tests/opening/cases/interaction_case.gd",
 	"res://tests/opening/cases/door_case.gd",
 	"res://tests/opening/cases/power_case.gd",
@@ -20,6 +21,11 @@ const CASES: Array[String] = [
 	"res://tests/opening/cases/props_case.gd",
 	"res://tests/opening/cases/settings_case.gd",
 	"res://tests/opening/cases/saves_case.gd",
+	"res://tests/opening/cases/sfx_case.gd",
+	"res://tests/opening/cases/objectives_case.gd",
+	"res://tests/opening/cases/feel_case.gd",
+	"res://tests/opening/cases/events_case.gd",
+	"res://tests/opening/cases/resync_case.gd",
 ]
 
 
