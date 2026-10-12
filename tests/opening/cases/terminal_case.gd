@@ -68,6 +68,15 @@ func run(c: OpeningCheck) -> void:
 	c.equal(program.choose("main", 2), "exit", "exit option")
 	c.is_true(GameState.has_flag(&"left"), "option effects apply on choice")
 
+	c.equal(program.era, ScreenStyle.ERA_MODULE, "a program without an era runs on a late screen")
+	c.equal(TerminalProgram.load_file(DATA_DIR.path_join("opening_old_cp.json")).era, ScreenStyle.ERA_OLD_CORE, "the old core console declares its era")
+	var neon := TerminalProgram.new()
+	neon.load_data({"id": "neon", "era": "neon", "start": "a", "screens": {"a": {"lines": ["x"]}}})
+	c.equal(neon.errors.size(), 1, "an unknown era is reported")
+	for era in ScreenStyle.ERAS:
+		var era_style := ScreenStyle.for_era(era)
+		c.is_true(era_style != null and era_style.era == era and era_style.font != null, "style of era %s is complete" % era)
+
 	var broken := TerminalProgram.new()
 	broken.load_data({"id": "broken", "start": "a", "screens": {"a": {"options": [{"text": "x", "goto": "missing"}], "effects": [{"explode": true}]}}})
 	c.equal(broken.errors.size(), 2, "unknown screen and unknown effect are reported")
@@ -89,6 +98,7 @@ func _ui_case(c: OpeningCheck) -> void:
 	var screen := terminal.screen
 	c.is_true(screen != null, "powered terminal opens")
 	c.is_true(player.controls_locked, "player is locked while the terminal is open")
+	c.equal(screen.style, ScreenStyle.for_era(ScreenStyle.ERA_MODULE), "the screen takes the look of its program's era")
 	screen.finish_typing()
 	c.is_true(screen.body_label.text.contains("Основное питание секции: отсутствует."), "screen shows conditional lines")
 	c.equal(screen.options_box.get_child_count(), 3, "main screen options")

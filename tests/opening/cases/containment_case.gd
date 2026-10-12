@@ -26,6 +26,9 @@ func run(c: OpeningCheck) -> void:
 	c.near(Containment.get_instability(&"module_4"), 55.0, 0.001, "module 4 starts from its configured value")
 	c.equal(Containment.get_stage(&"module_4"), Containment.Stage.ANXIOUS, "55 % is the anxious sleep stage")
 	c.equal(Containment.stage_names, ["СПОКОЙНЫЙ СОН", "БЕСПОКОЙНЫЙ СОН", "ТРЕВОЖНЫЙ СОН", "ПРЕДПРОБУЖДЕНИЕ", "ПРОБУЖДЕНИЕ"], "stage names grow in severity")
+	c.equal(ModuleMonitor.module_status(&"module_4"), &"warn", "the monitor shows an anxious sleep as a warning")
+	c.equal(ModuleMonitor.module_status(&"module_3"), &"ok", "the monitor shows a stable sleep as normal")
+	c.is_true(ModuleMonitor.screen_rows().size() == Containment.monitor_lines().size(), "the monitor screen has a row for every monitor line")
 
 	Containment.tick(60.0)
 	c.near(Containment.get_instability(&"module_4"), 55.0, 0.001, "inactive modules do not grow")
@@ -104,10 +107,11 @@ func run(c: OpeningCheck) -> void:
 	var monitor: ModuleMonitor = c.add((load("res://objects/containment/module_monitor.tscn") as PackedScene).instantiate())
 	monitor.section = &"mon"
 	monitor.refresh()
-	c.equal((monitor.get_node(^"Screen/Text") as Label3D).text, "", "unpowered monitor is dark")
+	var screen := monitor.get_node(^"Screen") as WorldScreen
+	c.is_true(not screen.view.powered, "unpowered monitor is dark")
 	GameState.set_section_power(&"mon", GameState.Power.EMERGENCY)
 	monitor.refresh()
-	c.is_true((monitor.get_node(^"Screen/Text") as Label3D).text.contains("МОДУЛЬ 4"), "powered monitor shows the modules")
+	c.is_true(screen.view.powered and screen.view.rows.size() > 0 and str(screen.view.rows[0]["text"]).contains("МОДУЛЬ 4"), "powered monitor shows the modules")
 
 	Containment.stage_changed.disconnect(on_stage)
 	Containment.module_awakened.disconnect(on_awake)

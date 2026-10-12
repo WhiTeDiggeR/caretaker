@@ -1,7 +1,8 @@
 extends Node
 
 ## Player settings (autoload `Settings`): volume of the Master/SFX/Ambience buses, mouse
-## sensitivity and inversion, field of view and the primary key of each remappable action.
+## sensitivity and inversion, field of view, the CRT effect of world screens and the primary
+## key of each remappable action.
 ## Stored in user://settings.cfg and applied at start.
 
 signal changed
@@ -27,6 +28,8 @@ var volume: Dictionary[StringName, float] = {&"Master": 100.0, &"SFX": 100.0, &"
 var mouse_multiplier := 1.0
 var invert_y := false
 var fov := DEFAULT_FOV
+## Scanlines, bloom and roll of the world screens (terminals, monitors); off keeps them flat.
+var crt_effects := true
 var head_bob := DEFAULT_HEAD_BOB
 
 ## Physical keycode of the primary key of each action as configured by the project.
@@ -62,6 +65,11 @@ func set_invert_y(value: bool) -> void:
 
 func set_fov(value: float) -> void:
 	fov = clampf(value, FOV_RANGE.x, FOV_RANGE.y)
+	changed.emit()
+
+
+func set_crt_effects(value: bool) -> void:
+	crt_effects = value
 	changed.emit()
 
 
@@ -134,6 +142,7 @@ func save_settings() -> Error:
 	file.set_value("controls", "mouse_multiplier", mouse_multiplier)
 	file.set_value("controls", "invert_y", invert_y)
 	file.set_value("video", "fov", fov)
+	file.set_value("video", "crt_effects", crt_effects)
 	file.set_value("video", "head_bob", head_bob)
 	for action in ACTIONS:
 		file.set_value("keys", String(action), primary_key(action))
@@ -148,6 +157,7 @@ func load_settings() -> void:
 		mouse_multiplier = float(file.get_value("controls", "mouse_multiplier", 1.0))
 		invert_y = bool(file.get_value("controls", "invert_y", false))
 		fov = float(file.get_value("video", "fov", DEFAULT_FOV))
+		crt_effects = bool(file.get_value("video", "crt_effects", true))
 		head_bob = clampf(float(file.get_value("video", "head_bob", DEFAULT_HEAD_BOB)), 0.0, 1.0)
 		for action in ACTIONS:
 			var key := int(file.get_value("keys", String(action), _default_keys[action]))
@@ -166,6 +176,7 @@ func reset_all() -> void:
 	mouse_multiplier = 1.0
 	invert_y = false
 	fov = DEFAULT_FOV
+	crt_effects = true
 	head_bob = DEFAULT_HEAD_BOB
 	reset_keys()
 

@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Стиль интерфейсов «Смотрителя»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Mono&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+SC:wght@400;600&family=Caveat:wght@500&display=swap">
+<style>
+/* Layout: one long board column; each interface type gets a section with a live 16:9 mockup, rules beside it. Deliberately single dark theme (game UI). */
+:root {
+  color-scheme: dark;
+  /* board chrome */
+  --bg: #0b0d0e;
+  --panel: #121517;
+  --line: #262b2d;
+  --fg: #d6d8d2;
+  --muted: #8b908c;
+  --accent: #f2b852;          /* = ShellUI.ACCENT (0.95, 0.72, 0.32) */
+
+  /* status grammar — from docs/art/style-guide.md */
+  --st-ok: #3ed36b;
+  --st-warn: #e8a21c;
+  --st-alarm: #d8341f;
+  --st-screen: #1fb5c8;
+  --hazard: #b89a1c;
+
+  /* era I — old core, amber phosphor */
+  --e1-bg: #140b03;
+  --e1-ph: #ffb347;
+  --e1-dim: #8a5a1e;
+  /* era II — sleep lab, green phosphor (current terminal_screen colours) */
+  --e2-bg: #03110a;
+  --e2-ph: #8cffbf;
+  --e2-dim: #2f7a55;
+  /* era III — serial modules, flat cyan */
+  --e3-bg: #041114;
+  --e3-cy: #1fb5c8;
+  --e3-dim: #0e505c;
+  --e3-line: #12343b;
+  --bowser: #3f8f4a;
+  --herobrine: #2f5fa8;
+
+  /* paper */
+  --paper: #dbd4b8;
+  --ink: #221f1b;
+  --stamp: #a8321f;
+  --pencil: #3d4150;
+
+  --f-display: "Oswald", "PT Sans Narrow", "Arial Narrow", sans-serif;
+  --f-body: "PT Sans", "Segoe UI", Arial, sans-serif;
+  --f-mono-old: "PT Mono", "Courier New", monospace;
+  --f-late: "IBM Plex Sans Condensed", "PT Sans Narrow", Arial, sans-serif;
+  --f-mono-late: "IBM Plex Mono", "PT Mono", monospace;
+  --f-dream: "Cormorant SC", "Cormorant", Georgia, serif;
+  --f-hand: "Caveat", "Segoe Print", cursive;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.55 var(--f-body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 80px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 500; letter-spacing: .04em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 5vw, 52px); text-transform: uppercase; letter-spacing: .12em; }
+h2 { font-size: clamp(22px, 3vw, 30px); text-transform: uppercase; letter-spacing: .08em; }
+h3 { font-size: 18px; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--accent); }
+.eyebrow { font: 500 12px/1 var(--f-mono-late); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 18px; color: var(--fg); max-width: 72ch; }
+.muted { color: var(--muted); }
+code, .code { font-family: var(--f-mono-late); font-size: .88em; color: #c9c2a8; }
+section { padding-block: 56px 8px; border-top: 1px solid var(--line); margin-top: 56px; display: grid; gap: 24px; }
+header { display: grid; gap: 18px; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 20px; }
+.cols > * { min-width: 0; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap: 20px; }
+.grid3 > * { min-width: 0; }
+.note { border-left: 2px solid var(--accent); padding: 4px 0 4px 14px; color: var(--fg); }
+.card { background: var(--panel); border: 1px solid var(--line); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.card ul, .rules { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.tag { display: inline-block; font: 500 11px/1 var(--f-mono-late); letter-spacing: .12em; text-transform: uppercase; padding: 5px 7px; border: 1px solid var(--line); color: var(--muted); }
+.tag.rec { color: #15130f; background: var(--accent); border-color: var(--accent); }
+.tag.new { color: var(--st-screen); border-color: var(--e3-dim); }
+.tag.have { color: var(--st-ok); border-color: #1d5a33; }
+.principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.principles > div { background: var(--panel); padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.principles b { font-family: var(--f-display); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; font-size: 17px; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14.5px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11px/1.3 var(--f-mono-late); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); background: var(--panel); }
+td.y { color: var(--st-ok); } td.n { color: #6b706d; }
+.sw { display: inline-block; width: 14px; height: 14px; vertical-align: -2px; margin-right: 8px; border: 1px solid #0006; }
+
+/* ---------- 16:9 mockup frame ---------- */
+.frame { position: relative; aspect-ratio: 16 / 9; width: 100%; max-width: 100%; overflow: hidden; container-type: inline-size; background: #000; border: 1px solid var(--line); }
+.frame .bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.frame .grain { position: absolute; inset: 0; pointer-events: none; opacity: .14; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+.cap { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; justify-content: space-between; }
+.cap h3 { color: var(--fg); }
+.figure { display: grid; gap: 12px; }
+
+/* ---------- Shell A «Протокол» ---------- */
+.shA .bg { filter: grayscale(.35) brightness(.42) contrast(1.05); }
+.shA .vig { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,9,10,.94) 0%, rgba(8,9,10,.78) 34%, rgba(8,9,10,.15) 70%, rgba(8,9,10,.5) 100%); }
+.shA .rail { position: absolute; left: 5cqw; top: 0; bottom: 0; width: .12cqw; background: rgba(242,184,82,.55); }
+.shA .col { position: absolute; left: 7.4cqw; top: 13cqw; width: 30cqw; display: grid; gap: 1cqw; font-family: var(--f-body); color: var(--fg); }
+.shA .kicker { font: 500 .78cqw/1 var(--f-mono-late); letter-spacing: .3em; color: rgba(214,216,210,.55); text-transform: uppercase; }
+.shA .title { font: 600 5.6cqw/0.95 var(--f-display); letter-spacing: .14em; color: #e4e5df; text-transform: uppercase; }
+.shA .sub { font-size: 1.15cqw; color: var(--muted); margin-top: -.2cqw; }
+.shA .menu { margin-top: 2.2cqw; display: grid; gap: .25cqw; }
+.shA .mi { display: grid; grid-template-columns: 2.4cqw 1fr auto; align-items: baseline; padding: .7cqw 1cqw .7cqw 0; font-size: 1.45cqw; color: #cfd1cb; border-left: .25cqw solid transparent; }
+.shA .mi i { font: normal .78cqw var(--f-mono-late); color: rgba(214,216,210,.38); padding-left: .8cqw; }
+.shA .mi small { font: .8cqw var(--f-mono-late); color: rgba(214,216,210,.45); letter-spacing: .06em; }
+.shA .mi.sel { border-left-color: var(--accent); background: linear-gradient(90deg, rgba(242,184,82,.16), rgba(242,184,82,0) 85%); color: var(--accent); }
+.shA .mi.sel i { color: var(--accent); }
+.shA .mi.dis { color: rgba(214,216,210,.3); }
+.shA .foot { position: absolute; left: 7.4cqw; right: 4cqw; bottom: 3cqw; display: flex; justify-content: space-between; font: .8cqw var(--f-mono-late); color: rgba(214,216,210,.42); letter-spacing: .08em; }
+.key { display: inline-block; min-width: 1.6em; padding: .1em .4em; margin-right: .35em; border: 1px solid currentColor; border-bottom-width: 2px; border-radius: 2px; text-align: center; font-family: var(--f-mono-late); }
+.shA .flick { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(220,240,255,.25); box-shadow: 0 0 2cqw .5cqw rgba(200,230,255,.08); animation: flick 7s infinite steps(1); }
+@keyframes flick { 0%, 100% { opacity: 1 } 61% { opacity: .2 } 62% { opacity: 1 } 64% { opacity: .1 } 65% { opacity: 1 } }
+
+/* ---------- Shell B «Кристалл» ---------- */
+.shB { background: #05070a; }
+.shB .bg { filter: blur(.8cqw) grayscale(.6) brightness(.32); transform: scale(1.06); }
+.shB .glow { position: absolute; left: 50%; top: 40%; width: 46cqw; height: 46cqw; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(circle, rgba(225,245,255,.55) 0%, rgba(160,215,235,.22) 12%, rgba(90,150,190,.08) 34%, transparent 62%); animation: breathe 6s ease-in-out infinite; }
+.shB .shard { position: absolute; left: 50%; top: 40%; width: 2.2cqw; height: 5.2cqw; transform: translate(-50%, -50%) rotate(8deg); background: linear-gradient(160deg, #f4fbff, #9fd3e6 55%, #4a7f9a); clip-path: polygon(50% 0, 100% 38%, 72% 100%, 22% 100%, 0 40%); filter: drop-shadow(0 0 1.2cqw rgba(210,240,255,.8)); }
+@keyframes breathe { 0%, 100% { opacity: .75; transform: translate(-50%, -50%) scale(.96) } 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.04) } }
+.shB .col { position: absolute; left: 0; right: 0; top: 52%; display: grid; justify-items: center; gap: .6cqw; color: #dfe9ee; text-align: center; }
+.shB .title { font: 400 5.4cqw/1 var(--f-dream); letter-spacing: .32em; padding-left: .32em; color: #eef6f9; text-shadow: 0 0 2cqw rgba(200,235,255,.35); }
+.shB .sub { font: italic 1.15cqw var(--f-body); color: rgba(220,233,238,.55); }
+.shB .menu { margin-top: 1.6cqw; display: flex; gap: 2.6cqw; font: 400 1.5cqw var(--f-dream); letter-spacing: .14em; color: rgba(223,233,238,.6); }
+.shB .menu .sel { color: #fff; text-shadow: 0 0 1cqw rgba(200,235,255,.7); }
+.shB .foot { position: absolute; left: 0; right: 0; bottom: 3cqw; text-align: center; font: .8cqw var(--f-mono-late); color: rgba(223,233,238,.3); letter-spacing: .2em; }
+
+/* ---------- Shell C «Пульт» + era I shared CRT ---------- */
+.crt { position: relative; overflow: hidden; }
+.crt::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3; background: repeating-linear-gradient(0deg, rgba(0,0,0,.28) 0 1px, transparent 1px 3px); }
+.crt::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 4; background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.65) 100%); }
+.shC { background: var(--e1-bg); }
+.shC .txt { position: absolute; inset: 6cqw 8cqw; font: 1.6cqw/1.55 var(--f-mono-old); color: var(--e1-ph); text-shadow: 0 0 .5cqw rgba(255,179,71,.7), 0 0 1.6cqw rgba(255,140,40,.25); white-space: pre; }
+.shC .txt .d { color: var(--e1-dim); text-shadow: none; }
+.shC .txt .inv { background: var(--e1-ph); color: var(--e1-bg); text-shadow: none; }
+.cursor { display: inline-block; width: .6em; height: 1em; vertical-align: -.12em; background: currentColor; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0 } }
+
+/* ---------- Shell elements kit (A) ---------- */
+.kit { background: #0e1112; border: 1px solid var(--line); padding: 26px; display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); font-family: var(--f-body); }
+.kit > div { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.kit .lab { font: 500 11px/1 var(--f-mono-late); letter-spacing: .16em; color: var(--muted); text-transform: uppercase; }
+.btn { display: grid; grid-template-columns: 34px 1fr auto; align-items: baseline; padding: 10px 14px 10px 0; font-size: 19px; color: #cfd1cb; border-left: 3px solid transparent; background: none; border-top: 0; border-right: 0; border-bottom: 0; text-align: left; font-family: var(--f-body); cursor: pointer; width: 100%; }
+.btn i { font: normal 11px var(--f-mono-late); color: #5d625f; padding-left: 10px; }
+.btn small { font: 11px var(--f-mono-late); color: #6d726f; }
+.btn:hover, .btn:focus-visible, .btn.hov { border-left-color: var(--accent); background: linear-gradient(90deg, rgba(242,184,82,.16), transparent 85%); color: var(--accent); outline: none; }
+.btn:hover i, .btn:focus-visible i, .btn.hov i { color: var(--accent); }
+.btn.prs { border-left-color: var(--accent); background: rgba(242,184,82,.28); color: #fff3d6; }
+.btn[disabled] { color: #4f5452; cursor: default; background: none; border-left-color: transparent; }
+.btn.danger:hover, .btn.danger:focus-visible { border-left-color: var(--st-alarm); color: #ff7b62; background: linear-gradient(90deg, rgba(216,52,31,.18), transparent 85%); }
+.row { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; font-size: 16px; padding: 8px 0; border-bottom: 1px solid #1c2022; }
+.row .v { font: 13px var(--f-mono-late); color: var(--accent); min-width: 3.5em; text-align: right; }
+.slider { -webkit-appearance: none; appearance: none; width: 100%; height: 18px; background: transparent; grid-column: 1 / -1; }
+.slider::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(90deg, var(--accent) var(--p, 70%), #30363a var(--p, 70%)); }
+.slider::-moz-range-track { height: 2px; background: #30363a; }
+.slider::-moz-range-progress { height: 2px; background: var(--accent); }
+.slider::-webkit-slider-thumb { -webkit-appearance: none; width: 8px; height: 18px; margin-top: -8px; background: var(--accent); border: 0; }
+.slider::-moz-range-thumb { width: 8px; height: 18px; background: var(--accent); border: 0; border-radius: 0; }
+.slider:focus-visible { outline: 1px dashed var(--accent); outline-offset: 4px; }
+.seg { display: inline-flex; border: 1px solid #30363a; }
+.seg button { font: 13px var(--f-mono-late); letter-spacing: .08em; padding: 6px 10px; background: none; color: #8b908c; border: 0; border-right: 1px solid #30363a; cursor: pointer; }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: #15130f; }
+.seg button:focus-visible { outline: 1px dashed var(--accent); outline-offset: 2px; }
+.tabs { display: flex; gap: 22px; border-bottom: 1px solid #262b2d; font: 500 14px var(--f-display); letter-spacing: .14em; text-transform: uppercase; flex-wrap: wrap; }
+.tabs span { padding: 0 0 8px; color: #7b807c; }
+.tabs .on { color: var(--accent); box-shadow: inset 0 -2px var(--accent); }
+.slot { display: grid; grid-template-columns: 96px 1fr; gap: 14px; padding: 10px; border: 1px solid #262b2d; align-items: center; }
+.slot.sel { border-color: var(--accent); background: rgba(242,184,82,.06); }
+.slot .th { aspect-ratio: 16/9; background-size: cover; background-position: center; filter: grayscale(.3) brightness(.7); }
+.slot b { font-weight: 700; font-size: 15px; display: block; }
+.slot span { font: 12px var(--f-mono-late); color: var(--muted); }
+.dialog { border: 1px solid #3a3f41; background: #111416; padding: 18px 20px; display: grid; gap: 12px; }
+.dialog .t { font: 500 17px var(--f-display); letter-spacing: .1em; text-transform: uppercase; }
+.dialog .acts { display: flex; gap: 18px; font-size: 15px; flex-wrap: wrap; }
+.dialog .acts span:first-child { color: var(--accent); }
+
+/* ---------- HUD ---------- */
+.hud .bg { filter: brightness(.85); }
+.hud .obj { position: absolute; left: 3.2cqw; top: 3cqw; display: grid; gap: .35cqw; }
+.hud .obj .l { font: 500 .7cqw/1 var(--f-mono-late); letter-spacing: .3em; color: rgba(242,184,82,.8); }
+.hud .obj .t { font: 1.25cqw var(--f-body); color: #e7e8e3; text-shadow: 0 0 .4cqw #000, 0 0 .1cqw #000; }
+.hud .xh { position: absolute; left: 50%; top: 50%; width: .3cqw; height: .3cqw; border-radius: 50%; background: rgba(240,240,232,.85); transform: translate(-50%, -50%); box-shadow: 0 0 .2cqw #000; }
+.hud .ring { position: absolute; left: 50%; top: 50%; width: 2.6cqw; height: 2.6cqw; transform: translate(-50%, -50%) rotate(-90deg); }
+.hud .prompt { position: absolute; left: 50%; top: 54.5%; transform: translateX(-50%); display: flex; gap: .6cqw; align-items: center; font: 500 1cqw var(--f-display); letter-spacing: .16em; color: #ecede8; text-shadow: 0 0 .4cqw #000; white-space: nowrap; }
+.hud .prompt .key { font-size: .9cqw; color: var(--accent); background: rgba(10,11,12,.55); }
+.hud .hint { position: absolute; left: 50%; bottom: 9cqw; transform: translateX(-50%); font: 1.15cqw var(--f-body); color: #e3e4df; text-shadow: 0 0 .5cqw #000, 0 0 .15cqw #000; white-space: nowrap; }
+.hud .toast { position: absolute; right: 3.2cqw; top: 3cqw; display: flex; gap: .8cqw; align-items: center; padding: .6cqw 1cqw; background: rgba(10,12,13,.62); border-left: .2cqw solid var(--accent); font: .95cqw var(--f-body); color: #dfe0db; }
+.hud .toast b { font: 500 .7cqw var(--f-mono-late); letter-spacing: .2em; color: var(--accent); }
+.hud .na { position: absolute; left: 70%; top: 62%; font: 500 .9cqw var(--f-display); letter-spacing: .16em; color: rgba(255,140,120,.85); text-shadow: 0 0 .4cqw #000; }
+.hud .na::before { content: ""; display: inline-block; width: .5cqw; height: .5cqw; margin-right: .5cqw; background: var(--st-alarm); vertical-align: .05cqw; }
+
+/* ---------- World screens ---------- */
+.switch { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.switch button { font: 500 12px var(--f-mono-late); letter-spacing: .12em; text-transform: uppercase; padding: 8px 12px; background: var(--panel); color: var(--muted); border: 1px solid var(--line); cursor: pointer; }
+.switch button[aria-pressed="true"] { color: #15130f; background: var(--accent); border-color: var(--accent); }
+.switch button:focus-visible { outline: 1px dashed var(--accent); outline-offset: 2px; }
+.screen { position: relative; aspect-ratio: 4 / 3; width: 100%; overflow: hidden; container-type: inline-size; border: 1.4cqw solid #1a1c1d; border-radius: 1.2cqw; box-shadow: inset 0 0 0 1px #2b2f31, 0 0 0 1px #000; }
+.screen.wide { aspect-ratio: 16 / 10; border-radius: .4cqw; border-width: .9cqw; }
+.screen .off { position: absolute; inset: 0; z-index: 6; display: none; background: linear-gradient(130deg, #0b0c0d 0%, #111314 46%, #1b1e20 50%, #0d0e0f 56%, #090a0b 100%); }
+.screen .off span { position: absolute; left: 6cqw; bottom: 5cqw; font: 2.6cqw var(--f-mono-late); color: #2a2e30; letter-spacing: .2em; }
+.worlds[data-state="off"] .screen .off { display: block; }
+.boot { position: absolute; inset: 0; z-index: 5; display: none; padding: 7cqw; white-space: pre; }
+.worlds[data-state="boot"] .boot { display: block; }
+
+/* era I */
+.e1 { background: var(--e1-bg); font-family: var(--f-mono-old); color: var(--e1-ph); }
+.e1 .body, .e1 .boot { position: absolute; inset: 6cqw 7cqw; font-size: 3.6cqw; line-height: 1.5; text-shadow: 0 0 1cqw rgba(255,179,71,.7), 0 0 3cqw rgba(255,140,40,.25); white-space: pre; }
+.e1 .boot { inset: 0; padding: 6cqw 7cqw; background: var(--e1-bg); font-size: 3.6cqw; line-height: 1.5; text-shadow: 0 0 1cqw rgba(255,179,71,.7); }
+.e1 .d { color: var(--e1-dim); text-shadow: none; }
+.e1 [data-tone="warn"] { animation: blink 1.2s steps(1) infinite; }
+.e1 [data-tone="alarm"] { background: var(--e1-ph); color: var(--e1-bg); text-shadow: none; }
+.e1 .body { animation: roll 9s linear infinite; }
+@keyframes roll { 0%, 96% { transform: none } 97% { transform: translateY(-.6cqw) } 98% { transform: translateY(.3cqw) } 100% { transform: none } }
+
+.panelI { background: linear-gradient(#26292a, #1b1d1e); border: 1px solid #333739; padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; }
+.lamps { display: flex; gap: 16px; flex-wrap: wrap; }
+.lamp { display: grid; justify-items: center; gap: 6px; font: 700 10px/1.1 var(--f-body); letter-spacing: .04em; color: #b9b6a8; text-align: center; }
+.lamp i { width: 22px; height: 22px; border-radius: 50%; border: 3px solid #4a4d4f; background: #2b2a26; box-shadow: inset 0 -3px 4px rgba(0,0,0,.5); }
+.lamp i.g { background: radial-gradient(circle at 40% 35%, #bfffd0, var(--st-ok) 45%, #0f5a26); box-shadow: 0 0 12px rgba(62,211,107,.7); }
+.lamp i.a { background: radial-gradient(circle at 40% 35%, #ffe6a8, var(--st-warn) 45%, #6d4a06); box-shadow: 0 0 12px rgba(232,162,28,.7); animation: blink 1.2s steps(1) infinite; }
+.lamp i.r { background: radial-gradient(circle at 40% 35%, #ffc2b5, var(--st-alarm) 45%, #5e130a); box-shadow: 0 0 14px rgba(216,52,31,.8); animation: blink .6s steps(1) infinite; }
+.lamp i.x { background: #2b2a26; }
+.gauge { width: 112px; height: 72px; }
+.plate { display: inline-block; font: 700 10px/1 var(--f-body); letter-spacing: .08em; color: #d8d3c0; background: #3c3f40; padding: 4px 6px; border: 1px solid #55595b; }
+
+/* era II */
+.e2 { background: var(--e2-bg); color: var(--e2-ph); font-family: var(--f-mono-old); }
+.e2 .body { position: absolute; inset: 5cqw 6cqw; display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; gap: 2cqw; font-size: 3.3cqw; line-height: 1.35; text-shadow: 0 0 1cqw rgba(120,255,180,.6); filter: blur(.04cqw); }
+.e2 .d { color: var(--e2-dim); text-shadow: none; }
+.e2 canvas { width: 100%; height: 100%; min-height: 0; display: block; }
+.wgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; }
+.wgrid > * { min-width: 0; }
+.wgrid .span-all { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (max-width: 900px) { .wgrid .span-all { grid-template-columns: 1fr; } }
+.e2 .glyphs { font-size: 5cqw; letter-spacing: .3em; color: #b6ffd6; min-height: 1.4em; }
+.e2 .boot { background: var(--e2-bg); font-size: 3.3cqw; line-height: 1.4; text-shadow: 0 0 1cqw rgba(120,255,180,.6); }
+.e2 .roll { position: absolute; left: 0; right: 0; height: 18%; z-index: 2; pointer-events: none; background: linear-gradient(transparent, rgba(140,255,191,.07), transparent); animation: vroll 5.5s linear infinite; }
+@keyframes vroll { from { top: -20% } to { top: 110% } }
+.worlds[data-state="warn"] .e2 .body, .worlds[data-state="alarm"] .e2 .body { animation: jitter .18s steps(2) infinite; }
+@keyframes jitter { 0% { transform: translateX(0) } 50% { transform: translateX(.35cqw) } }
+
+/* era III */
+.e3 { background: radial-gradient(ellipse at 50% 0%, #07191d, var(--e3-bg) 70%); color: #bfe9ef; font-family: var(--f-late); }
+.e3::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3; opacity: .35;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,.35) 0 1px, transparent 1px 3px), repeating-linear-gradient(0deg, rgba(0,0,0,.3) 0 1px, transparent 1px 3px); }
+.e3 .burn { position: absolute; right: 3%; bottom: 12%; font: 600 9cqw var(--f-late); color: rgba(31,181,200,.035); letter-spacing: .1em; z-index: 1; pointer-events: none; }
+.e3 .body { position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr auto; z-index: 2; }
+.e3 .hd { display: flex; justify-content: space-between; align-items: center; gap: 2cqw; padding: 1.6cqw 2.6cqw; border-bottom: .15cqw solid var(--e3-line); font: 600 2.1cqw var(--f-late); letter-spacing: .14em; color: var(--e3-cy); }
+.e3 .hd .mod { display: flex; align-items: center; gap: 1.2cqw; }
+.e3 .hd .mod i { width: .6cqw; height: 2.6cqw; background: var(--bowser); }
+.e3 .hd .clock { font: 500 1.8cqw var(--f-mono-late); color: var(--e3-dim); letter-spacing: .05em; }
+.worlds[data-state="alarm"] .e3 .hd { background: var(--st-alarm); color: #1a0703; animation: blink 1s steps(1) infinite; }
+.worlds[data-state="alarm"] .e3 .hd .clock { color: #1a0703; }
+.e3 .main { display: grid; grid-template-columns: 1.15fr 1fr; gap: 2.6cqw; padding: 2.4cqw 2.6cqw; min-height: 0; }
+.e3 .lbl { font: 500 1.35cqw var(--f-mono-late); letter-spacing: .18em; color: var(--e3-dim); text-transform: uppercase; }
+.e3 .big { font: 500 7.2cqw/1 var(--f-late); letter-spacing: .02em; }
+.e3 .segs { display: grid; grid-template-columns: repeat(20, 1fr); gap: .35cqw; height: 2.2cqw; margin: 1cqw 0 2cqw; }
+.e3 .segs i { background: #0d2a30; }
+.e3 .kv { display: grid; grid-template-columns: 1fr auto; gap: .8cqw 2cqw; font-size: 1.9cqw; align-content: start; }
+.e3 .kv span:nth-child(odd) { color: #6fa7b0; }
+.e3 .kv span:nth-child(even) { font-family: var(--f-mono-late); text-align: right; }
+.e3 .log { border-left: .15cqw solid var(--e3-line); padding-left: 2.2cqw; display: grid; gap: .9cqw; align-content: start; font: 1.6cqw/1.35 var(--f-mono-late); color: #8fc7cf; }
+.e3 .log b { color: var(--e3-dim); font-weight: 400; margin-right: 1cqw; }
+.e3 .ft { display: flex; gap: 3cqw; padding: 1.3cqw 2.6cqw; border-top: .15cqw solid var(--e3-line); font: 500 1.5cqw var(--f-mono-late); letter-spacing: .1em; color: var(--e3-dim); flex-wrap: wrap; }
+.e3 .ft .on { color: var(--e3-cy); }
+.e3 .boot { background: var(--e3-bg); font: 2.3cqw/1.5 var(--f-mono-late); color: var(--e3-cy); padding: 5cqw; }
+[data-tone="ok"] { color: var(--st-ok); }
+[data-tone="warn"] { color: var(--st-warn); }
+[data-tone="alarm"] { color: var(--st-alarm); }
+[data-tone="dim"] { color: #4f7f87; }
+.e1 [data-tone="ok"], .e1 [data-tone="warn"] { color: var(--e1-ph); }
+.e2 [data-tone] { color: var(--e2-ph); }
+.e2 [data-tone="alarm"] { color: #e6fff0; text-shadow: 0 0 2cqw #8cffbf; }
+
+/* ---------- Paper ---------- */
+.paperwrap { position: relative; display: grid; place-items: center; padding: 34px 16px; background: #1a1714; border: 1px solid var(--line); overflow: hidden; }
+.paper { position: relative; width: min(100%, 560px); background: var(--paper); color: var(--ink); padding: 36px 40px 40px; box-shadow: 0 18px 40px rgba(0,0,0,.6); transform: rotate(-.6deg);
+  background-image: radial-gradient(ellipse at 80% 10%, rgba(120,90,40,.16), transparent 50%), radial-gradient(ellipse at 10% 95%, rgba(90,70,40,.22), transparent 45%), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .25  0 0 0 0 .18  0 0 0 .22 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p)'/></svg>"); }
+.paper .hdr { display: flex; justify-content: space-between; gap: 12px; font: 11px/1.4 var(--f-mono-old); letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid rgba(34,31,27,.5); padding-bottom: 10px; flex-wrap: wrap; }
+.paper h4 { margin: 18px 0 4px; font: 700 18px/1.25 var(--f-body); text-transform: uppercase; letter-spacing: .06em; text-align: center; }
+.paper .no { text-align: center; font: 13px var(--f-mono-old); margin-bottom: 16px; }
+.paper p { font: 14.5px/1.6 var(--f-mono-old); max-width: none; margin-bottom: 10px; }
+.paper .red { background: #111; color: #111; border-radius: 1px; }
+.paper .sig { display: flex; justify-content: space-between; margin-top: 18px; font: 13px var(--f-mono-old); flex-wrap: wrap; gap: 8px; }
+.stamp { position: absolute; right: 30px; top: 92px; transform: rotate(-11deg); font: 600 20px/1 var(--f-display); letter-spacing: .14em; color: var(--stamp); border: 3px double var(--stamp); padding: 6px 10px; opacity: .78; mix-blend-mode: multiply; }
+.hand { position: absolute; left: 20px; bottom: -6px; transform: rotate(-3deg); font: 500 23px/1.05 var(--f-hand); color: var(--pencil); }
+.journal { display: grid; gap: 0; border: 1px solid var(--line); background: #0e1112; }
+.journal .jr { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #1c2022; font-size: 15px; }
+.journal .jr span { font: 12px var(--f-mono-late); color: var(--muted); }
+.journal .jr.sel { background: rgba(242,184,82,.07); box-shadow: inset 3px 0 var(--accent); color: var(--accent); }
+.journal .jr.new b::after { content: " · новое"; font: 11px var(--f-mono-late); color: var(--accent); }
+.journal b { font-weight: 400; }
+
+/* ---------- Dream ---------- */
+.dr .bg { filter: brightness(.6); }
+.dr.enter .wash { position: absolute; inset: 0; background: radial-gradient(circle at 63% 44%, #fff 0%, rgba(255,255,255,.9) 18%, rgba(230,245,255,.4) 45%, transparent 75%); animation: wash 5s ease-in-out infinite; }
+@keyframes wash { 0%, 100% { opacity: .55 } 50% { opacity: 1 } }
+.dr .msg { position: absolute; left: 0; right: 0; bottom: 12%; text-align: center; font: 400 3.4cqw var(--f-dream); letter-spacing: .3em; color: #1d2a33; }
+.dr .msg small { display: block; font: 500 1.6cqw var(--f-mono-late); letter-spacing: .3em; color: rgba(29,42,51,.6); margin-top: 1cqw; }
+.dr.bowser { background: #140803; }
+.dr.bowser .bg { background: radial-gradient(ellipse at 50% 120%, #ff7a2e 0%, #7a2a0c 30%, #2a0e05 60%, #0c0503 100%); filter: none; }
+.dr.bowser .ember { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 45%, rgba(20,6,2,.85) 100%); }
+.dr.bowser .ruin { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; background: linear-gradient(transparent, #0c0503 70%); clip-path: polygon(0 60%, 8% 40%, 12% 55%, 20% 20%, 26% 22%, 30% 50%, 44% 45%, 48% 15%, 53% 15%, 56% 45%, 70% 50%, 76% 28%, 82% 30%, 86% 55%, 100% 45%, 100% 100%, 0 100%); background-color: #0d0603; }
+.dr .dobj { position: absolute; left: 4cqw; top: 4cqw; display: grid; gap: .4cqw; }
+.dr .dobj .l { font: 400 1.1cqw var(--f-dream); letter-spacing: .3em; color: rgba(255,214,170,.6); }
+.dr .dobj .t { font: italic 2.1cqw var(--f-body); color: #ffe7cf; text-shadow: 0 0 1cqw rgba(255,120,40,.5); }
+.dr .seal { position: absolute; right: 4cqw; top: 4cqw; display: flex; gap: .8cqw; }
+.dr .seal i { width: 1.6cqw; height: 1.6cqw; border: .15cqw solid rgba(255,214,170,.7); transform: rotate(45deg); }
+.dr .seal i.on { background: rgba(255,190,120,.85); box-shadow: 0 0 1cqw rgba(255,150,60,.8); }
+.dr.hero { background: #02060d; }
+.dr.hero .bg { filter: grayscale(1) brightness(.35) contrast(1.4) sepia(1) hue-rotate(170deg) saturate(2.4); }
+.dr.hero .vg { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 30%, rgba(2,6,13,.95) 100%); }
+.dr.hero .gl { position: absolute; left: 0; right: 0; top: 38%; text-align: center; font: 400 4.4cqw var(--f-dream); letter-spacing: .35em; color: #cfe8ff; text-shadow: .35cqw 0 rgba(255,40,60,.55), -.35cqw 0 rgba(40,160,255,.7); animation: glitch 3.2s infinite steps(1); }
+.dr.hero .gl small { display: block; margin-top: 1.4cqw; font: italic 1.6cqw var(--f-body); letter-spacing: .1em; color: rgba(207,232,255,.6); text-shadow: none; }
+@keyframes glitch { 0%, 100% { transform: none; clip-path: none } 30% { transform: translateX(-.6cqw); clip-path: inset(0 0 55% 0) } 31% { transform: translateX(.8cqw); clip-path: inset(48% 0 0 0) } 32% { transform: none; clip-path: none } 77% { transform: skewX(-8deg) } 78% { transform: none } }
+.dr.hero .bars { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 7cqw, rgba(120,190,255,.06) 7cqw 7.4cqw); }
+.dr.fail { background: #000; }
+.dr.fail .nz { position: absolute; inset: 0; opacity: .6; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='turbulence' baseFrequency='1.4' numOctaves='1'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.4 -.4'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); animation: nz .25s steps(3) infinite; }
+@keyframes nz { 0% { background-position: 0 0 } 33% { background-position: 37px 51px } 66% { background-position: -23px 17px } }
+.dr.fail .red { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(216,52,31,.15), rgba(0,0,0,.92) 70%); }
+.dr.fail .t { position: absolute; left: 0; right: 0; top: 42%; text-align: center; font: 600 3.2cqw var(--f-late); letter-spacing: .3em; color: #ff6a52; }
+.dr.fail .t small { display: block; margin-top: 1.2cqw; font: 500 1.5cqw var(--f-mono-late); letter-spacing: .2em; color: rgba(255,200,190,.65); }
+
+.qs { display: grid; gap: 12px; counter-reset: q; }
+.qs > div { display: grid; grid-template-columns: 34px 1fr; gap: 12px; background: var(--panel); border: 1px solid var(--line); padding: 16px 18px; }
+.qs > div::before { counter-increment: q; content: counter(q); font: 600 22px/1 var(--f-display); color: var(--accent); }
+.qs b { display: block; margin-bottom: 4px; }
+
+@media (max-width: 640px) {
+  .wrap { padding-inline: 16px; }
+  .panelI { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Caretaker · поток «Интерфейсы» · черновик на согласование · 11.10.2026</div>
+  <h1>Стиль интерфейсов</h1>
+  <p class="lead">Формула: <b>старая машина содержания, которая всё ещё работает</b>. Интерфейс говорит голосом системы, которую герой не строил и понимает не до конца: сухой служебный язык, коды и проверки, износ экранов. Цвет появляется только там, где есть свет. Сон — другая материя: мягкий свет без рамок и сетки.</p>
+  <p class="muted">Основа — библия мира (<code>docs/world/</code>), стиль-гайд пропов (<code>docs/art/style-guide.md</code>), скетчи <code>complex_v3/sketches</code>, атласы <code>screens.png</code> и <code>signs_ru.png</code> и текущий код (<code>ShellUI</code>, <code>TerminalScreen</code>, <code>OpeningHud</code>, <code>DocumentReader</code>). Все макеты ниже собраны вживую из шрифтов и цветов стиля; фоны — уменьшенные скетчи. В конце — вопросы, на которые нужен ответ.</p>
+</header>
+
+<section>
+  <div class="eyebrow">01 · что берём из мира</div>
+  <h2>Шесть правил стиля</h2>
+  <div class="principles">
+    <div><b>Цвет только в свечении</b><p class="muted">Как у пропов: поверхности графитовые, насыщенный цвет только у экрана, лампы и статуса. Плашки и фоны интерфейса почти чёрные, белого нет.</p></div>
+    <div><b>Возраст виден по экрану</b><p class="muted">Комплекс строился очередями. Старое ядро — лампы, стрелки, янтарный ЭЛТ. Лаборатория сна — зелёный люминофор и помехи. Поздние модули — бирюзовые плоские экраны и мнемосхемы.</p></div>
+    <div><b>Голос — служебный</b><p class="muted">Прописные метки, коды (МОД-4, Г-1, ПУ-1), единицы (БАР, ОБ/МИН), ожидание проверок: «Поиск штатных операторов… 0». Никаких «Добро пожаловать».</p></div>
+    <div><b>Износ, а не киберпанк</b><p class="muted">Мерцание, выгорание, перекат кадра, перегоревшие лампы. Без голограмм, неоновых градиентов и прозрачного стекла с бликами.</p></div>
+    <div><b>Система не служит игроку</b><p class="muted">Экраны мира не подстраиваются: «Доступ не предоставлен», «Временный смотритель», заблокированные пункты остаются видны. Оболочка и HUD, наоборот, тихие и удобные.</p></div>
+    <div><b>Сон без рамок</b><p class="muted">В реальности всё в рамках, сетке и моноширинном шрифте. Во сне — антиква, мягкое свечение, текст растворяется; цвет задаёт хозяин сна.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">02 · сколько стилей нужно</div>
+  <h2>Шесть типов интерфейсов</h2>
+  <p>Двух стилей мало. Предлагаю два основных стиля и четыре производных от них: каждый следующий тип берёт шрифты и цвета у одного из основных, но имеет свои правила.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Тип</th><th>Где находится</th><th>Что входит</th><th>Опирается на</th><th>Сейчас в коде</th></tr></thead>
+    <tbody>
+      <tr><td><b>1. Оболочка</b> <span class="tag rec">основной</span></td><td>вне мира</td><td>стартовый экран, главное меню, пауза, настройки, сохранения, загрузка, титры</td><td>свой стиль «Протокол»</td><td><code>scenes/shell/</code>, <code>ShellUI</code> — рамки-кнопки, без шрифта</td></tr>
+      <tr><td><b>2. Экраны мира</b> <span class="tag rec">основной</span></td><td>внутри мира</td><td>терминалы, пульты, мониторы модулей, мнемосхемы, панели капсул; три диалекта по эпохам</td><td>свой стиль «Пульт»</td><td><code>TerminalScreen</code> (зелёный), <code>ModuleMonitor</code> (Label3D), <code>screens.png</code></td></tr>
+      <tr><td><b>3. HUD</b></td><td>поверх взгляда</td><td>прицел, подсказка действия, удержание, цель, разовые подсказки, уведомления</td><td>оболочка, без плашек</td><td><code>OpeningHud</code></td></tr>
+      <tr><td><b>4. Бумага</b></td><td>в руках</td><td>документы, записки, журнал прочитанного и целей</td><td>свой материал: бумага, машинопись, штамп, карандаш</td><td><code>DocumentReader</code> — бумага без шрифта</td></tr>
+      <tr><td><b>5. Сон и нейроинтерфейс</b> <span class="tag new">новый</span></td><td>между мирами</td><td>вход в сон, HUD во сне, печати, выход через врата, смерть во сне, газ, сообщения №2</td><td>оболочка + цвет хозяина сна</td><td>нет; есть <code>objects/dream/</code></td></tr>
+      <tr><td><b>6. Указатели и маркировка</b></td><td>на стенах</td><td>знаки эвакуации, таблички секций и модулей, надписи на пультах</td><td>экраны мира: те же шрифт и коды</td><td><code>signs_ru.png</code>, <code>panel_labels.png</code> (DejaVu)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Карманное устройство смотрителя (КПК, планшет) пока не предлагаю. Журнал удобнее оставить бумажным блокнотом, а сведения о комплексе брать с экранов мира. Так игрок чаще возвращается к пультам, и сохраняется тема неполного знания. Если появится ключ-карта с экраном, это будет тип 2.</p>
+</section>
+
+<section>
+  <div class="eyebrow">03 · тип 1 · оболочка</div>
+  <h2>Три варианта главного меню</h2>
+  <p>Пункты одинаковые, меняется только подача. Наведите курсор на набор элементов ниже — состояния живые.</p>
+
+  <div class="figure">
+    <div class="cap"><h3>А. «Протокол» — служебная бумага комплекса</h3><span class="tag rec">рекомендую как основу</span></div>
+    <div class="frame shA">
+      <div class="bg" style="background-image:url(../design/complex_v3/sketches/upper/emergency/01-emergency-sleep-block-mood.png)"></div>
+      <div class="vig"></div><div class="flick"></div><div class="rail"></div>
+      <div class="col">
+        <div class="kicker">Комплекс содержания · аварийный доступ</div>
+        <div class="title">Смотритель</div>
+        <div class="sub">Временный смотритель комплекса</div>
+        <div class="menu">
+          <div class="mi sel"><i>01</i>Продолжить<small>МОДУЛЬ 4 · 01:42</small></div>
+          <div class="mi"><i>02</i>Загрузить игру<small></small></div>
+          <div class="mi"><i>03</i>Новая игра<small></small></div>
+          <div class="mi"><i>04</i>Настройки<small></small></div>
+          <div class="mi"><i>05</i>Выход<small></small></div>
+        </div>
+      </div>
+      <div class="foot"><span>СБОРКА 0.1 · ТАБ. № 00-417</span><span><span class="key">Enter</span>выбрать&nbsp;&nbsp;&nbsp;<span class="key">Esc</span>назад</span></div>
+      <div class="grain"></div>
+    </div>
+    <div class="cols">
+      <div class="card"><b>Идея</b><p class="muted">Меню похоже на титульный лист служебной инструкции: узкий гротеск прописными, номера пунктов как в терминалах, одна янтарная направляющая. За меню — живая сцена комплекса (капсульный зал, где герой просыпается), затемнённая к краю.</p></div>
+      <div class="card"><b>Плюсы и минусы</b><ul><li>Продолжает текущий <code>ShellUI</code>: тот же янтарь, та же структура, переделка дешёвая.</li><li>Читается при любом фоне и масштабе, подходит для геймпада.</li><li>Минус: спокойный, сам по себе не говорит про сны. Это решает вариант Б на экранах загрузки и переходах.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="figure">
+    <div class="cap"><h3>Б. «Кристалл» — меню как порог сна</h3><span class="tag">для загрузки и переходов</span></div>
+    <div class="frame shB">
+      <div class="bg" style="background-image:url(../design/complex_v3/sketches/upper/chamber_6/21-chamber-6-primary-capsule-sleep-device-mood.png)"></div>
+      <div class="glow"></div><div class="shard"></div>
+      <div class="col">
+        <div class="title">Смотритель</div>
+        <div class="sub">чужой сон нужно удержать</div>
+        <div class="menu"><span class="sel">Продолжить</span><span>Загрузить</span><span>Новая игра</span><span>Настройки</span><span>Выход</span></div>
+      </div>
+      <div class="foot">НАЖМИТЕ ЛЮБУЮ КЛАВИШУ</div>
+      <div class="grain"></div>
+    </div>
+    <div class="cols">
+      <div class="card"><b>Идея</b><p class="muted">В центре дышит кристалл устройства погружения, кресло и капсула растворены в темноте. Антиква капителью, горизонтальное меню, много воздуха. Это лицо игры про сны, а не про технику.</p></div>
+      <div class="card"><b>Плюсы и минусы</b><ul><li>Сильная первая картинка и связь с главной механикой.</li><li>Минус: мягкая антиква плохо держит плотные экраны (настройки, слоты сохранений) — для них всё равно нужен А.</li><li>Предлагаю взять отсюда экран загрузки, заставку перед меню и переходы в сон.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="figure">
+    <div class="cap"><h3>В. «Пульт» — меню как терминал старого ядра</h3><span class="tag">не рекомендую для оболочки</span></div>
+    <div class="frame shC crt">
+<div class="txt"><span class="d">СИСТЕМА СОДЕРЖАНИЯ · ПУЛЬТ ПУ-1 · РЕЗЕРВНЫЙ</span>
+<span class="d">────────────────────────────────────────</span>
+ОПЕРАТОР: ВРЕМЕННЫЙ СМОТРИТЕЛЬ
+СМЕНА:    НЕ ЗАДАНА
+
+> ВЫБЕРИТЕ РЕЖИМ
+
+  <span class="inv"> 1. ПРОДОЛЖИТЬ СМЕНУ        </span>
+  2. ЗАГРУЗИТЬ ЖУРНАЛ СМЕНЫ
+  3. НОВАЯ СМЕНА
+  4. ПАРАМЕТРЫ ПУЛЬТА
+  5. ЗАВЕРШИТЬ СЕАНС
+
+> <span class="cursor"></span></div>
+      <div class="grain"></div>
+    </div>
+    <div class="cols">
+      <div class="card"><b>Идея</b><p class="muted">Вся оболочка — янтарный ЭЛТ, как терминал резервного пункта управления. Максимальное погружение с первой секунды.</p></div>
+      <div class="card"><b>Почему нет</b><ul><li>Сливается с терминалами мира: игрок перестаёт различать «это игра» и «это комплекс».</li><li>Настройки графики и звука в моноширинном ЭЛТ неудобны и выглядят шуткой.</li><li>Его язык полностью уходит в экраны мира (эпоха I), там он и нужен.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="figure">
+    <div class="cap"><h3>Базовые элементы оболочки (вариант А)</h3><span class="tag">живые состояния</span></div>
+    <div class="kit">
+      <div>
+        <span class="lab">Кнопка-пункт · обычная / наведение / нажатие / недоступна / опасная</span>
+        <button class="btn" type="button"><i>01</i>Продолжить<small>МОДУЛЬ 4 · 01:42</small></button>
+        <button class="btn hov" type="button"><i>02</i>Загрузить игру<small></small></button>
+        <button class="btn prs" type="button"><i>03</i>Новая игра<small></small></button>
+        <button class="btn" type="button" disabled><i>04</i>Полигон (отладка)<small>НЕДОСТУПНО</small></button>
+        <button class="btn danger" type="button"><i>05</i>Выйти в главное меню<small></small></button>
+      </div>
+      <div>
+        <span class="lab">Вкладки и строки настроек</span>
+        <div class="tabs"><span class="on">Графика</span><span>Звук</span><span>Управление</span><span>Интерфейс</span></div>
+        <label class="row" for="s-vol"><span>Громкость окружения</span><span class="v" id="s-vol-v">70%</span><input class="slider" id="s-vol" type="range" min="0" max="100" value="70"></label>
+        <label class="row" for="s-fov"><span>Поле зрения</span><span class="v" id="s-fov-v">82°</span><input class="slider" id="s-fov" type="range" min="60" max="110" value="82" style="--p:44%"></label>
+        <div class="row"><span>Тени</span><span class="seg" role="group" aria-label="Тени"><button type="button" aria-pressed="false">Низк.</button><button type="button" aria-pressed="true">Средн.</button><button type="button" aria-pressed="false">Выс.</button></span></div>
+        <div class="row"><span>Эффект ЭЛТ на экранах мира</span><span class="seg" role="group" aria-label="Эффект ЭЛТ"><button type="button" aria-pressed="true">Вкл.</button><button type="button" aria-pressed="false">Выкл.</button></span></div>
+      </div>
+      <div>
+        <span class="lab">Слот сохранения и подтверждение</span>
+        <div class="slot sel"><div class="th" style="background-image:url(../design/complex_v3/sketches/upper/chamber_6/22-chamber-6-primary-passenger-airlock-security-mood.png)"></div><div><b>Шлюз модуля 4</b><span>АВТО · 11.10 · 23:14 · 01:42 В ИГРЕ</span></div></div>
+        <div class="slot"><div class="th" style="background-image:url(../design/complex_v3/sketches/upper/emergency/01-emergency-sleep-block-mood.png)"></div><div><b>Аварийный блок</b><span>РУЧН. · 10.10 · 19:02 · 00:06 В ИГРЕ</span></div></div>
+        <div class="dialog"><div class="t">Перезаписать слот?</div><p class="muted">Сохранение «Шлюз модуля 4» будет заменено. Отменить это нельзя.</p><div class="acts"><span><span class="key">Enter</span>Перезаписать</span><span class="muted"><span class="key">Esc</span>Отмена</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">04 · тип 3 · HUD</div>
+  <h2>HUD — тише оболочки</h2>
+  <div class="frame hud">
+    <div class="bg" style="background-image:url(../design/complex_v3/sketches/upper/chamber_6/22-chamber-6-primary-passenger-airlock-security-mood.png)"></div>
+    <div class="obj"><span class="l">ЦЕЛЬ</span><span class="t">Добраться до модуля 4</span></div>
+    <div class="toast"><b>ЖУРНАЛ</b>Документ добавлен: «Памятка персонала» · <span class="key">J</span></div>
+    <svg class="ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="rgba(240,240,232,.18)" stroke-width="2"/><circle cx="20" cy="20" r="17" fill="none" stroke="#f2b852" stroke-width="2" stroke-dasharray="106.8" stroke-dashoffset="40"/></svg>
+    <div class="xh"></div>
+    <div class="prompt"><span class="key">E</span>УДЕРЖИВАТЬ · ОТКРЫТЬ ГЕРМОДВЕРЬ</div>
+    <div class="na">НЕТ ПИТАНИЯ</div>
+    <div class="hint">Шлюз открывается только с поста контроля</div>
+    <div class="grain"></div>
+  </div>
+  <div class="cols">
+    <div class="card"><b>Правила</b><ul class="rules"><li>Ни одной плашки, кроме уведомления; читаемость даёт тень текста.</li><li>Цель — слева сверху, мелкая метка «ЦЕЛЬ» янтарём и текст обычным регистром. При смене цель вспыхивает (уже есть в коде).</li><li>Подсказка действия — узкий гротеск прописными с клавишей в рамке. Удержание — кольцо вокруг прицела, а не полоса.</li><li>Недоступное действие — красный квадрат и причина: «НЕТ ПИТАНИЯ», «ТРЕБУЕТСЯ КЛЮЧ».</li></ul></div>
+    <div class="card"><b>Чего нет в HUD</b><ul class="rules"><li>Здоровья, мини-карты, компаса и счётчиков в реальности. Состояние комплекса узнают с экранов мира.</li><li>Прогноза пробуждения в HUD нет: он живёт на мониторах модулей. Отдельный вопрос — нужен ли маленький индикатор, когда герой во сне (см. тип 5).</li></ul></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">05 · тип 2 · экраны мира</div>
+  <h2>Один пульт, три эпохи</h2>
+  <p>Общая грамматика (цвета статусов, коды, прописные метки, единицы) одинакова во всём комплексе, а техника отображения меняется вместе с возрастом сектора. Переключите состояние — оно применяется ко всем трём экранам.</p>
+  <div class="switch" role="group" aria-label="Состояние систем">
+    <span class="eyebrow">Состояние:</span>
+    <button type="button" data-set="ok" aria-pressed="true">Норма</button>
+    <button type="button" data-set="warn" aria-pressed="false">Внимание</button>
+    <button type="button" data-set="alarm" aria-pressed="false">Тревога</button>
+    <button type="button" data-set="boot" aria-pressed="false">Включение</button>
+    <button type="button" data-set="off" aria-pressed="false">Нет питания</button>
+  </div>
+
+  <div class="worlds" data-state="ok">
+    <div class="wgrid">
+      <div class="figure">
+        <div class="cap"><h3>I. Старое ядро</h3><span class="tag">ПУ-1, генератор, камера №1</span></div>
+        <div class="screen e1 crt">
+<div class="body"><span class="d">ПУЛЬТ ПУ-1 · РЕЗЕРВНЫЙ</span>
+<span class="d">──────────────────────</span>
+ГЕНЕРАТОР Г-1 .. <span data-k="gen"></span>
+ШИНА ОСН. ...... <span data-k="bus"></span>
+СЕКЦИЯ А ....... <span data-k="secA"></span>
+СЕКЦИЯ Б ....... <span data-k="secB"></span>
+ДАВЛ. МАСЛА .... <span data-k="oil"></span>
+
+> <span class="cursor"></span></div>
+          <div class="boot" data-boot="ПУ-1 · САМОПРОВЕРКА&#10;ОЗУ ....... 16К&#10;ПЗУ ....... ОК&#10;РЕЛЕ ...... ОК&#10;ОЖИДАНИЕ ОПЕРАТОРА_"></div>
+          <div class="off"><span>ПУ-1</span></div>
+        </div>
+        <div class="panelI">
+          <div class="lamps">
+            <div class="lamp"><i data-lamp="gen"></i>Г-1</div>
+            <div class="lamp"><i data-lamp="bus"></i>ШИНА</div>
+            <div class="lamp"><i data-lamp="secA"></i>СЕКЦ.&nbsp;А</div>
+            <div class="lamp"><i class="x"></i>СЕКЦ.&nbsp;В</div>
+          </div>
+          <svg class="gauge" viewBox="0 0 112 72" aria-label="Манометр"><path d="M10 64 A46 46 0 0 1 102 64" fill="#d8d3c0" stroke="#55595b" stroke-width="3"/><path d="M78 26 A46 46 0 0 1 102 64" fill="none" stroke="#d8341f" stroke-width="6"/><g stroke="#222" stroke-width="1.5"><line x1="16" y1="64" x2="22" y2="64"/><line x1="23" y1="38" x2="28" y2="41"/><line x1="56" y1="22" x2="56" y2="28"/><line x1="89" y1="38" x2="84" y2="41"/><line x1="96" y1="64" x2="90" y2="64"/></g><text x="56" y="56" text-anchor="middle" font-family="PT Sans, Arial" font-weight="700" font-size="9" fill="#222">БАР</text><line id="needle" x1="56" y1="64" x2="56" y2="26" stroke="#111" stroke-width="2.5" style="transform-origin:56px 64px;transition:transform .8s cubic-bezier(.3,1.6,.5,1)"/><circle cx="56" cy="64" r="5" fill="#333"/></svg>
+        </div>
+        <ul class="rules muted"><li>Янтарный ЭЛТ, скан-линии, виньетка, редкий перекат кадра.</li><li>Рядом с экраном всегда физика: лампы в оправе, стрелочные приборы, гравированные таблички.</li><li>Шрифт — машинописный моноширинный; тревога — инверсия строки.</li></ul>
+      </div>
+
+      <div class="figure">
+        <div class="cap"><h3>II. Лаборатория сна</h3><span class="tag">терминал №2, камеры №2–3</span></div>
+        <div class="screen e2 crt">
+          <div class="roll"></div>
+          <div class="body">
+            <div><span class="d">КАНАЛ НАБЛЮДЕНИЯ · ОБЪЕКТ 2</span><br>СИГНАЛ: <span data-k="sig"></span></div>
+            <div class="glyphs" id="glyphs">Ж ◊ ▒ Ы 7</div>
+            <canvas id="eeg" aria-label="Запись мозговой активности"></canvas>
+            <div class="d">ЭЭГ · 4 КАНАЛА · <span data-k="eeg"></span></div>
+          </div>
+          <div class="boot" data-boot="ТЕРМИНАЛ НАБЛЮДЕНИЯ ТН-2&#10;ПРОГРЕВ ТРУБКИ ...&#10;ДАТЧИКИ: 4 ИЗ 6&#10;ПОИСК СИГНАЛА_"></div>
+          <div class="off"><span>ТН-2</span></div>
+        </div>
+        <ul class="rules muted"><li>Зелёный люминофор — тот же цвет, что у текущего <code>TerminalScreen</code>, его оставляем.</li><li>Волны ЭЭГ, плывущая полоса развёртки, дрожь кадра при помехах.</li><li>Здесь №2 передаёт обрывки символов; после ремонта — короткий текст. Это единственный экран, где система «говорит» не своим голосом.</li></ul>
+      </div>
+
+      <div class="figure span-all"><div class="figure">
+        <div class="cap"><h3>III. Серийные модули</h3><span class="tag">модули №4–6, новый ЦУ</span></div>
+        <div class="screen e3 wide">
+          <div class="burn">МОДУЛЬ 4</div>
+          <div class="body">
+            <div class="hd"><span class="mod"><i></i><span data-k="hdr"></span></span><span class="clock">ЦИКЛ ██:██</span></div>
+            <div class="main">
+              <div>
+                <div class="lbl">Стабильность сна</div>
+                <div class="big" data-k="stab"></div>
+                <div class="segs" id="segs"></div>
+                <div class="kv">
+                  <span>Прогноз пробуждения</span><span data-k="eta"></span>
+                  <span>Синхронизация</span><span data-k="sync"></span>
+                  <span>Реагент</span><span data-k="reag"></span>
+                  <span>Капсула</span><span data-k="pod"></span>
+                </div>
+              </div>
+              <div class="log">
+                <div class="lbl">Журнал</div>
+                <div><b>06:12</b>Плановая проверка</div>
+                <div><b>06:40</b><span data-k="log1"></span></div>
+                <div><b>06:41</b><span data-k="log2"></span></div>
+              </div>
+            </div>
+            <div class="ft"><span class="on">1 СОСТОЯНИЕ</span><span>2 КАПСУЛА</span><span>3 ПРОТОКОЛ</span><span>ДОПУСК: ВРЕМЕННЫЙ</span></div>
+          </div>
+          <div class="boot" data-boot="СИСТЕМА СОДЕРЖАНИЯ  v4.1&#10;ПРОВЕРКА ПАМЯТИ ........ ОК&#10;ШИНА ДАННЫХ ............ ОК&#10;ПИТАНИЕ СЕКЦИИ ......... АВАРИЙНОЕ&#10;ДОПУСК: ОЖИДАНИЕ&#10;> _"></div>
+          <div class="off"><span>МОД-4</span></div>
+        </div></div>
+        <ul class="rules muted" style="align-self:center"><li>Плоский экран: бирюзовая сетка, пиксельная решётка, выгорание старых надписей.</li><li>Компоновка как у мнемосхемы: шапка с кодом, крупное значение, сегменты, журнал, вкладки цифрами.</li><li>Цвет модуля — узкая метка в шапке: зелёный у Боузера, синий у Херобрина.</li><li>Прогноз появляется только при снижении стабильности, как в каноне.</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="card">
+      <b>Общая грамматика для всех эпох</b>
+      <div class="tablewrap" style="border:0"><table style="min-width:0">
+        <thead><tr><th>Статус</th><th>Цвет</th><th>Слово на экране</th><th>Лампа</th></tr></thead>
+        <tbody>
+          <tr><td>норма</td><td><span class="sw" style="background:var(--st-ok)"></span>#3ed36b</td><td>НОРМА, ОК, РАБОТА</td><td>горит ровно</td></tr>
+          <tr><td>внимание</td><td><span class="sw" style="background:var(--st-warn)"></span>#e8a21c</td><td>ОТКЛОНЕНИЕ, ПЕРЕГРЕВ</td><td>мигает медленно</td></tr>
+          <tr><td>авария</td><td><span class="sw" style="background:var(--st-alarm)"></span>#d8341f</td><td>ТРЕВОГА, ОБРЫВ, НЕТ ПИТАНИЯ</td><td>мигает быстро</td></tr>
+          <tr><td>информация</td><td><span class="sw" style="background:var(--st-screen)"></span>#1fb5c8</td><td>заголовки, метки</td><td>—</td></tr>
+          <tr><td>нет данных</td><td><span class="sw" style="background:#4f7f87"></span>тусклый</td><td>——, НЕТ ОТВЕТА</td><td>не горит</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted">Цвета статусов взяты из стиль-гайда пропов: лампы на моделях и строки на экранах совпадают. На янтарных и зелёных ЭЛТ статус передаётся словом, миганием и инверсией, потому что второго цвета у люминофора нет.</p>
+    </div>
+    <div class="card">
+      <b>Как экран показывается игроку</b>
+      <p class="muted">Сейчас терминал открывается как полноэкранная панель поверх игры. Предлагаю сохранить это решение (читаемость, геймпад), но оформлять панель как сам экран нужной эпохи: рамка корпуса, люминофор, эффекты. Камера в момент открытия коротко наезжает на экран.</p>
+      <p class="muted">Мониторы, которые только осматривают (монитор модулей, панели капсул), рендерятся прямо на модели через SubViewport с тем же оформлением, вместо текущего Label3D.</p>
+      <p class="muted">Эффекты ЭЛТ выключаются в настройках оболочки («Эффект ЭЛТ на экранах мира») для тех, кому они мешают читать.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">06 · тип 4 · бумага</div>
+  <h2>Документы и журнал</h2>
+  <div class="cols">
+    <div class="paperwrap">
+      <div class="paper">
+        <div class="hdr"><span>Комплекс содержания<br>Служба эксплуатации</span><span>Экз. № 2<br>Форма Э-14</span></div>
+        <h4>Распоряжение</h4>
+        <div class="no">№ 114-С от <span class="red">██.██</span>.19<span class="red">██</span></div>
+        <p>В связи с вводом аварийного блока сна персонала часть помещений старого архива отгородить под нижнюю площадку маршрута А.</p>
+        <p>Двери маршрута выполнить механическими, не зависящими от центральной электроники. Ответственный — <span class="red">██████████</span>.</p>
+        <div class="sig"><span>Нач. службы ____________</span><span>Отм. о вып.: ________</span></div>
+        <div class="stamp">ДСП</div>
+        <div class="hand">а если ядро не<br>выдержит? — К.</div>
+      </div>
+    </div>
+    <div class="figure">
+      <div class="journal">
+        <div class="jr sel"><b>Распоряжение № 114-С</b><span>АРХИВ · L-ARCHIVE</span></div>
+        <div class="jr new"><b>Памятка персонала</b><span>АВАРИЙНЫЙ БЛОК</span></div>
+        <div class="jr"><b>Схема эвакуации, маршрут А</b><span>АВАРИЙНЫЙ БЛОК</span></div>
+        <div class="jr"><b>Цель: Добраться до модуля 4</b><span>ТЕКУЩАЯ</span></div>
+      </div>
+      <ul class="rules muted">
+        <li>Бумага — тёплый материал в холодном мире. Тон бумаги сохраняем из текущего <code>DocumentReader</code>.</li>
+        <li>Машинопись — тем же шрифтом, что янтарный ЭЛТ (PT Mono): старые документы и старые терминалы печатала одна эпоха.</li>
+        <li>Штампы (ДСП, СЕКРЕТНО, ПОГАШЕНО), вымаранные строки и карандашные пометки — отдельные слои, их можно добавлять к любому документу из данных.</li>
+        <li>Рукописные пометки — рукописный шрифт с кириллицей, пишет только персонал. Голос системы рукописным не бывает.</li>
+        <li>Журнал — список в стиле оболочки, а не бумага: это инструмент игрока.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">07 · тип 5 · сон и нейроинтерфейс</div>
+  <h2>Между мирами</h2>
+  <p>Новый тип. Всё, что происходит со смотрителем при подключении к креслу, теряет рамки и сетку. Цвет и поведение задаёт хозяин сна, общими остаются только антиква и мягкое появление текста.</p>
+  <div class="grid3">
+    <div class="figure">
+      <div class="frame dr enter">
+        <div class="bg" style="background-image:url(../design/complex_v3/sketches/upper/chamber_6/21-chamber-6-primary-capsule-sleep-device-mood.png)"></div>
+        <div class="wash"></div>
+        <div class="msg">погружение<small>СИНХРОНИЗАЦИЯ 100% · МОДУЛЬ 4</small></div>
+      </div>
+      <div class="cap"><h3>Вход в сон</h3></div>
+      <p class="muted">Кристалл разгорается, кадр уходит в белое (как в сценарии начала). Последняя служебная строка ещё моноширинная, слово «погружение» уже антиквой — переход между двумя стилями.</p>
+    </div>
+    <div class="figure">
+      <div class="frame dr bowser">
+        <div class="bg"></div><div class="ruin"></div><div class="ember"></div>
+        <div class="dobj"><span class="l">ЗАДАЧА СНА</span><span class="t">Найти вторую печать</span></div>
+        <div class="seal"><i class="on"></i><i></i><i></i></div>
+        <div class="grain"></div>
+      </div>
+      <div class="cap"><h3>HUD во сне Боузера</h3></div>
+      <p class="muted">Тёплый жар и зелёный модуля. Задача — курсивом, печати — ромбами. Стабильность числом не показываем: её видно по краям кадра и по миру. Вопрос о малом индикаторе прогноза — ниже.</p>
+    </div>
+    <div class="figure">
+      <div class="frame dr hero">
+        <div class="bg" style="background-image:url(../design/complex_v3/sketches/upper/chamber_6/22-chamber-6-primary-passenger-airlock-security-mood.png)"></div>
+        <div class="bars"></div><div class="vg"></div>
+        <div class="gl">выход там<small>указатель может лгать</small></div>
+      </div>
+      <div class="cap"><h3>Сон Херобрина и его помехи</h3></div>
+      <p class="muted">Холодный синий, расщепление цвета, ложные надписи. Тот же эффект «просачивается» в чужие сны и на экраны комплекса, когда Херобрин близок к пробуждению.</p>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="frame dr fail">
+      <div class="nz"></div><div class="red"></div>
+      <div class="t">СВЯЗЬ С СОЗНАНИЕМ ПРЕРВАНА<small>ПРИНУДИТЕЛЬНОЕ ВОЗВРАЩЕНИЕ · СТАБИЛЬНОСТЬ −18%</small></div>
+    </div>
+    <div class="card"><b>Смерть во сне, газ, сообщения №2</b><ul class="rules muted"><li>Смерть во сне — не «Game Over», а голос системы: шум, красный, сухая строка о последствиях. Затем потолок капсулы.</li><li>Срабатывание химического протокола — тот же язык, но янтарный и медленный.</li><li>Сообщения №2 во сне героя — единственное место, где голос системы и сон смешиваются: моноширинный текст, проступающий сквозь антикву.</li></ul></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">08 · токены</div>
+  <h2>Цвета, шрифты, эффекты</h2>
+  <div class="cols">
+    <div class="card">
+      <b>Шрифты</b>
+      <div class="tablewrap" style="border:0"><table style="min-width:0">
+        <thead><tr><th>Роль</th><th>Шрифт</th><th>Где</th></tr></thead>
+        <tbody>
+          <tr><td>Заголовки, подсказки</td><td style="font-family:var(--f-display);font-size:17px;letter-spacing:.08em">OSWALD · ГЕРМОДВЕРЬ</td><td>оболочка, HUD, штампы</td></tr>
+          <tr><td>Текст</td><td style="font-family:var(--f-body)">PT Sans · Добраться до модуля</td><td>оболочка, HUD, бумага (заголовки)</td></tr>
+          <tr><td>Старые экраны, машинопись</td><td style="font-family:var(--f-mono-old)">PT Mono · ГЕНЕРАТОР Г-1</td><td>эпохи I–II, документы</td></tr>
+          <tr><td>Поздние экраны</td><td style="font-family:var(--f-late)">IBM Plex Sans Cond. · МОДУЛЬ 4</td><td>эпоха III, таблички</td></tr>
+          <tr><td>Цифры, коды</td><td style="font-family:var(--f-mono-late)">IBM Plex Mono · 06:41 · 4.2 БАР</td><td>значения, служебные метки</td></tr>
+          <tr><td>Сон</td><td style="font-family:var(--f-dream);font-size:18px">Cormorant SC · погружение</td><td>тип 5, загрузка</td></tr>
+          <tr><td>Рука персонала</td><td style="font-family:var(--f-hand);font-size:20px">Caveat · а если ядро…</td><td>пометки на бумаге</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted">Все семь — открытая лицензия OFL с полной кириллицей, их можно положить в проект. Сейчас в проекте шрифтов нет: Godot рисует системным, атласы знаков — DejaVu.</p>
+    </div>
+    <div class="card">
+      <b>Палитры по типам</b>
+      <div class="tablewrap" style="border:0"><table style="min-width:0">
+        <thead><tr><th>Тип</th><th>Цвета</th></tr></thead>
+        <tbody>
+          <tr><td>Оболочка, HUD</td><td><span class="sw" style="background:#0d0f10"></span><span class="sw" style="background:#15181a"></span><span class="sw" style="background:#d9dad5"></span><span class="sw" style="background:#8b908c"></span><span class="sw" style="background:var(--accent)"></span></td></tr>
+          <tr><td>Эпоха I</td><td><span class="sw" style="background:var(--e1-bg)"></span><span class="sw" style="background:var(--e1-dim)"></span><span class="sw" style="background:var(--e1-ph)"></span></td></tr>
+          <tr><td>Эпоха II</td><td><span class="sw" style="background:var(--e2-bg)"></span><span class="sw" style="background:var(--e2-dim)"></span><span class="sw" style="background:var(--e2-ph)"></span></td></tr>
+          <tr><td>Эпоха III</td><td><span class="sw" style="background:var(--e3-bg)"></span><span class="sw" style="background:var(--e3-dim)"></span><span class="sw" style="background:var(--e3-cy)"></span><span class="sw" style="background:var(--bowser)"></span><span class="sw" style="background:var(--herobrine)"></span></td></tr>
+          <tr><td>Статусы (везде)</td><td><span class="sw" style="background:var(--st-ok)"></span><span class="sw" style="background:var(--st-warn)"></span><span class="sw" style="background:var(--st-alarm)"></span></td></tr>
+          <tr><td>Бумага</td><td><span class="sw" style="background:var(--paper)"></span><span class="sw" style="background:var(--ink)"></span><span class="sw" style="background:var(--stamp)"></span><span class="sw" style="background:var(--pencil)"></span></td></tr>
+          <tr><td>Сон Боузера</td><td><span class="sw" style="background:#ff7a2e"></span><span class="sw" style="background:#7a2a0c"></span><span class="sw" style="background:#ffe7cf"></span><span class="sw" style="background:var(--bowser)"></span></td></tr>
+          <tr><td>Сон Херобрина</td><td><span class="sw" style="background:#02060d"></span><span class="sw" style="background:var(--herobrine)"></span><span class="sw" style="background:#cfe8ff"></span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Эффект</th><th>Оболочка</th><th>HUD</th><th>Эпоха I</th><th>Эпоха II</th><th>Эпоха III</th><th>Сон</th></tr></thead>
+    <tbody>
+      <tr><td>Зерно плёнки</td><td class="y">слабо</td><td class="n">нет</td><td class="y">да</td><td class="y">да</td><td class="n">нет</td><td class="y">да</td></tr>
+      <tr><td>Скан-линии, виньетка ЭЛТ</td><td class="n">нет</td><td class="n">нет</td><td class="y">да</td><td class="y">да</td><td class="n">нет</td><td class="n">нет</td></tr>
+      <tr><td>Свечение люминофора</td><td class="n">нет</td><td class="n">нет</td><td class="y">сильно</td><td class="y">сильно</td><td class="y">слабо</td><td class="y">мягко</td></tr>
+      <tr><td>Пиксельная решётка, выгорание</td><td class="n">нет</td><td class="n">нет</td><td class="n">нет</td><td class="n">нет</td><td class="y">да</td><td class="n">нет</td></tr>
+      <tr><td>Перекат кадра, дрожь</td><td class="n">нет</td><td class="n">нет</td><td class="y">редко</td><td class="y">при помехах</td><td class="n">нет</td><td class="n">нет</td></tr>
+      <tr><td>Мерцание</td><td class="y">лампа фона</td><td class="n">нет</td><td class="y">при сбое питания</td><td class="y">при сбое питания</td><td class="y">при сбое питания</td><td class="n">нет</td></tr>
+      <tr><td>Расщепление цвета</td><td class="n">нет</td><td class="n">нет</td><td class="n">нет</td><td class="n">нет</td><td class="y">только помехи Херобрина</td><td class="y">сон Херобрина</td></tr>
+      <tr><td>Печать текста</td><td class="n">нет</td><td class="n">нет</td><td class="y">140 зн/с</td><td class="y">медленнее</td><td class="y">строками</td><td class="y">проявление</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <div class="eyebrow">09 · на согласование</div>
+  <h2>Что нужно решить</h2>
+  <div class="qs">
+    <div><div><b>Оболочка: какой вариант?</b><span class="muted">Предлагаю А «Протокол» как основу всех экранов меню, а из Б «Кристалл» взять заставку, экран загрузки и переходы в сон. В не используем для оболочки.</span></div></div>
+    <div><div><b>Экраны мира: три диалекта по эпохам?</b><span class="muted">Янтарный ЭЛТ в старом ядре, зелёный люминофор в лаборатории, бирюзовый плоский экран в поздних модулях — при общей грамматике статусов.</span></div></div>
+    <div><div><b>Шрифты: можно положить в проект?</b><span class="muted">Семь OFL-шрифтов в <code>loads/fonts/</code> с файлом лицензии и записью происхождения. По правилам репозитория бинарные ассеты добавляются только с явного разрешения. Если состав шрифтов хочется другим — скажите, покажу замены.</span></div></div>
+    <div><div><b>Сон и нейроинтерфейс — отдельный тип?</b><span class="muted">И сопутствующий вопрос: показывать ли во сне маленький индикатор прогноза пробуждения, или стабильность читается только по миру и краям кадра?</span></div></div>
+    <div><div><b>Расхождение в документах</b><span class="muted">В <code>docs/art/style-guide.md</code> зелёные акценты Боузера привязаны к «модулю №1», а по библии Боузер в камере №4. На макетах взял модуль 4; стиль-гайд стоит поправить.</span></div></div>
+  </div>
+  <div class="card">
+    <b>Что сделаю после согласования</b>
+    <ul class="rules muted">
+      <li>Заведу задачу в Issues с критериями приёмки и закреплю владение файлами UI.</li>
+      <li>Тема оболочки как ресурс Godot (<code>Theme</code>, <code>.tres</code>) вместо сборки в коде <code>ShellUI</code>; главное меню, пауза, настройки и слоты на новой теме.</li>
+      <li>Три темы экранов мира и шейдер ЭЛТ (скан-линии, свечение, виньетка, перекат), переключаемый из настроек; <code>TerminalScreen</code> получает оформление по эпохе из данных программы.</li>
+      <li>HUD по правилам выше: кольцо удержания, клавиша в рамке, уведомление журнала.</li>
+      <li>Сцена-витрина UI в <code>scenes/sandbox/</code>, где все элементы видны в Godot.</li>
+    </ul>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var worlds = document.querySelector(".worlds");
+
+  var STATES = {
+    ok:    { gen: ["РАБОТА", "ok"], bus: ["НОРМА", "ok"], secA: ["НОРМА", "ok"], secB: ["НОРМА", "ok"], oil: ["4.2 БАР", "ok"],
+             sig: ["СЛАБЫЙ", "ok"], eeg: ["РОВНАЯ", "ok"],
+             hdr: ["МОДУЛЬ 4 · ПОСТ КОНТРОЛЯ", ""], stab: ["100%", "ok"], eta: ["НЕТ", "dim"], sync: ["НОРМА", "ok"], reag: ["3 / 3", "ok"], pod: ["ЗАКРЫТА", "ok"],
+             log1: ["Синхронизация — норма", "dim"], log2: ["Без событий", "dim"], segs: [20, "ok"], needle: -10, lamps: { gen: "g", bus: "g", secA: "g" } },
+    warn:  { gen: ["ПЕРЕГРЕВ", "warn"], bus: ["НОРМА", "ok"], secA: ["НОРМА", "ok"], secB: ["НЕТ ОТВЕТА", "warn"], oil: ["5.6 БАР", "warn"],
+             sig: ["ПОМЕХИ", "warn"], eeg: ["ВСПЛЕСКИ", "warn"],
+             hdr: ["МОДУЛЬ 4 · ПОСТ КОНТРОЛЯ", ""], stab: ["71%", "warn"], eta: ["≈ 2 Ч 40 МИН", "warn"], sync: ["ОТКЛОНЕНИЕ", "warn"], reag: ["3 / 3", "ok"], pod: ["ЗАКРЫТА", "ok"],
+             log1: ["Отклонение синхронизации", "warn"], log2: ["Прогноз: пересчёт", "warn"], segs: [14, "warn"], needle: 38, lamps: { gen: "a", bus: "g", secA: "g" } },
+    alarm: { gen: ["ОСТАНОВ", "alarm"], bus: ["ОБРЫВ", "alarm"], secA: ["НЕТ ПИТ.", "alarm"], secB: ["НЕТ ПИТ.", "alarm"], oil: ["0.0 БАР", "alarm"],
+             sig: ["ВСПЛЕСК АКТИВНОСТИ", "alarm"], eeg: ["НЕ РАСПОЗНАНО", "alarm"],
+             hdr: ["ТРЕВОГА · НЕСТАБИЛЬНОСТЬ МОДУЛЯ 4", ""], stab: ["23%", "alarm"], eta: ["00:06:12", "alarm"], sync: ["ПОТЕРЯНА", "alarm"], reag: ["ГОТОВ · 1 ЗАРЯД", "warn"], pod: ["ОШИБКА КЛАПАНА", "alarm"],
+             log1: ["Синхронизация потеряна", "alarm"], log2: ["Требуется вмешательство оператора", "alarm"], segs: [5, "alarm"], needle: -70, lamps: { gen: "r", bus: "r", secA: "x" } }
+  };
+  var COLORS = { ok: "#3ed36b", warn: "#e8a21c", alarm: "#d8341f" };
+  var segBox = document.getElementById("segs");
+  for (var i = 0; i < 20; i++) segBox.appendChild(document.createElement("i"));
+
+  var level = "ok";
+  function apply(name) {
+    worlds.dataset.state = name;
+    document.querySelectorAll(".switch button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.set === name)); });
+    if (name === "boot") { runBoot(); return; }
+    if (name === "off") return;
+    level = name;
+    var s = STATES[name];
+    document.querySelectorAll("[data-k]").forEach(function (el) {
+      var v = s[el.dataset.k]; if (!v) return;
+      el.textContent = v[0];
+      if (v[1]) el.dataset.tone = v[1]; else el.removeAttribute("data-tone");
+    });
+    var cells = segBox.children;
+    for (var j = 0; j < cells.length; j++) cells[j].style.background = j < s.segs[0] ? COLORS[s.segs[1]] : "";
+    document.getElementById("needle").style.transform = "rotate(" + s.needle + "deg)";
+    document.querySelectorAll("[data-lamp]").forEach(function (el) { el.className = s.lamps[el.dataset.lamp]; });
+  }
+
+  var bootTimers = [];
+  function runBoot() {
+    bootTimers.forEach(clearTimeout); bootTimers = [];
+    document.querySelectorAll(".boot").forEach(function (el) {
+      var text = el.dataset.boot;
+      if (reduce) { el.textContent = text; return; }
+      el.textContent = "";
+      var n = 0;
+      (function tick() {
+        n += 2; el.textContent = text.slice(0, n);
+        if (n < text.length && worlds.dataset.state === "boot") bootTimers.push(setTimeout(tick, 1000 / 70));
+      })();
+    });
+  }
+
+  document.querySelectorAll(".switch button").forEach(function (b) { b.addEventListener("click", function () { apply(b.dataset.set); }); });
+  apply("ok");
+
+  // Era II: EEG traces and garbled glyph stream from object 2.
+  var canvas = document.getElementById("eeg"), ctx = canvas.getContext("2d"), t = 0;
+  function draw() {
+    var w = canvas.clientWidth, h = canvas.clientHeight, dpr = window.devicePixelRatio || 1;
+    if (canvas.width !== Math.round(w * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    var amp = level === "alarm" ? 1.9 : level === "warn" ? 1.3 : 1;
+    for (var c = 0; c < 4; c++) {
+      var y0 = h * (c + 0.5) / 4;
+      ctx.strokeStyle = c === 0 ? "rgba(182,255,214,.95)" : "rgba(140,255,191," + (0.55 - c * 0.1) + ")";
+      ctx.lineWidth = 1.2; ctx.shadowColor = "rgba(140,255,191,.8)"; ctx.shadowBlur = 4;
+      ctx.beginPath();
+      for (var x = 0; x <= w; x += 2) {
+        var p = (x + t * (40 + c * 9)) * 0.05;
+        var y = y0 + Math.sin(p * (1 + c * 0.3)) * h * 0.04 * amp + Math.sin(p * 3.7 + c) * h * 0.02 * amp
+              + (Math.sin(p * 0.21 + c * 2) > 0.93 ? Math.sin(p * 9) * h * 0.09 * amp : 0);
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    t += 1 / 60;
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  draw();
+  if (reduce) window.addEventListener("resize", draw);
+
+  var glyphs = document.getElementById("glyphs"), POOL = "ЖЩЫЮЭЁЪ▒░▓◊∆≡¦╫╪7Ф";
+  if (!reduce) setInterval(function () {
+    var n = level === "alarm" ? 7 : 5, s = "";
+    for (var k = 0; k < n; k++) s += (Math.random() < 0.18 ? " " : POOL[Math.floor(Math.random() * POOL.length)]) + " ";
+    glyphs.textContent = s.trim();
+  }, level === "ok" ? 420 : 260);
+
+  // Settings kit: live slider values and segmented toggles.
+  [["s-vol", "%"], ["s-fov", "°"]].forEach(function (p) {
+    var el = document.getElementById(p[0]), out = document.getElementById(p[0] + "-v");
+    function upd() { out.textContent = el.value + p[1]; el.style.setProperty("--p", ((el.value - el.min) / (el.max - el.min) * 100) + "%"); }
+    el.addEventListener("input", upd); upd();
+  });
+  document.querySelectorAll(".seg").forEach(function (g) {
+    g.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      g.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
