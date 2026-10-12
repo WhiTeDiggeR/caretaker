@@ -142,8 +142,8 @@ godot --headless --path . --script res://scenes/complex_v4/review/opening_route_
 ```
 
 Ожидается: в отчёте `safe_regenerate` — `"status": "promoted"`, `"ready": true`, пустой `errors`; меняются только
-`gen/l/l_old_core/{Generated/**, anchor_frames.json, generation_manifest.json, regeneration_report.json}` (лестница VT-OLD-STAIR
-пересобирается побайтно той же); `check_stair_fit.py` по-прежнему `gaps_over_0.6=0`; `run_checks.sh` — `ALL CHECKS PASSED`;
+`gen/l/l_old_core/{Generated/**, anchor_frames.json, generation_manifest.json, regeneration_report.json}` (лестница VT-OLD-STAIR пересобирается
+из той же разметки шахты и не должна сдвинуться); `check_stair_fit.py` по-прежнему `gaps_over_0.6=0`; `run_checks.sh` — `ALL CHECKS PASSED`;
 проверка маршрута — `OPENING_ROUTE_CHECK mode=strict legs=14 passable=14 blocked=0`. Если `safe_regenerate` вернёт ошибку привязок
 (`object_bindings.json` ЦУ), пришлите отчёт в #170 — это правится без генератора.
 
