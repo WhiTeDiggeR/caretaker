@@ -13,6 +13,10 @@
 | `switch` | смесь Freesound 139970 (jessepash) и 377203 (kiddpark) |
 | `lever` | Freesound 386208, ldezem |
 | `door_locked` | Freesound 829092, -+Fugu+- |
+| `door_motor` | Freesound 322920, jedspear — ход гермодвери, 1,7 с |
+| `door_stop` | Freesound 406197, kyles — удар в упор |
+| `door_mech` | Freesound 438732, craigsmith — штурвал, 1,5 с |
+| `door_swing` | Freesound 583059, Profispiesser — служебная дверь, 0,8 с |
 | `gen_start` | Freesound 709272, Skybonator — рывок стартера, схватывание, холостые (OGG) |
 | `gen_run` | Freesound 606933, Garuda1982 — бесшовная петля 16 с, громкость подогнана к холостым `gen_start` (OGG) |
 
