@@ -121,4 +121,6 @@ func crt_material(emergency_power: bool = false) -> ShaderMaterial:
 	material.set_shader_parameter(&"jitter", jitter)
 	material.set_shader_parameter(&"tint", phosphor)
 	material.set_shader_parameter(&"flicker", 0.6 if emergency_power else 0.0)
+	# Herobrine close to waking leaks into the late screens of the complex.
+	material.set_shader_parameter(&"split", DreamProfile.leak_strength() if era == ERA_MODULE else 0.0)
 	return material

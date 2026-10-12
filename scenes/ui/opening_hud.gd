@@ -23,6 +23,18 @@ const MESSAGE_WIDTH := 720.0
 const MESSAGE_MARGINS := 48.0
 ## Height of the message plate without its text: margins, title, hint and gaps.
 const MESSAGE_CHROME := 104.0
+const DREAM_HEADING := "ЗАДАЧА СНА"
+const DREAM_TEXT_SIZE := 24
+const DREAM_HEADING_SIZE := 17
+const DREAM_GLOW_ALPHA := 0.3
+const DREAM_GLOW_SIZE := 8
+## Vignette of a dream: always a little, closing in with the instability of the sleep.
+const VIGNETTE_BASE := 0.25
+const VIGNETTE_RANGE := 0.6
+const VIGNETTE_REFRESH := 0.5
+const ALERT_SECONDS := 8.0
+const ALERT_WARNING := "ХИМИЧЕСКИЙ ПРОТОКОЛ · %s · ГЕРМЕТИЗАЦИЯ ЧЕРЕЗ %s"
+const ALERT_SEALED := "%s ЗАПОЛНЕН СНОТВОРНЫМ · ОКНО РЕМОНТА %s"
 const PLATE := Color(0.04, 0.047, 0.05, 0.72)
 const OBJECTIVE_FLASH_SECONDS := 1.2
 const HINT_WIDTH := 900.0
@@ -46,6 +58,13 @@ var hint_label: Label
 var _hint_timer: Timer
 var _objective_tween: Tween
 var _journal_size := 0
+## Profile of the dream the HUD is in; null in reality.
+var dream_profile: DreamProfile
+var seal_marks: SealMarks
+var alert_label: Label
+var _vignette: ColorRect
+var _vignette_timer: Timer
+var _alert_timer: Timer
 
 
 func _ready() -> void:
@@ -57,6 +76,10 @@ func _ready() -> void:
 	GameState.flag_changed.connect(_on_flag_changed)
 	GameState.state_loaded.connect(func() -> void: _journal_size = DocumentLibrary.read_ids().size())
 	_toast_timer.timeout.connect(func() -> void: journal_toast.visible = false)
+	if Dreams.in_dream:
+		_enter_dream_mode(DreamProfile.for_module(Dreams.module_id))
+	else:
+		_build_alert()
 	GameState.objective_changed.connect(_on_objective_changed)
 	_set_objective_text(GameState.objective_text)
 	_message_timer.timeout.connect(hide_message)
@@ -198,3 +221,106 @@ func _shadowed(label: Label, font: Font, size: int, color: Color) -> void:
 ## Journal titles are written in capitals; the notice quotes them in sentence case.
 static func _sentence_case(title: String) -> String:
 	return title.substr(0, 1).to_upper() + title.substr(1).to_lower() if not title.is_empty() else title
+
+
+# --- Dream (type 5 of the style guide) ---------------------------------------------------
+
+## The HUD of a dream: no frames, Cormorant heading, the task in italics, seal diamonds and the
+## sleeper's colour closing in at the edges as the sleep grows unstable.
+func _enter_dream_mode(profile: DreamProfile) -> void:
+	dream_profile = profile
+	objective_heading.text = DREAM_HEADING
+	_shadowed(objective_heading, UiStyle.FONT_DREAM, DREAM_HEADING_SIZE, Color(profile.text, 0.75))
+	_shadowed(objective_label, UiStyle.FONT_BODY_ITALIC, DREAM_TEXT_SIZE, profile.text)
+	# No hard shadows in a dream: a soft halo of the sleeper's light instead.
+	for label: Label in [objective_heading, objective_label]:
+		label.add_theme_color_override(&"font_shadow_color", Color(profile.glow, DREAM_GLOW_ALPHA))
+		label.add_theme_constant_override(&"shadow_offset_y", 0)
+		label.add_theme_constant_override(&"shadow_outline_size", DREAM_GLOW_SIZE)
+	seal_marks = SealMarks.new()
+	seal_marks.name = "SealMarks"
+	seal_marks.color = profile.text
+	seal_marks.glow = profile.glow
+	seal_marks.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	seal_marks.offset_left = -240.0
+	seal_marks.offset_right = -40.0
+	seal_marks.offset_top = 34.0
+	seal_marks.offset_bottom = 60.0
+	add_child(seal_marks)
+	_count_seals.call_deferred()
+	Dreams.seal_restored_signal.connect(func(_id: StringName) -> void: seal_marks.filled = seal_marks.count)
+	_vignette = ColorRect.new()
+	_vignette.name = "DreamVignette"
+	_vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://materials/ui/dream_vignette.gdshader")
+	material.set_shader_parameter(&"tint", profile.vignette)
+	_vignette.material = material
+	add_child(_vignette)
+	move_child(_vignette, 0)
+	_vignette_timer = Timer.new()
+	_vignette_timer.wait_time = VIGNETTE_REFRESH
+	_vignette_timer.timeout.connect(_refresh_vignette)
+	add_child(_vignette_timer)
+	_vignette_timer.start()
+	_refresh_vignette()
+
+
+## Seals of this dream (all show the visit's state, see DreamSeal); counted once.
+func _count_seals() -> void:
+	var scene := get_tree().current_scene
+	var seals := scene.find_children("*", "DreamSeal", true, false).size() if scene else 0
+	seal_marks.count = maxi(seals, 1)
+	seal_marks.filled = seal_marks.count if Dreams.seal_restored else 0
+
+
+func _refresh_vignette() -> void:
+	var material := _vignette.material as ShaderMaterial
+	var unrest := Containment.get_instability(Dreams.module_id) / 100.0 if Containment.modules.has(Dreams.module_id) else 0.0
+	material.set_shader_parameter(&"strength", VIGNETTE_BASE + VIGNETTE_RANGE * clampf(unrest, 0.0, 1.0))
+	# An anomalous sleeper splits its own dream and, when close to waking, the others too.
+	material.set_shader_parameter(&"split", maxf(dream_profile.split, DreamProfile.leak_strength()))
+
+
+# --- Chemical protocol (reality) -----------------------------------------------------------
+
+func _build_alert() -> void:
+	alert_label = Label.new()
+	alert_label.name = "AlertLabel"
+	alert_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	alert_label.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	alert_label.offset_left = -560.0
+	alert_label.offset_right = 560.0
+	alert_label.offset_top = 96.0
+	alert_label.offset_bottom = 128.0
+	alert_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_shadowed(alert_label, UiStyle.FONT_DISPLAY, 21, UiStyle.STATUS_WARN)
+	alert_label.visible = false
+	add_child(alert_label)
+	_alert_timer = Timer.new()
+	_alert_timer.one_shot = true
+	_alert_timer.timeout.connect(func() -> void: alert_label.visible = false)
+	add_child(_alert_timer)
+	Containment.chemical_warning.connect(func(id: StringName, seconds: float) -> void:
+		show_alert(ALERT_WARNING % [_module_label(id), _clock(seconds)]))
+	Containment.module_sealed.connect(func(id: StringName) -> void:
+		show_alert(ALERT_SEALED % [_module_label(id), _clock(Containment.chemical_timer(id))]))
+
+
+## Amber line of the chemical protocol: the same system voice, slower and warmer.
+func show_alert(text: String) -> void:
+	alert_label.text = text
+	alert_label.visible = true
+	alert_label.modulate.a = 0.0
+	create_tween().tween_property(alert_label, "modulate:a", 1.0, 1.2)
+	_alert_timer.start(ALERT_SECONDS)
+
+
+static func _module_label(id: StringName) -> String:
+	return str((Containment.modules.get(id, {}) as Dictionary).get("label", id)).to_upper()
+
+
+static func _clock(seconds: float) -> String:
+	var total := maxi(int(ceil(seconds)), 0)
+	return "%02d:%02d" % [total / 60, total % 60]
