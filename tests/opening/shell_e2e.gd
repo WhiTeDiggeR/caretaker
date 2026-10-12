@@ -36,6 +36,21 @@ func _run() -> void:
 	await _capture("shell_1_menu")
 
 	_check(_has_button(menu, "Полигон (отладка)"), "debug builds offer the test range")
+	# #166: waking in the capsule starts after the loading screen, not under it.
+	var wake_while_loading: Array[bool] = []
+	var on_effect := func(id: StringName) -> void:
+		if id == &"wake_up":
+			wake_while_loading.append(Shell.loading or Shell._loading_layer.visible)
+	ScreenEffects.effect_started.connect(on_effect)
+	var story_scene := Shell.new_game_scene
+	Shell.new_game_scene = SANDBOX
+	Shell.new_game()
+	await _until(func() -> bool: return _scene_is(SANDBOX))
+	await _frames(3)
+	Shell.new_game_scene = story_scene
+	ScreenEffects.effect_started.disconnect(on_effect)
+	_check(wake_while_loading == [false], "waking starts once the loading screen is gone: %s" % [wake_while_loading])
+	ScreenEffects.stop()
 	GameState.set_flag(&"left_over")
 	Shell.start_sandbox()
 	await _until(func() -> bool: return _scene_is(SANDBOX))

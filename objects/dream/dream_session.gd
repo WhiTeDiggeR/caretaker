@@ -8,6 +8,9 @@ extends Node
 
 signal entered(module_id: StringName)
 signal left(module_id: StringName, reason: Exit)
+## The hero is back in reality and the veil starts to lift (the aftertaste effects start
+## here, not under the veil — #166).
+signal arrived(module_id: StringName, reason: Exit)
 signal seal_restored_signal(module_id: StringName)
 
 ## GATE — voluntary exit, DEATH — killed in the dream, WOKEN — the module was gassed and
@@ -184,6 +187,7 @@ func _leave(reason: Exit) -> void:
 		await get_tree().process_frame
 		if get_tree().current_scene:
 			arrive_in_reality(get_tree().current_scene, reason)
+	arrived.emit(id, reason)
 	await _fade_to(0.0)
 
 

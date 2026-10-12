@@ -29,6 +29,8 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(hud.dream_profile == null and hud.alert_label != null, "the HUD in reality has no dream look and listens to the chemical protocol")
 	hud.show_saved("auto")
 	c.is_true(hud.save_indicator.visible and hud.save_label.text == OpeningHud.SAVE_WRITING and hud.save_icon.state == SaveIcon.State.WRITING, "a save shows the running crystal in the HUD")
+	var save_layer := hud.save_indicator.get_parent() as CanvasLayer
+	c.is_true(save_layer.layer > ScreenEffects.layer and save_layer.layer < Dreams._fade.layer and save_layer.is_in_group(Saves.HUD_GROUP), "the save indicator stays above gas and waking, under the dream veil, out of thumbnails")
 	c.is_true(hud.is_in_group(Saves.DISPLAY_GROUP) and hud.is_in_group(Saves.HUD_GROUP), "the HUD hears saves and hides for thumbnails")
 	Containment.chemical_warning.emit(&"module_4", 10.0)
 	c.is_true(hud.alert_label.visible and hud.alert_label.text.contains("МОДУЛЬ 4") and hud.alert_label.text.contains("00:10"), "the chemical warning shows the module and the countdown")

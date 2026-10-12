@@ -68,6 +68,13 @@ func run(c: OpeningCheck) -> void:
 
 	var reasons: Array[int] = []
 	Dreams.left.connect(func(_id: StringName, reason: int) -> void: reasons.append(reason))
+	# #166: the aftertaste starts once the hero is back under a full veil, never before it.
+	var effect_at_left: Array[bool] = []
+	var veil_at_arrival: Array[float] = []
+	var on_left := func(_id: StringName, _reason: int) -> void: effect_at_left.append(ScreenEffects.is_playing(&"dream_exit"))
+	var on_arrived := func(_id: StringName, _reason: int) -> void: veil_at_arrival.append(Dreams._fade.veil)
+	Dreams.left.connect(on_left)
+	Dreams.arrived.connect(on_arrived)
 	player.global_position = Vector3(30, 0.9, 30)
 	Dreams.exit_through_gate()
 	await c.tree.create_timer(Dreams.FADE_SECONDS * 2.0 + 0.3).timeout
@@ -77,6 +84,12 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(Vector2(player.global_position.x - exit_point.x, player.global_position.z - exit_point.z).length() < 0.01,
 			"the hero stands at the chair after returning")
 	c.is_true(Dreams.return_text(Dreams.Exit.GATE).contains("во сне — около"), "return message tells both times")
+	c.equal(effect_at_left, [false] as Array[bool], "no aftertaste is drawn under the veil of the exit")
+	c.is_true(veil_at_arrival.size() == 1 and veil_at_arrival[0] > 0.99, "the hero arrives in reality under a full veil")
+	c.is_true(ScreenEffects.is_playing(&"dream_exit") or ScreenEffects.elapsed > 0.0, "the aftertaste of the gate plays after the arrival")
+	Dreams.left.disconnect(on_left)
+	Dreams.arrived.disconnect(on_arrived)
+	ScreenEffects.stop()
 
 	var before_death := Containment.get_instability(&"module_4")
 	await Dreams.enter(&"module_4", &"test_chair")
