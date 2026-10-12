@@ -10,6 +10,8 @@ signal toggled(on: bool)
 
 enum Kind { LEVER, VALVE, SWITCH, BREAKER }
 
+const SOUNDS: Dictionary[Kind, StringName] = {Kind.LEVER: &"lever", Kind.VALVE: &"valve", Kind.SWITCH: &"switch", Kind.BREAKER: &"breaker"}
+
 const FLAG_PREFIX := "ctl/"
 const ANIMATION_TIME := 0.35
 
@@ -48,6 +50,7 @@ func is_on() -> bool:
 func set_on(on: bool) -> void:
 	if on == is_on():
 		return
+	Sfx.play(SOUNDS[kind], self)
 	if on:
 		GameState.set_flag(flag_for(control_id))
 	else:

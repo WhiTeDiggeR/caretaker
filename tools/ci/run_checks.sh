@@ -57,6 +57,7 @@ python_suite tools/complex_v4/composition_validator/tests
 python_suite tools/complex_v4/repair_package/tests
 python_suite tools/complex_v3_pilots/tests
 python_script "scene index matches the passports" scenes/complex_v4/validate_sector_scenes.py
+python_script "generated sounds match their recipes" tools/audio/make_sfx.py --check
 python_script "art props: sizes, anchors, budgets, provenance" tools/props/validate_props.py
 python_script "git lfs: new binaries are LFS pointers" tools/ci/lfs_check.py
 # The registry exits 2 while verticals are unresolved; it must still build (exit 0 or 2) and list them.
