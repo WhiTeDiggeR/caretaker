@@ -1,0 +1,27 @@
+{
+  "events": {
+    "sandbox_blackout": {
+      "steps": [
+        {"power": {"section": "sandbox_event", "power": "emergency", "flicker": 4}},
+        {"sound": "alarm_stage", "at": "door"},
+        {"shake": {"strength": 0.06, "seconds": 0.8}},
+        {"door": {"target": "door", "action": "close"}},
+        {"wait": 1.2},
+        {"door": {"target": "door", "action": "lock"}},
+        {"message": {"title": "АВАРИЯ СЕКЦИИ", "text": "Основное питание потеряно. Гермодверь заблокирована аварийной автоматикой."}},
+        {"objective": "sandbox_blackout"}
+      ]
+    },
+    "sandbox_blackout_reset": {
+      "steps": [
+        {"effects": [{"set_flag": "sandbox/blackout_cleared"}]},
+        {"power": {"section": "sandbox_event", "power": "main"}},
+        {"door": {"target": "door", "action": "unlock"}},
+        {"door": {"target": "door", "action": "open"}},
+        {"wait": 0.5},
+        {"objective": "sandbox_tour"},
+        {"effects": [{"clear_flag": "sandbox/blackout_cleared"}, {"clear_flag": "event/done/sandbox_blackout"}]}
+      ]
+    }
+  }
+}
