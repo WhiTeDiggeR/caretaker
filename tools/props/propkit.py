@@ -269,7 +269,8 @@ class Kit:
                 "+x": ((0, 0, -1), (0, 1, 0), (1, 0, 0)), "-x": ((0, 0, 1), (0, 1, 0), (-1, 0, 0)),
                 "+y": ((1, 0, 0), (0, 0, -1), (0, 1, 0)), "-y": ((1, 0, 0), (0, 0, 1), (0, -1, 0))}[normal]
         ux, uy, un = (Vector(a) for a in axes)
-        if tilt:  # rotate the quad about its own u axis (positive tilts the top away from the viewer)
+        if tilt:  # rotate the quad about its own u axis by the right-hand rule: on a "+z" quad positive tilts the top
+            # toward the viewer, so a quad on a box with rot=(-a, 0, 0) needs tilt=-a; a quad on a slope uses normal="+y"
             r = Matrix.Rotation(math.radians(tilt), 3, ux)
             uy, un = r @ uy, r @ un
         if roll:

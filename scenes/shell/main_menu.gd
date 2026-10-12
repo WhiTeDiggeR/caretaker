@@ -13,7 +13,6 @@ const SUBTITLE := "Временный смотритель комплекса"
 const SPLASH_HINT := "НАЖМИТЕ ЛЮБУЮ КЛАВИШУ"
 const SPLASH_LINE := "чужой сон нужно удержать"
 const FOOTER := "СБОРКА %s"
-const DEFAULT_VERSION := "0.1"
 const BACKGROUND := Color(0.035, 0.04, 0.045)
 const RAIL_X := 96.0
 const COLUMN := Vector2(150.0, 190.0)
@@ -162,8 +161,7 @@ func _build_backdrop() -> void:
 
 
 func _build_footer() -> void:
-	var version := str(ProjectSettings.get_setting("application/config/version", ""))
-	var left := ShellUI.label(self, FOOTER % (version if not version.is_empty() else DEFAULT_VERSION), &"ShellKicker")
+	var left := ShellUI.label(self, FOOTER % BuildInfo.label(), &"ShellKicker")
 	left.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
 	left.offset_left = COLUMN.x
 	left.offset_top = -64.0
