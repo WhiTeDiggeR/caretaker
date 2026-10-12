@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Dima'sFirstGame"
+config/version="0.1.0"
 run/main_scene="res://scenes/underground_research_complex.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://05xq355noukc"
@@ -26,6 +27,12 @@ Sfx="*res://objects/audio/sfx.gd"
 Objectives="*res://objects/objectives/objectives.gd"
 Hints="*res://objects/objectives/hints.gd"
 ScreenEffects="*res://objects/feel/screen_effects.gd"
+
+[debug]
+
+file_logging/enable_file_logging=true
+file_logging/log_path="user://logs/godot.log"
+file_logging/max_log_files=10
 
 [display]
 
