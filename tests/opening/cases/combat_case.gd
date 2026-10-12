@@ -115,6 +115,16 @@ func run(c: OpeningCheck) -> void:
 	c.equal(c.tree.get_nodes_in_group(DreamEnemy.GROUP).size(), 4, "four shades: three in the arena, one at the gate")
 	var hud := dream.get_node(^"Combat").get("hud") as DreamCombatHud
 	c.equal(hud.weapons_text(), "Оружия нет — ищите образы сна", "the HUD asks to find images")
+	# Dream style (#164): the meters and the image crystals take the sleeper's colours.
+	var neutral := DreamProfile.current()
+	c.equal(hud.resolve_meter.fill, neutral.glow, "the resolve meter glows in the dream profile colour")
+	c.equal(hud.focus_meter.fill, neutral.text, "the focus meter is in the dream profile text colour")
+	var bowser := DreamProfile.load_profile(&"bowser")
+	c.equal(DreamWeaponPickup.crystal_color("melee", bowser), bowser.glow, "a melee image glows in the sleeper colour")
+	c.equal(DreamWeaponPickup.crystal_color("ranged", bowser), bowser.text, "a ranged image is in the sleeper text colour")
+	hud.resolve_meter.set_value(1.0, 10.0)
+	c.is_true(hud.resolve_meter.is_low() and hud.resolve_meter.trail > hud.resolve_meter.ratio, "a heavy loss leaves a trail and marks the meter low")
+	hud.resolve_meter.set_value(dream_combat.resolve, dream_combat.max_resolve)
 	# Taken the way the player does it: look at the crystal and press interact.
 	var hero := dream.get_node(^"Player") as CharacterBody3D
 	hero.global_position = Vector3(-2.5, 0.9, -0.6)
