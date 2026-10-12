@@ -1,0 +1,206 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="hud"]
+[ext_resource type="Material" path="res://materials/hangar_concrete_floor.tres" id="floor_mat"]
+[ext_resource type="PackedScene" path="res://loads/bowser_capsule/Hitem3d-1782155776080.glb" id="o0"]
+[ext_resource type="PackedScene" path="res://loads/bowser_capsule/lod/bowser_capsule_lod.gltf" id="l0"]
+[ext_resource type="PackedScene" path="res://objects/art/capsule_bowser.tscn" id="s0"]
+[ext_resource type="PackedScene" path="res://loads/herobrine_capsule/Hitem3d-1782239593585.glb" id="o1"]
+[ext_resource type="PackedScene" path="res://loads/herobrine_capsule/lod/herobrine_capsule_lod.gltf" id="l1"]
+[ext_resource type="PackedScene" path="res://objects/art/capsule_herobrine.tscn" id="s1"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.02, 0.022, 0.026, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.32, 0.34, 0.38, 1)
+ambient_light_energy = 0.4
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="floor_mesh"]
+material = ExtResource("floor_mat")
+size = Vector2(60, 40)
+
+[sub_resource type="BoxShape3D" id="floor_shape"]
+size = Vector3(60, 0.2, 40)
+
+[node name="CapsuleCompare" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("floor_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("floor_shape")
+
+[node name="RowTitle0" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 2.0, 0.00)
+text = "Боузер · объект №4"
+font_size = 110
+outline_size = 14
+modulate = Color(1, 0.85, 0.45, 1)
+
+[node name="R0C0" parent="." instance=ExtResource("o0")]
+transform = Transform3D(5.0, 0, 0, 0, 5.0, 0, 0, 0, 5.0, -7.5, 1.525, 0.00)
+
+[node name="R0C0_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 3.9, 1.00)
+text = "Исходник (text-to-3d)\n≈ 2 млн треугольников · 111 МБ"
+font_size = 56
+outline_size = 10
+billboard = 1
+
+[node name="R0C0_inside" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 1.7, 0.20)
+light_color = Color(0.4, 1, 0.45, 1)
+light_energy = 1.2
+omni_range = 2.2
+
+[node name="R0C0_key" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, -7.5, 5.5, 4.00)
+light_color = Color(1, 0.86, 0.72, 1)
+light_energy = 6.0
+spot_range = 12.0
+spot_angle = 38.0
+shadow_enabled = true
+
+[node name="R0C1" parent="." instance=ExtResource("l0")]
+transform = Transform3D(5.0, 0, 0, 0, 5.0, 0, 0, 0, 5.0, 0.0, 1.525, 0.00)
+
+[node name="R0C1_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, 3.9, 1.00)
+text = "Облегчённая копия\n39 тыс. треугольников · 2.3 МБ"
+font_size = 56
+outline_size = 10
+billboard = 1
+
+[node name="R0C1_inside" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, 1.7, 0.20)
+light_color = Color(0.4, 1, 0.45, 1)
+light_energy = 1.2
+omni_range = 2.2
+
+[node name="R0C1_key" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0.0, 5.5, 4.00)
+light_color = Color(1, 0.86, 0.72, 1)
+light_energy = 6.0
+spot_range = 12.0
+spot_angle = 38.0
+shadow_enabled = true
+
+[node name="R0C2" parent="." instance=ExtResource("s0")]
+transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 7.5, 0.000, 0.00)
+
+[node name="R0C2_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.9, 1.00)
+text = "Скриптовая модель\n31 тыс. треугольников · 1.4 МБ"
+font_size = 56
+outline_size = 10
+billboard = 1
+
+[node name="R0C2_inside" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1.7, 0.20)
+light_color = Color(0.4, 1, 0.45, 1)
+light_energy = 1.2
+omni_range = 2.2
+
+[node name="R0C2_key" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 7.5, 5.5, 4.00)
+light_color = Color(1, 0.86, 0.72, 1)
+light_energy = 6.0
+spot_range = 12.0
+spot_angle = 38.0
+shadow_enabled = true
+
+[node name="RowTitle1" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 2.0, -8.00)
+text = "Херобрин · объект №3"
+font_size = 110
+outline_size = 14
+modulate = Color(1, 0.85, 0.45, 1)
+
+[node name="R1C0" parent="." instance=ExtResource("o1")]
+transform = Transform3D(5.0, 0, 0, 0, 5.0, 0, 0, 0, 5.0, -7.5, 1.220, -8.00)
+
+[node name="R1C0_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 3.9, -7.00)
+text = "Исходник (text-to-3d)\n≈ 2 млн треугольников · 119 МБ"
+font_size = 56
+outline_size = 10
+billboard = 1
+
+[node name="R1C0_inside" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 1.7, -7.80)
+light_color = Color(0.35, 0.6, 1, 1)
+light_energy = 1.2
+omni_range = 2.2
+
+[node name="R1C0_key" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, -7.5, 5.5, -4.00)
+light_color = Color(1, 0.86, 0.72, 1)
+light_energy = 6.0
+spot_range = 12.0
+spot_angle = 38.0
+shadow_enabled = true
+
+[node name="R1C1" parent="." instance=ExtResource("l1")]
+transform = Transform3D(5.0, 0, 0, 0, 5.0, 0, 0, 0, 5.0, 0.0, 1.220, -8.00)
+
+[node name="R1C1_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, 3.9, -7.00)
+text = "Облегчённая копия\n40 тыс. треугольников · 2.5 МБ"
+font_size = 56
+outline_size = 10
+billboard = 1
+
+[node name="R1C1_inside" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, 1.7, -7.80)
+light_color = Color(0.35, 0.6, 1, 1)
+light_energy = 1.2
+omni_range = 2.2
+
+[node name="R1C1_key" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0.0, 5.5, -4.00)
+light_color = Color(1, 0.86, 0.72, 1)
+light_energy = 6.0
+spot_range = 12.0
+spot_angle = 38.0
+shadow_enabled = true
+
+[node name="R1C2" parent="." instance=ExtResource("s1")]
+transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 7.5, 0.000, -8.00)
+
+[node name="R1C2_label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.9, -7.00)
+text = "Скриптовая модель\n19 тыс. треугольников · 0.9 МБ"
+font_size = 56
+outline_size = 10
+billboard = 1
+
+[node name="R1C2_inside" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1.7, -7.80)
+light_color = Color(0.35, 0.6, 1, 1)
+light_energy = 1.2
+omni_range = 2.2
+
+[node name="R1C2_key" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 7.5, 5.5, -4.00)
+light_color = Color(1, 0.86, 0.72, 1)
+light_energy = 6.0
+spot_range = 12.0
+spot_angle = 38.0
+shadow_enabled = true
+
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 7)
+interact_label = NodePath("../OpeningHud/InteractLabel")
+hold_progress_bar = NodePath("../OpeningHud/HoldProgress")
+
+[node name="OpeningHud" parent="." instance=ExtResource("hud")]
