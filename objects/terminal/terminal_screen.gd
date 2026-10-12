@@ -1,25 +1,28 @@
 class_name TerminalScreen
 extends CanvasLayer
 
-## Full-screen terminal UI. Types the lines of each screen, then lists its options.
+## Full-screen terminal UI. Types the lines of each screen, then lists its options. Looks like
+## the screen of its program's era (ScreenStyle: casing, phosphor, CRT picture, typing).
 ## Keys: up/down or digits choose, Enter/E confirm, Enter/E while typing shows the whole
 ## screen, Esc leaves. The player's controls are locked while the terminal is open.
 
 signal closed
 
-const CHARS_PER_SECOND := 140.0
 const AUTO_NEXT_PAUSE := 0.8
 const PLAYER_GROUP := &"player"
-const SELECT_MARK := "▶ "
-const LOCKED_COLOR := Color(0.45, 0.55, 0.5)
-const OPTION_COLOR := Color(0.55, 1.0, 0.75)
+const SELECT_MARK := "> "
+const HINT_SIZE := 16
 
 @onready var title_label: Label = $Panel/Margin/Rows/Title
 @onready var body_label: Label = $Panel/Margin/Rows/Body
 @onready var options_box: VBoxContainer = $Panel/Margin/Rows/Options
 @onready var hint_label: Label = $Panel/Margin/Rows/Hint
+@onready var _panel: PanelContainer = $Panel
+@onready var _rule: ColorRect = $Panel/Margin/Rows/Rule
+@onready var _crt: ColorRect = $Panel/Crt
 
 var program: TerminalProgram
+var style: ScreenStyle
 var screen_id := ""
 var view: Dictionary = {}
 var selected := 0
@@ -33,8 +36,10 @@ var _wait := 0.0
 var _auto_next := -1.0
 
 
-func open(terminal_program: TerminalProgram) -> void:
+## `emergency_power` makes the picture flicker (the section runs on its reserve line).
+func open(terminal_program: TerminalProgram, emergency_power: bool = false) -> void:
 	program = terminal_program
+	_apply_style(ScreenStyle.for_era(program.era), emergency_power)
 	title_label.text = program.title
 	hint_label.text = "↑↓ / 1–9 — выбор    %s — подтвердить    %s — выйти" % [
 		InputPromptFormatter.action_label(&"interact"), InputPromptFormatter.action_label(&"ui_cancel")]
@@ -96,7 +101,10 @@ func _process(delta: float) -> void:
 	if _wait > 0.0:
 		_wait -= delta
 		return
-	_typed += delta * CHARS_PER_SECOND
+	if style.line_by_line:
+		_typed = _current.length()
+	else:
+		_typed += delta * style.chars_per_second
 	var count := mini(int(_typed), _current.length())
 	body_label.text = _shown_text + _current.substr(0, count)
 	if count >= _current.length():
@@ -113,7 +121,7 @@ func _next_line() -> void:
 		return
 	var line: Dictionary = _queue.pop_front()
 	_current = str(line["text"])
-	_wait = float(line["wait"])
+	_wait = float(line["wait"]) + (style.line_delay if style.line_by_line else 0.0)
 	_typed = 0.0
 
 
@@ -126,7 +134,6 @@ func _show_options() -> void:
 	for position in options.size():
 		var option: Dictionary = options[position]
 		var label := Label.new()
-		label.add_theme_font_size_override(&"font_size", 22)
 		options_box.add_child(label)
 	_refresh_options()
 
@@ -139,8 +146,37 @@ func _refresh_options() -> void:
 		var text := "%d. %s" % [position + 1, option["text"]]
 		if not option["available"] and not str(option["locked_text"]).is_empty():
 			text += " — " + str(option["locked_text"])
-		label.text = (SELECT_MARK if position == selected else "   ") + text
-		label.add_theme_color_override(&"font_color", OPTION_COLOR if option["available"] else LOCKED_COLOR)
+		_style_option(label, text, position == selected, option["available"])
+
+
+## Selected line: inverted on old CRTs, a marker on the others; locked options are dim.
+func _style_option(label: Label, text: String, is_selected: bool, available: bool) -> void:
+	var color := style.phosphor if available else style.dim
+	var inverted := is_selected and style.invert_selection
+	style.style_label(label, style.background if inverted else color)
+	if inverted:
+		label.text = " " + text + " "
+		var box := StyleBoxFlat.new()
+		box.bg_color = color
+		label.add_theme_stylebox_override(&"normal", box)
+		label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		label.remove_theme_constant_override(&"shadow_outline_size")
+	else:
+		label.text = (SELECT_MARK if is_selected else "  ") + text
+		label.remove_theme_stylebox_override(&"normal")
+		label.size_flags_horizontal = Control.SIZE_FILL
+
+
+func _apply_style(screen_style: ScreenStyle, emergency_power: bool) -> void:
+	style = screen_style
+	_panel.add_theme_stylebox_override(&"panel", style.panel_box())
+	style.style_label(title_label, style.title_color, style.title_size, style.title_font)
+	style.style_label(body_label, style.phosphor)
+	style.style_label(hint_label, style.dim, HINT_SIZE, style.hint_font)
+	hint_label.remove_theme_constant_override(&"shadow_outline_size")
+	_rule.color = Color(style.dim, 0.7)
+	_crt.material = style.crt_material(emergency_power)
+	_crt.visible = _crt.material != null
 
 
 func _clear_options() -> void:
