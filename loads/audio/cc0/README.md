@@ -13,6 +13,10 @@
 | `switch` | смесь Freesound 139970 (jessepash) и 377203 (kiddpark) |
 | `lever` | Freesound 386208, ldezem |
 | `door_locked` | Freesound 829092, -+Fugu+- |
+| `gen_start` | Freesound 709272, Skybonator — рывок стартера, схватывание, холостые (OGG) |
+| `gen_run` | Freesound 606933, Garuda1982 — бесшовная петля 16 с, громкость подогнана к холостым `gen_start` (OGG) |
+
+Генератор играет компонент `objects/audio/generator_sound.gd`: запуск при установке флага, затем петля работы в 3D.
 
 Происхождение каждого файла, фрагмент и правки — `manifest.json`. Формат: WAV, 44,1 кГц, моно,
 16 бит, пик 0,7. Шаги нарезаны на отдельные удары (`steps/<id>_NN.wav`) и играют через

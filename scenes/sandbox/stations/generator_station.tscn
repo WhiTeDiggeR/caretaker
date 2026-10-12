@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://objects/repair/repair_gauge.gd" id="3_gauge"]
 [ext_resource type="Script" path="res://objects/repair/repair_procedure.gd" id="4_procedure"]
 [ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="5_interactable"]
+[ext_resource type="Script" path="res://objects/audio/generator_sound.gd" id="6_generator_sound"]
 
 [sub_resource type="StandardMaterial3D" id="machine"]
 albedo_color = Color(0.3, 0.34, 0.31, 1)
@@ -44,6 +45,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2.2)
 
 [node name="Mesh" type="MeshInstance3D" parent="Generator"]
 mesh = SubResource("generator_mesh")
+
+[node name="GeneratorSound" type="Node3D" parent="Generator"]
+script = ExtResource("6_generator_sound")
+running_flag = &"sandbox_generator_started"
 
 [node name="Collision" type="CollisionShape3D" parent="Generator"]
 shape = SubResource("generator_shape")

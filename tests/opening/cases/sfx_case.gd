@@ -90,5 +90,23 @@ func run(c: OpeningCheck) -> void:
 		Sfx.play(&"door_stop", Vector3.ZERO)
 	c.equal(Sfx._spatial.size(), Sfx.MAX_SPATIAL, "the 3D pool is bounded")
 
+	# #137: the generator starts once, then loops; a loaded running generator only loops.
+	heard.clear()
+	var generator := GeneratorSound.new()
+	generator.running_flag = &"sfx_generator"
+	c.add(generator)
+	c.is_true(not generator.is_running(), "a stopped generator is silent")
+	GameState.set_flag(&"sfx_generator")
+	c.equal(heard, [&"gen_start"] as Array[StringName], "starting the generator plays the start once")
+	c.is_true(generator.is_running(), "the running loop follows the start")
+	GameState.set_flag(&"sfx_generator", false)
+	c.is_true(not generator.is_running(), "clearing the flag stops the loop")
+	GameState.set_flag(&"sfx_generator")
+	heard.clear()
+	var loaded := GeneratorSound.new()
+	loaded.running_flag = &"sfx_generator"
+	c.add(loaded)
+	c.is_true(loaded.is_running() and heard.is_empty(), "a generator running on load loops without the start")
+
 	Sfx.requested.disconnect(on_request)
 	GameState.reset()
