@@ -51,7 +51,7 @@ func _on_chemical_warning(id: StringName, seconds: float) -> void:
 
 
 func _on_module_sealed(id: StringName) -> void:
-	print("Containment %s: sealed, chemical sleep, repair window %d s" % [id, Containment.chemical_timer(id)])
+	print("Containment %s: sealed, chemical sleep, repair window %d s, hero inside: %s" % [id, Containment.chemical_timer(id), Containment.is_hero_inside(id)])
 
 
 func _on_repair_window_ended(id: StringName) -> void:
@@ -130,7 +130,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_F6:
 			var trigger := float(Containment.chemical.get("trigger_at", 95.0))
 			Containment.add_instability(&"module_4", maxf(trigger - Containment.get_instability(&"module_4"), 0.0))
-			print("Module 4 at the chemical threshold")
+			if Containment.is_charged(&"module_4") and not Containment.has_gas(&"module_4"):
+				print("Module 4 at the chemical threshold: sealing after the warning")
+			else:
+				print("Module 4 at the threshold, but the protocol is spent: vent and recharge it at the reagent panel or reset the sandbox (F3)")
 		KEY_8:
 			Containment.add_instability(&"module_3", Containment.MAX_INSTABILITY)
 			Containment.add_instability(&"module_4", Containment.MAX_INSTABILITY)

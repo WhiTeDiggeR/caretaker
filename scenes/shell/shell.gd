@@ -17,8 +17,12 @@ const SANDBOX_SCENE := "res://scenes/sandbox/opening_sandbox.tscn"
 const PLAYER_GROUP := &"player"
 const DEFEAT_CATASTROPHE := &"catastrophe"
 const DEFEAT_GASSED := &"gassed"
+## Screen effect the hero falls asleep under, and the shortest fall when it is missing.
+const FALL_ASLEEP_EFFECT := &"gas"
+const FALL_ASLEEP_MIN_SECONDS := 2.0
 const SAVE_BLOCKED_LOADING := "Идёт загрузка."
 const SAVE_BLOCKED_DEFEAT := "После поражения сохранить игру нельзя."
+const SAVE_BLOCKED_ASLEEP := "Смотритель засыпает — сохранить игру нельзя."
 const SAVE_BLOCKED_DREAM := "Во сне сохранить игру нельзя — сначала вернитесь в реальность."
 const SAVE_BLOCKED_NO_GAME := "Нет начатой игры."
 
@@ -29,6 +33,8 @@ var loading := false
 var defeat_enabled := true
 ## Reason of the current defeat, empty while the game goes on.
 var defeat_reason: StringName = &""
+## True while the gassed hero falls asleep, before the defeat screen opens.
+var falling_asleep := false
 
 var _loading_layer: CanvasLayer
 var _loading_bar: ProgressBar
@@ -38,6 +44,7 @@ var _loading_path := ""
 ## Save being loaded: applied to the scene once it is in the tree.
 var _pending_save: Dictionary = {}
 var _starting_new_game := false
+var _fall_asleep_serial := 0
 
 
 func _ready() -> void:
@@ -53,7 +60,7 @@ func _ready() -> void:
 	_loading_bar.custom_minimum_size = Vector2(0, 10)
 	column.add_child(_loading_bar)
 	Containment.catastrophe.connect(func(_ids: Array[StringName]) -> void: defeat(DEFEAT_CATASTROPHE))
-	Containment.hero_gassed.connect(func(_id: StringName) -> void: defeat(DEFEAT_GASSED))
+	Containment.hero_gassed.connect(func(_id: StringName) -> void: fall_asleep(DEFEAT_GASSED))
 
 
 # --- Scene changes -----------------------------------------------------------
@@ -64,6 +71,7 @@ func change_scene(path: String) -> void:
 		return
 	resume()
 	_clear_defeat()
+	falling_asleep = false
 	# A defeat or a load may interrupt a dream: the new scene starts in reality.
 	Dreams.abort()
 	loading = true
@@ -146,11 +154,34 @@ func defeat(reason: StringName) -> void:
 	if not defeat_enabled or is_defeated() or loading or get_tree().get_first_node_in_group(PLAYER_GROUP) == null:
 		return
 	resume()
+	falling_asleep = false
 	defeat_reason = reason
 	get_tree().paused = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_defeat_screen = DefeatScreen.open(self, reason)
 	defeated.emit(reason)
+
+
+## A defeat that comes over the hero: controls lock, the hero sinks to the floor and the
+## screen fades out (the ScreenEffects effect started by the same event), then the defeat
+## screen opens. A load or a scene change during the fall cancels it.
+func fall_asleep(reason: StringName) -> void:
+	if not defeat_enabled or is_defeated() or falling_asleep or loading:
+		return
+	var player := get_tree().get_first_node_in_group(PLAYER_GROUP)
+	if player == null:
+		return
+	resume()
+	falling_asleep = true
+	_fall_asleep_serial += 1
+	var serial := _fall_asleep_serial
+	if player.has_method(&"fall_asleep"):
+		player.call(&"fall_asleep")
+	await get_tree().create_timer(maxf(ScreenEffects.duration(FALL_ASLEEP_EFFECT), FALL_ASLEEP_MIN_SECONDS)).timeout
+	if serial != _fall_asleep_serial or not falling_asleep:
+		return
+	falling_asleep = false
+	defeat(reason)
 
 
 ## Why the game cannot be saved right now, or "" when it can.
@@ -159,6 +190,8 @@ func save_block_reason() -> String:
 		return SAVE_BLOCKED_LOADING
 	if is_defeated():
 		return SAVE_BLOCKED_DEFEAT
+	if falling_asleep:
+		return SAVE_BLOCKED_ASLEEP
 	if Dreams.in_dream:
 		return SAVE_BLOCKED_DREAM
 	if get_tree().get_first_node_in_group(PLAYER_GROUP) == null:
@@ -190,7 +223,7 @@ func in_gameplay() -> bool:
 
 
 func pause() -> void:
-	if is_paused() or loading or is_defeated():
+	if is_paused() or loading or is_defeated() or falling_asleep:
 		return
 	get_tree().paused = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
