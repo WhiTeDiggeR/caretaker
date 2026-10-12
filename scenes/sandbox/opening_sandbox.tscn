@@ -18,6 +18,7 @@
 
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/hint_triggers.tscn" id="16_hints"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/event_station.tscn" id="17_events"]
+[ext_resource type="PackedScene" path="res://objects/containment/resync_panel.tscn" id="17_resync"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
@@ -103,6 +104,8 @@ font_size = 44
 outline_size = 10
 [node name="ReagentPanel" parent="Stations" instance=ExtResource("12_reagent")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -5.5, 0, 9.5)
+[node name="ResyncPanel" parent="Stations" instance=ExtResource("17_resync")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.5, 0, 9.5)
 
 [node name="ModuleChamber" type="Area3D" parent="Stations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.5, 9.5)
