@@ -1,28 +1,22 @@
 class_name DreamCombatHud
 extends CanvasLayer
 
-## Dream-only HUD: resolve and focus bars, the weapon keys and a red flash on hits.
+## Dream-only HUD: resolve and focus bars and the weapon keys. A hit plays the `dream_hit`
+## screen effect (data/feel/screen_effects.json).
 
 const RESOLVE_COLOR := Color(0.85, 0.3, 0.25)
 const FOCUS_COLOR := Color(0.4, 0.75, 1.0)
-const HURT_ALPHA := 0.35
-const HURT_SECONDS := 0.4
+const HURT_EFFECT := &"dream_hit"
 const MOUSE_NAMES := {MOUSE_BUTTON_LEFT: "ЛКМ", MOUSE_BUTTON_RIGHT: "ПКМ", MOUSE_BUTTON_MIDDLE: "СКМ"}
 
 var resolve_bar: ProgressBar
 var focus_bar: ProgressBar
 var weapons_label: Label
-var _flash: ColorRect
 var _combat: DreamCombat
 
 
 func _ready() -> void:
 	layer = 5
-	_flash = ColorRect.new()
-	_flash.color = Color(0.8, 0.05, 0.05, 0.0)
-	_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_flash.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(_flash)
 	var box := VBoxContainer.new()
 	box.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
 	box.offset_left = -340.0
@@ -44,7 +38,7 @@ func bind(combat: DreamCombat) -> void:
 	combat.resolve_changed.connect(func(value: float, maximum: float) -> void: _show(resolve_bar, value, maximum))
 	combat.focus_changed.connect(func(value: float, maximum: float) -> void: _show(focus_bar, value, maximum))
 	combat.weapon_added.connect(func(_id: StringName) -> void: _refresh_weapons())
-	combat.hurt.connect(func(_amount: float) -> void: _hurt_flash())
+	combat.hurt.connect(func(_amount: float) -> void: ScreenEffects.play(HURT_EFFECT))
 	_show(resolve_bar, combat.resolve, combat.max_resolve)
 	_show(focus_bar, combat.focus, combat.max_focus)
 	_refresh_weapons()
@@ -97,9 +91,3 @@ func _bar(parent: Control, title: String, color: Color) -> ProgressBar:
 func _show(bar: ProgressBar, value: float, maximum: float) -> void:
 	bar.max_value = maximum
 	bar.value = value
-
-
-func _hurt_flash() -> void:
-	_flash.color.a = HURT_ALPHA
-	var tween := create_tween()
-	tween.tween_property(_flash, "color:a", 0.0, HURT_SECONDS)

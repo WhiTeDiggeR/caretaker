@@ -127,6 +127,9 @@ func run(c: OpeningCheck) -> void:
 	await c.physics_frames(10)
 	c.equal(hud.weapons_text(), "ЛКМ — Клинок сна", "taking an image arms the hero and names the key")
 	c.is_true(hero.interactor.target == null, "the interactor lets go of the taken image (no freed target)")
+	dream_combat.take_damage(5.0, hero.global_position + Vector3.FORWARD)
+	c.is_true(ScreenEffects.is_playing(&"dream_hit"), "a hit plays the dream_hit screen effect")
+	ScreenEffects.stop()
 	dream.queue_free()
 	await c.physics_frames(2)
 
