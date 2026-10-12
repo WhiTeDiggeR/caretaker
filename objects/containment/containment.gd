@@ -184,6 +184,11 @@ func stabilize(id: StringName, amount: float) -> float:
 	return get_instability(id)
 
 
+## Sets instability directly, an awakened prisoner included (debug moments and cheats, #169).
+func set_instability(id: StringName, value: float) -> void:
+	_set_value(id, value)
+
+
 ## While held (chemical sleep) instability does not grow.
 func set_held(id: StringName, held: bool) -> void:
 	(_ensure(id))["held"] = held

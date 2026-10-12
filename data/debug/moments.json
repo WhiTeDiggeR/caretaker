@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "moments": [
+    {
+      "id": "wake_up",
+      "title": "Пробуждение",
+      "story_scene": 1,
+      "scene": "res://scenes/underground_research_complex.tscn",
+      "state": {"objective_chain": "opening"},
+      "expect": {"objective": "leave_capsule"}
+    },
+    {
+      "id": "after_airlock",
+      "title": "После гермотамбура",
+      "story_scene": 3,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "spawn": {"node": "Stations/DoorStation", "offset": [5, 1, 0], "yaw": 90},
+      "state": {
+        "flags": ["opening/hero_capsule_open"],
+        "section_power": {"sandbox_a": "emergency", "sandbox_b": "emergency"},
+        "objective_chain": "opening"
+      },
+      "expect": {"objective": "leave_block"}
+    },
+    {
+      "id": "before_generator",
+      "title": "Перед генератором",
+      "story_scene": 9,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "spawn": {"node": "Stations/GeneratorStation", "offset": [0, 1, 5], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control"],
+        "section_power": {"sandbox_a": "emergency", "sandbox_b": "emergency"},
+        "objective_chain": "opening"
+      },
+      "expect": {"objective": "generator"}
+    },
+    {
+      "id": "generator_running",
+      "title": "Генератор запущен",
+      "story_scene": 10,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "spawn": {"node": "Stations/GeneratorStation", "offset": [0, 1, 5], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "opening"
+      },
+      "expect": {"objective": "operator_room"}
+    },
+    {
+      "id": "before_module_4",
+      "title": "Перед модулем №4",
+      "story_scene": 11,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "spawn": {"node": "Stations/ImmersionChair", "offset": [0, 1, -4.5], "yaw": 180},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "instability": {"module_4": 60},
+        "objective_chain": "opening"
+      },
+      "expect": {"objective": "module_4"}
+    },
+    {
+      "id": "dream_start",
+      "title": "Сон: начало",
+      "story_scene": 12,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "instability": {"module_4": 60},
+        "objective_chain": "opening"
+      },
+      "dream": {"module": "module_4", "chair": "sandbox_chair"},
+      "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/test_dream.tscn"}
+    },
+    {
+      "id": "dream_seal",
+      "title": "Сон: зал печати",
+      "story_scene": 12,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "instability": {"module_4": 60},
+        "objective_chain": "opening"
+      },
+      "dream": {"module": "module_4", "chair": "sandbox_chair", "spawn": {"node": "Seal", "offset": [0, 1, 2.5], "yaw": 0}},
+      "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/test_dream.tscn"}
+    },
+    {
+      "id": "dream_return",
+      "title": "Возвращение из сна",
+      "story_scene": 12,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "instability": {"module_4": 60},
+        "objective_chain": "opening"
+      },
+      "dream": {"module": "module_4", "chair": "sandbox_chair", "exit": "gate"},
+      "expect": {"objective": "", "in_dream": false, "flags": ["dream/returned/module_4"]}
+    }
+  ],
+  "cheats": {
+    "access": ["caretaker", "module_3", "module_4"],
+    "flags": ["senior_key_taken"],
+    "instability_values": [0, 25, 50, 75, 95, 100],
+    "time_scales": [1, 10, 60]
+  }
+}
