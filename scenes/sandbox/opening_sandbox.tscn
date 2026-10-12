@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" path="res://objects/checkpoint/checkpoint.tscn" id="15_checkpoint"]
 
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/hint_triggers.tscn" id="16_hints"]
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stations/event_station.tscn" id="17_events"]
 [ext_resource type="PackedScene" path="res://objects/containment/resync_panel.tscn" id="17_resync"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
@@ -127,6 +128,9 @@ font_size = 40
 outline_size = 10
 
 [node name="HintTriggers" parent="Stations" instance=ExtResource("16_hints")]
+
+[node name="EventStation" parent="Stations" instance=ExtResource("17_events")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 24)
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
