@@ -22,4 +22,5 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 	GameState.set_flag(StringName(FLAG_PREFIX + String(checkpoint_id)))
 	if Saves.write(Saves.AUTO, get_tree()) == OK:
+		Sfx.play(&"checkpoint")
 		get_tree().call_group(&"message_display", "show_message", "КОНТРОЛЬНАЯ ТОЧКА", "Игра сохранена.")

@@ -1,0 +1,134 @@
+class_name DreamKnowledge
+extends RefCounted
+
+## Knowledge carried out of a dream (docs/game_design/03-first-dream.md, D4 and D7): nothing
+## material leaves a dream, but the hero remembers what he saw. A restored seal grants a
+## knowledge entry with a random sequence of glyphs; the journal shows it, and the module's
+## resync panel takes it as input. Every visit grants a new sequence, and a used one is spent.
+## Definitions: data/dreams/knowledge.json. State: GameState system data (saved with the game).
+
+enum Result { SYNCED, WRONG, NO_KNOWLEDGE, AWAKE }
+
+const DATA_PATH := "res://data/dreams/knowledge.json"
+const SYSTEM := &"dream_knowledge"
+const SEPARATOR := " · "
+
+static var _data: Dictionary = {}
+static var _loaded := false
+
+
+static func reload() -> void:
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH))
+	_data = parsed if parsed is Dictionary else {}
+	_loaded = true
+
+
+static func glyphs() -> PackedStringArray:
+	_ensure()
+	return PackedStringArray(_data.get("glyphs", []))
+
+
+static func definition(id: StringName) -> Dictionary:
+	_ensure()
+	return (_data.get("knowledge", {}) as Dictionary).get(String(id), {})
+
+
+static func resync_param(key: String, default: float) -> float:
+	_ensure()
+	return float((_data.get("resync", {}) as Dictionary).get(key, default))
+
+
+## Grants `id` with a fresh random sequence of distinct glyphs (replacing an earlier visit's
+## one). Returns the sequence; empty for an unknown id.
+static func grant(id: StringName, rng: RandomNumberGenerator = null) -> PackedStringArray:
+	var config := definition(id)
+	if config.is_empty():
+		push_error("DreamKnowledge: unknown knowledge '%s'" % id)
+		return PackedStringArray()
+	if rng == null:
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+	var pool := glyphs()
+	var code := PackedStringArray()
+	for _i in mini(int(config.get("length", 3)), pool.size()):
+		var index := rng.randi_range(0, pool.size() - 1)
+		code.append(pool[index])
+		pool.remove_at(index)
+	var state := _state()
+	var order: Array = state.get("order", [])
+	order.erase(String(id))
+	order.append(String(id))
+	state["order"] = order
+	(state["entries"] as Dictionary)[String(id)] = {"code": Array(code), "used": false}
+	GameState.set_system_data(SYSTEM, state)
+	return code
+
+
+static func has(id: StringName) -> bool:
+	return (_state()["entries"] as Dictionary).has(String(id))
+
+
+static func is_used(id: StringName) -> bool:
+	return bool(_entry(id).get("used", false))
+
+
+static func code(id: StringName) -> PackedStringArray:
+	return PackedStringArray(_entry(id).get("code", []))
+
+
+static func code_text(id: StringName) -> String:
+	return SEPARATOR.join(code(id))
+
+
+## The unspent knowledge for `module`, or an empty id.
+static func active_for(module: StringName) -> StringName:
+	for id: String in _state().get("order", []):
+		if StringName(str(definition(StringName(id)).get("module", ""))) == module and not is_used(StringName(id)):
+			return StringName(id)
+	return &""
+
+
+## Journal lines, newest first: {"text": String, "used": bool}.
+static func journal_entries() -> Array[Dictionary]:
+	var result: Array[Dictionary] = []
+	var order: Array = _state().get("order", [])
+	for index in range(order.size() - 1, -1, -1):
+		var id := StringName(str(order[index]))
+		var config := definition(id)
+		var text := "%s. %s" % [config.get("title", id), str(config.get("text", "%s")) % code_text(id)]
+		result.append({"text": text, "used": is_used(id)})
+	return result
+
+
+## Checks an entered sequence against the module's active knowledge and applies the effect
+## on Containment: a match calms the sleep and spends the knowledge, a mistake disturbs it.
+static func resync(module: StringName, entered: PackedStringArray) -> Result:
+	if Containment.is_awake(module):
+		return Result.AWAKE
+	var id := active_for(module)
+	if id.is_empty():
+		return Result.NO_KNOWLEDGE
+	if entered != code(id):
+		Containment.add_instability(module, resync_param("failure_penalty", 5.0))
+		return Result.WRONG
+	Containment.stabilize(module, resync_param("success_relief", 100.0))
+	var state := _state()
+	((state["entries"] as Dictionary)[String(id)] as Dictionary)["used"] = true
+	GameState.set_system_data(SYSTEM, state)
+	return Result.SYNCED
+
+
+static func _entry(id: StringName) -> Dictionary:
+	return (_state()["entries"] as Dictionary).get(String(id), {})
+
+
+static func _state() -> Dictionary:
+	var state := GameState.get_system_data(SYSTEM).duplicate(true)
+	if not state.has("entries"):
+		state["entries"] = {}
+	return state
+
+
+static func _ensure() -> void:
+	if not _loaded:
+		reload()

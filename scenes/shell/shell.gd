@@ -8,6 +8,8 @@ extends Node
 signal scene_changed(path: String)
 signal paused_changed(paused: bool)
 signal defeated(reason: StringName)
+## A new game's first scene is in the tree (the hero wakes up in the capsule).
+signal new_game_started
 
 const MAIN_MENU := "res://scenes/shell/main_menu.tscn"
 ## Test range of the opening systems, offered by the main menu in debug builds.
@@ -35,6 +37,7 @@ var _defeat_screen: DefeatScreen
 var _loading_path := ""
 ## Save being loaded: applied to the scene once it is in the tree.
 var _pending_save: Dictionary = {}
+var _starting_new_game := false
 
 
 func _ready() -> void:
@@ -81,6 +84,8 @@ func _process(_delta: float) -> void:
 		return
 	loading = false
 	_loading_layer.visible = false
+	var new_game_loaded := _starting_new_game
+	_starting_new_game = false
 	if status != ResourceLoader.THREAD_LOAD_LOADED:
 		push_error("Shell: cannot load %s" % _loading_path)
 		return
@@ -92,10 +97,15 @@ func _process(_delta: float) -> void:
 		await get_tree().process_frame
 		Saves.apply_to_scene(get_tree(), save)
 	scene_changed.emit(_loading_path)
+	if new_game_loaded:
+		new_game_started.emit()
 
 
 func new_game() -> void:
+	if loading:
+		return
 	GameState.reset()
+	_starting_new_game = true
 	change_scene(new_game_scene)
 
 

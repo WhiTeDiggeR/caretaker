@@ -1,0 +1,19 @@
+{
+  "chains": {
+    "opening": {
+      "final_text": "",
+      "steps": [
+        {"id": "leave_capsule", "text": "Выбраться из капсулы", "done_when": {"flag": "opening/hero_capsule_open"}},
+        {"id": "leave_block", "text": "Выбраться из аварийного блока", "done_when": {"flag": "opening/left_emergency_block"}},
+        {"id": "old_core", "text": "Найти путь к старому ядру", "done_when": {"flag": "opening/reached_old_core"}},
+        {"id": "old_control", "text": "Найти старый резервный пункт управления", "done_when": {"flag": "opening/reached_old_control"}},
+        {"id": "generator", "text": "Запустить главный генератор", "done_when": {"flag": "generator_started"}},
+        {"id": "operator_room", "text": "Найти закрытую операторскую", "done_when": {"flag": "senior_key_taken"}},
+        {"id": "succession", "text": "Запустить протокол преемственности", "done_when": {"flag": "caretaker_assigned"}},
+        {"id": "module_4", "text": "Добраться до модуля 4", "done_when": {"flag": "opening/reached_module_4"}},
+        {"id": "post_4", "text": "Подготовить пост модуля 4", "done_when": {"flag": "module4_ready"}},
+        {"id": "first_dive", "text": "Погрузиться в сон модуля 4", "done_when": {"flag": "dream/returned/module_4"}}
+      ]
+    }
+  }
+}

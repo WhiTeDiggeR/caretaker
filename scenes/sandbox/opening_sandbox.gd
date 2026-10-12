@@ -98,7 +98,9 @@ func reset_state() -> void:
 	GameState.set_flag(INITIALIZED_FLAG)
 	for section in SECTIONS:
 		GameState.set_section_power(section, GameState.Power.EMERGENCY)
-	GameState.set_objective(&"sandbox", "Проверить станции полигона")
+	# The scripted event station (#133) starts on working power; its blackout drops it.
+	GameState.set_section_power(&"sandbox_event", GameState.Power.MAIN)
+	Objectives.start(&"sandbox_tour")
 	GameState.set_flag(&"containment_online")
 	GameState.grant_access(&"module_4")
 

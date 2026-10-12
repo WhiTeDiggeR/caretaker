@@ -1,0 +1,65 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/objectives/hint_trigger.gd" id="1_trigger"]
+
+[sub_resource type="BoxShape3D" id="station"]
+size = Vector3(8, 2, 8)
+
+[sub_resource type="BoxShape3D" id="strip"]
+size = Vector3(4, 2, 2)
+
+[sub_resource type="BoxShape3D" id="wide_strip"]
+size = Vector3(8, 2, 2)
+
+[sub_resource type="BoxShape3D" id="tunnel"]
+size = Vector3(6, 2, 3)
+
+[node name="HintTriggers" type="Node3D"]
+
+[node name="Hold" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 16)
+script = ExtResource("1_trigger")
+hint_id = &"hold"
+
+[node name="Shape" type="CollisionShape3D" parent="Hold"]
+shape = SubResource("station")
+
+[node name="Crouch" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, -2.5)
+script = ExtResource("1_trigger")
+hint_id = &"crouch"
+
+[node name="Shape" type="CollisionShape3D" parent="Crouch"]
+shape = SubResource("strip")
+
+[node name="Mantle" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1, -2.5)
+script = ExtResource("1_trigger")
+hint_id = &"mantle"
+
+[node name="Shape" type="CollisionShape3D" parent="Mantle"]
+shape = SubResource("wide_strip")
+
+[node name="Access" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 1, 6)
+script = ExtResource("1_trigger")
+hint_id = &"access"
+
+[node name="Shape" type="CollisionShape3D" parent="Access"]
+shape = SubResource("station")
+
+[node name="Crawl" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1, -9)
+script = ExtResource("1_trigger")
+hint_id = &"crawl"
+
+[node name="Shape" type="CollisionShape3D" parent="Crawl"]
+shape = SubResource("tunnel")
+
+[node name="Ladder" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -9.5)
+script = ExtResource("1_trigger")
+hint_id = &"ladder"
+
+[node name="Shape" type="CollisionShape3D" parent="Ladder"]
+shape = SubResource("wide_strip")
