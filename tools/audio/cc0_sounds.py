@@ -37,6 +37,10 @@ SOURCES: dict[str, tuple[str, str]] = {
     "377203": ("kiddpark", "FX kill switch single record.wav"),
     "386208": ("ldezem", "Ratchet drill - Unbranded - Tighten"),
     "829092": ("-+Fugu+-", "locked door"),
+    "322920": ("jedspear", "Automatic garage door opening"),
+    "406197": ("kyles", "door metal big heavy close kinda slam thud echo offmic.wav"),
+    "438732": ("craigsmith", "G45-30-Submarine Hatch Opening.wav"),
+    "583059": ("Profispiesser", "FX SaSc Door 01 Metal Rattle Open Close 2 Versions.wav"),
     "709272": ("Skybonator", "Honda Generator Start-Up."),
     "606933": ("Garuda1982", "large diesel emergency generator is running"),
 }
@@ -62,6 +66,12 @@ ONE_SHOTS: dict[str, tuple[list[tuple[str, float, float, float, float]], float]]
     "switch": ([("139970", 1.25, 2.45, 1.0, 0.0), ("377203", 0.62, 1.82, 0.6, 0.0)], 0.5),
     "lever": ([("386208", 1.35, 2.05, 1.0, 0.0)], 0.15),
     "door_locked": ([("829092", 1.70, 2.32, 1.0, 0.0)], 0.12),
+    # Doors: lengths follow the move (hermetic and mechanical 1.4 s, service 0.8 s); door_stop
+    # plays separately when a powered or mechanical door reaches its end.
+    "door_motor": ([("322920", 1.90, 3.60, 1.0, 0.0)], 0.3),
+    "door_stop": ([("406197", 0.28, 1.30, 1.0, 0.0)], 0.5),
+    "door_mech": ([("438732", 4.00, 5.50, 1.0, 0.0)], 0.3),
+    "door_swing": ([("583059", 5.05, 5.85, 1.0, 0.0)], 0.3),
 }
 
 
