@@ -27,6 +27,9 @@ func run(c: OpeningCheck) -> void:
 	DocumentLibrary.mark_read("sandbox_memo")
 	c.is_true(hud.journal_toast.visible and hud.toast_text.text.contains("«Памятка полигона»"), "a new journal document shows the notice")
 	c.is_true(hud.dream_profile == null and hud.alert_label != null, "the HUD in reality has no dream look and listens to the chemical protocol")
+	hud.show_saved("auto")
+	c.is_true(hud.save_indicator.visible and hud.save_label.text == OpeningHud.SAVE_WRITING and hud.save_icon.state == SaveIcon.State.WRITING, "a save shows the running crystal in the HUD")
+	c.is_true(hud.is_in_group(Saves.DISPLAY_GROUP) and hud.is_in_group(Saves.HUD_GROUP), "the HUD hears saves and hides for thumbnails")
 	Containment.chemical_warning.emit(&"module_4", 10.0)
 	c.is_true(hud.alert_label.visible and hud.alert_label.text.contains("МОДУЛЬ 4") and hud.alert_label.text.contains("00:10"), "the chemical warning shows the module and the countdown")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

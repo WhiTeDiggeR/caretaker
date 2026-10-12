@@ -35,6 +35,13 @@ const VIGNETTE_REFRESH := 0.5
 const ALERT_SECONDS := 8.0
 const ALERT_WARNING := "ХИМИЧЕСКИЙ ПРОТОКОЛ · %s · ГЕРМЕТИЗАЦИЯ ЧЕРЕЗ %s"
 const ALERT_SEALED := "%s ЗАПОЛНЕН СНОТВОРНЫМ · ОКНО РЕМОНТА %s"
+const SAVE_ICON_SIZE := 52.0
+const SAVE_WRITING := "ЗАПИСЬ ЖУРНАЛА СМЕНЫ"
+const SAVE_DONE := "ЗАПИСАНО"
+## The record itself is instant; the arc runs this long so the player sees it, then closes.
+const SAVE_WRITE_SECONDS := 0.9
+const SAVE_HOLD_SECONDS := 1.6
+const SAVE_FADE_SECONDS := 0.5
 const PLATE := Color(0.04, 0.047, 0.05, 0.72)
 const OBJECTIVE_FLASH_SECONDS := 1.2
 const HINT_WIDTH := 900.0
@@ -65,17 +72,24 @@ var alert_label: Label
 var _vignette: ColorRect
 var _vignette_timer: Timer
 var _alert_timer: Timer
+var save_indicator: Control
+var save_icon: SaveIcon
+var save_label: Label
+var _save_tween: Tween
 
 
 func _ready() -> void:
 	add_to_group(MESSAGE_GROUP)
 	add_to_group(HINT_GROUP)
+	add_to_group(Saves.HUD_GROUP)
+	add_to_group(Saves.DISPLAY_GROUP)
 	_build_hint()
 	_apply_style()
 	_journal_size = DocumentLibrary.read_ids().size()
 	GameState.flag_changed.connect(_on_flag_changed)
 	GameState.state_loaded.connect(func() -> void: _journal_size = DocumentLibrary.read_ids().size())
 	_toast_timer.timeout.connect(func() -> void: journal_toast.visible = false)
+	_build_save_indicator()
 	if Dreams.in_dream:
 		_enter_dream_mode(DreamProfile.for_module(Dreams.module_id))
 	else:
@@ -324,3 +338,48 @@ static func _module_label(id: StringName) -> String:
 static func _clock(seconds: float) -> String:
 	var total := maxi(int(ceil(seconds)), 0)
 	return "%02d:%02d" % [total / 60, total % 60]
+
+
+# --- Save indicator (issue #152) ------------------------------------------------------------
+
+## Bottom right: the save icon with a mono line. Runs while the game is paused too.
+func _build_save_indicator() -> void:
+	save_indicator = HBoxContainer.new()
+	save_indicator.name = "SaveIndicator"
+	save_indicator.process_mode = Node.PROCESS_MODE_ALWAYS
+	save_indicator.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	save_indicator.alignment = BoxContainer.ALIGNMENT_END
+	save_indicator.add_theme_constant_override(&"separation", 10)
+	save_indicator.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	save_indicator.offset_left = -460.0
+	save_indicator.offset_right = -36.0
+	save_indicator.offset_top = -36.0 - SAVE_ICON_SIZE
+	save_indicator.offset_bottom = -36.0
+	save_indicator.visible = false
+	add_child(save_indicator)
+	save_label = Label.new()
+	save_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	save_label.size_flags_vertical = Control.SIZE_FILL
+	_shadowed(save_label, UiStyle.FONT_MONO_MEDIUM, LABEL_SIZE, Color(UiStyle.TEXT, 0.8))
+	save_indicator.add_child(save_label)
+	save_icon = SaveIcon.new()
+	save_icon.custom_minimum_size = Vector2(SAVE_ICON_SIZE, SAVE_ICON_SIZE)
+	save_indicator.add_child(save_icon)
+
+
+## Called through the `save_display` group after every successful save.
+func show_saved(_slot: String) -> void:
+	if _save_tween:
+		_save_tween.kill()
+	save_indicator.visible = true
+	save_indicator.modulate.a = 1.0
+	save_label.text = SAVE_WRITING
+	save_icon.start()
+	_save_tween = save_indicator.create_tween()
+	_save_tween.tween_interval(SAVE_WRITE_SECONDS)
+	_save_tween.tween_callback(func() -> void:
+		save_icon.complete()
+		save_label.text = SAVE_DONE)
+	_save_tween.tween_interval(SAVE_HOLD_SECONDS)
+	_save_tween.tween_property(save_indicator, "modulate:a", 0.0, SAVE_FADE_SECONDS)
+	_save_tween.tween_callback(func() -> void: save_indicator.visible = false)

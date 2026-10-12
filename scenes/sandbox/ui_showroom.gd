@@ -99,6 +99,21 @@ func _page_shell() -> void:
 	ShellUI.button(column, "Загрузить игру", func() -> void: pass).grab_focus()
 	ShellUI.button(column, "Полигон (отладка)", func() -> void: pass, "НЕДОСТУПНО").disabled = true
 	ShellUI.button(column, "В главное меню", func() -> void: pass, "НЕСОХРАНЁННОЕ ПРОПАДЁТ").danger = true
+	ShellUI.label(column, "ИКОНКА СОХРАНЕНИЯ", &"ShellSection")
+	var icons := HBoxContainer.new()
+	icons.add_theme_constant_override(&"separation", 24)
+	column.add_child(icons)
+	for side: float in [96.0, 52.0, 30.0]:
+		var icon := SaveIcon.new()
+		icon.custom_minimum_size = Vector2(side, side)
+		icons.add_child(icon)
+		icon.start()
+	ShellUI.button(column, "Запись завершена / снова", func() -> void:
+		for icon: SaveIcon in icons.get_children():
+			if icon.state == SaveIcon.State.DONE:
+				icon.start()
+			else:
+				icon.complete())
 	ShellUI.label(column, "ЭКРАНЫ", &"ShellSection")
 	ShellUI.button(column, "Настройки", func() -> void: SettingsScreen.open(self))
 	ShellUI.button(column, "Слоты сохранений", func() -> void: SaveSlotsScreen.open(self, SaveSlotsScreen.Mode.SAVE))
@@ -175,6 +190,7 @@ func _page_hud() -> void:
 	_hud.hold_progress.value = _hud.hold_progress.max_value * 0.6
 	_hud.show_journal_notice("Памятка персонала")
 	_hud.show_hint("Шлюз открывается только с поста контроля")
+	_hud.show_saved("slot_1")
 	if _hud.alert_label:
 		_hud.show_alert(OpeningHud.ALERT_WARNING % ["МОДУЛЬ 4", "00:10"])
 

@@ -9,6 +9,10 @@ signal closed
 
 enum Mode { SAVE, LOAD }
 
+const WRITTEN_NOTE := "ЗАПИСАНО"
+const WRITTEN_ICON := 30.0
+const WRITTEN_SECONDS := 2.0
+
 var mode: Mode = Mode.SAVE
 var slot_buttons: Dictionary[String, ShellButton] = {}
 var _note: Label
@@ -31,6 +35,7 @@ func _ready() -> void:
 		if mode == Mode.SAVE and slot == Saves.AUTO:
 			continue
 		slot_buttons[slot] = ShellUI.button(column, Saves.slot_title(slot), choose.bind(slot))
+		slot_buttons[slot].show_thumbnail = true
 	_note = ShellUI.label(column, "", &"ShellNote")
 	ShellUI.button(column, "Назад", close)
 	refresh()
@@ -43,6 +48,7 @@ func refresh() -> void:
 		slot_buttons[slot].text = Saves.slot_title(slot) + ((" — " + objective) if used and not objective.is_empty() else "")
 		slot_buttons[slot].note = Saves.stamp(slot) if used else "ПУСТО"
 		slot_buttons[slot].disabled = mode == Mode.LOAD and not used
+		slot_buttons[slot].thumbnail = Saves.thumbnail(slot) if used else null
 
 
 func choose(slot: String) -> void:
@@ -53,12 +59,31 @@ func choose(slot: String) -> void:
 			overwrite_confirmed = false)
 		return
 	if mode == Mode.SAVE:
-		var result := Saves.write(slot, get_tree())
-		_note.text = "Сохранено: %s." % Saves.slot_title(slot) if result == OK else "Не удалось сохранить (ошибка %d)." % result
+		var result := Saves.write(slot, get_tree(), Saves.last_frame)
+		_note.text = "" if result == OK else "Не удалось сохранить (ошибка %d)." % result
 		refresh()
+		if result == OK:
+			_show_written(slot_buttons[slot])
 	else:
 		close()
 		Shell.load_game(slot)
+
+
+## The written slot flashes; the save icon and «ЗАПИСАНО» take its note for a moment.
+func _show_written(button: ShellButton) -> void:
+	button.flash()
+	button.note = WRITTEN_NOTE
+	var icon := SaveIcon.new()
+	icon.size = Vector2(WRITTEN_ICON, WRITTEN_ICON)
+	var note_width := UiStyle.FONT_MONO.get_string_size(WRITTEN_NOTE, HORIZONTAL_ALIGNMENT_LEFT, -1, ShellButton.NOTE_SIZE).x
+	icon.position = Vector2(button.size.x - ShellButton.NOTE_GAP - note_width - WRITTEN_ICON - 6.0, (button.size.y - WRITTEN_ICON) * 0.5)
+	button.add_child(icon)
+	icon.complete()
+	get_tree().create_timer(WRITTEN_SECONDS, true).timeout.connect(func() -> void:
+		if is_instance_valid(icon):
+			icon.queue_free()
+		if is_inside_tree():
+			refresh())
 
 
 func close() -> void:

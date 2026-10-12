@@ -154,13 +154,22 @@ func pause() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_pause_layer = CanvasLayer.new()
 	_pause_layer.layer = 80
+	# Hidden for the frames it takes to grab the game without HUD for a save thumbnail.
+	_pause_layer.visible = false
 	add_child(_pause_layer)
+	_grab_pause_frame(_pause_layer)
 	var column := ShellUI.screen(_pause_layer, "Пауза")
 	var resume_button := ShellUI.button(column, "Продолжить", resume)
 	_add_pause_items(column)
 	ShellUI.button(column, "В главное меню", main_menu, "НЕСОХРАНЁННОЕ ПРОПАДЁТ").danger = true
 	resume_button.grab_focus.call_deferred()
 	paused_changed.emit(true)
+
+
+func _grab_pause_frame(layer: CanvasLayer) -> void:
+	Saves.last_frame = await Saves.grab_frame(get_tree())
+	if is_instance_valid(layer):
+		layer.visible = true
 
 
 func _add_pause_items(column: VBoxContainer) -> void:
