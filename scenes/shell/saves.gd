@@ -88,14 +88,25 @@ static func latest() -> String:
 
 ## One line for the slot list: time and objective, or «пусто».
 static func describe(slot: String) -> String:
+	if not exists(slot):
+		return "%s — пусто" % slot_title(slot)
+	var objective := str(read(slot).get("objective", ""))
+	return "%s — %s%s" % [slot_title(slot), stamp(slot), (" — " + objective) if not objective.is_empty() else ""]
+
+
+## Local date and time of a save ("11.10.2026 23:14"), empty for an empty slot.
+static func stamp(slot: String) -> String:
 	var data := read(slot)
 	if data.is_empty():
-		return "%s — пусто" % slot_title(slot)
+		return ""
 	var bias := int(Time.get_time_zone_from_system().get("bias", 0)) * 60
 	var when := Time.get_datetime_dict_from_unix_time(int(float(data["saved_at"])) + bias)
-	var stamp := "%02d.%02d.%04d %02d:%02d" % [when.day, when.month, when.year, when.hour, when.minute]
-	var objective := str(data.get("objective", ""))
-	return "%s — %s%s" % [slot_title(slot), stamp, (" — " + objective) if not objective.is_empty() else ""]
+	return "%02d.%02d.%04d %02d:%02d" % [when.day, when.month, when.year, when.hour, when.minute]
+
+
+## Objective the save was made at, empty when none.
+static func objective(slot: String) -> String:
+	return str(read(slot).get("objective", ""))
 
 
 ## Restores objects and the hero into the already loaded scene of `data`.

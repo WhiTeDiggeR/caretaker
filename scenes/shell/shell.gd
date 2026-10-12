@@ -2,7 +2,8 @@ extends Node
 
 ## Game shell (autoload `Shell`): scene changes behind a loading screen with threaded
 ## loading, the pause menu (Esc in gameplay, when no terminal, document or message took the
-## key) and entry points of the main menu. Screens are built from ShellUI.
+## key) and entry points of the main menu. Screens are built from ShellUI (variant A); the
+## loading screen is the crystal of variant B (docs/ui/style-guide.md, issue #144).
 
 signal scene_changed(path: String)
 signal paused_changed(paused: bool)
@@ -11,6 +12,9 @@ const MAIN_MENU := "res://scenes/shell/main_menu.tscn"
 ## Test range of the opening systems, offered by the main menu in debug builds.
 const SANDBOX_SCENE := "res://scenes/sandbox/opening_sandbox.tscn"
 const PLAYER_GROUP := &"player"
+const LOADING_WORD := "загрузка"
+const LOADING_BAR_WIDTH := 360.0
+const LOADING_SPACING := 18
 
 ## Scene a new game starts in. The complex scene until the opening scene exists.
 var new_game_scene := "res://scenes/underground_research_complex.tscn"
@@ -30,11 +34,36 @@ func _ready() -> void:
 	_loading_layer.layer = 90
 	_loading_layer.visible = false
 	add_child(_loading_layer)
-	var column := ShellUI.screen(_loading_layer, "ЗАГРУЗКА", 420.0)
+	_build_loading_screen()
+
+
+## The crystal breathes while the scene loads; one word and a hairline of progress below it.
+func _build_loading_screen() -> void:
+	var root := Control.new()
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.theme = ShellUI.theme()
+	_loading_layer.add_child(root)
+	root.add_child(CrystalBackdrop.new())
+	var column := VBoxContainer.new()
+	column.set_anchors_preset(Control.PRESET_CENTER)
+	column.offset_top = 150.0
+	column.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	column.add_theme_constant_override(&"separation", 18)
+	root.add_child(column)
+	var word := Label.new()
+	word.text = LOADING_WORD
+	word.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var spaced := UiStyle.FONT_DREAM.duplicate() as FontVariation
+	spaced.spacing_glyph = LOADING_SPACING
+	word.add_theme_font_override(&"font", spaced)
+	word.add_theme_font_size_override(&"font_size", 40)
+	word.add_theme_color_override(&"font_color", Color(0.9, 0.95, 0.97, 0.8))
+	column.add_child(word)
 	_loading_bar = ProgressBar.new()
 	_loading_bar.max_value = 1.0
 	_loading_bar.show_percentage = false
-	_loading_bar.custom_minimum_size = Vector2(0, 10)
+	_loading_bar.custom_minimum_size = Vector2(LOADING_BAR_WIDTH, 2)
+	_loading_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	column.add_child(_loading_bar)
 
 
@@ -126,10 +155,10 @@ func pause() -> void:
 	_pause_layer = CanvasLayer.new()
 	_pause_layer.layer = 80
 	add_child(_pause_layer)
-	var column := ShellUI.screen(_pause_layer, "ПАУЗА")
+	var column := ShellUI.screen(_pause_layer, "Пауза")
 	var resume_button := ShellUI.button(column, "Продолжить", resume)
 	_add_pause_items(column)
-	ShellUI.button(column, "В главное меню", main_menu)
+	ShellUI.button(column, "В главное меню", main_menu, "НЕСОХРАНЁННОЕ ПРОПАДЁТ").danger = true
 	resume_button.grab_focus.call_deferred()
 	paused_changed.emit(true)
 

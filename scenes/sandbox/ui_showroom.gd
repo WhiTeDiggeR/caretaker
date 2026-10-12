@@ -83,7 +83,36 @@ func show_page(name: String) -> void:
 		"Сон":
 			_page_buttons("Оверлей между мирами (щелчок — следующий режим скрывает предыдущий).", ["Вход", "Врата", "Смерть во сне", "Экстренное пробуждение", "Скрыть"], show_veil)
 		"Оболочка":
-			_label(_content, "Вариант оболочки ждёт выбора автора (#144). Сейчас меню собирает ShellUI; элементы варианта А — на доске docs/ui/style-board.html.", UiStyle.TEXT, Vector2(32, 40))
+			_page_shell()
+
+
+## Elements of the shell (variant A) and the entries to its screens; the splash and the
+## loading screen are variant B.
+func _page_shell() -> void:
+	var column := VBoxContainer.new()
+	column.position = Vector2(32, 32)
+	column.custom_minimum_size = Vector2(560, 0)
+	column.add_theme_constant_override(&"separation", 2)
+	_content.add_child(column)
+	ShellUI.label(column, "КНОПКИ-ПУНКТЫ", &"ShellSection")
+	ShellUI.button(column, "Продолжить", func() -> void: pass, "11.10.2026 23:14")
+	ShellUI.button(column, "Загрузить игру", func() -> void: pass).grab_focus()
+	ShellUI.button(column, "Полигон (отладка)", func() -> void: pass, "НЕДОСТУПНО").disabled = true
+	ShellUI.button(column, "В главное меню", func() -> void: pass, "НЕСОХРАНЁННОЕ ПРОПАДЁТ").danger = true
+	ShellUI.label(column, "ЭКРАНЫ", &"ShellSection")
+	ShellUI.button(column, "Настройки", func() -> void: SettingsScreen.open(self))
+	ShellUI.button(column, "Слоты сохранений", func() -> void: SaveSlotsScreen.open(self, SaveSlotsScreen.Mode.SAVE))
+	ShellUI.button(column, "Подтверждение", func() -> void:
+		ShellUI.confirm(self, "Перезаписать слот?", "Сохранение «Слот 1» будет заменено. Отменить это нельзя.", "Перезаписать", func() -> void: pass))
+	ShellUI.button(column, "Пауза", func() -> void:
+		Shell.pause()
+		get_tree().paused = false)
+	ShellUI.button(column, "Загрузка (вариант Б, 2 с)", func() -> void:
+		Shell._loading_layer.visible = true
+		get_tree().create_timer(2.0).timeout.connect(func() -> void: Shell._loading_layer.visible = false))
+	ShellUI.button(column, "Главное меню с заставкой (вариант Б)", func() -> void:
+		MainMenu.splash_seen = false
+		get_tree().change_scene_to_file(Shell.MAIN_MENU))
 
 
 ## Three world screens side by side and the state switcher.

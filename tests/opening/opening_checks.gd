@@ -21,6 +21,7 @@ const CASES: Array[String] = [
 	"res://tests/opening/cases/settings_case.gd",
 	"res://tests/opening/cases/saves_case.gd",
 	"res://tests/opening/cases/objectives_case.gd",
+	"res://tests/opening/cases/shell_ui_case.gd",
 	"res://tests/opening/cases/ui_showroom_case.gd",
 ]
 

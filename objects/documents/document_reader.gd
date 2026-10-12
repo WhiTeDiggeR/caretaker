@@ -6,7 +6,8 @@ extends CanvasLayer
 ## Journal: ↑↓ choose, E/Enter open, Esc/J close. The player is locked while open.
 ## A document is drawn as paper of the complex (docs/ui/style-guide.md, issue #148):
 ## typewritten body, optional form header, stamps, a handwritten margin note or a fully
-## handwritten sheet; redactions are the █ characters of the text itself.
+## handwritten sheet; redactions are the █ characters of the text itself. The journal is the
+## player's tool, so it takes the look of the shell instead of paper (issue #144).
 
 signal closed
 
@@ -18,7 +19,7 @@ const OBJECTIVES_TITLE := "ЦЕЛИ"
 const DOCUMENTS_TITLE := "ДОКУМЕНТЫ"
 const CURRENT_MARK := ">  "
 const DONE_MARK := "—  "
-const MUTED := Color(0.38, 0.34, 0.28)
+const MUTED := UiStyle.MUTED
 const META_COLOR := Color(0.36, 0.32, 0.26)
 const TITLE_SIZE := 25
 const BODY_SIZE := 19
@@ -49,6 +50,8 @@ var document_id := ""
 var in_journal := false
 var selected := 0
 var _from_journal := false
+var _paper_theme: Theme
+var _paper_box: StyleBox
 
 
 func _ready() -> void:
@@ -83,6 +86,7 @@ func show_document(id: String, from_journal: bool = false) -> void:
 	meta_label.text = str(document.get("meta", ""))
 	meta_label.visible = not meta_label.text.is_empty()
 	body_label.text = str(document.get("body", ""))
+	_set_look(false)
 	_set_hand(bool(document.get("handwritten", false)))
 	_show_form(document.get("form", {}))
 	_show_marks(document.get("stamps", []), document.get("note", ""))
@@ -102,6 +106,7 @@ func show_journal() -> void:
 	meta_label.visible = true
 	scroll.visible = false
 	list_box.visible = true
+	_set_look(true)
 	_show_form({})
 	_show_marks([], "")
 	selected = clampi(selected, 0, maxi(DocumentLibrary.read_ids().size() - 1, 0))
@@ -132,7 +137,7 @@ func _fill_list() -> void:
 		var title := str(DocumentLibrary.get_document(ids[index]).get("title", ids[index]))
 		label.text = (SELECT_MARK if index == selected else "   ") + title
 		label.add_theme_font_size_override(&"font_size", 21)
-		label.add_theme_color_override(&"font_color", UiStyle.STAMP if index == selected else UiStyle.INK)
+		label.add_theme_color_override(&"font_color", UiStyle.ACCENT if index == selected else UiStyle.TEXT)
 		list_box.add_child(label)
 
 
@@ -142,21 +147,22 @@ func _add_objectives() -> void:
 	var done := Objectives.completed_texts()
 	if current.is_empty() and done.is_empty():
 		return
-	_add_line(OBJECTIVES_TITLE, 20, MUTED)
+	_add_line(OBJECTIVES_TITLE, 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
 	if not current.is_empty():
-		_add_line(CURRENT_MARK + current, 21, UiStyle.INK)
+		_add_line(CURRENT_MARK + current, 21, UiStyle.TEXT)
 	for index in range(done.size() - 1, -1, -1):
 		_add_line(DONE_MARK + done[index], 20, MUTED)
-	_add_line(DOCUMENTS_TITLE, 20, MUTED)
+	_add_line(DOCUMENTS_TITLE, 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
 
 
-func _add_line(text: String, size: int, color: Color) -> void:
+func _add_line(text: String, size: int, color: Color) -> Label:
 	var label := Label.new()
 	label.text = text
 	label.add_theme_font_size_override(&"font_size", size)
 	label.add_theme_color_override(&"font_color", color)
 	label.set_meta(OBJECTIVE_META, true)
 	list_box.add_child(label)
+	return label
 
 
 
@@ -166,6 +172,8 @@ func _apply_style() -> void:
 	paper_theme.default_font_size = 20
 	paper_theme.set_color(&"font_color", &"Label", UiStyle.INK)
 	$Paper.theme = paper_theme
+	_paper_theme = paper_theme
+	_paper_box = ($Paper as Control).get_theme_stylebox(&"panel")
 	title_label.add_theme_font_override(&"font", UiStyle.FONT_BODY_BOLD)
 	title_label.add_theme_font_size_override(&"font_size", TITLE_SIZE)
 	meta_label.add_theme_font_override(&"font", UiStyle.FONT_MONO)
@@ -189,6 +197,18 @@ func _apply_style() -> void:
 	grain.noise = noise
 	_grain.texture = grain
 	_grain.modulate = Color(0.35, 0.27, 0.16, GRAIN_ALPHA)
+
+
+## Paper for documents, the shell plate (dark, amber edge) for the journal.
+func _set_look(journal: bool) -> void:
+	var paper := $Paper as PanelContainer
+	paper.theme = ShellUI.theme() if journal else _paper_theme
+	paper.add_theme_stylebox_override(&"panel", ShellUI.theme().get_stylebox(&"panel", &"PanelContainer") if journal else _paper_box)
+	_grain.visible = not journal
+	title_label.add_theme_font_override(&"font", UiStyle.FONT_DISPLAY if journal else UiStyle.FONT_BODY_BOLD)
+	title_label.add_theme_color_override(&"font_color", UiStyle.ACCENT if journal else UiStyle.INK)
+	meta_label.add_theme_color_override(&"font_color", UiStyle.MUTED if journal else META_COLOR)
+	hint_label.add_theme_color_override(&"font_color", UiStyle.MUTED if journal else META_COLOR)
 
 
 ## Typewritten body, or the whole sheet in a hand (notes of the staff).
