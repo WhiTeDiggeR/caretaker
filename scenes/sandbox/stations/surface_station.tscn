@@ -1,0 +1,120 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="mat_concrete"]
+albedo_color = Color(0.42, 0.42, 0.4, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="mesh_concrete"]
+material = SubResource("mat_concrete")
+size = Vector3(2.4, 0.04, 12)
+
+[sub_resource type="StandardMaterial3D" id="mat_metal"]
+albedo_color = Color(0.36, 0.42, 0.48, 1)
+metallic = 0.7
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="mesh_metal"]
+material = SubResource("mat_metal")
+size = Vector3(2.4, 0.04, 12)
+
+[sub_resource type="StandardMaterial3D" id="mat_grate"]
+albedo_color = Color(0.62, 0.5, 0.22, 1)
+metallic = 0.7
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="mesh_grate"]
+material = SubResource("mat_grate")
+size = Vector3(2.4, 0.04, 12)
+
+[sub_resource type="BoxShape3D" id="strip_shape"]
+size = Vector3(2.4, 0.04, 12)
+
+[sub_resource type="StandardMaterial3D" id="mat_ledge"]
+albedo_color = Color(0.3, 0.32, 0.34, 1)
+
+[sub_resource type="BoxMesh" id="mesh_ledge"]
+material = SubResource("mat_ledge")
+size = Vector3(3, 1.2, 2)
+
+[sub_resource type="BoxShape3D" id="ledge_shape"]
+size = Vector3(3, 1.2, 2)
+
+[node name="SurfaceStation" type="Node3D"]
+
+[node name="Concrete" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0, -0.019, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Concrete"]
+mesh = SubResource("mesh_concrete")
+
+[node name="Collision" type="CollisionShape3D" parent="Concrete"]
+shape = SubResource("strip_shape")
+
+[node name="ConcreteLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0, 2.2, 0.5)
+pixel_size = 0.004
+text = "БЕТОН
+(без метки)"
+font_size = 40
+outline_size = 10
+
+[node name="Metal" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, -0.019, -6)
+metadata/surface = "metal"
+
+[node name="Mesh" type="MeshInstance3D" parent="Metal"]
+mesh = SubResource("mesh_metal")
+
+[node name="Collision" type="CollisionShape3D" parent="Metal"]
+shape = SubResource("strip_shape")
+
+[node name="MetalLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0, 2.2, 0.5)
+pixel_size = 0.004
+text = "МЕТАЛЛ
+метка surface"
+font_size = 40
+outline_size = 10
+
+[node name="Grate" type="StaticBody3D" parent="." groups=["surface_grate"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0, -0.019, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Grate"]
+mesh = SubResource("mesh_grate")
+
+[node name="Collision" type="CollisionShape3D" parent="Grate"]
+shape = SubResource("strip_shape")
+
+[node name="GrateLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0, 2.2, 0.5)
+pixel_size = 0.004
+text = "РЕШЁТКА
+группа surface_grate"
+font_size = 40
+outline_size = 10
+
+[node name="Ledge" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.6, -6)
+
+[node name="Mesh" type="MeshInstance3D" parent="Ledge"]
+mesh = SubResource("mesh_ledge")
+
+[node name="Collision" type="CollisionShape3D" parent="Ledge"]
+shape = SubResource("ledge_shape")
+
+[node name="LedgeLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2.2, 0.5)
+pixel_size = 0.004
+text = "УСТУП 1,2 м
+залезть (прыжок) и спрыгнуть:
+приземление"
+font_size = 36
+outline_size = 10
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 0.5)
+pixel_size = 0.005
+text = "ДОРОЖКИ ПОКРЫТИЙ · ШАГИ (#134)
+ходьба · бег · присед · ползком"
+font_size = 44
+outline_size = 10

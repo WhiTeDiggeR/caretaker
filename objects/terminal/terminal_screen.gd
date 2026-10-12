@@ -8,6 +8,8 @@ extends CanvasLayer
 
 signal closed
 
+## A key click every N printed characters (not every one: 140 per second is a buzz).
+const TYPE_SOUND_EVERY := 6
 const AUTO_NEXT_PAUSE := 0.8
 const PLAYER_GROUP := &"player"
 const SELECT_MARK := "> "
@@ -24,6 +26,7 @@ const HINT_SIZE := 16
 var program: TerminalProgram
 var style: ScreenStyle
 var screen_id := ""
+var _typed_sound_step := 0
 var view: Dictionary = {}
 var selected := 0
 var typing := false
@@ -82,7 +85,9 @@ func choose(option_position: int) -> void:
 		return
 	var option: Dictionary = options[option_position]
 	if not option["available"]:
+		Sfx.play(&"terminal_error")
 		return
+	Sfx.play(&"terminal_beep")
 	var target := program.choose(screen_id, option["index"])
 	if target == "exit":
 		close()
@@ -106,6 +111,9 @@ func _process(delta: float) -> void:
 	else:
 		_typed += delta * style.chars_per_second
 	var count := mini(int(_typed), _current.length())
+	if count / TYPE_SOUND_EVERY != _typed_sound_step:
+		_typed_sound_step = count / TYPE_SOUND_EVERY
+		Sfx.play(&"terminal_type")
 	body_label.text = _shown_text + _current.substr(0, count)
 	if count >= _current.length():
 		_shown_text += _current + "\n"

@@ -45,6 +45,8 @@ func _ready() -> void:
 	invert.toggled.connect(Settings.set_invert_y)
 	rows.add_child(invert)
 	_slider(rows, "Поле зрения", Settings.FOV_RANGE.x, Settings.FOV_RANGE.y, 1.0, Settings.fov, "%d°", Settings.set_fov)
+	_slider(rows, "Покачивание камеры", 0.0, 100.0, 5.0, Settings.head_bob * 100.0, "%d %%",
+			func(value: float) -> void: Settings.set_head_bob(value / 100.0))
 
 	_section(rows, "Экраны")
 	crt_toggle = CheckBox.new()

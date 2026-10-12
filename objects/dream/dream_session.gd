@@ -25,6 +25,7 @@ const GATE_LINE := "ВЫХОД ЧЕРЕЗ ВРАТА · СИНХРОНИЗАЦИ
 const DEATH_LINE := "ПРИНУДИТЕЛЬНОЕ ВОЗВРАЩЕНИЕ · НЕСТАБИЛЬНОСТЬ +%d %%"
 const WOKEN_LINE := "МОДУЛЬ ЗАПОЛНЕН СНОТВОРНЫМ · ВРЕМЯ НА РЕМОНТ СОКРАЩЕНО"
 const TRANSITION_BY_EXIT: Array[DreamTransition.Mode] = [DreamTransition.Mode.GATE, DreamTransition.Mode.DEATH, DreamTransition.Mode.WOKEN]
+const RESYNC_LINE := "Печать восстановлена. Требуется ресинхронизация капсулы — знаки записаны в журнале."
 
 var time_ratio := 15.0
 var entry_cost := 8.0
@@ -162,6 +163,8 @@ func return_text(reason: Exit) -> String:
 		text = "Связь со сном прервана. Нестабильность модуля выросла.\n" + text
 	elif reason == Exit.WOKEN:
 		text = "Модуль заполнен снотворным. Силуэт из сна вытолкнул вас наружу — времени на ремонт меньше.\n" + text
+	if not DreamKnowledge.active_for(module_id).is_empty():
+		text += "\n" + RESYNC_LINE
 	return text
 
 

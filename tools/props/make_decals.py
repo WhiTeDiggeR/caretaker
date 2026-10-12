@@ -326,6 +326,33 @@ def make_screens(out: Path):
     save(atlas, out / "decals" / "screens.png", uv)
 
 
+# ---------------------------------------------------------------- prisoner capsule consoles (#130)
+def capsule_screen(col, dim, number: str, status: str, timer: str, w=1024, h=512):
+    """Sleep monitor of a prisoner capsule: object number only (the monitor never names prisoners)."""
+    im = screen_base(w, h, 940 + int(number))
+    d = ImageDraw.Draw(im)
+    d.rectangle((16, 16, w - 16, h - 16), outline=dim, width=4)
+    d.text((40, 34), f"ОБЪЕКТ №{number}", font=font(FONT_BOLD, 44), fill=col)
+    d.text((w - 330, 40), "РЕЖИМ СНА", font=font(FONT_BOLD, 36), fill=dim)
+    centered(d, (0, 120, w, 330), timer, font(FONT_MONO, 170), col)
+    d.text((40, 360), status, font=font(FONT_BOLD, 40), fill=col)
+    for i in range(24):  # sleep-depth bar graph
+        hgt = 20 + int(70 * abs(math.sin(i * 0.7 + int(number))))
+        d.rectangle((40 + i * 38, h - 40 - hgt, 64 + i * 38, h - 40), fill=dim)
+    return im
+
+
+def make_capsule_screens(out: Path):
+    cw, ch = 1024, 512
+    atlas = Image.new("RGB", (cw * 2, ch))
+    uv = {}
+    for i, (name, im) in enumerate((("module_4", capsule_screen(GRN, (24, 90, 44), "4", "СОН СТАБИЛЕН · СИНХРОНИЗАЦИЯ 98%", "07:42:19")),
+                                    ("module_3", capsule_screen(CY, CYD, "3", "АНОМАЛИЯ ПОЛЯ · НАБЛЮДЕНИЕ", "06:18:47")))):
+        atlas.paste(im, (i * cw, 0))
+        uv[name] = [i * cw / atlas.width, 0.0, (i + 1) * cw / atlas.width, 1.0]
+    save(atlas, out / "decals" / "capsule_screens.png", uv)
+
+
 # ---------------------------------------------------------------- floor markings
 def make_floor_markings(out: Path):
     """Floor decals: lane lines, arrows, section numbers. Cells are 512x512."""
@@ -396,7 +423,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="loads/textures")
     out = Path(ap.parse_args().out)
-    for fn in (make_signs, make_hazard, make_labels, make_gauges, make_screens, make_floor_markings, make_grime):
+    for fn in (make_signs, make_hazard, make_labels, make_gauges, make_screens, make_capsule_screens, make_floor_markings, make_grime):
         fn(out)
     return 0
 

@@ -23,5 +23,6 @@ func _on_body_entered(body: Node3D) -> void:
 	# The save indicator of the HUD shows the record (issue #152); the frame for the thumbnail
 	# follows a couple of frames later, without the HUD.
 	if Saves.write(Saves.AUTO, get_tree()) == OK:
+		Sfx.play(&"checkpoint")
 		var frame: Image = await Saves.grab_frame(get_tree())
 		Saves.store_thumbnail(Saves.AUTO, frame)

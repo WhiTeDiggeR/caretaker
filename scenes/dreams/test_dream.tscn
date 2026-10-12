@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" path="res://objects/dream/dream_seal.tscn" id="5_seal"]
 [ext_resource type="Script" path="res://objects/dream/dream_hazard.gd" id="6_hazard"]
 [ext_resource type="Script" path="res://scenes/dreams/test_dream.gd" id="7_dream"]
+[ext_resource type="Script" path="res://objects/dream/combat/dream_combat_setup.gd" id="8_combat"]
+[ext_resource type="Script" path="res://objects/dream/combat/dream_weapon_pickup.gd" id="9_pickup"]
+[ext_resource type="Script" path="res://objects/dream/combat/dream_enemy.gd" id="10_enemy"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -35,6 +38,13 @@ size = Vector3(2, 0.4, 8)
 
 [sub_resource type="BoxShape3D" id="bridge_shape"]
 size = Vector3(2, 0.4, 8)
+
+[sub_resource type="BoxMesh" id="arena_mesh"]
+material = SubResource("rock")
+size = Vector3(14, 1, 14)
+
+[sub_resource type="BoxShape3D" id="arena_shape"]
+size = Vector3(14, 1, 14)
 
 [sub_resource type="PlaneMesh" id="lava_mesh"]
 material = SubResource("lava")
@@ -113,6 +123,7 @@ shape = SubResource("lava_shape")
 
 [node name="Seal" parent="." instance=ExtResource("5_seal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+knowledge_id = &"module_4_seal"
 
 [node name="Gate" parent="." instance=ExtResource("4_gate")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -39)
@@ -120,9 +131,56 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -39)
 [node name="Hint" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -4)
 pixel_size = 0.006
-text = "ТЕСТОВЫЙ СОН\nпечать — в центре, врата — в конце; лава смертельна"
+text = "ТЕСТОВЫЙ СОН\nпечать — в центре, врата — в конце; лава смертельна\nобразы оружия — по сторонам, арена — справа от печати"
 font_size = 48
 outline_size = 12
+
+[node name="Combat" type="Node" parent="."]
+script = ExtResource("8_combat")
+
+[node name="BladeImage" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -2)
+script = ExtResource("9_pickup")
+weapon_id = &"dream_blade"
+
+[node name="PulseImage" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, -2)
+script = ExtResource("9_pickup")
+weapon_id = &"dream_pulse"
+
+[node name="BridgeArena" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7, -0.2, -18)
+
+[node name="Mesh" type="MeshInstance3D" parent="BridgeArena"]
+mesh = SubResource("bridge_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="BridgeArena"]
+shape = SubResource("bridge_shape")
+
+[node name="Arena" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, -0.5, -18)
+
+[node name="Mesh" type="MeshInstance3D" parent="Arena"]
+mesh = SubResource("arena_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Arena"]
+shape = SubResource("arena_shape")
+
+[node name="ShadeArenaA" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.95, -15)
+script = ExtResource("10_enemy")
+
+[node name="ShadeArenaB" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0.95, -18)
+script = ExtResource("10_enemy")
+
+[node name="ShadeArenaC" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0.95, -21)
+script = ExtResource("10_enemy")
+
+[node name="ShadeGate" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.95, -36)
+script = ExtResource("10_enemy")
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2)

@@ -309,6 +309,7 @@ func vent(id: StringName) -> bool:
 	_chem(id)["venting"] = float(chemical.get("vent_seconds", 30.0))
 	_save()
 	reagent_changed.emit()
+	Sfx.play(&"vent")
 	return true
 
 
@@ -334,6 +335,7 @@ func recharge(id: StringName) -> bool:
 	chem["phase"] = Chemical.READY
 	_save()
 	reagent_changed.emit()
+	Sfx.play(&"recharge")
 	return true
 
 

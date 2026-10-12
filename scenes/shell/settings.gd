@@ -14,6 +14,8 @@ const BASE_MOUSE_SENSITIVITY := 0.002
 const SENSITIVITY_RANGE := Vector2(0.25, 3.0)
 const FOV_RANGE := Vector2(60.0, 100.0)
 const DEFAULT_FOV := 75.0
+## Head bob, strafe roll and landing dip of the camera (#134): 0 = off, 1 = full.
+const DEFAULT_HEAD_BOB := 1.0
 ## Remappable actions and their names in the settings screen.
 const ACTIONS: Array[StringName] = [&"move_forward", &"move_back", &"move_left", &"move_right", &"jump", &"sprint", &"crouch", &"crawl", &"interact", &"journal"]
 const ACTION_NAMES := {
@@ -28,6 +30,7 @@ var invert_y := false
 var fov := DEFAULT_FOV
 ## Scanlines, bloom and roll of the world screens (terminals, monitors); off keeps them flat.
 var crt_effects := true
+var head_bob := DEFAULT_HEAD_BOB
 
 ## Physical keycode of the primary key of each action as configured by the project.
 var _default_keys: Dictionary[StringName, int] = {}
@@ -67,6 +70,11 @@ func set_fov(value: float) -> void:
 
 func set_crt_effects(value: bool) -> void:
 	crt_effects = value
+	changed.emit()
+
+
+func set_head_bob(value: float) -> void:
+	head_bob = clampf(value, 0.0, 1.0)
 	changed.emit()
 
 
@@ -135,6 +143,7 @@ func save_settings() -> Error:
 	file.set_value("controls", "invert_y", invert_y)
 	file.set_value("video", "fov", fov)
 	file.set_value("video", "crt_effects", crt_effects)
+	file.set_value("video", "head_bob", head_bob)
 	for action in ACTIONS:
 		file.set_value("keys", String(action), primary_key(action))
 	return file.save(config_path)
@@ -149,6 +158,7 @@ func load_settings() -> void:
 		invert_y = bool(file.get_value("controls", "invert_y", false))
 		fov = float(file.get_value("video", "fov", DEFAULT_FOV))
 		crt_effects = bool(file.get_value("video", "crt_effects", true))
+		head_bob = clampf(float(file.get_value("video", "head_bob", DEFAULT_HEAD_BOB)), 0.0, 1.0)
 		for action in ACTIONS:
 			var key := int(file.get_value("keys", String(action), _default_keys[action]))
 			if key != primary_key(action):
@@ -167,6 +177,7 @@ func reset_all() -> void:
 	invert_y = false
 	fov = DEFAULT_FOV
 	crt_effects = true
+	head_bob = DEFAULT_HEAD_BOB
 	reset_keys()
 
 
