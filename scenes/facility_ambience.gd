@@ -7,6 +7,8 @@ const STEREO_FRAME_BYTES := 4
 
 
 func _ready() -> void:
+	if AudioServer.get_bus_index(&"Ambience") >= 0:
+		bus = &"Ambience"
 	stream = _create_ambience_stream()
 	play()
 
@@ -27,7 +29,8 @@ func _create_ambience_stream() -> AudioStreamWAV:
 
 	for index in frame_count:
 		var time := float(index) / MIX_RATE
-		var hum := sin(TAU * 48.0 * time) * 0.11 + sin(TAU * 96.0 * time) * 0.035
+		# No mains hum of the lamps (author feedback #126): air, ventilation and clanks only.
+		var hum := 0.0
 		var ventilation := sin(TAU * 0.17 * time) * 0.025
 		var air_noise := rng.randf_range(-0.012, 0.012)
 		if clank_samples <= 0 and rng.randf() < 1.0 / (MIX_RATE * 14.0):

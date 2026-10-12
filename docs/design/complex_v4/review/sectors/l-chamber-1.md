@@ -1,6 +1,6 @@
 # L-CHAMBER-1
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_chamber_1.svg`. Высота стен 5.0 м. Габарит 26.7×23.3 м, x -107.8…-81.1, z -2.7…20.7.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_chamber_1.svg`. Высота стен 5.0 м. Габарит 26.7×23.3 м, x -107.8…-81.1, z -2.7…20.7.
 
 ![L-CHAMBER-1](img/l-chamber-1.png)
 

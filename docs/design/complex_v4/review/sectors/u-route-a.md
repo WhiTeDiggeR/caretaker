@@ -1,6 +1,6 @@
 # U-ROUTE-A
 
-Этаж: верхний (LV-U). Источник: `docs/design/complex_v3/plans/sectors/upper/u_emergency.svg`. Высота стен 3.4 м. Габарит 15.6×21.1 м, x -62.2…-46.7, z -1.5…19.6.
+Этаж: верхний (LV-U). Источник: `docs/design/complex_v4/sources/plans/sectors/upper/u_emergency.svg`. Высота стен 5.0 м. Габарит 15.6×21.1 м, x -62.2…-46.7, z -1.5…19.6.
 
 ![U-ROUTE-A](img/u-route-a.png)
 

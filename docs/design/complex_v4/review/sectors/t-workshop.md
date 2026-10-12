@@ -1,6 +1,6 @@
 # T-WORKSHOP
 
-Этаж: технический (LV-T). Источник: `docs/design/complex_v3/plans/sectors/technical/t_workshop.svg`. Высота стен 4.5 м. Габарит 38.1×24.5 м, x -55.5…-17.4, z -4.9…19.6.
+Этаж: технический (LV-T). Источник: `docs/design/complex_v4/sources/plans/sectors/technical/t_workshop.svg`. Высота стен 4.5 м. Габарит 38.1×24.5 м, x -55.5…-17.4, z -4.9…19.6.
 
 ![T-WORKSHOP](img/t-workshop.png)
 

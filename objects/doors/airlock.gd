@@ -27,6 +27,7 @@ var _panel: Interactable
 
 
 func _ready() -> void:
+	add_to_group(&"persist")
 	door_a.section = section
 	door_b.section = section
 	door_a.interlock_partner = door_b
@@ -43,6 +44,16 @@ func _ready() -> void:
 	door_a.refresh()
 	door_b.refresh()
 	_refresh()
+
+
+func save_state() -> Dictionary:
+	return {"synced_with_a": synced_door == door_a}
+
+
+func load_state(data: Dictionary) -> void:
+	synced_door = door_a if bool(data.get("synced_with_a", true)) else door_b
+	cycling = false
+	_set_cycle_lock(false)
 
 
 func lock_reason() -> String:
@@ -81,6 +92,7 @@ func _run_cycle(from: FacilityDoor, to: FacilityDoor) -> void:
 	cycling = true
 	_set_cycle_lock(true)
 	cycle_started.emit()
+	Sfx.play(&"airlock_cycle", self)
 	if not from.is_closed():
 		from.force(false)
 		await from.closed

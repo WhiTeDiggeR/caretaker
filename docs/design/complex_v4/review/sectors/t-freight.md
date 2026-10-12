@@ -1,6 +1,6 @@
 # T-FREIGHT
 
-Этаж: технический (LV-T). Источник: `docs/design/complex_v3/plans/sectors/technical/t_freight.svg`. Высота стен 4.5 м. Габарит 43.5×10.0 м, x -15.7…27.8, z 69.6…79.6.
+Этаж: технический (LV-T). Источник: `docs/design/complex_v4/sources/plans/sectors/technical/t_freight.svg`. Высота стен 4.5 м. Габарит 43.5×10.0 м, x -15.7…27.8, z 69.6…79.6.
 
 ![T-FREIGHT](img/t-freight.png)
 

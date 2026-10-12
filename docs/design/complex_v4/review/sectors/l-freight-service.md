@@ -1,6 +1,6 @@
 # L-FREIGHT-SERVICE
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_freight_service.svg`. Высота стен 5.0 м. Габарит 43.4×10.0 м, x -15.7…27.8, z 69.6…79.6.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_freight_service.svg`. Высота стен 5.0 м. Габарит 43.4×10.0 м, x -15.7…27.8, z 69.6…79.6.
 
 ![L-FREIGHT-SERVICE](img/l-freight-service.png)
 

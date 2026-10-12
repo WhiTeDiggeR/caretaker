@@ -8,6 +8,8 @@ func run(c: OpeningCheck) -> void:
 	c.equal(DocumentLibrary.errors(), PackedStringArray(), "all document catalogues are valid")
 	c.is_true(DocumentLibrary.has("sandbox_memo"), "sandbox documents are loaded")
 	c.equal(DocumentLibrary.get_document("missing"), {}, "unknown document is empty")
+	c.equal(DocumentLibrary._validate_paper({"form": {}, "stamps": ["ДСП"], "note": "x", "handwritten": true}, "ok").size(), 0, "paper fields are accepted")
+	c.equal(DocumentLibrary._validate_paper({"form": "x", "stamps": [1], "note": 2, "handwritten": "yes"}, "bad").size(), 4, "malformed paper fields are reported")
 
 	c.equal(DocumentLibrary.read_ids(), [] as Array[String], "journal starts empty")
 	c.is_true(DocumentLibrary.mark_read("sandbox_log"), "first reading is new")
@@ -39,6 +41,10 @@ func run(c: OpeningCheck) -> void:
 	var reader := memo.reader
 	c.is_true(reader != null and reader.body_label.text.begins_with("Этот документ"), "pickup opens the reader")
 	c.is_true(player.controls_locked, "player is locked while reading")
+	c.is_true(reader.marks.get_child_count() == 1 and not reader.form_box.visible, "the memo carries a pencil note and no form header")
+	reader.show_document("sandbox_log")
+	c.is_true(reader.form_box.visible and reader.marks.get_child_count() == 2, "the log has a form header and two stamps")
+	reader.show_document("sandbox_memo")
 	c.is_true(DocumentLibrary.is_read("sandbox_memo"), "pickup adds the document to the journal")
 	reader.close()
 	await c.tree.process_frame
@@ -66,8 +72,9 @@ func run(c: OpeningCheck) -> void:
 	await c.physics_frames(2)
 
 	var journal := DocumentReader.open_journal_scene(c.tree)
-	c.is_true(journal.in_journal and journal.list_box.get_child_count() == 1, "journal lists read documents")
-	c.is_true((journal.list_box.get_child(0) as Label).text.ends_with("ПАМЯТКА ПОЛИГОНА"), "journal shows titles")
+	var lines := journal.document_lines()
+	c.is_true(journal.in_journal and lines.size() == 1, "journal lists read documents")
+	c.is_true(lines.size() == 1 and lines[0].text.ends_with("ПАМЯТКА ПОЛИГОНА"), "journal shows titles")
 	journal.show_document("sandbox_memo", true)
 	c.is_true(not journal.in_journal and journal.scroll.visible, "journal opens a document")
 	journal.close()

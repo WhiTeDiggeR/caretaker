@@ -2,9 +2,9 @@
 class_name FacilityDoor
 extends Node3D
 
-## Door of the facility with readable lock reasons. Placeholder geometry (frame, sliding
-## leaf, controls on both sides) is generated from `width`/`height`, so presets only set
-## exports. Powered doors open from a panel and need section power; mechanical doors open
+## Door of the facility with readable lock reasons. Geometry (frame, sliding leaf, controls
+## on both sides; art from `DoorArt`, #157) is generated from `width`/`height`, so presets
+## only set exports. Powered doors open from a panel and need section power; mechanical doors open
 ## with a hand wheel (hold) and work without power. Both may require an access grant or be
 ## put under emergency lock. An airlock interlocks two doors through `interlock_partner`.
 
@@ -12,7 +12,9 @@ signal state_changed(state: State)
 signal opened
 signal closed
 
-enum Kind { POWERED, MECHANICAL }
+## POWERED — panel, needs section power; MECHANICAL — hand wheel (hold), no power;
+## MANUAL — ordinary handle (press), no power (service room doors).
+enum Kind { POWERED, MECHANICAL, MANUAL }
 enum State { CLOSED, OPENING, OPEN, CLOSING }
 ## How the leaf opens (decision R-10, docs/game_design/02-prop-standard.md):
 ## SIDE — slides into a wall pocket (hermetic and mechanical doors),
@@ -32,9 +34,14 @@ const LEAF_DEPTH := 0.12
 const CONTROL_OFFSET := 0.45  # from the frame edge to the control centre
 const CONTROL_HEIGHT := 1.25
 const SWING_ANGLE := deg_to_rad(95.0)
+const WHEEL_TURNS := 1.5  # hand wheel turns over a full opening
 const LAMP_OFF := Color(0.05, 0.05, 0.05)
 const LAMP_READY := Color(0.15, 0.85, 0.3)
 const LAMP_LOCKED := Color(0.9, 0.15, 0.1)
+const SOUND_MOVE: Dictionary[Kind, StringName] = {Kind.POWERED: &"door_motor", Kind.MECHANICAL: &"door_mech", Kind.MANUAL: &"door_swing"}
+const SOUND_STOP := &"door_stop"
+## A locked handle rattles (manual doors only); wheels and powered panels keep the common refusal.
+const SOUND_LOCKED := &"door_locked"
 
 @export var kind: Kind = Kind.POWERED
 @export var width := 1.8
@@ -71,6 +78,7 @@ var _open_amount := 0.0:
 		_apply_leaf_pose()
 var _controls: Array[Interactable] = []
 var _lamps: Array[StandardMaterial3D] = []
+var _wheels: Array[Node3D] = []
 var _tween: Tween
 
 
@@ -81,10 +89,29 @@ func _ready() -> void:
 		_open_amount = 1.0
 	if Engine.is_editor_hint():
 		return
+	add_to_group(&"persist")
 	GameState.section_power_changed.connect(func(_section: StringName, _power: int) -> void: refresh())
 	GameState.access_changed.connect(func(_access: StringName, _granted: bool) -> void: refresh())
 	GameState.state_loaded.connect(refresh)
 	refresh()
+
+
+func save_state() -> Dictionary:
+	return {"open": state == State.OPEN or state == State.OPENING, "emergency_lock": emergency_lock}
+
+
+## Restores a saved door at once, without the opening animation.
+func load_state(data: Dictionary) -> void:
+	if _tween:
+		_tween.kill()
+	var open_door := bool(data.get("open", false))
+	# Scripted events lock doors (#133); older saves have no lock key and keep the authored one.
+	if data.has("emergency_lock"):
+		emergency_lock = bool(data["emergency_lock"])
+	state = State.OPEN if open_door else State.CLOSED
+	_open_amount = 1.0 if open_door else 0.0
+	refresh()
+	state_changed.emit(state)
 
 
 func is_open() -> bool:
@@ -96,7 +123,7 @@ func is_closed() -> bool:
 
 
 func is_powered() -> bool:
-	return kind == Kind.MECHANICAL or GameState.is_section_powered(section)
+	return kind != Kind.POWERED or GameState.is_section_powered(section)
 
 
 ## Why the door cannot be operated now, or an empty string when it can.
@@ -157,6 +184,8 @@ func refresh() -> void:
 	for control in _controls:
 		control.available = available
 		control.unavailable_prompt = reason
+		var rattles := kind == Kind.MANUAL and not reason.is_empty() and reason != REASON_MOVING
+		control.denied_sound = SOUND_LOCKED if rattles else &""
 		control.prompt = _prompt()
 	var lamp_color := LAMP_READY if available else LAMP_LOCKED
 	if not is_powered():
@@ -170,12 +199,12 @@ func _prompt() -> String:
 	if state == State.OPEN:
 		if not close_prompt.is_empty():
 			return close_prompt
-		return "ЗАКРЫТЬ ДВЕРЬ" if kind == Kind.POWERED else "ПОВЕРНУТЬ ШТУРВАЛ: ЗАКРЫТЬ"
+		return "ПОВЕРНУТЬ ШТУРВАЛ: ЗАКРЫТЬ" if kind == Kind.MECHANICAL else "ЗАКРЫТЬ ДВЕРЬ"
 	if not open_prompt.is_empty():
 		return open_prompt
 	if operator.is_valid():
 		return "ОТКРЫТЬ ШЛЮЗ"
-	return "ОТКРЫТЬ ДВЕРЬ" if kind == Kind.POWERED else "ПОВЕРНУТЬ ШТУРВАЛ"
+	return "ПОВЕРНУТЬ ШТУРВАЛ" if kind == Kind.MECHANICAL else "ОТКРЫТЬ ДВЕРЬ"
 
 
 func _move(open_door: bool) -> void:
@@ -186,6 +215,8 @@ func _move(open_door: bool) -> void:
 	if interlock_partner:
 		interlock_partner.refresh()
 	state_changed.emit(state)
+	if not Engine.is_editor_hint():
+		Sfx.play(SOUND_MOVE[kind], self)
 	var target := 1.0 if open_door else 0.0
 	var duration := open_time * absf(target - _open_amount)
 	_tween = create_tween()
@@ -196,6 +227,8 @@ func _move(open_door: bool) -> void:
 
 func _on_move_finished(open_door: bool) -> void:
 	state = State.OPEN if open_door else State.CLOSED
+	if kind != Kind.MANUAL:
+		Sfx.play(SOUND_STOP, self)
 	refresh()
 	if interlock_partner:
 		interlock_partner.refresh()
@@ -207,6 +240,8 @@ func _on_move_finished(open_door: bool) -> void:
 
 
 func _apply_leaf_pose() -> void:
+	for wheel in _wheels:
+		wheel.rotation.z = TAU * WHEEL_TURNS * _open_amount
 	if _leaf == null:
 		return
 	if slide_axis == SlideAxis.SWING:
@@ -230,7 +265,7 @@ func _on_control_used() -> void:
 		toggle()
 
 
-# --- Placeholder geometry ----------------------------------------------------
+# --- Geometry -----------------------------------------------------------------
 
 func _build() -> void:
 	for child in get_children():
@@ -238,14 +273,15 @@ func _build() -> void:
 			child.free()
 	_controls.clear()
 	_lamps.clear()
-	var frame_material := _material(frame_color)
+	_wheels.clear()
 	var frame := StaticBody3D.new()
 	frame.name = "Frame"
 	_generated(frame)
 	var post_x := width * 0.5 + FRAME_POST * 0.5
-	_box(frame, Vector3(-post_x, height * 0.5, 0), Vector3(FRAME_POST, height, FRAME_DEPTH), frame_material, true)
-	_box(frame, Vector3(post_x, height * 0.5, 0), Vector3(FRAME_POST, height, FRAME_DEPTH), frame_material, true)
-	_box(frame, Vector3(0, height + FRAME_POST * 0.5, 0), Vector3(width + FRAME_POST * 2.0, FRAME_POST, FRAME_DEPTH), frame_material, true)
+	_shape(frame, Vector3(-post_x, height * 0.5, 0), Vector3(FRAME_POST, height, FRAME_DEPTH))
+	_shape(frame, Vector3(post_x, height * 0.5, 0), Vector3(FRAME_POST, height, FRAME_DEPTH))
+	_shape(frame, Vector3(0, height + FRAME_POST * 0.5, 0), Vector3(width + FRAME_POST * 2.0, FRAME_POST, FRAME_DEPTH))
+	DoorArt.frame(frame, width, height, FRAME_POST, FRAME_DEPTH, frame_color)
 
 	_leaf = AnimatableBody3D.new()
 	_leaf.name = "Leaf"
@@ -253,11 +289,10 @@ func _build() -> void:
 	_generated(_leaf)
 	# A hinged leaf turns around its left edge, so its geometry is offset from the hinge.
 	var leaf_x := width * 0.5 if slide_axis == SlideAxis.SWING else 0.0
-	_box(_leaf, Vector3(leaf_x, height * 0.5, 0), Vector3(width, height, LEAF_DEPTH), _material(leaf_color), true)
-	_box(_leaf, Vector3(leaf_x, height * 0.5, 0), Vector3(width * 0.9, 0.12, LEAF_DEPTH + 0.02), _material(Color(0.75, 0.6, 0.15)), false)
-	_apply_leaf_pose()
+	_shape(_leaf, Vector3(leaf_x, height * 0.5, 0), Vector3(width, height, LEAF_DEPTH))
+	DoorArt.leaf(_leaf, slide_axis, width, height, LEAF_DEPTH, leaf_x, leaf_color)
 
-	for side in [1.0, -1.0]:
+	for side: float in [1.0, -1.0]:
 		var control := StaticBody3D.new()
 		control.name = "ControlFront" if side > 0.0 else "ControlBack"
 		control.position = Vector3(-(post_x + CONTROL_OFFSET), CONTROL_HEIGHT, side * (FRAME_DEPTH * 0.5 + 0.06))
@@ -265,33 +300,32 @@ func _build() -> void:
 		var lamp_material := _material(LAMP_OFF, true)
 		_lamps.append(lamp_material)
 		if kind == Kind.POWERED:
-			_box(control, Vector3.ZERO, Vector3(0.28, 0.4, 0.08), _material(Color(0.12, 0.13, 0.14)), true)
-			_box(control, Vector3(0, 0.1, side * 0.045), Vector3(0.1, 0.1, 0.02), lamp_material, false)
+			_shape(control, Vector3.ZERO, Vector3(0.28, 0.4, 0.08))
+		elif kind == Kind.MANUAL:
+			control.position = Vector3(-(post_x + 0.12), CONTROL_HEIGHT - 0.2, side * (FRAME_DEPTH * 0.5 + 0.05))
+			_shape(control, Vector3.ZERO, Vector3(0.06, 0.16, 0.06))
 		else:
-			var wheel := MeshInstance3D.new()
-			var torus := TorusMesh.new()
-			torus.inner_radius = 0.18
-			torus.outer_radius = 0.24
-			torus.material = _material(Color(0.45, 0.18, 0.12))
-			wheel.mesh = torus
-			wheel.rotation = Vector3(PI * 0.5, 0, 0)
-			control.add_child(wheel)
 			var shape := CollisionShape3D.new()
 			var cylinder := CylinderShape3D.new()
 			cylinder.radius = 0.26
 			cylinder.height = 0.1
 			shape.shape = cylinder
 			shape.rotation = Vector3(PI * 0.5, 0, 0)
+			# In the plane of the hand wheel, which stands off the wall on its gearbox.
+			shape.position = Vector3(0, 0, side * (DoorArt.WHEEL_REACH - DoorArt.WALL_GAP[kind]))
 			control.add_child(shape)
-			_box(control, Vector3(0, 0.36, 0), Vector3(0.08, 0.08, 0.04), lamp_material, false)
+		var wheel := DoorArt.control(control, kind, side, lamp_material)
+		if wheel:
+			_wheels.append(wheel)
 		var interactable := Interactable.new()
-		interactable.mode = Interactable.Mode.PRESS if kind == Kind.POWERED else Interactable.Mode.HOLD
+		interactable.mode = Interactable.Mode.HOLD if kind == Kind.MECHANICAL else Interactable.Mode.PRESS
 		interactable.hold_time = hold_time
 		interactable.prompt = _prompt()
 		control.add_child(interactable)
 		if not Engine.is_editor_hint():
 			interactable.interacted.connect(_on_control_used)
 		_controls.append(interactable)
+	_apply_leaf_pose()
 
 
 func _generated(node: Node3D) -> void:
@@ -299,21 +333,13 @@ func _generated(node: Node3D) -> void:
 	add_child(node)
 
 
-func _box(parent: Node3D, position: Vector3, size: Vector3, material: Material, collide: bool) -> void:
-	var mesh_instance := MeshInstance3D.new()
-	var mesh := BoxMesh.new()
-	mesh.size = size
-	mesh.material = material
-	mesh_instance.mesh = mesh
-	mesh_instance.position = position
-	parent.add_child(mesh_instance)
-	if collide:
-		var shape := CollisionShape3D.new()
-		var box := BoxShape3D.new()
-		box.size = size
-		shape.shape = box
-		shape.position = position
-		parent.add_child(shape)
+func _shape(parent: Node3D, position: Vector3, size: Vector3) -> void:
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = size
+	shape.shape = box
+	shape.position = position
+	parent.add_child(shape)
 
 
 func _material(color: Color, emissive: bool = false) -> StandardMaterial3D:

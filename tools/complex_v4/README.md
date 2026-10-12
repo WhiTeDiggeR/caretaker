@@ -1,0 +1,148 @@
+# Complex v3 sector regeneration backend
+
+`regenerate_sector.py` builds exactly one sector package under a caller-provided empty staging directory. It never promotes staging, edits a live sector scene, or writes authored content; atomic promotion belongs to T10.
+
+Required invocation:
+
+```powershell
+python tools/complex_v4/regenerate_sector.py `
+  --sector U-MEDBAY `
+  --staging <empty-directory> `
+  --svg-tool-root <canonical-svg-plan-to-godot-source>
+```
+
+Add `--stair-tool-root <canonical-generate-godot-stairs-source>` when the selected sector declares a vertical generator. Installed skill caches are not implicit inputs.
+
+The backend runs strict SVG inspection and conversion with one shared argument list, requires identical `spatial_handoff`, blocks `anchor_frame_issues`, converts frames through an exact declared `local_to_world`, and writes:
+
+- `Generated/Architecture/` and optionally `Generated/Stairs/`;
+- `anchor_frames.json` in world coordinates;
+- `generation_manifest.json` with input hashes and effective geometry settings;
+- `regeneration_report.json` with commands and exit codes.
+
+`sector_generation_manifest.json` is the single production manifest for all 32 sectors. Every
+`source_svg` points to the single metric input under
+`docs/design/complex_v4/plans/generation/`; SVGs under `plans/sectors` and
+`plans/overview` are presentation-only. The split manifests under `rollouts/` remain
+regression inputs, but neither the editor nor production CLI selects them. Before
+creating staging, the backend validates the complete manifest contract and checks
+`svg_to_godot3d >= 1.19.0`; sectors with vertical generators also require
+`generate_godot_stairs >= 2.9.0`. `data-scale="relative"` is not accepted as a
+metric transform. Non-empty material overrides remain blocked because converter
+1.19 has no explicit material-override input; the backend never guesses them.
+
+Exit code `0` means the staging package passed this backend's checks. Exit code `2` means no usable package was produced; a caller must not promote it.
+
+## Safe one-command orchestration
+
+`safe_regenerate.py` is the promoting entry point. A ready sector must add a reviewed composition source to its manifest entry:
+
+```json
+"safe_regeneration": {
+  "composition_input": "scenes/complex_v4/regeneration/rollout/upper/AuthoredContent/u_medbay/composition.json"
+}
+```
+
+The path is project-relative and may point into preserved live `AuthoredContent`. The composition document remains authored input: the orchestrator writes a temporary resolved copy, replaces its `generation_id` and `anchors` with the staged values, and passes that copy to the canonical composition validator. Missing, duplicate, wrong-kind, or otherwise invalid bindings block promotion; no fallback anchor is selected. `--report` must point outside the live sector package so reporting itself cannot mutate live content.
+
+```powershell
+python tools/complex_v4/safe_regenerate.py `
+  --sector U-MEDBAY `
+  --manifest tools/complex_v4/sector_generation_manifest.json `
+  --svg-tool-root <canonical-svg-plan-to-godot-source> `
+  --stair-tool-root <canonical-generate-godot-stairs-source> `
+  --report <machine-report.json>
+```
+
+The transaction is:
+
+1. validate the complete production manifest and tool versions before staging exists;
+2. invoke the T04 backend into an empty sibling staging directory;
+3. validate generated manifests, anchor IDs, and stair reports;
+4. copy the live package to a sibling candidate, replacing only generator-owned `Generated/`, `anchor_frames.json`, `generation_manifest.json`, and `regeneration_report.json`;
+5. validate all candidate Godot resource links, resolve bindings in a temporary document, and run the T09 composition validator;
+6. atomically rename live to backup and candidate to live on the same filesystem; restore backup if the second rename fails.
+
+The validations logically associated with bindings and composition run against the exact promotion candidate before the rename. This preserves the T01 invariant that any validation failure leaves live content unchanged. Only a promoted, unchanged, or validate-only-clean live package is `ready: true`; every failure and dry run is `ready: false` (`candidate_validated: true` distinguishes a clean dry run). The fixed subprocesses are the declared Python backend and composition validator only—no coding agent is invoked.
+
+`--dry-run` executes generation and every validation but skips promotion. `--validate-only` validates the current live package without running a generator. The machine report uses `caretaker.safe_regeneration_report` version `1.0.0` and records stage results, input/output SHA-256 hashes, live hashes, mode, status, readiness, and errors.
+
+Semantic equality covers `Generated/`, `anchor_frames.json`, and `generation_manifest.json`. The backend diagnostic report is excluded because operational evidence does not define geometry. When semantic output is unchanged, status is `noop` and the live directory is not renamed or overwritten. Files outside the generator-owned set—including `AuthoredContent`, `Materials`, and arbitrary user files—are preserved byte-for-byte in the candidate.
+
+### Durable candidate evidence (T24)
+
+Orchestrator 1.2.0 keeps schema 1.0.0 compatible and extends the optional
+`validation_artifacts` report field. Once composition validation runs, a fresh
+`<report-stem>.evidence-*` directory beside the requested machine report retains
+the resolved composition, validation report, repair queue, candidate anchor
+frames, candidate generation manifest, candidate regeneration report, source
+SHA-256, sector-config SHA-256, and generation ID. Every report entry records the
+absolute path and SHA-256, and `evidence_directory` identifies their common
+attempt directory. JSON evidence is identity-checked against one `map_id`,
+`sector_id`, and `generation_id`; an inconsistency blocks promotion.
+
+Evidence is preserved even when the validator exits 2, before transaction staging
+is deleted, so Agent Fix can inspect the exact candidate anchors. Failure to
+preserve the complete available context blocks promotion. Failure reports record
+the post-attempt live hash as well as the original hash.
+
+The current machine report points only to evidence from that attempt. A clean
+attempt points to a new empty repair queue; an earlier-stage failure has an empty
+`validation_artifacts` object. Older evidence is retained for audit and is not
+implicitly overwritten or deleted. Consumers must follow the current report,
+not search neighboring directories for a queue. Authored bindings are unchanged,
+and no candidate anchor IDs are invented for a deleted reference.
+
+When a ready sector declares project-relative `bindings_input` beside
+`composition_input`, `resolve_bindings.py` applies the T01 policies to staged
+frames, recalculates authored transforms/bounds and generated infrastructure,
+and sends that exact candidate document to validation. Missing IDs retain their
+original reference and old bounds so the validator emits a repair item; no nearby
+anchor is selected.
+
+An authored object may intersect a generated wall only through an explicit
+`wall_integration` declaration. `mode: mounted` is limited to the same wall
+anchor referenced by the binding; `mode: door_frame` additionally requires a
+door binding. Both modes require a finite, non-negative `max_depth_m`, and the
+validator checks the actual overlap along the source wall normal. This is a
+bounded exception for a physical mount or jamb/lintel, not permission to ignore
+collisions with another wall. Missing or malformed declarations remain blocking.
+
+## Floor rollout materializer
+
+`build_floor_rollout.py --level upper|lower|technical` derives metric generator
+sources from the reviewed handoff, never from presentation SVG coordinates. It
+retains those presentation drawings as visual controls, uses semantic hashes of
+handoff space/portal IDs for stable SVG IDs, and emits authored composition and
+binding inputs without changing existing dressing scenes. Ambiguous portal side,
+missing footprint, missing portal, duplicate wall-face demand, or a mount that
+cannot select one authored wall face raises `BuildError` before output is usable.
+
+The upper rollout intentionally omits `--strict-ceiling-alignment` only for
+`U-EMERGENCY`: that sector has reviewed 3.4 m and 3.8 m adjacent clear heights,
+while the converter's nearest-wall diagnostic cannot model the step boundary.
+Per-wall heights and composition collision checks remain strict.
+
+Portal topology is also explicit. A portal is an opening only when its handoff
+state is not `closed` and `traversable` is not `false`. A closed transition emits
+a stable `sealed_portal` marker for audit, keeps the generated wall solid, and
+binds any existing authored frame as a bounded mount to that exact wall. It must
+not appear in `opening_anchor_ids` or produce door anchor frames.
+
+## Verification fixtures
+
+`tests/fixtures/fixture_generation_manifest.json` contains one ordinary sector and one vertical sector with exact transforms. They are deliberately separate from the blocked production inventory. Run the unit suite with:
+
+```powershell
+python -m unittest discover -s tools/complex_v4/tests -v
+```
+
+For an integration check, invoke `regenerate_sector.py` with that fixture manifest, `--sector FIXTURE-ORDINARY` or `FIXTURE-VERTICAL`, and explicit canonical roots. Run the ordinary fixture twice into different empty staging directories and compare the package byte-for-byte. Backend, converter, preflight, and scene metadata paths are normalized to `$PROJECT_ROOT`, `$STAGING`, `$SVG_TOOL_ROOT`, `$STAIR_TOOL_ROOT`, and `$PYTHON`, so reports do not retain a developer's worktree path.
+
+## Vertical (stair) generation from the plans
+
+Stair generators with `"source": "svg"` take shaft size and position, entry/exit sides, stair width, floor height and shaft walls from `data-vertical-*` markup in the SVG plans via `vertical_resolver.py`; the manifest keeps only non-geometric arguments. The production manifest is built by `build_sector_manifest.py` from its sources, including `vertical_definitions.json`; never edit `sector_generation_manifest.json` by hand (`test_manifest_reproducible` fails if it drifts). Markup contract: `docs/design/complex_v4/regeneration/vertical-markup.md`.
+
+## Vertical status registry
+
+`vertical_registry.py` is the single source of truth for every vertical transition: stairs defined in `vertical_definitions.json` are `generated` (resolved from the plans), lift shafts are `openings_ready` or `markup_incomplete` (checked from the plans' openings), everything else is `unresolved` with the reason. The shared infrastructure report (`gen/shared/generation_report.json`), the input audit and the port mapper read it; do not hard-code vertical ids. Run `python tools/complex_v4/vertical_registry.py` for the table. After changing plans or definitions refresh the shared package: `rollouts/map_vertical_ports.py --report ...`, `rollouts/audit_shared_inputs.py --report ...`, then `rollouts/build_shared_contract.py` (needs `GODOT_BIN`).

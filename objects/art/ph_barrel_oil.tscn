@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://loads/props/ph_barrel_oil/ph_barrel_oil.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="Shape0"]
+size = Vector3(0.563, 0.88, 0.563)
+
+[node name="PhBarrelOil" type="StaticBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(0.0, 0.44, 0.0)
+shape = SubResource("Shape0")

@@ -1,0 +1,189 @@
+class_name Saves
+extends RefCounted
+
+## Save games: the scene, the hero's position and view, the whole GameState and the state of
+## every node in the `persist` group (doors, airlocks…) keyed by its path in the scene.
+## Nodes in `persist` implement `save_state() -> Dictionary` and `load_state(Dictionary)`.
+## Every slot may have a thumbnail next to its JSON (a frame without HUD, issue #152); a
+## successful write tells the `save_display` group (the HUD indicator).
+
+const VERSION := 1
+const AUTO := "auto"
+const SLOTS: Array[String] = [AUTO, "slot_1", "slot_2", "slot_3"]
+const PERSIST_GROUP := &"persist"
+const PLAYER_GROUP := &"player"
+const DISPLAY_GROUP := &"save_display"
+## Canvas layers hidden for one frame while the thumbnail is taken.
+const HUD_GROUP := &"hud_layer"
+const THUMBNAIL_SIZE := Vector2i(320, 180)
+
+static var directory := "user://saves"
+## Last frame of the game taken without HUD (Shell takes it when the pause opens).
+static var last_frame: Image
+
+
+static func path_for(slot: String) -> String:
+	return directory.path_join(slot + ".json")
+
+
+static func thumbnail_path(slot: String) -> String:
+	return directory.path_join(slot + ".png")
+
+
+static func slot_title(slot: String) -> String:
+	return "Автосохранение" if slot == AUTO else "Слот %s" % slot.trim_prefix("slot_")
+
+
+## Snapshot of the running game.
+static func capture(tree: SceneTree) -> Dictionary:
+	var scene := tree.current_scene
+	var data := {
+		"version": VERSION,
+		"saved_at": Time.get_unix_time_from_system(),
+		"scene": scene.scene_file_path if scene else "",
+		"objective": GameState.objective_text,
+		"state": GameState.to_dict(),
+		"objects": {},
+	}
+	var player := tree.get_first_node_in_group(PLAYER_GROUP) as Node3D
+	if player:
+		var camera := player.get_node_or_null(^"Camera3D") as Node3D
+		data["player"] = {
+			"position": [player.global_position.x, player.global_position.y, player.global_position.z],
+			"yaw": player.rotation.y,
+			"pitch": camera.rotation.x if camera else 0.0,
+		}
+	if scene:
+		for node in tree.get_nodes_in_group(PERSIST_GROUP):
+			if scene.is_ancestor_of(node):
+				data["objects"][str(scene.get_path_to(node))] = node.call("save_state")
+	return data
+
+
+## Writes the slot; `thumbnail` (a frame without HUD) is stored next to it when given.
+## Tells the save display (HUD indicator) on success.
+static func write(slot: String, tree: SceneTree, thumbnail: Image = null) -> Error:
+	DirAccess.make_dir_recursive_absolute(directory)
+	var file := FileAccess.open(path_for(slot), FileAccess.WRITE)
+	if file == null:
+		return FileAccess.get_open_error()
+	file.store_string(JSON.stringify(capture(tree), "\t"))
+	file.close()
+	if thumbnail:
+		store_thumbnail(slot, thumbnail)
+	tree.call_group(DISPLAY_GROUP, "show_saved", slot)
+	return OK
+
+
+## Scales the frame down and stores it as the slot's thumbnail.
+static func store_thumbnail(slot: String, frame: Image) -> Error:
+	if frame == null or frame.is_empty():
+		return ERR_INVALID_DATA
+	var small := frame.duplicate() as Image
+	small.resize(THUMBNAIL_SIZE.x, THUMBNAIL_SIZE.y, Image.INTERPOLATE_BILINEAR)
+	DirAccess.make_dir_recursive_absolute(directory)
+	return small.save_png(thumbnail_path(slot))
+
+
+## The slot's thumbnail, or null when it has none.
+static func thumbnail(slot: String) -> Texture2D:
+	if not exists(slot) or not FileAccess.file_exists(thumbnail_path(slot)):
+		return null
+	var image := Image.load_from_file(ProjectSettings.globalize_path(thumbnail_path(slot)))
+	return ImageTexture.create_from_image(image) if image and not image.is_empty() else null
+
+
+## Takes a frame of the game without HUD: the `hud_layer` canvas layers are hidden for the
+## frames it takes to draw one. Null when nothing is rendered (headless).
+static func grab_frame(tree: SceneTree) -> Image:
+	if DisplayServer.get_name() == "headless":
+		return null
+	var hidden: Array[CanvasLayer] = []
+	for node in tree.get_nodes_in_group(HUD_GROUP):
+		var layer := node as CanvasLayer
+		if layer and layer.visible:
+			layer.visible = false
+			hidden.append(layer)
+	await tree.process_frame
+	await tree.process_frame
+	var image := tree.root.get_texture().get_image()
+	for layer in hidden:
+		if is_instance_valid(layer):
+			layer.visible = true
+	return image if image and not image.is_empty() else null
+
+
+static func read(slot: String) -> Dictionary:
+	if not FileAccess.file_exists(path_for(slot)):
+		return {}
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path_for(slot)))
+	if not parsed is Dictionary or int((parsed as Dictionary).get("version", -1)) != VERSION:
+		return {}
+	return parsed
+
+
+static func exists(slot: String) -> bool:
+	return not read(slot).is_empty()
+
+
+static func delete(slot: String) -> void:
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(path_for(slot)))
+	if FileAccess.file_exists(thumbnail_path(slot)):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(thumbnail_path(slot)))
+
+
+## The most recent slot, or "" when there is no save.
+static func latest() -> String:
+	var best := ""
+	var best_time := -1.0
+	for slot in SLOTS:
+		var data := read(slot)
+		if not data.is_empty() and float(data.get("saved_at", 0.0)) > best_time:
+			best_time = float(data["saved_at"])
+			best = slot
+	return best
+
+
+## One line for the slot list: time and objective, or «пусто».
+static func describe(slot: String) -> String:
+	if not exists(slot):
+		return "%s — пусто" % slot_title(slot)
+	var objective := str(read(slot).get("objective", ""))
+	return "%s — %s%s" % [slot_title(slot), stamp(slot), (" — " + objective) if not objective.is_empty() else ""]
+
+
+## Local date and time of a save ("11.10.2026 23:14"), empty for an empty slot.
+static func stamp(slot: String) -> String:
+	var data := read(slot)
+	if data.is_empty():
+		return ""
+	var bias := int(Time.get_time_zone_from_system().get("bias", 0)) * 60
+	var when := Time.get_datetime_dict_from_unix_time(int(float(data["saved_at"])) + bias)
+	return "%02d.%02d.%04d %02d:%02d" % [when.day, when.month, when.year, when.hour, when.minute]
+
+
+## Objective the save was made at, empty when none.
+static func objective(slot: String) -> String:
+	return str(read(slot).get("objective", ""))
+
+
+## Restores objects and the hero into the already loaded scene of `data`.
+## GameState is restored separately, before the scene is loaded.
+static func apply_to_scene(tree: SceneTree, data: Dictionary) -> void:
+	var scene := tree.current_scene
+	if scene == null:
+		return
+	var objects: Dictionary = data.get("objects", {})
+	for path: String in objects:
+		var node := scene.get_node_or_null(NodePath(path))
+		if node and node.has_method("load_state"):
+			node.call("load_state", objects[path])
+	var player := tree.get_first_node_in_group(PLAYER_GROUP) as Node3D
+	var saved: Dictionary = data.get("player", {})
+	if player and not saved.is_empty():
+		var position: Array = saved["position"]
+		player.global_position = Vector3(float(position[0]), float(position[1]), float(position[2]))
+		player.rotation.y = float(saved.get("yaw", 0.0))
+		var camera := player.get_node_or_null(^"Camera3D") as Node3D
+		if camera:
+			camera.rotation.x = float(saved.get("pitch", 0.0))

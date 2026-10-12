@@ -1,6 +1,6 @@
 # L-ARCHIVE-A
 
-Этаж: нижний (LV-L). Источник: `docs/design/complex_v3/plans/sectors/lower/l_archive_a.svg`. Высота стен 3.4 м. Габарит 17.8×27.8 м, x -58.9…-41.1, z -8.1…19.6.
+Этаж: нижний (LV-L). Источник: `docs/design/complex_v4/sources/plans/sectors/lower/l_archive_a.svg`. Высота стен 5.0 м. Габарит 17.8×27.8 м, x -58.9…-41.1, z -8.1…19.6.
 
 ![L-ARCHIVE-A](img/l-archive-a.png)
 

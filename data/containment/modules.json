@@ -1,0 +1,55 @@
+{
+  "stage_thresholds": [
+    25,
+    50,
+    75,
+    100
+  ],
+  "stage_names": [
+    "СПОКОЙНЫЙ СОН",
+    "БЕСПОКОЙНЫЙ СОН",
+    "ТРЕВОЖНЫЙ СОН",
+    "ПРЕДПРОБУЖДЕНИЕ",
+    "ПРОБУЖДЕНИЕ"
+  ],
+  "catastrophe_pairs": [
+    [
+      "module_3",
+      "module_4"
+    ]
+  ],
+  "chemical": {
+    "trigger_at": 95,
+    "warning_seconds": 10,
+    "repair_window_seconds": 180,
+    "woken_window_factor": 0.4,
+    "vent_seconds": 30,
+    "initial_reagent_stock": 1
+  },
+  "modules": {
+    "module_3": {
+      "label": "МОДУЛЬ 3",
+      "start": 0,
+      "growth_per_minute": 0.8,
+      "active_when": {
+        "flag": "containment_online"
+      },
+      "visible_when": {
+        "access": "module_3"
+      },
+      "chemical_protocol": true
+    },
+    "module_4": {
+      "label": "МОДУЛЬ 4",
+      "start": 55,
+      "growth_per_minute": 1.2,
+      "active_when": {
+        "flag": "containment_online"
+      },
+      "visible_when": {
+        "access": "module_4"
+      },
+      "chemical_protocol": true
+    }
+  }
+}

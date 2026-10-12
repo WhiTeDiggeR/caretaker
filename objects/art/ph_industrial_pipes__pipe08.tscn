@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://loads/props/ph_industrial_pipes/pipe08.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="Shape0"]
+size = Vector3(0.2662, 0.3788, 0.3073)
+
+[node name="PhIndustrialPipesPipe08" type="StaticBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(-0.0, -0.0, -0.0001)
+shape = SubResource("Shape0")

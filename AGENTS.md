@@ -37,6 +37,7 @@
 - Prefer reusable sub-scenes and scripts over adding more inline resources to the large startup scene.
 - Do not hand-edit `.uid` or `.import` files. Let Godot generate metadata when source assets change.
 - Do not add or replace large binary assets unless the issue explicitly authorizes it and records licensing/provenance.
+- New binary assets go through Git LFS (`docs/LFS.md`): run `git lfs install` once; `tools/ci/lfs_check.py` rejects binaries committed without it.
 
 ## GDScript and scene conventions
 
@@ -60,7 +61,7 @@ Run the strongest available checks before delivery:
 
 Locating Godot: use the `GODOT_BIN` environment variable if it is set, otherwise the `godot` command from `PATH`. Run it through the console wrapper (`Godot_v4.7-stable_win64_console.exe`, not the GUI executable) and confirm `--version` reports 4.7. The wrapper only works under its original file name, so do not rename it; use a shim such as `godot.cmd` instead. Do not search whole drives before checking these two.
 
-Generation tools: use the `svg-plan-to-godot` (svg_to_godot3d >= 1.19.0) and `generate-godot-stairs` (generate_godot_stairs >= 2.9.0) skills installed for the agent that is running. Pass their roots explicitly (`--svg-tool-root`, `--stair-tool-root`, `COMPLEX_V3_*`, `SVG_TOOL_ROOT`/`STAIR_TOOL_ROOT`). If a compatible installed skill is missing, ask the user for the paths; do not search drives, fall back to another agent's skill directory, or use another version.
+Generation tools: use the `svg-plan-to-godot` (svg_to_godot3d >= 1.19.0) and `generate-godot-stairs` (generate_godot_stairs >= 2.9.0) skills installed for the agent that is running. Pass their roots explicitly (`--svg-tool-root`, `--stair-tool-root`, `COMPLEX_V4_*`, `SVG_TOOL_ROOT`/`STAIR_TOOL_ROOT`). If a compatible installed skill is missing, ask the user for the paths; do not search drives, fall back to another agent's skill directory, or use another version.
 
 If Godot is unavailable, say so explicitly in the issue or delivery summary; do not claim runtime verification.
 
