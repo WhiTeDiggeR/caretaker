@@ -116,7 +116,7 @@ def control_desk(k: Kit):
         return (x, y + n[1] * lift, z + n[2] * lift)
     # screen strip (top rear of the slope)
     k.group("Screen", pivot=on_slope(-0.45, 0.68))
-    k.decal(on_slope(-0.45, 0.62, 0.0015), (0.5, 0.2), "screens", uv("screens", "terminal_off"), tilt=-ang, offset=0.0)
+    k.decal(on_slope(-0.45, 0.62, 0.0075), (0.5, 0.2), "screens", uv("screens", "terminal_off"), normal="+y", tilt=ang, offset=0.0)
     k.body()
     k.box((0.54, 0.012, 0.28), on_slope(-0.45, 0.62, 0.0), "plastic_panel", 0.002, rot=(ang, 0, 0))
     # button banks
@@ -129,7 +129,7 @@ def control_desk(k: Kit):
             px, py, pz = on_slope(x + 0.05, t, 0.0145)
             k.cyl(0.015, 0.005, (px, py, pz), "y", mat, 10, rot=(ang, 0, 0))
     for i, name in enumerate(("ПУСК", "СТОП", "СБРОС", "ТЕСТ")):
-        k.decal(on_slope(0.12 + i * 0.14, 0.38, 0.0015), (0.12, 0.03), "panel_labels", uv("panel_labels", name), tilt=-ang, offset=0.0)
+        k.decal(on_slope(0.12 + i * 0.14, 0.38, 0.0015), (0.12, 0.03), "panel_labels", uv("panel_labels", name), normal="+y", tilt=ang, offset=0.0)
     # knife switch (the interactable): base plate and a pivoting handle
     bx = 0.58
     px, py, pz = on_slope(bx, 0.45, 0.012)
