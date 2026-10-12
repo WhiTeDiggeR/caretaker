@@ -44,6 +44,27 @@ func run(c: OpeningCheck) -> void:
 	c.equal(heard, [&"interact_click", &"interact_denied", &"hold_done"] as Array[StringName], "press, refusal and hold sounds")
 	heard.clear()
 
+	# #137: a locked handle rattles; a wheel and a powered door's panel keep the common refusal.
+	var manual := FacilityDoor.new()
+	manual.kind = FacilityDoor.Kind.MANUAL
+	manual.emergency_lock = true
+	c.add(manual)
+	var wheel := FacilityDoor.new()
+	wheel.kind = FacilityDoor.Kind.MECHANICAL
+	wheel.emergency_lock = true
+	c.add(wheel)
+	var powered := FacilityDoor.new()
+	powered.emergency_lock = true
+	c.add(powered)
+	await c.tree.process_frame
+	interactor.step(manual._controls[0], true, true, 0.016)
+	interactor.step(wheel._controls[0], true, true, 0.016)
+	interactor.step(powered._controls[0], true, true, 0.016)
+	c.equal(heard, [&"door_locked", &"interact_denied", &"interact_denied"] as Array[StringName], "only a locked handle rattles")
+	manual.emergency_lock = false
+	c.equal(manual._controls[0].denied_sound, &"", "an unlocked door has no rattle")
+	heard.clear()
+
 	# Repair controls, containment service and global events.
 	var lever := RepairControl.new()
 	lever.kind = RepairControl.Kind.LEVER

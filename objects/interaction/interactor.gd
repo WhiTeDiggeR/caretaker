@@ -81,7 +81,8 @@ func step(new_target: Object, pressed: bool, just_pressed: bool, delta: float) -
 	if not interactable.is_available():
 		_cancel_hold()
 		if just_pressed:
-			Sfx.play(SOUND_DENIED)
+			var denied := interactable.denied_sound if not interactable.denied_sound.is_empty() else SOUND_DENIED
+			Sfx.play(denied, interactable.get_parent())
 		return
 
 	match interactable.mode:

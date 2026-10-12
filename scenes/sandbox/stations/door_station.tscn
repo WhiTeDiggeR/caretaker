@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://objects/doors/access_gate.tscn" id="4_gate"]
 [ext_resource type="PackedScene" path="res://objects/doors/airlock.tscn" id="5_airlock"]
 [ext_resource type="PackedScene" path="res://objects/terminal/terminal.tscn" id="6_terminal"]
+[ext_resource type="PackedScene" path="res://objects/doors/service_door.tscn" id="7_service"]
 
 [node name="DoorStation" type="Node3D"]
 
@@ -26,6 +27,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 3.4, 0.2)
 pixel_size = 0.004
 text = "ГЕРМОДВЕРЬ 1,8×2,8
 пульт, питание секции"
+font_size = 40
+outline_size = 10
+
+[node name="LockedService" parent="." instance=ExtResource("7_service")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 0)
+emergency_lock = true
+
+[node name="LockedServiceLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 3.4, 0.2)
+pixel_size = 0.004
+text = "СЛУЖЕБНАЯ, ЗАПЕРТА
+ручка дребезжит"
 font_size = 40
 outline_size = 10
 
