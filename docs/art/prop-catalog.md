@@ -43,7 +43,7 @@
 | P-103 | `wall_terminal` | опора в центре | пересобрать с креплением к плоскости стены | Скр | план |
 | P-104 | `emergency_light`, `caged_light` | опора в центре / принять | опора по стандарту | Скр | план |
 | P-105 | `temporary_blast_door` | заменяется семейством дверей | модель рамы и створки под `objects/doors/` | Скр | план |
-| P-106 | `bowser_pod`, `herobrine_pod` (по 84–88 МБ) | непомерный вес | три варианта на выбор автора (#130): облегчённая копия `loads/*_capsule/lod/` (40 тыс., нормали запечены с исходника, 2,3–2,5 МБ; `tools/props/lighten_capsules.py --bake`), скриптовые `capsule_bowser`, `capsule_herobrine` (`tools/props/props_capsules.py`); сравнение — `scenes/sandbox/capsule_compare.tscn`, `docs/art/previews/capsules_compare.jpg`. Исходники не тронуты | Прав / Скр | **ждёт выбора автора** |
+| P-106 | `bowser_pod`, `herobrine_pod` (по 84–88 МБ) | непомерный вес | три варианта на выбор автора (#130): облегчённая копия `loads/*_capsule/lod/` (40 тыс., нормали запечены с исходника, 2,3–2,5 МБ; `tools/props/lighten_capsules.py --bake`), скриптовые `capsule_bowser`, `capsule_herobrine` (`tools/props/props_capsules.py`); сравнение — `scenes/sandbox/capsule_compare.tscn`, `docs/art/previews/capsules_compare.jpg`. Исходники не тронуты | Прав | **решено (О-5): облегчённые копии в `scenes/bowser_pod.tscn`, `scenes/herobrine_pod.tscn`**; скриптовые остаются в репозитории для сравнения |
 | P-107 | `debris_pile` | низкий для завала | заменяется P-004 | — | план |
 
 ## 3. Общие модульные наборы (В2)
