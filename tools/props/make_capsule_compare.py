@@ -2,7 +2,8 @@
 """Writes scenes/sandbox/capsule_compare.tscn (#130): the prisoner capsules in three variants side by side.
 
 Rows: Bowser (object No. 4), Herobrine (object No. 3). Columns: original text-to-3d GLB (scaled x5 like
-scenes/*_pod.tscn), the light copy from lighten_capsules.py (same scale), and the scripted model from props_capsules.py.
+scenes/*_pod.tscn), the light copy from lighten_capsules.py (same scale), and the scripted v2 assembly (capsule + separate sleeper,
+objects/containment/prisoner_capsule_*.tscn, #162).
 Each capsule gets the same interior light, so the comparison is fair. Generated: do not edit the scene by hand.
 """
 from __future__ import annotations
@@ -59,7 +60,7 @@ def main() -> int:
              f"≈ 2 млн треугольников · {mb(orig_path.parent):.0f} МБ"),
             ("Облегчённая копия", f'[ext_resource type="PackedScene" path="res://{light_copy}" id="l{r}"]', f"l{r}", 5.0, cy,
              f"{tris_of(light_path) // 1000} тыс. треугольников · {mb(light_path.parent):.1f} МБ"),
-            ("Скриптовая модель", f'[ext_resource type="PackedScene" path="res://objects/art/{scripted}.tscn" id="s{r}"]', f"s{r}", 1.0, 0.0,
+            ("Скриптовая модель v2", f'[ext_resource type="PackedScene" path="res://objects/containment/prisoner_{scripted}.tscn" id="s{r}"]', f"s{r}", 1.0, 0.0,
              f"{tris_of(script_dir / (scripted + '.gltf')) // 1000} тыс. треугольников · {mb(script_dir):.1f} МБ"),
         ]
         nodes += [f'[node name="RowTitle{r}" type="Label3D" parent="."]',
@@ -73,11 +74,12 @@ def main() -> int:
                       f"transform = Transform3D({scale}, 0, 0, 0, {scale}, 0, 0, 0, {scale}, {x}, {y:.3f}, {z:.2f})", "",
                       f'[node name="{name}_label" type="Label3D" parent="."]',
                       f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {x}, 3.9, {z + 1.0:.2f})",
-                      f'text = "{label}\\n{stats}"', "font_size = 56", "outline_size = 10", "billboard = 1", "",
-                      f'[node name="{name}_inside" type="OmniLight3D" parent="."]',
-                      f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {x}, 1.7, {z + 0.2:.2f})",
-                      f"light_color = Color({light}, 1)", "light_energy = 1.2", "omni_range = 2.2", "",
-                      f'[node name="{name}_key" type="SpotLight3D" parent="."]',
+                      f'text = "{label}\\n{stats}"', "font_size = 56", "outline_size = 10", "billboard = 1", ""]
+            if c < 2:  # the scripted assembly carries its own interior light
+                nodes += [f'[node name="{name}_inside" type="OmniLight3D" parent="."]',
+                          f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {x}, 1.7, {z + 0.2:.2f})",
+                          f"light_color = Color({light}, 1)", "light_energy = 1.2", "omni_range = 2.2", ""]
+            nodes += [f'[node name="{name}_key" type="SpotLight3D" parent="."]',
                       f"transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, {x}, 5.5, {z + 4.0:.2f})",
                       "light_color = Color(1, 0.86, 0.72, 1)", "light_energy = 6.0", "spot_range = 12.0", "spot_angle = 38.0",
                       "shadow_enabled = true", ""]

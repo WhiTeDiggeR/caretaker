@@ -337,20 +337,130 @@ def capsule_screen(col, dim, number: str, status: str, timer: str, w=1024, h=512
     centered(d, (0, 120, w, 330), timer, font(FONT_MONO, 170), col)
     d.text((40, 360), status, font=font(FONT_BOLD, 40), fill=col)
     for i in range(24):  # sleep-depth bar graph
-        hgt = 20 + int(70 * abs(math.sin(i * 0.7 + int(number))))
+        hgt = 16 + int(36 * abs(math.sin(i * 0.7 + int(number))))
         d.rectangle((40 + i * 38, h - 40 - hgt, 64 + i * 38, h - 40), fill=dim)
     return im
 
 
+EMBLEM_SKULL = [  # object No. 3: pixel skull (the Herobrine series mark), 10 x 9 cells
+    "..XXXXXX..",
+    ".XXXXXXXX.",
+    "XXXXXXXXXX",
+    "XX..XX..XX",
+    "XX..XX..XX",
+    "XXXXXXXXXX",
+    "XXXX..XXXX",
+    ".XX.XX.XX.",
+    ".XX.XX.XX.",
+]
+
+
+def emblem_skull(col, w=512):
+    im = screen_base(w, w, 960)
+    d = ImageDraw.Draw(im)
+    d.rectangle((14, 14, w - 14, w - 14), outline=CYD, width=8)
+    cell = 34
+    x0, y0 = (w - cell * 10) // 2, (w - cell * 9) // 2 - 6
+    for r, row in enumerate(EMBLEM_SKULL):
+        for c, ch in enumerate(row):
+            if ch == "X":
+                d.rectangle((x0 + c * cell, y0 + r * cell, x0 + (c + 1) * cell - 3, y0 + (r + 1) * cell - 3), fill=col)
+    return im
+
+
+def emblem_beast(col, w=512):
+    """Object No. 4: a horned, spiked beast face (the Bowser series mark), drawn from polygons."""
+    im = screen_base(w, w, 961)
+    d = ImageDraw.Draw(im)
+    d.rectangle((14, 14, w - 14, w - 14), outline=(110, 24, 14), width=8)
+    c = w / 2
+
+    def poly(pts):
+        d.polygon([(c + x * w / 2, c + y * w / 2) for x, y in pts], fill=col)
+
+    for sx in (-1, 1):  # horns
+        poly([(sx * 0.18, -0.38), (sx * 0.62, -0.78), (sx * 0.46, -0.28)])
+        poly([(sx * 0.55, -0.05), (sx * 0.86, -0.22), (sx * 0.62, 0.12)])  # cheek spikes
+    for i in range(5):  # hair flames
+        x = -0.32 + i * 0.16
+        poly([(x - 0.09, -0.4), (x + 0.02 * (i - 2), -0.78 + abs(i - 2) * 0.08), (x + 0.09, -0.4)])
+    d.ellipse((c - 0.6 * w / 2, c - 0.5 * w / 2, c + 0.6 * w / 2, c + 0.62 * w / 2), fill=col)  # head
+    bg = SCREEN_BG
+    for sx in (-1, 1):
+        d.polygon([(c + sx * 0.08 * w / 2, c - 0.12 * w / 2), (c + sx * 0.42 * w / 2, c - 0.26 * w / 2),
+                   (c + sx * 0.36 * w / 2, c - 0.04 * w / 2)], fill=bg)                       # angry eyes
+        d.ellipse((c + sx * 0.18 * w / 2 - 14, c + 0.12 * w / 2 - 12, c + sx * 0.18 * w / 2 + 14, c + 0.12 * w / 2 + 12), fill=bg)  # nostrils
+    d.polygon([(c - 0.42 * w / 2, c + 0.3 * w / 2), (c + 0.42 * w / 2, c + 0.3 * w / 2), (c, c + 0.5 * w / 2)], fill=bg)  # mouth
+    for sx in (-1, 1):  # fangs
+        poly([(sx * 0.3, 0.3), (sx * 0.2, 0.3), (sx * 0.25, 0.44)])
+    return im
+
+
 def make_capsule_screens(out: Path):
+    """Sleep monitors (row 1) and the series emblems shown on the end ports and consoles (row 2, #162)."""
     cw, ch = 1024, 512
-    atlas = Image.new("RGB", (cw * 2, ch))
+    atlas = Image.new("RGB", (cw * 2, ch * 2))
     uv = {}
     for i, (name, im) in enumerate((("module_4", capsule_screen(GRN, (24, 90, 44), "4", "СОН СТАБИЛЕН · СИНХРОНИЗАЦИЯ 98%", "07:42:19")),
                                     ("module_3", capsule_screen(CY, CYD, "3", "АНОМАЛИЯ ПОЛЯ · НАБЛЮДЕНИЕ", "06:18:47")))):
         atlas.paste(im, (i * cw, 0))
-        uv[name] = [i * cw / atlas.width, 0.0, (i + 1) * cw / atlas.width, 1.0]
+        uv[name] = [i * cw / atlas.width, 0.0, (i + 1) * cw / atlas.width, 0.5]
+    for i, (name, im) in enumerate((("emblem_4", emblem_beast(REDC)), ("emblem_3", emblem_skull(CY)))):
+        atlas.paste(im, (i * ch, ch))
+        uv[name] = [i * ch / atlas.width, 0.5, (i + 1) * ch / atlas.width, 1.0]
     save(atlas, out / "decals" / "capsule_screens.png", uv)
+
+
+# ---------------------------------------------------------------- prisoner sleepers (#162)
+def _pixels(rows: list[str], pal: dict, seed: int, cell: int = 32) -> Image.Image:
+    """Blocky skin face: one letter per texel, each texel gets a small random shade so the blocks read."""
+    g = np.random.default_rng(seed)
+    h, w = len(rows), len(rows[0])
+    arr = np.zeros((h, w, 3), np.float32)
+    for y, row in enumerate(rows):
+        for x, ch in enumerate(row):
+            arr[y, x] = np.array(pal[ch], np.float32) * g.uniform(0.9, 1.08)
+    im = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
+    return im.resize((w * cell, h * cell), Image.NEAREST)
+
+
+HB_PAL = {"H": (52, 34, 18), "h": (66, 44, 22), "S": (184, 134, 106), "s": (160, 112, 88), "W": (250, 252, 255),
+          "N": (138, 92, 70), "M": (96, 58, 42), "C": (0, 168, 168), "c": (0, 140, 146), "B": (58, 56, 168),
+          "b": (44, 42, 132), "G": (106, 106, 112), "g": (84, 84, 90)}
+HB_FACES = {
+    "head_front": ["HHHHHHHH", "HHHHHHHH", "HSSSSSSH", "SSSSSSSS", "SWWSSWWS", "SSSNNSSS", "SSMMMMSS", "SSsSSsSS"],
+    "head_back": ["HHHHHHHH", "HHhHHHHH", "HHHHHhHH", "HHHHHHHH", "HhHHHHHH", "HHHHHHhH", "HHHHHHHH", "hHHHHHHH"],
+    "head_side": ["HHHHHHHH", "HHHHHHHH", "HHHHHHSS", "HHHHSSSS", "HHHSSSSS", "HHHSSSsS", "HHSSSSSS", "HHSSSSSS"],
+    "head_top": ["HHHHHHHH", "HhHHHHHH", "HHHHHhHH", "HHHHHHHH", "HHhHHHHH", "HHHHHHHH", "HHHHHHhH", "HHHHHHHH"],
+    "head_bottom": ["SSSSSSSS"] * 3 + ["SSSsSSSS"] + ["SSSSSSSS"] * 4,
+    "body_front": ["CCCSSCCC", "CCCCSCCC", "CCCCCCCC", "CCcCCCCC", "CCCCCCCC", "CCCCCcCC", "CCCCCCCC", "CCcCCCCC",
+                   "CCCCCCCC", "CCCCCCCC", "BBBBBBBB", "BBBbBBBB"],
+    "body_back": ["CCCCCCCC", "CCCCCCcC", "CCCCCCCC", "CcCCCCCC", "CCCCCCCC", "CCCCcCCC", "CCCCCCCC", "CCCCCCCC",
+                  "CCcCCCCC", "CCCCCCCC", "BBBBBBBB", "BBBBBbBB"],
+    "body_side": ["CCCC", "CCcC", "CCCC", "CCCC", "cCCC", "CCCC", "CCCC", "CCcC", "CCCC", "CCCC", "BBBB", "BbBB"],
+    "body_end": ["CCCCCCCC"] * 4,
+    "arm_side": ["CCCC", "CcCC", "CCCC", "cCCC", "SSSS", "SSsS", "SSSS", "SSSS", "sSSS", "SSSS", "SSSs", "SSSS"],
+    "arm_top": ["CCCC", "CCcC", "CCCC", "CCCC"],
+    "arm_end": ["SSSS", "SsSS", "SSSS", "SSSS"],
+    "leg_side": ["BBBB", "BBbB", "BBBB", "bBBB", "BBBB", "BBBB", "BBbB", "BBBB", "BBBB", "BbBB", "GGGG", "GgGG"],
+    "leg_top": ["BBBB", "BbBB", "BBBB", "BBBB"],
+    "leg_end": ["GGGG", "GgGG", "GGGG", "GGgG"],
+}
+
+
+def make_sleeper_skins(out: Path):
+    """Blocky skin of the object No. 3 sleeper (8 x 8 head, 8 x 12 body, 4 x 12 limbs, 32 px per texel)."""
+    faces = {k: _pixels(v, HB_PAL, 70 + i) for i, (k, v) in enumerate(HB_FACES.items())}
+    atlas = Image.new("RGB", (1024, 1024), (20, 20, 20))
+    uv, x, y, row_h = {}, 0, 0, 0
+    for name, im in sorted(faces.items(), key=lambda kv: -kv[1].height):
+        if x + im.width > atlas.width:
+            x, y, row_h = 0, y + row_h, 0
+        atlas.paste(im, (x, y))
+        uv[name] = [x / atlas.width, y / atlas.height, (x + im.width) / atlas.width, (y + im.height) / atlas.height]
+        x, row_h = x + im.width, max(row_h, im.height)
+    assert y + row_h <= atlas.height, "sleeper skin atlas overflow"
+    save(atlas, out / "decals" / "sleeper_skins.png", uv)
 
 
 # ---------------------------------------------------------------- floor markings
@@ -423,7 +533,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="loads/textures")
     out = Path(ap.parse_args().out)
-    for fn in (make_signs, make_hazard, make_labels, make_gauges, make_screens, make_capsule_screens, make_floor_markings, make_grime):
+    for fn in (make_signs, make_hazard, make_labels, make_gauges, make_screens, make_capsule_screens, make_sleeper_skins, make_floor_markings, make_grime):
         fn(out)
     return 0
 
