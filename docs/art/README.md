@@ -48,3 +48,5 @@ godot --headless --path . --script res://tools/props/check_props.gd
 ```
 
 После изменения ассетов запустите `godot --headless --editor --path . --quit`, чтобы Godot создал `.import`, и закоммитьте их вместе с файлами. Новая модель — это функция с декоратором `@prop(...)` в `tools/props/props_*.py`; её габарит, опора и бюджет проверяются автоматически.
+
+Текстуры в `loads/` импортируются как 3D: VRAM-сжатие (S3TC/BPTC на десктопе) и mipmaps (решение О-6, #156). Для новых файлов это задаёт `[importer_defaults]` в `project.godot`. Headless-импорт (облако, CI) сам не включает «detect 3D», поэтому `tools/ci/texture_import_check.py` проверяет `.import`; если проверка падает — `python3 tools/ci/texture_import_check.py --apply`, затем `godot --headless --editor --path . --quit` (большие EXR сжимаются в BPTC несколько минут).
