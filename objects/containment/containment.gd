@@ -214,6 +214,11 @@ func monitor_lines() -> PackedStringArray:
 	return lines
 
 
+## Detail lines of one module as the monitor shows them (state, forecast, protocol).
+func status_lines(id: StringName) -> PackedStringArray:
+	return _status_lines(id)
+
+
 func _status_lines(id: StringName) -> PackedStringArray:
 	if is_awake(id):
 		return PackedStringArray([AWAKE_LINE])
