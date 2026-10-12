@@ -26,6 +26,9 @@ var _wait_release := false
 
 func _physics_process(delta: float) -> void:
 	var collider: Object = ray.get_collider() if ray and ray.is_colliding() else null
+	# The ray keeps reporting a collider freed this frame (a taken pickup).
+	if not is_instance_valid(collider):
+		collider = null
 	var pressed := Input.is_action_pressed(&"interact")
 	var just_pressed := Input.is_action_just_pressed(&"interact")
 	if _wait_release:
@@ -48,7 +51,8 @@ static func find_target(collider: Object) -> Object:
 	var node := collider as Node
 	while node:
 		if node.has_meta(Interactable.META):
-			return node.get_meta(Interactable.META)
+			var found: Object = node.get_meta(Interactable.META)
+			return found if is_instance_valid(found) else null
 		if node.has_method("interact"):
 			return node
 		node = node.get_parent()
@@ -56,6 +60,11 @@ static func find_target(collider: Object) -> Object:
 
 
 func step(new_target: Object, pressed: bool, just_pressed: bool, delta: float) -> void:
+	# A target that was freed (picked up, removed) is simply gone.
+	if not is_instance_valid(target):
+		target = null
+	if not is_instance_valid(new_target):
+		new_target = null
 	if new_target != target:
 		_cancel_hold()
 		target = new_target
