@@ -3,7 +3,9 @@
 
 Usage: python3 tools/props/make_decals.py [--out loads/textures]
 Writes PNG atlases plus <atlas>.json with UV rectangles (u0, v0, u1, v1; v measured from the top, as in image space).
-Fonts: DejaVu Sans / Mono (free licence), checked in by the OS, never bundled.
+Fonts: the interface fonts of the project (loads/fonts, SIL OFL, issue #150; docs/ui/style-guide.md):
+PT Sans for signs, labels, gauges and floor markings; IBM Plex Sans Condensed and IBM Plex Mono for the
+late-era screens, in the colours of the module era and the status grammar.
 """
 from __future__ import annotations
 
@@ -19,12 +21,16 @@ from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import texlib as T  # noqa: E402
 
-FONT_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-FONT_MONO = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf"
-FONT_REG = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+FONT_DIR = Path(__file__).resolve().parents[2] / "loads" / "fonts"
+FONT_BOLD = str(FONT_DIR / "pt_sans" / "PTSans-Bold.ttf")
+FONT_REG = str(FONT_DIR / "pt_sans" / "PTSans-Regular.ttf")
+FONT_MONO = str(FONT_DIR / "ibm_plex_mono" / "IBMPlexMono-Medium.ttf")
+FONT_SCREEN = str(FONT_DIR / "ibm_plex_sans_condensed" / "IBMPlexSansCondensed-SemiBold.ttf")
 
 
 def font(path, size):
+    if not Path(path).is_file():
+        raise SystemExit(f"make_decals: font {path} is missing; the interface fonts live in loads/fonts (issue #143)")
     return ImageFont.truetype(path, size)
 
 
@@ -239,13 +245,15 @@ def make_gauges(out: Path):
 
 
 # ---------------------------------------------------------------- screens
+# Module era of docs/ui/style-guide.md: background, information cyan, dim, phosphor text, status colours.
 CY, CYD, GRN, AMB, REDC = (31, 181, 200), (14, 80, 92), (62, 211, 107), (232, 162, 28), (216, 52, 31)
+SCREEN_BG, SCREEN_TEXT = (4, 17, 20), (191, 233, 239)
 
 
 def screen_base(w, h, seed):
     n = np.asarray(Image.fromarray((T.fbm(seed, 1.0, size=max(w, h)) * 255).astype(np.uint8)).resize((w, h)), np.float32) / 255.0
     arr = np.zeros((h, w, 3), np.float32)
-    arr[...] = np.array([3, 14, 17], np.float32) / 255.0
+    arr[...] = np.array(SCREEN_BG, np.float32) / 255.0
     arr += n[..., None] * 0.02
     arr[::3] *= 0.86  # scanlines
     return Image.fromarray((arr * 255).astype(np.uint8)).convert("RGB")
@@ -259,8 +267,8 @@ def node(d, x, y, w, h, text, col, fnt):
 def screen_mnemonic(w=1024, h=512):
     im = screen_base(w, h, 900)
     d = ImageDraw.Draw(im)
-    f, fs = font(FONT_BOLD, 26), font(FONT_MONO, 20)
-    d.text((24, 16), "ЭНЕРГОСНАБЖЕНИЕ  /  МНЕМОСХЕМА", font=font(FONT_BOLD, 28), fill=CY)
+    f, fs = font(FONT_SCREEN, 28), font(FONT_MONO, 20)
+    d.text((24, 16), "ЭНЕРГОСНАБЖЕНИЕ  /  МНЕМОСХЕМА", font=font(FONT_SCREEN, 30), fill=CY)
     d.line((24, 56, w - 24, 56), fill=CYD, width=2)
     node(d, 40, 200, 230, 90, "ГЕНЕРАТОР Г-1", AMB, fs)
     d.line((250, 245, 330, 245), fill=CY, width=4)
@@ -283,7 +291,7 @@ def screen_terminal_boot(w=1024, h=512):
     lines = ["СИСТЕМА СОДЕРЖАНИЯ  v4.1", "ПРОВЕРКА ПАМЯТИ ............ ОК", "ШИНА ДАННЫХ ................ ОК",
              "ПИТАНИЕ СЕКЦИИ ............. АВАРИЙНОЕ", "СВЯЗЬ С МОДУЛЯМИ ........... НЕТ ОТВЕТА", "", "ДОПУСК:  ОЖИДАНИЕ", "> _"]
     for i, t in enumerate(lines):
-        d.text((32, 28 + i * 34), t, font=f, fill=GRN if "ОК" in t else (AMB if "АВАР" in t or "НЕТ" in t else CY))
+        d.text((32, 28 + i * 34), t, font=f, fill=GRN if "ОК" in t else (AMB if "АВАР" in t or "НЕТ" in t else (CY if i == 0 else SCREEN_TEXT)))
     return im
 
 
@@ -300,8 +308,8 @@ def screen_alarm(w=1024, h=512):
     im = screen_base(w, h, 930)
     d = ImageDraw.Draw(im)
     d.rectangle((24, 24, w - 24, h - 24), outline=REDC, width=6)
-    centered(d, (0, 120, w, 260), "ТРЕВОГА", font(FONT_BOLD, 120), REDC)
-    centered(d, (0, 270, w, 340), "НЕСТАБИЛЬНОСТЬ МОДУЛЯ", font(FONT_BOLD, 40), AMB)
+    centered(d, (0, 120, w, 260), "ТРЕВОГА", font(FONT_SCREEN, 130), REDC)
+    centered(d, (0, 270, w, 340), "НЕСТАБИЛЬНОСТЬ МОДУЛЯ", font(FONT_SCREEN, 44), AMB)
     centered(d, (0, 350, w, 400), "ТРЕБУЕТСЯ ВМЕШАТЕЛЬСТВО ОПЕРАТОРА", font(FONT_MONO, 26), CY)
     return im
 
