@@ -60,7 +60,7 @@ python_script "scene index matches the passports" scenes/complex_v4/validate_sec
 python_script "generated sounds match their recipes" tools/audio/make_sfx.py --check
 python_script "art props: sizes, anchors, budgets, provenance" tools/props/validate_props.py
 python_script "git lfs: new binaries are LFS pointers" tools/ci/lfs_check.py
-python_script "textures: loads/ imported as 3D (VRAM + mipmaps)" tools/ci/texture_import_check.py
+python_script "textures: loads/ imported as 3D (VRAM + mipmaps, <= 2048 px)" tools/ci/texture_import_check.py
 # The registry exits 2 while verticals are unresolved; it must still build (exit 0 or 2) and list them.
 registry_output=$(python tools/complex_v4/vertical_registry.py --json 2>&1); registry_code=$?
 if [ $registry_code -le 2 ] && echo "$registry_output" | grep -q '"verticals"'; then record "vertical registry builds" 0; else echo "$registry_output" | tail -15; record "vertical registry builds" 1; fi

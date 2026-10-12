@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""3D texture import settings for `loads/` (issue #156, decision O-6).
+"""3D texture import settings for `loads/` (issue #156, decision O-6; 2048 px cap: issue #160).
 
 Godot's "detect 3D" switch (VRAM compression + mipmaps once a texture is used in a material) only fires in the
 editor with a window; headless imports (cloud sessions, CI) keep textures uncompressed and without mipmaps.
 `project.godot` sets `[importer_defaults]` for new textures; this script keeps the existing ones in line.
+Every texture is also capped at SIZE_LIMIT px on import: 4K sources stay in the repository, Godot downsizes them,
+and lifting the cap brings 4K back. The cap does nothing to textures that are already that small.
 
 Usage:
-  python tools/ci/texture_import_check.py           check: every texture under loads/ is VRAM + mipmaps
+  python tools/ci/texture_import_check.py           check: every texture under loads/ is VRAM + mipmaps, <= 2048 px
   python tools/ci/texture_import_check.py --apply   switch the params the editor's detection would switch,
                                                     then run `godot --headless --editor --path . --quit`
                                                     so Godot reimports and rewrites the .import files itself
@@ -21,8 +23,10 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 ROOTS = ("loads/",)
 NORMAL = re.compile(r"(nor_gl|nor_baked|normal|_nrm)", re.IGNORECASE)
-# Exactly what the editor writes after detecting a texture used in 3D.
-WANTED = {"compress/mode": "2", "mipmaps/generate": "true", "detect_3d/compress_to": "0"}
+SIZE_LIMIT = 2048
+# Exactly what the editor writes after detecting a texture used in 3D, plus the size cap.
+WANTED = {"compress/mode": "2", "mipmaps/generate": "true", "detect_3d/compress_to": "0",
+          "process/size_limit": str(SIZE_LIMIT)}
 
 
 def texture_imports() -> list[Path]:
@@ -68,7 +72,7 @@ def main(argv: list[str]) -> int:
         print(f"switched {len(bad)} texture imports; now run Godot headless --editor to reimport")
         return 0
     if bad:
-        print(f"{len(bad)} texture(s) under loads/ are not imported as 3D textures (VRAM + mipmaps):")
+        print(f"{len(bad)} texture(s) under loads/ are not imported as 3D textures (VRAM + mipmaps, <= {SIZE_LIMIT} px):")
         for path, diff in bad[:30]:
             print(f"  {path}: {diff}")
         print("Fix: python tools/ci/texture_import_check.py --apply, then godot --headless --editor --path . --quit")
