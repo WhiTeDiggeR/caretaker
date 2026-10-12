@@ -16,7 +16,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from validate_props import REPO, analyse  # noqa: E402
 
-NO_COLLISION = {"chain_hanging", "cable_hang", "document_sheet", "personal_key"}
+NO_COLLISION = {"chain_hanging", "cable_hang", "document_sheet", "personal_key",
+                "sleeper_herobrine", "sleeper_bowser"}  # sleepers sit behind the capsule glass
 NO_COLLISION_PREFIXES = ("ph_electric_cables__",)  # loose cable runs
 # id -> list of (centre, size, rotation_z_degrees); replaces the bounding-box collision
 OVERRIDES = {
