@@ -20,7 +20,9 @@ when LFS was switched on (673 files). Those paths keep the LFS filter off, so th
 - Linux/macOS: install the `git-lfs` package, then `git lfs install`.
 - An existing clone: after `git lfs install`, run `git lfs pull` to replace pointers with real files.
 - Claude Code cloud sessions skip LFS downloads on checkout (`smudge --skip`): run `git lfs pull` at the start of a
-  session before opening the project in Godot. Uploads work through the session proxy.
+  session before opening the project in Godot. Pushing uploads objects to S3 and then confirms each one with a
+  verify request to `lfs.github.com`; the environment's network access must allow that host (issue #157), otherwise
+  the pre-push hook fails and nothing is pushed.
 - GitHub Actions: `actions/checkout` uses `lfs: true` in both workflows.
 
 Without Git LFS, Godot sees text pointers instead of images and models and the import fails for those files.
