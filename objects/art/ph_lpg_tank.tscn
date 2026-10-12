@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://loads/props/ph_lpg_tank/ph_lpg_tank.gltf" id="1_model"]
+
+[sub_resource type="BoxShape3D" id="Shape0"]
+size = Vector3(0.4105, 0.6422, 0.4092)
+
+[node name="PhLpgTank" type="StaticBody3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_model")]
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+position = Vector3(-0.0001, 0.3211, 0.0002)
+shape = SubResource("Shape0")

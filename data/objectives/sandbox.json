@@ -1,0 +1,14 @@
+{
+  "chains": {
+    "sandbox_tour": {
+      "final_text": "Полигон пройден — станции можно проверять в любом порядке",
+      "steps": [
+        {"id": "tour_memo", "text": "Прочитать памятку на станции документов", "done_when": {"flag": "sandbox_memo_read"}},
+        {"id": "tour_generator", "text": "Запустить генератор полигона", "done_when": {"flag": "sandbox_generator_started"}},
+        {"id": "tour_caretaker", "text": "Получить допуск смотрителя (терминал или F2)", "done_when": {"access": "caretaker"}},
+        {"id": "tour_checkpoint", "text": "Пройти контрольную точку", "done_when": {"flag": "checkpoint/sandbox_doors"}},
+        {"id": "tour_dream", "text": "Погрузиться в сон модуля 4 и вернуться", "done_when": {"flag": "dream/returned/module_4"}}
+      ]
+    }
+  }
+}

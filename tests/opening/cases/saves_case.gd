@@ -27,7 +27,7 @@ func run(c: OpeningCheck) -> void:
 
 	c.equal(Saves.write("slot_1", c.tree), OK, "game is saved to slot 1")
 	c.equal(Saves.latest(), "slot_1", "slot 1 is the latest save")
-	c.is_true(Saves.describe("slot_1").contains("Проверить станции полигона"), "slot line shows the objective")
+	c.is_true(Saves.describe("slot_1").contains("Прочитать памятку"), "slot line shows the objective")
 	var data := Saves.read("slot_1")
 	c.equal(data["scene"], c.tree.current_scene.scene_file_path, "save names the scene")
 

@@ -66,8 +66,9 @@ func run(c: OpeningCheck) -> void:
 	await c.physics_frames(2)
 
 	var journal := DocumentReader.open_journal_scene(c.tree)
-	c.is_true(journal.in_journal and journal.list_box.get_child_count() == 1, "journal lists read documents")
-	c.is_true((journal.list_box.get_child(0) as Label).text.ends_with("ПАМЯТКА ПОЛИГОНА"), "journal shows titles")
+	var lines := journal.document_lines()
+	c.is_true(journal.in_journal and lines.size() == 1, "journal lists read documents")
+	c.is_true(lines.size() == 1 and lines[0].text.ends_with("ПАМЯТКА ПОЛИГОНА"), "journal shows titles")
 	journal.show_document("sandbox_memo", true)
 	c.is_true(not journal.in_journal and journal.scroll.visible, "journal opens a document")
 	journal.close()
