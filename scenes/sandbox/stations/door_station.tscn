@@ -29,6 +29,18 @@ text = "ГЕРМОДВЕРЬ 1,8×2,8
 font_size = 40
 outline_size = 10
 
+[node name="LockedMechanical" parent="." instance=ExtResource("2_mechanical")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, 0)
+emergency_lock = true
+
+[node name="LockedMechanicalLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 3.4, 0.2)
+pixel_size = 0.004
+text = "МЕХАНИЧЕСКАЯ, ЗАПЕРТА
+штурвал дребезжит"
+font_size = 40
+outline_size = 10
+
 [node name="Mechanical" parent="." instance=ExtResource("2_mechanical")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
 
