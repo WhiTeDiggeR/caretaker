@@ -172,12 +172,20 @@ def build_capsule(k: Kit, c: Capsule):
     k.prism_x(c_profile(d, h, r, yc, t, y0s, y1s), c.length, 0.0, "painted_metal", bevel=0.0)
     for sx in (-1, 1):
         k.prism_x(rrect_contour(d + 0.08, h + 0.08, r + 0.04, yc)[1:], 0.24, sx * (half + 0.0), c.accent, bevel=0.012)
-    k.box((c.length - 0.3, c.win_y1 - c.win_y0 + 0.3, 0.04), (0, (c.win_y0 + c.win_y1) / 2, -d / 2 + t + 0.03), c.haze, 0.0)
+    # dark interior: a black liner on the back wall carries a framed glow panel, the backdrop the sleeper is seen
+    # against; the floor is black rubber with light lines along the back, so the figure stays the brightest thing
+    back_z, wy = -d / 2 + t, (c.win_y0 + c.win_y1) / 2
+    k.box((c.length - 0.3, h - 2 * r, 0.03), (0, yc, back_z + 0.015), "rubber_black", 0.0)  # flat part of the back wall
+    pw, ph = c.win_w - 0.15, c.win_y1 - c.win_y0 - 0.06                # a touch inside the window outline
+    k.prism(stadium(pw, ph, min(c.win_r, ph / 2), wy), 0.02, (0, 0, back_z + 0.04), c.haze, "z", bevel=0.0)
+    edge = stadium(pw + 0.04, ph + 0.04, min(c.win_r, ph / 2) + 0.02, wy, n=10)
+    k.tube([(x, y, back_z + 0.05) for x, y in edge + [edge[0], edge[1]]], 0.016, "steel_bare", 8, caps=False)
     floor_y = c.win_y0 - 0.06
     k.box((c.length - 0.3, floor_y - (bottom + t), d - 2 * t - 0.1), (0, (floor_y + bottom + t) / 2, 0), "painted_metal", 0.01)
-    k.box((c.length - 0.5, 0.012, d - 2 * t - 0.3), (0, floor_y + 0.006, 0), "diamond_plate", 0.0)
-    k.group("Emit_Interior", pivot=(0, c.win_y1 - 0.08, fz - 0.2))
-    k.box((c.win_w - 0.6, 0.03, 0.05), (0, c.win_y1 - 0.08, fz - 0.16), c.emit, 0.0)           # strip under the window top
+    k.box((c.length - 0.5, 0.012, d - 2 * t - 0.3), (0, floor_y + 0.006, 0), "rubber_black", 0.0)
+    k.group("Emit_Interior", pivot=(0, floor_y, back_z + 0.1))
+    for lz in (back_z + 0.1, back_z + 0.22):                              # light lines in the floor along the back
+        k.box((c.length - 0.7, 0.008, 0.025), (0, floor_y + 0.016, lz), c.emit, 0.0)
     k.body()
 
     # ---- bulkhead with the stadium window, glass, frame ring and its bolted lugs
