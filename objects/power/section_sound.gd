@@ -2,19 +2,23 @@ class_name SectionSound
 extends PowerConsumer
 
 ## Plays a loop that depends on section power, e.g. alarm on emergency power and machine
-## hum on main power. Without streams set, placeholder tones are generated.
+## hum on main power. Without streams set, a placeholder alarm is generated for emergency
+## power; main power stays silent unless a stream is given (the generated 50 Hz hum of the
+## lamps was tiring, author feedback #126).
 
 @export var player: Node
 @export var main_stream: AudioStream
 @export var emergency_stream: AudioStream
 @export var use_placeholder_tones := true
+## The generated mains hum for main power; off by default.
+@export var use_placeholder_hum := false
 
 
 func _ready() -> void:
 	if player == null:
 		player = get_parent()
 	if use_placeholder_tones:
-		if main_stream == null:
+		if main_stream == null and use_placeholder_hum:
 			main_stream = PlaceholderTones.hum()
 		if emergency_stream == null:
 			emergency_stream = PlaceholderTones.alarm()

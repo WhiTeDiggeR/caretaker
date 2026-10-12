@@ -9,6 +9,12 @@
         {"id": "tour_checkpoint", "text": "Пройти контрольную точку", "done_when": {"flag": "checkpoint/sandbox_doors"}},
         {"id": "tour_dream", "text": "Погрузиться в сон модуля 4 и вернуться", "done_when": {"flag": "dream/returned/module_4"}}
       ]
+    },
+    "sandbox_blackout": {
+      "final_text": "Авария снята",
+      "steps": [
+        {"id": "blackout_reset", "text": "Снять аварию: кнопка «СБРОС АВАРИИ» на станции событий", "done_when": {"flag": "sandbox/blackout_cleared"}}
+      ]
     }
   }
 }

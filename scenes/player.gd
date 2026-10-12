@@ -75,6 +75,9 @@ var _leave_crawl := false
 var _step_offset := 0.0
 var _snapped := false
 var _ladder: Ladder
+## Head bob and landing dip (FirstPersonFeel, #134), added to the camera position.
+var _view_offset := Vector3.ZERO
+var _feel: FirstPersonFeel
 
 
 func _ready() -> void:
@@ -89,6 +92,9 @@ func _ready() -> void:
 	_collision.shape = _shape
 	floor_snap_length = FLOOR_SNAP
 	_apply_height(STAND_HEIGHT)
+	_feel = FirstPersonFeel.new()
+	_feel.name = &"Feel"
+	add_child(_feel)
 
 
 func _apply_settings() -> void:
@@ -297,7 +303,19 @@ func _apply_height(height: float) -> void:
 	_current_height = height
 	_shape.height = height
 	_collision.position.y = (height - STAND_HEIGHT) * 0.5
-	camera.position.y = STAND_CAMERA_Y - (STAND_HEIGHT - height) - _step_offset
+	_update_camera()
+
+
+## Camera motion of the body: `offset` in metres (bob, landing), `roll` in radians (strafe).
+func set_view_motion(offset: Vector3, roll: float) -> void:
+	_view_offset = offset
+	camera.rotation.z = roll
+	_update_camera()
+
+
+func _update_camera() -> void:
+	var eyes := STAND_CAMERA_Y - (STAND_HEIGHT - _current_height) - _step_offset
+	camera.position = Vector3(_view_offset.x, eyes + _view_offset.y, 0.0)
 
 
 ## True when the standing capsule fits at the current position.

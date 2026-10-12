@@ -1,7 +1,7 @@
 extends Node
 
 ## End-to-end check of the dream loop with real scene changes: sandbox → chair → test dream
-## → gate → sandbox. Detaches itself from `current_scene` so the scene changes keep it.
+## → seal (knowledge) → gate → sandbox → resync panel (#132). Detaches itself from `current_scene` so the scene changes keep it.
 ## Prints `DREAM_E2E_OK` on success. With `-- capture <dir>` it also saves frames.
 
 const SANDBOX := "res://scenes/sandbox/opening_sandbox.tscn"
@@ -36,6 +36,10 @@ func _run() -> void:
 	_check(Containment.get_instability(&"module_4") >= start + Dreams.entry_cost - 0.01, "entry raised the instability")
 	await _capture("e2e_1_dream")
 	var dream := tree.current_scene
+	(dream.get_node(^"Seal/Interactable") as Interactable).trigger()
+	var code := DreamKnowledge.code(&"module_4_seal")
+	_check(code.size() == 3, "the seal leaves glyphs to remember")
+	var after_seal := Containment.get_instability(&"module_4")
 	var player := dream.get_node(^"Player") as Node3D
 	player.global_position = Vector3(0, 0.9, -38.4)
 	await _until(func() -> bool: return _scene_is(SANDBOX))
@@ -45,8 +49,15 @@ func _run() -> void:
 	var back_chair := tree.current_scene.get_node(^"Stations/ImmersionChair") as ImmersionChair
 	var offset := back_player.global_position - back_chair.exit_transform().origin
 	_check(Vector2(offset.x, offset.z).length() < 0.2, "hero returned to the chair (offset %s)" % offset)
-	_check(Containment.get_instability(&"module_4") >= start + Dreams.entry_cost - 0.01, "returning keeps the session state")
+	_check(Containment.get_instability(&"module_4") >= after_seal - 0.01, "returning keeps the session state")
 	await _capture("e2e_2_back")
+	_check(Dreams.return_text(Dreams.Exit.GATE).contains(Dreams.RESYNC_LINE), "return message asks for a resync")
+	var panel := tree.current_scene.get_node(^"Stations/ResyncPanel") as ResyncPanel
+	for glyph in code:
+		panel.glyph_button(glyph).trigger()
+	_check(panel.last_result == DreamKnowledge.Result.SYNCED, "remembered glyphs resync the capsule")
+	_check(Containment.is_stable(&"module_4"), "resync brings module 4 to full stability")
+	await _capture("e2e_3_resync")
 	for error in _errors:
 		printerr("FAIL ", error)
 	if _errors.is_empty():
