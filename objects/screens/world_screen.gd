@@ -53,6 +53,14 @@ func show_rows(title: String, rows: Array[Dictionary]) -> void:
 	view.show_rows(title, rows)
 
 
+## Title and rows as plain lines (tests, the inspect text of a screen).
+func text() -> String:
+	var lines := PackedStringArray([view.title])
+	for row in view.rows:
+		lines.append(str(row.get("text", "")))
+	return "\n".join(lines)
+
+
 func set_powered(on: bool) -> void:
 	view.set_powered(on)
 	_material.set_shader_parameter(&"powered", on)

@@ -42,3 +42,21 @@ const PAPER := Color(0.86, 0.83, 0.72)
 const INK := Color("#221f1b")
 const STAMP := Color("#a8321f")
 const PENCIL := Color("#3d4150")
+
+# --- Signs on equipment ------------------------------------------------------------
+const SIGN_TEXT := Color("#e6e8e3")
+## World size of one pixel of sign type.
+const SIGN_PIXEL := 0.0015
+
+
+## A caption on equipment in the type of the signs (light condensed on a dark plate, no
+## outline): glyph buttons, button captions. Faces +Z of its parent.
+static func sign_label(text: String, font_size: int = 34) -> Label3D:
+	var label := Label3D.new()
+	label.text = text
+	label.font = FONT_SCREEN_LATE_STRONG
+	label.font_size = font_size
+	label.modulate = SIGN_TEXT
+	label.pixel_size = SIGN_PIXEL
+	label.outline_size = 0
+	return label

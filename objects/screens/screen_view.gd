@@ -16,6 +16,7 @@ const STATUSES: Array[StringName] = [&"ok", &"warn", &"alarm", &"none", &""]
 ## Status words blink on phosphor screens (they have one colour): seconds per phase.
 const BLINK_WARN := 0.6
 const BLINK_ALARM := 0.3
+const LARGE_SCALE := 1.6
 
 var style: ScreenStyle
 var title := ""
@@ -36,7 +37,8 @@ func setup(screen_style: ScreenStyle) -> void:
 	queue_redraw()
 
 
-## Rows: [{text, status (ok/warn/alarm/none/""), indent (bool)}]. Returns true if anything changed.
+## Rows: [{text, status (ok/warn/alarm/none/""), indent (bool), large (bool)}]. Returns true
+## if anything changed. A large row is an input line (code slots) read from further away.
 func show_rows(new_title: String, new_rows: Array[Dictionary]) -> bool:
 	if new_title == title and new_rows == rows:
 		return false
@@ -115,10 +117,11 @@ func _draw() -> void:
 		var color := style.status_color(status) if status != &"" else style.phosphor
 		if _hidden_by_blink(status):
 			color = style.dim
+		var row_size := roundi(font_size * LARGE_SCALE) if row.get("large", false) else font_size
 		# Long lines wrap under their own indent.
 		var width := size.x - indent - margin.x
-		draw_multiline_string(font, Vector2(indent, y + font.get_ascent(font_size)), text, HORIZONTAL_ALIGNMENT_LEFT, width, font_size, -1, color)
-		y += font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, width, font_size).y + ROW_GAP * text_scale
+		draw_multiline_string(font, Vector2(indent, y + font.get_ascent(row_size)), text, HORIZONTAL_ALIGNMENT_LEFT, width, row_size, -1, color)
+		y += font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, width, row_size).y + ROW_GAP * text_scale
 
 
 func _hidden_by_blink(status: StringName) -> bool:

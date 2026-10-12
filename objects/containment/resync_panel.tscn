@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://objects/containment/resync_panel.gd" id="1_panel"]
 [ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="2_interactable"]
+[ext_resource type="Script" path="res://objects/screens/world_screen.gd" id="3_screen"]
 
 [sub_resource type="StandardMaterial3D" id="cabinet"]
 albedo_color = Color(0.2, 0.22, 0.27, 1)
@@ -23,6 +24,16 @@ size = Vector3(0.18, 0.12, 0.06)
 [sub_resource type="BoxShape3D" id="reset_shape"]
 size = Vector3(0.2, 0.14, 0.1)
 
+[sub_resource type="StandardMaterial3D" id="housing"]
+albedo_color = Color(0.16, 0.17, 0.18, 1)
+
+[sub_resource type="BoxMesh" id="housing_mesh"]
+material = SubResource("housing")
+size = Vector3(1.0, 0.62, 0.14)
+
+[sub_resource type="BoxShape3D" id="housing_shape"]
+size = Vector3(1.0, 0.62, 0.14)
+
 [node name="ResyncPanel" type="StaticBody3D"]
 script = ExtResource("1_panel")
 
@@ -34,12 +45,20 @@ mesh = SubResource("cabinet_mesh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 shape = SubResource("cabinet_shape")
 
-[node name="Status" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0.16)
-pixel_size = 0.0025
-modulate = Color(0.75, 0.85, 1, 1)
-font_size = 40
-outline_size = 8
+[node name="ScreenHousing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72, 0)
+mesh = SubResource("housing_mesh")
+
+[node name="HousingCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72, 0)
+shape = SubResource("housing_shape")
+
+[node name="Screen" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.72, 0.076)
+script = ExtResource("3_screen")
+era = &"module"
+resolution = Vector2i(800, 450)
+quad_size = Vector2(0.88, 0.495)
 
 [node name="ResetButton" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.18)
