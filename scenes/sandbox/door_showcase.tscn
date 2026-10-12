@@ -1,0 +1,129 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="hud"]
+[ext_resource type="Material" path="res://materials/lookdev/wall_concrete.tres" id="wall"]
+[ext_resource type="Material" path="res://materials/lookdev/floor.tres" id="floor"]
+[ext_resource type="PackedScene" path="res://objects/doors/hermetic_door.tscn" id="hermetic_door"]
+[ext_resource type="PackedScene" path="res://objects/doors/mechanical_door.tscn" id="mechanical_door"]
+[ext_resource type="PackedScene" path="res://objects/doors/access_gate.tscn" id="access_gate"]
+[ext_resource type="PackedScene" path="res://objects/doors/historic_door.tscn" id="historic_door"]
+[ext_resource type="PackedScene" path="res://objects/doors/service_door.tscn" id="service_door"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.025, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.32, 0.36, 1)
+ambient_light_energy = 0.3
+tonemap_mode = 3
+tonemap_white = 6.0
+ssao_enabled = true
+
+[node name="DoorShowcase" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+use_collision = true
+size = Vector3(24, 0.2, 14)
+material = ExtResource("floor")
+
+[node name="Wall" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Slab" type="CSGBox3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.75, 0)
+size = Vector3(21, 3.5, 0.3)
+material = ExtResource("wall")
+
+[node name="CutHermetic" type="CSGBox3D" parent="Wall"]
+operation = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0, 1.49, 0)
+size = Vector3(2.18, 3.02, 0.4)
+
+[node name="CutMechanical" type="CSGBox3D" parent="Wall"]
+operation = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0, 1.49, 0)
+size = Vector3(2.18, 3.02, 0.4)
+
+[node name="CutGate" type="CSGBox3D" parent="Wall"]
+operation = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0, 1.49, 0)
+size = Vector3(2.18, 3.02, 0.4)
+
+[node name="CutHistoric" type="CSGBox3D" parent="Wall"]
+operation = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 1.24, 0)
+size = Vector3(1.7799999999999998, 2.52, 0.4)
+
+[node name="CutService" type="CSGBox3D" parent="Wall"]
+operation = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6, 1.1400000000000001, 0)
+size = Vector3(1.38, 2.3200000000000003, 0.4)
+
+[node name="Hermetic" parent="." instance=ExtResource("hermetic_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0, 0, 0)
+
+[node name="Mechanical" parent="." instance=ExtResource("mechanical_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0, 0, 0)
+
+[node name="Gate" parent="." instance=ExtResource("access_gate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0, 0, 0)
+
+[node name="Historic" parent="." instance=ExtResource("historic_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 0, 0)
+
+[node name="Service" parent="." instance=ExtResource("service_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6, 0, 0)
+
+[node name="Lamp0" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 3.2, 3)
+light_color = Color(1, 0.86, 0.7, 1)
+light_energy = 2.2
+shadow_enabled = true
+omni_range = 9.0
+
+[node name="Lamp1" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3.2, 3)
+light_color = Color(1, 0.86, 0.7, 1)
+light_energy = 2.2
+shadow_enabled = true
+omni_range = 9.0
+
+[node name="Lamp2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3.2, 3)
+light_color = Color(1, 0.86, 0.7, 1)
+light_energy = 2.2
+shadow_enabled = true
+omni_range = 9.0
+
+[node name="Lamp3" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3.2, 3)
+light_color = Color(1, 0.86, 0.7, 1)
+light_energy = 2.2
+shadow_enabled = true
+omni_range = 9.0
+
+[node name="Lamp4" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 3.2, -3)
+light_color = Color(1, 0.86, 0.7, 1)
+light_energy = 2.2
+shadow_enabled = true
+omni_range = 9.0
+
+[node name="Lamp5" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 3.2, -3)
+light_color = Color(1, 0.86, 0.7, 1)
+light_energy = 2.2
+shadow_enabled = true
+omni_range = 9.0
+
+[node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 5)
+interact_label = NodePath("../OpeningHud/InteractLabel")
+hold_progress_bar = NodePath("../OpeningHud/HoldProgress")
+
+[node name="OpeningHud" parent="." instance=ExtResource("hud")]
