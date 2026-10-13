@@ -113,6 +113,30 @@ func _run() -> void:
 	_check(GameState.has_flag(&"e2e_marker"), "the range keeps the loaded flags")
 	var loaded_player := tree.current_scene.get_node(^"Player") as Node3D
 	_check(loaded_player.global_position.distance_to(Vector3(2, 0.9, -1)) < 0.2, "continue restores the hero position")
+	# #123: a checkpoint, then the catastrophe, then back to the checkpoint.
+	GameState.set_flag(&"containment_online")
+	var checkpoint := tree.current_scene.get_node(^"Stations/Checkpoint") as Checkpoint
+	loaded_player.global_position = checkpoint.global_position + Vector3(0, 0.9, 0)
+	await _until(func() -> bool: return Saves.exists(Saves.AUTO))
+	_check(checkpoint.is_reached(), "walking into the checkpoint saves the game")
+	Containment.add_instability(&"module_3", 100.0)
+	Containment.add_instability(&"module_4", 100.0)
+	await _frames(2)
+	_check(Shell.is_defeated() and tree.paused, "the catastrophe ends the game")
+	await _capture("shell_6_defeat")
+	var defeat := Shell.find_children("*", "DefeatScreen", false, false)
+	_check(defeat.size() == 1 and not (defeat[0] as DefeatScreen).checkpoint_button.disabled, "the defeat screen offers the checkpoint")
+	_press_cancel()
+	await _frames(2)
+	_check(Shell.is_defeated(), "Esc does not dismiss the defeat")
+	if defeat.size() == 1:
+		(defeat[0] as DefeatScreen).checkpoint_button.pressed.emit()
+	await _until(func() -> bool: return not Shell.loading and _scene_is(SANDBOX) and not Shell.is_defeated())
+	await _frames(5)
+	_check(not tree.paused, "loading the checkpoint resumes the game")
+	_check(not GameState.has_flag(Containment.CATASTROPHE_FLAG), "the checkpoint is from before the catastrophe")
+	_check(not Containment.is_awake(&"module_3") and not Containment.is_awake(&"module_4"), "the modules sleep again")
+
 	for slot in Saves.SLOTS:
 		Saves.delete(slot)
 

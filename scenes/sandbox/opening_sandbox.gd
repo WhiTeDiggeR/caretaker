@@ -5,7 +5,8 @@ extends Node3D
 ## F1 — cycle power of every sandbox section, F2 — toggle caretaker access, F3 — reset state,
 ## F4 — module 4 instability +10 %, F5 — module 4 stabilised by 20 %,
 ## F6 — module 4 straight to the chemical protocol threshold,
-## F7 — containment time speed x1 / x10 / x60.
+## 7 — containment time speed x1 / x10 / x60, 8 — catastrophe (modules 3 and 4 awake).
+## Not F7/F8: the Godot editor pauses and stops the running project on those keys.
 ## A debug overlay shows the exact state of module 4; containment events go to the console.
 
 const SECTIONS: Array[StringName] = [&"sandbox_a", &"sandbox_b"]
@@ -16,8 +17,12 @@ const INITIALIZED_FLAG := &"sandbox/initialized"
 const DEBUG_MODULE := &"module_4"
 const TIME_SCALES: Array[float] = [1.0, 10.0, 60.0]
 const OVERLAY_REFRESH_SECONDS := 0.25
+## Floor of the gas chamber: dim while the hero is outside, bright once they stand in it.
+const ZONE_OUTSIDE_COLOR := Color(0.55, 0.9, 0.4, 0.3)
+const ZONE_INSIDE_COLOR := Color(0.75, 1.0, 0.35, 0.6)
 
 var _overlay: Label
+var _zone_material: StandardMaterial3D
 var _overlay_elapsed := 0.0
 
 
@@ -25,6 +30,9 @@ func _ready() -> void:
 	# Returning from a dream or loading a save reloads this scene: keep the state.
 	if not GameState.has_flag(INITIALIZED_FLAG):
 		reset_state()
+	var zone := $Stations/ModuleChamber/Zone as MeshInstance3D
+	_zone_material = zone.mesh.surface_get_material(0).duplicate() as StandardMaterial3D
+	zone.material_override = _zone_material
 	_build_overlay()
 	# Method connections are dropped automatically when the scene is freed (dream entry).
 	Containment.chemical_warning.connect(_on_chemical_warning)
@@ -50,7 +58,7 @@ func _on_chemical_warning(id: StringName, seconds: float) -> void:
 
 
 func _on_module_sealed(id: StringName) -> void:
-	print("Containment %s: sealed, chemical sleep, repair window %d s" % [id, Containment.chemical_timer(id)])
+	print("Containment %s: sealed, chemical sleep, repair window %d s, hero inside: %s" % [id, Containment.chemical_timer(id), Containment.is_hero_inside(id)])
 
 
 func _on_repair_window_ended(id: StringName) -> void:
@@ -90,7 +98,10 @@ func _refresh_overlay() -> void:
 		text += " %.0f с" % Containment.chemical_timer(id)
 	var forecast := Containment.forecast_seconds(id)
 	text += " · прогноз: %s" % ("нет" if forecast < 0.0 else "%.0f с" % forecast)
-	text += "\nF4 +10 %  F5 −20 %  F6 к порогу  F7 скорость времени"
+	var inside := Containment.is_hero_inside(id)
+	text += "\nкамера газа: %s" % ("ВЫ ВНУТРИ" if inside else "вы снаружи (зелёный пол у кресла)")
+	_zone_material.albedo_color = ZONE_INSIDE_COLOR if inside else ZONE_OUTSIDE_COLOR
+	text += "\nF4 +10 %  F5 −20 %  F6 к порогу  7 скорость времени  8 катастрофа"
 	_overlay.text = text
 
 
@@ -131,8 +142,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_F6:
 			var trigger := float(Containment.chemical.get("trigger_at", 95.0))
 			Containment.add_instability(&"module_4", maxf(trigger - Containment.get_instability(&"module_4"), 0.0))
-			print("Module 4 at the chemical threshold")
-		KEY_F7:
+			if Containment.is_charged(&"module_4") and not Containment.has_gas(&"module_4"):
+				print("Module 4 at the chemical threshold: sealing after the warning")
+			else:
+				print("Module 4 at the threshold, but the protocol is spent: vent and recharge it at the reagent panel or reset the sandbox (F3)")
+		KEY_8:
+			Containment.add_instability(&"module_3", Containment.MAX_INSTABILITY)
+			Containment.add_instability(&"module_4", Containment.MAX_INSTABILITY)
+			print("Modules 3 and 4 awake")
+		KEY_7:
 			var index := (TIME_SCALES.find(Containment.time_scale) + 1) % TIME_SCALES.size()
 			Containment.time_scale = TIME_SCALES[index]
 			print("Containment time x", Containment.time_scale)
