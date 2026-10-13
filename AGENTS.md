@@ -65,6 +65,10 @@ Generation tools: use the `svg-plan-to-godot` (svg_to_godot3d >= 1.19.0) and `ge
 
 If Godot is unavailable, say so explicitly in the issue or delivery summary; do not claim runtime verification.
 
+## Handoff for manual review
+
+- When work is ready for the author to check by hand, the final message (and the issue summary) gives the branch preview link `caretaker://open/<branch>` and the fallback command `powershell -ExecutionPolicy Bypass -File tools\dev\open_branch.ps1 <branch>` (`docs/branch-preview.md`). Not every client makes custom links clickable, so always include both.
+
 ## Definition of done
 
 - Acceptance criteria are met.
