@@ -71,7 +71,8 @@ const LEGS: Array[Array] = [
 	["9", "energy_generator_hall", "energy_switchboard", "", 0.0],
 	["9", "energy_switchboard", "energy_cooling", "", 0.0],
 	["9-10", "energy_generator_hall", "old_relay_room", "VT-OLD-STAIR", 0.0],
-	## Through the breach the room is ~6 m away; around it over the control room and its jammed door it is ~11 m.
+	## Entering, the room is ~6 m away through the breach; around it over the control room and door-04 (locked by the
+	## senior's access until scene 10) it is ~11 m. Leaving after scene 10 (10-11) may use door-04.
 	["10", "old_relay_room", "old_core_senior_room", "", 8.0],
 	["10-11", "old_core_senior_room", "lower_core_vestibule", "", 0.0],
 	["11", "lower_core_vestibule", "upper_core_vestibule", "VT-MAIN-STAIR", 0.0],
