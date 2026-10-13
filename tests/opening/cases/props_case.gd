@@ -97,7 +97,7 @@ func run(c: OpeningCheck) -> void:
 	door.open_time = 0.05
 	c.add(door)
 	c.equal(door.lock_reason(), "", "a manual service door needs no power")
-	var handle := door.get_node(^"ControlFront").get_meta(Interactable.META) as Interactable
+	var handle := door.get_node(^"Leaf/ControlFront").get_meta(Interactable.META) as Interactable
 	c.is_true(handle.mode == Interactable.Mode.PRESS and handle.get_prompt_text().ends_with("ОТКРЫТЬ ДВЕРЬ"), "service door opens with a press")
 	handle.trigger()
 	await door.opened
