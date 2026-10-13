@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" path="res://objects/dream/dream_seal_rings.tscn" id="6_seal"]
 [ext_resource type="PackedScene" path="res://scenes/player.tscn" id="7_player"]
 [ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="8_hud"]
+[ext_resource type="Script" path="res://objects/dream/dream_remains.gd" id="9_remains"]
+[ext_resource type="Script" path="res://objects/dream/combat/dream_ambush.gd" id="10_ambush"]
+[ext_resource type="PackedScene" path="res://objects/documents/document_pickup.tscn" id="11_note"]
 
 [sub_resource type="StandardMaterial3D" id="mat_rock"]
 albedo_color = Color(0.22, 0.17, 0.17, 1)
@@ -179,10 +182,6 @@ size = Vector3(0.3, 0.03, 4)
 material = SubResource("mat_bone")
 size = Vector3(1.8, 0.35, 0.6)
 
-[sub_resource type="BoxMesh" id="box_20"]
-material = SubResource("mat_chain")
-size = Vector3(0.8, 0.1, 0.3)
-
 [sub_resource type="BoxMesh" id="box_21"]
 material = SubResource("mat_iron")
 size = Vector3(0.8, 1, 0.8)
@@ -192,7 +191,7 @@ size = Vector3(0.8, 1, 0.8)
 
 [sub_resource type="BoxMesh" id="box_22"]
 material = SubResource("mat_mark")
-size = Vector3(1.4, 0.5, 0.05)
+size = Vector3(0.55, 0.02, 0.35)
 
 [sub_resource type="BoxMesh" id="box_23"]
 material = SubResource("mat_hall")
@@ -645,6 +644,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 1.215, 0)
 mesh = SubResource("box_18")
 
 [node name="Remains" type="Node3D" parent="Yard"]
+script = ExtResource("9_remains")
 
 [node name="Body" type="MeshInstance3D" parent="Yard/Remains"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.6, 1.375, -7.7)
@@ -652,10 +652,6 @@ mesh = SubResource("box_19")
 
 [node name="WeaponSpot" type="Marker3D" parent="Yard/Remains"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.9, 1.2, -7)
-
-[node name="ChainPlaceholder" type="MeshInstance3D" parent="Yard/Remains"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.9, 1.25, -7)
-mesh = SubResource("box_20")
 
 [node name="Brazier" type="StaticBody3D" parent="Yard/Remains"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 1.7, -8)
@@ -666,14 +662,22 @@ mesh = SubResource("box_21")
 [node name="Collision" type="CollisionShape3D" parent="Yard/Remains/Brazier"]
 shape = SubResource("shape_16")
 
-[node name="OperatorMark" type="MeshInstance3D" parent="Yard/Remains"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 3.6, -8.965)
-mesh = SubResource("box_22")
+[node name="Note" parent="Yard/Remains" instance=ExtResource("11_note")]
+transform = Transform3D(0.94, 0, 0.342, 0, 1, 0, -0.342, 0, 0.94, 49.9, 1.21, -7.05)
+document_id = "bowser_predecessor_note"
 
 [node name="Ambush" type="Node3D" parent="Yard"]
+script = ExtResource("10_ambush")
+wake_line = NodePath("WakeLine")
+spawn_points = Array[NodePath]([NodePath("GuardSpawnNorth"), NodePath("GuardSpawnSouth")])
+threshold = NodePath("HallThreshold")
 
 [node name="WakeLine" type="Marker3D" parent="Yard/Ambush"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 1.2, 0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 56, 1.2, 0)
+
+[node name="OperatorTrace" type="MeshInstance3D" parent="Yard/Ambush"]
+transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 57.4, 1.21, 1.7)
+mesh = SubResource("box_22")
 
 [node name="GuardSpawnNorth" type="Marker3D" parent="Yard/Ambush"]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 68.5, 1.2, -5.75)

@@ -8,9 +8,10 @@ extends Node3D
 ## there are no guards. Number and type of the guards come from `ambushes` in
 ## data/dreams/combat.json. `ambush_started` is the cue for the weapon at the remains (Р-4).
 ##
-## Children: `WakeLine` (Node3D; the hero crosses it moving along its -Z, within
-## `wake_half_width` of it), `Niches` (Marker3D children, guards appear there in turn),
-## `Threshold` (Node3D; a box of `threshold_size` around it is forbidden to the guards).
+## Nodes (paths are exported, defaults are children): `wake_line` (Node3D; the hero crosses it
+## moving along its -Z, within `wake_half_width` of it), `spawn_points` (guards appear there in
+## turn; empty means the Marker3D children of `Niches`), `threshold` (Node3D; a box of
+## `threshold_size` around it is forbidden to the guards).
 
 signal ambush_started
 
@@ -22,6 +23,9 @@ const VANISH_SECONDS := 0.4
 @export var ambush_id: StringName = &"bowser_first_fight"
 @export var wake_half_width := 9.0
 @export var threshold_size := Vector3(4.0, 4.0, 4.0)
+@export var wake_line: NodePath = ^"WakeLine"
+@export var spawn_points: Array[NodePath] = []
+@export var threshold: NodePath = ^"Threshold"
 
 ## True from the moment the guards step out; for listeners that connect late.
 var started := false
@@ -29,9 +33,8 @@ var guards: Array[DreamEnemy] = []
 var config: Dictionary = {}
 
 var _hero: Node3D
-@onready var _wake_line: Node3D = $WakeLine
-@onready var _niches: Node3D = $Niches
-@onready var _threshold: Node3D = $Threshold
+@onready var _wake_line: Node3D = get_node(wake_line)
+@onready var _threshold: Node3D = get_node(threshold)
 
 
 func _ready() -> void:
@@ -70,7 +73,7 @@ func start() -> void:
 		return
 	started = true
 	set_physics_process(false)
-	var niches := _niches.get_children()
+	var niches := _spawn_nodes()
 	var count := int(config.get("count", 0))
 	var assemble := float(config.get("assemble_seconds", 1.5))
 	for i in count:
@@ -79,6 +82,15 @@ func start() -> void:
 		var niche := niches[i % niches.size()] as Node3D
 		guards.append(_spawn(niche, i, assemble))
 	ambush_started.emit()
+
+
+func _spawn_nodes() -> Array[Node]:
+	if spawn_points.is_empty():
+		return get_node(^"Niches").get_children()
+	var nodes: Array[Node] = []
+	for path in spawn_points:
+		nodes.append(get_node(path))
+	return nodes
 
 
 func _spawn(niche: Node3D, index: int, assemble: float) -> DreamEnemy:
