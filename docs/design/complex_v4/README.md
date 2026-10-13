@@ -25,6 +25,13 @@
    проходная тестовая сцена — `complex_v4_blockout_test.tscn`.
 5. `bash tools/ci/run_checks.sh` — все проверки (Python и headless Godot).
 
+## Планы этажей
+
+`python tools/complex_v4/floor_plans/build_floor_plans.py` собирает `build/floor_plans.html` — интерактивные планы трёх уровней
+из `plans/generation/*.svg` (помещения, двери по типам, окна, проёмы, шахты). Маршрут начала и отметки помещений задаются в
+`tools/complex_v4/floor_plans/annotations.json`; `--check` проверяет, что все отмеченные помещения существуют (входит в
+`run_checks.sh`).
+
 ## Правила
 
 - Масштаб и положение берутся только из общих планов этажей (линейки 9 px/м у U/L, 8 px/м у T); оси масштабируются независимо.

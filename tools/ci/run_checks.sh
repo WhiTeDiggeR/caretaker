@@ -58,6 +58,7 @@ python_suite tools/complex_v4/repair_package/tests
 python_suite tools/complex_v3_pilots/tests
 python_script "scene index matches the passports" scenes/complex_v4/validate_sector_scenes.py
 python_script "generated sounds match their recipes" tools/audio/make_sfx.py --check
+python_script "floor plan page builds from the canonical SVGs" tools/complex_v4/floor_plans/build_floor_plans.py --check
 python_script "art props: sizes, anchors, budgets, provenance" tools/props/validate_props.py
 python_script "git lfs: new binaries are LFS pointers" tools/ci/lfs_check.py
 python_script "textures: loads/ imported as 3D (VRAM + mipmaps, <= 2048 px)" tools/ci/texture_import_check.py
