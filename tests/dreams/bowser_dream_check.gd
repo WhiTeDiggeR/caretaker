@@ -1,9 +1,10 @@
 extends Node
 
 ## Headless check of the Bowser dream blockout (#182): the scene loads with its wiring and the
-## hook nodes of the later tasks, module 4 dreams into it, the route terrace → bastion is
-## walkable (floor rays, no step above the mantle height, no wall across the way, head room)
-## and falling into the lava throws the hero out of the dream.
+## hook nodes of the later tasks, module 4 dreams into it, the side grate and the arch stay shut
+## until the seal (#190), the route terrace → bastion is walkable once the grate is open (floor
+## rays, no step above the mantle height, no wall across the way, head room) and falling into
+## the lava throws the hero out of the dream.
 ## Prints `BOWSER_DREAM_CHECK_OK checks=<n>` on success.
 
 const BOWSER_DREAM := "res://scenes/dreams/bowser_dream.tscn"
@@ -38,6 +39,9 @@ func _run() -> void:
 	add_child(dream)
 	await _frames(5)
 	_check_wiring(dream)
+	_check_shut(dream)
+	dream.open_side_door(true)
+	await _frames(2)
 	_check_route(dream)
 	await _check_lava(dream)
 	_finish()
@@ -63,6 +67,17 @@ func _check_wiring(dream: BowserDream) -> void:
 	_check(Vector2(player.global_position.x - spawn.global_position.x, player.global_position.z - spawn.global_position.z).length() < 0.1,
 			"the hero starts at the spawn")
 	_check(spawn.global_basis.z.dot(Vector3.LEFT) > 0.99, "the spawn faces the fortress (+X)")
+
+
+func _check_shut(dream: BowserDream) -> void:
+	var gate := dream.get_node(BowserDream.GATE) as DreamGate
+	_check(gate.requires_seal and not gate.is_open(), "the arch on the bastion waits for the seal")
+	_check(not dream.side_door_open, "the side grate is down before the seal")
+	var door := (dream.get_node(BowserDream.SIDE_DOOR) as Node3D).global_position
+	var space := dream.get_world_3d().direct_space_state
+	var hit := _ray(space, door + Vector3(0, CHEST, 2), door + Vector3(0, CHEST, -2), [])
+	_check(not hit.is_empty() and hit["collider"] == dream.get_node(BowserDream.SIDE_GRATE), "the side grate blocks the way to the bastion")
+	_check(not BowserDream.silhouette_line().is_empty(), "the silhouette of №2 has its line in the dream data")
 
 
 func _check_route(dream: BowserDream) -> void:

@@ -116,6 +116,8 @@ func _enter_dream(dream: Dictionary, return_scene: String) -> bool:
 		return false
 	if not DebugMoments.place_player(get_tree().current_scene, _find_player(), dream.get("spawn", {})):
 		return false
+	if str(dream.get("seal", "")) == "restored":
+		_restore_seal(get_tree().current_scene)
 	if str(dream.get("exit", "")) == "gate":
 		Dreams.exit_through_gate()
 		if not await _wait_for_scene(return_scene):
@@ -124,6 +126,21 @@ func _enter_dream(dream: Dictionary, return_scene: String) -> bool:
 		for _frame in RETURN_FRAMES:
 			await get_tree().process_frame
 	return true
+
+
+## Solves the seal of the dream scene as the hero would (rings turned by their levers, or
+## the plain seal completed): moments right after the visit's main task.
+func _restore_seal(scene: Node) -> void:
+	for node in scene.find_children("*", "StaticBody3D", true, false):
+		var rings := node as DreamSealRings
+		if rings:
+			for ring in DreamSealRings.RING_COUNT:
+				for _turn in DreamSealRings.POSITIONS:
+					if rings.is_ring_aligned(ring):
+						break
+					rings.turn(ring)
+		elif node is DreamSeal:
+			(node as DreamSeal).complete()
 
 
 ## Waits until `path` is the current scene and has settled for a couple of frames.
