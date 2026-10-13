@@ -65,6 +65,19 @@ python_script "textures: loads/ imported as 3D (VRAM + mipmaps, <= 2048 px)" too
 registry_output=$(python tools/complex_v4/vertical_registry.py --json 2>&1); registry_code=$?
 if [ $registry_code -le 2 ] && echo "$registry_output" | grep -q '"verticals"'; then record "vertical registry builds" 0; else echo "$registry_output" | tail -15; record "vertical registry builds" 1; fi
 
+# Git logic of the branch preview tool (tools/dev/open_branch.ps1, issue #175) on a temporary repository.
+if command -v pwsh >/dev/null 2>&1; then
+  output=$(pwsh -NoProfile -File tools/dev/tests/open_branch_test.ps1 2>&1); code=$?
+  if [ $code -eq 0 ] && echo "$output" | grep -Eq "OPEN_BRANCH_TEST checks=[0-9]+ failures=0"; then
+    record "branch preview: open_branch.ps1 git logic" 0
+  else
+    echo "$output" | grep -E -A6 "^FAIL" | head -40
+    record "branch preview: open_branch.ps1 git logic" 1
+  fi
+else
+  echo "SKIP  branch preview: pwsh is not installed"
+fi
+
 echo "== Godot import"
 "$GODOT" --headless --editor --path . --quit >/dev/null 2>&1
 record "godot editor import" $?
