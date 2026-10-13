@@ -17,8 +17,12 @@ const INITIALIZED_FLAG := &"sandbox/initialized"
 const DEBUG_MODULE := &"module_4"
 const TIME_SCALES: Array[float] = [1.0, 10.0, 60.0]
 const OVERLAY_REFRESH_SECONDS := 0.25
+## Floor of the gas chamber: dim while the hero is outside, bright once they stand in it.
+const ZONE_OUTSIDE_COLOR := Color(0.55, 0.9, 0.4, 0.3)
+const ZONE_INSIDE_COLOR := Color(0.75, 1.0, 0.35, 0.6)
 
 var _overlay: Label
+var _zone_material: StandardMaterial3D
 var _overlay_elapsed := 0.0
 
 
@@ -26,6 +30,9 @@ func _ready() -> void:
 	# Returning from a dream or loading a save reloads this scene: keep the state.
 	if not GameState.has_flag(INITIALIZED_FLAG):
 		reset_state()
+	var zone := $Stations/ModuleChamber/Zone as MeshInstance3D
+	_zone_material = zone.mesh.surface_get_material(0).duplicate() as StandardMaterial3D
+	zone.material_override = _zone_material
 	_build_overlay()
 	# Method connections are dropped automatically when the scene is freed (dream entry).
 	Containment.chemical_warning.connect(_on_chemical_warning)
@@ -91,6 +98,9 @@ func _refresh_overlay() -> void:
 		text += " %.0f с" % Containment.chemical_timer(id)
 	var forecast := Containment.forecast_seconds(id)
 	text += " · прогноз: %s" % ("нет" if forecast < 0.0 else "%.0f с" % forecast)
+	var inside := Containment.is_hero_inside(id)
+	text += "\nкамера газа: %s" % ("ВЫ ВНУТРИ" if inside else "вы снаружи (зелёный пол у кресла)")
+	_zone_material.albedo_color = ZONE_INSIDE_COLOR if inside else ZONE_OUTSIDE_COLOR
 	text += "\nF4 +10 %  F5 −20 %  F6 к порогу  7 скорость времени  8 катастрофа"
 	_overlay.text = text
 

@@ -40,6 +40,13 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(hud.is_in_group(Saves.DISPLAY_GROUP) and hud.is_in_group(Saves.HUD_GROUP), "the HUD hears saves and hides for thumbnails")
 	Containment.chemical_warning.emit(&"module_4", 10.0)
 	c.is_true(hud.alert_label.visible and hud.alert_label.text.contains("МОДУЛЬ 4") and hud.alert_label.text.contains("00:10"), "the chemical warning shows the module and the countdown")
+	# #123: the gas chamber floor lights up and the overlay says whether the hero stands in it.
+	Containment.set_hero_inside(&"module_4", true)
+	sandbox._refresh_overlay()
+	c.is_true(sandbox._overlay.text.contains("ВЫ ВНУТРИ") and sandbox._zone_material.albedo_color == sandbox.ZONE_INSIDE_COLOR, "the sandbox shows the hero inside the gas chamber")
+	Containment.set_hero_inside(&"module_4", false)
+	sandbox._refresh_overlay()
+	c.is_true(sandbox._overlay.text.contains("вы снаружи") and sandbox._zone_material.albedo_color == sandbox.ZONE_OUTSIDE_COLOR, "the sandbox shows the hero outside the gas chamber")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
