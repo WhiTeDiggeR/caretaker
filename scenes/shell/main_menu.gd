@@ -3,15 +3,13 @@ extends Control
 
 ## Main menu, variant A «Протокол» (docs/ui/style-guide.md, issue #144): a service title page
 ## of the complex — mono kicker, the title in Oswald, numbered items with one amber rail —
-## over a dark backdrop with grain and a flickering lamp line. The first time in a session
-## it opens behind the splash of variant B «Кристалл»: any key or click dismisses it.
+## over a dark backdrop with grain and a flickering lamp line. It opens at once, without a
+## splash (#180).
 ## Items: continue, load a chosen save, new game, settings, quit; the test range in debug
 ## builds.
 
 const KICKER := "КОМПЛЕКС СОДЕРЖАНИЯ · АВАРИЙНЫЙ ДОСТУП"
 const SUBTITLE := "Временный смотритель комплекса"
-const SPLASH_HINT := "НАЖМИТЕ ЛЮБУЮ КЛАВИШУ"
-const SPLASH_LINE := "чужой сон нужно удержать"
 const FOOTER := "СБОРКА %s"
 const BACKGROUND := Color(0.035, 0.04, 0.045)
 const RAIL_X := 96.0
@@ -19,17 +17,10 @@ const COLUMN := Vector2(150.0, 190.0)
 const COLUMN_WIDTH := 520.0
 const GRAIN_ALPHA := 0.05
 const FLICKER_SECONDS := 7.0
-const SPLASH_FADE := 0.6
-const SPLASH_TITLE_SIZE := 86
-const SPLASH_SPACING := 26
-
-## The splash is shown once per run of the game, before the first menu.
-static var splash_seen := false
 
 var continue_button: ShellButton
 var load_button: ShellButton
 var buttons: VBoxContainer
-var splash: Control
 
 var _flicker: ColorRect
 var _flicker_time := 0.0
@@ -63,8 +54,6 @@ func _ready() -> void:
 	_build_footer()
 	refresh()
 	(continue_button if not continue_button.disabled else new_game).grab_focus.call_deferred()
-	if not splash_seen:
-		_build_splash()
 
 
 func refresh() -> void:
@@ -83,32 +72,11 @@ func open_load() -> SaveSlotsScreen:
 	return screen
 
 
-func dismiss_splash() -> void:
-	if splash == null:
-		return
-	splash_seen = true
-	var leaving := splash
-	splash = null
-	leaving.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var tween := create_tween()
-	tween.tween_property(leaving, "modulate:a", 0.0, SPLASH_FADE)
-	tween.tween_callback(leaving.queue_free)
-
-
 func _process(delta: float) -> void:
 	# A lamp at the top edge drops out now and then, like the fluorescent tubes of the complex.
 	_flicker_time = fmod(_flicker_time + delta, FLICKER_SECONDS)
 	var phase := _flicker_time / FLICKER_SECONDS
 	_flicker.modulate.a = 0.2 if (phase > 0.61 and phase < 0.62) or (phase > 0.64 and phase < 0.65) else 1.0
-
-
-func _input(event: InputEvent) -> void:
-	if splash == null:
-		return
-	var key := event is InputEventKey or event is InputEventJoypadButton or event is InputEventMouseButton
-	if key and event.is_pressed():
-		dismiss_splash()
-		get_viewport().set_input_as_handled()
 
 
 func _on_continue() -> void:
@@ -173,48 +141,6 @@ func _build_footer() -> void:
 	right.offset_right = -56.0
 	right.offset_top = -64.0
 	right.offset_bottom = -40.0
-
-
-## Variant B before the first menu: the crystal of the immersion device breathes in the dark.
-func _build_splash() -> void:
-	splash = Control.new()
-	splash.name = "Splash"
-	splash.set_anchors_preset(Control.PRESET_FULL_RECT)
-	splash.mouse_filter = Control.MOUSE_FILTER_STOP
-	add_child(splash)
-	splash.add_child(CrystalBackdrop.new())
-	var column := VBoxContainer.new()
-	column.set_anchors_preset(Control.PRESET_FULL_RECT)
-	column.offset_top = 520.0
-	column.alignment = BoxContainer.ALIGNMENT_BEGIN
-	column.add_theme_constant_override(&"separation", 12)
-	splash.add_child(column)
-	var title := Label.new()
-	title.text = ShellUI.TITLE.to_lower().capitalize()
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_override(&"font", _spaced(UiStyle.FONT_DREAM, SPLASH_SPACING))
-	title.add_theme_font_size_override(&"font_size", SPLASH_TITLE_SIZE)
-	title.add_theme_color_override(&"font_color", Color("#eef6f9"))
-	title.add_theme_color_override(&"font_shadow_color", Color(0.78, 0.92, 1.0, 0.18))
-	title.add_theme_constant_override(&"shadow_outline_size", 10)
-	title.add_theme_constant_override(&"shadow_offset_y", 0)
-	column.add_child(title)
-	var line := Label.new()
-	line.text = SPLASH_LINE
-	line.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	line.add_theme_font_override(&"font", UiStyle.FONT_BODY_ITALIC)
-	line.add_theme_color_override(&"font_color", Color(0.86, 0.91, 0.93, 0.55))
-	column.add_child(line)
-	var hint := Label.new()
-	hint.text = SPLASH_HINT
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	hint.offset_top = -80.0
-	hint.offset_bottom = -50.0
-	hint.add_theme_font_override(&"font", _spaced(UiStyle.FONT_MONO, 6))
-	hint.add_theme_font_size_override(&"font_size", 13)
-	hint.add_theme_color_override(&"font_color", Color(0.86, 0.91, 0.93, 0.35))
-	splash.add_child(hint)
 
 
 static func _spaced(font: FontVariation, spacing: int) -> FontVariation:

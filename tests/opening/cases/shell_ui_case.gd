@@ -1,6 +1,7 @@
 extends RefCounted
 
-## Shell in variant A with the splash and loading of variant B (#144).
+## Shell in variant A with the loading screen of variant B (#144); the menu opens without a
+## splash (#180).
 
 const TEST_DIR := "user://test_shell_saves"
 const MENU := "res://scenes/shell/main_menu.tscn"
@@ -21,14 +22,12 @@ func run(c: OpeningCheck) -> void:
 	Saves.directory = TEST_DIR
 	for slot in Saves.SLOTS:
 		Saves.delete(slot)
-	MainMenu.splash_seen = false
 	var menu := (load(MENU) as PackedScene).instantiate() as MainMenu
 	c.root.add_child(menu)
 	await c.tree.process_frame
-	c.is_true(menu.splash != null, "the first menu opens behind the crystal splash")
+	c.is_true(menu.find_children("*", "", true, false).all(func(node: Node) -> bool: return not node is CrystalBackdrop), "the menu opens at once, without a splash")
+	c.is_true(menu.get_viewport().gui_get_focus_owner() != null and menu.buttons.is_ancestor_of(menu.get_viewport().gui_get_focus_owner()), "a menu item has the focus from the first frame")
 	c.is_true(menu.continue_button.disabled and menu.continue_button.note.is_empty(), "continue is off and silent without saves")
-	menu.dismiss_splash()
-	c.is_true(MainMenu.splash_seen and menu.splash == null, "any key dismisses the splash for the rest of the run")
 
 	var frame := Image.create(640, 360, false, Image.FORMAT_RGB8)
 	frame.fill(Color(0.2, 0.3, 0.4))
