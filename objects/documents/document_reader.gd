@@ -4,19 +4,33 @@ extends CanvasLayer
 ## Full-screen reader for documents and the journal of read documents.
 ## Document: ↑↓/wheel scroll, Esc/E close (back to the journal when opened from it).
 ## Journal: ↑↓ choose, E/Enter open, Esc/J close. The player is locked while open.
+## A document is drawn as paper of the complex (docs/ui/style-guide.md, issue #148):
+## typewritten body, optional form header, stamps, a handwritten margin note or a fully
+## handwritten sheet; redactions are the █ characters of the text itself. The journal is the
+## player's tool, so it takes the look of the shell instead of paper (issue #144).
 
 signal closed
 
 const SCENE_PATH := "res://objects/documents/document_reader.tscn"
 const PLAYER_GROUP := &"player"
 const SCROLL_STEP := 60
-const SELECT_MARK := "▶ "
+const SELECT_MARK := "> "
 const OBJECTIVES_TITLE := "ЦЕЛИ"
 const DOCUMENTS_TITLE := "ДОКУМЕНТЫ"
+const CURRENT_MARK := ">  "
+const DONE_MARK := "—  "
+const MUTED := UiStyle.MUTED
+const META_COLOR := Color(0.36, 0.32, 0.26)
+const TITLE_SIZE := 25
+const BODY_SIZE := 19
+const HAND_SIZE := 30
+const SMALL_SIZE := 14
+const STAMP_SIZE := 24
+const NOTE_SIZE := 26
+const STAMP_ANGLE := -11.0
+const STAMP_STEP := Vector2(-36.0, 64.0)
+const GRAIN_ALPHA := 0.16
 const KNOWLEDGE_TITLE := "ЗНАНИЯ ИЗ СНА"
-const CURRENT_MARK := "▶  "
-const DONE_MARK := "✓  "
-const MUTED := Color(0.6, 0.62, 0.6)
 const OBJECTIVE_META := &"objective_line"
 const EMPTY_JOURNAL := "Журнал пуст. Найденные документы появятся здесь."
 
@@ -26,11 +40,23 @@ const EMPTY_JOURNAL := "Журнал пуст. Найденные докумен
 @onready var body_label: Label = $Paper/Margin/Rows/Scroll/Body
 @onready var list_box: VBoxContainer = $Paper/Margin/Rows/List
 @onready var hint_label: Label = $Paper/Margin/Rows/Hint
+@onready var form_box: HBoxContainer = $Paper/Margin/Rows/Form
+@onready var marks: Control = $Paper/Marks
+@onready var _form_office: Label = $Paper/Margin/Rows/Form/Office
+@onready var _form_number: Label = $Paper/Margin/Rows/Form/Number
+@onready var _form_rule: ColorRect = $Paper/Margin/Rows/FormRule
+@onready var _grain: TextureRect = $Paper/Grain
 
 var document_id := ""
 var in_journal := false
 var selected := 0
 var _from_journal := false
+var _paper_theme: Theme
+var _paper_box: StyleBox
+
+
+func _ready() -> void:
+	_apply_style()
 
 
 static func open_document_scene(tree: SceneTree, id: String) -> DocumentReader:
@@ -61,6 +87,10 @@ func show_document(id: String, from_journal: bool = false) -> void:
 	meta_label.text = str(document.get("meta", ""))
 	meta_label.visible = not meta_label.text.is_empty()
 	body_label.text = str(document.get("body", ""))
+	_set_look(false)
+	_set_hand(bool(document.get("handwritten", false)))
+	_show_form(document.get("form", {}))
+	_show_marks(document.get("stamps", []), document.get("note", ""))
 	scroll.visible = true
 	scroll.scroll_vertical = 0
 	list_box.visible = false
@@ -77,6 +107,9 @@ func show_journal() -> void:
 	meta_label.visible = true
 	scroll.visible = false
 	list_box.visible = true
+	_set_look(true)
+	_show_form({})
+	_show_marks([], "")
 	selected = clampi(selected, 0, maxi(DocumentLibrary.read_ids().size() - 1, 0))
 	_fill_list()
 	hint_label.text = "↑↓ — выбор    %s — открыть    %s — закрыть" % [
@@ -96,7 +129,7 @@ func _fill_list() -> void:
 	var sections := _add_objectives()
 	sections = _add_knowledge() or sections
 	if sections:
-		_add_line(DOCUMENTS_TITLE, 20, MUTED)
+		_add_line(DOCUMENTS_TITLE, 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
 	var ids := DocumentLibrary.read_ids()
 	if ids.is_empty():
 		var empty := Label.new()
@@ -107,7 +140,8 @@ func _fill_list() -> void:
 		var label := Label.new()
 		var title := str(DocumentLibrary.get_document(ids[index]).get("title", ids[index]))
 		label.text = (SELECT_MARK if index == selected else "   ") + title
-		label.add_theme_font_size_override(&"font_size", 22)
+		label.add_theme_font_size_override(&"font_size", 21)
+		label.add_theme_color_override(&"font_color", UiStyle.ACCENT if index == selected else UiStyle.TEXT)
 		list_box.add_child(label)
 
 
@@ -118,9 +152,9 @@ func _add_objectives() -> bool:
 	var done := Objectives.completed_texts()
 	if current.is_empty() and done.is_empty():
 		return false
-	_add_line(OBJECTIVES_TITLE, 20, MUTED)
+	_add_line(OBJECTIVES_TITLE, 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
 	if not current.is_empty():
-		_add_line(CURRENT_MARK + current, 22, Color.WHITE)
+		_add_line(CURRENT_MARK + current, 21, UiStyle.TEXT)
 	for index in range(done.size() - 1, -1, -1):
 		_add_line(DONE_MARK + done[index], 20, MUTED)
 	return true
@@ -131,14 +165,14 @@ func _add_knowledge() -> bool:
 	var entries := DreamKnowledge.journal_entries()
 	if entries.is_empty():
 		return false
-	_add_line(KNOWLEDGE_TITLE, 20, MUTED)
+	_add_line(KNOWLEDGE_TITLE, 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
 	for entry in entries:
 		var used := bool(entry["used"])
-		_add_line((DONE_MARK if used else CURRENT_MARK) + str(entry["text"]), 20 if used else 22, MUTED if used else Color.WHITE)
+		_add_line((DONE_MARK if used else CURRENT_MARK) + str(entry["text"]), 20 if used else 21, MUTED if used else UiStyle.TEXT)
 	return true
 
 
-func _add_line(text: String, size: int, color: Color) -> void:
+func _add_line(text: String, size: int, color: Color) -> Label:
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -146,6 +180,107 @@ func _add_line(text: String, size: int, color: Color) -> void:
 	label.add_theme_color_override(&"font_color", color)
 	label.set_meta(OBJECTIVE_META, true)
 	list_box.add_child(label)
+	return label
+
+
+
+func _apply_style() -> void:
+	var paper_theme := Theme.new()
+	paper_theme.default_font = UiStyle.FONT_BODY
+	paper_theme.default_font_size = 20
+	paper_theme.set_color(&"font_color", &"Label", UiStyle.INK)
+	$Paper.theme = paper_theme
+	_paper_theme = paper_theme
+	_paper_box = ($Paper as Control).get_theme_stylebox(&"panel")
+	title_label.add_theme_font_override(&"font", UiStyle.FONT_BODY_BOLD)
+	title_label.add_theme_font_size_override(&"font_size", TITLE_SIZE)
+	meta_label.add_theme_font_override(&"font", UiStyle.FONT_MONO)
+	meta_label.add_theme_font_size_override(&"font_size", SMALL_SIZE + 1)
+	meta_label.add_theme_color_override(&"font_color", META_COLOR)
+	for label: Label in [_form_office, _form_number]:
+		label.add_theme_font_override(&"font", UiStyle.FONT_SCREEN_OLD)
+		label.add_theme_font_size_override(&"font_size", SMALL_SIZE)
+		label.add_theme_color_override(&"font_color", UiStyle.INK)
+	hint_label.add_theme_font_override(&"font", UiStyle.FONT_MONO)
+	hint_label.add_theme_font_size_override(&"font_size", SMALL_SIZE)
+	hint_label.add_theme_color_override(&"font_color", META_COLOR)
+	_set_hand(false)
+	var noise := FastNoiseLite.new()
+	noise.frequency = 0.35
+	noise.fractal_octaves = 3
+	var grain := NoiseTexture2D.new()
+	grain.width = 256
+	grain.height = 256
+	grain.seamless = true
+	grain.noise = noise
+	_grain.texture = grain
+	_grain.modulate = Color(0.35, 0.27, 0.16, GRAIN_ALPHA)
+
+
+## Paper for documents, the shell plate (dark, amber edge) for the journal.
+func _set_look(journal: bool) -> void:
+	var paper := $Paper as PanelContainer
+	paper.theme = ShellUI.theme() if journal else _paper_theme
+	paper.add_theme_stylebox_override(&"panel", ShellUI.theme().get_stylebox(&"panel", &"PanelContainer") if journal else _paper_box)
+	_grain.visible = not journal
+	title_label.add_theme_font_override(&"font", UiStyle.FONT_DISPLAY if journal else UiStyle.FONT_BODY_BOLD)
+	title_label.add_theme_color_override(&"font_color", UiStyle.ACCENT if journal else UiStyle.INK)
+	meta_label.add_theme_color_override(&"font_color", UiStyle.MUTED if journal else META_COLOR)
+	hint_label.add_theme_color_override(&"font_color", UiStyle.MUTED if journal else META_COLOR)
+
+
+## Typewritten body, or the whole sheet in a hand (notes of the staff).
+func _set_hand(handwritten: bool) -> void:
+	body_label.add_theme_font_override(&"font", UiStyle.FONT_HAND if handwritten else UiStyle.FONT_SCREEN_OLD)
+	body_label.add_theme_font_size_override(&"font_size", HAND_SIZE if handwritten else BODY_SIZE)
+	body_label.add_theme_color_override(&"font_color", UiStyle.PENCIL if handwritten else UiStyle.INK)
+
+
+## Header of an official form: office on the left, form number and copy on the right.
+func _show_form(form: Dictionary) -> void:
+	_form_office.text = str(form.get("office", ""))
+	_form_number.text = "\n".join(PackedStringArray([str(form.get("number", "")), str(form.get("copy", ""))])).strip_edges()
+	form_box.visible = not form.is_empty()
+	_form_rule.visible = form_box.visible
+
+
+## Stamps in the upper right corner and a pencil note at the bottom, over the text.
+func _show_marks(stamps: Array, note: String) -> void:
+	for child in marks.get_children():
+		marks.remove_child(child)
+		child.queue_free()
+	var paper_size := ($Paper as Control).size
+	for index in stamps.size():
+		var stamp := Label.new()
+		stamp.name = "Stamp%d" % index
+		stamp.text = str(stamps[index])
+		stamp.add_theme_font_override(&"font", UiStyle.FONT_DISPLAY_STRONG)
+		stamp.add_theme_font_size_override(&"font_size", STAMP_SIZE)
+		stamp.add_theme_color_override(&"font_color", Color(UiStyle.STAMP, 0.8))
+		var frame := StyleBoxFlat.new()
+		frame.draw_center = false
+		frame.border_color = Color(UiStyle.STAMP, 0.75)
+		frame.set_border_width_all(3)
+		frame.set_content_margin_all(8)
+		frame.content_margin_top = 2
+		frame.content_margin_bottom = 2
+		stamp.add_theme_stylebox_override(&"normal", frame)
+		marks.add_child(stamp)
+		stamp.reset_size()
+		stamp.pivot_offset = stamp.size * 0.5
+		stamp.rotation_degrees = STAMP_ANGLE + index * 7.0
+		stamp.position = Vector2(paper_size.x - stamp.size.x - 70.0, 96.0) + STAMP_STEP * index
+	if not note.is_empty():
+		var pencil := Label.new()
+		pencil.name = "Note"
+		pencil.text = note
+		pencil.add_theme_font_override(&"font", UiStyle.FONT_HAND)
+		pencil.add_theme_font_size_override(&"font_size", NOTE_SIZE)
+		pencil.add_theme_color_override(&"font_color", UiStyle.PENCIL)
+		marks.add_child(pencil)
+		pencil.reset_size()
+		pencil.rotation_degrees = -3.0
+		pencil.position = Vector2(paper_size.x - pencil.size.x - 60.0, paper_size.y - pencil.size.y - 64.0)
 
 
 ## Journal lines of read documents (without the objectives section).

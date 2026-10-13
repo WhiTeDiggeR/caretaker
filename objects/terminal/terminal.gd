@@ -10,8 +10,9 @@ signal closed
 
 const SCREEN_SCENE := preload("res://objects/terminal/terminal_screen.tscn")
 const PROMPT := "ИСПОЛЬЗОВАТЬ ТЕРМИНАЛ"
-const SCREEN_ON := Color(0.1, 0.5, 0.36)
 const SCREEN_OFF := Color(0.02, 0.02, 0.02)
+## Share of the phosphor colour in the glow of the screen mesh.
+const SCREEN_GLOW := 0.35
 
 @export_file("*.json") var program_path := ""
 @export var section: StringName = &""
@@ -48,7 +49,7 @@ func open() -> void:
 	screen = SCREEN_SCENE.instantiate()
 	get_tree().root.add_child(screen)
 	screen.closed.connect(_on_screen_closed)
-	screen.open(program)
+	screen.open(program, GameState.get_section_power(section) == GameState.Power.EMERGENCY)
 	opened.emit()
 
 
@@ -59,7 +60,9 @@ func _on_screen_closed() -> void:
 
 func _refresh() -> void:
 	var powered := is_powered()
+	var style := ScreenStyle.for_era(program.era)
+	var screen_on := style.background.lerp(style.phosphor, SCREEN_GLOW)
 	_interactable.available = powered
 	_interactable.unavailable_prompt = FacilityDoor.REASON_NO_POWER
-	_screen_material.albedo_color = SCREEN_ON if powered else SCREEN_OFF
-	_screen_material.emission = SCREEN_ON if powered else SCREEN_OFF
+	_screen_material.albedo_color = screen_on if powered else SCREEN_OFF
+	_screen_material.emission = screen_on if powered else SCREEN_OFF

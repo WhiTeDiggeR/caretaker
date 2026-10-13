@@ -30,6 +30,9 @@ const DEFAULT_PROMPT := "ВЗАИМОДЕЙСТВОВАТЬ"
 @export var inspect_text_id := ""
 ## Story flag set in GameState when the object is used (e.g. a read diagnostic panel).
 @export var sets_flag: StringName = &""
+## Sound (data/audio/sfx.json) of a refused use while unavailable, e.g. a rattled locked
+## handle; empty plays the common refusal.
+@export var denied_sound: StringName = &""
 
 var used := false
 

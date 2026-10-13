@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="Dima'sFirstGame"
-run/main_scene="res://scenes/underground_research_complex.tscn"
+config/version="0.1.0"
+run/main_scene="res://scenes/shell/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://05xq355noukc"
 
@@ -26,6 +27,13 @@ Sfx="*res://objects/audio/sfx.gd"
 Objectives="*res://objects/objectives/objectives.gd"
 Hints="*res://objects/objectives/hints.gd"
 ScreenEffects="*res://objects/feel/screen_effects.gd"
+Debug="*res://objects/debug/debug.gd"
+
+[debug]
+
+file_logging/enable_file_logging=true
+file_logging/log_path="user://logs/godot.log"
+file_logging/max_log_files=10
 
 [display]
 
@@ -49,7 +57,8 @@ import/blender/enabled=false
 texture={
 "compress/mode": 2,
 "detect_3d/compress_to": 0,
-"mipmaps/generate": true
+"mipmaps/generate": true,
+"process/size_limit": 2048
 }
 
 [input]
@@ -113,6 +122,16 @@ dream_alt_attack={
 crawl={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+debug_menu={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194341,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+debug_report={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194343,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 

@@ -1,0 +1,99 @@
+name: Build
+
+# Exports the game for Windows (artifact) and smoke-tests the Linux export headless (issue #168).
+# No releases, signing or deployment: the build is only uploaded as a workflow artifact.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - team/integration
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GODOT_VERSION: 4.7-stable
+      GODOT_BINARY: Godot_v4.7-stable_linux.x86_64
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          # Binary assets are stored in Git LFS (docs/LFS.md); the export needs the real files.
+          lfs: true
+
+      - name: Install Godot 4.7 stable
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 --output godot.zip \
+            "https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/${GODOT_BINARY}.zip"
+          unzip -q godot.zip
+          rm godot.zip
+          chmod +x "${GODOT_BINARY}"
+          echo "GODOT_BIN=${PWD}/${GODOT_BINARY}" >> "$GITHUB_ENV"
+
+      - name: Cache export templates
+        id: templates
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/godot/export_templates/4.7.stable
+          key: godot-export-templates-4.7-stable-win64-linux64
+
+      - name: Install export templates 4.7 stable
+        if: steps.templates.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 --output templates.tpz \
+            "https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}/Godot_v4.7-stable_export_templates.tpz"
+          dir="${HOME}/.local/share/godot/export_templates/4.7.stable"
+          mkdir -p "$dir"
+          # Only the templates this project exports with (the full archive is ~1.2 GB unpacked).
+          unzip -j -o templates.tpz \
+            templates/version.txt \
+            templates/windows_release_x86_64.exe templates/windows_debug_x86_64.exe \
+            templates/windows_debug_x86_64_console.exe \
+            templates/linux_release.x86_64 templates/linux_debug.x86_64 \
+            -d "$dir"
+          rm templates.tpz
+          ls -l "$dir"
+
+      - name: Export Windows
+        shell: bash
+        run: bash tools/build/export.sh windows 2>&1 | tee export-windows.log | grep -v "Storing File"
+
+      - name: Export Linux
+        shell: bash
+        run: bash tools/build/export.sh linux 2>&1 | tee export-linux.log | grep -v "Storing File"
+
+      - name: Smoke-test Linux export headless
+        shell: bash
+        run: bash tools/build/smoke_test.sh build/linux/caretaker.x86_64
+
+      - name: Name the artifact
+        id: meta
+        shell: bash
+        run: |
+          version="$(sed -n 's/^config\/version="\(.*\)"$/\1/p' project.godot)"
+          echo "name=caretaker-windows-${version}-$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Сборка ${version} ($(git rev-parse --short HEAD))"
+            echo '```'
+            grep -h "^Exported" export-windows.log export-linux.log
+            du -sh build/windows build/linux
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.meta.outputs.name }}
+          path: build/windows/
+          if-no-files-found: error
+          retention-days: 14

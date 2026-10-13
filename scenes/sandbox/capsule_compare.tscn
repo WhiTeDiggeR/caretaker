@@ -5,10 +5,10 @@
 [ext_resource type="Material" path="res://materials/hangar_concrete_floor.tres" id="floor_mat"]
 [ext_resource type="PackedScene" path="res://loads/bowser_capsule/Hitem3d-1782155776080.glb" id="o0"]
 [ext_resource type="PackedScene" path="res://loads/bowser_capsule/lod/bowser_capsule_lod.gltf" id="l0"]
-[ext_resource type="PackedScene" path="res://objects/art/capsule_bowser.tscn" id="s0"]
+[ext_resource type="PackedScene" path="res://objects/containment/prisoner_capsule_bowser.tscn" id="s0"]
 [ext_resource type="PackedScene" path="res://loads/herobrine_capsule/Hitem3d-1782239593585.glb" id="o1"]
 [ext_resource type="PackedScene" path="res://loads/herobrine_capsule/lod/herobrine_capsule_lod.gltf" id="l1"]
-[ext_resource type="PackedScene" path="res://objects/art/capsule_herobrine.tscn" id="s1"]
+[ext_resource type="PackedScene" path="res://objects/containment/prisoner_capsule_herobrine.tscn" id="s1"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -100,16 +100,10 @@ transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 7.5, 0.000, 0.00)
 
 [node name="R0C2_label" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.9, 1.00)
-text = "Скриптовая модель\n31 тыс. треугольников · 1.4 МБ"
+text = "Скриптовая модель v2\n26 тыс. треугольников · 1.1 МБ"
 font_size = 56
 outline_size = 10
 billboard = 1
-
-[node name="R0C2_inside" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1.7, 0.20)
-light_color = Color(0.4, 1, 0.45, 1)
-light_energy = 1.2
-omni_range = 2.2
 
 [node name="R0C2_key" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 7.5, 5.5, 4.00)
@@ -179,16 +173,10 @@ transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 7.5, 0.000, -8.00)
 
 [node name="R1C2_label" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 3.9, -7.00)
-text = "Скриптовая модель\n19 тыс. треугольников · 0.9 МБ"
+text = "Скриптовая модель v2\n26 тыс. треугольников · 1.1 МБ"
 font_size = 56
 outline_size = 10
 billboard = 1
-
-[node name="R1C2_inside" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1.7, -7.80)
-light_color = Color(0.35, 0.6, 1, 1)
-light_energy = 1.2
-omni_range = 2.2
 
 [node name="R1C2_key" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 7.5, 5.5, -4.00)

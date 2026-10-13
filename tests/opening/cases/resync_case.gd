@@ -20,7 +20,7 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(first != null, "panel has a button per glyph")
 	c.is_true(not first.is_available(), "without knowledge the panel is locked")
 	c.equal(first.get_prompt_text(), ResyncPanel.LOCK_NO_KNOWLEDGE, "the lock says what is needed")
-	c.is_true(panel.get_node(^"Status").text.contains("Нужны знаки"), "the screen explains how to get the glyphs")
+	c.is_true(panel.screen_text().contains("Нужны знаки"), "the screen explains how to get the glyphs")
 
 	# A seal restored inside the dream grants the knowledge once.
 	var seal := (load(SEAL) as PackedScene).instantiate() as DreamSeal
@@ -67,6 +67,8 @@ func run(c: OpeningCheck) -> void:
 	for glyph in wrong:
 		panel.glyph_button(glyph).trigger()
 	c.equal(panel.last_result, DreamKnowledge.Result.WRONG, "reversed glyphs are a mistake")
+	var screen := panel.get_node(^"Screen") as WorldScreen
+	c.is_true(screen.view.rows.any(func(row: Dictionary) -> bool: return row.get("status") == &"alarm"), "the mistake is an alarm on the screen")
 	c.near(Containment.get_instability(MODULE), 40.0 + DreamKnowledge.resync_param("failure_penalty", 0.0), 0.001, "a mistake raises the instability")
 	c.equal(panel.entered.size(), 0, "input starts over after a mistake")
 	c.equal(DreamKnowledge.active_for(MODULE), KNOWLEDGE, "a mistake does not spend the knowledge")
@@ -84,7 +86,7 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(Containment.is_stable(MODULE) and Containment.forecast_seconds(MODULE) < 0.0, "resync removes the awakening forecast")
 	c.is_true(DreamKnowledge.is_used(KNOWLEDGE) and DreamKnowledge.active_for(MODULE).is_empty(), "the knowledge is spent")
 	c.is_true(not first.is_available(), "spent knowledge locks the panel again")
-	c.is_true(panel.get_node(^"Status").text.contains("СИНХРОНИЗАЦИЯ ЗАВЕРШЕНА"), "the screen confirms the resync")
+	c.is_true(panel.screen_text().contains("СИНХРОНИЗАЦИЯ ЗАВЕРШЕНА"), "the screen confirms the resync")
 	c.equal(DreamKnowledge.journal_entries()[0]["used"], true, "the journal marks the knowledge as used")
 
 	# A new visit gives a new knowledge entry.

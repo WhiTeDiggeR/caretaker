@@ -44,6 +44,27 @@ func run(c: OpeningCheck) -> void:
 	c.equal(heard, [&"interact_click", &"interact_denied", &"hold_done"] as Array[StringName], "press, refusal and hold sounds")
 	heard.clear()
 
+	# #137: a locked handle rattles; a wheel and a powered door's panel keep the common refusal.
+	var manual := FacilityDoor.new()
+	manual.kind = FacilityDoor.Kind.MANUAL
+	manual.emergency_lock = true
+	c.add(manual)
+	var wheel := FacilityDoor.new()
+	wheel.kind = FacilityDoor.Kind.MECHANICAL
+	wheel.emergency_lock = true
+	c.add(wheel)
+	var powered := FacilityDoor.new()
+	powered.emergency_lock = true
+	c.add(powered)
+	await c.tree.process_frame
+	interactor.step(manual._controls[0], true, true, 0.016)
+	interactor.step(wheel._controls[0], true, true, 0.016)
+	interactor.step(powered._controls[0], true, true, 0.016)
+	c.equal(heard, [&"door_locked", &"interact_denied", &"interact_denied"] as Array[StringName], "only a locked handle rattles")
+	manual.emergency_lock = false
+	c.equal(manual._controls[0].denied_sound, &"", "an unlocked door has no rattle")
+	heard.clear()
+
 	# Repair controls, containment service and global events.
 	var lever := RepairControl.new()
 	lever.kind = RepairControl.Kind.LEVER
@@ -68,6 +89,24 @@ func run(c: OpeningCheck) -> void:
 	for _i in Sfx.MAX_SPATIAL + 3:
 		Sfx.play(&"door_stop", Vector3.ZERO)
 	c.equal(Sfx._spatial.size(), Sfx.MAX_SPATIAL, "the 3D pool is bounded")
+
+	# #137: the generator starts once, then loops; a loaded running generator only loops.
+	heard.clear()
+	var generator := GeneratorSound.new()
+	generator.running_flag = &"sfx_generator"
+	c.add(generator)
+	c.is_true(not generator.is_running(), "a stopped generator is silent")
+	GameState.set_flag(&"sfx_generator")
+	c.equal(heard, [&"gen_start"] as Array[StringName], "starting the generator plays the start once")
+	c.is_true(generator.is_running(), "the running loop follows the start")
+	GameState.set_flag(&"sfx_generator", false)
+	c.is_true(not generator.is_running(), "clearing the flag stops the loop")
+	GameState.set_flag(&"sfx_generator")
+	heard.clear()
+	var loaded := GeneratorSound.new()
+	loaded.running_flag = &"sfx_generator"
+	c.add(loaded)
+	c.is_true(loaded.is_running() and heard.is_empty(), "a generator running on load loops without the start")
 
 	Sfx.requested.disconnect(on_request)
 	GameState.reset()

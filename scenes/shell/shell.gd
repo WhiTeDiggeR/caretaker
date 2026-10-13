@@ -3,7 +3,8 @@ extends Node
 ## Game shell (autoload `Shell`): scene changes behind a loading screen with threaded
 ## loading, the pause menu (Esc in gameplay, when no terminal, document or message took the
 ## key), defeat and the rules of when the game may be saved, and entry points of the main
-## menu. Screens are built from ShellUI.
+## menu. Screens are built from ShellUI (variant A); the loading screen is the crystal of
+## variant B (docs/ui/style-guide.md, issue #144).
 
 signal scene_changed(path: String)
 signal paused_changed(paused: bool)
@@ -12,6 +13,9 @@ signal defeated(reason: StringName)
 signal new_game_started
 
 const MAIN_MENU := "res://scenes/shell/main_menu.tscn"
+## `-- --new-game` after the engine arguments starts a new game right away: the exported build
+## cannot run a scene by path, so tools/build/smoke_test.sh reaches the complex this way (#173).
+const NEW_GAME_ARG := "--new-game"
 ## Test range of the opening systems, offered by the main menu in debug builds.
 const SANDBOX_SCENE := "res://scenes/sandbox/opening_sandbox.tscn"
 const PLAYER_GROUP := &"player"
@@ -25,6 +29,9 @@ const SAVE_BLOCKED_DEFEAT := "После поражения сохранить �
 const SAVE_BLOCKED_ASLEEP := "Смотритель засыпает — сохранить игру нельзя."
 const SAVE_BLOCKED_DREAM := "Во сне сохранить игру нельзя — сначала вернитесь в реальность."
 const SAVE_BLOCKED_NO_GAME := "Нет начатой игры."
+const LOADING_WORD := "загрузка"
+const LOADING_BAR_WIDTH := 360.0
+const LOADING_SPACING := 18
 
 ## Scene a new game starts in. The complex scene until the opening scene exists.
 var new_game_scene := "res://scenes/underground_research_complex.tscn"
@@ -49,15 +56,43 @@ var _fall_asleep_serial := 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	BuildInfo.log_once()
+	if NEW_GAME_ARG in OS.get_cmdline_user_args():
+		new_game.call_deferred()
 	_loading_layer = CanvasLayer.new()
 	_loading_layer.layer = 90
 	_loading_layer.visible = false
 	add_child(_loading_layer)
-	var column := ShellUI.screen(_loading_layer, "ЗАГРУЗКА", 420.0)
+	_build_loading_screen()
+
+
+## The crystal breathes while the scene loads; one word and a hairline of progress below it.
+func _build_loading_screen() -> void:
+	var root := Control.new()
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.theme = ShellUI.theme()
+	_loading_layer.add_child(root)
+	root.add_child(CrystalBackdrop.new())
+	var column := VBoxContainer.new()
+	column.set_anchors_preset(Control.PRESET_CENTER)
+	column.offset_top = 150.0
+	column.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	column.add_theme_constant_override(&"separation", 18)
+	root.add_child(column)
+	var word := Label.new()
+	word.text = LOADING_WORD
+	word.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var spaced := UiStyle.FONT_DREAM.duplicate() as FontVariation
+	spaced.spacing_glyph = LOADING_SPACING
+	word.add_theme_font_override(&"font", spaced)
+	word.add_theme_font_size_override(&"font_size", 40)
+	word.add_theme_color_override(&"font_color", Color(0.9, 0.95, 0.97, 0.8))
+	column.add_child(word)
 	_loading_bar = ProgressBar.new()
 	_loading_bar.max_value = 1.0
 	_loading_bar.show_percentage = false
-	_loading_bar.custom_minimum_size = Vector2(0, 10)
+	_loading_bar.custom_minimum_size = Vector2(LOADING_BAR_WIDTH, 2)
+	_loading_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	column.add_child(_loading_bar)
 	Containment.catastrophe.connect(func(_ids: Array[StringName]) -> void: defeat(DEFEAT_CATASTROPHE))
 	Containment.hero_gassed.connect(func(_id: StringName) -> void: fall_asleep(DEFEAT_GASSED))
@@ -98,6 +133,7 @@ func _process(_delta: float) -> void:
 		push_error("Shell: cannot load %s" % _loading_path)
 		return
 	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(_loading_path))
+	print("Сцена: %s" % _loading_path)
 	if not _pending_save.is_empty():
 		var save := _pending_save
 		_pending_save = {}
@@ -229,13 +265,22 @@ func pause() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	_pause_layer = CanvasLayer.new()
 	_pause_layer.layer = 80
+	# Hidden for the frames it takes to grab the game without HUD for a save thumbnail.
+	_pause_layer.visible = false
 	add_child(_pause_layer)
-	var column := ShellUI.screen(_pause_layer, "ПАУЗА")
+	_grab_pause_frame(_pause_layer)
+	var column := ShellUI.screen(_pause_layer, "Пауза")
 	var resume_button := ShellUI.button(column, "Продолжить", resume)
 	_add_pause_items(column)
-	ShellUI.button(column, "В главное меню", main_menu)
+	ShellUI.button(column, "В главное меню", main_menu, "НЕСОХРАНЁННОЕ ПРОПАДЁТ").danger = true
 	resume_button.grab_focus.call_deferred()
 	paused_changed.emit(true)
+
+
+func _grab_pause_frame(layer: CanvasLayer) -> void:
+	Saves.last_frame = await Saves.grab_frame(get_tree())
+	if is_instance_valid(layer):
+		layer.visible = true
 
 
 func _add_pause_items(column: VBoxContainer) -> void:
