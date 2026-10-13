@@ -404,6 +404,13 @@ ambient_light_source = 2
 ambient_light_color = Color(0.9, 0.7, 0.5, 1)
 fog_enabled = true
 
+[sub_resource type="BoxMesh" id="side_grate_mesh"]
+material = SubResource("mat_iron")
+size = Vector3(3, 5, 0.2)
+
+[sub_resource type="BoxShape3D" id="side_grate_shape"]
+size = Vector3(3, 5, 0.2)
+
 [node name="BowserDream" type="Node3D"]
 script = ExtResource("1_dream")
 
@@ -820,6 +827,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.2, 0)
 [node name="SideDoor" type="Marker3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.2, -8.5)
 
+[node name="SideGrate" type="StaticBody3D" parent="SealHall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 3.7, -8.5)
+
+[node name="Mesh" type="MeshInstance3D" parent="SealHall/SideGrate"]
+mesh = SubResource("side_grate_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="SealHall/SideGrate"]
+shape = SubResource("side_grate_shape")
+
 [node name="Seal" parent="SealHall" instance=ExtResource("6_seal")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.2, 0)
 knowledge_id = &"module_4_seal"
@@ -892,6 +908,7 @@ shape = SubResource("shape_33")
 
 [node name="Gate" parent="Bastion" instance=ExtResource("5_gate")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.2, -25)
+requires_seal = true
 
 [node name="Branches" type="Node3D" parent="."]
 
