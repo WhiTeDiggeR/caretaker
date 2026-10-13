@@ -451,6 +451,9 @@ func _save() -> void:
 
 
 func _on_state_loaded() -> void:
+	# A new or loaded game starts with the hero outside every chamber; the scene's chambers
+	# report the hero again when it enters them.
+	_hero_inside.clear()
 	_state = GameState.get_system_data(SYSTEM).duplicate(true)
 	for id: StringName in modules:
 		_ensure(id)

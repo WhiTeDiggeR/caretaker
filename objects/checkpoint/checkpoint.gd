@@ -2,6 +2,7 @@ class_name Checkpoint
 extends Area3D
 
 ## Autosave point: the first time the hero walks in, the game is saved to the autosave slot.
+## Nothing happens while saving is blocked (dream, loading, defeat): the point stays unreached.
 
 const FLAG_PREFIX := "checkpoint/"
 
@@ -17,7 +18,7 @@ func is_reached() -> bool:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if not body.is_in_group(&"player") or is_reached():
+	if not body.is_in_group(&"player") or is_reached() or not Shell.can_save():
 		return
 	GameState.set_flag(StringName(FLAG_PREFIX + String(checkpoint_id)))
 	# The save indicator of the HUD shows the record (issue #152); the frame for the thumbnail

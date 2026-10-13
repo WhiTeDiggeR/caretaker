@@ -22,6 +22,7 @@ const CASES: Array[String] = [
 	"res://tests/opening/cases/props_case.gd",
 	"res://tests/opening/cases/settings_case.gd",
 	"res://tests/opening/cases/saves_case.gd",
+	"res://tests/opening/cases/defeat_case.gd",
 	"res://tests/opening/cases/sfx_case.gd",
 	"res://tests/opening/cases/objectives_case.gd",
 	"res://tests/opening/cases/feel_case.gd",
@@ -33,6 +34,8 @@ const CASES: Array[String] = [
 
 
 func _ready() -> void:
+	# Cases wake modules on purpose; only the defeat case lets that stop the game.
+	Shell.defeat_enabled = false
 	var total_checks := 0
 	var failures := PackedStringArray()
 	var script_errors := ScriptErrorLogger.new()

@@ -51,6 +51,11 @@ const LADDER_GRAB_TIME := 0.25
 const LADDER_TOP_START := 1.0  # feet below the top when climbing down from the landing
 const LADDER_EXIT_MARGIN := 0.35  # feet this close to the top step onto the landing
 const LADDER_RELEASE_PUSH := 2.0
+## Falling asleep (gas): the hero staggers, then sinks to the floor with the head tilting over.
+const FALL_ASLEEP_DELAY := 0.6
+const FALL_ASLEEP_SECONDS := 3.4
+const FALL_ASLEEP_EYES := -0.55  # eyes 0.35 m above the feet: lying on the floor
+const FALL_ASLEEP_ROLL := deg_to_rad(38.0)
 
 @onready var camera: Camera3D = $Camera3D
 @onready var ray: RayCast3D = $Camera3D/RayCast3D
@@ -66,6 +71,11 @@ var is_mantling := false
 var is_climbing := false
 ## Set while a full-screen UI (terminal, document) owns the input.
 var controls_locked := false
+## 0 standing … 1 lying asleep on the floor (fall_asleep).
+var asleep := 0.0:
+	set(value):
+		asleep = value
+		_update_camera()
 
 var _shape: CapsuleShape3D
 var _current_height := STAND_HEIGHT
@@ -77,6 +87,7 @@ var _snapped := false
 var _ladder: Ladder
 ## Head bob and landing dip (FirstPersonFeel, #134), added to the camera position.
 var _view_offset := Vector3.ZERO
+var _view_roll := 0.0
 var _feel: FirstPersonFeel
 
 
@@ -309,13 +320,24 @@ func _apply_height(height: float) -> void:
 ## Camera motion of the body: `offset` in metres (bob, landing), `roll` in radians (strafe).
 func set_view_motion(offset: Vector3, roll: float) -> void:
 	_view_offset = offset
-	camera.rotation.z = roll
+	_view_roll = roll
 	_update_camera()
 
 
 func _update_camera() -> void:
-	var eyes := STAND_CAMERA_Y - (STAND_HEIGHT - _current_height) - _step_offset
-	camera.position = Vector3(_view_offset.x, eyes + _view_offset.y, 0.0)
+	var eyes := STAND_CAMERA_Y - (STAND_HEIGHT - _current_height) - _step_offset + _view_offset.y
+	camera.position = Vector3(_view_offset.x, lerpf(eyes, FALL_ASLEEP_EYES, asleep), 0.0)
+	camera.rotation.z = _view_roll + FALL_ASLEEP_ROLL * asleep
+
+
+## The hero falls asleep on the spot: controls lock and the body sinks to the floor.
+func fall_asleep() -> void:
+	if is_climbing:
+		detach_ladder()
+	set_controls_locked(true)
+	var tween := create_tween()
+	tween.tween_interval(FALL_ASLEEP_DELAY)
+	tween.tween_property(self, ^"asleep", 1.0, FALL_ASLEEP_SECONDS).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 
 
 ## True when the standing capsule fits at the current position.

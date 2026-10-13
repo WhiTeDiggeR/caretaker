@@ -104,6 +104,19 @@ func enter(id: StringName, chair_id: StringName, dream_scene: String = "") -> bo
 	return true
 
 
+## Drops the session without a return (a defeat or a loaded save replaces the scene).
+func abort() -> void:
+	in_dream = false
+	module_id = &""
+	seal_restored = false
+	real_seconds = 0.0
+	subjective_seconds = 0.0
+	_return_scene = ""
+	_return_chair = &""
+	if _fade:
+		_fade.veil = 0.0
+
+
 ## The hero passed through the gate.
 func exit_through_gate() -> void:
 	_leave(Exit.GATE)

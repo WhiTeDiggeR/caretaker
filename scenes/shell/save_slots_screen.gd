@@ -52,6 +52,9 @@ func refresh() -> void:
 
 
 func choose(slot: String) -> void:
+	if mode == Mode.SAVE and not Shell.can_save():
+		_note.text = Shell.save_block_reason()
+		return
 	if mode == Mode.SAVE and Saves.exists(slot) and not overwrite_confirmed:
 		ShellUI.confirm(self, "Перезаписать слот?", "Сохранение «%s» от %s будет заменено. Отменить это нельзя." % [Saves.slot_title(slot), Saves.stamp(slot)], "Перезаписать", func() -> void:
 			overwrite_confirmed = true
