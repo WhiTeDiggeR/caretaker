@@ -7,7 +7,7 @@ Issue #168. Presets are in `export_presets.cfg`; output goes to `build/` (ignore
 | `bash tools/build/export_windows.sh` | `build/windows/caretaker.exe` + `caretaker.pck` |
 | `bash tools/build/export.sh linux` | `build/linux/caretaker.x86_64` + `caretaker.pck` |
 | `BUILD_DEBUG=1 bash tools/build/export.sh windows` | debug template: debug output and the test range in the menu |
-| `bash tools/build/smoke_test.sh build/linux/caretaker.x86_64` | runs the Linux build headless, fails on a crash, a script error or a missing version line |
+| `bash tools/build/smoke_test.sh build/linux/caretaker.x86_64` | runs the Linux build headless, fails on a crash, any `ERROR` in the log (also on quit) or a missing version line |
 
 The script imports the project, writes the short commit hash to `build_info.json` (removed after the export, read by `scenes/shell/build_info.gd`) and exports with the release template. The `.exe` and `.pck` must stay together.
 
