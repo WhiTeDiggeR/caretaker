@@ -114,6 +114,7 @@ res://scenes/complex_v4/regeneration/door_frame_prefab_check.gd|DOOR_FRAME_PREFA
 res://scenes/complex_v4/regeneration/surface_conflict_check.gd|SURFACE_CONFLICT_CHECK sectors=32 findings=[0-9]+ errors=0
 res://scenes/complex_v4/regeneration/rollout/shared/combined_check.gd|SHARED_COMBINED checks=[0-9]+ errors=0
 res://tools/complex_v4/tests/production_matrix_check.gd|PRODUCTION_MATRIX generated=32 sectors=32 errors=0
+res://tools/complex_v4/tests/coplanar_check.gd|COPLANAR_CHECK meshes=[0-9]+ overlaps=0
 res://scenes/complex_v4/sector_wrapper_contract_check.gd|COMPLEX_V4_SECTOR_WRAPPER_CONTRACT_OK
 res://scenes/complex_v4/set_dressing/set_dressing_scene_check.gd|SET_DRESSING_GODOT_SCENES_OK
 res://scenes/complex_v4/complex_v4_sector_check.gd|COMPLEX_V4_SECTORS_OK sectors=32

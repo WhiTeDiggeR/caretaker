@@ -11,12 +11,12 @@
 | `sources/plans/sectors/` | исходные планы секторов (утверждённые презентационные планы), из которых построены канонические SVG |
 | `handoff/` | метаданные комплекса: описание пространств и порталов (`geometry`), вертикальные переходы (`vertical`), паспорта секторов (`passports`) |
 | `regeneration/vertical-markup.md` | контракт разметки лестниц и шахт в SVG (`data-vertical-*`) |
-| `review/` | итоги ревизии: статус вопросов, решения D-01…D-47, карточка и картинка на сектор |
+| `review/` | итоги ревизии: статус вопросов, решения D-01…D-48, карточка и картинка на сектор |
 
 ## Конвейер
 
 1. `tools/complex_v4/build_canonical_from_approved.py` строит `plans/generation/*.svg` из `sources/plans/` по правилам
-   `tools/complex_v4/approved_registration.json` (привязка к общим планам этажей, поправки D-01…D-47). Элементы, добавленные в
+   `tools/complex_v4/approved_registration.json` (привязка к общим планам этажей, поправки D-01…D-48). Элементы, добавленные в
    исходные планы позже (пилоты), в построении не участвуют.
 2. `tools/complex_v4/build_sector_manifest.py` собирает `sector_generation_manifest.json`; лестницы выводятся из разметки SVG
    (`vertical_resolver.py`, определения — `vertical_definitions.json`).
@@ -39,4 +39,5 @@
 - Коридоры и магистрали U/L/T принадлежат секторам U-/L-/T-CIRCULATION.
 - Перекрытие между этажами не тоньше 1,0 м; высоту стен задаёт политика по этажам (`review/decisions.md`).
 - Лестницы занимают шахту целиком, двери входа и выхода стоят по центру своих маршей (`tools/complex_v4/check_stair_fit.py`).
+- Проёмы шахт между этажами закрываются при генерации (обшивка и порог у выхода лестницы, `tools/complex_v4/vertical_closures.py`).
 - Источник правды по смыслу — `docs/world/`.

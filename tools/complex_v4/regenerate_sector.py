@@ -18,6 +18,7 @@ from typing import Any, Sequence
 try:
     from .manifest_contract import validate_manifest_document
     from .vertical_resolver import VerticalError, resolve_sector_verticals
+    from . import vertical_closures
 except ImportError:
     try:
         from tools.complex_v4.manifest_contract import validate_manifest_document
@@ -25,6 +26,7 @@ except ImportError:
     except ImportError:
         from manifest_contract import validate_manifest_document
         from vertical_resolver import VerticalError, resolve_sector_verticals
+    import vertical_closures
 
 
 VERSION = "1.1.1"
@@ -738,6 +740,11 @@ def execute(args: argparse.Namespace) -> int:
         project_root, staging, sector,
     )
     commands.extend(stair_commands)
+    try:
+        closures = vertical_closures.plan_closures(sector, manifest, project_root, stair_reports)
+        vertical_closures.inject(staging / "Generated" / "Architecture" / (sector["scene_name"] + ".tscn"), closures)
+    except (ValueError, OSError, ET_ParseError) as exc:
+        raise RegenerationError(f"Vertical closures failed: {exc}") from exc
     frames = parameterize_frames(svg_frames, sector, conversion_report.get("spatial_handoff", {}))
     frames.extend(parameterize_frames(stair_frames, sector, {}, producer="stairs"))
     check_stair_door_alignment(frames)
@@ -775,6 +782,7 @@ def execute(args: argparse.Namespace) -> int:
         "generation_id": generation_id,
         "commands": commands,
         "anchor_count": len(anchor_document["anchors"]),
+        "vertical_closures": vertical_closures.describe(closures),
         "errors": [],
         "warnings": [],
         "files": [

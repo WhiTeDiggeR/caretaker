@@ -25,9 +25,9 @@
     "step_thickness": 0.15,
     "minimum_headroom": 2.4,
     "wall_thickness": 0.09,
-    "shaft_wall_bottom": 4.5,
-    "shaft_wall_top": 5.5,
-    "no_shaft": false,
+    "shaft_wall_bottom": null,
+    "shaft_wall_top": null,
+    "no_shaft": true,
     "railings": "auto",
     "rail_height": 1.0,
     "rail_post_spacing": 1.0,
@@ -51,7 +51,7 @@
     "riser_height": 0.148649,
     "lower_entry_side": "north",
     "upper_exit_side": "north",
-    "shaft_walls_generated": true,
+    "shaft_walls_generated": false,
     "flights": [
       {
         "name": "Flight_01",
@@ -463,277 +463,13 @@
         }
       },
       "geometry_hash": "sha256:c52a9548066e3c622e5d620d199635e64b3863f9a60a543dd569feb5ca908e81"
-    },
-    {
-      "anchor_id": "AF-STAIRS-SERVICE-STAIR-SHAFT-FACE-EAST",
-      "type": "wall",
-      "role": "shaft_face",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "generation-report",
-        "source_id": "STAIRS-SERVICE-STAIR"
-      },
-      "origin": [
-        2.315,
-        4.5,
-        4.275
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 8.55,
-        "height_m": 1.0,
-        "thickness_m": 0.09,
-        "surface_side_id": "STAIRS-SERVICE-STAIR/SHAFT/EAST"
-      },
-      "placement_limits": {
-        "along_normalized": [
-          0.0,
-          1.0
-        ],
-        "normal_offset_m": [
-          0.0,
-          0.09
-        ],
-        "height_m": [
-          0.0,
-          1.0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180.0,
-            180.0
-          ],
-          "pitch": [
-            0.0,
-            0.0
-          ],
-          "roll": [
-            0.0,
-            0.0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:0d7108aec91ea56635a02a8c464753c180e7a36f111047d395b2598bcd697252"
-    },
-    {
-      "anchor_id": "AF-STAIRS-SERVICE-STAIR-SHAFT-FACE-NORTH",
-      "type": "wall",
-      "role": "shaft_face",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "generation-report",
-        "source_id": "STAIRS-SERVICE-STAIR"
-      },
-      "origin": [
-        -2.315,
-        4.5,
-        4.275
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 4.63,
-        "height_m": 1.0,
-        "thickness_m": 0.09,
-        "surface_side_id": "STAIRS-SERVICE-STAIR/SHAFT/NORTH"
-      },
-      "placement_limits": {
-        "along_normalized": [
-          0.0,
-          1.0
-        ],
-        "normal_offset_m": [
-          0.0,
-          0.09
-        ],
-        "height_m": [
-          0.0,
-          1.0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180.0,
-            180.0
-          ],
-          "pitch": [
-            0.0,
-            0.0
-          ],
-          "roll": [
-            0.0,
-            0.0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:0df01723f96208daac3052d7daad6b91e69945340eec8f36d4adf6e82e4f195a"
-    },
-    {
-      "anchor_id": "AF-STAIRS-SERVICE-STAIR-SHAFT-FACE-SOUTH",
-      "type": "wall",
-      "role": "shaft_face",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "generation-report",
-        "source_id": "STAIRS-SERVICE-STAIR"
-      },
-      "origin": [
-        2.315,
-        4.5,
-        -4.275
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 4.63,
-        "height_m": 1.0,
-        "thickness_m": 0.09,
-        "surface_side_id": "STAIRS-SERVICE-STAIR/SHAFT/SOUTH"
-      },
-      "placement_limits": {
-        "along_normalized": [
-          0.0,
-          1.0
-        ],
-        "normal_offset_m": [
-          0.0,
-          0.09
-        ],
-        "height_m": [
-          0.0,
-          1.0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180.0,
-            180.0
-          ],
-          "pitch": [
-            0.0,
-            0.0
-          ],
-          "roll": [
-            0.0,
-            0.0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:99f33f5f679c7b91e249b33d4577db42e65ff61a9d3f61ddf990014538747ff1"
-    },
-    {
-      "anchor_id": "AF-STAIRS-SERVICE-STAIR-SHAFT-FACE-WEST",
-      "type": "wall",
-      "role": "shaft_face",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "generation-report",
-        "source_id": "STAIRS-SERVICE-STAIR"
-      },
-      "origin": [
-        -2.315,
-        4.5,
-        -4.275
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 8.55,
-        "height_m": 1.0,
-        "thickness_m": 0.09,
-        "surface_side_id": "STAIRS-SERVICE-STAIR/SHAFT/WEST"
-      },
-      "placement_limits": {
-        "along_normalized": [
-          0.0,
-          1.0
-        ],
-        "normal_offset_m": [
-          0.0,
-          0.09
-        ],
-        "height_m": [
-          0.0,
-          1.0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180.0,
-            180.0
-          ],
-          "pitch": [
-            0.0,
-            0.0
-          ],
-          "roll": [
-            0.0,
-            0.0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:d797b4d4334486b8aaa3c411693b85ee1dbea2580942839a7065c792af1bb9e6"
     }
   ],
   "counts": {
     "stairs": 74,
     "landings": 1,
     "railings": 76,
-    "shaft": 4,
+    "shaft": 0,
     "debug": 0,
     "flights": 2,
     "risers": 37,
@@ -742,9 +478,9 @@
     "railing_posts": 56,
     "railing_joints": 0,
     "railing_joint_fittings": 0,
-    "visual_nodes": 155,
+    "visual_nodes": 151,
     "debug_nodes": 0,
-    "collision_shapes": 155,
+    "collision_shapes": 151,
     "static_bodies": 4
   },
   "geometry_validation": {
@@ -975,7 +711,7 @@
     },
     "shaft": {
       "ok": true,
-      "wall_count": 4,
+      "wall_count": 0,
       "checked_element_count": 151,
       "maximum_penetration": 0.0,
       "issues": []
