@@ -52,7 +52,7 @@ func _check_wiring(dream: BowserDream) -> void:
 	_check(dream.get_node_or_null(^"Mood") is DreamMood, "the dream follows the instability stage")
 	var hooks: Array[NodePath] = [BowserDream.SEAL_SLOT, BowserDream.SIDE_DOOR, BowserDream.WAKE_LINE,
 			BowserDream.HALL_THRESHOLD, BowserDream.REMAINS, BowserDream.WEAPON_SPOT, BowserDream.SILHOUETTE_SPOT,
-			^"Spawn", ^"Yard/Remains/Brazier", ^"Yard/Remains/OperatorMark"]
+			^"Spawn", ^"Yard/Remains/Brazier", ^"Yard/Ambush/OperatorTrace", ^"Yard/Remains/Note"]
 	hooks.append_array(BowserDream.GUARD_SPAWNS)
 	for hook in hooks:
 		_check(dream.get_node_or_null(hook) is Node3D, "hook node %s exists" % hook)
