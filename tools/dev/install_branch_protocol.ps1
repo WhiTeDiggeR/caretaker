@@ -52,7 +52,8 @@ foreach ($line in $worktrees) {
     if ($line.StartsWith('worktree ')) { $main = $line.Substring('worktree '.Length); break }
 }
 if ($gitCode -ne 0 -or -not $main) { throw "Не удалось найти основной клон для $start" }
-$main = [IO.Path]::GetFullPath($main)
+# Без обратного слэша в конце: «\"» в команде протокола экранировал бы закрывающую кавычку.
+$main = [IO.Path]::GetFullPath($main).TrimEnd('\', '/')
 if (-not (Test-Path -LiteralPath (Join-Path $main '.git'))) { throw "Путь к клону прочитан неверно: $main" }
 
 New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null

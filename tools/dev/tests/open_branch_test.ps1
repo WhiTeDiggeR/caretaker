@@ -178,7 +178,8 @@ $rest = @($args | Select-Object -Skip 1)
 exit $LASTEXITCODE
 '@)
     Invoke-Scenario "" "ascii" "caretaker" $false
-    Invoke-Scenario "[кириллица cp866] " "Проверка кириллицы/Мои проекты" "клон игры" $true
+    Invoke-Scenario "[кириллица и апостроф cp866] " "Документы/Godot" "dima's-first-game" $true
+    Invoke-Scenario "[кириллица и пробел cp866] " "Проверка кириллицы/Мои проекты" "клон игры" $true
 } catch {
     $script:failures++
     Write-Host "FAIL  exception: $($_.Exception.Message)"
