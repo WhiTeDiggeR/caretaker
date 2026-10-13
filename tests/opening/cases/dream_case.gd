@@ -2,6 +2,7 @@ extends RefCounted
 
 const CHAIR := "res://objects/dream/immersion_chair.tscn"
 const TEST_DREAM := "res://scenes/dreams/test_dream.tscn"
+const BOWSER_DREAM := "res://scenes/dreams/bowser_dream.tscn"
 const PLAYER := "res://scenes/player.tscn"
 
 
@@ -11,7 +12,7 @@ func run(c: OpeningCheck) -> void:
 	var original_loader := Dreams.scene_loader
 	Dreams.scene_loader = func(path: String) -> void: loads.append(path)
 
-	c.equal(Dreams.dream_scene_for(&"module_4"), TEST_DREAM, "module 4 dream scene is configured")
+	c.equal(Dreams.dream_scene_for(&"module_4"), BOWSER_DREAM, "module 4 dream scene is configured")
 	c.near(Dreams.time_ratio, 15.0, 0.001, "default dream time ratio 1:15")
 	c.equal(DreamProfile.for_module(&"module_4").id, &"bowser", "module 4 dreams in Bowser's colours")
 	c.equal(DreamProfile.for_module(&"module_3").id, &"herobrine", "module 3 dreams in Herobrine's colours")
@@ -50,7 +51,7 @@ func run(c: OpeningCheck) -> void:
 	c.equal(Dreams._fade.word_text(), "погружение", "the veil of the entry speaks in the dream's word")
 	c.near(Containment.get_instability(&"module_4"), start + Dreams.entry_cost, 0.001, "entering raises the instability")
 	await c.tree.create_timer(ImmersionChair.SEQUENCE_SECONDS + Dreams.FADE_SECONDS * 2.0 + 0.3).timeout
-	c.equal(loads, [TEST_DREAM] as Array[String], "the dream scene is loaded")
+	c.equal(loads, [BOWSER_DREAM] as Array[String], "the dream scene is loaded")
 	c.is_true(Dreams.in_dream, "session is in the dream")
 	c.equal(chair.lock_reason(), ImmersionChair.REASON_IN_DREAM, "chair is busy during the dream")
 
