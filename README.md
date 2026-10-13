@@ -6,7 +6,7 @@ A Godot 4.7 3D game set in an underground research complex. The current playable
 
 1. Install Godot 4.7 stable.
 2. Import `project.godot` in the editor.
-3. Run the project; the startup scene is `scenes/underground_research_complex.tscn`.
+3. Run the project: it opens the main menu (`scenes/shell/main_menu.tscn`); «Новая игра» loads the complex `scenes/underground_research_complex.tscn`. To open the complex directly, run that scene (F6) in the editor.
 
 Controls: `WASD` to move, `Shift` to sprint, `Space` to jump, `E` to interact, and `Esc` to close facility messages.
 
@@ -14,7 +14,8 @@ Controls: `WASD` to move, `Shift` to sprint, `Space` to jump, `E` to interact, a
 
 ```sh
 godot --headless --editor --path . --quit
-godot --headless --path . --quit-after 5
+godot --headless --path . --quit-after 5                                                  # main menu
+godot --headless --path . res://scenes/underground_research_complex.tscn --quit-after 5  # complex
 ```
 
 Godot is not currently discoverable through `PATH` on every contributor machine. Use the full executable path when necessary.
