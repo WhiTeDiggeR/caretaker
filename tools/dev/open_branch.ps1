@@ -49,6 +49,9 @@ $RecentBranchCount = 20
 $GeneratedPatterns = @('*.import', '*.uid')
 $GeneratedDirectory = '.godot/'
 $ResavedPatterns = @('*.tscn', '*.tres')
+# Git пишет пути и тексты в UTF-8, а PowerShell декодирует вывод нативных команд по
+# [Console]::OutputEncoding — на русской Windows это OEM cp866, и пути с кириллицей портятся.
+$Utf8NoBom = New-Object System.Text.UTF8Encoding $false
 
 function Write-Step([string]$Text) {
     Write-Host "==> $Text" -ForegroundColor Cyan
@@ -113,7 +116,7 @@ function Test-ResavedOnly([string]$Review, [string]$Path) {
         if ($Path -like $pattern) { $matchesScene = $true }
     }
     if (-not $matchesScene) { return $false }
-    $headLines = & git -C $Review show "HEAD:$Path" 2>$null
+    $headLines = & git -c core.quotepath=false -C $Review show "HEAD:$Path" 2>$null
     if ($LASTEXITCODE -ne 0) { return $false }
     $file = Join-Path $Review $Path
     if (-not (Test-Path -LiteralPath $file)) { return $false }
@@ -239,7 +242,7 @@ function Open-Branch {
         Invoke-Git $review clean -fdxq -e /.godot/ | Out-Null
     }
 
-    $lfs = & git -C $review lfs version 2>$null
+    $lfs = & git -c core.quotepath=false -C $review lfs version 2>$null
     if ($LASTEXITCODE -eq 0 -and $lfs) {
         Write-Step "git lfs pull"
         Invoke-Git $review lfs pull | Out-Null
@@ -256,11 +259,27 @@ function Open-Branch {
     Start-Process -FilePath $godotBin -ArgumentList @('--editor', '--path', "`"$review`"") | Out-Null
 }
 
+$savedOutputEncoding = $OutputEncoding
+$savedConsoleEncoding = $null
+try {
+    $savedConsoleEncoding = [Console]::OutputEncoding
+    [Console]::OutputEncoding = $Utf8NoBom
+} catch {
+    $savedConsoleEncoding = $null  # без консоли кодировку не поменять; тогда вывод git не декодируется консолью
+}
+$OutputEncoding = $Utf8NoBom
+$exitCode = 0
 try {
     Open-Branch
     if ($PauseAtEnd) { Start-Sleep -Seconds 3 }
 } catch {
     Write-Host "Ошибка: $($_.Exception.Message)" -ForegroundColor Red
     if ($PauseAtEnd) { Read-Host "Нажмите Enter, чтобы закрыть окно" | Out-Null }
-    exit 1
+    $exitCode = 1
+} finally {
+    $OutputEncoding = $savedOutputEncoding
+    if ($null -ne $savedConsoleEncoding) {
+        try { [Console]::OutputEncoding = $savedConsoleEncoding } catch { $savedConsoleEncoding = $null }
+    }
 }
+exit $exitCode

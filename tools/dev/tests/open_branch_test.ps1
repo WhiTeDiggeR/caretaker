@@ -2,7 +2,9 @@
   Проверка git-логики tools/dev/open_branch.ps1 на временном репозитории (issue #175).
   Запуск: pwsh -NoProfile -File tools/dev/tests/open_branch_test.ps1
   Godot не запускается (-NoGodot); проверяются копия просмотра, сохранение .godot/, защита ручных
-  правок, валидация имени ветки и то, что основной клон не меняется.
+  правок, валидация имени ветки и то, что основной клон не меняется. Сценарий идёт дважды: в обычной
+  папке и в папке с кириллицей и пробелом, где скрипт запускается с консольной кодировкой cp866,
+  как в Windows PowerShell на русской Windows (вывод git декодируется по [Console]::OutputEncoding).
 #>
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = "Stop"
@@ -15,12 +17,14 @@ $env:GIT_COMMITTER_NAME = "test"; $env:GIT_COMMITTER_EMAIL = "test@example.com"
 $script:checks = 0
 $script:lastOutput = ""
 $script:failures = 0
+$script:prefix = ""
+$script:cp866 = $false
 
 function Check([bool]$Condition, [string]$Message) {
     $script:checks++
-    if ($Condition) { Write-Host "PASS  $Message" } else {
+    if ($Condition) { Write-Host "PASS  $($script:prefix)$Message" } else {
         $script:failures++
-        Write-Host "FAIL  $Message"
+        Write-Host "FAIL  $($script:prefix)$Message"
         if ($script:lastOutput) { Write-Host ($script:lastOutput.Trim() -replace '(?m)^', '      | ') }
     }
 }
@@ -41,7 +45,9 @@ function Write-File([string]$Path, [string]$Text) {
 
 ## Запускает open_branch.ps1 отдельным процессом с перенаправленным stdin (неинтерактивно).
 function Open-Branch([string[]]$Arguments, [string]$InputText = '') {
-    $all = @('-NoProfile', '-File', $script, '-Repo', $main, '-NoGodot') + $Arguments
+    $all = @('-NoProfile', '-File')
+    if ($script:cp866) { $all += @($wrapper, $script) } else { $all += @($script) }
+    $all += @('-Repo', $main, '-NoGodot') + $Arguments
     $output = $InputText | & $pwshBin @all 2>&1
     $script:lastOutput = ($output | Out-String)
     return $LASTEXITCODE
@@ -56,11 +62,15 @@ function Get-MainState {
     }
 }
 
-try {
-    New-Item -ItemType Directory -Path $root | Out-Null
-    $origin = Join-Path $root "origin.git"
-    $seed = Join-Path $root "seed"
-    $main = Join-Path $root "caretaker"
+function Invoke-Scenario([string]$Label, [string]$Parent, [string]$CloneName, [bool]$Cp866) {
+    $script:prefix = $Label
+    $script:cp866 = $Cp866
+    $base = Join-Path $root $Parent
+    New-Item -ItemType Directory -Path $base -Force | Out-Null
+    $origin = Join-Path $base "origin.git"
+    $seed = Join-Path $base "seed"
+    $script:main = Join-Path $base $CloneName
+    $main = $script:main
     $review = "$main-review"
 
     & git init --quiet --bare $origin
@@ -69,7 +79,8 @@ try {
     Write-File (Join-Path $seed ".gitignore") "/build/`n.godot/`n"
     Write-File (Join-Path $seed "project.godot") "config_version=5`n"
     Write-File (Join-Path $seed "notes.txt") "integration`n"
-    Write-File (Join-Path $seed "scenes/room.tscn") "[gd_scene load_steps=2 format=3 uid=`"uid://aaa`"]`n`n[node name=`"Room`" type=`"Node3D`" unique_id=1]`n"
+    Write-File (Join-Path $seed "scenes/room.tscn") "[gd_scene load_steps=2 format=3 uid=`"uid://aaa`"]`n`n[node name=`"Room`" type=`"Node3D`" unique_id=1]`ntext = `"Комната смотрителя`"`n"
+    Write-File (Join-Path $seed "docs/заметки.txt") "кириллица в имени файла`n"
     G $seed add -A | Out-Null
     G $seed commit --quiet -m "integration" | Out-Null
     G $seed checkout --quiet -b task/1-feature | Out-Null
@@ -102,7 +113,7 @@ try {
     Write-File (Join-Path $review "scenes/room.tscn.import") "generated"
     Write-File (Join-Path $review "scenes/room.gd.uid") "uid://bbb"
     Write-File (Join-Path $review "build/game.exe") "binary"
-    Write-File (Join-Path $review "scenes/room.tscn") "[gd_scene load_steps=3 format=3 uid=`"uid://ccc`"]`n[node name=`"Room`" type=`"Node3D`" unique_id=77]`n"
+    Write-File (Join-Path $review "scenes/room.tscn") "[gd_scene load_steps=3 format=3 uid=`"uid://ccc`"]`n[node name=`"Room`" type=`"Node3D`" unique_id=77]`ntext = `"Комната смотрителя`"`n"
     $code = Open-Branch @('team/integration')
     Check ($code -eq 0) "Godot-generated changes do not block the switch"
     Check (Test-Path (Join-Path $review ".godot/imported/cache.bin")) ".godot/ cache is kept"
@@ -150,6 +161,25 @@ try {
     Check ($after.Branch -eq $before.Branch) "main clone branch is unchanged"
     Check ($after.Status -eq $before.Status) "main clone status (uncommitted work) is unchanged"
     Check ($after.File -eq $before.File) "main clone uncommitted file content is unchanged"
+    Check (@(Get-ChildItem -LiteralPath $base -Force | Where-Object { $_.Name -ne 'origin.git' -and $_.Name -ne 'seed' }).Count -eq 2) "nothing is created next to the clone except the review copy"
+}
+
+# Обёртка: запускает open_branch.ps1 с консольной кодировкой cp866 (OEM русской Windows).
+$wrapper = Join-Path $root "cp866_wrapper.ps1"
+
+try {
+    New-Item -ItemType Directory -Path $root | Out-Null
+    [IO.File]::WriteAllText($wrapper, @'
+[Text.Encoding]::RegisterProvider([Text.CodePagesEncodingProvider]::Instance)
+[Console]::OutputEncoding = [Text.Encoding]::GetEncoding(866)
+$target = $args[0]
+$rest = @($args | Select-Object -Skip 1)
+& $target @rest
+exit $LASTEXITCODE
+'@)
+    Invoke-Scenario "" "ascii" "caretaker" $false
+    Invoke-Scenario "[кириллица и апостроф cp866] " "Документы/Godot" "dima's-first-game" $true
+    Invoke-Scenario "[кириллица и пробел cp866] " "Проверка кириллицы/Мои проекты" "клон игры" $true
 } catch {
     $script:failures++
     Write-Host "FAIL  exception: $($_.Exception.Message)"
