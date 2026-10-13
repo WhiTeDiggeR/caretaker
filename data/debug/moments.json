@@ -108,7 +108,7 @@
     },
     {
       "id": "dream_seal",
-      "title": "Сон: зал печати",
+      "title": "Сон Боузера: перед печатью",
       "story_scene": 12,
       "scene": "res://scenes/sandbox/opening_sandbox.tscn",
       "state": {
@@ -119,6 +119,21 @@
         "objective_chain": "opening"
       },
       "dream": {"module": "module_4", "chair": "sandbox_chair", "spawn": {"node": "SealHall/SealSlot", "offset": [-6, 1, 0], "yaw": -90}},
+      "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/bowser_dream.tscn"}
+    },
+    {
+      "id": "bowser_after_seal",
+      "title": "Сон Боузера: после печати",
+      "story_scene": 12,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "instability": {"module_4": 60},
+        "objective_chain": "opening"
+      },
+      "dream": {"module": "module_4", "chair": "sandbox_chair", "seal": "restored", "spawn": {"node": "SealHall/SideDoor", "offset": [0, 1, -3], "yaw": 0}},
       "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/bowser_dream.tscn"}
     },
     {
