@@ -93,8 +93,8 @@ func show_page(name: String) -> void:
 			_page_shell()
 
 
-## Elements of the shell (variant A) and the entries to its screens; the splash and the
-## loading screen are variant B.
+## Elements of the shell (variant A) and the entries to its screens; the loading screen is
+## variant B.
 func _page_shell() -> void:
 	var column := VBoxContainer.new()
 	column.position = Vector2(32, 32)
@@ -132,9 +132,7 @@ func _page_shell() -> void:
 	ShellUI.button(column, "Загрузка (вариант Б, 2 с)", func() -> void:
 		Shell._loading_layer.visible = true
 		get_tree().create_timer(2.0).timeout.connect(func() -> void: Shell._loading_layer.visible = false))
-	ShellUI.button(column, "Главное меню с заставкой (вариант Б)", func() -> void:
-		MainMenu.splash_seen = false
-		get_tree().change_scene_to_file(Shell.MAIN_MENU))
+	ShellUI.button(column, "Главное меню", func() -> void: get_tree().change_scene_to_file(Shell.MAIN_MENU))
 
 
 ## Three world screens side by side and the state switcher.

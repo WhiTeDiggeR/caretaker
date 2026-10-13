@@ -2,7 +2,7 @@ class_name CrystalBackdrop
 extends ColorRect
 
 ## Variant B «Кристалл» of the shell (issue #144): a breathing crystal in the dark behind the
-## splash and the loading screen. Fills its parent.
+## loading screen. Fills its parent.
 
 const SHADER := preload("res://materials/ui/crystal_glow.gdshader")
 const CENTRE := Vector2(0.5, 0.4)
