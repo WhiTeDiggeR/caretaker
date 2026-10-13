@@ -1,11 +1,11 @@
 extends RefCounted
 
 ## #178: the cracked wall between the relay room and the senior officer's room, the crowbar
-## and the jammed door, on the sandbox station.
+## and the door locked by the senior officer's access, on the sandbox station.
 
 const STATION := "res://scenes/sandbox/stations/breach_station.tscn"
 const SECTION := &"sandbox_a"
-const TEST_UNJAM := &"test/breach_unjam"
+const ACCESS := &"caretaker"
 
 
 func run(c: OpeningCheck) -> void:
@@ -14,7 +14,7 @@ func run(c: OpeningCheck) -> void:
 	var station := c.add((load(STATION) as PackedScene).instantiate()) as Node3D
 	await c.physics_frames(2)
 	var wall := station.get_node(^"BreachWall") as BreachWall
-	var door := station.get_node(^"JammedDoor") as JammedDoor
+	var door := station.get_node(^"SeniorDoor") as FacilityDoor
 	var crowbar := station.get_node(^"Crowbar") as CrowbarPickup
 	var interactable := wall.interactable
 	c.is_true(DocumentLibrary.has(BreachWall.TEXT_DARK) and DocumentLibrary.has(BreachWall.TEXT_LIT), "crack inspect texts exist")
@@ -35,16 +35,18 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(wall.is_lit() and wall.room_light.visible, "main power lights the room behind the crack")
 	c.is_true(interactable.get_inspect_text().contains("пробивается свет"), "the lit crack tells about the light")
 
-	# The door from the old control point is jammed (lock reason, no change of the door logic).
+	# The door from the old control point is locked by the senior officer's access (#178,
+	# author's note): the succession protocol grants it, then the hero walks back out to ЦУ.
 	var control: Interactable = door._controls[0]
-	c.equal(door.lock_reason(), JammedDoor.REASON_JAMMED, "the door to the room is jammed")
-	c.is_true(not door.open() and not control.is_available() and control.unavailable_prompt == JammedDoor.REASON_JAMMED, "the jammed door does not open and says why")
-	door.unjam_flag = TEST_UNJAM
-	GameState.set_flag(TEST_UNJAM)
-	c.is_true(door.lock_reason().is_empty() and control.is_available(), "an unjam flag frees the door")
-	door.unjam_flag = &""
-	door.refresh()
-	c.equal(control.unavailable_prompt, JammedDoor.REASON_JAMMED, "without an unjam flag the door stays jammed")
+	c.equal(door.required_access, ACCESS, "the door to the room needs the access of the succession protocol")
+	c.equal(door.lock_reason(), FacilityDoor.REASON_NO_ACCESS, "without the access the door is locked")
+	c.is_true(not door.open() and not control.is_available() and control.unavailable_prompt == FacilityDoor.REASON_NO_ACCESS, "the locked door does not open and says why")
+	GameState.grant_access(ACCESS)
+	c.is_true(door.lock_reason().is_empty() and control.is_available(), "the granted access opens the way back to ЦУ")
+	GameState.revoke_access(ACCESS)
+	c.equal(control.unavailable_prompt, FacilityDoor.REASON_NO_ACCESS, "revoking the access locks the door again")
+	c.is_true(wall.is_in_group(BreachWall.ROUTE_PASSABLE_GROUP), "the route check treats the breach as passable")
+	c.is_true(is_equal_approx(wall.opening_width, 1.2) and is_equal_approx(wall.opening_height, 2.0), "the opening matches the breach door of L-OLD-CORE")
 
 	# The crowbar from the fire shield.
 	(crowbar.get_meta(Interactable.META) as Interactable).trigger()
