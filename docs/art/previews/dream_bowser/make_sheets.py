@@ -96,9 +96,9 @@ def arch_path(cx, g, w, h, k) -> str:
 # ---------------------------------------------------------------- sheet 1: fortress kit + closed branches
 def sheet_kit() -> str:
     k = 20
-    W, H = 1200, 820
+    W, H = 1200, 840
     s = [head(W, H, "Модульный набор крепости и закрытые ветки",
-              "Концепт DB-К, DB-З. Сетка 4 м, высоты кратны 2 м, масштаб гиганта ×2,5. Свои формы; мотивы фан-образа — белые конические шипы, шипастые ошейники колонн, чёрный металл, зелёный акцент.")]
+              "Концепт DB-К, DB-З. Сетка 4 м, высоты кратны 2 м, масштаб гиганта ×2,5. Мотивы фан-образа: белые конические шипы, ошейники колонн, чёрный металл.")]
     x0, g = 60, 380
     m = lambda v: x0 + v * k  # noqa: E731
     s.append(ground(40, 760, g))
@@ -117,7 +117,7 @@ def sheet_kit() -> str:
     s.append(f'<path d="{arch_path(m(8), g, 3, 5, k)}" fill="#0d0a0c" stroke="{BRONZE}" stroke-width="2"/>')
     s.append(f'<ellipse cx="{m(8)}" cy="{g - 2.4 * k}" rx="{0.9 * k}" ry="{1.6 * k}" fill="#3a1c18" opacity="0.7" filter="url(#soft)"/>')
     s.append(f'<circle cx="{m(8) + 6}" cy="{g - 3.3 * k}" r="2.5" fill="#ff7a2a"/>')
-    s.append(txt(m(8), g + 34, "К-02 Стена с нишей 3 × 5 м", 13, TEXT, "middle", "600"))
+    s.append(txt(m(8), g + 54, "К-02 Стена с нишей 3 × 5 м", 13, TEXT, "middle", "600"))
     # K-03 column 2 x 10 with spiked collar
     s.append(f'<rect x="{m(11.7)}" y="{g - 0.8 * k}" width="{2.6 * k}" height="{0.8 * k}" fill="{STONE_L}"/>')
     s.append(f'<rect x="{m(12)}" y="{g - 9.2 * k}" width="{2 * k}" height="{8.4 * k}" fill="{STONE}"/>')
@@ -140,7 +140,7 @@ def sheet_kit() -> str:
     s.append(f'<rect x="{m(17.9)}" y="{g - 4.4 * k}" width="{5.2 * k}" height="{0.25 * k}" fill="{GREEN}"/>')
     s.append(f'<circle cx="{m(19.9)}" cy="{g - 2.6 * k}" r="{0.35 * k}" fill="none" stroke="{BRONZE_L}" stroke-width="2.5"/>')
     s.append(f'<circle cx="{m(21.1)}" cy="{g - 2.6 * k}" r="{0.35 * k}" fill="none" stroke="{BRONZE_L}" stroke-width="2.5"/>')
-    s.append(txt(m(20.5), g + 34, "К-04 Проём с вратами 5 × 7 м", 13, TEXT, "middle", "600"))
+    s.append(txt(m(20.5), g + 54, "К-04 Проём с вратами 5 × 7 м", 13, TEXT, "middle", "600"))
     # K-05 stairs 0.5 m + ramp
     pts = [f"{m(26.5)},{g}"]
     for i in range(4):
@@ -149,7 +149,7 @@ def sheet_kit() -> str:
     s.append(f'<polygon points="{" ".join(pts)}" fill="{STONE_L}"/>')
     s.append(f'<line x1="{m(26.5)}" y1="{g}" x2="{m(30.5)}" y2="{g - 2 * k}" stroke="{BRONZE_L}" stroke-width="2" stroke-dasharray="6 4"/>')
     s.append(txt(m(28.5), g + 34, "К-05 Ступени 0,5 м", 13, TEXT, "middle", "600"))
-    s.append(txt(m(28.5), g + 50, "пунктир — пандус 1:2", 11, MUTED, "middle"))
+    s.append(txt(m(28.5), g + 70, "пунктир — пандус 1:2", 11, MUTED, "middle"))
     s.append(hero(m(32.6), g, k))
 
     # legend right
@@ -175,7 +175,7 @@ def sheet_kit() -> str:
 
     # row 2: closed branches
     g2 = 760
-    s.append(txt(40, 440, "Закрытые проходы веток (В-1): точки подключения будущих визитов", 17, TEXT, "start", "700"))
+    s.append(txt(40, 470, "Закрытые проходы веток (В-1): точки подключения будущих визитов", 17, TEXT, "start", "700"))
     s.append(ground(40, 760, g2))
     # З-1 rubble
     s.append(f'<rect x="{m(0)}" y="{g2 - 8 * k}" width="{6 * k}" height="{8 * k}" fill="{STONE}"/>')
@@ -200,7 +200,7 @@ def sheet_kit() -> str:
         bx += 0.45
     for hy in (1.6, 3.4, 5.0):
         s.append(f'<line x1="{m(9.0)}" y1="{g2 - hy * k}" x2="{m(13.0)}" y2="{g2 - hy * k}" stroke="{IRON}" stroke-width="6"/>')
-    s.append(txt(m(11), g2 + 34, "З-2 Опущенная решётка", 13, TEXT, "middle", "600"))
+    s.append(txt(m(11), g2 + 54, "З-2 Опущенная решётка", 13, TEXT, "middle", "600"))
     # З-3 collapsed stair
     s.append(f'<rect x="{m(16)}" y="{g2 - 10 * k}" width="{10 * k}" height="{10 * k}" fill="{STONE}" opacity="0.65"/>')
     s.append(f'<path d="{arch_path(m(24.5), g2 - 6 * k, 2.2, 3.4, k)}" fill="#0d0a0c"/>')
@@ -233,13 +233,12 @@ def sheet_kit() -> str:
 
 
 # ---------------------------------------------------------------- sheet 2: seal
-SIGNS = ["КОР", "ЦЕП", "ПЛМ", "КЛЮ", "ГЛЗ", "БШН"]
 
 
 def sheet_seal() -> str:
     W, H = 1200, 700
     s = [head(W, H, "Печать с тремя кольцами и штурвалы",
-              "Концепт DB-П. Диск Ø 8 м в зале 20 × 16 м. Три кольца × 6 положений, три штурвала у края. Белое свечение (Б-5) — только трещина, ядро и метка чтения.")]
+              "Концепт DB-П. Диск Ø 8 м, три кольца, три штурвала. Пунктирные гнёзда — место под знаки из #188 (здесь не рисуются). Белое (Б-5) — трещина, ядро, метка.")]
     k = 36
     cx, cy = 320, 380
     rings = [(4.0, 2.9, "#4a4044"), (2.9, 1.9, "#423a3e"), (1.9, 1.0, "#3a3236")]
@@ -255,8 +254,9 @@ def sheet_seal() -> str:
             s.append(f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="{BRONZE}" stroke-width="1.5"/>')
             am = math.radians(-90 + j * 60 + offsets[i])
             rm = (ro + ri) / 2 * k
-            tx, ty = cx + rm * math.cos(am), cy + rm * math.sin(am) + 4
-            s.append(txt(tx, ty, SIGNS[(j + i * 2) % 6], 11 if i < 2 else 10, "#d8cfc2", "middle", "600"))
+            tx, ty = cx + rm * math.cos(am), cy + rm * math.sin(am)
+            sz = 0.62 * k if i < 2 else 0.5 * k
+            s.append(f'<rect x="{tx - sz / 2:.1f}" y="{ty - sz / 2:.1f}" width="{sz:.1f}" height="{sz:.1f}" rx="4" fill="#1f1a1d" stroke="#d8cfc2" stroke-width="1" stroke-dasharray="3 2"/>')
         # crack segment of this ring, at its own rotation
         a = math.radians(-90 + offsets[i] + 12)
         x1, y1 = cx + ri * k * math.cos(a), cy + ri * k * math.sin(a)
@@ -271,7 +271,7 @@ def sheet_seal() -> str:
         px, py = cx + 5.0 * k * math.cos(a), cy + 5.0 * k * math.sin(a)
         s.append(f'<rect x="{px - 0.5 * k:.1f}" y="{py - 0.3 * k:.1f}" width="{1.0 * k}" height="{0.6 * k}" fill="{STONE_L}" stroke="{BRONZE_L}" transform="rotate({ang - 90} {px:.1f} {py:.1f})"/>')
         s.append(txt(px, py + 0.75 * k + 8, f"Ш-{i + 1}", 12, TEXT, "middle", "600"))
-    s.append(txt(cx, cy + 6.15 * k, "План. Сейчас трещина разорвана: кольца сбиты на 60° и 120°.", 12, MUTED, "middle"))
+    s.append(txt(cx, cy + 6.9 * k, "План. Сейчас трещина разорвана: кольца сбиты на 60° и 120°.", 12, MUTED, "middle"))
 
     # section
     k2 = 40
@@ -299,18 +299,18 @@ def sheet_seal() -> str:
     s.append(f'<circle cx="{wx}" cy="{g - 1.6 * k2}" r="7" fill="{BRONZE_L}"/>')
     s.append(hero(m(10.6), g, k2))
     s.append(txt(m(4), g + 30, "Разрез: диск 8 м, кольца ступенями 0,45 / 0,6 / 0,75 м, ядро — купол 1,2 м", 12, MUTED, "middle"))
-    s.append(txt(wx, g - 2.5 * k2, "штурвал Ø 1,2 м,", 12, TEXT, "middle"))
-    s.append(txt(wx, g - 2.5 * k2 + 15, "ось 1,6 м", 12, TEXT, "middle"))
-    notes = ["Узлы: Ring1..3 (пивот в центре, поворот по Y на 60°), Wheel1..3, Emit_Crack1..3, Emit_Core.",
-             "Знаки — атлас-декаль DT-08 (6 знаков), читаются под меткой. Сами кольца — один меш на кольцо.",
-             "Бюджет «героя»: до 25 000 тр. на диск со штурвалами; текстуры 2048² только для DT-08."]
+    s.append(txt(wx - 0.9 * k2, g - 2.6 * k2, "штурвал Ø 1,2 м,", 12, TEXT, "end"))
+    s.append(txt(wx - 0.9 * k2, g - 2.6 * k2 + 15, "ось 1,6 м", 12, TEXT, "end"))
+    notes = ["Узлы: Ring1..3 (пивот в центре, шаг 360°/N), Wheel1..3,", "Emit_Crack1..3, Emit_Core, Glyph_*.",
+             "Гнёзда знаков — вставки под атлас-декаль из #188;", "число положений (6 или 8) — по З-5 #188.",
+             "Бюджет «героя»: до 25 000 тр. на диск со штурвалами;", "текстуры 2048² только для DT-08."]
     for i, t in enumerate(notes):
-        s.append(txt(640, 180 + i * 20, t, 12, MUTED))
+        s.append(txt(640, 160 + i * 19, t, 12, MUTED))
     s.append("</svg>\n")
     return "".join(s)
 
 
-# ---------------------------------------------------------------- sheet 3: niche with remains
+# ---------------------------------------------------------------- sheet 3: remains of the world's hero + operator death trace
 def niche(x0, g, k, lit: bool) -> str:
     m = lambda v: x0 + v * k  # noqa: E731
     s = []
@@ -319,30 +319,28 @@ def niche(x0, g, k, lit: bool) -> str:
     s.append(f'<path d="{arch_path(m(3), g, 4, 5, k)}" fill="#120e10"/>')
     if lit:
         s.append(f'<circle cx="{m(5.6)}" cy="{g - 1.6 * k}" r="{2.6 * k}" fill="url(#warm)"/>')
-    # cloak
-    s.append(f'<path d="M{m(2.0)},{g - 1.6 * k} Q{m(1.7)},{g - 0.6 * k} {m(1.4)},{g} L{m(3.1)},{g} Q{m(2.8)},{g - 0.8 * k} {m(2.7)},{g - 1.6 * k} Z" fill="#2a1e20"/>')
-    # armour slumped, sitting against back wall
-    arm = "#4a4446" if not lit else "#5a5254"
-    s.append(f'<path d="M{m(1.95)},{g - 1.55 * k} L{m(2.75)},{g - 1.55 * k} L{m(2.65)},{g - 0.75 * k} L{m(2.05)},{g - 0.75 * k} Z" fill="{arm}" stroke="#2a2426"/>')
-    s.append(f'<ellipse cx="{m(1.95)}" cy="{g - 1.5 * k}" rx="{0.22 * k}" ry="{0.13 * k}" fill="{arm}" stroke="#2a2426"/>')
-    s.append(f'<ellipse cx="{m(2.75)}" cy="{g - 1.5 * k}" rx="{0.22 * k}" ry="{0.13 * k}" fill="{arm}" stroke="#2a2426"/>')
-    s.append(f'<path d="M{m(2.25)},{g - 1.9 * k} q{0.18 * k},{-0.3 * k} {0.36 * k},0 l0,{0.32 * k} l{-0.36 * k},0 Z" fill="{arm}" stroke="#2a2426" transform="rotate(18 {m(2.43)} {g - 1.7 * k})"/>')
-    s.append(f'<line x1="{m(2.3)}" y1="{g - 1.78 * k}" x2="{m(2.55)}" y2="{g - 1.72 * k}" stroke="#0a0809" stroke-width="2" transform="rotate(18 {m(2.43)} {g - 1.7 * k})"/>')
-    s.append(f'<path d="M{m(2.1)},{g - 0.75 * k} L{m(3.3)},{g - 0.25 * k} L{m(3.3)},{g - 0.05 * k} L{m(2.0)},{g - 0.45 * k} Z" fill="{arm}" stroke="#2a2426"/>')
-    s.append(f'<path d="M{m(2.6)},{g - 0.7 * k} L{m(3.7)},{g - 0.15 * k} L{m(3.7)},{g} L{m(2.5)},{g - 0.4 * k} Z" fill="{arm}" stroke="#2a2426"/>')
-    s.append(f'<rect x="{m(1.55)}" y="{g - 0.22 * k}" width="{0.3 * k}" height="{0.18 * k}" rx="3" fill="{arm}" stroke="#2a2426"/>')
-    # chain + shackle weight
+    # hero of this world: slumped under a torn cloak, faceless, one gloved hand out
+    cloak = "#3a2226" if not lit else "#4a2a2e"
+    s.append(f'<path d="M{m(1.5)},{g} Q{m(1.45)},{g - 0.9 * k} {m(1.9)},{g - 1.45 * k} Q{m(2.3)},{g - 1.75 * k} {m(2.75)},{g - 1.35 * k} '
+             f'Q{m(3.1)},{g - 0.8 * k} {m(3.2)},{g} Z" fill="{cloak}" stroke="#1a1214"/>')
+    s.append(f'<path d="M{m(1.7)},{g} l{0.15 * k},{-0.25 * k} l{0.12 * k},{0.25 * k} l{0.15 * k},{-0.2 * k} l{0.1 * k},{0.2 * k}" fill="#120e10"/>')
+    bone = "#8a8076" if not lit else "#a39a90"
+    s.append(f'<path d="M{m(2.95)},{g - 0.35 * k} L{m(3.6)},{g - 0.12 * k}" stroke="{bone}" stroke-width="5" stroke-linecap="round"/>')
+    s.append(f'<ellipse cx="{m(3.72)}" cy="{g - 0.1 * k}" rx="{0.14 * k}" ry="{0.09 * k}" fill="#d8cfc2"/>')
+    # head-gear lying apart: generic round cap with brim (own form)
+    s.append(f'<path d="M{m(0.75)},{g} Q{m(0.75)},{g - 0.32 * k} {m(1.05)},{g - 0.32 * k} Q{m(1.35)},{g - 0.32 * k} {m(1.35)},{g} Z" fill="#6a2a24"/>')
+    s.append(f'<path d="M{m(1.3)},{g} l{0.28 * k},{-0.04 * k} l0,{0.04 * k} Z" fill="#6a2a24"/>')
+    # weapon beside him: chain + shackle weight
     chain_col = WHITE if lit else "#3d373a"
     filt = ' filter="url(#glow)"' if lit else ""
-    pts = [(1.85, 0.12), (2.1, 0.08), (2.4, 0.06), (2.7, 0.07), (3.0, 0.05), (3.3, 0.06), (3.6, 0.08), (3.85, 0.1)]
+    pts = [(3.9, 0.1), (4.15, 0.07), (4.4, 0.06), (4.65, 0.08), (4.9, 0.06)]
     for i, (px, py) in enumerate(pts):
         s.append(f'<ellipse cx="{m(px)}" cy="{g - py * k}" rx="{0.15 * k}" ry="{0.06 * k if i % 2 else 0.035 * k}" fill="none" stroke="{chain_col}" stroke-width="2.5"{filt}/>')
-    s.append(f'<circle cx="{m(4.2)}" cy="{g - 0.2 * k}" r="{0.2 * k}" fill="{IRON if not lit else "#2a2a30"}" stroke="{chain_col}" stroke-width="2"{filt}/>')
-    s.append(f'<circle cx="{m(4.2)}" cy="{g - 0.44 * k}" r="{0.07 * k}" fill="none" stroke="{chain_col}" stroke-width="2.5"{filt}/>')
-    # operator mark
-    mark = WHITE if lit else "#6b5f5a"
-    s.append(f'<g stroke="{mark}" stroke-width="1.6" fill="none"{filt}><path d="M{m(3.3)},{g - 3.2 * k} l{0.3 * k},0 M{m(3.3)},{g - 3.0 * k} l{0.5 * k},0 M{m(3.3)},{g - 2.8 * k} l{0.4 * k},0"/></g>')
-    s.append(txt(m(3.55), g - 3.35 * k, "ОП-3", 12, mark, "middle", "700"))
+    s.append(f'<circle cx="{m(4.6)}" cy="{g - 0.55 * k}" r="{0.2 * k}" fill="{IRON if not lit else "#2a2a30"}" stroke="{chain_col}" stroke-width="2"{filt}/>')
+    s.append(f'<path d="M{m(4.6)},{g - 0.35 * k} Q{m(4.75)},{g - 0.15 * k} {m(4.9)},{g - 0.08 * k}" stroke="{chain_col}" stroke-width="2.5" fill="none"{filt}/>')
+    # predecessor's note (text lives in data)
+    s.append(f'<rect x="{m(2.1)}" y="{g - 0.06 * k}" width="{0.42 * k}" height="{0.06 * k}" fill="#b8ab96" transform="rotate(-4 {m(2.3)} {g})"/>')
+    s.append(f'<path d="M{m(2.1)},{g - 0.06 * k} l{0.42 * k},{-0.22 * k}" stroke="#b8ab96" stroke-width="0" />')
     # brazier outside, right
     bx = m(5.4)
     s.append(f'<path d="M{bx - 0.35 * k},{g} L{bx},{g - 1.0 * k} L{bx + 0.35 * k},{g} M{bx},{g} L{bx},{g - 1.0 * k}" stroke="{IRON}" stroke-width="4" fill="none"/>')
@@ -351,62 +349,94 @@ def niche(x0, g, k, lit: bool) -> str:
     if lit:
         s.append(f'<path d="M{bx - 0.3 * k},{g - 1.3 * k} Q{bx - 0.2 * k},{g - 1.9 * k} {bx},{g - 2.1 * k} Q{bx + 0.1 * k},{g - 1.7 * k} {bx + 0.3 * k},{g - 1.3 * k} Z" fill="{EMBER}" filter="url(#glow)"/>')
     # fallen column, diagonal, in front-left
-    s.append(f'<rect x="{m(-0.6)}" y="{g - 0.9 * k}" width="{2.6 * k}" height="{0.9 * k}" rx="4" fill="{STONE_L}" stroke="{STONE_D}" transform="rotate(-14 {m(0.7)} {g - 0.45 * k})"/>')
+    s.append(f'<rect x="{m(-0.6)}" y="{g - 0.9 * k}" width="{2.0 * k}" height="{0.9 * k}" rx="4" fill="{STONE_L}" stroke="{STONE_D}" transform="rotate(-14 {m(0.4)} {g - 0.45 * k})"/>')
+    return "".join(s)
+
+
+def trace(cx, cy, r, kind: str) -> str:
+    """Operator death trace on the floor, plan view (circle radius r px)."""
+    s = [f'<circle cx="{cx}" cy="{cy}" r="{r * 1.6:.1f}" fill="#2b2427"/>']
+    if kind == "a":  # glassy white crack spot, faint
+        s.append(f'<circle cx="{cx}" cy="{cy}" r="{r * 0.55:.1f}" fill="{WHITE}" opacity="0.18"/>')
+        for j in range(7):
+            a = math.radians(j * 51 + 10)
+            l = r * (0.7 + 0.3 * ((j * 37) % 5) / 4)
+            s.append(f'<path d="M{cx},{cy} l{l * math.cos(a):.1f},{l * math.sin(a):.1f} l{0.3 * l * math.cos(a + 0.6):.1f},{0.3 * l * math.sin(a + 0.6):.1f}" stroke="{WHITE}" stroke-width="1.2" fill="none" opacity="0.75"/>')
+    elif kind == "b":  # body-shaped pale imprint
+        s.append(f'<ellipse cx="{cx}" cy="{cy - r * 0.7:.1f}" rx="{r * 0.22:.1f}" ry="{r * 0.22:.1f}" fill="{WHITE}" opacity="0.22"/>')
+        s.append(f'<path d="M{cx - r * 0.3:.1f},{cy - r * 0.45:.1f} L{cx + r * 0.3:.1f},{cy - r * 0.45:.1f} L{cx + r * 0.2:.1f},{cy + r * 0.9:.1f} L{cx - r * 0.2:.1f},{cy + r * 0.9:.1f} Z" fill="{WHITE}" opacity="0.22"/>')
+    else:  # scattered white shards
+        for j in range(9):
+            a = math.radians(j * 40 + 7)
+            d = r * (0.3 + 0.8 * ((j * 53) % 7) / 6)
+            x, y = cx + d * math.cos(a), cy + d * math.sin(a)
+            s.append(f'<path d="M{x:.1f},{y - 4:.1f} l3,4 l-3,4 l-3,-4 Z" fill="{WHITE}" opacity="0.8"/>')
     return "".join(s)
 
 
 def sheet_niche() -> str:
-    W, H = 1200, 760
-    s = [head(W, H, "Ниша с останками, цепь с грузом, жаровня, метка",
-              "Концепт DB-Н. Ниша 4 × 3 м в северо-западном углу двора (06_first_fight_zone.svg). Слева — до засады, справа — отклик (свет, жаровня, метка).")]
+    W, H = 1200, 920
+    s = [head(W, H, "Останки героя мира, его оружие, записка, жаровня · след гибели оператора",
+              "Концепт DB-Н по решению автора в #186. Ниша 4 × 3 м в СЗ углу двора: слева до засады, справа отклик. Внизу — след гибели оператора сразу за WakeLine.")]
     k, g = 48, 520
     s.append(ground(40, 1170, g))
     s.append(niche(70, g, k, False))
     s.append(niche(420, g, k, True))
     s.append(txt(70 + 3 * k, g + 30, "До засады: всё тёмное, цепь — часть декора", 13, TEXT, "middle", "600"))
-    s.append(txt(420 + 3 * k, g + 30, "Отклик: цепь и метка — белые, жаровня — тёплая", 13, TEXT, "middle", "600"))
+    s.append(txt(420 + 3 * k, g + 30, "Отклик: цепь белая, жаровня тёплая", 13, TEXT, "middle", "600"))
     s.append(hero(420 + 6.9 * k, g, k))
-    # variants of the weight
-    vx, vy = 790, 140
-    s.append(txt(vx, vy, "Груз на цепи — варианты (решение Д-4)", 15, TEXT, "start", "700"))
-    kk = 120
-    # a shackle weight
-    s.append(f'<circle cx="{vx + 50}" cy="{vy + 90}" r="{0.2 * kk}" fill="{IRON}" stroke="#5a5254" stroke-width="2"/>')
-    s.append(f'<ellipse cx="{vx + 50}" cy="{vy + 60}" rx="{0.08 * kk}" ry="{0.1 * kk}" fill="none" stroke="#5a5254" stroke-width="4"/>')
-    s.append(txt(vx + 50, vy + 140, "а. Кандальная гиря", 12, TEXT, "middle", "600"))
-    s.append(txt(vx + 50, vy + 156, "реком.: читается как оковы", 11, MUTED, "middle"))
-    # b spiked ball
-    bx = vx + 180
-    s.append(f'<circle cx="{bx}" cy="{vy + 90}" r="{0.18 * kk}" fill="{IRON}" stroke="#5a5254" stroke-width="2"/>')
+    vx, vy = 790, 120
+    s.append(txt(vx, vy, "Как показать героя мира — решение Д-3", 15, TEXT, "start", "700"))
+    for i, t in enumerate(["а. Узнаваемый герой-соперник целиком (силуэт,",
+                           "   одежда). Сильнейший фан-мотив, риск О-10, жёстко.",
+                           "б. Останки под истлевшим плащом, лица нет; один",
+                           "   узнаваемый мотив — головной убор рядом.  РЕКОМ.",
+                           "в. Только вещи: убор, плащ, оружие. Нейтрально,",
+                           "   «герой» читается слабо — держится на записке."]):
+        s.append(txt(vx, vy + 24 + i * 18, t, 12, TEXT if t.startswith(("а", "б", "в")) else MUTED))
+    s.append(txt(vx, vy + 152, "Груз на цепи — решение Д-4", 15, TEXT, "start", "700"))
+    kk = 110
+    gy = vy + 215
+    s.append(f'<circle cx="{vx + 40}" cy="{gy}" r="{0.2 * kk}" fill="{IRON}" stroke="#5a5254" stroke-width="2"/>')
+    s.append(f'<ellipse cx="{vx + 40}" cy="{gy - 30}" rx="{0.08 * kk}" ry="{0.1 * kk}" fill="none" stroke="#5a5254" stroke-width="4"/>')
+    s.append(txt(vx + 40, gy + 42, "а. Кандальная гиря", 12, TEXT, "middle", "600"))
+    s.append(txt(vx + 40, gy + 57, "РЕКОМ.: оковы, не оружие", 11, MUTED, "middle"))
+    bx = vx + 175
+    s.append(f'<circle cx="{bx}" cy="{gy}" r="{0.18 * kk}" fill="{IRON}" stroke="#5a5254" stroke-width="2"/>')
     for j in range(8):
         a = math.radians(j * 45)
-        x1, y1 = bx + 0.18 * kk * math.cos(a), vy + 90 + 0.18 * kk * math.sin(a)
-        x2, y2 = bx + 0.3 * kk * math.cos(a), vy + 90 + 0.3 * kk * math.sin(a)
+        x1, y1 = bx + 0.18 * kk * math.cos(a), gy + 0.18 * kk * math.sin(a)
+        x2, y2 = bx + 0.3 * kk * math.cos(a), gy + 0.3 * kk * math.sin(a)
         s.append(f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="{SPIKE}" stroke-width="4" stroke-linecap="round"/>')
-    s.append(txt(bx, vy + 140, "б. Шипастое ядро", 12, TEXT, "middle", "600"))
-    s.append(txt(bx, vy + 156, "сразу «оружие» — подсказка", 11, MUTED, "middle"))
-    # c shell weight
-    cx = vx + 310
-    s.append(f'<path d="M{cx - 30},{vy + 104} Q{cx},{vy + 54} {cx + 30},{vy + 104} Z" fill="{GREEN}" stroke="#5a5254" stroke-width="2"/>')
-    s.append(f'<rect x="{cx - 32}" y="{vy + 102}" width="64" height="7" fill="#d8cfc2"/>')
-    s.append(spikes_row(cx - 22, cx + 22, vy + 84, 30, 0.45, 0.6))
-    s.append(txt(cx, vy + 140, "в. Гиря-панцирь", 12, TEXT, "middle", "600"))
-    s.append(txt(cx, vy + 156, "сильный фан-мотив", 11, MUTED, "middle"))
-    notes = ["Останки — НЕЙТРАЛЬНЫЕ: пустой доспех человеческого роста,",
-             "без костей и лица, без знаков принадлежности. Подходит",
-             "к любой трактовке (#181: «чьи останки» не решено).",
-             "Тексты осмотра — в данных (#186), не в модели.",
-             "",
-             "Цепь-образ: звенья 0,15 м, длина 1,6 м, груз Ø 0,4 м.",
-             "Узлы: Chain (подбор), Emit_Chain (вспышка), Weight.",
-             "Метка — декаль DT-10 со вторым слоем свечения.",
-             "Жаровня 1,0 × 1,3 м, узел Fire (частицы + OmniLight).",
-             "Упавшая колонна — вариант К-03, без новой модели.",
-             "",
-             "Бюджет: доспех до 6 000 тр., цепь до 1 500,",
-             "жаровня до 2 000. Материалы: DT-05, DT-06, DT-07."]
+    s.append(txt(bx, gy + 42, "б. Шипастое ядро", 12, TEXT, "middle", "600"))
+    s.append(txt(bx, gy + 57, "слишком явное", 11, MUTED, "middle"))
+    cx = vx + 305
+    s.append(f'<path d="M{cx - 30},{gy + 14} Q{cx},{gy - 36} {cx + 30},{gy + 14} Z" fill="{GREEN}" stroke="#5a5254" stroke-width="2"/>')
+    s.append(f'<rect x="{cx - 32}" y="{gy + 12}" width="64" height="7" fill="#d8cfc2"/>')
+    s.append(spikes_row(cx - 22, cx + 22, gy - 6, 30, 0.45, 0.6))
+    s.append(txt(cx, gy + 42, "в. Гиря-панцирь", 12, TEXT, "middle", "600"))
+    s.append(txt(cx, gy + 57, "вещь хозяина", 11, MUTED, "middle"))
+    notes = ["Записка предшественника — лист DT-10 у руки;",
+             "текст только в данных (#186), в модели надписей нет.",
+             "Цепь: звенья 0,15 м, длина 1,6 м, груз Ø 0,4 м.",
+             "Узлы: Body, WeaponSpot/Chain, Emit_Chain, Note, Brazier/Fire.",
+             "Бюджет: останки до 6 000 тр., цепь до 1 500, жаровня до 2 000."]
     for i, t in enumerate(notes):
-        s.append(txt(vx, vy + 200 + i * 20, t, 12, MUTED))
+        s.append(txt(vx, gy + 92 + i * 19, t, 12, MUTED))
+
+    # operator death trace
+    ty = 600
+    s.append(f'<line x1="40" y1="{ty}" x2="1160" y2="{ty}" stroke="#3a3034"/>')
+    s.append(txt(40, ty + 32, "След гибели оператора за WakeLine — решение Д-5", 16, TEXT, "start", "700"))
+    s.append(txt(40, ty + 54, "Небольшой (≤ 1,2 м), без подписи. Игрок ещё не умирал и не знает, как это выглядит. Тот же след потом оставит смерть игрока —", 12, MUTED))
+    s.append(txt(40, ty + 72, "так намёк «расшифровывается» задним числом. Белый (Б-5) — след связи с системой, а не кровь и не тело.", 12, MUTED))
+    for i, (kind, a, b) in enumerate([("a", "а. Стеклянная трещина в камне, Ø 0,8 м", "тусклое белое мерцание; РЕКОМ."),
+                                      ("b", "б. Бледный отпечаток силуэта", "читается сразу — подсказка слишком явная"),
+                                      ("c", "в. Россыпь белых осколков", "легко спутать с искрами печати")]):
+        x = 170 + i * 360
+        s.append(trace(x, ty + 170, 45, kind))
+        s.append(txt(x, ty + 258, a, 13, TEXT, "middle", "600"))
+        s.append(txt(x, ty + 276, b, 12, MUTED, "middle"))
     s.append("</svg>\n")
     return "".join(s)
 
@@ -480,7 +510,7 @@ def sheet_guardians() -> str:
         s.append(txt(x, g + 34, a, 14, TEXT, "middle", "700"))
         s.append(txt(x, g + 54, b, 12, MUTED, "middle"))
         s.append(txt(x, g + 72, c, 12, MUTED, "middle"))
-    s.append(txt(1160, g + 120, "Без скелета в S: цельный меш + шейдер дыма, движение — смещение и наклон (`DreamEnemy`). До 15 000 тр.", 12, MUTED, "end"))
+    s.append(txt(1160, g + 120, "Без скелета в S: цельный меш + шейдер дыма, движение — смещение и наклон (DreamEnemy). До 15 000 тр.", 12, MUTED, "end"))
     s.append("</svg>\n")
     return "".join(s)
 
@@ -596,8 +626,8 @@ def sheet_bridge() -> str:
             s.append(f'<ellipse cx="{ax + side * 3.1 * bk:.1f}" cy="{yy:.1f}" rx="5" ry="9" fill="none" stroke="#6b6064" stroke-width="3"/>')
     s.append(spikes_row(ax - 3.5 * bk * 0.6, ax + 3.5 * bk * 0.6, bg - 9.0 * bk + 6, bk, 0.8, 1.2))
     s.append(hero(mb(11.5), bg, bk))
-    s.append(txt(ax, bg + 26, "Бастион 10 × 8 м. Арка: общий силуэт врат снов (`DreamGate`)", 12, TEXT, "middle"))
-    s.append(txt(ax, bg + 42, "+ «одежда» Боузера: чёрный металл, цепи, шипы. Проём 4 × 6,5 м — белый.", 12, MUTED, "middle"))
+    s.append(txt(ax - 40, bg + 50, "Бастион 10 × 8 м. Арка — общий силуэт врат снов (DreamGate)", 12, TEXT, "middle"))
+    s.append(txt(ax - 40, bg + 66, "+ накладки сна Боузера: чёрный металл, цепи, шипы. Проём 4 × 6,5 м — белый.", 12, MUTED, "middle"))
     s.append("</svg>\n")
     return "".join(s)
 
@@ -605,7 +635,7 @@ def sheet_bridge() -> str:
 SHEETS = {
     "01_fortress_kit.svg": sheet_kit,
     "02_seal_rings.svg": sheet_seal,
-    "03_remains_niche.svg": sheet_niche,
+    "03_remains_hero_trace.svg": sheet_niche,
     "04_guardians.svg": sheet_guardians,
     "05_sky_stages.svg": sheet_sky,
     "06_bridge_bastion.svg": sheet_bridge,
