@@ -79,7 +79,12 @@ func data() -> Dictionary:
 ## Loads the moment: its scene with a fresh state, the hero at the spawn point, then the
 ## dream entry (or the full trip and back) when the moment has one. True when it got there.
 func go_to_moment(id: StringName) -> bool:
-	var entry := moment(id)
+	return await go_to(moment(id), id)
+
+
+## Loads any entry shaped like a moment (scene, state, spawn, dream); the review hall
+## (#192) passes its own stations through here.
+func go_to(entry: Dictionary, id: StringName) -> bool:
 	if entry.is_empty() or busy or Shell.loading:
 		push_warning("Debug: cannot load moment %s now" % id)
 		return false

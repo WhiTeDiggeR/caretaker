@@ -6,7 +6,7 @@ extends Control
 ## over a dark backdrop with grain and a flickering lamp line. It opens at once, without a
 ## splash (#180).
 ## Items: continue, load a chosen save, new game, settings, quit; the test range in debug
-## builds.
+## builds, and the review hall (#192) there or with `--review`.
 
 const KICKER := "КОМПЛЕКС СОДЕРЖАНИЯ · АВАРИЙНЫЙ ДОСТУП"
 const SUBTITLE := "Временный смотритель комплекса"
@@ -24,6 +24,9 @@ var buttons: VBoxContainer
 
 var _flicker: ColorRect
 var _flicker_time := 0.0
+
+## `--review` opens the review hall once per run, not on every return to the menu.
+static var _review_opened := false
 
 
 func _ready() -> void:
@@ -49,11 +52,16 @@ func _ready() -> void:
 	var new_game := ShellUI.button(buttons, "Новая игра", Shell.new_game)
 	if OS.is_debug_build():
 		ShellUI.button(buttons, "Полигон (отладка)", Shell.start_sandbox, "ОТЛАДКА")
+	if ReviewHub.available():
+		ShellUI.button(buttons, "Проверка (отладка)", ReviewHub.open, "ОТЛАДКА")
 	ShellUI.button(buttons, "Настройки", func() -> void: SettingsScreen.open(self))
 	ShellUI.button(buttons, "Выход", Shell.quit_game)
 	_build_footer()
 	refresh()
 	(continue_button if not continue_button.disabled else new_game).grab_focus.call_deferred()
+	if ReviewHub.available() and ReviewHub.requested() and not _review_opened:
+		_review_opened = true
+		ReviewHub.open.call_deferred()
 
 
 func refresh() -> void:
