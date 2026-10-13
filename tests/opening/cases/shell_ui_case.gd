@@ -37,6 +37,10 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(thumb != null and thumb.get_size() == Vector2(Saves.THUMBNAIL_SIZE), "the thumbnail is stored small next to the slot")
 	c.equal(Saves.write("slot_3", c.tree), OK, "a slot without a frame is still written")
 	c.is_true(Saves.thumbnail("slot_3") == null, "a slot without a frame has no thumbnail")
+	# Saving needs a running game (#123): a stand-in hero.
+	var hero := Node3D.new()
+	hero.add_to_group(Shell.PLAYER_GROUP)
+	c.add(hero)
 	var slots := SaveSlotsScreen.open(menu, SaveSlotsScreen.Mode.SAVE)
 	await c.tree.process_frame
 	c.is_true(slots.slot_buttons["slot_1"].note == Saves.stamp("slot_1") and slots.slot_buttons["slot_2"].note == "ПУСТО", "slots show their date or emptiness on the right")
@@ -48,6 +52,7 @@ func run(c: OpeningCheck) -> void:
 	c.equal(dialogs.size(), 1, "saving over a used slot asks first")
 	(dialogs[0] as ShellConfirm).answer(false)
 	slots.close()
+	hero.free()
 
 	var settings := SettingsScreen.open(menu)
 	await c.tree.process_frame
