@@ -42,6 +42,10 @@ File logging is enabled in every build (`debug/file_logging` in `project.godot`)
 
 Attach `logs/godot.log` to bug reports. The first log line written by the game names the build and the log folder.
 
+## Preview a branch (Windows)
+
+`caretaker://open/<branch>` links (or `powershell -ExecutionPolicy Bypass -File tools\dev\open_branch.ps1 <branch>`) open the latest version of a branch in a separate review worktree next to your clone and start Godot; your own clone is not touched. One-time setup and details: [docs/branch-preview.md](docs/branch-preview.md).
+
 ## Team development
 
 GitHub Issues are the single task backlog. Active work integrates into `team/integration`; `main` stays stable and only receives reviewed release PRs. Read [the team workflow](docs/TEAM_WORKFLOW.md) and [the agent guide](AGENTS.md) before making changes.
