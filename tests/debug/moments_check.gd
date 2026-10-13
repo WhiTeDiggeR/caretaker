@@ -2,7 +2,8 @@ extends Node
 
 ## Headless check of the playtest tools (#169): every moment of data/debug/moments.json loads
 ## without errors and sets its state, the cheats work, the bug report writes its JSON
-## without a screenshot (headless) and the tools remove themselves when disabled (release).
+## without a screenshot (headless), copies the tail of the game log or notes its absence (#172)
+## and the tools remove themselves when disabled (release).
 ## Detaches itself from `current_scene` so the scene changes keep it.
 ## Prints `DEBUG_MOMENTS_OK moments=<n>` on success.
 
@@ -11,6 +12,8 @@ const INSTABILITY_TOLERANCE := 2.0
 const SPAWN_TOLERANCE := 1.5
 const FALL_LIMIT_Y := -5.0
 const REPORT_DIR := "user://bug_reports_check"
+const FAKE_LOG := "user://bug_reports_check_fake.log"
+const FAKE_LOG_LINES := 2500
 
 
 ## Counts engine and script errors (warnings are not errors).
@@ -166,18 +169,77 @@ func _check_report() -> void:
 	_check(parsed is Dictionary, "report JSON parses")
 	if parsed is Dictionary:
 		var report: Dictionary = parsed
-		for key in ["scene", "player", "flags", "objective", "objectives", "containment", "game_version", "godot_version", "save", "debug"]:
+		for key in ["scene", "player", "flags", "objective", "objectives", "containment", "game_version", "godot_version", "build", "log", "log_source", "save", "debug"]:
 			_check(report.has(key), "report has %s" % key)
 		_check(str(report.get("scene", "")) == get_tree().current_scene.scene_file_path, "report names the scene")
 		_check(report.get("screenshot") == null and report.has("screenshot_note"), "headless report has no screenshot and says why")
 		_check(str((report.get("debug", {}) as Dictionary).get("last_moment", "")) == String(Debug.last_moment), "report names the last moment")
 		_check(((report.get("save", {}) as Dictionary).get("state", {}) as Dictionary).has("flags"), "report carries a loadable save")
+		var build: Dictionary = report.get("build", {})
+		_check(str(build.get("version", "")) == BuildInfo.version() and str(build.get("commit", "")) == BuildInfo.commit(), "report names the build %s" % BuildInfo.label())
+		var source := BugReport.current_log_path()
+		if not source.is_empty() and FileAccess.file_exists(source):
+			_check(report.get("log") == BugReport.LOG_FILE, "report copies the game log")
+			_check(str(report.get("log_source", "")) == ProjectSettings.globalize_path(source), "report names the log path")
+			_check(FileAccess.file_exists(folder.path_join(BugReport.LOG_FILE)), "log copy is in the report folder")
+		else:
+			_check(report.get("log") == null and report.has("log_note"), "report without a game log says why")
 	_check(not FileAccess.file_exists(folder.path_join(BugReport.SCREENSHOT_FILE)), "no screenshot file in headless")
 	_check(not Debug.toast_text().is_empty(), "report shows a notice")
+	_remove_report(folder)
+	await _check_report_log_tail()
+	_check_report_without_log()
+	DirAccess.remove_absolute(REPORT_DIR)
+
+
+## A long log is cut to its last BugReport.LOG_TAIL_LINES lines.
+func _check_report_log_tail() -> void:
+	var fake := FileAccess.open(FAKE_LOG, FileAccess.WRITE)
+	_check(fake != null, "fake log written")
+	if fake == null:
+		return
+	for i in FAKE_LOG_LINES:
+		fake.store_line("строка %d" % i)
+	fake.close()
+	BugReport.log_path = FAKE_LOG
+	var folder := BugReport.write(get_tree(), null)
+	BugReport.log_path = ""
+	DirAccess.remove_absolute(FAKE_LOG)
+	_check(not folder.is_empty(), "report with a long log written")
+	if folder.is_empty():
+		return
+	var report: Dictionary = _read_report(folder)
+	var copy := FileAccess.get_file_as_string(folder.path_join(BugReport.LOG_FILE)).split("\n", false)
+	_check(report.get("log") == BugReport.LOG_FILE, "long log attached")
+	_check(copy.size() == BugReport.LOG_TAIL_LINES and int(report.get("log_lines", 0)) == BugReport.LOG_TAIL_LINES, "log copy keeps %d lines (%d)" % [BugReport.LOG_TAIL_LINES, copy.size()])
+	_check(not copy.is_empty() and copy[0] == "строка %d" % (FAKE_LOG_LINES - BugReport.LOG_TAIL_LINES) and copy[copy.size() - 1] == "строка %d" % (FAKE_LOG_LINES - 1), "log copy is the tail of the log")
+	_check(bool(report.get("log_truncated", false)), "report marks the log as cut")
+	_remove_report(folder)
+
+
+## A missing log does not break the report.
+func _check_report_without_log() -> void:
+	BugReport.log_path = REPORT_DIR.path_join("missing.log")
+	var folder := BugReport.write(get_tree(), null)
+	BugReport.log_path = ""
+	_check(not folder.is_empty(), "report without a log written")
+	if folder.is_empty():
+		return
+	var report: Dictionary = _read_report(folder)
+	_check(report.get("log") == null and not str(report.get("log_note", "")).is_empty(), "report without a log says why")
+	_check(not FileAccess.file_exists(folder.path_join(BugReport.LOG_FILE)), "no log copy without a log")
+	_remove_report(folder)
+
+
+func _read_report(folder: String) -> Dictionary:
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(folder.path_join(BugReport.STATE_FILE)))
+	return parsed if parsed is Dictionary else {}
+
+
+func _remove_report(folder: String) -> void:
 	for file in DirAccess.get_files_at(folder):
 		DirAccess.remove_absolute(folder.path_join(file))
 	DirAccess.remove_absolute(folder)
-	DirAccess.remove_absolute(REPORT_DIR)
 
 
 func _check_release() -> void:
