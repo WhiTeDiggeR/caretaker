@@ -38,23 +38,34 @@ static func resync_param(key: String, default: float) -> float:
 	return float((_data.get("resync", {}) as Dictionary).get(key, default))
 
 
-## Grants `id` with a fresh random sequence of distinct glyphs (replacing an earlier visit's
-## one). Returns the sequence; empty for an unknown id.
-static func grant(id: StringName, rng: RandomNumberGenerator = null) -> PackedStringArray:
-	var config := definition(id)
-	if config.is_empty():
-		push_error("DreamKnowledge: unknown knowledge '%s'" % id)
-		return PackedStringArray()
-	if rng == null:
-		rng = RandomNumberGenerator.new()
-		rng.randomize()
-	var pool := glyphs()
-	var code := PackedStringArray()
-	for _i in mini(int(config.get("length", 3)), pool.size()):
-		var index := rng.randi_range(0, pool.size() - 1)
-		code.append(pool[index])
-		pool.remove_at(index)
+## The sequence the seal of `id` will grant on this visit, rolled once and kept until it is
+## granted (#183: the ring seal shows it before it is solved). Empty for an unknown id.
+static func prepare(id: StringName, rng: RandomNumberGenerator = null) -> PackedStringArray:
 	var state := _state()
+	var pending: Dictionary = state.get("pending", {})
+	if pending.has(String(id)):
+		return PackedStringArray(pending[String(id)])
+	var code := _roll(id, rng)
+	if code.is_empty():
+		return code
+	pending[String(id)] = Array(code)
+	state["pending"] = pending
+	GameState.set_system_data(SYSTEM, state)
+	return code
+
+
+## Grants `id` with the prepared sequence or a fresh random one of distinct glyphs (replacing
+## an earlier visit's one). Returns the sequence; empty for an unknown id.
+static func grant(id: StringName, rng: RandomNumberGenerator = null) -> PackedStringArray:
+	var state := _state()
+	var pending: Dictionary = state.get("pending", {})
+	var code := PackedStringArray(pending.get(String(id), []))
+	if code.is_empty():
+		code = _roll(id, rng)
+		if code.is_empty():
+			return code
+	pending.erase(String(id))
+	state["pending"] = pending
 	var order: Array = state.get("order", [])
 	order.erase(String(id))
 	order.append(String(id))
@@ -116,6 +127,23 @@ static func resync(module: StringName, entered: PackedStringArray) -> Result:
 	((state["entries"] as Dictionary)[String(id)] as Dictionary)["used"] = true
 	GameState.set_system_data(SYSTEM, state)
 	return Result.SYNCED
+
+
+static func _roll(id: StringName, rng: RandomNumberGenerator) -> PackedStringArray:
+	var config := definition(id)
+	if config.is_empty():
+		push_error("DreamKnowledge: unknown knowledge '%s'" % id)
+		return PackedStringArray()
+	if rng == null:
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+	var pool := glyphs()
+	var code := PackedStringArray()
+	for _i in mini(int(config.get("length", 3)), pool.size()):
+		var index := rng.randi_range(0, pool.size() - 1)
+		code.append(pool[index])
+		pool.remove_at(index)
+	return code
 
 
 static func _entry(id: StringName) -> Dictionary:
