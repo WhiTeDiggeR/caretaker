@@ -1,11 +1,13 @@
 extends Node
 
-## End-to-end check of the dream loop with real scene changes: sandbox → chair → test dream
+## End-to-end check of the dream loop with real scene changes: sandbox → chair → Bowser's dream
 ## → seal (knowledge) → gate → sandbox → resync panel (#132). Detaches itself from `current_scene` so the scene changes keep it.
 ## Prints `DREAM_E2E_OK` on success. With `-- capture <dir>` it also saves frames.
 
 const SANDBOX := "res://scenes/sandbox/opening_sandbox.tscn"
-const TEST_DREAM := "res://scenes/dreams/test_dream.tscn"
+const BOWSER_DREAM := "res://scenes/dreams/bowser_dream.tscn"
+const SEAL := ^"SealHall/Seal/Interactable"
+const GATE := ^"Bastion/Gate"
 const TIMEOUT_FRAMES := 600
 
 var _errors := PackedStringArray()
@@ -30,18 +32,18 @@ func _run() -> void:
 	_check(chair.lock_reason().is_empty(), "sandbox chair is free: %s" % chair.lock_reason())
 	var start := Containment.get_instability(&"module_4")
 	chair.sit_down()
-	await _until(func() -> bool: return _scene_is(TEST_DREAM))
+	await _until(func() -> bool: return _scene_is(BOWSER_DREAM))
 	await _frames(60)
 	_check(Dreams.in_dream, "session is in the dream")
 	_check(Containment.get_instability(&"module_4") >= start + Dreams.entry_cost - 0.01, "entry raised the instability")
 	await _capture("e2e_1_dream")
 	var dream := tree.current_scene
-	(dream.get_node(^"Seal/Interactable") as Interactable).trigger()
+	(dream.get_node(SEAL) as Interactable).trigger()
 	var code := DreamKnowledge.code(&"module_4_seal")
 	_check(code.size() == 3, "the seal leaves glyphs to remember")
 	var after_seal := Containment.get_instability(&"module_4")
 	var player := dream.get_node(^"Player") as Node3D
-	player.global_position = Vector3(0, 0.9, -38.4)
+	player.global_position = (dream.get_node(GATE) as Node3D).global_position + Vector3(0, 0.9, 0.6)
 	await _until(func() -> bool: return _scene_is(SANDBOX))
 	await _frames(60)
 	_check(not Dreams.in_dream, "gate ended the session")

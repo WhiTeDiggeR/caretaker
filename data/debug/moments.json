@@ -89,7 +89,22 @@
         "objective_chain": "opening"
       },
       "dream": {"module": "module_4", "chair": "sandbox_chair"},
-      "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/test_dream.tscn"}
+      "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/bowser_dream.tscn"}
+    },
+    {
+      "id": "bowser_terrace",
+      "title": "Сон Боузера: терраса",
+      "story_scene": 12,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "instability": {"module_4": 60},
+        "objective_chain": "opening"
+      },
+      "dream": {"module": "module_4", "chair": "sandbox_chair", "spawn": {"node": "Spawn", "offset": [0, 1, 0], "yaw": -90}},
+      "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/bowser_dream.tscn"}
     },
     {
       "id": "dream_seal",
@@ -103,8 +118,8 @@
         "instability": {"module_4": 60},
         "objective_chain": "opening"
       },
-      "dream": {"module": "module_4", "chair": "sandbox_chair", "spawn": {"node": "Seal", "offset": [0, 1, 2.5], "yaw": 0}},
-      "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/test_dream.tscn"}
+      "dream": {"module": "module_4", "chair": "sandbox_chair", "spawn": {"node": "SealHall/SealSlot", "offset": [-4, 1, 0], "yaw": -90}},
+      "expect": {"objective": "first_dive", "in_dream": true, "scene": "res://scenes/dreams/bowser_dream.tscn"}
     },
     {
       "id": "dream_return",
