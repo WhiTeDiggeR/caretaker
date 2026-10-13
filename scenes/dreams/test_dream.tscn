@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://objects/dream/combat/dream_combat_setup.gd" id="8_combat"]
 [ext_resource type="Script" path="res://objects/dream/combat/dream_weapon_pickup.gd" id="9_pickup"]
 [ext_resource type="Script" path="res://objects/dream/combat/dream_enemy.gd" id="10_enemy"]
+[ext_resource type="Script" path="res://objects/dream/combat/dream_ambush.gd" id="11_ambush"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -131,7 +132,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -39)
 [node name="Hint" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -4)
 pixel_size = 0.006
-text = "ТЕСТОВЫЙ СОН\nпечать с кольцами — в центре (рычаги у края), врата — в конце; лава смертельна\nобразы оружия — по сторонам, арена — справа от печати"
+text = "ТЕСТОВЫЙ СОН\nпечать с кольцами — в центре (рычаги у края), врата — в конце; лава смертельна\nобразы оружия — по сторонам, арена — справа от печати, двор засады — слева"
 font_size = 48
 outline_size = 12
 
@@ -181,6 +182,60 @@ script = ExtResource("10_enemy")
 [node name="ShadeGate" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.95, -36)
 script = ExtResource("10_enemy")
+
+[node name="BridgeYard" type="StaticBody3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -7, -0.2, -18)
+
+[node name="Mesh" type="MeshInstance3D" parent="BridgeYard"]
+mesh = SubResource("bridge_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="BridgeYard"]
+shape = SubResource("bridge_shape")
+
+[node name="Yard" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, -0.5, -18)
+
+[node name="Mesh" type="MeshInstance3D" parent="Yard"]
+mesh = SubResource("arena_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Yard"]
+shape = SubResource("arena_shape")
+
+[node name="Ambush" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -18)
+script = ExtResource("11_ambush")
+wake_half_width = 7.0
+
+[node name="WakeLine" type="Node3D" parent="Ambush"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4, 0, 0)
+
+[node name="Label" type="Label3D" parent="Ambush/WakeLine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+billboard = 1
+pixel_size = 0.006
+text = "ЛИНИЯ ПРОБУЖДЕНИЯ"
+font_size = 40
+outline_size = 10
+
+[node name="Niches" type="Node3D" parent="Ambush"]
+
+[node name="NicheNorth" type="Marker3D" parent="Ambush/Niches"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.5, 0.95, -4)
+
+[node name="NicheSouth" type="Marker3D" parent="Ambush/Niches"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.5, 0.95, 4)
+
+[node name="Threshold" type="Node3D" parent="Ambush"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 1, 0)
+
+[node name="Label" type="Label3D" parent="Ambush/Threshold"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+billboard = 1
+pixel_size = 0.006
+text = "ПОРОГ ЗАЛА
+стражи не входят"
+font_size = 40
+outline_size = 10
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2)
