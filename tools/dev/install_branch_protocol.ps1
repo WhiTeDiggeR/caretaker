@@ -28,6 +28,8 @@ $Scheme = "caretaker"
 $ClassKey = "HKCU:\Software\Classes\$Scheme"
 $InstallDir = Join-Path $env:LOCALAPPDATA "Caretaker"
 $InstalledScript = Join-Path $InstallDir "open_branch.ps1"
+# Вывод git (путь к клону) — UTF-8; без этого Windows PowerShell читает его как OEM cp866 и портит кириллицу.
+$Utf8NoBom = New-Object System.Text.UTF8Encoding $false
 
 if ($Uninstall) {
     if (Test-Path $ClassKey) { Remove-Item -Path $ClassKey -Recurse -Force }
@@ -38,11 +40,20 @@ if ($Uninstall) {
 
 if ($Repo) { $start = $Repo } else { $start = $PSScriptRoot }
 $main = $null
-foreach ($line in @(& git -C $start worktree list --porcelain)) {
+$savedConsoleEncoding = $null
+try { $savedConsoleEncoding = [Console]::OutputEncoding; [Console]::OutputEncoding = $Utf8NoBom } catch { $savedConsoleEncoding = $null }
+try {
+    $worktrees = @(& git -c core.quotepath=false -C $start worktree list --porcelain)
+    $gitCode = $LASTEXITCODE
+} finally {
+    if ($null -ne $savedConsoleEncoding) { [Console]::OutputEncoding = $savedConsoleEncoding }
+}
+foreach ($line in $worktrees) {
     if ($line.StartsWith('worktree ')) { $main = $line.Substring('worktree '.Length); break }
 }
-if ($LASTEXITCODE -ne 0 -or -not $main) { throw "Не удалось найти основной клон для $start" }
+if ($gitCode -ne 0 -or -not $main) { throw "Не удалось найти основной клон для $start" }
 $main = [IO.Path]::GetFullPath($main)
+if (-not (Test-Path -LiteralPath (Join-Path $main '.git'))) { throw "Путь к клону прочитан неверно: $main" }
 
 New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot "open_branch.ps1") -Destination $InstalledScript -Force
