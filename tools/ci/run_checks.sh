@@ -69,6 +69,21 @@ echo "== Godot import"
 "$GODOT" --headless --editor --path . --quit >/dev/null 2>&1
 record "godot editor import" $?
 
+echo "== Godot scenes"
+# The startup scene (main menu) and the new-game scene load headless without errors (#173).
+scene_smoke() { # label, [scene]
+  local label="$1" output code; shift
+  output=$(timeout 300 "$GODOT" --headless --path . "$@" --quit-after 5 2>&1); code=$?
+  if [ $code -eq 0 ] && ! echo "$output" | grep -Eq "^(ERROR|SCRIPT ERROR)"; then
+    record "$label" 0
+  else
+    echo "$output" | grep -E -A1 "^(ERROR|SCRIPT ERROR)" | head -20
+    record "$label (exit $code or errors)" 1
+  fi
+}
+scene_smoke "godot startup scene (main menu)"
+scene_smoke "godot complex scene" res://scenes/underground_research_complex.tscn
+
 echo "== Godot checks"
 while IFS='|' read -r resource marker; do
   [ -z "$resource" ] && continue

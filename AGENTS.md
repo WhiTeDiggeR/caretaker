@@ -4,7 +4,7 @@
 
 - This is a Godot 4.7 stable 3D game written in GDScript.
 - The renderer is Forward Plus and 3D physics uses Jolt Physics.
-- The startup scene is `res://scenes/underground_research_complex.tscn`.
+- The startup scene is the main menu `res://scenes/shell/main_menu.tscn`; «Новая игра» loads the complex `res://scenes/underground_research_complex.tscn` (`Shell.new_game_scene`).
 - Gameplay scripts and composed scenes live in `scenes/`.
 - Reusable props and interactions live in `objects/`.
 - Materials and shaders live in `materials/`; imported source assets live in `loads/`.
@@ -34,7 +34,7 @@
 - Avoid parallel edits to `scenes/underground_research_complex.tscn`; it is the current integration hotspot.
 - Read the latest issue comments and `git status` before changing files.
 - Preserve unrelated dirty-worktree changes. Never reset, restore, or reformat files outside the task.
-- Prefer reusable sub-scenes and scripts over adding more inline resources to the large startup scene.
+- Prefer reusable sub-scenes and scripts over adding more inline resources to the large complex scene.
 - Do not hand-edit `.uid` or `.import` files. Let Godot generate metadata when source assets change.
 - Do not add or replace large binary assets unless the issue explicitly authorizes it and records licensing/provenance.
 - New binary assets go through Git LFS (`docs/LFS.md`): run `git lfs install` once; `tools/ci/lfs_check.py` rejects binaries committed without it.
@@ -54,7 +54,7 @@
 Run the strongest available checks before delivery:
 
 1. `godot --headless --editor --path . --quit`
-2. `godot --headless --path . --quit-after 5`
+2. `godot --headless --path . --quit-after 5` (main menu) and `godot --headless --path . res://scenes/underground_research_complex.tscn --quit-after 5` (complex)
 3. Open and exercise the affected scene in Godot 4.7 when the change is visual, interactive, physics-related, or audio-related.
 4. Run `git diff --check` and inspect the final diff for accidental scene churn.
 5. For changes to the generation flow, tools, plans or generated packages run `bash tools/ci/run_checks.sh` (all Python suites and headless Godot checks; CI runs the same script). Set `SVG_TOOL_ROOT` and `STAIR_TOOL_ROOT` to also run the tests that need the generation tools.

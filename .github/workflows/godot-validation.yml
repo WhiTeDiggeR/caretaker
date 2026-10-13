@@ -45,9 +45,13 @@ jobs:
         shell: bash
         run: ./"${GODOT_BINARY}" --headless --editor --path . --quit
 
-      - name: Smoke-test startup scene
+      - name: Smoke-test startup scene (main menu)
         shell: bash
         run: ./"${GODOT_BINARY}" --headless --path . --quit-after 5
+
+      - name: Smoke-test complex scene
+        shell: bash
+        run: ./"${GODOT_BINARY}" --headless --path . res://scenes/underground_research_complex.tscn --quit-after 5
 
       - name: Set up Python
         uses: actions/setup-python@v5

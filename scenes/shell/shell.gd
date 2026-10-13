@@ -11,6 +11,9 @@ signal paused_changed(paused: bool)
 signal new_game_started
 
 const MAIN_MENU := "res://scenes/shell/main_menu.tscn"
+## `-- --new-game` after the engine arguments starts a new game right away: the exported build
+## cannot run a scene by path, so tools/build/smoke_test.sh reaches the complex this way (#173).
+const NEW_GAME_ARG := "--new-game"
 ## Test range of the opening systems, offered by the main menu in debug builds.
 const SANDBOX_SCENE := "res://scenes/sandbox/opening_sandbox.tscn"
 const PLAYER_GROUP := &"player"
@@ -34,6 +37,8 @@ var _starting_new_game := false
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	BuildInfo.log_once()
+	if NEW_GAME_ARG in OS.get_cmdline_user_args():
+		new_game.call_deferred()
 	_loading_layer = CanvasLayer.new()
 	_loading_layer.layer = 90
 	_loading_layer.visible = false
@@ -102,6 +107,7 @@ func _process(_delta: float) -> void:
 		push_error("Shell: cannot load %s" % _loading_path)
 		return
 	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(_loading_path))
+	print("Сцена: %s" % _loading_path)
 	if not _pending_save.is_empty():
 		var save := _pending_save
 		_pending_save = {}
