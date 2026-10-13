@@ -1,4 +1,4 @@
-# Маршрут начала по комплексу v4: состояние и план минимальной починки (#170)
+# Маршрут начала по комплексу v4: состояние и план минимальной починки (#170, #177)
 
 Срез: `team/integration` df9c16ee, 2026-10-12. Цель — пройти **только маршрут начала** (`docs/game_design/01-opening.md`, сцены 1–12),
 а не чинить все 32 сектора.
@@ -14,7 +14,30 @@
 - Минимальный путь до проходимого маршрута: одна поправка (дверь ЦУ) → перестройка канонического SVG и манифеста (в облаке) →
   локальная регенерация **одного** сектора L-OLD-CORE у автора → повторный прогон проверки.
 
-Сведения из описания задачи, которые устарели: U-/L-CIRCULATION уже производственные сектора — манифест, каталог сцен, матрица и
+## Обновление 2026-10-13: решения автора и поправка D-48 (#177)
+
+Решения автора (комментарий в #170): операторская сцены 10 — **комната старшего** в L-OLD-CORE, вход в неё — **пролом из
+релейной** (разрушаемая стена, объект и сюжет — #178); дверь ЦУ ↔ комната остаётся, но заклинена геймплеем; путь к модулю №4 —
+через главное ядро; обход в T-ENERGY остаётся по D-28; блокировки (G-05) — объекты геймплея.
+
+| Что | Состояние |
+|---|---|
+| D-48a: дверь historic 1,4×2,3 из ЦУ в коридор, x −69,4…−68,0, z 2,804 (`l-old-core-door-15`) | в `approved_registration.json`, `decisions.md` и каноническом SVG |
+| D-48b: пролом 1,2×2,0 релейная ↔ комната старшего, x −64,77…−63,57, z −2,772 (`l-old-core-door-16`, `data-door-type="breach"`) | то же |
+| манифест (`build_sector_manifest.py`) | без изменений: хэшей SVG в нём нет |
+| пакет `gen/l/l_old_core` | **ждёт регенерации у автора** (команды ниже) |
+| проверка маршрута | 18 участков по решениям автора: у каждого ожидаемые лестницы и при необходимости предел длины; `DETOUR`, если цель достигнута другой лестницей или в обход; тела группы `opening_route_passable` (разрушаемая стена #178) не участвуют в навмеше |
+
+Пролом размечен как `door`, а не `opening`: у `opening` генератор (`svg_to_godot3d` 1.19.0) вырезает стену на всю высоту 5 м
+(так сделаны проходы 4,0 м старого ядра), у `door` — по `data-door-height` и оставляет перемычку. Отдельного вида «пролом» контракт
+генератора не знает; `data-door-type` — свободная метка (её читают только наши инструменты), поэтому `breach` отличает пролом от
+двери без изменения генератора. Объект #178 закрывает проём 1,2×2,0 и встаёт в группу `opening_route_passable`.
+
+Текущий результат проверки (пакет ещё старый): `legs=18 passable=13 blocked=5` — 6-7, 7-8, 9-10, 10-11 `BLOCKED` (блок ЦУ
+замкнут), 10 `DETOUR` (в комнату старшего сейчас ведёт только обход через ЦУ и дверь `door-04`, 11,6 м при пределе 8 м). После
+регенерации ожидается `blocked=0`.
+
+Сведения из описания задачи #170, которые устарели: U-/L-CIRCULATION уже производственные сектора — манифест, каталог сцен, матрица и
 `complex_v4_sector_check` рассчитаны на 32 (коммит 420a50de, #95); VT-OLD-STAIR уже сгенерирована (U-turn, восточная сторона,
 решение автора в #67), её блокировка в #67 к маршруту больше не относится.
 
@@ -107,47 +130,58 @@ $GODOT_BIN --headless --path . --script res://scenes/complex_v4/review/opening_r
 
 | # | Задача | Кто | Оценка | Готово, когда |
 |---|---|---|---|---|
-| 1 | Ответы автора на вопросы 1–3 ниже (минимум — вопрос 1) | автор | 10 мин | ответы в #170 |
-| 2 | Поправка L-OLD-CORE в `tools/complex_v4/approved_registration.json` (новое решение D-48): дверь ЦУ ↔ коридор; перестроить канонический SVG и манифест; при варианте 3-Б — ещё поправки T-ENERGY | агент | 30 мин | `validate_canonical_sources.py`, `check_cross_openings.py`, `check_stair_fit.py`, тесты `tools/complex_v4/tests` зелёные |
-| 3 | Регенерация пакета L-OLD-CORE (и T-ENERGY при 3-Б) у автора — команды ниже | автор | 20 мин | `safe_regenerate` `status: promoted`, `ready: true` |
-| 4 | Прогон `opening_route_check.gd -- --strict`; при `blocked=0` перевести строку в `run_checks.sh` на strict | агент | 15 мин | `OPENING_ROUTE_CHECK ... blocked=0` |
-| 5 | Операторская: ключ, тело, пульт протокола в выбранном помещении (расстановка в `set_dressing/sectors/l_old_core_dressing.tscn`) — отдельно от геометрии | агент | по задаче сцены 10 | — |
+| 1 | Ответы автора на вопросы 1–3 ниже (минимум — вопрос 1) | автор | 10 мин | **сделано** (#170) |
+| 2 | Поправки L-OLD-CORE D-48a/b в `tools/complex_v4/approved_registration.json`, канонический SVG и манифест перестроены | агент | 30 мин | **сделано** (#177, ветка `task/177-old-core-door-breach`) |
+| 3 | Регенерация пакета L-OLD-CORE у автора на ветке #177 — команды ниже | автор | 20 мин | `safe_regenerate` `status: promoted`, `ready: true`, пакет закоммичен в ветку |
+| 4 | Влить ветку #177 в `team/integration`, прогон `opening_route_check.gd -- --strict`; при `blocked=0` перевести строку в `run_checks.sh` на strict | агент | 15 мин | `OPENING_ROUTE_CHECK mode=strict ... blocked=0` |
+| 5 | Операторская: разрушаемая стена, лом, тело, ключ — объекты #178; расстановка в `set_dressing/sectors/l_old_core_dressing.tscn` после шага 4 | агент | по #178 | — |
 | 6 | Ручной проход маршрута в `complex_v4_blockout_test.tscn` (F1 — первое лицо) | автор / #169 | 20 мин | записано в #169 |
 
-Предлагаемая поправка шага 2 (дверь historic 1,4×2,3, как остальные двери ЦУ по D-21; окно остаётся):
+Поправки шага 2 (`sectors."L-OLD-CORE".amendments`; окно `l-old-core-window-01` остаётся):
 
 ```json
-{"id": "D-48a", "op": "door_add", "at_m": [-69.4, 2.804, -68.0, 2.804], "kind": "door", "height_m": 2.3, "type": "historic"}
+{"id": "D-48a", "op": "door_add", "at_m": [-69.4, 2.804, -68.0, 2.804], "kind": "door", "height_m": 2.3, "type": "historic"},
+{"id": "D-48b", "op": "door_add", "at_m": [-64.77, -2.772, -63.57, -2.772], "kind": "door", "height_m": 2.0, "type": "breach"}
 ```
-
-в `sectors."L-OLD-CORE".amendments`. Если автор предпочтёт превратить окно в дверь — вместо этого
-`{"op": "opening_remove", "near_m": [-71.39, 2.804], "gtype": "window"}` и та же `door_add` на x −72,1…−70,7.
 
 ### Команды для автора (шаг 3)
 
-Генераторы в облаке недоступны. На машине автора из корня репозитория, после того как шаг 2 влит в `team/integration`:
+Генераторы в облаке недоступны. Канонический SVG с D-48 нельзя влить в `team/integration` без пакета: `test_lower_rollout`
+требует якоря для каждой двери SVG, и CI станет красным. Поэтому регенерация идёт **на ветке #177**, на машине автора из корня
+репозитория:
 
 ```powershell
-git pull origin team/integration
+git fetch origin
+git checkout task/177-old-core-door-breach
+git pull origin task/177-old-core-door-breach
 python tools/complex_v4/safe_regenerate.py `
   --sector L-OLD-CORE `
   --manifest tools/complex_v4/sector_generation_manifest.json `
   --svg-tool-root <путь к svg-plan-to-godot (svg_to_godot3d >= 1.19.0)> `
   --stair-tool-root <путь к generate-godot-stairs (generate_godot_stairs >= 2.9.0)> `
   --report $env:TEMP\l_old_core_regen.json
-# при варианте 3-Б то же для --sector T-ENERGY (лестниц нет, --stair-tool-root можно не передавать)
+godot --headless --editor --path . --quit          # Godot создаёт .import для новых .obj — их коммитим, руками не правим
+godot --headless --path . --script res://scenes/complex_v4/review/opening_route_check.gd -- --strict
 $env:SVG_TOOL_ROOT = "<путь svg-plan-to-godot>"; $env:STAIR_TOOL_ROOT = "<путь generate-godot-stairs>"
 bash tools/ci/run_checks.sh
-godot --headless --path . --script res://scenes/complex_v4/review/opening_route_check.gd -- --strict
+git add gen/l/l_old_core
+git commit -m "#177 Regenerate L-OLD-CORE package (D-48a/b)"
+git push origin task/177-old-core-door-breach
 ```
+
+После пуша агент вливает ветку в `team/integration` и переводит проверку маршрута в CI на `--strict` (шаг 4).
 
 Ожидается: в отчёте `safe_regenerate` — `"status": "promoted"`, `"ready": true`, пустой `errors`; меняются только
 `gen/l/l_old_core/{Generated/**, anchor_frames.json, generation_manifest.json, regeneration_report.json}` (лестница VT-OLD-STAIR пересобирается
-из той же разметки шахты и не должна сдвинуться); `check_stair_fit.py` по-прежнему `gaps_over_0.6=0`; `run_checks.sh` — `ALL CHECKS PASSED`;
-проверка маршрута — `OPENING_ROUTE_CHECK mode=strict legs=14 passable=14 blocked=0`. Если `safe_regenerate` вернёт ошибку привязок
-(`object_bindings.json` ЦУ), пришлите отчёт в #170 — это правится без генератора.
+из той же разметки шахты и не должна сдвинуться); в `anchor_frames.json` появляются `svg:l-old-core-door-15:door:*` и
+`svg:l-old-core-door-16:door:*` (`center`, `threshold_inside`, `threshold_outside`); в `generation_manifest.json` новый
+`source.sha256` SVG; `check_stair_fit.py` по-прежнему `gaps_over_0.6=0`; `run_checks.sh` — `ALL CHECKS PASSED`;
+проверка маршрута — `OPENING_ROUTE_CHECK mode=strict legs=18 passable=18 blocked=0`. Если `safe_regenerate` вернёт ошибку привязок
+(`object_bindings.json`) или проверка маршрута покажет `BLOCKED`/`DETOUR`, пришлите отчёт и вывод в #177 — это разбирается без генератора.
 
 ## Вопросы автору
+
+Отвечены автором в #170 (2026-10-13): 1 — A (комната старшего, вход через пролом из релейной), 2 — A, 3 — A, 4 — по рекомендации.
 
 **1. Где закрытая операторская (сцена 10, Р-2)?**
 
@@ -178,8 +212,7 @@ godot --headless --path . --script res://scenes/complex_v4/review/opening_route_
 
 ## Предлагаемые follow-up задачи
 
-1. «L-OLD-CORE: дверь в блок старого резервного ЦУ (D-48) + регенерация сектора» — шаги 2–4 плана; зависит от вопроса 1.
-2. «Перевести `opening_route_check` в strict» — после задачи 1.
-3. (если вопрос 1 = B) «U-CONTROL: выход в магистраль U (E-U04)».
-4. (если вопрос 3 = B) «T-ENERGY: двери зал ↔ охлаждение ↔ щитовая».
-5. «G-05: состояния дверей и завалов маршрута начала как геймплейные объекты».
+1. «L-OLD-CORE: дверь в блок старого резервного ЦУ (D-48) + регенерация сектора» — заведена как #177, включает перевод проверки в strict.
+2. Пролом, лом, заклинившая дверь — #178.
+3. «G-05: состояния дверей и завалов маршрута начала как геймплейные объекты».
+4. U-CONTROL без выхода в магистраль U (E-U04) — вне маршрута начала, но остаётся дефектом данных.
