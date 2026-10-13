@@ -242,7 +242,8 @@ def resolve_stair(entry: dict[str, Any], sectors: dict[str, dict[str, Any]], pro
         "--shaft-width", _format(width), "--shaft-length", _format(length), "--floor-height", _format(floor_height),
         "--layout", layout, "--stair-width", _format(entry_width),
         "--lower-entry-side", LOCAL_SIDE[entry_side], "--upper-exit-side", LOCAL_SIDE[exit_side],
-        "--shaft-wall-bottom", _format(bottom), "--shaft-wall-top", _format(floor_height),
+        # shaft walls come from vertical_closures (lining with the room wall material), not from the stair generator
+        "--no-shaft",
         *fit_args,
         *entry.get("args", []),
     ]

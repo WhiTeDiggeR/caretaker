@@ -58,6 +58,7 @@ python_suite tools/complex_v4/repair_package/tests
 python_suite tools/complex_v3_pilots/tests
 python_script "scene index matches the passports" scenes/complex_v4/validate_sector_scenes.py
 python_script "generated sounds match their recipes" tools/audio/make_sfx.py --check
+python_script "floor plan page builds from the canonical SVGs" tools/complex_v4/floor_plans/build_floor_plans.py --check
 python_script "art props: sizes, anchors, budgets, provenance" tools/props/validate_props.py
 python_script "git lfs: new binaries are LFS pointers" tools/ci/lfs_check.py
 python_script "textures: loads/ imported as 3D (VRAM + mipmaps, <= 2048 px)" tools/ci/texture_import_check.py
@@ -113,6 +114,7 @@ res://scenes/complex_v4/regeneration/door_frame_prefab_check.gd|DOOR_FRAME_PREFA
 res://scenes/complex_v4/regeneration/surface_conflict_check.gd|SURFACE_CONFLICT_CHECK sectors=32 findings=[0-9]+ errors=0
 res://scenes/complex_v4/regeneration/rollout/shared/combined_check.gd|SHARED_COMBINED checks=[0-9]+ errors=0
 res://tools/complex_v4/tests/production_matrix_check.gd|PRODUCTION_MATRIX generated=32 sectors=32 errors=0
+res://tools/complex_v4/tests/coplanar_check.gd|COPLANAR_CHECK meshes=[0-9]+ overlaps=0
 res://scenes/complex_v4/sector_wrapper_contract_check.gd|COMPLEX_V4_SECTOR_WRAPPER_CONTRACT_OK
 res://scenes/complex_v4/set_dressing/set_dressing_scene_check.gd|SET_DRESSING_GODOT_SCENES_OK
 res://scenes/complex_v4/complex_v4_sector_check.gd|COMPLEX_V4_SECTORS_OK sectors=32

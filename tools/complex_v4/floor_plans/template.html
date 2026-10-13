@@ -1,0 +1,219 @@
+<title>Планы этажей комплекса</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: drafting sheet — narrow decision rail on the left, the floor plan as the working surface on the right; stacks on phones. */
+:root{
+  --paper:#e9eeec; --sheet:#f6f8f7; --ink:#1f2c33; --ink-2:#55656d; --line:#c4cfcc;
+  --floor:#cfd9d6; --wall:#24323a; --route:#c46a12; --route-soft:rgba(196,106,18,.18);
+  --cand:#a8322b; --cand-soft:rgba(168,50,43,.16); --closed:rgba(168,50,43,.10);
+  --door:#2f7d5b; --door-hist:#b07a1c; --door-fire:#a8322b; --window:#2b74b8; --stair:#6c5ca8;
+  --font-display:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --font-body:"IBM Plex Sans Condensed","Segoe UI",Arial,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11181b; --sheet:#172126; --ink:#d3dee2; --ink-2:#8fa1a8; --line:#2b3a40;
+  --floor:#24333a; --wall:#c3d2d8; --route:#f0a040; --route-soft:rgba(240,160,64,.20);
+  --cand:#f07468; --cand-soft:rgba(240,116,104,.20); --closed:rgba(240,116,104,.12);
+  --door:#5fc493; --door-hist:#e2b04e; --door-fire:#f07468; --window:#6fb2ef; --stair:#a898e6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11181b; --sheet:#172126; --ink:#d3dee2; --ink-2:#8fa1a8; --line:#2b3a40;
+  --floor:#24333a; --wall:#c3d2d8; --route:#f0a040; --route-soft:rgba(240,160,64,.20);
+  --cand:#f07468; --cand-soft:rgba(240,116,104,.20); --closed:rgba(240,116,104,.12);
+  --door:#5fc493; --door-hist:#e2b04e; --door-fire:#f07468; --window:#6fb2ef; --stair:#a898e6; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.45;padding:16px 16px 24px}
+h1{font-family:var(--font-display);font-weight:600;font-size:1.6rem;margin:0;text-wrap:balance;letter-spacing:.01em}
+.sub{color:var(--ink-2);margin:.2rem 0 0;font-size:.92rem}
+.mono{font-family:var(--font-mono);font-size:.82em}
+.wrap{display:grid;grid-template-columns:minmax(260px,330px) minmax(0,1fr);gap:16px;margin-top:14px}
+@media (max-width:820px){.wrap{grid-template-columns:minmax(0,1fr)}}
+.rail{display:flex;flex-direction:column;gap:14px;min-width:0}
+.block h2{font-family:var(--font-display);font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-2);margin:0 0 .45rem;font-weight:600}
+.cand{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;padding:9px 10px;border:1px solid var(--line);background:var(--sheet);border-radius:6px;cursor:pointer;text-align:left;color:inherit;font:inherit;width:100%}
+.cand+.cand{margin-top:8px}
+.cand:hover,.cand:focus-visible{border-color:var(--cand);outline:none}
+.cand .k{width:24px;height:24px;border-radius:50%;background:var(--cand);color:var(--sheet);display:grid;place-items:center;font-weight:600;font-family:var(--font-mono);font-size:.85rem}
+.cand b{font-weight:600}
+.cand .rec{color:var(--cand);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin-left:4px}
+.cand p{margin:.15rem 0 0;color:var(--ink-2);font-size:.86rem}
+.route{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.route button{all:unset;cursor:pointer;display:grid;grid-template-columns:30px minmax(0,1fr);gap:6px;padding:3px 4px;border-radius:4px;width:calc(100% - 8px)}
+.route button:hover,.route button:focus-visible{background:var(--route-soft)}
+.route .n{font-family:var(--font-mono);color:var(--route);font-weight:500;font-variant-numeric:tabular-nums}
+.route .bad{color:var(--cand)}
+.note{font-size:.86rem;color:var(--ink-2);border-left:3px solid var(--cand);padding:4px 0 4px 10px}
+.stage{min-width:0;display:flex;flex-direction:column;gap:8px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button,.tool{font:inherit;font-size:.88rem;background:var(--sheet);color:var(--ink);border:0;padding:6px 10px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.tool{border:1px solid var(--line);border-radius:6px}
+.tool:focus-visible,.seg button:focus-visible{outline:2px solid var(--route);outline-offset:1px}
+label.chk{display:inline-flex;gap:5px;align-items:center;font-size:.88rem;color:var(--ink-2);margin-left:4px}
+.sheet{position:relative;background:var(--sheet);border:1px solid var(--line);border-radius:6px;height:min(74vh,820px);min-height:380px;overflow:hidden;touch-action:none}
+.sheet svg{width:100%;height:100%;display:block;cursor:grab}
+.sheet svg.drag{cursor:grabbing}
+.info{position:absolute;right:10px;bottom:10px;max-width:min(360px,calc(100% - 20px));background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:.86rem;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.info b{display:block;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.82rem;color:var(--ink-2)}
+.legend i{display:inline-block;width:18px;height:0;border-top:3px solid;vertical-align:middle;margin-right:5px}
+.legend i.box{height:10px;border:1.5px solid;border-top-width:1.5px}
+.foot{font-size:.8rem;color:var(--ink-2);margin-top:6px}
+/* svg */
+.room{fill:var(--floor);stroke:none;cursor:pointer}
+.room:hover{fill:var(--route-soft)}
+.room.onroute{fill:var(--route-soft)}
+.room.closed{fill:var(--closed)}
+.room.sel{fill:var(--route-soft);stroke:var(--route);stroke-width:2;vector-effect:non-scaling-stroke}
+.wall{stroke:var(--wall);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linecap:square}
+.door{stroke:var(--door);stroke-width:5;vector-effect:non-scaling-stroke}
+.door.historic{stroke:var(--door-hist)}.door.fire{stroke:var(--door-fire)}
+.win{stroke:var(--window);stroke-width:5;vector-effect:non-scaling-stroke;stroke-dasharray:2 2}
+.open{stroke:var(--ink-2);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-dasharray:4 3}
+.stair{fill:none;stroke:var(--stair);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-dasharray:3 2}
+.rl{fill:var(--ink);font-family:var(--font-body);pointer-events:none;text-anchor:middle;dominant-baseline:central}
+.sl{fill:var(--ink-2);font-family:var(--font-mono);pointer-events:none;opacity:.75}
+.mk circle{fill:var(--route)} .mk text{fill:var(--sheet);font-family:var(--font-mono);font-weight:600;text-anchor:middle;dominant-baseline:central}
+.ck circle{fill:var(--cand)} .ck text{fill:var(--sheet);font-family:var(--font-mono);font-weight:600;text-anchor:middle;dominant-baseline:central}
+.ck .ring{fill:none;stroke:var(--cand);stroke-width:2;vector-effect:non-scaling-stroke}
+.callout{fill:var(--cand);font-family:var(--font-body);font-weight:600}
+.nolabels .rl,.noroute .mk,.noroute .room.onroute{} .nolabels .rl{display:none}.nosec .sl{display:none}.noroute .mk{display:none}
+@media (prefers-reduced-motion:no-preference){.sheet svg{transition:none}}
+</style>
+
+<header>
+  <h1 id="title"></h1>
+  <p class="sub"><span id="subtitle"></span> <span class="mono">team/integration @ __REV__</span>, 1 единица = 1 м.</p>
+</header>
+
+<div class="wrap">
+  <aside class="rail">
+    <section class="block" id="marks-block">
+      <h2>Отметки</h2>
+      <div id="marks"></div>
+    </section>
+    <section class="block">
+      <h2>Маршрут начала</h2>
+      <ol class="route" id="route"></ol>
+    </section>
+  </aside>
+
+  <main class="stage">
+    <div class="bar">
+      <div class="seg" role="group" aria-label="Уровень">
+        <button id="lv-upper" data-lv="upper" aria-pressed="false">LV-U · 0 м</button>
+        <button id="lv-lower" data-lv="lower" aria-pressed="true">LV-L · −6 м</button>
+        <button id="lv-technical" data-lv="technical" aria-pressed="false">LV-T · −11,5 м</button>
+      </div>
+      <button class="tool" id="zin" aria-label="Приблизить">+</button>
+      <button class="tool" id="zout" aria-label="Отдалить">−</button>
+      <button class="tool" id="zfit">Весь этаж</button>
+      <label class="chk"><input type="checkbox" id="t-labels" checked> подписи</label>
+      <label class="chk"><input type="checkbox" id="t-route" checked> маршрут</label>
+      <label class="chk"><input type="checkbox" id="t-sec"> сектора</label>
+    </div>
+    <div class="sheet" id="sheet">
+      <svg id="plan" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="План этажа"></svg>
+      <div class="info" id="info"><b>Нажмите на помещение</b>чтобы увидеть полное название, сектор и размеры. Колесо или щипок — масштаб, перетаскивание — сдвиг.</div>
+    </div>
+    <div class="legend">
+      <span><i style="border-color:var(--wall)"></i>стена</span>
+      <span><i style="border-color:var(--door)"></i>дверь</span>
+      <span><i style="border-color:var(--door-hist)"></i>старая (historic)</span>
+      <span><i style="border-color:var(--door-fire)"></i>противопожарная</span>
+      <span><i style="border-color:var(--window);border-top-style:dashed"></i>окно</span>
+      <span><i style="border-color:var(--ink-2);border-top-style:dashed;border-top-width:1.5px"></i>проём</span>
+      <span><i class="box" style="border-color:var(--stair);border-style:dashed"></i>шахта лестницы</span>
+      <span><i class="box" style="border-color:var(--route);background:var(--route-soft)"></i>сектора маршрута</span>
+    </div>
+    <p class="foot">Север вверху, +X — восток, +Z — юг. Двери показаны все, включая те, что в игре будут заперты или завалены. Перекрытия и потолки не показаны.</p>
+  </main>
+</div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script type="application/json" id="ann">__ANN__</script>
+<script>
+(function(){
+const D = JSON.parse(document.getElementById('data').textContent);
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('plan'), info=document.getElementById('info'), sheet=document.getElementById('sheet');
+const A = JSON.parse(document.getElementById('ann').textContent);
+document.getElementById('title').textContent=A.title; document.getElementById('subtitle').textContent=A.subtitle||'';
+const ROUTE_SECTORS=new Set(A.route_sectors||[]);
+const CLOSED=new Set(A.closed_rooms||[]);
+const MARKS=A.marks||[];
+const SCENES=(A.scenes||[]).map(s=>[s.n,s.text,s.level,s.room,!!s.warn]);
+const short=l=>{const p=(l||'').split(' / ').map(s=>s.trim());return (p[0].length<=10&&p[1])?p[0]+' '+p[1]:p[0]};
+function wrapWords(t,max){const w=t.split(/\s+/);const out=[];let cur='';for(const x of w){if((cur+' '+x).trim().length>max&&cur){out.push(cur);cur=x}else cur=(cur+' '+x).trim()}if(cur)out.push(cur);return out.slice(0,3)}
+function el(n,a,p){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+let lv=A.default_level||'lower', vb=null, full=null, roomEls={};
+function bounds(L){let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const r of L.rooms){x0=Math.min(x0,r.x);y0=Math.min(y0,r.y);x1=Math.max(x1,r.x+r.w);y1=Math.max(y1,r.y+r.h)}const m=4;return[x0-m,y0-m,x1-x0+2*m,y1-y0+2*m]}
+function setVB(v){vb=v;svg.setAttribute('viewBox',v.map(n=>n.toFixed(3)).join(' '))}
+function render(){
+  const L=D[lv]; svg.innerHTML=''; roomEls={};
+  const gR=el('g',{},svg), gS=el('g',{},svg), gW=el('g',{},svg), gD=el('g',{},svg), gT=el('g',{},svg), gSec=el('g',{},svg), gM=el('g',{},svg);
+  for(const r of L.rooms){
+    const c=['room']; if(ROUTE_SECTORS.has(r.s))c.push('onroute'); if(CLOSED.has(r.id))c.push('closed');
+    const e=el('rect',{x:r.x,y:r.y,width:r.w,height:r.h,class:c.join(' '),tabindex:0},gR);
+    e.addEventListener('click',()=>select(r)); e.addEventListener('keydown',ev=>{if(ev.key==='Enter')select(r)});
+    roomEls[r.id]=e;
+    const name=short(r.l); if(!name)continue;
+    const lines=wrapWords(name,Math.max(6,Math.round(r.w*1.3)));
+    const longest=Math.max(...lines.map(s=>s.length));
+    let fs=Math.min((r.w-0.6)/(longest*0.64), r.h/(lines.length*1.6), 1.4); if(fs<0.4)continue;
+    const t=el('text',{x:r.x+r.w/2,y:r.y+r.h/2-(lines.length-1)*fs*0.6,class:'rl','font-size':fs.toFixed(2)},gT);
+    lines.forEach((s,i)=>{const sp=el('tspan',{x:r.x+r.w/2,dy:i?(fs*1.2).toFixed(2):0},t);sp.textContent=s});
+  }
+  for(const s of L.stairs) el('rect',{x:s.x,y:s.y,width:s.w,height:s.h,class:'stair'},gS);
+  for(const w of L.walls) el('line',{x1:w[0],y1:w[1],x2:w[2],y2:w[3],class:'wall'},gW);
+  for(const o of L.openings) el('line',{x1:o[0],y1:o[1],x2:o[2],y2:o[3],class:'open'},gD);
+  for(const d of L.doors){const p=d.p;el('line',{x1:p[0],y1:p[1],x2:p[2],y2:p[3],class:'door '+(d.t==='historic'?'historic':d.t==='fire'?'fire':'')},gD)}
+  for(const w of L.windows){const p=w.p;el('line',{x1:p[0],y1:p[1],x2:p[2],y2:p[3],class:'win'},gD)}
+  for(const s of L.sectors){const[x,y,w,h]=s.vb;const t=el('text',{x:x+0.6,y:y+1.6,class:'sl','font-size':1.3},gSec);t.textContent=s.id}
+  // markers
+  const byId=Object.fromEntries(L.rooms.map(r=>[r.id,r]));
+  SCENES.forEach(sc=>{if(sc[2]!==lv)return;const r=byId[sc[3]];if(!r)return;const cx=r.x+r.w/2,cy=r.y+Math.min(r.h*0.25,2.5);const g=el('g',{class:'mk'},gM);el('circle',{cx,cy,r:1.35},g);const t=el('text',{x:cx,y:cy,'font-size':sc[0].length>2?0.75:1.05},g);t.textContent=sc[0]});
+  for(const c of MARKS){const k=c.key;if(c.level!==lv)continue;const r=byId[c.room];if(!r)continue;const g=el('g',{class:'ck'},gM);el('rect',{x:r.x-0.3,y:r.y-0.3,width:r.w+0.6,height:r.h+0.6,class:'ring'},g);const cx=r.x+r.w-0.2,cy=r.y+0.2;el('circle',{cx,cy,r:1.35},g);const t=el('text',{x:cx,y:cy,'font-size':1.2},g);t.textContent=k}
+  for(const co of (A.callouts||[])){if(co.level!==lv)continue;const w=L.windows.find(x=>x.id===co.window);if(w){const p=w.p;const t=el('text',{x:(p[0]+p[2])/2,y:p[1]+1.6,class:'callout','font-size':0.9,'text-anchor':'middle'},gM);t.textContent=co.text}}
+  full=bounds(L);
+  applyToggles();
+}
+function select(r){
+  document.querySelectorAll('.room.sel').forEach(e=>e.classList.remove('sel'));
+  roomEls[r.id]&&roomEls[r.id].classList.add('sel');
+  const parts=(r.l||'(без названия)').split(' / ');
+  info.innerHTML='';const b=document.createElement('b');b.textContent=parts[0];info.appendChild(b);
+  if(parts.length>1){const p=document.createElement('div');p.textContent=parts.slice(1).join(' · ');info.appendChild(p)}
+  const m=document.createElement('div');m.className='mono';m.style.color='var(--ink-2)';m.textContent=r.id+' · '+r.w.toFixed(1)+' × '+r.h.toFixed(1)+' м · '+(r.w*r.h).toFixed(0)+' м²';info.appendChild(m);
+}
+function setLevel(n,keep){lv=n;document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lv===n));render();if(!keep)setVB(full.slice());}
+function focusRoom(level,id){setLevel(level,true);const r=D[level].rooms.find(x=>x.id===id);if(!r){setVB(full.slice());return}
+  const pad=Math.max(r.w,r.h)*2.2+10;const ar=sheet.clientWidth/sheet.clientHeight||1.4;let w=pad*ar,h=pad;setVB([r.x+r.w/2-w/2,r.y+r.h/2-h/2,w,h]);select(r)}
+// zoom/pan
+function zoom(f,cx,cy){const[x,y,w,h]=vb;if(cx===undefined){cx=x+w/2;cy=y+h/2}const nw=Math.min(Math.max(w*f,6),full[2]*3),k=nw/w;setVB([cx-(cx-x)*k,cy-(cy-y)*k,w*k,h*k])}
+function toWorld(ev){const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse())}
+svg.addEventListener('wheel',ev=>{ev.preventDefault();const p=toWorld(ev);zoom(ev.deltaY>0?1.15:1/1.15,p.x,p.y)},{passive:false});
+const ptrs=new Map();let last=null,pinch=null;
+svg.addEventListener('pointerdown',ev=>{ptrs.set(ev.pointerId,ev);svg.setPointerCapture(ev.pointerId);last={x:ev.clientX,y:ev.clientY,moved:false};svg.classList.add('drag')});
+svg.addEventListener('pointermove',ev=>{if(!ptrs.has(ev.pointerId))return;ptrs.set(ev.pointerId,ev);
+  if(ptrs.size===2){const[a,b]=[...ptrs.values()];const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);if(pinch){const m={clientX:(a.clientX+b.clientX)/2,clientY:(a.clientY+b.clientY)/2};const p=toWorld(m);zoom(pinch/d,p.x,p.y)}pinch=d;return}
+  if(!last)return;const s=vb[2]/svg.clientWidth;const dx=(ev.clientX-last.x),dy=(ev.clientY-last.y);if(Math.abs(dx)+Math.abs(dy)>2)last.moved=true;
+  const sc=Math.max(vb[2]/svg.clientWidth,vb[3]/svg.clientHeight);setVB([vb[0]-dx*sc,vb[1]-dy*sc,vb[2],vb[3]]);last.x=ev.clientX;last.y=ev.clientY});
+function up(ev){ptrs.delete(ev.pointerId);if(ptrs.size<2)pinch=null;if(!ptrs.size){svg.classList.remove('drag');last=null}}
+svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
+document.getElementById('zin').onclick=()=>zoom(1/1.4);document.getElementById('zout').onclick=()=>zoom(1.4);document.getElementById('zfit').onclick=()=>setVB(full.slice());
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>setLevel(b.dataset.lv));
+const mk=document.getElementById('marks');
+if(!MARKS.length)document.getElementById('marks-block').hidden=true;
+MARKS.forEach(c=>{const b=document.createElement('button');b.className='cand';const k=document.createElement('span');k.className='k';k.textContent=c.key;const s=document.createElement('span');const h=document.createElement('b');h.textContent=c.title;s.appendChild(h);if(c.badge){const r=document.createElement('span');r.className='rec';r.textContent=c.badge;s.appendChild(r)}if(c.text){const p=document.createElement('p');p.textContent=c.text;s.appendChild(p)}b.append(k,s);b.onclick=()=>focusRoom(c.level,c.room);mk.appendChild(b)});
+const ol=document.getElementById('route');
+SCENES.forEach(sc=>{const li=document.createElement('li');const b=document.createElement('button');const n=document.createElement('span');n.className='n';n.textContent=sc[0];const t=document.createElement('span');t.textContent=sc[1];if(sc[4])t.className='bad';b.append(n,t);b.onclick=()=>focusRoom(sc[2],sc[3]);li.appendChild(b);ol.appendChild(li)});
+function applyToggles(){svg.classList.toggle('nolabels',!document.getElementById('t-labels').checked);svg.classList.toggle('noroute',!document.getElementById('t-route').checked);svg.classList.toggle('nosec',!document.getElementById('t-sec').checked);
+  document.querySelectorAll('.room.onroute').forEach(e=>e.style.fill=document.getElementById('t-route').checked?'':'var(--floor)')}
+['t-labels','t-route','t-sec'].forEach(i=>document.getElementById(i).onchange=applyToggles);
+setLevel(A.default_level||'lower');
+})();
+</script>

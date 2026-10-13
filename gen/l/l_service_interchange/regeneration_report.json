@@ -4,7 +4,7 @@
   "contract_version": "1.0.0",
   "status": "ok",
   "sector_id": "L-SERVICE-INTERCHANGE",
-  "generation_id": "sha256:cfd5d014fc8337f1933860e4dcd618b8357b0c912b4d5231f506e4ae32e55350",
+  "generation_id": "sha256:57a389d6c66ec0d2a052eb65d94d2d3223ef120eac58f00e45d536a156acee0e",
   "commands": [
     {
       "stage": "inspect",
@@ -91,10 +91,7 @@
         "north",
         "--upper-exit-side",
         "north",
-        "--shaft-wall-bottom",
-        "4.5",
-        "--shaft-wall-top",
-        "5.5",
+        "--no-shaft",
         "--landing-depth",
         "2.849",
         "--target-riser",
@@ -121,7 +118,79 @@
       "exit_code": 0
     }
   ],
-  "anchor_count": 43,
+  "anchor_count": 39,
+  "vertical_closures": [
+    {
+      "name": "Lining_01_VT-SERVICE-STAIR_N",
+      "kind": "lining",
+      "center": [
+        -45.445,
+        -6.5,
+        53.1935
+      ],
+      "size": [
+        4.796,
+        0.96,
+        0.093
+      ]
+    },
+    {
+      "name": "Lining_01_VT-SERVICE-STAIR_S",
+      "kind": "lining",
+      "center": [
+        -45.445,
+        -6.5,
+        61.7965
+      ],
+      "size": [
+        4.796,
+        0.96,
+        0.093
+      ]
+    },
+    {
+      "name": "Lining_01_VT-SERVICE-STAIR_W",
+      "kind": "lining",
+      "center": [
+        -47.7965,
+        -6.5,
+        57.495
+      ],
+      "size": [
+        0.093,
+        0.96,
+        8.51
+      ]
+    },
+    {
+      "name": "Lining_01_VT-SERVICE-STAIR_E",
+      "kind": "lining",
+      "center": [
+        -43.0935,
+        -6.5,
+        57.495
+      ],
+      "size": [
+        0.093,
+        0.96,
+        8.51
+      ]
+    },
+    {
+      "name": "Threshold_VT-SERVICE-STAIR",
+      "kind": "threshold",
+      "center": [
+        -45.445,
+        -6.09,
+        53.3765
+      ],
+      "size": [
+        4.646,
+        0.18,
+        0.309
+      ]
+    }
+  ],
   "errors": [],
   "warnings": [],
   "files": [
