@@ -31,8 +31,13 @@
 | 7 | Мнемосхема | осмотр | `old_cp_mnemonic` | — |
 | 7 | Журнал обхода (релейная) | документ | `relay_rounds_log` | — |
 | 7 | Инструкция ручного пуска Г-1 | документ | `generator_manual` | — |
+| 7 | Трещина в стене релейной (до питания комнаты) | осмотр | `relay_crack_dark` | `BreachWall`, #178 |
+| 7 | Дверь ЦУ ↔ комната старшего | причина запирания | «ЗАКЛИНИЛО» (`JammedDoor`) | — |
 | 9 | Щит генератора | осмотр | `generator_shield_log` | у `Interactable`: `sets_flag = gen_diagnosed` |
 | 9 | Процедура пуска | процедура | по образцу `data/procedures/sandbox_generator.json` | итог: `generator_started`, питание секций старого ядра → `main` |
+| 9 | Пожарный лом на щите (тамбур T-ENERGY) | действие «ВЗЯТЬ ЛОМ» | — | `item_crowbar` |
+| 10 | Трещина в релейной после генератора (свет за стеной) | осмотр | `relay_crack_lit` | — |
+| 10 | Пролом стены ломом (удержание, 3 удара) | действие «ВЫЛОМАТЬ ЛОМОМ» | — | читает `item_crowbar`; ставит `opening/senior_breach_hits`, `opening/senior_breach_open` |
 | 10 | Тело старшего сотрудника | осмотр | `senior_body` | — |
 | 10 | Ключ (подбор) | действие | — | `senior_key_taken` |
 | 10 | Записка на пульте | документ | `senior_note` | — |
@@ -46,6 +51,8 @@
 |---|---|---|
 | `gen_diagnosed` | щит генератора (`sets_flag`) | процедура пуска, шаг 1 |
 | `generator_started` | процедура пуска | пульт старого ЦУ |
+| `item_crowbar` | лом с пожарного щита (`CrowbarPickup`) | пролом стены (`BreachWall`) |
+| `opening/senior_breach_hits`, `opening/senior_breach_open` | удары ломом по трещине | стена-пролом (состояние сохраняется) |
 | `senior_key_taken` | подбор ключа в операторской | терминал ОП-1 |
 | `caretaker_assigned`, допуск `caretaker`, `module_4` | протокол преемственности | двери поздних секторов, модуль 4 |
 | `module4_ready` | чек-лист поста модуля 4 | кресло погружения (будущая задача) |

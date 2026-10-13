@@ -49,6 +49,19 @@
       "expect": {"objective": "operator_room"}
     },
     {
+      "id": "before_breach",
+      "title": "Перед проломом",
+      "story_scene": 10,
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "spawn": {"node": "Stations/BreachStation", "offset": [0, 1, 2.5], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "item_crowbar"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "opening"
+      },
+      "expect": {"objective": "operator_room"}
+    },
+    {
       "id": "before_module_4",
       "title": "Перед модулем №4",
       "story_scene": 11,
