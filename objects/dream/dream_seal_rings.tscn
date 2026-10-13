@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/dream/dream_seal_rings.gd" id="1_seal"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="2_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="glow"]
+emission_enabled = true
+emission_energy_multiplier = 0.6
+
+[sub_resource type="CylinderMesh" id="core"]
+top_radius = 0.55
+bottom_radius = 0.55
+height = 0.2
+
+[node name="DreamSealRings" type="StaticBody3D"]
+script = ExtResource("1_seal")
+
+[node name="Glow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+mesh = SubResource("core")
+surface_material_override/0 = SubResource("glow")
+
+[node name="Interactable" type="Node" parent="."]
+script = ExtResource("2_interactable")
+mode = 2
+prompt = "ОСМОТРЕТЬ ПЕЧАТЬ"

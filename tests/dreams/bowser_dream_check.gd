@@ -46,14 +46,13 @@ func _run() -> void:
 func _check_wiring(dream: BowserDream) -> void:
 	_check(dream.get_node_or_null(^"Lava") is DreamHazard, "the lava is deadly")
 	_check(dream.get_node_or_null(^"Bastion/Gate") is DreamGate, "the gate stands on the bastion")
-	var seal := dream.get_node_or_null(^"SealHall/Seal") as DreamSeal
-	_check(seal != null and seal.knowledge_id == &"module_4_seal", "the hall holds a seal that grants module 4 glyphs")
+	var seal := dream.get_node_or_null(BowserDream.SEAL) as DreamSealRings
+	_check(seal != null and seal.knowledge_id == &"module_4_seal", "the hall holds the seal of rings that grants module 4 glyphs")
 	_check(dream.get_node_or_null(^"Combat") is DreamCombatSetup, "the dream has combat")
 	_check(dream.get_node_or_null(^"Mood") is DreamMood, "the dream follows the instability stage")
 	var hooks: Array[NodePath] = [BowserDream.SEAL_SLOT, BowserDream.SIDE_DOOR, BowserDream.WAKE_LINE,
 			BowserDream.HALL_THRESHOLD, BowserDream.REMAINS, BowserDream.WEAPON_SPOT, BowserDream.SILHOUETTE_SPOT,
 			^"Spawn", ^"Yard/Remains/Brazier", ^"Yard/Remains/OperatorMark"]
-	hooks.append_array(BowserDream.LEVER_SLOTS)
 	hooks.append_array(BowserDream.GUARD_SPAWNS)
 	for hook in hooks:
 		_check(dream.get_node_or_null(hook) is Node3D, "hook node %s exists" % hook)
