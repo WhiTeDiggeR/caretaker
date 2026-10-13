@@ -9,12 +9,16 @@ extends StaticBody3D
 ## The state lives in GameState flags (`flag`, and the hits done in `<flag>_hits`), so it is
 ## saved and loaded with the playthrough. The room behind the wall has its own light that turns
 ## on with the power of `section`; while the crack is closed it glows through the crack.
+## The root is in the group `opening_route_passable`: the opening route check (#177) builds
+## its navmesh from static collisions and treats this wall as the open breach the player makes.
 ## Local frame: the wall runs along X, the player's side (relay room) is +Z, the room is -Z;
 ## the origin is on the floor at the centre of the opening.
 
 signal hit(hits_done: int)
 signal broken
 
+## The route check (scenes/complex_v4/review/opening_route_check.gd) walks through these.
+const ROUTE_PASSABLE_GROUP := &"opening_route_passable"
 const PROMPT_INSPECT := "ОСМОТРЕТЬ ТРЕЩИНУ"
 const PROMPT_BREAK := "ВЫЛОМАТЬ ЛОМОМ"
 ## Inspect texts (data/documents/opening.json): dark and lit room behind the crack.
@@ -49,8 +53,9 @@ const DUST_AMOUNT := 40
 @export var width := 4.0
 @export var height := 3.0
 @export var thickness := 0.25
-@export var opening_width := 1.0
-@export var opening_height := 1.9
+## The opening matches the breach door of L-OLD-CORE (#177): 1.2 × 2.0 m.
+@export var opening_width := 1.2
+@export var opening_height := 2.0
 @export var hit_sound: StringName = &"door_stop"
 @export var break_sound: StringName = &"land"
 
@@ -67,6 +72,7 @@ var _shake: Tween
 
 func _ready() -> void:
 	_build()
+	add_to_group(ROUTE_PASSABLE_GROUP)
 	if Engine.is_editor_hint():
 		return
 	interactable = PropKit.interactable(_plug, Interactable.Mode.INSPECT, PROMPT_INSPECT)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/sandbox/stations/breach_station.gd" id="1_station"]
 [ext_resource type="PackedScene" path="res://objects/breach/breach_wall.tscn" id="2_breach"]
-[ext_resource type="PackedScene" path="res://objects/breach/jammed_door.tscn" id="3_door"]
+[ext_resource type="PackedScene" path="res://objects/doors/service_door.tscn" id="3_door"]
 [ext_resource type="PackedScene" path="res://objects/props/key_pickup.tscn" id="4_key"]
 [ext_resource type="PackedScene" path="res://objects/props/personal_items.tscn" id="5_items"]
 [ext_resource type="PackedScene" path="res://objects/props/crowbar_pickup.tscn" id="6_crowbar"]
@@ -24,8 +24,9 @@ outline_size = 12
 section = &"sandbox_a"
 width = 6.0
 
-[node name="JammedDoor" parent="." instance=ExtResource("3_door")]
+[node name="SeniorDoor" parent="." instance=ExtResource("3_door")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3, 0, -2)
+required_access = &"caretaker"
 
 [node name="Desk" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.475, -3.45)
