@@ -10,6 +10,9 @@ signal requested(id: StringName)
 const DATA_PATH := "res://data/audio/sfx.json"
 const MAX_FLAT := 6
 const MAX_SPATIAL := 12
+## Pitch range a retimed sound (`play_on`) may be stretched to.
+const PITCH_MIN := 0.6
+const PITCH_MAX := 2.0
 
 ## id -> {"file", "bus", "volume_db", "positional", "max_distance", "pitch_jitter"}
 var sounds: Dictionary[StringName, Dictionary] = {}
@@ -79,6 +82,20 @@ func play(id: StringName, at: Variant = null, volume_offset_db: float = 0.0) -> 
 		_start(player, stream, entry, volume_offset_db)
 	else:
 		_start(_free_flat(), stream, entry, volume_offset_db)
+
+
+## Plays a sound on a player the caller owns and may stop (a hand wheel let go mid-turn).
+## `duration` > 0 retimes the sound to last that long by its pitch.
+func play_on(player: AudioStreamPlayer3D, id: StringName, duration: float = 0.0, volume_offset_db: float = 0.0) -> void:
+	requested.emit(id)
+	var stream := _stream(id)
+	if stream == null:
+		return
+	var entry := sounds[id]
+	player.max_distance = float(entry.get("max_distance", 25.0))
+	_start(player, stream, entry, volume_offset_db)
+	if duration > 0.0 and stream.get_length() > 0.0:
+		player.pitch_scale = clampf(stream.get_length() / duration, PITCH_MIN, PITCH_MAX)
 
 
 ## Repeated sounds (footsteps) vary their pitch by up to `pitch_jitter` either way.

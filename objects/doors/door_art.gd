@@ -30,16 +30,15 @@ const RIVET := 0.022
 const RIVET_STEP := 0.3
 const SLAT_STEP := 0.16
 const LAMP_RADIUS := 0.022
-## Lamp lens centre in each control model and how far the model's wall face sits behind the control node.
+## Lamp lens centre in each wall control model and how far the model's wall face sits behind the control node.
+## The manual door's handle sits on the leaf without a lamp (#174), see `handle()`.
 const LAMP_POSITION: Dictionary[FacilityDoor.Kind, Vector3] = {
 	FacilityDoor.Kind.POWERED: Vector3(0, 0.1, 0.072),
 	FacilityDoor.Kind.MECHANICAL: Vector3(0, 0.36, 0.05),
-	FacilityDoor.Kind.MANUAL: Vector3(0, 0.09, 0.022),
 }
 const WALL_GAP: Dictionary[FacilityDoor.Kind, float] = {
 	FacilityDoor.Kind.POWERED: 0.06,
 	FacilityDoor.Kind.MECHANICAL: 0.06,
-	FacilityDoor.Kind.MANUAL: 0.05,
 }
 ## Distance from the wall face to the hand wheel plane (door_wheel model).
 const WHEEL_REACH := 0.24
@@ -111,14 +110,10 @@ static func leaf(parent: Node3D, axis: FacilityDoor.SlideAxis, width: float, hei
 			parent.add_child(hinge)
 
 
-## Control model under `control` (a door control node in front of the wall face, `side` = ±1); returns the hand
-## wheel node of a mechanical control, or null.
+## Wall control model (panel or hand wheel) under `control` (a door control node in front of the wall face,
+## `side` = ±1); returns the hand wheel node of a mechanical control, or null.
 static func control(control_node: Node3D, kind: FacilityDoor.Kind, side: float, lamp: Material) -> Node3D:
-	var scene: PackedScene = PANEL_MODEL
-	if kind == FacilityDoor.Kind.MECHANICAL:
-		scene = WHEEL_MODEL
-	elif kind == FacilityDoor.Kind.MANUAL:
-		scene = HANDLE_MODEL
+	var scene: PackedScene = WHEEL_MODEL if kind == FacilityDoor.Kind.MECHANICAL else PANEL_MODEL
 	var model := scene.instantiate() as Node3D
 	model.name = "Model"
 	model.position = Vector3(0, 0, -side * WALL_GAP[kind])
@@ -139,6 +134,18 @@ static func control(control_node: Node3D, kind: FacilityDoor.Kind, side: float, 
 	lens.rotation.x = PI * 0.5
 	model.add_child(lens)
 	return model.find_child("Wheel", true, false) as Node3D
+
+
+## Lever handle under `control_node` (a node on the leaf face, `side` = ±1); the lever points along `lever_x`
+## (±1, towards the hinges). The model's lever points along its +X, so one side is mirrored.
+static func handle(control_node: Node3D, side: float, lever_x: float) -> Node3D:
+	var model := HANDLE_MODEL.instantiate() as Node3D
+	model.name = "Model"
+	if side < 0.0:
+		model.rotation.y = PI
+	model.scale.x = side * lever_x
+	control_node.add_child(model)
+	return model
 
 
 ## Paint material tinted by a door colour relative to `BASE_COLOR`.

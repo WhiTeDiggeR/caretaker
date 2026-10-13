@@ -7,6 +7,8 @@ extends Node3D
 ## only set exports. Powered doors open from a panel and need section power; mechanical doors open
 ## with a hand wheel (hold) and work without power. Both may require an access grant or be
 ## put under emergency lock. An airlock interlocks two doors through `interlock_partner`.
+## The hand wheel turns while the hold runs and rolls back when it is let go (#174); a manual
+## door's handle sits on the leaf at its free edge and has no lamp.
 
 signal state_changed(state: State)
 signal opened
@@ -34,12 +36,21 @@ const LEAF_DEPTH := 0.12
 const CONTROL_OFFSET := 0.45  # from the frame edge to the control centre
 const CONTROL_HEIGHT := 1.25
 const SWING_ANGLE := deg_to_rad(95.0)
-const WHEEL_TURNS := 1.5  # hand wheel turns over a full opening
+const WHEEL_TURNS := 1.5  # hand wheel turns over a full hold
+const WHEEL_RETURN_TIME := 0.4  # a hand wheel let go rolls back to its rest position
+## Handle of a manual door: centre from the leaf's free edge, height, and the interaction zone
+## around it (larger than the small handle model).
+const HANDLE_INSET := 0.08
+const HANDLE_HEIGHT := 1.05
+const HANDLE_ZONE := Vector3(0.32, 0.36, 0.1)
 const LAMP_OFF := Color(0.05, 0.05, 0.05)
 const LAMP_READY := Color(0.15, 0.85, 0.3)
 const LAMP_LOCKED := Color(0.9, 0.15, 0.1)
 const SOUND_MOVE: Dictionary[Kind, StringName] = {Kind.POWERED: &"door_motor", Kind.MECHANICAL: &"door_mech", Kind.MANUAL: &"door_swing"}
 const SOUND_STOP := &"door_stop"
+## The wheel being let go: the stop sound, quieter and shortened (a short roll-back knock).
+const WHEEL_KNOCK_TIME := 0.7
+const WHEEL_KNOCK_DB := -6.0
 ## A locked handle rattles (manual doors only); wheels and powered panels keep the common refusal.
 const SOUND_LOCKED := &"door_locked"
 
@@ -79,7 +90,16 @@ var _open_amount := 0.0:
 var _controls: Array[Interactable] = []
 var _lamps: Array[StandardMaterial3D] = []
 var _wheels: Array[Node3D] = []
+## 0 — the wheel at the closed door's rest, 1 — at the open door's rest (one full hold apart).
+var _wheel_turn := 0.0:
+	set(value):
+		_wheel_turn = value
+		_apply_wheel_pose()
 var _tween: Tween
+var _wheel_tween: Tween
+## Hand wheel sound: owned by the door so it can be cut off when the wheel is let go.
+var _wheel_audio: AudioStreamPlayer3D
+var _wheel_turning_sound := false
 
 
 func _ready() -> void:
@@ -87,8 +107,14 @@ func _ready() -> void:
 	if starts_open:
 		state = State.OPEN
 		_open_amount = 1.0
+		_wheel_turn = 1.0
 	if Engine.is_editor_hint():
 		return
+	if kind == Kind.MECHANICAL:
+		_wheel_audio = AudioStreamPlayer3D.new()
+		_wheel_audio.name = "WheelAudio"
+		_wheel_audio.position = Vector3(-(width * 0.5 + FRAME_POST * 0.5 + CONTROL_OFFSET), CONTROL_HEIGHT, 0)
+		add_child(_wheel_audio)
 	add_to_group(&"persist")
 	GameState.section_power_changed.connect(func(_section: StringName, _power: int) -> void: refresh())
 	GameState.access_changed.connect(func(_access: StringName, _granted: bool) -> void: refresh())
@@ -110,6 +136,8 @@ func load_state(data: Dictionary) -> void:
 		emergency_lock = bool(data["emergency_lock"])
 	state = State.OPEN if open_door else State.CLOSED
 	_open_amount = 1.0 if open_door else 0.0
+	_stop_wheel()
+	_wheel_turn = _open_amount
 	refresh()
 	state_changed.emit(state)
 
@@ -223,6 +251,11 @@ func _move(open_door: bool) -> void:
 	_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	_tween.tween_property(self, "_open_amount", target, maxf(duration, 0.01))
 	_tween.finished.connect(_on_move_finished.bind(open_door))
+	# A full hold has already turned the wheel; a door moved otherwise (airlock, script) turns it with the leaf.
+	_stop_wheel()
+	if not is_equal_approx(_wheel_turn, target):
+		_wheel_tween = create_tween()
+		_wheel_tween.tween_property(self, "_wheel_turn", target, maxf(duration, 0.01))
 
 
 func _on_move_finished(open_door: bool) -> void:
@@ -239,9 +272,12 @@ func _on_move_finished(open_door: bool) -> void:
 		closed.emit()
 
 
-func _apply_leaf_pose() -> void:
+func _apply_wheel_pose() -> void:
 	for wheel in _wheels:
-		wheel.rotation.z = TAU * WHEEL_TURNS * _open_amount
+		wheel.rotation.z = TAU * WHEEL_TURNS * _wheel_turn
+
+
+func _apply_leaf_pose() -> void:
 	if _leaf == null:
 		return
 	if slide_axis == SlideAxis.SWING:
@@ -263,6 +299,49 @@ func _on_control_used() -> void:
 		operator.call(self)
 	else:
 		toggle()
+	# A completed hold the door refused (or an airlock that only queued a cycle) leaves the wheel turned.
+	if kind == Kind.MECHANICAL and (state == State.OPEN or state == State.CLOSED):
+		_on_wheel_cancelled()
+
+
+## The wheel follows the hold: from the rest of the current state towards the other one.
+func _on_wheel_progress(ratio: float) -> void:
+	if state != State.OPEN and state != State.CLOSED:
+		return
+	_kill_wheel_tween()
+	var rest := 1.0 if state == State.OPEN else 0.0
+	_wheel_turn = rest + (1.0 - 2.0 * rest) * clampf(ratio, 0.0, 1.0)
+	if _wheel_audio and not _wheel_turning_sound:
+		_wheel_turning_sound = true
+		Sfx.play_on(_wheel_audio, SOUND_MOVE[kind], hold_time * (1.0 - ratio))
+
+
+## A hold let go early: the wheel rolls back to its rest with a short knock.
+func _on_wheel_cancelled() -> void:
+	var rest := 1.0 if state == State.OPEN or state == State.OPENING else 0.0
+	if is_equal_approx(_wheel_turn, rest):
+		return
+	_kill_wheel_tween()
+	_wheel_tween = create_tween()
+	_wheel_tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	_wheel_tween.tween_property(self, "_wheel_turn", rest, WHEEL_RETURN_TIME)
+	if _wheel_audio:
+		_wheel_turning_sound = false
+		Sfx.play_on(_wheel_audio, SOUND_STOP, WHEEL_KNOCK_TIME, WHEEL_KNOCK_DB)
+
+
+## Cuts the hand wheel sound and motion (the leaf takes over, or a save is loaded).
+func _stop_wheel() -> void:
+	_kill_wheel_tween()
+	_wheel_turning_sound = false
+	if _wheel_audio:
+		_wheel_audio.stop()
+
+
+func _kill_wheel_tween() -> void:
+	if _wheel_tween:
+		_wheel_tween.kill()
+		_wheel_tween = null
 
 
 # --- Geometry -----------------------------------------------------------------
@@ -295,16 +374,19 @@ func _build() -> void:
 	for side: float in [1.0, -1.0]:
 		var control := StaticBody3D.new()
 		control.name = "ControlFront" if side > 0.0 else "ControlBack"
-		control.position = Vector3(-(post_x + CONTROL_OFFSET), CONTROL_HEIGHT, side * (FRAME_DEPTH * 0.5 + 0.06))
-		_generated(control)
-		var lamp_material := _material(LAMP_OFF, true)
-		_lamps.append(lamp_material)
+		if kind == Kind.MANUAL:
+			_build_handle(control, side, leaf_x)
+		else:
+			control.position = Vector3(-(post_x + CONTROL_OFFSET), CONTROL_HEIGHT, side * (FRAME_DEPTH * 0.5 + 0.06))
+			_generated(control)
+			var lamp_material := _material(LAMP_OFF, true)
+			_lamps.append(lamp_material)
+			var wheel := DoorArt.control(control, kind, side, lamp_material)
+			if wheel:
+				_wheels.append(wheel)
 		if kind == Kind.POWERED:
 			_shape(control, Vector3.ZERO, Vector3(0.28, 0.4, 0.08))
-		elif kind == Kind.MANUAL:
-			control.position = Vector3(-(post_x + 0.12), CONTROL_HEIGHT - 0.2, side * (FRAME_DEPTH * 0.5 + 0.05))
-			_shape(control, Vector3.ZERO, Vector3(0.06, 0.16, 0.06))
-		else:
+		elif kind == Kind.MECHANICAL:
 			var shape := CollisionShape3D.new()
 			var cylinder := CylinderShape3D.new()
 			cylinder.radius = 0.26
@@ -314,9 +396,6 @@ func _build() -> void:
 			# In the plane of the hand wheel, which stands off the wall on its gearbox.
 			shape.position = Vector3(0, 0, side * (DoorArt.WHEEL_REACH - DoorArt.WALL_GAP[kind]))
 			control.add_child(shape)
-		var wheel := DoorArt.control(control, kind, side, lamp_material)
-		if wheel:
-			_wheels.append(wheel)
 		var interactable := Interactable.new()
 		interactable.mode = Interactable.Mode.HOLD if kind == Kind.MECHANICAL else Interactable.Mode.PRESS
 		interactable.hold_time = hold_time
@@ -324,8 +403,23 @@ func _build() -> void:
 		control.add_child(interactable)
 		if not Engine.is_editor_hint():
 			interactable.interacted.connect(_on_control_used)
+			if kind == Kind.MECHANICAL:
+				interactable.hold_progress_changed.connect(_on_wheel_progress)
+				interactable.hold_cancelled.connect(_on_wheel_cancelled)
 		_controls.append(interactable)
 	_apply_leaf_pose()
+	_apply_wheel_pose()
+
+
+## A manual door's handle: on the leaf face near the edge away from the hinges (a hinged leaf turns about
+## its left edge; a sliding leaf leads with its left edge), so it leaves with the leaf. No lamp.
+func _build_handle(control: StaticBody3D, side: float, leaf_x: float) -> void:
+	var free_edge := 1.0 if slide_axis == SlideAxis.SWING else -1.0
+	control.position = Vector3(leaf_x + free_edge * (width * 0.5 - HANDLE_INSET), HANDLE_HEIGHT, side * LEAF_DEPTH * 0.5)
+	_leaf.add_child(control)
+	# The zone covers the handle standing off the face and reaches a little into the leaf.
+	_shape(control, Vector3(0, 0, side * (HANDLE_ZONE.z * 0.5 - 0.01)), HANDLE_ZONE)
+	DoorArt.handle(control, side, -free_edge)
 
 
 func _generated(node: Node3D) -> void:
