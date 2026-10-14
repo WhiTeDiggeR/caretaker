@@ -76,6 +76,7 @@ func _run() -> void:
 	var panel := tree.current_scene.get_node(^"Stations/ResyncPanel") as ResyncPanel
 	for glyph in code:
 		panel.glyph_button(glyph).trigger()
+	(panel.get_node(^"EnterButton/Interactable") as Interactable).trigger()
 	_check(panel.last_result == DreamKnowledge.Result.SYNCED, "remembered glyphs resync the capsule")
 	_check(Containment.is_stable(&"module_4"), "resync brings module 4 to full stability")
 	await _capture("e2e_3_resync")

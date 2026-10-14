@@ -24,6 +24,13 @@ size = Vector3(0.18, 0.12, 0.06)
 [sub_resource type="BoxShape3D" id="reset_shape"]
 size = Vector3(0.2, 0.14, 0.1)
 
+[sub_resource type="StandardMaterial3D" id="enter"]
+albedo_color = Color(0.18, 0.42, 0.24, 1)
+
+[sub_resource type="BoxMesh" id="enter_mesh"]
+material = SubResource("enter")
+size = Vector3(0.18, 0.12, 0.06)
+
 [sub_resource type="StandardMaterial3D" id="housing"]
 albedo_color = Color(0.16, 0.17, 0.18, 1)
 
@@ -61,7 +68,7 @@ resolution = Vector2i(800, 450)
 quad_size = Vector2(0.88, 0.495)
 
 [node name="ResetButton" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.7, 0.18)
 
 [node name="Mesh" type="MeshInstance3D" parent="ResetButton"]
 mesh = SubResource("reset_mesh")
@@ -70,4 +77,16 @@ mesh = SubResource("reset_mesh")
 shape = SubResource("reset_shape")
 
 [node name="Interactable" type="Node" parent="ResetButton"]
+script = ExtResource("2_interactable")
+
+[node name="EnterButton" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.7, 0.18)
+
+[node name="Mesh" type="MeshInstance3D" parent="EnterButton"]
+mesh = SubResource("enter_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="EnterButton"]
+shape = SubResource("reset_shape")
+
+[node name="Interactable" type="Node" parent="EnterButton"]
 script = ExtResource("2_interactable")

@@ -15,6 +15,8 @@ enum Result { SYNCED, WRONG, NO_KNOWLEDGE, AWAKE }
 const DATA_PATH := "res://data/dreams/knowledge.json"
 const SYSTEM := &"dream_knowledge"
 const SEPARATOR := " · "
+const SKETCH_SEAL := &"seal"
+const SKETCH_IMAGES := &"images"
 
 static var _data: Dictionary = {}
 static var _loaded := false
@@ -114,7 +116,8 @@ static func grant(id: StringName, rng: RandomNumberGenerator = null) -> PackedSt
 	order.erase(String(id))
 	order.append(String(id))
 	state["order"] = order
-	(state["entries"] as Dictionary)[String(id)] = {"code": Array(code), "used": false}
+	var visits := int(_entry(id).get("visits", 0)) + 1
+	(state["entries"] as Dictionary)[String(id)] = {"code": Array(code), "used": false, "visits": visits}
 	GameState.set_system_data(SYSTEM, state)
 	return code
 
@@ -143,15 +146,21 @@ static func active_for(module: StringName) -> StringName:
 	return &""
 
 
-## Journal lines, newest first: {"text": String, "used": bool}.
+## Journal entries, newest first: {"text", "used", "sketch", "dream", "code"}. The hero sketches
+## what he saw, not the phase codes (#188, З-3): after the first visit — the whole assembled
+## seal (`SKETCH_SEAL`; he does not yet know what he will need), on later visits — the images
+## of the code one by one (`SKETCH_IMAGES`). Texts: `journal` of the knowledge in the data.
 static func journal_entries() -> Array[Dictionary]:
 	var result: Array[Dictionary] = []
 	var order: Array = _state().get("order", [])
 	for index in range(order.size() - 1, -1, -1):
 		var id := StringName(str(order[index]))
 		var config := definition(id)
-		var text := "%s. %s" % [config.get("title", id), str(config.get("text", "%s")) % code_text(id)]
-		result.append({"text": text, "used": is_used(id)})
+		var sketch := SKETCH_SEAL if int(_entry(id).get("visits", 1)) <= 1 else SKETCH_IMAGES
+		var texts: Dictionary = config.get("journal", {})
+		var text := "%s. %s" % [config.get("title", id), texts.get(String(sketch), "")]
+		result.append({"text": text, "used": is_used(id), "sketch": sketch,
+			"dream": StringName(str(config.get("dream", ""))), "code": code(id)})
 	return result
 
 
