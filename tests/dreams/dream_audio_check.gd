@@ -4,12 +4,13 @@ extends Node
 ## in the Sfx catalogue and load, every stage builds a looping stream, the stage of Bowser's dream switches the background loop
 ## (alarm on entry, unease at the ambush, alarm after the seal, pre-awakening at a high
 ## instability stage, calm on a repeat visit, silence outside) and the ambush, the seal, a
-## strike of the chain and the exit through the gate start their stingers. With the sky and
+## swing of the chain, the fight (#218: a blow on an enemy, its death, the hero hurt) and the
+## exit through the gate start their stingers. With the sky and
 ## light of the dream (DreamStageMood, #202) in the scene the sound follows its stage.
 ## Prints `DREAM_AUDIO_CHECK_OK checks=<n>` on success.
 
 const MODULE := &"module_4"
-const STINGERS: Array[StringName] = [&"ambush", &"seal", &"gate", &"chain_hit"]
+const STINGERS: Array[StringName] = [&"ambush", &"seal", &"gate", &"chain_hit", &"strike", &"enemy_died", &"hurt"]
 
 var _errors := PackedStringArray()
 var _checks := 0
@@ -67,6 +68,13 @@ func _run() -> void:
 	add_child(combat)
 	combat.attacked.emit(&"dream_bolt_not_chain")
 	combat.attacked.emit(&"dream_chain")
+	# The fight (#218): a blow that lands, the enemy dissolving, the hero hurt.
+	var enemy := DreamEnemy.new()
+	add_child(enemy)
+	enemy.hit_taken.emit(10.0)
+	enemy.died.emit()
+	enemy.queue_free()
+	combat.hurt.emit(5.0)
 
 	# Seal: back to alarm, stinger.
 	Dreams.restore_seal()

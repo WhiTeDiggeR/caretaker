@@ -6,6 +6,8 @@ extends CharacterBody3D
 ## is staggered by hits. Parameters by `enemy_type` from data/dreams/combat.json.
 
 signal died
+## A hit that did not kill (the death is `died`).
+signal hit_taken(damage: float)
 
 enum State { PATROL, CHASE, WINDUP, STAGGER, DEAD }
 
@@ -68,6 +70,7 @@ func take_hit(damage: float, push: Vector3) -> void:
 	if health <= 0.0:
 		_die()
 		return
+	hit_taken.emit(damage)
 	state = State.STAGGER
 	_timer = float(config.get("stagger", 0.35))
 	velocity.x = push.x

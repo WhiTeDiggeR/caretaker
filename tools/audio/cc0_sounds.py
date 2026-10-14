@@ -57,7 +57,6 @@ SOURCES: dict[str, tuple[str, str]] = {
     "829103": ("Squirrel_404", "Smashed/demolished brick wall crumbling/caving in"),
     "550342": ("Nox_Sound", "Foley_Stones_Falls_Debris_Stereo_DR05.wav"),
     "539968": ("Za-Games", "Deep Boom"),
-    "275550": ("mbezzola", "Soft Swish Air Release"),
     "478812": ("IanStarGem", "ambience 4.wav"),
     "852822": ("KolbyRFX", "AMBUndr_Subterranean Howling Wind Loop_KOLBYR_FREE SOUNDS"),
     "860781": ("bassimat", "Low Frequency Vibrating Drone with Heart Pressure Rumbles and Booms"),
@@ -91,7 +90,8 @@ ONE_SHOTS: dict[str, tuple[list[tuple[str, float, float, float, float]], float]]
     "door_stop": ([("406197", 0.28, 1.30, 1.0, 0.0)], 0.5),
     "door_mech": ([("438732", 4.00, 5.50, 1.0, 0.0)], 0.3),
     # #209: the handle pressed down, then the metal leaf pulled open (was a short handle rattle).
-    "door_swing": ([("214002", 0.30, 0.55, 0.45, 0.0), ("679460", 0.06, 2.45, 1.5, 0.18)], 0.6),
+    # #218: cut to the leaf's swing (open_time 0.8 s of service_door.tscn), was 2.5 s.
+    "door_swing": ([("214002", 0.30, 0.55, 0.45, 0.0), ("679460", 0.06, 0.86, 1.5, 0.18)], 0.3),
     # #209: the hand wheel turning (one hold, 1.6 s) apart from the hatch leaf (door_mech).
     "door_wheel": ([("559470", 1.00, 2.60, 1.0, 0.0)], 0.2),
     "door_wheel_jammed": ([("453333", 0.45, 1.45, 1.0, 0.0)], 0.3),
@@ -101,14 +101,14 @@ ONE_SHOTS: dict[str, tuple[list[tuple[str, float, float, float, float]], float]]
     # The breach wall (#178): a sledgehammer on masonry, then the wall caving in with falling debris.
     "breach_hit": ([("827432", 3.24, 4.10, 1.0, 0.0), ("706979", 0.985, 1.70, 0.5, 0.0)], 0.35),
     "breach_break": ([("829103", 0.25, 3.45, 1.0, 0.0), ("550342", 15.0, 18.2, 0.45, 0.5)], 1.0),
-    # Bowser's dream (#201): a deep boom at the ambush, a soft breath of air on the way out.
+    # Bowser's dream (#201): a deep boom at the ambush. The entry and the exit (#218) are built by
+    # tools/audio/dream_sounds.py.
     "dream_ambush": ([("539968", 0.0, 3.0, 1.0, 0.0)], 1.0),
-    "dream_exit": ([("275550", 0.20, 2.60, 1.0, 0.0)], 1.4),
 }
 # Fade-in of a one-shot (s) when its cut starts inside a sound; others start at a transient.
-FADE_IN: dict[str, float] = {"breath": 0.03, "airlock_cycle": 0.4, "dream_exit": 0.15}
+FADE_IN: dict[str, float] = {"breath": 0.03, "airlock_cycle": 0.4}
 # Long one-shots kept as Ogg Vorbis.
-OGG: set[str] = {"door_swing", "airlock_cycle", "breach_break", "dream_ambush", "dream_exit"}
+OGG: set[str] = {"door_swing", "airlock_cycle", "breach_break", "dream_ambush"}
 
 # Dream stage loops (#201, #209): catalogue id -> layers (source, start s, end s, gain); loudness
 # matched to LOOP_RMS, the end cross-faded into the start (LOOP_XFADE s), Ogg Vorbis.
@@ -373,9 +373,11 @@ def main() -> int:
     files.update(build_loops(args.src, args.out, only))
     if only is None or only & {"gen_start", "gen_run"}:
         files.update(build_generator(args.src, args.out))
-    if only is not None and manifest_path.exists():
+    # Entries of other builders (tools/audio/dream_sounds.py) stay in a full rebuild too.
+    if manifest_path.exists():
         files = merge_manifest(json.loads(manifest_path.read_text(encoding="utf-8"))["files"], files)
-    manifest = {"note": "Recorded CC0 sounds (#137, #209). Built by tools/audio/cc0_sounds.py.", "files": files}
+    manifest = {"note": "Recorded CC0 sounds (#137, #209, #218). Built by tools/audio/cc0_sounds.py and "
+                            "tools/audio/dream_sounds.py.", "files": files}
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"{len(files)} files in {args.out}")
     return 0
