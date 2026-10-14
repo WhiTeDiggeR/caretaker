@@ -20,7 +20,7 @@ func run(c: OpeningCheck) -> void:
 	Settings.set_mouse_multiplier(1.5)
 	c.near(Settings.mouse_sensitivity(), Settings.BASE_MOUSE_SENSITIVITY * 1.5, 0.000001, "sensitivity scales the base value")
 
-	var player := (load("res://scenes/player.tscn") as PackedScene).instantiate() as CharacterBody3D
+	var player := (load("res://scenes/player/player.tscn") as PackedScene).instantiate() as CharacterBody3D
 	c.add(player)
 	Settings.set_fov(90.0)
 	c.near((player.get_node(^"Camera3D") as Camera3D).fov, 90.0, 0.001, "player camera follows the field of view")

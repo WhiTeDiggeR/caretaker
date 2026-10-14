@@ -42,7 +42,7 @@ def main() -> int:
 
     ext, sub, nodes = [], [], []
     ext.append('[ext_resource type="Script" path="res://scenes/sandbox/art_showroom.gd" id="showroom_script"]')
-    ext.append('[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]')
+    ext.append('[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]')
     ext.append('[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="hud"]')
     ext.append('[ext_resource type="Material" path="res://materials/hangar_concrete_floor.tres" id="floor_mat"]')
 

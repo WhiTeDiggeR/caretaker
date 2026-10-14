@@ -43,7 +43,7 @@ MIN_SVG_VERSION = (1, 19, 0)
 KNOWN_TYPES = {"floor", "ceiling", "floor-opening", "ceiling-opening", "wall", "door", "window", "opening", "marker", "ignore"}
 ALIGN_TOLERANCE = 0.01  # converter ceiling_alignment_tolerance
 MIN_SHARED_EDGE_M = 0.05
-MIN_PASSAGE_M = 0.8  # player capsule 0.7 m (scenes/player.tscn) plus margin
+MIN_PASSAGE_M = 0.8  # player capsule 0.7 m (scenes/player/player.tscn) plus margin
 ON_LINE_TOLERANCE = 1e-6
 MARKER_DOOR_TOLERANCE = 0.6
 # BowserDream.route() of scenes/dreams/bowser_dream.gd: the main route has to stay on generated floors.

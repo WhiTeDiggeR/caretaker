@@ -1,6 +1,6 @@
 extends RefCounted
 
-const PLAYER := "res://scenes/player.tscn"
+const PLAYER := "res://scenes/player/player.tscn"
 const FLOOR_SIZE := Vector3(40, 0.2, 40)
 
 

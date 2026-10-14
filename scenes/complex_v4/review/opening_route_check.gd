@@ -12,8 +12,8 @@ extends SceneTree
 
 const BLOCKOUT_SCENE := preload("res://scenes/complex_v4/complex_v4_blockout.tscn")
 
-## The agent is the standing player capsule (`scenes/player.tscn`: height 1.8 m, radius 0.35 m rounded up to the cell,
-## steps up to STEP_MAX_HEIGHT 0.3 m in `scenes/player.gd`). Doors are openings in the generated geometry, so the check
+## The agent is the standing player capsule (`scenes/player/player.tscn`: height 1.8 m, radius 0.35 m rounded up to the cell,
+## steps up to STEP_MAX_HEIGHT 0.3 m in `scenes/player/player.gd`). Doors are openings in the generated geometry, so the check
 ## sees every door open; lock states (G-05) are gameplay, not geometry.
 const AGENT_HEIGHT := 1.8
 const AGENT_RADIUS := 0.4

@@ -3,7 +3,7 @@ extends RefCounted
 const CHAIR := "res://objects/dream/immersion_chair.tscn"
 const TEST_DREAM := "res://scenes/dreams/test_dream.tscn"
 const BOWSER_DREAM := "res://scenes/dreams/bowser_dream.tscn"
-const PLAYER := "res://scenes/player.tscn"
+const PLAYER := "res://scenes/player/player.tscn"
 
 
 func run(c: OpeningCheck) -> void:

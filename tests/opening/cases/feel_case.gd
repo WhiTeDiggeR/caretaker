@@ -3,7 +3,7 @@ extends RefCounted
 ## #134: footsteps by distance and surface, landing, breathing, head bob and its setting,
 ## screen effects of the hero's states.
 
-const PLAYER := "res://scenes/player.tscn"
+const PLAYER := "res://scenes/player/player.tscn"
 const TEST_SETTINGS := "user://test_feel_settings.cfg"
 const PHYSICS_FPS := 60.0
 

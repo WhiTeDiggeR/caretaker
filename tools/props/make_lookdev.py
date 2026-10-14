@@ -266,7 +266,7 @@ def build() -> Scene:
 def main() -> int:
     write_materials()
     s = build()
-    ext = list(s.ext) + ['[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]',
+    ext = list(s.ext) + ['[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]',
                          '[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="hud"]']
     sub = ['[sub_resource type="Environment" id="env"]', "background_mode = 1", "background_color = Color(0.01, 0.011, 0.013, 1)",
            "ambient_light_source = 2", "ambient_light_color = Color(0.3, 0.32, 0.36, 1)", "ambient_light_energy = 0.25",

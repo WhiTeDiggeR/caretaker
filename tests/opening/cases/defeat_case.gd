@@ -89,7 +89,7 @@ func run(c: OpeningCheck) -> void:
 	floor_body.add_child(floor_shape)
 	floor_body.position = Vector3(200, -0.1, 0)
 	c.add(floor_body)
-	var player := (load("res://scenes/player.tscn") as PackedScene).instantiate() as CharacterBody3D
+	var player := (load("res://scenes/player/player.tscn") as PackedScene).instantiate() as CharacterBody3D
 	player.position = Vector3(200, 0.9, 0)
 	c.add(player)
 	await c.physics_frames(3)

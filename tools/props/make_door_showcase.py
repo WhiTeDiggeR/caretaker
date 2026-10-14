@@ -7,7 +7,7 @@ from pathlib import Path
 repo = Path(__file__).resolve().parents[2]
 doors = [("Hermetic", "hermetic_door", -7.0, 1.8, 2.8), ("Mechanical", "mechanical_door", -3.0, 1.8, 2.8),
          ("Gate", "access_gate", 1.0, 1.8, 2.8), ("Historic", "historic_door", 4.6, 1.4, 2.3), ("Service", "service_door", 7.6, 1.0, 2.1)]
-ext = ['[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]',
+ext = ['[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]',
        '[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="hud"]',
        '[ext_resource type="Material" path="res://materials/lookdev/wall_concrete.tres" id="wall"]',
        '[ext_resource type="Material" path="res://materials/lookdev/floor.tres" id="floor"]']

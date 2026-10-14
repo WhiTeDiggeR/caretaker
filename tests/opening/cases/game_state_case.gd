@@ -1,6 +1,6 @@
 extends RefCounted
 
-const GameStateScript := preload("res://scenes/game_state.gd")
+const GameStateScript := preload("res://scenes/systems/game_state.gd")
 
 
 func run(c: OpeningCheck) -> void:
