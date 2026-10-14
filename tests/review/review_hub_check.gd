@@ -99,8 +99,13 @@ func _check_station(station: Dictionary, moments: Dictionary) -> void:
 	if hub == null:
 		_errors.append("%s: not started from the hall" % id)
 		return
-	var arrived: bool = await hub.travel(station)
-	_check(arrived, "%s: loaded" % id)
+	_check(hub.travel(station), "%s: trip started" % id)
+	await get_tree().process_frame
+	for _i in TIMEOUT_FRAMES:
+		if not Debug.busy:
+			break
+		await get_tree().process_frame
+	_check(not Debug.busy and Debug.last_moment == ReviewHub.moment_id(station), "%s: loaded" % id)
 	await _frames(SETTLE_FRAMES)
 	var dream: Dictionary = entry.get("dream", {})
 	var expected := str(entry["scene"])

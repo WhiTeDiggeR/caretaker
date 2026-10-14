@@ -21,7 +21,6 @@ const PLAYER_GROUP := &"player"
 var pads: Dictionary[String, Area3D] = {}
 
 var _moments: Dictionary = {}
-var _travelling := false
 
 
 ## True when the hall may be opened in this build.
@@ -50,15 +49,19 @@ func _ready() -> void:
 		_build_station(stations[index], Vector3(sin(angle), 0.0, -cos(angle)) * RING_RADIUS)
 
 
-## Loads `station`; false when it has no entry or another load is under way.
+## Starts loading `station` through Debug.go_to (which outlives this hall); false when the
+## station has no entry or another load is under way.
 func travel(station: Dictionary) -> bool:
 	var entry := ReviewStations.entry(station, _moments)
-	if entry.is_empty() or _travelling:
+	if entry.is_empty() or Debug.busy or Shell.loading:
 		return false
-	_travelling = true
-	var arrived: bool = await Debug.go_to(entry, StringName("review_" + str(station["id"])))
-	_travelling = false
-	return arrived
+	Debug.go_to(entry, moment_id(station))
+	return true
+
+
+## The id Debug remembers for a station's trip.
+static func moment_id(station: Dictionary) -> StringName:
+	return StringName("review_" + str(station["id"]))
 
 
 func _build_station(station: Dictionary, at: Vector3) -> void:
