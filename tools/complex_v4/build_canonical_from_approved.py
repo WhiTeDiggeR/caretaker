@@ -30,6 +30,12 @@ REGISTRATION = Path(__file__).with_name("approved_registration.json")
 FINISHES = Path(__file__).with_name("room_finishes.json")
 NS = "{http://www.w3.org/2000/svg}"
 SNAP_PX = 2.5
+# Shared walls and slabs between sectors (#205): the converter builds a 0.3 m wall box that reaches 0.15 m past
+# each line end and resolves joints only inside one sector, so a wall or floor drawn by two sectors flickers.
+WALL_THICKNESS_M = 0.3      # --wall-thickness of every sector in sector_generation_manifest.json
+COLLINEAR_M = 0.002         # walls of two sectors this close are one wall
+OPENING_JAMB_CLEAR_M = 0.2  # an opening end keeps this distance from the centre line of a perpendicular wall
+SHARED_FACES_RULE = "D-49"  # data-shared-faces on the SVG root: built with the ownership rule (coplanar_check.gd reads it)
 
 ROOM_CLASSES = {
     "personnel", "support", "corridor", "room", "passenger", "security", "command", "containment",
@@ -491,8 +497,179 @@ def fmt(value: float) -> str:
     return text if text not in {"-0", ""} else "0"
 
 
+# --- shared walls and slabs (#205) -----------------------------------------------------------------------------
+# Ownership rule: of two sectors of one level, the one with the lower rank owns every wall, opening and slab
+# edge they share; ties go to the smaller sector ID. Circulation sectors (the public corridors) rank 0, the rest 1;
+# an entry may set "shared_face_rank" explicitly. Sectors are built in rank order and each one adapts to the
+# sectors built before it on its level: its room edges closer than a wall thickness to an owner's opposite edge
+# move onto it, its walls on an owner's wall are dropped, its wall ends stop at the owner's wall face, and its
+# openings on a dropped wall are left to the owner's matching opening.
+
+def shared_face_rank(sector_id: str, entry: dict[str, Any]) -> tuple[int, str]:
+    return int(entry.get("shared_face_rank", 0 if sector_id.endswith("-CIRCULATION") else 1)), sector_id
+
+
+def _to_px(tf: Transform, orient: str, value_m: float) -> float:
+    """Inverse of Transform.px / Transform.py for a vertical ("v", x) or horizontal ("h", z) edge value."""
+    return (value_m - tf.sx) / tf.kx + tf.ox if orient == "v" else (value_m - tf.sy) / tf.ky + tf.oy
+
+
+def room_edges_m(rooms: list[Rect], tf: Transform) -> list[tuple[str, float, float, float, str, float]]:
+    """(orient, fixed_m, lo_m, hi_m, side, fixed_px) of every room edge; side "lo" = the room lies after the edge."""
+    out = []
+    for r in rooms:
+        x1, x2, z1, z2 = tf.px(r.x), tf.px(r.x2), tf.py(r.y), tf.py(r.y2)
+        out += [("h", z1, x1, x2, "lo", r.y), ("h", z2, x1, x2, "hi", r.y2), ("v", x1, z1, z2, "lo", r.x), ("v", x2, z1, z2, "hi", r.x2)]
+    return out
+
+
+def _move_edge(rooms: list[Rect], mapping: dict[float, float], orient: str, old: float, new: float) -> None:
+    for r in rooms:
+        if orient == "v":
+            x1 = new if abs(r.x - old) < 1e-9 else r.x
+            x2 = new if abs(r.x2 - old) < 1e-9 else r.x2
+            r.x, r.w = x1, x2 - x1
+        else:
+            y1 = new if abs(r.y - old) < 1e-9 else r.y
+            y2 = new if abs(r.y2 - old) < 1e-9 else r.y2
+            r.y, r.h = y1, y2 - y1
+    for key, value in mapping.items():
+        if abs(value - old) < 1e-9:
+            mapping[key] = new
+
+
+def snap_close_edges(rooms: list[Rect], xs: dict[float, float], ys: dict[float, float], tf: Transform, notes: list[dict]) -> None:
+    """Inside one sector: parallel edges closer than a wall thickness whose walls would overlap become one line.
+
+    The longer edge stays; the converter would otherwise build two overlapping wall boxes (it merges only 0.02 m)."""
+    for orient, mapping in (("v", xs), ("h", ys)):
+        for _ in range(len(rooms) * 4):
+            edges = [e for e in room_edges_m(rooms, tf) if e[0] == orient]
+            length: dict[float, float] = {}
+            for e in edges:
+                length[e[5]] = length.get(e[5], 0.0) + e[3] - e[2]
+            pair = next(((a, b) for a in edges for b in edges
+                         if 1e-6 < abs(a[1] - b[1]) < WALL_THICKNESS_M and min(a[3], b[3]) - max(a[2], b[2]) > -WALL_THICKNESS_M), None)
+            if pair is None:
+                break
+            keep, move = sorted(pair, key=lambda e: (-length[e[5]], e[1]))
+            notes.append({"orient": orient, "from_m": move[1], "to_m": keep[1], "reason": "parallel walls of this sector closer than the wall thickness"})
+            _move_edge(rooms, mapping, orient, move[5], keep[5])
+
+
+def snap_to_owner_edges(rooms: list[Rect], xs: dict[float, float], ys: dict[float, float], tf: Transform,
+                        owners: list[dict[str, Any]], notes: list[dict]) -> None:
+    """Room edges facing an owner's room edge closer than a wall thickness move onto it: one wall line, no slab overlap."""
+    owner_edges = [(o["sector_id"], e) for o in owners for e in o["edges"]]
+    for _ in range(len(rooms) * 4):
+        best = None
+        for e in room_edges_m(rooms, tf):
+            for owner, oe in owner_edges:
+                if oe[0] != e[0] or oe[4] == e[4]:
+                    continue
+                gap = abs(oe[1] - e[1])
+                if 1e-6 < gap < WALL_THICKNESS_M and min(oe[3], e[3]) - max(oe[2], e[2]) > 0.05 and (best is None or gap < best[0]):
+                    best = (gap, e, oe, owner)
+        if best is None:
+            return
+        _gap, e, oe, owner = best
+        notes.append({"orient": e[0], "from_m": e[1], "to_m": oe[1], "owner": owner, "reason": "edge facing the owner's room"})
+        _move_edge(rooms, xs if e[0] == "v" else ys, e[0], e[5], _to_px(tf, e[0], oe[1]))
+
+
+def wall_axis(q: tuple[float, float, float, float]) -> tuple[str, float, float, float] | None:
+    x1, z1, x2, z2 = q
+    if abs(z1 - z2) < 1e-6:
+        return "h", z1, min(x1, x2), max(x1, x2)
+    if abs(x1 - x2) < 1e-6:
+        return "v", x1, min(z1, z2), max(z1, z2)
+    return None
+
+
+def _axis_q(orient: str, fixed: float, lo: float, hi: float) -> tuple[float, float, float, float]:
+    return (lo, fixed, hi, fixed) if orient == "h" else (fixed, lo, fixed, hi)
+
+
+def resolve_owned_walls(walls: list[dict[str, Any]], owners: list[dict[str, Any]], shared: dict[str, Any]) -> list[dict[str, Any]]:
+    """Drop the parts of this sector's walls that an owner already draws and stop wall ends at the owner's face."""
+    t = WALL_THICKNESS_M
+    owner_walls = [(o["sector_id"], w) for o in owners for w in o["walls"]]
+    out: list[dict[str, Any]] = []
+    for wall in walls:
+        axis = wall_axis(wall["q"])
+        if axis is None or not owner_walls:
+            out.append(wall)
+            continue
+        orient, fixed, lo, hi = axis
+        pieces = [[lo, hi]]
+        owners_hit: set[str] = set()
+        for owner, ow in owner_walls:
+            if ow["orient"] != orient or abs(ow["fixed"] - fixed) > COLLINEAR_M:
+                continue
+            cut_lo, cut_hi = ow["lo"] - t, ow["hi"] + t     # the owner's box plus this wall's own end reach
+            nxt = []
+            for a, b in pieces:
+                if min(b, ow["hi"]) - max(a, ow["lo"]) <= 1e-6:
+                    nxt.append([a, b])          # touches the owner's wall end only: a butt joint, kept
+                    continue
+                owners_hit.add(owner)
+                if cut_lo - a > 1e-6:
+                    nxt.append([a, cut_lo])
+                if b - cut_hi > 1e-6:
+                    nxt.append([cut_hi, b])
+            pieces = nxt
+        for owner, ow in owner_walls:
+            if ow["orient"] == orient or not (ow["lo"] - t / 2 - 1e-6 <= fixed <= ow["hi"] + t / 2 + 1e-6):
+                continue
+            face = ow["fixed"]
+            for piece in pieces:
+                if abs(piece[1] - face) < t - 1e-6 and piece[0] < face:
+                    piece[1] = face - t                 # the end box stops at the owner's wall face
+                    owners_hit.add(owner)
+                elif abs(piece[0] - face) < t - 1e-6 and piece[1] > face:
+                    piece[0] = face + t
+                    owners_hit.add(owner)
+        pieces = [p for p in pieces if p[1] - p[0] > 0.01]
+        if not owners_hit:
+            out.append(wall)
+            continue
+        if not pieces:
+            shared["dropped_walls"].append({"id": wall["id"], "owner": sorted(owners_hit), "world_m": list(wall["q"])})
+            continue
+        for k, (a, b) in enumerate(pieces):
+            surface = wall["surface"] if k == 0 else f'{wall["surface"]}:part-{k + 1}'
+            piece = dict(wall, id=wall["id"] if k == 0 else element_id(surface), surface=surface, q=_axis_q(orient, fixed, a, b))
+            out.append(piece)
+        shared["trimmed_walls"].append({"id": wall["id"], "owner": sorted(owners_hit), "world_m": list(wall["q"]),
+                                        "pieces_m": [[round(a, 3), round(b, 3)] for a, b in pieces]})
+    return out
+
+
+def clear_opening_corners(orient: str, fixed: float, lo: float, hi: float, walls: list[dict[str, Any]]) -> tuple[float, float]:
+    """Move an opening along its wall so that no end lies inside the box of a perpendicular wall (jamb z-fighting)."""
+    t = WALL_THICKNESS_M
+    for _ in range(4):
+        moved = False
+        for w in walls:
+            axis = wall_axis(w["q"])
+            if axis is None or axis[0] == orient or not (axis[2] - t / 2 - 1e-6 <= fixed <= axis[3] + t / 2 + 1e-6):
+                continue
+            face = axis[1]
+            if 0.001 < lo - face < OPENING_JAMB_CLEAR_M:
+                shift = face + OPENING_JAMB_CLEAR_M - lo
+                lo, hi, moved = lo + shift, hi + shift, True
+            elif 0.001 < face - hi < OPENING_JAMB_CLEAR_M:
+                shift = hi - (face - OPENING_JAMB_CLEAR_M)
+                lo, hi, moved = lo - shift, hi - shift, True
+        if not moved:
+            break
+    return lo, hi
+
+
 def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
-                 finishes: dict[str, Any] | None = None) -> tuple[str, dict[str, Any], Path]:
+                 finishes: dict[str, Any] | None = None, shared_level: list[dict[str, Any]] | None = None) -> tuple[str, dict[str, Any], Path]:
+    """Build one sector. ``shared_level`` holds the already built sectors of its level, which own shared faces (D-49);
+    without it the sector is built alone, as before the ownership rule."""
     global SNAP_PX
     if finishes is None:
         finishes = json.loads(FINISHES.read_text(encoding="utf-8")) if FINISHES.is_file() else {}
@@ -574,6 +751,12 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
     for r in rooms:
         nx1, nx2, ny1, ny2 = xs[r.x], xs[r.x2], ys[r.y], ys[r.y2]
         r.x, r.y, r.w, r.h = nx1, ny1, nx2 - nx1, ny2 - ny1
+    owners = list(shared_level or [])
+    faces: dict[str, Any] = {"rank": list(shared_face_rank(sector_id, entry)), "owners": [o["sector_id"] for o in owners],
+                              "snapped_edges": [], "dropped_walls": [], "trimmed_walls": [], "dropped_openings": [], "moved_openings": []}
+    if shared_level is not None:        # the ownership rule applies when the complex is built (build_all)
+        snap_close_edges(rooms, xs, ys, tf, faces["snapped_edges"])
+        snap_to_owner_edges(rooms, xs, ys, tf, owners, faces["snapped_edges"])
     seen: dict[str, int] = {}
     group_space: dict[str, str] = {}
     for r in rooms:
@@ -660,6 +843,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
         if current:
             wall_items.append(tuple(current))  # type: ignore[arg-type]
     wall_items.sort(key=lambda t: (t[0], t[2] if t[0] == "h" else t[1], t[1] if t[0] == "h" else t[2]))
+    walls: list[dict[str, Any]] = []
     # finished-face side: "normal" = room lies south of a horizontal / west of a vertical wall. The wall is named after the room
     # on its finished side: the north wall of the room south of it, the east wall of the room west of it.
     wall_meta = []
@@ -672,7 +856,6 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
         wall_meta.append((root, other, side, normal))
     wall_ids = unique_ids([f"{root.space}:{side}" for root, _o, side, _n in wall_meta],
                           [room_local(other.space) if other else "outer" for _r, other, _s, _n in wall_meta])
-    out.append(f'  <g id="{sid}-walls" data-layer="walls">')
     n_wall = 0
     for (orient, fixed, lo, hi, _low, _high), (root, other, side, normal), stable in zip(wall_items, wall_meta, wall_ids):
         n_wall += 1
@@ -681,9 +864,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
         else:
             q = (tf.px(fixed), tf.py(lo), tf.px(fixed), tf.py(hi))
         wall_rooms = root.space + (f"|{other.space}" if other else "")
-        out.append(f'    <line id="{element_id(stable)}" class="wall" data-godot-type="wall" data-wall-height="{fmt(wall_h)}" '
-                   f'data-surface-side-id="{stable}" data-normal-side="{normal}" data-wall-rooms="{wall_rooms}" '
-                   f'x1="{fmt(q[0])}" y1="{fmt(q[1])}" x2="{fmt(q[2])}" y2="{fmt(q[3])}" />')
+        walls.append({"id": element_id(stable), "surface": stable, "normal": normal, "attrs": f'data-wall-rooms="{wall_rooms}" ', "q": q})
     wall_lines = [l for l in plan.lines if l.cls in WALL_LINE]
     for am in entry.get("amendments", []):
         if am["op"] == "wall_shift":
@@ -709,10 +890,15 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
         grow(q[0], q[1]); grow(q[2], q[3])
         mx, my = (l.x1 + l.x2) / 2, (l.y1 + l.y2) / 2
         host = next((r for r in rooms if r.x <= mx <= r.x2 and r.y <= my <= r.y2), None)
-        hosted = f' data-wall-rooms="{host.space}"' if host else ""
-        out.append(f'    <line id="{element_id(stable)}" class="wall" data-godot-type="wall" data-wall-height="{fmt(wall_h)}" '
-                   f'data-surface-side-id="{stable}" data-normal-side="normal"{hosted} '
-                   f'data-source-id="{l.ident}" x1="{fmt(q[0])}" y1="{fmt(q[1])}" x2="{fmt(q[2])}" y2="{fmt(q[3])}" />')
+        hosted = f'data-wall-rooms="{host.space}" ' if host else ""
+        walls.append({"id": element_id(stable), "surface": stable, "normal": "normal", "attrs": f'{hosted}data-source-id="{l.ident}" ', "q": q})
+    walls = resolve_owned_walls(walls, owners, faces)
+    out.append(f'  <g id="{sid}-walls" data-layer="walls">')
+    for w in walls:
+        q = w["q"]
+        out.append(f'    <line id="{w["id"]}" class="wall" data-godot-type="wall" data-wall-height="{fmt(wall_h)}" '
+                   f'data-surface-side-id="{w["surface"]}" data-normal-side="{w["normal"]}" '
+                   f'{w["attrs"]}x1="{fmt(q[0])}" y1="{fmt(q[1])}" x2="{fmt(q[2])}" y2="{fmt(q[3])}" />')
     out.append("  </g>")
     report["wall_segments"] = n_wall
 
@@ -827,6 +1013,28 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
         sides = (sorted([r for r in (low, high) if r is not None], key=lambda r: r.space)
                  or sorted(containing, key=lambda r: r.space)[:1] or sorted(hosts, key=lambda r: r.space)[:1])
         root_room, other_room = sides[0], (sides[1] if len(sides) > 1 else None)
+        o_axis = wall_axis(p)
+        if o_axis and not c.get("vertical"):
+            orient_m, fixed_m, lo_m, hi_m = o_axis
+            on_own = any(wa and wa[0] == orient_m and abs(wa[1] - fixed_m) <= COLLINEAR_M and min(wa[3], hi_m) - max(wa[2], lo_m) > 0.05
+                         for wa in (wall_axis(w["q"]) for w in walls))
+            owner_hit = next(((o["sector_id"], ow) for o in owners for ow in o["walls"] if ow["orient"] == orient_m
+                              and abs(ow["fixed"] - fixed_m) <= COLLINEAR_M and min(ow["hi"], hi_m) - max(ow["lo"], lo_m) > 0.05), None)
+            if not on_own and owner_hit:
+                owner_id = owner_hit[0]
+                dropped_id = f"{root_room.space}:{gtype}:{room_local(other_room.space) if other_room else 'outer'}"
+                match = next((oo["id"] for o in owners if o["sector_id"] == owner_id for oo in o["openings"]
+                              if oo["orient"] == orient_m and abs(oo["fixed"] - fixed_m) <= COLLINEAR_M and min(oo["hi"], hi_m) - max(oo["lo"], lo_m) > 0.05), None)
+                faces["dropped_openings"].append({"id": dropped_id, "type": gtype, "owner": owner_id, "owner_opening": match,
+                                                  "rooms": sorted({h.space for h in hosts}), "world_m": [round(v, 3) for v in p]})
+                if match is None:
+                    report["anomalies"].append({"type": "shared_opening_missing_in_owner", "id": dropped_id, "owner": owner_id, "world_m": [round(v, 3) for v in p],
+                                                "note": "the wall belongs to the owner sector, which has no opening here"})
+                continue
+            new_lo, new_hi = clear_opening_corners(orient_m, fixed_m, lo_m, hi_m, walls) if shared_level is not None else (lo_m, hi_m)
+            if abs(new_lo - lo_m) > 1e-6:
+                faces["moved_openings"].append({"id": c["src"], "shift_m": round(new_lo - lo_m, 3), "reason": "jamb inside a perpendicular wall"})
+                p = _axis_q(orient_m, fixed_m, round(new_lo, 3), round(new_hi, 3))
         attr = ""
         if gtype == "door":
             # "inside" is the room that owns the door: the smaller of the two rooms, or the only one
@@ -886,6 +1094,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
     out.append("  </g>")
     n_feat = sum(1 for r in plan.rects if r.role == "feature")
     report["feature_rects_ignored"] = n_feat
+    report["shared_faces"] = faces
     report["unmapped_other_elements"] = len(plan.others)
 
     # --- anomalies on rooms
@@ -896,7 +1105,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
             if ox > SNAP_PX and oy > SNAP_PX:
                 report["anomalies"].append({"type": "rooms_overlap", "a": a.space, "b": b.space,
                                             "overlap_m": [round(ox * tf.kx, 2), round(oy * tf.ky, 2)]})
-    attached = {sp for o in report["openings"] for sp in o["rooms"]}
+    attached = {sp for o in report["openings"] + faces["dropped_openings"] for sp in o["rooms"]}
     for r in rooms:
         if r.space not in attached:
             report["anomalies"].append({"type": "room_without_drawn_opening", "space": r.space, "label": r.label})
@@ -904,20 +1113,43 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
     margin = 2.0
     vx, vy = bbox[0] - margin, bbox[1] - margin
     vw, vh = bbox[2] - bbox[0] + 2 * margin, bbox[3] - bbox[1] + 2 * margin
+    shared_mark = f' data-shared-faces="{SHARED_FACES_RULE}"' if shared_level is not None else ""
     header = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         f'<svg xmlns="http://www.w3.org/2000/svg" data-presentation-only="false" data-generator-input="true" '
         f'viewBox="{fmt(vx)} {fmt(vy)} {fmt(vw)} {fmt(vh)}" width="{fmt(vw * 12)}" height="{fmt(vh * 12)}" '
         f'data-scale="1" data-scale-unit="m-per-svg-unit" data-grid-size="1" data-artifact-id="APPROVED-{sector_id}-SVG-01" '
         f'data-plan-style-id="caretaker-style-b-v1" data-sector-id="{sector_id}" data-level="{level["level_id"]}" '
-        f'data-source-plan="{entry.get('plan') or 'overview'}" data-derivation="approved-plan-scaled-by-overview">',
+        f'data-source-plan="{entry.get('plan') or 'overview'}" data-derivation="approved-plan-scaled-by-overview"{shared_mark}>',
         f'  <title>{sector_id} — метрический источник из утверждённого плана</title>',
         f'  <desc>+X восток, +Z юг, метры. Построено из {entry.get('plan') or 'общего плана этажа'}; масштаб и положение — по общему плану этажа. Геометрия не исправлялась.</desc>',
         '  <style>.floor{fill:#b9c9d2;fill-opacity:.55;stroke:none}.ceiling{fill:none;stroke:none}.wall{stroke:#253038;stroke-width:.12}</style>',
     ]
     svg = "\n".join(header + out + ["</svg>", ""])
+    if shared_level is not None:
+        geometry: dict[str, Any] = {"sector_id": sector_id, "walls": [], "openings": [],
+                                    "edges": [e[:5] for e in room_edges_m(rooms, tf)]}
+        for w in walls:
+            axis = wall_axis(w["q"])
+            if axis:
+                geometry["walls"].append({"id": w["id"], "orient": axis[0], "fixed": axis[1], "lo": axis[2], "hi": axis[3]})
+        for o in report["openings"]:
+            axis = wall_axis(tuple(o["world_m"]))
+            if axis:
+                geometry["openings"].append({"id": o["id"], "orient": axis[0], "fixed": axis[1], "lo": axis[2], "hi": axis[3]})
+        shared_level.append(geometry)
     target = V4 / "plans/generation" / level["folder"] / (sector_id.lower().replace("-", "_") + ".svg")
     return svg, report, target
+
+
+def build_all(reg: dict[str, Any]) -> list[tuple[str, str, dict[str, Any], Path]]:
+    """Build every sector in ownership order (the owners decide the shared faces): (sector_id, svg, report, target)."""
+    levels: dict[str, list[dict[str, Any]]] = {}
+    built = []
+    for sector_id, entry in sorted(reg["sectors"].items(), key=lambda item: shared_face_rank(*item)):
+        svg, report, target = build_sector(sector_id, entry, reg, shared_level=levels.setdefault(entry["level"], []))
+        built.append((sector_id, svg, report, target))
+    return built
 
 
 def main() -> int:
@@ -930,10 +1162,9 @@ def main() -> int:
     report_dir = Path(args.report_dir)
     report_dir.mkdir(parents=True, exist_ok=True)
     wanted = set(args.sector or reg["sectors"])
-    for sector_id, entry in reg["sectors"].items():
+    for sector_id, svg, report, target in build_all(reg):
         if sector_id not in wanted:
             continue
-        svg, report, target = build_sector(sector_id, entry, reg)
         if not args.dry_run:
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(svg, encoding="utf-8", newline="\n")
