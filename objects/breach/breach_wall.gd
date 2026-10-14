@@ -6,9 +6,12 @@ extends StaticBody3D
 ## tool. States: CRACK — the plug in the opening blocks the way, inspecting it tells that the
 ## hands are not enough; with the tool flag the plug is broken by holding the interact action,
 ## one hit per hold, `hits_required` hits in all; OPEN — a hole one can walk through.
+## The wall, the plug and the rubble share one material (#211): the plug is the broken-in part
+## of the same wall, its outline jagged. The crack is a real slit through the plug — the plug
+## is two pieces with a gap that each hit widens, so the room light shines through it.
 ## The state lives in GameState flags (`flag`, and the hits done in `<flag>_hits`), so it is
 ## saved and loaded with the playthrough. The room behind the wall has its own light that turns
-## on with the power of `section`; while the crack is closed it glows through the crack.
+## on with the power of `section`; a second light just behind the crack throws a streak through it.
 ## The root is in the group `opening_route_passable`: the opening route check (#177) builds
 ## its navmesh from static collisions and treats this wall as the open breach the player makes.
 ## Local frame: the wall runs along X, the player's side (relay room) is +Z, the room is -Z;
@@ -25,17 +28,32 @@ const PROMPT_BREAK := "ВЫЛОМАТЬ ЛОМОМ"
 const TEXT_DARK := "relay_crack_dark"
 const TEXT_LIT := "relay_crack_lit"
 const WALL_COLOR := Color(0.36, 0.36, 0.34)
-const PLUG_COLOR := Color(0.4, 0.39, 0.36)
-const CRACK_DARK := Color(0.03, 0.03, 0.03)
-const CRACK_LIT := Color(1.0, 0.82, 0.55)
-const DEBRIS_COLOR := Color(0.33, 0.32, 0.3)
 const ROOM_LIGHT_COLOR := Color(1.0, 0.86, 0.66)
 const ROOM_LIGHT_ENERGY := 1.6
 const ROOM_LIGHT_RANGE := 6.0
-const LEAK_LIGHT_ENERGY := 0.5
-const LEAK_LIGHT_RANGE := 2.5
-## Each hit widens the crack by this share of its size.
-const CRACK_GROWTH := 0.35
+const LEAK_LIGHT_COLOR := Color(1.0, 0.82, 0.55)
+const LEAK_LIGHT_ENERGY := 2.5
+const LEAK_LIGHT_RANGE := 3.0
+## Width of the slit before the first hit and how much each hit widens it, m.
+const CRACK_WIDTH := 0.035
+const CRACK_GROWTH := 0.03
+## Outline of the opening for a 1.2 × 2.0 m opening, from the floor at the left, over the top,
+## down to the floor at the right. Every point lies outside the clear 1.2 × 2.0 rectangle, so
+## the jagged hole never narrows the way. Scaled with `opening_width`/`opening_height`.
+const OUTLINE: PackedVector2Array = [
+	Vector2(-0.68, 0.0), Vector2(-0.75, 0.32), Vector2(-0.65, 0.66), Vector2(-0.8, 1.02),
+	Vector2(-0.68, 1.38), Vector2(-0.77, 1.74), Vector2(-0.63, 2.03), Vector2(-0.46, 2.17),
+	Vector2(-0.22, 2.07), Vector2(0.0, 2.26), Vector2(0.19, 2.09), Vector2(0.41, 2.2),
+	Vector2(0.66, 2.04), Vector2(0.74, 1.7), Vector2(0.65, 1.37), Vector2(0.8, 0.99),
+	Vector2(0.67, 0.64), Vector2(0.76, 0.3), Vector2(0.67, 0.0),
+]
+## The crack zigzag through the plug, top to bottom (same scale); it runs past the outline.
+const CRACK_LINE: PackedVector2Array = [
+	Vector2(0.03, 2.6), Vector2(0.0, 2.1), Vector2(-0.12, 1.78), Vector2(0.07, 1.42),
+	Vector2(-0.06, 1.08), Vector2(0.1, 0.72), Vector2(-0.04, 0.38), Vector2(0.05, -0.2),
+]
+## Far edge of the half-planes that cut the plug along the crack.
+const CUT_FAR := 10.0
 const SHAKE_OFFSET := 0.025
 const SHAKE_TIME := 0.18
 const DUST_AMOUNT := 40
@@ -62,8 +80,8 @@ const DUST_AMOUNT := 40
 var interactable: Interactable
 var room_light: OmniLight3D
 var _plug: StaticBody3D
-var _crack: Node3D
-var _crack_material: StandardMaterial3D
+var _wall_material: StandardMaterial3D
+var _pieces: Array[MeshInstance3D] = []
 var _leak_light: OmniLight3D
 var _rubble: Node3D
 var _dust: CPUParticles3D
@@ -98,6 +116,11 @@ func hits_done() -> int:
 
 func has_tool() -> bool:
 	return tool_flag.is_empty() or GameState.has_flag(tool_flag)
+
+
+## Width of the slit through the plug now: it grows with every hit.
+func crack_width() -> float:
+	return CRACK_WIDTH + CRACK_GROWTH * mini(hits_done(), hits_required)
 
 
 func is_lit() -> bool:
@@ -144,10 +167,7 @@ func _refresh() -> void:
 	_rubble.visible = open
 	room_light.visible = lit
 	_leak_light.visible = lit and not open
-	_crack_material.albedo_color = CRACK_LIT if lit else CRACK_DARK
-	_crack_material.emission_enabled = lit
-	var growth := 1.0 + CRACK_GROWTH * mini(hits_done(), hits_required)
-	_crack.scale = Vector3(growth, growth, 1.0)
+	_build_pieces(crack_width())
 	interactable.available = not open
 	interactable.unavailable_prompt = ""
 	if has_tool():
@@ -178,34 +198,32 @@ func _shake_plug() -> void:
 
 
 func _build() -> void:
-	var wall := PropKit.material(WALL_COLOR)
-	var side_width := (width - opening_width) * 0.5
-	var side_x := (opening_width + side_width) * 0.5
-	for side: float in [-1.0, 1.0]:
-		PropKit.box(self, Vector3(side * side_x, height * 0.5, 0), Vector3(side_width, height, thickness), wall, true)
-	var lintel := height - opening_height
-	PropKit.box(self, Vector3(0, opening_height + lintel * 0.5, 0), Vector3(opening_width, lintel, thickness), wall, true)
-	# Jagged rim of the opening, seen once the plug is gone.
-	var rim := PropKit.material(DEBRIS_COLOR)
-	PropKit.box(self, Vector3(-opening_width * 0.42, opening_height - 0.08, 0), Vector3(0.22, 0.2, thickness + 0.02), rim, false, Vector3(0, 0, 0.5))
-	PropKit.box(self, Vector3(opening_width * 0.45, opening_height * 0.6, 0), Vector3(0.14, 0.4, thickness + 0.02), rim, false, Vector3(0, 0, -0.3))
+	_wall_material = PropKit.material(WALL_COLOR)
+	var outline := _outline()
+	# The wall around the opening is one outline: the hole reaches the floor, so the wall is a
+	# simple polygon running from the floor at the left edge round the hole to the right edge.
+	var wall_polygon := PackedVector2Array([Vector2(-width * 0.5, 0.0)])
+	wall_polygon.append_array(outline)
+	wall_polygon.append_array([Vector2(width * 0.5, 0.0), Vector2(width * 0.5, height), Vector2(-width * 0.5, height)])
+	var wall_mesh := MeshInstance3D.new()
+	wall_mesh.name = "WallMesh"
+	wall_mesh.mesh = extrude([wall_polygon], thickness, _wall_material)
+	add_child(wall_mesh)
+	var wall_shape := CollisionShape3D.new()
+	wall_shape.shape = wall_mesh.mesh.create_trimesh_shape()
+	add_child(wall_shape)
 
 	_plug = StaticBody3D.new()
 	_plug.name = "Plug"
 	add_child(_plug)
-	PropKit.box(_plug, Vector3(0, opening_height * 0.5, 0), Vector3(opening_width, opening_height, thickness), PropKit.material(PLUG_COLOR), true)
-	_crack = Node3D.new()
-	_crack.name = "Crack"
-	_crack.position = Vector3(0, opening_height * 0.55, 0)
-	_plug.add_child(_crack)
-	_crack_material = PropKit.material(CRACK_DARK)
-	_crack_material.emission = CRACK_LIT
-	_crack_material.emission_energy_multiplier = 3.0
-	# A zigzag slit through the whole plug, visible from both sides.
-	var depth := thickness + 0.02
-	PropKit.box(_crack, Vector3(-0.08, 0.32, 0), Vector3(0.04, 0.42, depth), _crack_material, false, Vector3(0, 0, 0.35))
-	PropKit.box(_crack, Vector3(0.02, 0.0, 0), Vector3(0.12, 0.34, depth), _crack_material, false, Vector3(0, 0, -0.25))
-	PropKit.box(_crack, Vector3(0.1, -0.32, 0), Vector3(0.05, 0.4, depth), _crack_material, false, Vector3(0, 0, 0.3))
+	var bounds := _bounds(outline)
+	var plug_shape := CollisionShape3D.new()
+	var plug_box := BoxShape3D.new()
+	plug_box.size = Vector3(bounds.size.x, bounds.size.y, thickness)
+	plug_shape.shape = plug_box
+	plug_shape.position = Vector3(bounds.get_center().x, bounds.get_center().y, 0)
+	_plug.add_child(plug_shape)
+	_build_pieces(CRACK_WIDTH)
 
 	room_light = OmniLight3D.new()
 	room_light.name = "RoomLight"
@@ -217,24 +235,34 @@ func _build() -> void:
 	room_light.shadow_enabled = true
 	room_light.visible = false
 	add_child(room_light)
+	# Just behind the crack on the room side: its light passes only through the slit.
 	_leak_light = OmniLight3D.new()
 	_leak_light.name = "LeakLight"
-	_leak_light.position = Vector3(0, opening_height * 0.55, thickness * 0.5 + 0.3)
-	_leak_light.light_color = CRACK_LIT
+	_leak_light.position = Vector3(0, opening_height * 0.55, -thickness * 0.5 - 0.5)
+	_leak_light.light_color = LEAK_LIGHT_COLOR
 	_leak_light.light_energy = LEAK_LIGHT_ENERGY
 	_leak_light.omni_range = LEAK_LIGHT_RANGE
+	_leak_light.shadow_enabled = true
 	_leak_light.visible = false
 	add_child(_leak_light)
 
+	# Chunks of the same wall on both sides of the hole once it is broken.
 	_rubble = Node3D.new()
 	_rubble.name = "Rubble"
 	_rubble.visible = false
 	add_child(_rubble)
-	var debris := PropKit.material(DEBRIS_COLOR)
-	var pieces: Array[Vector3] = [Vector3(-0.3, 0.06, 0.45), Vector3(0.25, 0.05, 0.6), Vector3(0.05, 0.08, -0.5), Vector3(-0.4, 0.05, -0.7), Vector3(0.45, 0.04, -0.35)]
+	var chunk: PackedVector2Array = [Vector2(-0.12, -0.05), Vector2(0.03, -0.09), Vector2(0.13, -0.01), Vector2(0.08, 0.08), Vector2(-0.07, 0.07)]
+	var pieces: Array[Vector3] = [Vector3(-0.3, 0.07, 0.45), Vector3(0.25, 0.06, 0.6), Vector3(0.05, 0.08, -0.5), Vector3(-0.42, 0.06, -0.7), Vector3(0.45, 0.05, -0.35), Vector3(-0.6, 0.06, 0.25), Vector3(0.62, 0.07, 0.15)]
 	for index in pieces.size():
-		var size := Vector3(0.22, 0.12, 0.18) * (1.0 - 0.12 * index)
-		PropKit.box(_rubble, pieces[index], size, debris, false, Vector3(0, 0.6 * index, 0.2))
+		var factor := 1.6 - 0.15 * index
+		var scaled := PackedVector2Array()
+		for point in chunk:
+			scaled.append(point * factor)
+		var piece := MeshInstance3D.new()
+		piece.mesh = extrude([scaled], 0.12 * factor, _wall_material)
+		piece.position = pieces[index]
+		piece.rotation = Vector3(PI * 0.5 + 0.2 * (index % 3 - 1), 0.9 * index, 0.15 * (index % 2))
+		_rubble.add_child(piece)
 
 	_dust = CPUParticles3D.new()
 	_dust.name = "Dust"
@@ -256,3 +284,81 @@ func _build() -> void:
 	grain.material = PropKit.material(Color(0.55, 0.53, 0.5))
 	_dust.mesh = grain
 	add_child(_dust)
+
+
+## The plug as the pieces left of and right of the crack, `gap` m apart.
+func _build_pieces(gap: float) -> void:
+	for piece in _pieces:
+		piece.free()
+	_pieces.clear()
+	var outline := _outline()
+	var crack := _scaled(CRACK_LINE)
+	for side: float in [-1.0, 1.0]:
+		var half := PackedVector2Array()
+		for point in crack:
+			half.append(point + Vector2(side * gap * 0.5, 0))
+		var last := crack[crack.size() - 1]
+		var first := crack[0]
+		half.append_array([Vector2(side * CUT_FAR, last.y), Vector2(side * CUT_FAR, first.y)])
+		var piece := MeshInstance3D.new()
+		piece.name = "PieceLeft" if side < 0.0 else "PieceRight"
+		piece.mesh = extrude(Geometry2D.intersect_polygons(outline, half), thickness, _wall_material)
+		_plug.add_child(piece)
+		_pieces.append(piece)
+
+
+func _outline() -> PackedVector2Array:
+	return _scaled(OUTLINE)
+
+
+func _scaled(points: PackedVector2Array) -> PackedVector2Array:
+	var factor := Vector2(opening_width / 1.2, opening_height / 2.0)
+	var result := PackedVector2Array()
+	for point in points:
+		result.append(point * factor)
+	return result
+
+
+func _bounds(points: PackedVector2Array) -> Rect2:
+	var rect := Rect2(points[0], Vector2.ZERO)
+	for point in points:
+		rect = rect.expand(point)
+	return rect
+
+
+## A prism mesh from simple polygons in the XY plane, `depth` thick along Z and centred on it.
+## Flat-shaded: caps and every side face get their own normals.
+static func extrude(polygons: Array[PackedVector2Array], depth: float, mat: Material) -> ArrayMesh:
+	var surface := SurfaceTool.new()
+	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var half := depth * 0.5
+	for polygon in polygons:
+		if polygon.size() < 3:
+			continue
+		var points := polygon
+		if Geometry2D.is_polygon_clockwise(points):
+			points = polygon.duplicate()
+			points.reverse()
+		var triangles := Geometry2D.triangulate_polygon(points)
+		for cap: float in [1.0, -1.0]:
+			surface.set_normal(Vector3(0, 0, cap))
+			for index in triangles.size():
+				# Godot culls counter-clockwise faces: the front cap (seen from +Z) flips the
+				# counter-clockwise order of the points, the back one keeps it.
+				var corner := triangles[index] if cap < 0.0 else triangles[index - 2 * (index % 3) + 2]
+				var point := points[corner]
+				surface.set_uv(point)
+				surface.add_vertex(Vector3(point.x, point.y, cap * half))
+		for index in points.size():
+			var a := points[index]
+			var b := points[(index + 1) % points.size()]
+			var edge := b - a
+			surface.set_normal(Vector3(edge.y, -edge.x, 0).normalized())
+			var length := edge.length()
+			var quad: Array[Vector3] = [Vector3(a.x, a.y, half), Vector3(a.x, a.y, -half), Vector3(b.x, b.y, -half), Vector3(b.x, b.y, half)]
+			var uvs: Array[Vector2] = [Vector2(0, 0), Vector2(0, depth), Vector2(length, depth), Vector2(length, 0)]
+			for corner: int in [0, 2, 1, 0, 3, 2]:
+				surface.set_uv(uvs[corner])
+				surface.add_vertex(quad[corner])
+	surface.set_material(mat)
+	return surface.commit()

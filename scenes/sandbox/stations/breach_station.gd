@@ -5,6 +5,8 @@ extends Node3D
 ## (scene 10), the room with the body under the fallen pipe and the key, the door from the old
 ## control point (ЦУ), locked by the senior officer's access (`caretaker`, granted by the
 ## succession protocol) and the fire shield with the crowbar (scene 9, T-ENERGY).
+## #211: the door is electronic, a pass reader on each side tells why it refuses; the senior
+## officer's computer in the room runs the succession protocol that grants the access.
 ## The room light follows the power of `BreachWall.section` (F1 in the sandbox cycles it).
 ## Shell walls and the body are placeholders built here; the gameplay objects are instances.
 ## Layout (local): relay x −3…3, z 0…4; senior room x −3…3, z −4…0; ЦУ x 3…8, z −4…4 with the
