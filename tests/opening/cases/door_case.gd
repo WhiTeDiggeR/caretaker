@@ -29,6 +29,8 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(door.is_open(), "door is open")
 	var leaf := door.get_node(^"Leaf") as Node3D
 	c.is_true(leaf.position.x > door.width, "leaf slid aside")
+	for path: NodePath in [^"ControlFront", ^"ControlBack"]:
+		c.is_true((door.get_node(path) as Node3D).position.x > door.width * 0.5, "#220: panel %s is on the free edge side" % path)
 	c.is_true(panel.get_prompt_text().ends_with("ЗАКРЫТЬ ДВЕРЬ"), "panel offers to close")
 	GameState.set_section_power(&"sec_a", GameState.Power.OFF)
 	c.is_true(door.is_open(), "losing power leaves an open door open")
@@ -97,18 +99,32 @@ func run(c: OpeningCheck) -> void:
 	await historic.opened
 	c.near(historic_leaf.rotation.y, -FacilityDoor.SWING_ANGLE, 0.001, "leaf swung around the hinge")
 	c.near(historic_leaf.position.x, -historic.width * 0.5, 0.001, "hinge stays at the frame edge")
+	# #220: the wheels are on the side away from the hinges, so the open leaf does not cover them.
+	for path: NodePath in [^"ControlFront", ^"ControlBack"]:
+		c.is_true((historic.get_node(path) as Node3D).position.x > historic.width * 0.5, "historic wheel %s is away from the hinges" % path)
 	c.is_true(historic.close(), "historic door closes")
 	await historic.closed
 	c.near(historic_leaf.rotation.y, 0.0, 0.001, "leaf returned to the frame")
 
-	# Access gate requires the caretaker grant.
+	# Access gate requires the caretaker grant; pass readers replace its panels (#220).
 	var gate := _door(c, GATE, &"sec_a")
+	var gate_reader := gate.get_node(^"ControlFront") as AccessReader
+	c.is_true(gate_reader != null and gate.get_node(^"ControlBack") is AccessReader, "#220: the gate has a pass reader on each side")
+	c.is_true(gate._controls.is_empty() and gate.find_children("Lamp", "", true, false).is_empty(), "the gate has no panels")
+	c.is_true(gate_reader.position.x > gate.width * 0.5, "the reader is on the free edge side")
 	c.equal(gate.lock_reason(), FacilityDoor.REASON_NO_ACCESS, "gate needs access")
+	c.is_true(not gate_reader.scan() and gate.is_closed(), "the reader refuses the pass without the access")
 	GameState.grant_access(&"caretaker")
 	c.equal(gate.lock_reason(), "", "granted access unlocks the gate")
-	c.is_true(gate.open(), "gate opens with access")
+	gate.emergency_lock = true
+	c.is_true(gate_reader.scan() and gate.is_closed() and gate_reader.screen.text.contains(FacilityDoor.REASON_EMERGENCY), "a locked gate refuses a granted pass and says why")
+	gate.emergency_lock = false
+	c.is_true(gate_reader.scan() and gate.state == FacilityDoor.State.OPENING, "a granted pass opens the gate")
+	c.is_true(not gate_reader.interactable.is_available(), "the reader waits while the leaf moves")
 	await gate.opened
 	c.is_true((gate.get_node(^"Leaf") as Node3D).position.y > 2.0, "gate leaf slid up")
+	c.is_true(gate_reader.scan() and gate.state == FacilityDoor.State.CLOSING, "the reader also closes the gate")
+	await gate.closed
 
 	# Airlock: interlock and cycle.
 	var airlock := (load(AIRLOCK) as PackedScene).instantiate() as Airlock

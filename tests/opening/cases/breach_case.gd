@@ -47,11 +47,14 @@ func run(c: OpeningCheck) -> void:
 
 	# The door from the old control point is locked by the senior officer's access (#178,
 	# author's note): the succession protocol grants it, then the hero walks back out to ЦУ.
-	var control: Interactable = door._controls[0]
 	c.equal(door.required_access, ACCESS, "the door to the room needs the access of the succession protocol")
 	c.equal(door.lock_reason(), FacilityDoor.REASON_NO_ACCESS, "without the access the door is locked")
-	c.is_true(not door.open() and not control.is_available() and control.unavailable_prompt == FacilityDoor.REASON_NO_ACCESS, "the locked door does not open and says why")
-	var reader := station.get_node(^"ReaderOutside") as AccessReader
+	c.is_true(not door.open(), "the locked door does not open")
+	# #220: the door has only the pass readers, one on each side, no panel.
+	var reader := door.get_node(^"ControlFront") as AccessReader
+	var reader_inside := door.get_node(^"ControlBack") as AccessReader
+	c.is_true(reader != null and reader_inside != null and door._controls.is_empty(), "the door is worked only by its readers")
+	c.is_true(reader.interactable.is_available(), "the reader takes the pass without the access to say why it refuses")
 	c.equal(reader.idle_text(), "СЧИТЫВАТЕЛЬ\nДОПУСК СТАРШЕГО", "the reader names the access the door wants")
 	c.is_true(not reader.scan() and reader.screen.text.contains("2-117") and reader.screen.text.contains("ОТКАЗАНО"), "the reader refuses the guard's pass and says why")
 	c.is_true(door.is_closed(), "a refused pass leaves the door closed")
@@ -84,12 +87,13 @@ func run(c: OpeningCheck) -> void:
 	c.equal(program.choose("main", 3), "protocol", "after the status check the protocol opens")
 	program.complete("protocol")
 	c.is_true(GameState.has_access(ACCESS), "the protocol grants the senior officer's access")
-	c.is_true(door.lock_reason().is_empty() and control.is_available(), "the granted access opens the way back to ЦУ")
-	c.is_true((station.get_node(^"ReaderInside") as AccessReader).scan() and door.state == FacilityDoor.State.OPENING, "the reader lets the pass through and opens the door")
+	c.is_true(door.lock_reason().is_empty(), "the granted access opens the way back to ЦУ")
+	c.is_true(reader_inside.scan() and door.state == FacilityDoor.State.OPENING, "the reader lets the pass through and opens the door")
 	await c.physics_frames(int((door.open_time + 0.3) * Engine.physics_ticks_per_second))
 	c.is_true(door.is_open(), "the electronic door opens")
 	GameState.revoke_access(ACCESS)
-	c.equal(control.unavailable_prompt, FacilityDoor.REASON_NO_ACCESS, "revoking the access locks the door again")
+	c.equal(door.lock_reason(), FacilityDoor.REASON_NO_ACCESS, "revoking the access locks the door again")
+	c.is_true(not reader.scan() and door.is_open(), "without the access the reader does not close the door either")
 	c.is_true(wall.is_in_group(BreachWall.ROUTE_PASSABLE_GROUP), "the route check treats the breach as passable")
 	c.is_true(is_equal_approx(wall.opening_width, 1.2) and is_equal_approx(wall.opening_height, 2.0), "the opening matches the breach door of L-OLD-CORE")
 

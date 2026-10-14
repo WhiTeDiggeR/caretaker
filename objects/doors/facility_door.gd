@@ -9,6 +9,9 @@ extends Node3D
 ## put under emergency lock. An airlock interlocks two doors through `interlock_partner`.
 ## The hand wheel turns while the hold runs and rolls back when it is let go (#174); a manual
 ## door's handle sits on the leaf at its free edge and has no lamp.
+## Wall controls stand on the side of the free edge (+X), away from the hinges, so an open leaf covers
+## neither them nor the way (#220). A powered door that needs an access has pass readers (`AccessReader`,
+## #211) instead of the panels.
 
 signal state_changed(state: State)
 signal opened
@@ -33,7 +36,7 @@ const REASON_MOVING := ""
 const FRAME_DEPTH := 0.3
 const FRAME_POST := 0.2
 const LEAF_DEPTH := 0.12
-const CONTROL_OFFSET := 0.45  # from the frame edge to the control centre
+const CONTROL_OFFSET := 0.45  # from the frame edge to the control centre (+X side)
 const CONTROL_HEIGHT := 1.25
 const SWING_ANGLE := deg_to_rad(95.0)
 const WHEEL_TURNS := 1.5  # hand wheel turns over a full hold
@@ -92,6 +95,8 @@ var _open_amount := 0.0:
 		_open_amount = value
 		_apply_leaf_pose()
 var _controls: Array[Interactable] = []
+## Pass readers in place of the panels of a powered door with an access (#220).
+var _readers: Array[AccessReader] = []
 var _lamps: Array[StandardMaterial3D] = []
 var _wheels: Array[Node3D] = []
 ## 0 — the wheel at the closed door's rest, 1 — at the open door's rest (one full hold apart).
@@ -117,7 +122,7 @@ func _ready() -> void:
 	if kind == Kind.MECHANICAL:
 		_wheel_audio = AudioStreamPlayer3D.new()
 		_wheel_audio.name = "WheelAudio"
-		_wheel_audio.position = Vector3(-(width * 0.5 + FRAME_POST * 0.5 + CONTROL_OFFSET), CONTROL_HEIGHT, 0)
+		_wheel_audio.position = Vector3(width * 0.5 + FRAME_POST * 0.5 + CONTROL_OFFSET, CONTROL_HEIGHT, 0)
 		add_child(_wheel_audio)
 	add_to_group(&"persist")
 	GameState.section_power_changed.connect(func(_section: StringName, _power: int) -> void: refresh())
@@ -179,6 +184,11 @@ func _interlocked() -> bool:
 	return state == State.CLOSED and interlock_partner != null and not interlock_partner.is_closed()
 
 
+## Whether the door is worked by pass readers instead of panels (#220).
+func has_readers() -> bool:
+	return kind == Kind.POWERED and not required_access.is_empty()
+
+
 func can_operate() -> bool:
 	return lock_reason().is_empty() and (state == State.OPEN or state == State.CLOSED)
 
@@ -209,7 +219,13 @@ func force(open_door: bool) -> void:
 
 
 func refresh() -> void:
-	if _controls.is_empty() or Engine.is_editor_hint():
+	if Engine.is_editor_hint():
+		return
+	for reader in _readers:
+		reader.section = section
+		reader.required_access = required_access
+		reader.refresh()
+	if _controls.is_empty():
 		return
 	var reason := lock_reason()
 	var available := reason.is_empty() and (state == State.OPEN or state == State.CLOSED)
@@ -310,6 +326,11 @@ func _open_position() -> Vector3:
 	return Vector3(width + FRAME_POST * 0.5, 0, 0)
 
 
+## A granted pass on one of the door's readers works the door like a panel press (#220).
+func use_from_reader() -> void:
+	_on_control_used()
+
+
 func _on_control_used() -> void:
 	if operator.is_valid():
 		operator.call(self)
@@ -367,6 +388,7 @@ func _build() -> void:
 		if child.has_meta(&"door_generated"):
 			child.free()
 	_controls.clear()
+	_readers.clear()
 	_lamps.clear()
 	_wheels.clear()
 	var frame := StaticBody3D.new()
@@ -392,8 +414,12 @@ func _build() -> void:
 		control.name = "ControlFront" if side > 0.0 else "ControlBack"
 		if kind == Kind.MANUAL:
 			_build_handle(control, side, leaf_x)
+		elif has_readers():
+			control.free()
+			_build_reader(side, post_x)
+			continue
 		else:
-			control.position = Vector3(-(post_x + CONTROL_OFFSET), CONTROL_HEIGHT, side * (FRAME_DEPTH * 0.5 + 0.06))
+			control.position = Vector3(post_x + CONTROL_OFFSET, CONTROL_HEIGHT, side * (FRAME_DEPTH * 0.5 + 0.06))
 			_generated(control)
 			var lamp_material := _material(LAMP_OFF, true)
 			_lamps.append(lamp_material)
@@ -426,6 +452,20 @@ func _build() -> void:
 		_controls.append(interactable)
 	_apply_leaf_pose()
 	_apply_wheel_pose()
+
+
+## A pass reader on the wall in place of the panel, facing out on `side` (#220).
+func _build_reader(side: float, post_x: float) -> void:
+	var reader := AccessReader.new()
+	reader.name = "ControlFront" if side > 0.0 else "ControlBack"
+	reader.position = Vector3(post_x + CONTROL_OFFSET, CONTROL_HEIGHT, side * (FRAME_DEPTH * 0.5 + AccessReader.BODY_SIZE.z * 0.5 + 0.01))
+	if side < 0.0:
+		reader.rotation.y = PI
+	reader.required_access = required_access
+	reader.section = section
+	reader.door = self
+	_generated(reader)
+	_readers.append(reader)
 
 
 ## A manual door's handle: on the leaf face near the edge away from the hinges (a hinged leaf turns about

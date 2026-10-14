@@ -7,6 +7,9 @@ extends StaticBody3D
 ## screen answers with the pass owner and the refusal, a red lamp and an error beep; with the
 ## access it confirms and opens the linked door. The lamp is green while the access is held,
 ## dark without section power. Local frame: the reader faces +Z, the origin is its centre.
+## A powered door with an access builds its own readers in place of the panels (#220): then a granted
+## scan works the door like a panel press (opens or closes it), and a door locked for another reason
+## (emergency) refuses on the screen with that reason.
 
 signal scanned(granted: bool)
 
@@ -38,10 +41,11 @@ const LAMP_READY := Color(0.15, 0.85, 0.3)
 ## The player's role once the access is held, named on a granted scan.
 @export var granted_title := "ВРЕМЕННЫЙ СМОТРИТЕЛЬ"
 
+## The door this reader works; set by the door for its own readers, else found by `door_path`.
+var door: FacilityDoor
 var interactable: Interactable
 var screen: Label3D
 var _lamp: StandardMaterial3D
-var _door: FacilityDoor
 var _answer_timer: SceneTreeTimer
 ## Last scan answer on the screen: empty — idle text.
 var _answer := ""
@@ -52,13 +56,16 @@ func _ready() -> void:
 	_build()
 	if Engine.is_editor_hint():
 		return
-	_door = get_node_or_null(door_path) as FacilityDoor
+	if door == null:
+		door = get_node_or_null(door_path) as FacilityDoor
 	interactable = PropKit.interactable(self, Interactable.Mode.PRESS, PROMPT)
 	interactable.interacted.connect(scan)
-	GameState.section_power_changed.connect(func(_section: StringName, _power: int) -> void: _refresh())
-	GameState.access_changed.connect(func(_access: StringName, _granted: bool) -> void: _refresh())
-	GameState.state_loaded.connect(_refresh)
-	_refresh()
+	GameState.section_power_changed.connect(func(_section: StringName, _power: int) -> void: refresh())
+	GameState.access_changed.connect(func(_access: StringName, _granted: bool) -> void: refresh())
+	GameState.state_loaded.connect(refresh)
+	if door:
+		door.state_changed.connect(func(_state: FacilityDoor.State) -> void: refresh())
+	refresh()
 
 
 func is_powered() -> bool:
@@ -74,11 +81,17 @@ func scan() -> bool:
 	if not is_powered():
 		return false
 	var granted := is_granted()
-	if granted:
+	var reason := _door_reason()
+	if granted and not reason.is_empty():
+		_show_answer("%s\nОТКАЗАНО\n%s" % [granted_title, reason], TEXT_DENIED)
+		Sfx.play(SOUND_DENIED, self)
+	elif granted:
 		_show_answer("%s\nДОСТУП РАЗРЕШЁН" % granted_title, TEXT_GRANTED)
 		Sfx.play(SOUND_GRANTED, self)
-		if _door and _door.is_closed():
-			_door.open()
+		if door and door.has_readers():
+			door.use_from_reader()
+		elif door and door.is_closed():
+			door.open()
 	else:
 		_show_answer("%s\nОТКАЗАНО\nНУЖЕН %s" % [pass_title, access_title], TEXT_DENIED)
 		Sfx.play(SOUND_DENIED, self)
@@ -90,28 +103,39 @@ func idle_text() -> String:
 	return "СЧИТЫВАТЕЛЬ\n%s" % access_title
 
 
+## Why the linked door refuses a granted pass (other than the access itself), or empty.
+func _door_reason() -> String:
+	if door == null:
+		return ""
+	var reason := door.lock_reason()
+	return "" if reason == FacilityDoor.REASON_NO_ACCESS else reason
+
+
 func _show_answer(text: String, color: Color) -> void:
 	_answer = text
 	_answer_color = color
-	_refresh()
+	refresh()
 	_answer_timer = get_tree().create_timer(ANSWER_TIME)
 	var timer := _answer_timer
 	timer.timeout.connect(func() -> void:
 		if _answer_timer == timer:
 			_answer = ""
-			_refresh())
+			refresh())
 
 
-func _refresh() -> void:
+func refresh() -> void:
+	if interactable == null:
+		return
 	var powered := is_powered()
-	interactable.available = powered
-	interactable.unavailable_prompt = FacilityDoor.REASON_NO_POWER
+	var moving := door != null and not (door.is_open() or door.is_closed())
+	interactable.available = powered and not moving
+	interactable.unavailable_prompt = FacilityDoor.REASON_NO_POWER if not powered else FacilityDoor.REASON_MOVING
 	screen.visible = powered
 	screen.text = idle_text() if _answer.is_empty() else _answer
 	screen.modulate = TEXT_IDLE if _answer.is_empty() else _answer_color
 	var lamp_color := LAMP_OFF
 	if powered:
-		lamp_color = LAMP_READY if is_granted() else LAMP_LOCKED
+		lamp_color = LAMP_READY if is_granted() and _door_reason().is_empty() else LAMP_LOCKED
 	_lamp.albedo_color = lamp_color
 	_lamp.emission = lamp_color
 
