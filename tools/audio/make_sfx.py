@@ -326,71 +326,33 @@ def breath(rng):
     return mul(air, envelope(samples(d), 0.18, 0.55), lfo(1.3, d, 0.8, 0.2), 0.6)
 
 
-# Bowser's dream (#201): background loops per dream stage (docs/art/dream-bowser-s.md §2)
-# and stingers. Loops are LOOP seconds long; every tone and LFO makes whole cycles in a loop
-# and the noise is cross-faded over the seam, so the files repeat without a click.
-LOOP = 8.0
-SEAM = 0.5
-
-
-def seamless(make, rng: random.Random) -> Signal:
-    """`make(duration, rng)` rendered SEAM longer; its tail is faded into its head."""
-    signal = make(LOOP + SEAM, rng)
-    n, f = samples(LOOP), samples(SEAM)
-    out = signal[:n]
-    for i in range(f):
-        w = i / f
-        out[i] = signal[i] * w + signal[n + i] * (1.0 - w)
-    return out
-
-
-def drone(freqs, wind_cutoff: float, wind: float, pulse: float, depth: float):
-    def make(d, rng):
-        tones = add(*(mul(sine(f, d), 1.0 / (k + 1)) for k, f in enumerate(freqs)))
-        air = mul(lowpass(noise(d, rng), wind_cutoff), wind)
-        return mul(add(tones, air), lfo(pulse, d, 1.0 - depth, depth))
-    return make
-
-
-def dream_bg_calm(rng):
-    return seamless(drone([55.0, 82.5, 110.0], 300, 1.5, 0.25, 0.2), rng)
-
-
-def dream_bg_alarm(rng):
-    return seamless(drone([49.0, 51.875, 73.5], 450, 2.5, 0.5, 0.3), rng)
-
-
-def dream_bg_unease(rng):
-    return seamless(drone([41.25, 43.75, 87.5, 92.5], 700, 3.5, 1.25, 0.45), rng)
-
-
-def dream_bg_preawake(rng):
-    return seamless(drone([36.75, 38.875, 52.0, 155.5], 1000, 5.0, 0.625, 0.6), rng)
+# Bowser's dream (#201): stingers. The stage loops are synthesised in the game
+# (objects/audio/dream_audio.gd) to keep the placeholders within their budget.
 
 
 def dream_ambush(rng):
-    d = 1.8
+    d = 1.0
     rise = mul(add(sweep(90, 420, d), mul(sweep(95, 445, d), 0.8)), 0.4, envelope(samples(d), 0.6, 0.4))
-    return add(mul(thud(1.2, rng, 45.0), 1.4), rise)
+    return add(mul(thud(0.9, rng, 45.0), 1.4), rise)
 
 
 def dream_seal(rng):
-    d = 2.6
+    d = 1.3
     n = samples(d)
-    bell = add(*(mul(sine(f, d), a, decay(n, t)) for f, a, t in ((660, 0.5, 1.2), (990, 0.35, 0.9), (1320, 0.3, 0.7), (1980, 0.15, 0.4))))
+    bell = add(*(mul(sine(f, d), a, decay(n, t)) for f, a, t in ((660, 0.5, 0.6), (990, 0.35, 0.45), (1320, 0.3, 0.35), (1980, 0.15, 0.2))))
     return add(click(rng, 0.03, 2500), mul(bell, envelope(n, 0.005, 0.6)))
 
 
 def dream_gate(rng):
-    d = 2.2
+    d = 1.1
     n = samples(d)
     whoosh = mul(highpass(lowpass(noise(d, rng), 2500), 300), lfo(0.5 / d, d, 0.0, 1.0))
     shimmer = mul(add(sweep(600, 1500, d), mul(sine(2400, d), 0.3)), 0.3, lfo(9, d, 0.6, 0.4))
-    return mul(add(whoosh, shimmer), envelope(n, 0.3, 0.9))
+    return mul(add(whoosh, shimmer), envelope(n, 0.2, 0.6))
 
 
 def dream_chain_hit(rng):
-    d = 0.7
+    d = 0.5
     n = samples(d)
     ring = add(*(mul(sine(f, d), a, decay(n, t)) for f, a, t in ((520, 0.5, 0.25), (1340, 0.35, 0.15), (2210, 0.25, 0.1))))
     return add(thud(d, rng, 80.0), ring, click(rng, 0.02, 3000))
@@ -429,10 +391,6 @@ RECIPES = {
     "step_ladder": step_ladder,
     "land": land,
     "breath": breath,
-    "dream_bg_calm": dream_bg_calm,
-    "dream_bg_alarm": dream_bg_alarm,
-    "dream_bg_unease": dream_bg_unease,
-    "dream_bg_preawake": dream_bg_preawake,
     "dream_ambush": dream_ambush,
     "dream_seal": dream_seal,
     "dream_gate": dream_gate,
@@ -449,7 +407,6 @@ SEED_ORDER = [
     # #134
     "step_concrete", "step_metal", "step_grate", "step_crawl", "step_ladder", "land", "breath",
     # #201
-    "dream_bg_calm", "dream_bg_alarm", "dream_bg_unease", "dream_bg_preawake",
     "dream_ambush", "dream_seal", "dream_gate", "dream_chain_hit",
 ]
 

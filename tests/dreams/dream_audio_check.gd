@@ -1,7 +1,7 @@
 extends Node
 
-## Headless check of the dream sound (#201): the sounds of data/audio/dream_audio.json are in
-## the Sfx catalogue and load, the stage of Bowser's dream switches the background loop
+## Headless check of the dream sound (#201): the stingers of data/audio/dream_audio.json are
+## in the Sfx catalogue and load, every stage builds a looping stream, the stage of Bowser's dream switches the background loop
 ## (alarm on entry, unease at the ambush, alarm after the seal, pre-awakening at a high
 ## instability stage, calm on a repeat visit, silence outside) and the ambush, the seal, a
 ## strike of the chain and the exit through the gate start their stingers.
@@ -29,10 +29,13 @@ func _run() -> void:
 	DreamAudio.stinger_played.connect(func(event: StringName, _id: StringName) -> void: _stingers.append(event))
 	var cfg := DreamAudio.config(MODULE)
 	_check(not cfg.is_empty(), "Bowser's dream has a sound config")
-	for key: String in ["stages", "stingers"]:
-		for name: String in cfg.get(key, {}):
-			var id := StringName(str(cfg[key][name]))
-			_check(Sfx.sounds.has(id), "%s %s: %s is in the Sfx catalogue" % [key, name, id])
+	for event: String in cfg.get("stingers", {}):
+		var id := StringName(str(cfg.stingers[event]))
+		_check(Sfx.sounds.has(id), "stinger %s: %s is in the Sfx catalogue" % [event, id])
+	for stage_id: String in [DreamAudio.CALM, DreamAudio.ALARM, DreamAudio.UNEASE, DreamAudio.PREAWAKE]:
+		var stream := DreamAudio.stage_stream(MODULE, StringName(stage_id)) as AudioStreamWAV
+		var loops := stream != null and stream.loop_mode == AudioStreamWAV.LOOP_FORWARD and stream.get_length() > 1.0
+		_check(loops, "stage %s has a looping background" % stage_id)
 	_check(Sfx.validate().is_empty(), "the Sfx catalogue loads: %s" % [Sfx.validate()])
 	_check(DreamAudio.stage == DreamAudio.SILENT, "silent outside a dream")
 
@@ -44,7 +47,7 @@ func _run() -> void:
 	Dreams.entered.emit(MODULE)
 	await _frames(10)
 	_expect(DreamAudio.ALARM, "entry")
-	_check(_playing() == cfg.stages.alarm, "the alarm loop plays")
+	_check(_playing() == DreamAudio.ALARM, "the alarm loop plays")
 
 	# Ambush: unease and its stinger.
 	var ambush := DreamAmbush.new()
@@ -56,7 +59,7 @@ func _run() -> void:
 	ambush.ambush_started.emit()
 	await _frames(10)
 	_expect(DreamAudio.UNEASE, "ambush")
-	_check(_playing() == cfg.stages.unease, "the unease loop plays after the cross-fade")
+	_check(_playing() == DreamAudio.UNEASE, "the unease loop plays after the cross-fade")
 
 	# A strike of the chain (and not of another weapon).
 	var combat := DreamCombat.new()
@@ -100,7 +103,7 @@ func _expect(stage: StringName, label: String) -> void:
 	_check(DreamAudio.stage == stage, "%s: stage %s (got %s)" % [label, stage, DreamAudio.stage])
 
 
-## Sfx id of the loop that plays in front (the other player only fades out).
+## Stage of the loop that plays in front (the other player only fades out).
 func _playing() -> StringName:
 	var player: AudioStreamPlayer = DreamAudio._players[DreamAudio._current]
 	var looped := player.stream is AudioStreamWAV and (player.stream as AudioStreamWAV).loop_mode == AudioStreamWAV.LOOP_FORWARD
