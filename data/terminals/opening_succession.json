@@ -15,6 +15,7 @@
       ],
       "lines": [
         "АВАРИЙНОЕ УПРАВЛЕНИЕ КОМПЛЕКСОМ.",
+        "Терминал старшего смены. Вход — по личному ключу.",
         {
           "text": "Вставьте личный ключ.",
           "if": {
@@ -22,20 +23,60 @@
           }
         },
         {
-          "text": "Ключ: принят. Владелец: старший ████. Статус владельца: нет отклика.",
+          "text": "Ключ вставлен. Требуется проверка.",
           "if": {
-            "flag": "senior_key_taken"
+            "flag": "senior_key_taken",
+            "not_flag": "opening/succession_key_checked"
+          }
+        },
+        {
+          "text": "Ключ: подлинный. Владелец: старший смены ████.",
+          "if": {
+            "flag": "opening/succession_key_checked"
+          }
+        },
+        {
+          "text": "Оператор: охранник, таб. № 2-117 — не владелец ключа.",
+          "if": {
+            "flag": "opening/succession_operator_identified"
+          }
+        },
+        {
+          "text": "Смотритель комплекса: нет отклика.",
+          "if": {
+            "flag": "opening/succession_status_checked"
           }
         }
       ],
       "options": [
         {
-          "text": "Протокол преемственности",
-          "goto": "protocol",
+          "text": "Проверка ключа",
+          "goto": "key_check",
           "requires": {
             "flag": "senior_key_taken"
           },
           "locked_text": "нужен личный ключ"
+        },
+        {
+          "text": "Идентификация оператора",
+          "goto": "identify",
+          "visible_if": {
+            "flag": "opening/succession_key_checked"
+          }
+        },
+        {
+          "text": "Статус смотрителя",
+          "goto": "status",
+          "visible_if": {
+            "flag": "opening/succession_operator_identified"
+          }
+        },
+        {
+          "text": "Протокол преемственности",
+          "goto": "protocol",
+          "visible_if": {
+            "flag": "opening/succession_status_checked"
+          }
         },
         {
           "text": "Выход",
@@ -43,10 +84,87 @@
         }
       ]
     },
+    "key_check": {
+      "lines": [
+        "ПРОВЕРКА КЛЮЧА",
+        {
+          "text": "Чтение ключа…",
+          "wait": 1.0
+        },
+        {
+          "text": "Ключ: подлинный.",
+          "wait": 1.2
+        },
+        "Владелец ключа: СТАРШИЙ СМЕНЫ ████.",
+        "Уровень: аварийное управление комплексом."
+      ],
+      "effects": [
+        {
+          "set_flag": "opening/succession_key_checked"
+        }
+      ],
+      "next": "main"
+    },
+    "identify": {
+      "lines": [
+        "ИДЕНТИФИКАЦИЯ ОПЕРАТОРА",
+        {
+          "text": "Считывание пропуска оператора…",
+          "wait": 1.0
+        },
+        {
+          "text": "Пропуск: ТАБ. № 2-117 · ОХРАНА.",
+          "wait": 1.2
+        },
+        {
+          "text": "Сверка с владельцем ключа…",
+          "wait": 1.2
+        },
+        {
+          "text": "НЕ СОВПАДАЕТ. Ключ не принадлежит оператору.",
+          "wait": 1.0
+        },
+        "Действия от имени владельца ключа запрещены."
+      ],
+      "effects": [
+        {
+          "set_flag": "opening/succession_operator_identified"
+        }
+      ],
+      "next": "main"
+    },
+    "status": {
+      "lines": [
+        "СТАТУС СМОТРИТЕЛЯ",
+        "Смотритель комплекса по штату: СТАРШИЙ СМЕНЫ ████.",
+        {
+          "text": "Запрос по личному браслету…",
+          "wait": 1.0
+        },
+        {
+          "text": "Сигнал: нет.",
+          "wait": 1.2
+        },
+        {
+          "text": "Вызов по громкой связи…",
+          "wait": 1.2
+        },
+        {
+          "text": "Отклик: нет.",
+          "wait": 1.4
+        },
+        "Смотритель не на связи. Разрешён протокол преемственности."
+      ],
+      "effects": [
+        {
+          "set_flag": "opening/succession_status_checked"
+        }
+      ],
+      "next": "main"
+    },
     "protocol": {
       "lines": [
         "ПРОТОКОЛ ПРЕЕМСТВЕННОСТИ",
-        "Ключ не даёт права действовать от имени владельца.",
         {
           "text": "Поиск штатных операторов…",
           "wait": 1.0
