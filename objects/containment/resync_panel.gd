@@ -19,6 +19,9 @@ const ENTER_CAPTION := "ВВОД"
 const HOLD_SECONDS := 1.5
 const NEED_GLYPHS := "НУЖНО %d ЗНАКА"
 const CAPTION_SIZE := 26
+## Share of the key height the glyph takes; the phase code under it is small.
+const KEY_GLYPH_SHARE := 0.66
+const KEY_CODE_SIZE := 14
 const TITLE := "РЕСИНХРОНИЗАЦИЯ КАПСУЛЫ · %s"
 const EMPTY_SLOT := "_"
 const LOCK_NO_KNOWLEDGE := "НУЖНЫ ЗНАКИ ИЗ СНА"
@@ -114,10 +117,13 @@ func refresh() -> void:
 			rows.append_array(_rows(WRONG_LINE, &"alarm"))
 		var shown := held if entered.is_empty() and not held.is_empty() else entered
 		var slots := PackedStringArray()
+		var glyphs: Array[String] = []
 		for index in DreamKnowledge.code(id).size():
 			slots.append(DreamKnowledge.label(shown[index]) if index < shown.size() else EMPTY_SLOT)
+			glyphs.append(shown[index] if index < shown.size() else "")
 		rows.append({"text": "Введите знаки печати:", "status": &""})
-		rows.append({"text": DreamKnowledge.SEPARATOR.join(slots), "status": &"", "large": true})
+		# The slots are drawn as glyphs (#198); the text is their plain reading for tests.
+		rows.append({"text": DreamKnowledge.SEPARATOR.join(slots), "status": &"", "large": true, "glyphs": glyphs})
 	var powered := section.is_empty() or GameState.is_section_powered(section)
 	_screen.set_powered(powered)
 	if powered:
@@ -178,11 +184,12 @@ func _build_button(glyph: String, index: int) -> Interactable:
 	shape.size = BUTTON_SIZE + Vector3(0.02, 0.02, 0.04)
 	collision.shape = shape
 	body.add_child(collision)
-	var text := UiStyle.sign_label(DreamKnowledge.label(glyph), 22)
-	text.position = Vector3(0, -BUTTON_SIZE.y * 0.32, BUTTON_SIZE.z * 0.5 + 0.005)
+	# The drawn glyph is the key's face; its phase code is only a small service mark (#198).
+	var text := UiStyle.sign_label(DreamKnowledge.label(glyph), KEY_CODE_SIZE)
+	text.position = Vector3(0, -BUTTON_SIZE.y * 0.38, BUTTON_SIZE.z * 0.5 + 0.005)
 	body.add_child(text)
-	var mark := DreamGlyph.mesh_instance(glyph, BUTTON_SIZE.y * 0.55, DreamGlyph.flat_material(UiStyle.SIGN_TEXT))
-	mark.position = Vector3(0, BUTTON_SIZE.y * 0.08, BUTTON_SIZE.z * 0.5 + 0.004)
+	var mark := DreamGlyph.mesh_instance(glyph, BUTTON_SIZE.y * KEY_GLYPH_SHARE, DreamGlyph.flat_material(UiStyle.SIGN_TEXT))
+	mark.position = Vector3(0, BUTTON_SIZE.y * 0.1, BUTTON_SIZE.z * 0.5 + 0.004)
 	body.add_child(mark)
 	var interactable := Interactable.new()
 	interactable.prompt = "ВВЕСТИ ЗНАК · %s" % DreamKnowledge.label(glyph)
