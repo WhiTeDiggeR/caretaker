@@ -3,7 +3,7 @@ extends RefCounted
 ## #185: the dodge dash in the dream (B-14) — moves the hero, invulnerability, cooldown, the
 ## action works only with dream combat (not in the complex).
 
-const PLAYER := "res://scenes/player.tscn"
+const PLAYER := "res://scenes/player/player.tscn"
 
 
 func run(c: OpeningCheck) -> void:

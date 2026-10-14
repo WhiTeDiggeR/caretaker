@@ -2,7 +2,7 @@ extends RefCounted
 
 ## #124: crawling through low passages and vertical ladders.
 
-const PLAYER := "res://scenes/player.tscn"
+const PLAYER := "res://scenes/player/player.tscn"
 const LADDER := "res://objects/movement/ladder.tscn"
 const TIMEOUT_FRAMES := 400
 

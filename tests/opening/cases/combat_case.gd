@@ -2,7 +2,7 @@ extends RefCounted
 
 ## #127: dream combat — resolve, images (weapons), shades and the test dream arena.
 
-const PLAYER := "res://scenes/player.tscn"
+const PLAYER := "res://scenes/player/player.tscn"
 const TEST_DREAM := "res://scenes/dreams/test_dream.tscn"
 
 

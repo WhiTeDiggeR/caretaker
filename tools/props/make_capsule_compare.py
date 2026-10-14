@@ -37,7 +37,7 @@ COLS = (-7.5, 0.0, 7.5)
 
 
 def main() -> int:
-    ext = ['[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]',
+    ext = ['[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="player"]',
            '[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="hud"]',
            '[ext_resource type="Material" path="res://materials/hangar_concrete_floor.tres" id="floor_mat"]']
     sub = ['[sub_resource type="Environment" id="env"]', "background_mode = 1", "background_color = Color(0.02, 0.022, 0.026, 1)",
