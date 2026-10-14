@@ -24,6 +24,12 @@ const EYE_COLOR := Color(1.0, 0.45, 0.1)
 const WINDUP_COLOR := Color(1.0, 0.95, 0.6)
 
 @export var enemy_type: StringName = &"shade"
+## Optional look (#199, С-01): a model standing on the floor with its front to +Z, drawn with
+## `art_material`; the eyes move to `art_eye_height` over the body centre. Collision and
+## behaviour stay the capsule's. Without it the shade is the plain capsule.
+@export var art: PackedScene
+@export var art_material: Material
+@export var art_eye_height := EYE_HEIGHT
 ## Optional `func(point: Vector3) -> bool`: ground the shade must not step on (a hall threshold
 ## of an ambush, DreamAmbush); it stops at the border as at an edge.
 var forbidden_zone: Callable = Callable()
@@ -225,13 +231,17 @@ func _build() -> void:
 	var collision := CollisionShape3D.new()
 	collision.shape = shape
 	add_child(collision)
-	var body := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = RADIUS
-	mesh.height = HEIGHT
-	mesh.material = PropKit.material(BODY_COLOR)
-	body.mesh = mesh
-	add_child(body)
+	if art:
+		_build_art()
+	else:
+		var body := MeshInstance3D.new()
+		var mesh := CapsuleMesh.new()
+		mesh.radius = RADIUS
+		mesh.height = HEIGHT
+		mesh.material = PropKit.material(BODY_COLOR)
+		body.mesh = mesh
+		add_child(body)
+	var eye_height := art_eye_height if art else EYE_HEIGHT
 	_eye_material = PropKit.material(EYE_COLOR, true)
 	for side: float in [-1.0, 1.0]:
 		var eye := MeshInstance3D.new()
@@ -240,5 +250,16 @@ func _build() -> void:
 		sphere.height = 0.1
 		sphere.material = _eye_material
 		eye.mesh = sphere
-		eye.position = Vector3(side * 0.11, EYE_HEIGHT, -RADIUS + 0.03)
+		eye.position = Vector3(side * 0.11, eye_height, -RADIUS + 0.03)
 		add_child(eye)
+
+
+func _build_art() -> void:
+	var look := art.instantiate() as Node3D
+	look.name = "Art"
+	look.position = Vector3(0, -HEIGHT * 0.5, 0)
+	look.rotation.y = PI
+	add_child(look)
+	if art_material:
+		for mesh: Node in look.find_children("*", "MeshInstance3D", true, false):
+			(mesh as MeshInstance3D).material_override = art_material

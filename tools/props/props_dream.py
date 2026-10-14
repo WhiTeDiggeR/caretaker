@@ -340,3 +340,192 @@ def dream_gate_bowser(k: Kit):
     for x, h in ((-1.6, 0.7), (-0.8, 0.9), (0.0, 1.0), (0.8, 0.9), (1.6, 0.7)):
         y = 4.95 + (8.0 - 4.95) * (1 - abs(x) / 2.0) if abs(x) < 1.2 else 4.95 + (8.0 - 4.95) * (2.0 - abs(x)) / 0.8
         spike(k, (x, min(y, 8.0), 0), h, 0.16)
+
+
+# ============================================================================= third wave (#199): ПР-5, ПР-8, ПР-9
+CLOTH = "fabric_dark"        # the rotted cloak
+CAP = "red_paint_worn"       # the recognisable cap of the world's hero (Д-3, Д-7)
+WOOD = "wood_old"
+
+
+# ----------------------------------------------------------------------------- З-1 rubble in an arch
+@prop("dream_rubble_arch", "З-1", (5.2, 6.26, 2.63), "floor", 4000, views=VIEWS_WIDE,
+      notes="Rubble filling a 4 × 6 m arch of the yard's south wall up to the lintel; origin on the floor in the middle "
+            "of the arch (world 62, 1.2, 9.5); collision stays the blockout's stones")
+def dream_rubble_arch(k: Kit):
+    seed = 300
+    rows = ((0.6, 6, 0.75), (1.7, 5, 0.7), (2.8, 5, 0.65), (3.9, 4, 0.62), (4.9, 4, 0.55), (5.6, 3, 0.45))
+    for y, n, r in rows:
+        for i in range(n):
+            seed += 1
+            x = -2.0 + (i + 0.5) * 4.0 / n + ((seed * 37) % 11 - 5) * 0.03
+            z = ((seed * 53) % 7 - 3) * 0.08 + 0.3 - y * 0.04
+            k.chunk((x, y, z), (r * 1.4, r * 1.1, r * 1.25), seed, STONE, 18)
+    k.prism_x([(-0.5, 0.0), (0.35, 0.0), (0.15, 5.2), (-0.3, 5.5)], 3.3, 0.0, ROCK, 0.0)   # packed core behind the stones
+    for x, z, r in ((-1.6, 0.9, 0.45), (0.3, 1.0, 0.4), (1.5, 0.8, 0.5), (-0.6, -0.9, 0.4), (1.0, -0.95, 0.38)):
+        seed += 1
+        k.chunk((x, r * 0.6, z), (r, r * 0.7, r * 0.9), seed, STONE, 8)        # stones rolled off the pile
+    k.box((0.9, 0.5, 0.6), (-0.9, 0.6, 0.95), STONE, 0.03, 1, rot=(0, 18, 9))  # dressed blocks of the fallen arch
+    k.box((0.8, 0.45, 0.55), (1.1, 3.3, 0.5), STONE, 0.03, 1, rot=(12, -25, 6))
+    k.cyl(0.05, 1.8, (0.4, 2.2, 0.75), "x", IRON, 6, rot=(0, 20, 28))          # bent iron cramp
+    k.rescale(ground=True)
+
+
+# ----------------------------------------------------------------------------- З-2 lowered portcullis
+GRATE_W, GRATE_H = 3.0, 5.2
+
+
+@prop("dream_grate", "З-2", (3.36, 5.42, 0.36), "floor", 3000,
+      notes="Lowered portcullis 3 × 5.2 m, bars every 0.45 m with spiked feet; node Gate (pivot at the top) for a later "
+            "raise; origin on the floor in the middle, bars across X (world 90.5, 1.2, 0 turned 90°)")
+def dream_grate(k: Kit):
+    k.group("Gate", pivot=(0, GRATE_H, 0))
+    n = 7
+    for i in range(n):
+        x = -(n - 1) * 0.45 / 2 + i * 0.45
+        k.box((0.12, GRATE_H - 0.2, 0.12), (x, 0.1 + (GRATE_H - 0.2) / 2 + 0.1, 0), IRON, 0.01, 1)
+        k.cyl(0.07, 0.22, (x, 0.11, 0), "y", IRON, 4, r2=0.0, rot=(180, 0, 0))    # teeth bite the floor
+    for y in (1.4, 2.9, 4.4):
+        k.box((GRATE_W, 0.16, 0.2), (0, y, 0), IRON, 0.01, 1)
+        for i in range(n):
+            x = -(n - 1) * 0.45 / 2 + i * 0.45
+            k.box((0.2, 0.2, 0.26), (x, y, 0), IRON, 0.01, 1)                  # rivet plates
+    k.box((GRATE_W + 0.24, 0.3, 0.36), (0, GRATE_H + 0.07, 0), IRON, 0.02, 1)  # head beam
+    for s in (-1, 1):
+        k.box((0.12, 0.6, 0.3), (s * 1.62, GRATE_H - 0.2, 0), IRON, 0.01, 1)
+    k.body()
+
+
+# ----------------------------------------------------------------------------- З-3 collapsed stair
+@prop("dream_stair_collapsed", "З-3", (6.72, 5.8, 2.66), "free", 3000, views=VIEWS_WIDE,
+      notes="Stair along the north wall to the +6 m gallery, broken off after 2 m of rise: fine steps over the "
+            "blockout's four 1 × 0.5 m steps, a jagged stump, steps hanging from the wall above, debris; origin on the "
+            "floor at the foot (world 63, 1.2, -8.25), climbing +X")
+def dream_stair_collapsed(k: Kit):
+    for i in range(8):                                                          # 0.5 run × 0.25 rise
+        top = 0.25 * (i + 1)
+        k.box((0.5, top, 1.5), (0.25 + i * 0.5, top / 2, 0), STONE, 0.02, 1)
+        k.box((0.54, 0.06, 1.54), (0.25 + i * 0.5, top - 0.03, 0.0), FLOOR, 0.01, 1)
+    k.chunk((4.2, 1.9, 0.0), (0.45, 0.55, 0.75), 401, STONE, 9)               # jagged stump
+    k.chunk((4.5, 1.2, -0.2), (0.4, 0.6, 0.6), 402, STONE, 9)
+    for i in range(4):                                                          # the flight still keyed into the wall
+        top = 4.6 + 0.25 * i
+        k.box((0.5, 0.6, 1.2), (4.95 + i * 0.5, top - 0.3, -0.15), STONE, 0.02, 1)
+    k.box((2.2, 0.3, 1.4), (6.4 - 0.9, 5.65, -0.1), FLOOR, 0.02, 1)          # broken landing slab
+    k.chunk((5.0, 4.2, -0.15), (0.35, 0.35, 0.55), 403, STONE, 8)             # broken underside
+    for x, z, r, s in ((4.6, 1.3, 0.45, 404), (5.0, 0.8, 0.32, 405), (4.0, 1.6, 0.3, 406), (3.6, 1.2, 0.3, 407)):
+        k.chunk((x, r * 0.6, z), (r * 1.2, r * 0.7, r), s, STONE, 8)           # steps lying where they fell
+    k.box((0.5, 0.25, 1.5), (4.8, 0.2, 1.1), STONE, 0.02, 1, rot=(0, 30, 8))
+
+
+# ----------------------------------------------------------------------------- Н-01 remains of the world's hero
+@prop("dream_hero_remains", "Н-01", (1.86, 1.16, 1.86), "floor", 6000, views=[((0.9, 0.6, 1.4), (0, 0, 0)), ((-1.2, 0.8, 0.9), (0, 0, 0))],
+      notes="Remains sitting against the niche wall under a rotted cloak, no face (Д-3); the recognisable cap lies at "
+            "the knee, the hero's mallet beside; origin on the floor under the body, back to -Z")
+def dream_hero_remains(k: Kit):
+    # cloak: one draped shape from the floor folds to the hood, slumped forward
+    lathe(k, [(0.0, 0.0), (0.56, 0.0), (0.5, 0.12), (0.42, 0.35), (0.34, 0.58), (0.24, 0.72), (0.15, 0.8), (0.19, 0.9),
+              (0.17, 1.02), (0.08, 1.1), (0.0, 1.12)], CLOTH, 20, center=(0.0, 0.0, -0.25))
+    k.sphere(0.13, (0.0, 0.9, -0.1), "collar_black", 10, scale=(0.9, 1.0, 0.45))   # the empty dark of the hood
+    for i, (x, z) in enumerate(((-0.5, 0.0), (0.46, -0.05), (-0.25, 0.3), (0.35, -0.55), (0.0, 0.25))):
+        k.chunk((x, 0.04, z - 0.2), (0.24, 0.07, 0.2), 500 + i, CLOTH, 8)        # folds on the floor
+    # legs: knees up out of the cloak
+    for s in (-1, 1):
+        knee = (s * 0.17, 0.36, 0.38)
+        k.tube([(s * 0.14, 0.2, -0.05), knee], 0.045, BONE, 8)
+        k.tube([knee, (s * 0.2, 0.06, 0.72)], 0.038, BONE, 8)
+        k.sphere(0.055, knee, BONE, 8)
+        k.box((0.1, 0.05, 0.22), (s * 0.2, 0.025, 0.82), BONE, 0.01, 1)
+    # arms: the right one reaching down to the floor (to the note), the left one on the knee
+    k.tube([(0.3, 0.6, -0.15), (0.44, 0.36, 0.1), (0.38, 0.06, 0.45)], 0.034, BONE, 8)
+    for f in range(4):
+        k.tube([(0.35 + f * 0.022, 0.05, 0.47), (0.33 + f * 0.03, 0.02, 0.56)], 0.011, BONE, 5)
+    k.tube([(-0.3, 0.6, -0.15), (-0.34, 0.42, 0.18), (-0.2, 0.4, 0.38)], 0.034, BONE, 8)
+    # the cap (Д-3): round crown and a peak, fallen by the right knee
+    k.sphere(0.16, (-0.55, 0.06, 0.45), CAP, 16, scale=(1.0, 0.6, 1.0))
+    k.cyl(0.165, 0.02, (-0.55, 0.06, 0.45), "y", CAP, 20)
+    k.box((0.24, 0.02, 0.13), (-0.55, 0.035, 0.63), CAP, 0.005, 1, rot=(0, 0, 6))
+    k.cyl(0.05, 0.004, (-0.55, 0.155, 0.53), "x", "white_paint_worn", 14, rot=(0, 0, 0))  # blank badge (emblem: ПР-12)
+    # the hero's mallet beside him
+    k.cyl(0.025, 0.7, (0.72, 0.03, 0.15), "x", WOOD, 8, rot=(0, -35, 0))
+    k.cyl(0.11, 0.3, (0.98, 0.11, 0.33), "z", WOOD, 12, rot=(0, -35, 0), cap_bevel=0.015)
+    k.torus(0.11, 0.012, (0.98, 0.11, 0.33), "z", IRON, 14, 4)
+    k.rescale(centre_xz=True, ground=True)
+
+
+# ----------------------------------------------------------------------------- Н-04 brazier
+@prop("dream_brazier", "Н-04", (1.02, 1.48, 1.04), "floor", 2000,
+      notes="Iron brazier: bowl Ø 1 on three spiked legs, cold coals; DreamRemains lights its Fire (OmniLight3D) at "
+            "0.8 m over the Brazier body, i.e. 1.3 m over the floor")
+def dream_brazier(k: Kit):
+    lathe(k, [(0.5, 1.3), (0.44, 1.05), (0.3, 0.9), (0.08, 0.86), (0.0, 0.86), (0.0, 0.92), (0.26, 0.96), (0.4, 1.1),
+              (0.46, 1.3)], IRON, 24)
+    lathe(k, [(0.15, 0.0), (0.2, 0.0), (0.2, 0.06), (0.15, 0.06)], IRON, 16)
+    k.cyl(0.07, 0.86, (0, 0.43, 0), "y", IRON, 8)
+    for i in range(3):
+        a = 2 * math.pi * i / 3
+        x, z = math.sin(a), math.cos(a)
+        k.box((0.06, 0.95, 0.06), (x * 0.33, 0.55, z * 0.33), IRON, 0.005, 1, rot=(math.degrees(-0.35 * z), 0, math.degrees(0.35 * x)))
+        spike(k, (x * 0.5, 1.28, z * 0.5), 0.2, 0.04, seg=5)
+    k.torus(0.48, 0.03, (0, 1.29, 0), "y", BRONZE, 24, 4)
+    for i in range(7):
+        k.chunk((math.sin(i * 1.7) * 0.22, 1.05, math.cos(i * 1.7) * 0.22), (0.11, 0.07, 0.1), 600 + i, ROCK, 7)
+
+
+# ----------------------------------------------------------------------------- guard niche frame (К-02 dressing)
+@prop("dream_guard_niche", "К-02", (3.46, 4.4, 0.9), "floor", 1500, center_z=False,
+      notes="Frame round a 2.5 × 3.5 m guard niche of the yard: jambs, spiked lintel, dark back; origin on the floor at "
+            "the back of the niche, opening to +Z (#184 guards stand in front of it)")
+def dream_guard_niche(k: Kit):
+    for s in (-1, 1):
+        k.box((0.4, 3.9, 0.6), (s * 1.5, 1.95, 0.3), STONE, 0.03, 1)
+        k.box((0.46, 0.25, 0.62), (s * 1.5, 0.125, 0.31), STONE, 0.03, 1)
+    k.box((3.4, 0.5, 0.6), (0, 4.15, 0.3), STONE, 0.03, 1)
+    for x in (-1.0, 0.0, 1.0):
+        spike(k, (x, 3.9, 0.55), 0.35, 0.07, "+z", BONE, 5)
+    k.box((2.6, 0.1, 0.5), (0, 0.05, 0.25), FLOOR, 0.01, 1)
+
+
+# ----------------------------------------------------------------------------- С-01 shadow guard
+@prop("dream_shade_guard", "С-01", (1.79, 2.6, 1.27), "floor", 15000, center_z=False, views=[((0.8, 0.5, 1.4), (0, 0, 0)), ((-1.2, 0.4, -1.0), (0, 0, 0))],
+      notes="Armoured warrior 2.6 m (Д-2): spiked carapace on the back, horned helm, claws; one material (DreamEnemy "
+            "overrides it with the shadow shader DT-12), no skeleton; origin on the floor, front +Z")
+def dream_shade_guard(k: Kit):
+    m = BONE
+    for s in (-1, 1):                                                           # legs
+        k.cyl(0.14, 0.62, (s * 0.24, 0.42, 0.04), "y", m, 10, r2=0.11)
+        k.sphere(0.13, (s * 0.24, 0.76, 0.06), m, 10)
+        k.cyl(0.17, 0.55, (s * 0.25, 1.02, 0.0), "y", m, 10, r2=0.14)
+        k.box((0.26, 0.14, 0.42), (s * 0.24, 0.07, 0.1), m, 0.03, 1)
+        for c in (-0.08, 0.0, 0.08):
+            spike(k, (s * 0.24 + c, 0.06, 0.31), 0.12, 0.03, "+z", m, 4)
+        spike(k, (s * 0.24, 0.8, 0.17), 0.16, 0.05, "+z", m, 5)                 # knee spikes
+    k.sphere(0.36, (0, 1.38, 0.0), m, 14, scale=(1.0, 0.65, 0.85))             # hips
+    k.sphere(0.48, (0, 1.78, 0.02), m, 16, scale=(1.0, 0.95, 0.8))            # chest
+    k.box((0.5, 0.3, 0.12), (0, 1.62, 0.37), m, 0.04, 1)                       # belly plates
+    k.box((0.44, 0.22, 0.12), (0, 1.36, 0.3), m, 0.04, 1)
+    k.sphere(0.58, (0, 1.82, -0.3), m, 18, scale=(1.05, 1.1, 0.55))           # carapace
+    k.torus(0.5, 0.05, (0, 1.82, -0.42), "z", m, 24, 5)
+    for y, xs in ((2.25, (-0.25, 0.25)), (1.9, (-0.42, 0.0, 0.42)), (1.5, (-0.3, 0.3))):
+        for x in xs:
+            spike(k, (x, y, -0.55), 0.38, 0.1, "-z", m, 6)
+    for s in (-1, 1):                                                           # pauldrons and arms
+        k.sphere(0.24, (s * 0.58, 2.1, 0.0), m, 12, scale=(1.0, 0.8, 1.0))
+        spike(k, (s * 0.62, 2.22, 0.0), 0.3, 0.07, "up", m, 5)
+        spike(k, (s * 0.72, 2.12, 0.0), 0.24, 0.06, "+x" if s > 0 else "-x", m, 5)
+        k.cyl(0.11, 0.5, (s * 0.66, 1.78, 0.04), "y", m, 8, r2=0.1)
+        k.cyl(0.1, 0.5, (s * 0.7, 1.32, 0.12), "y", m, 8, r2=0.12, rot=(-15, 0, 0))
+        k.torus(0.12, 0.03, (s * 0.7, 1.3, 0.12), "y", m, 12, 4)
+        k.sphere(0.12, (s * 0.71, 1.0, 0.2), m, 10)
+        for c in (-0.05, 0.0, 0.05):
+            k.cyl(0.02, 0.2, (s * 0.71 + c, 0.88, 0.27), "y", m, 4, r2=0.0, rot=(180, 0, 0))   # claws
+    k.cyl(0.13, 0.16, (0, 2.3, 0.04), "y", m, 8)                               # neck
+    k.sphere(0.24, (0, 2.46, 0.08), m, 14, scale=(0.95, 0.85, 1.05))           # helm
+    k.box((0.3, 0.12, 0.2), (0, 2.34, 0.26), m, 0.03, 1)                       # jaw guard
+    for s in (-1, 1):
+        k.tube([(s * 0.16, 2.55, 0.05), (s * 0.34, 2.62, 0.0), (s * 0.44, 2.75, -0.08), (s * 0.4, 2.6 + 0.0, -0.18)],
+               0.045, m, 8)                                                     # curled horns
+        k.cyl(0.05, 0.1, (s * 0.4, 2.56, -0.2), "y", m, 6, r2=0.0, rot=(180, 0, 0))
+    spike(k, (0, 2.62, 0.0), 0.14, 0.05, "up", m, 5)
+    f = 2.6 / 2.79                                                              # horns and crest end at 2.6 m
+    k.rescale(f, f, f, ground=True)
