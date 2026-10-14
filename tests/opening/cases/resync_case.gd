@@ -11,7 +11,27 @@ const KNOWLEDGE := &"module_4_seal"
 func run(c: OpeningCheck) -> void:
 	Containment.set_process(false)
 	var glyphs := DreamKnowledge.glyphs()
-	c.is_true(glyphs.size() >= 3, "glyph set is configured")
+	c.equal(glyphs, PackedStringArray(["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8"]), "eight glyphs by id (#194)")
+	for id in glyphs:
+		c.equal(DreamKnowledge.label(id), "Ф-%s" % id.substr(1), "glyph %s has its phase code" % id)
+		c.is_true(not DreamGlyph.polylines(id).is_empty(), "glyph %s has strokes" % id)
+		c.is_true(not str(DreamKnowledge.image(&"bowser", id).get("title", "")).is_empty(), "the Bowser dream sees glyph %s as an image" % id)
+	var data := FileAccess.get_file_as_string(DreamKnowledge.DATA_PATH)
+	for word in ["КОРОНА", "ЦЕПЬ", "ПЛАМЯ", "КЛЮЧ", "ГЛАЗ", "БАШНЯ"]:
+		c.is_true(not data.contains(word), "the old word glyph %s is gone" % word)
+	var view := DreamGlyphView.new()
+	view.size = Vector2(24, 24)
+	c.is_true(view.stroke_width() >= DreamGlyph.MIN_UI_WIDTH, "a 24 px glyph keeps a 2 px stroke")
+	view.free()
+	DreamKnowledge.visit_version = &"v3"
+	c.equal(DreamKnowledge.code_length(KNOWLEDGE), 4, "a V3 visit asks for four glyphs")
+	DreamKnowledge.visit_version = &""
+	c.equal(DreamKnowledge.code_length(KNOWLEDGE), 3, "by default the code has three glyphs")
+	# A save from the word glyphs drops its knowledge without an error.
+	GameState.set_system_data(DreamKnowledge.SYSTEM, {"entries": {"module_4_seal": {"code": ["КОРОНА", "ЦЕПЬ", "ПЛАМЯ"], "used": false}}, "order": ["module_4_seal"], "pending": {"module_4_seal": ["КЛЮЧ", "ГЛАЗ", "БАШНЯ"]}})
+	c.is_true(not DreamKnowledge.has(KNOWLEDGE) and DreamKnowledge.active_for(MODULE).is_empty(), "old word knowledge is dropped")
+	c.is_true(DreamKnowledge.prepare(KNOWLEDGE)[0] in glyphs, "a fresh code replaces the old pending one")
+	GameState.reset()
 	c.equal(DreamKnowledge.definition(KNOWLEDGE).get("module"), "module_4", "seal knowledge belongs to module 4")
 
 	var panel := (load(PANEL) as PackedScene).instantiate() as ResyncPanel
@@ -20,6 +40,7 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(first != null, "panel has a button per glyph")
 	c.is_true(not first.is_available(), "without knowledge the panel is locked")
 	c.equal(first.get_prompt_text(), ResyncPanel.LOCK_NO_KNOWLEDGE, "the lock says what is needed")
+	c.equal(first.prompt, "ВВЕСТИ ЗНАК · Ф-1", "the key names the phase code")
 	c.is_true(panel.screen_text().contains("Нужны знаки"), "the screen explains how to get the glyphs")
 
 	# A seal restored inside the dream grants the knowledge once.

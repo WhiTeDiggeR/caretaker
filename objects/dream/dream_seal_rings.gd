@@ -2,11 +2,13 @@ class_name DreamSealRings
 extends DreamSeal
 
 ## Seal of three rings (#183; docs/game_design/06-bowser-dream-world.md, section 6, B-7).
-## Each ring carries the six glyphs of DreamKnowledge and turns by 1/6 with its own lever at
+## Each ring carries six of the eight glyphs of DreamKnowledge as images of the dream
+## (DreamGlyphImage) and turns by 1/6 with its own lever at
 ## the edge of the disc. The correct positions come from the visit's code
 ## (`DreamKnowledge.prepare`): ring i is right when the glyph code[i] stands under the
 ## reading mark (outer → inner), and then its piece of the light crack lies on the mark too.
-## When all three are right the crack runs unbroken from the edge to the core and the seal
+## The glyph inside an image stays muted until its ring is right; then the code glyph under
+## the mark shows white (#194, author's note to З-2). When all three are right the crack runs unbroken from the edge to the core and the seal
 ## ends in the same chain as `DreamSeal` (`complete()`). A wrong turn costs only time (B-10):
 ## a hum and sparks. The glow is white (B-5). The ring positions are kept in GameState system
 ## data, so the dream remembers them across saves and returns within a visit; a new visit
@@ -16,7 +18,8 @@ signal ring_turned(ring: int, position: int)
 
 const RING_COUNT := 3
 const POSITIONS := 6
-## Each ring lists the glyphs from its own place in the set, so the rings do not read alike.
+## Each ring lists six glyphs from its own place in the set, so the rings do not read alike;
+## the code glyph replaces the last one when the ring's six lack it.
 const RING_OFFSETS: Array[int] = [0, 2, 4]
 const RING_NAMES: Array[String] = ["НАРУЖНОЕ", "СРЕДНЕЕ", "ВНУТРЕННЕЕ"]
 const SYSTEM := &"dream_seal_rings"
@@ -59,7 +62,7 @@ var levers: Array[Interactable] = []
 var _code := PackedStringArray()
 var _pivots: Array[Node3D] = []
 var _crack_materials: Array[StandardMaterial3D] = []
-var _glyph_labels: Array[Label3D] = []
+var _glyph_images: Array[Array] = [[], [], []]
 var _sparks: Array[CPUParticles3D] = []
 var _tweens: Array[Tween] = [null, null, null]
 var _light: OmniLight3D
@@ -96,7 +99,14 @@ func ring_glyphs(ring: int) -> PackedStringArray:
 	var result := PackedStringArray()
 	for sector in POSITIONS:
 		result.append(pool[(sector + RING_OFFSETS[ring]) % pool.size()])
+	if ring < _code.size() and not _code[ring] in result:
+		result[POSITIONS - 1] = _code[ring]
 	return result
+
+
+## Whether the glyph of `ring` at `sector` shows (its ring is right and it is under the mark).
+func is_glyph_revealed(ring: int, sector: int) -> bool:
+	return (_glyph_images[ring][sector] as DreamGlyphImage).revealed
 
 
 ## The glyph under the reading mark for each ring, outer first.
@@ -167,8 +177,10 @@ func _refresh() -> void:
 		_crack_materials[ring].emission_energy_multiplier = CRACK_BRIGHT if lit else CRACK_DIM
 		levers[ring].available = not restored
 		levers[ring].unavailable_prompt = PROMPT_DONE if restored else ""
-	for label in _glyph_labels:
-		label.modulate = WHITE if restored else Color(0.85, 0.8, 0.72)
+	for ring in RING_COUNT:
+		for sector in POSITIONS:
+			var lit := (restored or is_ring_aligned(ring)) and sector == positions[ring]
+			(_glyph_images[ring][sector] as DreamGlyphImage).revealed = lit
 	_show(restored)
 
 
@@ -316,16 +328,14 @@ func _build_ring(ring: int) -> void:
 	var middle := (radii.x + radii.y) * 0.5
 	for sector in POSITIONS:
 		var angle := float(sector) * TAU / POSITIONS
-		var label := Label3D.new()
-		label.text = glyphs[sector]
-		label.font_size = 40
-		label.pixel_size = 0.004 * (1.0 + 0.3 * (RING_COUNT - 1 - ring) / float(RING_COUNT))
-		label.outline_size = 8
+		var image := DreamGlyphImage.new()
+		image.glyph_id = glyphs[sector]
+		image.size = minf(radii.y - radii.x, 0.9) * 0.8
 		# Lies flat on the ring, read from the edge looking at the core.
-		label.position = Vector3(sin(angle) * (middle + 0.12), _ring_top(ring) + 0.01, cos(angle) * (middle + 0.12))
-		label.rotation = Vector3(-PI * 0.5, angle, 0)
-		pivot.add_child(label)
-		_glyph_labels.append(label)
+		image.position = Vector3(sin(angle) * middle, _ring_top(ring) + 0.012, cos(angle) * middle)
+		image.rotation = Vector3(-PI * 0.5, angle, 0)
+		pivot.add_child(image)
+		_glyph_images[ring].append(image)
 	var crack := MeshInstance3D.new()
 	crack.name = "Crack"
 	var crack_mesh := BoxMesh.new()

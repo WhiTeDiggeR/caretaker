@@ -35,7 +35,7 @@ func complete() -> void:
 	_show(true)
 	if first and not knowledge_id.is_empty():
 		var code := DreamKnowledge.grant(knowledge_id)
-		get_tree().call_group(MESSAGE_GROUP, "show_message", REMEMBERED_TITLE, REMEMBERED_TEXT % DreamKnowledge.SEPARATOR.join(code))
+		get_tree().call_group(MESSAGE_GROUP, "show_message", REMEMBERED_TITLE, REMEMBERED_TEXT % DreamKnowledge.labels_text(code))
 
 
 func _show(restored: bool) -> void:

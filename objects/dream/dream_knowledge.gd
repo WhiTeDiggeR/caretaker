@@ -5,7 +5,10 @@ extends RefCounted
 ## material leaves a dream, but the hero remembers what he saw. A restored seal grants a
 ## knowledge entry with a random sequence of glyphs; the journal shows it, and the module's
 ## resync panel takes it as input. Every visit grants a new sequence, and a used one is spent.
-## Definitions: data/dreams/knowledge.json. State: GameState system data (saved with the game).
+## Glyphs are the eight capsule phase marks Ф-1…Ф-8, kept by id (f1…f8; 07-dream-glyphs.md,
+## sections 5–6); each dream sees them as its own images (`image`). The shapes are drawn by
+## DreamGlyph. Definitions: data/dreams/knowledge.json. State: GameState system data (saved
+## with the game); entries from older saves with unknown glyphs are dropped without an error.
 
 enum Result { SYNCED, WRONG, NO_KNOWLEDGE, AWAKE }
 
@@ -23,9 +26,50 @@ static func reload() -> void:
 	_loaded = true
 
 
+## Story version of the current visit (v1…v4); picks `length_by_version` of a knowledge.
+static var visit_version: StringName = &""
+
+
+## Ids of the glyph set, Ф-1 first.
 static func glyphs() -> PackedStringArray:
 	_ensure()
-	return PackedStringArray(_data.get("glyphs", []))
+	var result := PackedStringArray()
+	for glyph: Dictionary in _data.get("glyphs", []):
+		result.append(str(glyph.get("id", "")))
+	return result
+
+
+static func glyph(id: String) -> Dictionary:
+	_ensure()
+	for entry: Dictionary in _data.get("glyphs", []):
+		if str(entry.get("id", "")) == id:
+			return entry
+	return {}
+
+
+## The service code of a glyph shown in the complex ("Ф-2"); the id for an unknown one.
+static func label(id: String) -> String:
+	return str(glyph(id).get("code", id))
+
+
+static func labels_text(ids: PackedStringArray) -> String:
+	var result := PackedStringArray()
+	for id in ids:
+		result.append(label(id))
+	return SEPARATOR.join(result)
+
+
+## How `dream` sees the glyph `id`: {"title", "tint"}; empty when the dream has no image.
+static func image(dream: StringName, id: String) -> Dictionary:
+	_ensure()
+	return ((_data.get("dream_images", {}) as Dictionary).get(String(dream), {}) as Dictionary).get(id, {})
+
+
+## Code length of knowledge `id` on this visit: by `visit_version`, else `length`.
+static func code_length(id: StringName) -> int:
+	var config := definition(id)
+	var by_version: Dictionary = config.get("length_by_version", {})
+	return int(by_version.get(String(visit_version), config.get("length", 3)))
 
 
 static func definition(id: StringName) -> Dictionary:
@@ -88,7 +132,7 @@ static func code(id: StringName) -> PackedStringArray:
 
 
 static func code_text(id: StringName) -> String:
-	return SEPARATOR.join(code(id))
+	return labels_text(code(id))
 
 
 ## The unspent knowledge for `module`, or an empty id.
@@ -139,7 +183,7 @@ static func _roll(id: StringName, rng: RandomNumberGenerator) -> PackedStringArr
 		rng.randomize()
 	var pool := glyphs()
 	var code := PackedStringArray()
-	for _i in mini(int(config.get("length", 3)), pool.size()):
+	for _i in mini(code_length(id), pool.size()):
 		var index := rng.randi_range(0, pool.size() - 1)
 		code.append(pool[index])
 		pool.remove_at(index)
@@ -154,7 +198,24 @@ static func _state() -> Dictionary:
 	var state := GameState.get_system_data(SYSTEM).duplicate(true)
 	if not state.has("entries"):
 		state["entries"] = {}
+	_drop_unknown(state, "pending")
+	_drop_unknown(state, "entries")
 	return state
+
+
+## Removes sequences with glyphs outside the set (saves from the word glyphs, before #194).
+static func _drop_unknown(state: Dictionary, key: String) -> void:
+	var known := glyphs()
+	var section: Dictionary = state.get(key, {})
+	for id: String in section.keys():
+		var value: Variant = section[id]
+		var sequence: Array = value.get("code", []) if value is Dictionary else value
+		for item: Variant in sequence:
+			if not str(item) in known:
+				section.erase(id)
+				var order: Array = state.get("order", [])
+				order.erase(id)
+				break
 
 
 static func _ensure() -> void:

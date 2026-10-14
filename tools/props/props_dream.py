@@ -271,7 +271,7 @@ def ring_radii(i: int):
 @prop("dream_seal", "ПЧ-1", (8.4, 0.8, 8.4), "floor", 20000, views=[((0.4, 1.0, 1.0), (0, 0, 0)), ((1.2, 0.5, 0.6), (0, 0, 0))],
       notes="Seal disc Ø 8 with three stepped rings (tops 0.45 / 0.6 / 0.75): nodes Ring1..Ring3 pivot at the disc top "
             "(y 0.3) in the centre; each ring carries six empty glyph sockets for #188 at the angle k·60° from +Z, "
-            "radius = ring middle + 0.12 (where DreamSealRings puts its glyphs)")
+            "radius = ring middle, Ø 0.84 (where DreamSealRings lays its glyph images)")
 def dream_seal(k: Kit):
     lathe(k, [(0.0, 0.0), (SEAL_R + 0.12, 0.0), (SEAL_R + 0.12, 0.2), (SEAL_R, SEAL_DISC), (0.0, SEAL_DISC)], FLOOR, 72)
     lathe(k, [(SEAL_R + 0.13, 0.04), (SEAL_R + 0.2, 0.04), (SEAL_R + 0.2, 0.16), (SEAL_R + 0.13, 0.16)], BRONZE, 72)
@@ -285,12 +285,12 @@ def dream_seal(k: Kit):
               FLOOR, 72)
         lathe(k, [(hi - 0.02, top - 0.14), (hi + 0.015, top - 0.14), (hi + 0.015, top - 0.04), (hi - 0.02, top - 0.04)],
               BRONZE, 72)
-        mid = (lo + hi) / 2 + 0.12
+        mid = (lo + hi) / 2
         for s in range(SOCKETS):
             a = 2 * math.pi * s / SOCKETS
             c = (math.sin(a) * mid, top, math.cos(a) * mid)
-            k.torus(0.17, 0.025, (c[0], top + 0.005, c[2]), "y", BRONZE, 16, 4)
-            k.cyl(0.15, 0.02, (c[0], top - 0.004, c[2]), "y", IRON, 16)
+            k.torus(0.42, 0.03, (c[0], top + 0.006, c[2]), "y", BRONZE, 24, 4)
+            k.cyl(0.4, 0.02, (c[0], top - 0.004, c[2]), "y", IRON, 24)
     k.body()
 
 
