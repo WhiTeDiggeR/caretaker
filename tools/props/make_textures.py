@@ -238,16 +238,79 @@ def fabric_dark(size):
     return albedo, height, T.cavity(height, 2), rough, np.zeros_like(rough), 4.0
 
 
+# Bowser's dream (docs/art/dream-bowser-s.md, DT-01b, DT-04, DT-05, DT-07).
+def dream_spike_bone(size):
+    n1, n2, fine = T.fbm(301, 2.6), T.fbm(302, 1.8, stretch=(1.0, 0.25)), T.fbm(303, 1.1)
+    _, edge, _ = T.voronoi(304, 6, size)
+    crack = (1 - T.smoothstep(0.0, 0.06, edge)) * T.smoothstep(0.45, 0.65, T.fbm(305, 2.2))
+    albedo = T.colorize(n1 * 0.6 + n2 * 0.4, [(0.0, (0.42, 0.38, 0.33)), (0.6, (0.62, 0.57, 0.49)), (1.0, (0.74, 0.69, 0.6))])
+    albedo = albedo * (0.9 + 0.15 * fine[..., None]) * (1 - 0.55 * crack[..., None])
+    soot = T.smoothstep(0.55, 0.85, T.fbm(306, 2.0, stretch=(1.0, 0.1)))
+    albedo = albedo * (1 - 0.5 * soot[..., None])
+    height = 0.5 + n2 * 0.12 + fine * 0.04 - crack * 0.2
+    rough = np.clip(0.62 + fine * 0.15 + soot * 0.1 - n2 * 0.08, 0.3, 1)
+    return albedo, height, T.cavity(height, 5), rough, np.zeros_like(rough), 3.0
+
+
+def dream_iron(size):
+    """Black forged iron: hammer dents, a dark #1a1718 base with worn lighter edges."""
+    _, edge, cell = T.voronoi(311, 14, size)
+    dent = T.smoothstep(0.0, 0.35, edge)
+    br, blotch, fine = T.fbm(312, 1.6, stretch=(0.05, 1.0)), T.fbm(313, 2.6), T.fbm(314, 1.0)
+    scr_fine, scr_deep = _scratches(315, 220, 40, 0.0, 0.5)
+    albedo = T.lerp(_c(0.085, 0.078, 0.082), _c(0.14, 0.13, 0.13), (0.5 * blotch + 0.3 * br + 0.2 * cell)[..., None])
+    albedo = np.clip(albedo + scr_fine[..., None] * 0.05 + scr_deep[..., None] * 0.09, 0, 1)
+    scale = T.smoothstep(0.6, 0.85, T.fbm(316, 2.4))
+    albedo = albedo * (1 - 0.3 * scale[..., None]) + _c(0.12, 0.06, 0.04) * (0.3 * scale[..., None])
+    height = 0.5 + dent * 0.08 + br * 0.03 + fine * 0.03 - scr_deep * 0.06
+    rough = np.clip(0.55 + (blotch - 0.5) * 0.15 + scale * 0.25 - scr_fine * 0.15, 0.25, 1)
+    metal = np.clip(0.9 - scale * 0.6, 0, 1)
+    return albedo, height, T.cavity(height, 5), rough, metal, 3.5
+
+
+def dream_bronze(size):
+    """Bronze #b8913a with green patina settling in the low areas."""
+    n1, n2, fine = T.fbm(321, 2.4), T.fbm(322, 1.5), T.fbm(323, 1.0)
+    scr_fine, _ = _scratches(324, 200, 10, 0.0, 0.6)
+    height = 0.5 + n1 * 0.08 + fine * 0.03
+    low = 1.0 - T.cavity(height, 8)
+    patina = np.clip(T.smoothstep(0.5, 0.8, n2) * 0.7 + low * 2.0, 0, 1)
+    metal_c = T.lerp(_c(0.6, 0.45, 0.19), _c(0.76, 0.6, 0.27), (0.6 * n1 + 0.4 * fine)[..., None])
+    metal_c = np.clip(metal_c + scr_fine[..., None] * 0.08, 0, 1)
+    pat_c = T.lerp(_c(0.16, 0.3, 0.24), _c(0.28, 0.45, 0.36), fine[..., None])
+    albedo = metal_c * (1 - patina[..., None]) + pat_c * patina[..., None]
+    rough = np.clip(0.4 + patina * 0.45 + fine * 0.05 - scr_fine * 0.1, 0.2, 1)
+    metal = np.clip(1.0 - patina, 0, 1)
+    return albedo, height, T.cavity(height, 5), rough, metal, 2.5
+
+
+def dream_lava(size):
+    """Lava crust plates over a molten flow. The seventh value is the glow mask (_heat.png) for lava.gdshader."""
+    f1, edge, cell = T.voronoi(331, 7, size)
+    warp = T.fbm(332, 2.2)
+    crack = 1 - T.smoothstep(0.0, 0.16, edge + (warp - 0.5) * 0.12)
+    molten = np.clip(crack + T.smoothstep(0.78, 0.95, cell * 0.5 + T.fbm(333, 1.8) * 0.5), 0, 1)
+    fine = T.fbm(334, 1.2)
+    crust = T.colorize(T.fbm(335, 2.0) * 0.7 + fine * 0.3, [(0.0, (0.03, 0.025, 0.025)), (0.7, (0.08, 0.06, 0.055)), (1.0, (0.13, 0.09, 0.08))])
+    hot = T.colorize(molten, [(0.0, (0.25, 0.05, 0.02)), (1.0, (1.0, 0.45, 0.1))])
+    albedo = crust * (1 - molten[..., None]) + hot * molten[..., None]
+    height = 0.5 + (1 - f1) * 0.12 + fine * 0.05 - molten * 0.25
+    rough = np.clip(0.85 - molten * 0.5 + fine * 0.1, 0.2, 1)
+    heat = np.clip(molten * (0.75 + 0.25 * T.fbm(336, 1.4)), 0, 1)
+    return albedo, height, T.cavity(height, 6), rough, np.zeros_like(rough), 3.0, heat
+
+
 RECIPES = {
     "painted_metal": painted_metal, "steel_bare": steel_bare, "rusted_steel": rusted_steel,
     "diamond_plate": diamond_plate, "rubber_black": rubber_black, "plastic_panel": plastic_panel,
     "vinyl_worn": vinyl_worn, "duct_galvanized": duct_galvanized, "concrete_rubble": concrete_rubble,
     "paper_aged": paper_aged, "wood_old": wood_old, "fabric_dark": fabric_dark,
+    "dream_spike_bone": dream_spike_bone, "dream_iron": dream_iron, "dream_bronze": dream_bronze, "dream_lava": dream_lava,
 }
 
 
 def write_material(name: str, out_dir: Path, size: int) -> list[Path]:
-    albedo, height, ao, rough, metal, strength = RECIPES[name](size)
+    albedo, height, ao, rough, metal, strength, *extra = RECIPES[name](size)
     d = out_dir / name
     d.mkdir(parents=True, exist_ok=True)
     paths = []
@@ -261,6 +324,10 @@ def write_material(name: str, out_dir: Path, size: int) -> list[Path]:
     p = d / f"{name}_orm.jpg"
     Image.fromarray((orm * 255 + 0.5).astype(np.uint8)).save(p, quality=95, subsampling=0, optimize=True)
     paths.append(p)
+    if extra:  # glow mask of emissive recipes
+        p = d / f"{name}_heat.png"
+        Image.fromarray((np.clip(extra[0], 0, 1) * 255 + 0.5).astype(np.uint8)).save(p, optimize=True)
+        paths.append(p)
     return paths
 
 

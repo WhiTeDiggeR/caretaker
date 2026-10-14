@@ -2,7 +2,8 @@
 
 # Tile size in metres of every tiling PBR material (docs/art/texture-catalog.md).
 TILE = {"painted_metal": 1.0, "steel_bare": 1.0, "rusted_steel": 1.0, "diamond_plate": 1.0, "rubber_black": 0.5,
-        "plastic_panel": 0.5, "vinyl_worn": 0.5, "duct_galvanized": 1.0, "concrete_rubble": 2.0, "paper_aged": 0.4, "wood_old": 1.0, "fabric_dark": 0.5}
+        "plastic_panel": 0.5, "vinyl_worn": 0.5, "duct_galvanized": 1.0, "concrete_rubble": 2.0, "paper_aged": 0.4, "wood_old": 1.0, "fabric_dark": 0.5,
+        "dream_spike_bone": 0.5, "dream_iron": 1.0, "dream_bronze": 1.0, "dream_lava": 8.0}
 
 # name -> (base colour rgb, emission rgb, emission strength). Parameter-only materials (no textures).
 EMIT = {
@@ -19,6 +20,11 @@ EMIT = {
     "emit_haze_blue": ((0.0, 0.0, 0.0), (0.1, 0.4, 0.95), 0.8),
     "emit_green_soft": ((0.0, 0.0, 0.0), (0.3, 0.85, 0.35), 1.2),
     "emit_eye_white": ((0.0, 0.0, 0.0), (0.95, 0.97, 1.0), 4.0),
+    # Bowser's dream (docs/art/dream-bowser-s.md §3)
+    "emit_dream_white": ((0.0, 0.0, 0.0), (0.93, 0.96, 1.0), 5.0),
+    "emit_dream_lava": ((0.0, 0.0, 0.0), (1.0, 0.35, 0.1), 2.6),
+    "emit_dream_ember": ((0.0, 0.0, 0.0), (1.0, 0.7, 0.35), 2.0),
+    "emit_dream_eye": ((0.0, 0.0, 0.0), (1.0, 0.48, 0.16), 3.0),
 }
 # name -> (rgb, roughness, metallic, alpha)
 PLAIN = {"glass_dirty": ((0.08, 0.1, 0.11), 0.25, 0.0, 0.28), "chrome_dull": ((0.55, 0.56, 0.58), 0.35, 1.0, 1.0),

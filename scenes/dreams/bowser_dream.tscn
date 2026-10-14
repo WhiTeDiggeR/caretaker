@@ -11,34 +11,18 @@
 [ext_resource type="Script" path="res://objects/dream/dream_remains.gd" id="9_remains"]
 [ext_resource type="Script" path="res://objects/dream/combat/dream_ambush.gd" id="10_ambush"]
 [ext_resource type="PackedScene" path="res://objects/documents/document_pickup.tscn" id="11_note"]
-
-[sub_resource type="StandardMaterial3D" id="mat_rock"]
-albedo_color = Color(0.22, 0.17, 0.17, 1)
-
-[sub_resource type="StandardMaterial3D" id="mat_wall"]
-albedo_color = Color(0.32, 0.27, 0.27, 1)
-
-[sub_resource type="StandardMaterial3D" id="mat_hall"]
-albedo_color = Color(0.27, 0.24, 0.24, 1)
-
-[sub_resource type="StandardMaterial3D" id="mat_iron"]
-albedo_color = Color(0.1, 0.09, 0.1, 1)
-metallic = 0.7
-roughness = 0.5
-
-[sub_resource type="StandardMaterial3D" id="mat_chain"]
-albedo_color = Color(0.29, 0.27, 0.28, 1)
-metallic = 0.8
-roughness = 0.4
+[ext_resource type="Material" path="res://materials/dream_bowser/rock.tres" id="12_rock"]
+[ext_resource type="Material" path="res://materials/dream_bowser/stone_wall.tres" id="13_stone_wall"]
+[ext_resource type="Material" path="res://materials/dream_bowser/stone_floor.tres" id="14_stone_floor"]
+[ext_resource type="Material" path="res://materials/dream_bowser/iron.tres" id="15_iron"]
+[ext_resource type="Material" path="res://materials/dream_bowser/chain.tres" id="16_chain"]
+[ext_resource type="ShaderMaterial" path="res://materials/dream_bowser/lava.tres" id="17_lava"]
 
 [sub_resource type="StandardMaterial3D" id="mat_dark"]
 albedo_color = Color(0.06, 0.05, 0.07, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_bone"]
 albedo_color = Color(0.72, 0.68, 0.6, 1)
-
-[sub_resource type="StandardMaterial3D" id="mat_rubble"]
-albedo_color = Color(0.36, 0.3, 0.28, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_seal"]
 albedo_color = Color(0.43, 0.39, 0.38, 1)
@@ -50,117 +34,113 @@ albedo_color = Color(0.85, 0.88, 0.9, 1)
 shading_mode = 0
 albedo_color = Color(0.95, 0.97, 1, 1)
 
-[sub_resource type="StandardMaterial3D" id="mat_lava"]
-shading_mode = 0
-albedo_color = Color(1, 0.35, 0.05, 1)
-
 [sub_resource type="BoxMesh" id="box_0"]
-material = SubResource("mat_rock")
+material = ExtResource("12_rock")
 size = Vector3(16, 1.5, 12)
 
 [sub_resource type="BoxShape3D" id="shape_0"]
 size = Vector3(16, 1.5, 12)
 
 [sub_resource type="BoxMesh" id="box_1"]
-material = SubResource("mat_rock")
+material = ExtResource("12_rock")
 size = Vector3(10, 1.5, 3)
 
 [sub_resource type="BoxShape3D" id="shape_1"]
 size = Vector3(10, 1.5, 3)
 
 [sub_resource type="BoxMesh" id="box_2"]
-material = SubResource("mat_rock")
+material = ExtResource("12_rock")
 size = Vector3(4, 2.7, 3)
 
 [sub_resource type="BoxShape3D" id="shape_2"]
 size = Vector3(4, 2.7, 3)
 
 [sub_resource type="BoxMesh" id="box_3"]
-material = SubResource("mat_iron")
+material = ExtResource("15_iron")
 size = Vector3(16, 0.4, 2)
 
 [sub_resource type="BoxShape3D" id="shape_3"]
 size = Vector3(16, 0.4, 2)
 
 [sub_resource type="BoxMesh" id="box_4"]
-material = SubResource("mat_chain")
+material = ExtResource("16_chain")
 size = Vector3(16, 1, 0.1)
 
 [sub_resource type="BoxShape3D" id="shape_4"]
 size = Vector3(16, 1, 0.1)
 
 [sub_resource type="BoxMesh" id="box_5"]
-material = SubResource("mat_rock")
+material = ExtResource("12_rock")
 size = Vector3(24, 1.5, 18)
 
 [sub_resource type="BoxShape3D" id="shape_5"]
 size = Vector3(24, 1.5, 18)
 
 [sub_resource type="BoxMesh" id="box_6"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(25, 8, 1)
 
 [sub_resource type="BoxShape3D" id="shape_6"]
 size = Vector3(25, 8, 1)
 
 [sub_resource type="BoxMesh" id="box_7"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(15.5, 8, 1)
 
 [sub_resource type="BoxShape3D" id="shape_7"]
 size = Vector3(15.5, 8, 1)
 
 [sub_resource type="BoxMesh" id="box_8"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(6.5, 8, 1)
 
 [sub_resource type="BoxShape3D" id="shape_8"]
 size = Vector3(6.5, 8, 1)
 
 [sub_resource type="BoxMesh" id="box_9"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(3, 3.5, 1)
 
 [sub_resource type="BoxShape3D" id="shape_9"]
 size = Vector3(3, 3.5, 1)
 
 [sub_resource type="BoxMesh" id="box_10"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 8, 8)
 
 [sub_resource type="BoxShape3D" id="shape_10"]
 size = Vector3(1, 8, 8)
 
 [sub_resource type="BoxMesh" id="box_11"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 3, 4)
 
 [sub_resource type="BoxShape3D" id="shape_11"]
 size = Vector3(1, 3, 4)
 
 [sub_resource type="BoxMesh" id="box_12"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(2, 8, 2)
 
 [sub_resource type="BoxShape3D" id="shape_12"]
 size = Vector3(2, 8, 2)
 
 [sub_resource type="BoxMesh" id="box_13"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(4.5, 1.2, 1.2)
 
 [sub_resource type="BoxShape3D" id="shape_13"]
 size = Vector3(4.5, 1.2, 1.2)
 
 [sub_resource type="BoxMesh" id="box_14"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(0.5, 4, 3)
 
 [sub_resource type="BoxShape3D" id="shape_14"]
 size = Vector3(0.5, 4, 3)
 
 [sub_resource type="BoxMesh" id="box_15"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(4.5, 0.3, 3)
 
 [sub_resource type="BoxShape3D" id="shape_15"]
@@ -183,7 +163,7 @@ material = SubResource("mat_bone")
 size = Vector3(1.8, 0.35, 0.6)
 
 [sub_resource type="BoxMesh" id="box_21"]
-material = SubResource("mat_iron")
+material = ExtResource("15_iron")
 size = Vector3(0.8, 1, 0.8)
 
 [sub_resource type="BoxShape3D" id="shape_16"]
@@ -194,203 +174,203 @@ material = SubResource("mat_mark")
 size = Vector3(0.55, 0.02, 0.35)
 
 [sub_resource type="BoxMesh" id="box_23"]
-material = SubResource("mat_hall")
+material = ExtResource("14_stone_floor")
 size = Vector3(20, 1.5, 16)
 
 [sub_resource type="BoxShape3D" id="shape_17"]
 size = Vector3(20, 1.5, 16)
 
 [sub_resource type="BoxMesh" id="box_24"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 12, 7)
 
 [sub_resource type="BoxShape3D" id="shape_18"]
 size = Vector3(1, 12, 7)
 
 [sub_resource type="BoxMesh" id="box_25"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 5, 4)
 
 [sub_resource type="BoxShape3D" id="shape_19"]
 size = Vector3(1, 5, 4)
 
 [sub_resource type="BoxMesh" id="box_26"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(9, 12, 1)
 
 [sub_resource type="BoxShape3D" id="shape_20"]
 size = Vector3(9, 12, 1)
 
 [sub_resource type="BoxMesh" id="box_27"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(9.5, 12, 1)
 
 [sub_resource type="BoxShape3D" id="shape_21"]
 size = Vector3(9.5, 12, 1)
 
 [sub_resource type="BoxMesh" id="box_28"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(3, 7, 1)
 
 [sub_resource type="BoxShape3D" id="shape_22"]
 size = Vector3(3, 7, 1)
 
 [sub_resource type="BoxMesh" id="box_29"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(21.5, 12, 1)
 
 [sub_resource type="BoxShape3D" id="shape_23"]
 size = Vector3(21.5, 12, 1)
 
 [sub_resource type="BoxMesh" id="box_30"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 12, 7.5)
 
 [sub_resource type="BoxShape3D" id="shape_24"]
 size = Vector3(1, 12, 7.5)
 
 [sub_resource type="BoxMesh" id="box_31"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 7, 3)
 
 [sub_resource type="BoxShape3D" id="shape_25"]
 size = Vector3(1, 7, 3)
 
 [sub_resource type="BoxMesh" id="box_32"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(21.5, 1, 7)
 
 [sub_resource type="BoxShape3D" id="shape_26"]
 size = Vector3(21.5, 1, 7)
 
 [sub_resource type="BoxMesh" id="box_33"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(8.5, 1, 4)
 
 [sub_resource type="BoxShape3D" id="shape_27"]
 size = Vector3(8.5, 1, 4)
 
 [sub_resource type="BoxMesh" id="box_34"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(9, 1, 4)
 
 [sub_resource type="BoxShape3D" id="shape_28"]
 size = Vector3(9, 1, 4)
 
 [sub_resource type="BoxMesh" id="box_35"]
-material = SubResource("mat_rock")
+material = ExtResource("12_rock")
 size = Vector3(3, 1, 12)
 
 [sub_resource type="BoxShape3D" id="shape_29"]
 size = Vector3(3, 1, 12)
 
 [sub_resource type="BoxMesh" id="box_36"]
-material = SubResource("mat_iron")
+material = ExtResource("15_iron")
 size = Vector3(0.2, 0.9, 11)
 
 [sub_resource type="BoxShape3D" id="shape_30"]
 size = Vector3(0.2, 0.9, 11)
 
 [sub_resource type="BoxMesh" id="box_37"]
-material = SubResource("mat_rock")
+material = ExtResource("12_rock")
 size = Vector3(10, 1.5, 8)
 
 [sub_resource type="BoxShape3D" id="shape_31"]
 size = Vector3(10, 1.5, 8)
 
 [sub_resource type="BoxMesh" id="box_38"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(10, 1, 0.4)
 
 [sub_resource type="BoxShape3D" id="shape_32"]
 size = Vector3(10, 1, 0.4)
 
 [sub_resource type="BoxMesh" id="box_39"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(0.4, 1, 8)
 
 [sub_resource type="BoxShape3D" id="shape_33"]
 size = Vector3(0.4, 1, 8)
 
 [sub_resource type="BoxMesh" id="box_40"]
-material = SubResource("mat_rubble")
+material = ExtResource("13_stone_wall")
 size = Vector3(1.6, 2, 1.4)
 
 [sub_resource type="BoxShape3D" id="shape_34"]
 size = Vector3(1.6, 2, 1.4)
 
 [sub_resource type="BoxMesh" id="box_41"]
-material = SubResource("mat_rubble")
+material = ExtResource("13_stone_wall")
 size = Vector3(1.4, 1.6, 1.4)
 
 [sub_resource type="BoxShape3D" id="shape_35"]
 size = Vector3(1.4, 1.6, 1.4)
 
 [sub_resource type="BoxMesh" id="box_42"]
-material = SubResource("mat_rubble")
+material = ExtResource("13_stone_wall")
 size = Vector3(2.2, 1.4, 1)
 
 [sub_resource type="BoxShape3D" id="shape_36"]
 size = Vector3(2.2, 1.4, 1)
 
 [sub_resource type="BoxMesh" id="box_43"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 0.5, 1.5)
 
 [sub_resource type="BoxShape3D" id="shape_37"]
 size = Vector3(1, 0.5, 1.5)
 
 [sub_resource type="BoxMesh" id="box_44"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 1, 1.5)
 
 [sub_resource type="BoxShape3D" id="shape_38"]
 size = Vector3(1, 1, 1.5)
 
 [sub_resource type="BoxMesh" id="box_45"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 1.5, 1.5)
 
 [sub_resource type="BoxShape3D" id="shape_39"]
 size = Vector3(1, 1.5, 1.5)
 
 [sub_resource type="BoxMesh" id="box_46"]
-material = SubResource("mat_wall")
+material = ExtResource("13_stone_wall")
 size = Vector3(1, 2, 1.5)
 
 [sub_resource type="BoxShape3D" id="shape_40"]
 size = Vector3(1, 2, 1.5)
 
 [sub_resource type="BoxMesh" id="box_47"]
-material = SubResource("mat_rubble")
+material = ExtResource("13_stone_wall")
 size = Vector3(1.4, 0.8, 1)
 
 [sub_resource type="BoxShape3D" id="shape_41"]
 size = Vector3(1.4, 0.8, 1)
 
 [sub_resource type="BoxMesh" id="box_48"]
-material = SubResource("mat_iron")
+material = ExtResource("15_iron")
 size = Vector3(0.2, 5, 0.12)
 
 [sub_resource type="BoxShape3D" id="shape_42"]
 size = Vector3(0.2, 5, 0.12)
 
 [sub_resource type="BoxMesh" id="box_49"]
-material = SubResource("mat_iron")
+material = ExtResource("15_iron")
 size = Vector3(0.2, 5, 0.12)
 
 [sub_resource type="BoxShape3D" id="shape_43"]
 size = Vector3(0.2, 5, 0.12)
 
 [sub_resource type="BoxMesh" id="box_50"]
-material = SubResource("mat_iron")
+material = ExtResource("15_iron")
 size = Vector3(0.2, 5, 0.12)
 
 [sub_resource type="BoxShape3D" id="shape_44"]
 size = Vector3(0.2, 5, 0.12)
 
 [sub_resource type="PlaneMesh" id="lava_mesh"]
-material = SubResource("mat_lava")
+material = ExtResource("17_lava")
 size = Vector2(200, 140)
 
 [sub_resource type="BoxShape3D" id="lava_shape"]
@@ -404,7 +384,7 @@ ambient_light_color = Color(0.9, 0.7, 0.5, 1)
 fog_enabled = true
 
 [sub_resource type="BoxMesh" id="side_grate_mesh"]
-material = SubResource("mat_iron")
+material = ExtResource("15_iron")
 size = Vector3(3, 5, 0.2)
 
 [sub_resource type="BoxShape3D" id="side_grate_shape"]
