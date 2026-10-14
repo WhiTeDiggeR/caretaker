@@ -19,6 +19,7 @@ try:
     from .manifest_contract import validate_manifest_document
     from .vertical_resolver import VerticalError, resolve_sector_verticals
     from . import vertical_closures
+    from . import room_finishes
 except ImportError:
     try:
         from tools.complex_v4.manifest_contract import validate_manifest_document
@@ -27,6 +28,7 @@ except ImportError:
         from manifest_contract import validate_manifest_document
         from vertical_resolver import VerticalError, resolve_sector_verticals
     import vertical_closures
+    import room_finishes
 
 
 VERSION = "1.1.1"
@@ -745,6 +747,16 @@ def execute(args: argparse.Namespace) -> int:
         vertical_closures.inject(staging / "Generated" / "Architecture" / (sector["scene_name"] + ".tscn"), closures)
     except (ValueError, OSError, ET_ParseError) as exc:
         raise RegenerationError(f"Vertical closures failed: {exc}") from exc
+    # room finishes (#206): materials of the rooms' finish classes, kept outside gen/, re-applied on every generation
+    try:
+        finish_registry = room_finishes.load_registry()
+        finish_errors = room_finishes.validate_registry(finish_registry)
+        if finish_errors:
+            raise room_finishes.FinishError("; ".join(finish_errors))
+        finishes, _changed = room_finishes.apply(
+            staging / "Generated" / "Architecture" / (sector["scene_name"] + ".tscn"), source, finish_registry)
+    except (ValueError, OSError, ET_ParseError) as exc:
+        raise RegenerationError(f"Room finishes failed: {exc}") from exc
     frames = parameterize_frames(svg_frames, sector, conversion_report.get("spatial_handoff", {}))
     frames.extend(parameterize_frames(stair_frames, sector, {}, producer="stairs"))
     check_stair_door_alignment(frames)
@@ -783,6 +795,7 @@ def execute(args: argparse.Namespace) -> int:
         "commands": commands,
         "anchor_count": len(anchor_document["anchors"]),
         "vertical_closures": vertical_closures.describe(closures),
+        "room_finishes": room_finishes.describe(finishes),
         "errors": [],
         "warnings": [],
         "files": [

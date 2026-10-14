@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 PLANS = ROOT / "docs/design/complex_v4/sources/plans"          # approved source plans: the only geometry source
 V4 = ROOT / "docs/design/complex_v4"                    # generated canonical inputs: complex version 4
 REGISTRATION = Path(__file__).with_name("approved_registration.json")
+FINISHES = Path(__file__).with_name("room_finishes.json")
 NS = "{http://www.w3.org/2000/svg}"
 SNAP_PX = 2.5
 
@@ -61,6 +62,46 @@ def slug(text: str) -> str:
     out = "".join(TRANSLIT.get(ch, ch) for ch in text.lower())
     out = re.sub(r"[^a-z0-9]+", "-", out).strip("-")
     return out[:28].strip("-") or "room"
+
+
+# --- stable element IDs (#206)
+# Anchor IDs are "svg:<element id>:<type>", so element IDs must not depend on drawing order. Every generated element gets a
+# readable stable ID built from its room and side (data-surface-side-id / data-stable-id) and an element id derived from it.
+
+def room_local(space: str) -> str:
+    """Room part of a space ID: "U-SECURITY/kpp" -> "kpp"."""
+    return space.split("/", 1)[-1]
+
+
+def element_id(stable: str) -> str:
+    """Element id for a stable ID: "U-SECURITY/kpp:north" -> "u-security--kpp--north" (slugs never contain "--")."""
+    parts = re.split(r"[/:]", stable.lower())
+    return "--".join(re.sub(r"[^a-z0-9]+", "-", part).strip("-") for part in parts)
+
+
+def unique_ids(bases: list[str], qualifiers: list[str]) -> list[str]:
+    """Stable IDs for items with the given base IDs: a base used once stays as is, a repeated base gets ":<qualifier>",
+    and a repeated base + qualifier gets "-2", "-3" in the given order."""
+    counts: dict[str, int] = {}
+    for base in bases:
+        counts[base] = counts.get(base, 0) + 1
+    named = [base if counts[base] == 1 else f"{base}:{qualifier}" for base, qualifier in zip(bases, qualifiers)]
+    seen: dict[str, int] = {}
+    result = []
+    for name in named:
+        seen[name] = seen.get(name, 0) + 1
+        result.append(name if seen[name] == 1 else f"{name}-{seen[name]}")
+    return result
+
+
+def finish_attr(finishes: dict[str, Any], space: str) -> str:
+    """data-finish-class of a room from tools/complex_v4/room_finishes.json (room rule, else sector default)."""
+    sector, room = space.split("/", 1)
+    entry = finishes.get("sectors", {}).get(sector, {})
+    value = entry.get("rooms", {}).get(room, entry.get("default", ""))
+    if value and value not in finishes.get("classes", {}):
+        raise ValueError(f"{space}: unknown finish class {value!r}")
+    return f' data-finish-class="{value}"' if value else ""
 
 
 @dataclass
@@ -450,8 +491,11 @@ def fmt(value: float) -> str:
     return text if text not in {"-0", ""} else "0"
 
 
-def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> tuple[str, dict[str, Any], Path]:
+def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
+                 finishes: dict[str, Any] | None = None) -> tuple[str, dict[str, Any], Path]:
     global SNAP_PX
+    if finishes is None:
+        finishes = json.loads(FINISHES.read_text(encoding="utf-8")) if FINISHES.is_file() else {}
     SNAP_PX = float(entry.get("snap_px", 2.5))
     level = reg["levels"][entry["level"]]
     plan = Plan() if not entry.get("plan") else parse_plan(PLANS / entry["plan"], set(reg["post_approval_ids"]))
@@ -555,21 +599,24 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
 
     floors: list[str] = []
     ceilings: list[str] = []
-    for i, r in enumerate(rooms, 1):
+    piece_ids = unique_ids([r.space for r in rooms], [r.ident for r in rooms])   # pieces of one room share its space id
+    for r, piece in zip(rooms, piece_ids):
         x, y = tf.px(r.x), tf.py(r.y)
         w, h = round(tf.px(r.x2) - x, 3), round(tf.py(r.y2) - y, 3)
         grow(x, y); grow(x + w, y + h)
         label = ET.Element("x", a=r.label).get("a").replace('"', "&quot;")
+        finish = finish_attr(finishes, r.space)
+        floor_id, ceiling_id = f"{piece}:floor", f"{piece}:ceiling"
         floors.append(
-            f'    <rect id="{sid}-floor-{i:02d}" class="floor" data-godot-type="floor" data-space-id="{r.space}" '
+            f'    <rect id="{element_id(floor_id)}" class="floor" data-godot-type="floor" data-space-id="{r.space}" data-stable-id="{floor_id}"{finish} '
             f'data-label="{label}" data-source-id="{r.ident}" x="{fmt(x)}" y="{fmt(y)}" width="{fmt(w)}" height="{fmt(h)}" />'
         )
         ceilings.append(
-            f'    <rect id="{sid}-ceiling-{i:02d}" class="ceiling" data-godot-type="ceiling" data-ceiling-elevation="{fmt(level["elevation_m"] + wall_h)}" '
-            f'x="{fmt(x)}" y="{fmt(y)}" width="{fmt(w)}" height="{fmt(h)}" />'
+            f'    <rect id="{element_id(ceiling_id)}" class="ceiling" data-godot-type="ceiling" data-ceiling-elevation="{fmt(level["elevation_m"] + wall_h)}" '
+            f'data-space-id="{r.space}" data-stable-id="{ceiling_id}"{finish} x="{fmt(x)}" y="{fmt(y)}" width="{fmt(w)}" height="{fmt(h)}" />'
         )
         report["rooms"].append({
-            "id": f"{sid}-floor-{i:02d}", "space_id": r.space, "label": r.label, "class": r.cls, "source_id": r.ident,
+            "id": element_id(floor_id), "stable_id": floor_id, "space_id": r.space, "label": r.label, "class": r.cls, "source_id": r.ident,
             "plan_px": [round(r.x, 1), round(r.y, 1), round(r.w, 1), round(r.h, 1)],
             "world_m": [round(x, 3), round(y, 3), round(w, 3), round(h, 3)], "size_m": [round(w, 2), round(h, 2)],
             "area_m2": round(w * h, 1),
@@ -581,76 +628,61 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
     out.extend(ceilings)
     out.append("  </g>")
 
-    # --- walls: every room edge, merged into maximal collinear segments
-    spans: dict[tuple[str, float], list[list[float]]] = {}
-    sides: dict[tuple[str, float, str], dict[str, list[list[float]]]] = {}
+    # --- walls: every room edge, split where the pair of rooms on its two sides changes, so each wall segment separates
+    # exactly one room (or one room and the outside) from another and can be named after that room and side (#206).
+    # Edges between pieces of one carved / amended room (same group) are not walls.
+    edges: dict[tuple[str, float], list[tuple[float, float, Rect, bool]]] = {}
     for r in rooms:
         for orient, fixed, lo, hi in edge_segments(r):
-            key = (orient, round(fixed, 4))
-            if r.group:
-                low_side = (orient == "h" and abs(fixed - r.y2) < 1e-6) or (orient == "v" and abs(fixed - r.x2) < 1e-6)
-                sides.setdefault((orient, round(fixed, 4), r.group), {"lo": [], "hi": []})["lo" if low_side else "hi"].append([lo, hi])
+            # low side = the room lies north of a horizontal / west of a vertical line
+            low = (orient == "h" and abs(fixed - r.y2) < 1e-6) or (orient == "v" and abs(fixed - r.x2) < 1e-6)
+            edges.setdefault((orient, round(fixed, 4)), []).append((lo, hi, r, low))
+    wall_items: list[tuple[str, float, float, float, Rect | None, Rect | None]] = []
+    for (orient, fixed), items in sorted(edges.items(), key=lambda kv: kv[0]):
+        cuts = sorted({v for lo, hi, _r, _low in items for v in (lo, hi)})
+        current: list[Any] | None = None
+        for a_, b_ in zip(cuts, cuts[1:]):
+            if b_ - a_ <= 1e-9:
+                continue
+            mid = (a_ + b_) / 2
+            low_room = next((r for lo, hi, r, low in items if low and lo <= mid <= hi), None)
+            high_room = next((r for lo, hi, r, low in items if not low and lo <= mid <= hi), None)
+            if (low_room is None and high_room is None) or (low_room and high_room and low_room.group and low_room.group == high_room.group):
+                pair = None
             else:
-                spans.setdefault(key, []).append([lo, hi])
-
-    def subtract(items: list[list[float]], cuts: list[list[float]]) -> list[list[float]]:
-        out_: list[list[float]] = []
-        for lo, hi in items:
-            parts = [[lo, hi]]
-            for c_lo, c_hi in cuts:
-                nxt: list[list[float]] = []
-                for a_, b_ in parts:
-                    if c_hi <= a_ + 1e-9 or c_lo >= b_ - 1e-9:
-                        nxt.append([a_, b_])
-                        continue
-                    if c_lo > a_ + 1e-9:
-                        nxt.append([a_, c_lo])
-                    if c_hi < b_ - 1e-9:
-                        nxt.append([c_hi, b_])
-                parts = nxt
-            out_.extend(parts)
-        return out_
-
-    for (orient, fixed, _group), both in sides.items():
-        shared = []
-        for a_lo, a_hi in both["lo"]:
-            for b_lo, b_hi in both["hi"]:
-                lo_, hi_ = max(a_lo, b_lo), min(a_hi, b_hi)
-                if hi_ - lo_ > 1e-9:
-                    shared.append([lo_, hi_])
-        for seg in subtract(both["lo"], shared) + subtract(both["hi"], shared):
-            spans.setdefault((orient, fixed), []).append(seg)
-    wall_items: list[tuple[str, float, float, float]] = []
-    for (orient, fixed), segs in sorted(spans.items()):
-        segs.sort()
-        cur = list(segs[0])
-        for lo, hi in segs[1:]:
-            if lo <= cur[1] + 1e-6:
-                cur[1] = max(cur[1], hi)
-            else:
-                wall_items.append((orient, fixed, cur[0], cur[1]))
-                cur = [lo, hi]
-        wall_items.append((orient, fixed, cur[0], cur[1]))
+                pair = (low_room, high_room)
+            if current and pair and current[4] is pair[0] and current[5] is pair[1] and abs(current[3] - a_) <= 1e-6:
+                current[3] = b_
+                continue
+            if current:
+                wall_items.append(tuple(current))  # type: ignore[arg-type]
+            current = [orient, fixed, a_, b_, pair[0], pair[1]] if pair else None
+        if current:
+            wall_items.append(tuple(current))  # type: ignore[arg-type]
     wall_items.sort(key=lambda t: (t[0], t[2] if t[0] == "h" else t[1], t[1] if t[0] == "h" else t[2]))
+    # finished-face side: "normal" = room lies south of a horizontal / west of a vertical wall. The wall is named after the room
+    # on its finished side: the north wall of the room south of it, the east wall of the room west of it.
+    wall_meta = []
+    for orient, fixed, lo, hi, low_room, high_room in wall_items:
+        if orient == "h":
+            root, other, side = (high_room, low_room, "north") if high_room else (low_room, None, "south")
+        else:
+            root, other, side = (low_room, high_room, "east") if low_room else (high_room, None, "west")
+        normal = "normal" if (orient == "h" and high_room) or (orient == "v" and low_room) else "opposite"
+        wall_meta.append((root, other, side, normal))
+    wall_ids = unique_ids([f"{root.space}:{side}" for root, _o, side, _n in wall_meta],
+                          [room_local(other.space) if other else "outer" for _r, other, _s, _n in wall_meta])
     out.append(f'  <g id="{sid}-walls" data-layer="walls">')
     n_wall = 0
-    for orient, fixed, lo, hi in wall_items:
+    for (orient, fixed, lo, hi, _low, _high), (root, other, side, normal), stable in zip(wall_items, wall_meta, wall_ids):
         n_wall += 1
         if orient == "h":
             q = (tf.px(lo), tf.py(fixed), tf.px(hi), tf.py(fixed))
         else:
             q = (tf.px(fixed), tf.py(lo), tf.px(fixed), tf.py(hi))
-        mid = (lo + hi) / 2
-        # finished-face side: "normal" = room lies south of a horizontal / west of a vertical wall
-        if orient == "h":
-            low_side = any(abs(r.y2 - fixed) < 1e-6 and r.x <= mid <= r.x2 for r in rooms)   # room to the north
-            high_side = any(abs(r.y - fixed) < 1e-6 and r.x <= mid <= r.x2 for r in rooms)   # room to the south
-        else:
-            low_side = any(abs(r.x2 - fixed) < 1e-6 and r.y <= mid <= r.y2 for r in rooms)   # room to the west
-            high_side = any(abs(r.x - fixed) < 1e-6 and r.y <= mid <= r.y2 for r in rooms)   # room to the east
-        normal = "normal" if (high_side and orient == "h") or (low_side and orient == "v") else "opposite"
-        out.append(f'    <line id="{sid}-wall-{n_wall:02d}" class="wall" data-godot-type="wall" data-wall-height="{fmt(wall_h)}" '
-                   f'data-surface-side-id="{sector_id}/wall-{n_wall:02d}" data-normal-side="{normal}" '
+        wall_rooms = root.space + (f"|{other.space}" if other else "")
+        out.append(f'    <line id="{element_id(stable)}" class="wall" data-godot-type="wall" data-wall-height="{fmt(wall_h)}" '
+                   f'data-surface-side-id="{stable}" data-normal-side="{normal}" data-wall-rooms="{wall_rooms}" '
                    f'x1="{fmt(q[0])}" y1="{fmt(q[1])}" x2="{fmt(q[2])}" y2="{fmt(q[3])}" />')
     wall_lines = [l for l in plan.lines if l.cls in WALL_LINE]
     for am in entry.get("amendments", []):
@@ -669,12 +701,17 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             for k, seg in enumerate(am["segments_m"], 1):
                 wall_lines.append(Line((seg[0] - tf.sx) / tf.kx + tf.ox, (seg[1] - tf.sy) / tf.ky + tf.oy,
                                        (seg[2] - tf.sx) / tf.kx + tf.ox, (seg[3] - tf.sy) / tf.ky + tf.oy, "wall", "wall", f"amendment-{am['id']}-{k}"))
-    for l in wall_lines:
+    # free wall lines of the plan (partitions, amendment walls) are named after their source element
+    line_ids = unique_ids([f"{sector_id}/line:{l.ident}" for l in wall_lines], [str(k) for k in range(1, len(wall_lines) + 1)])
+    for l, stable in zip(wall_lines, line_ids):
         n_wall += 1
         q = (tf.px(l.x1), tf.py(l.y1), tf.px(l.x2), tf.py(l.y2))
         grow(q[0], q[1]); grow(q[2], q[3])
-        out.append(f'    <line id="{sid}-wall-{n_wall:02d}" class="wall" data-godot-type="wall" data-wall-height="{fmt(wall_h)}" '
-                   f'data-surface-side-id="{sector_id}/wall-{n_wall:02d}" data-normal-side="normal" '
+        mx, my = (l.x1 + l.x2) / 2, (l.y1 + l.y2) / 2
+        host = next((r for r in rooms if r.x <= mx <= r.x2 and r.y <= my <= r.y2), None)
+        hosted = f' data-wall-rooms="{host.space}"' if host else ""
+        out.append(f'    <line id="{element_id(stable)}" class="wall" data-godot-type="wall" data-wall-height="{fmt(wall_h)}" '
+                   f'data-surface-side-id="{stable}" data-normal-side="normal"{hosted} '
                    f'data-source-id="{l.ident}" x1="{fmt(q[0])}" y1="{fmt(q[1])}" x2="{fmt(q[2])}" y2="{fmt(q[3])}" />')
     out.append("  </g>")
     report["wall_segments"] = n_wall
@@ -749,6 +786,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
     report["amendments"] = [am["id"] for am in entry.get("amendments", [])]
     out.append(f'  <g id="{sid}-openings" data-layer="openings">')
     n_open = 0
+    placed: list[tuple[dict[str, Any], list[Rect], str, tuple[float, float, float, float], float, str, Rect, Rect | None]] = []
     for c in cands:
         hosts = host_rooms(c, rooms)
         if not hosts and c.get("force"):
@@ -775,16 +813,22 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
             width = (hi - lo) * tf.ky
         n_open += 1
         gtype = c["gtype"]
-        oid = f"{sid}-{gtype}-{n_open:02d}"
+        mid = (lo + hi) / 2
+        if c["orient"] == "h":
+            low = next((r for r in rooms if abs(r.y2 - fixed) < 1e-6 and r.x <= mid <= r.x2), None)    # north
+            high = next((r for r in rooms if abs(r.y - fixed) < 1e-6 and r.x <= mid <= r.x2), None)    # south
+        else:
+            low = next((r for r in rooms if abs(r.x2 - fixed) < 1e-6 and r.y <= mid <= r.y2), None)    # west
+            high = next((r for r in rooms if abs(r.x - fixed) < 1e-6 and r.y <= mid <= r.y2), None)    # east
+        # an opening is named after the alphabetically first of its two rooms and the other one: "<room>:door:<neighbour>"
+        # an opening on a partition inside a room (not on a room edge) belongs to the room that contains it
+        cx, cy = ((mid, fixed) if c["orient"] == "h" else (fixed, mid))
+        containing = [r for r in rooms if r.x <= cx <= r.x2 and r.y <= cy <= r.y2]
+        sides = (sorted([r for r in (low, high) if r is not None], key=lambda r: r.space)
+                 or sorted(containing, key=lambda r: r.space)[:1] or sorted(hosts, key=lambda r: r.space)[:1])
+        root_room, other_room = sides[0], (sides[1] if len(sides) > 1 else None)
         attr = ""
         if gtype == "door":
-            mid = (lo + hi) / 2
-            if c["orient"] == "h":
-                low = next((r for r in rooms if abs(r.y2 - fixed) < 1e-6 and r.x <= mid <= r.x2), None)    # north
-                high = next((r for r in rooms if abs(r.y - fixed) < 1e-6 and r.x <= mid <= r.x2), None)    # south
-            else:
-                low = next((r for r in rooms if abs(r.x2 - fixed) < 1e-6 and r.y <= mid <= r.y2), None)    # west
-                high = next((r for r in rooms if abs(r.x - fixed) < 1e-6 and r.y <= mid <= r.y2), None)    # east
             # "inside" is the room that owns the door: the smaller of the two rooms, or the only one
             if low and high:
                 inside_high = (high.w * high.h) <= (low.w * low.h)
@@ -800,9 +844,16 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
         elif gtype == "window":
             attr = ""
         grow(p[0], p[1]); grow(p[2], p[3])
-        out.append(f'    <line id="{oid}" data-godot-type="{gtype}"{attr} data-source-id="{c["src"]}" x1="{fmt(p[0])}" y1="{fmt(p[1])}" x2="{fmt(p[2])}" y2="{fmt(p[3])}" />')
+        placed.append((c, hosts, attr, p, width, gtype, root_room, other_room))
+    opening_ids = unique_ids([f"{root.space}:{gtype}:{room_local(other.space) if other else 'outer'}" for _c, _h, _a, _p, _w, gtype, root, other in placed],
+                             [c["src"] for c, *_rest in placed])
+    for (c, hosts, attr, p, width, gtype, root_room, other_room), stable in zip(placed, opening_ids):
+        oid = element_id(stable)
+        rooms_attr = root_room.space + (f"|{other_room.space}" if other_room else "")
+        out.append(f'    <line id="{oid}" data-godot-type="{gtype}"{attr} data-stable-id="{stable}" data-wall-rooms="{rooms_attr}" '
+                   f'data-source-id="{c["src"]}" x1="{fmt(p[0])}" y1="{fmt(p[1])}" x2="{fmt(p[2])}" y2="{fmt(p[3])}" />')
         report["openings"].append({
-            "id": oid, "type": gtype, "source": c["source"], "source_id": c["src"], "width_m": round(width, 2),
+            "id": oid, "stable_id": stable, "type": gtype, "source": c["source"], "source_id": c["src"], "width_m": round(width, 2),
             "rooms": sorted({h.space for h in hosts}), "world_m": [round(v, 3) for v in p],
         })
     out.append("  </g>")
@@ -810,13 +861,14 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any]) -> 
     cuts = [am for am in entry.get("amendments", []) if am["op"] == "vertical_cut"]
     if cuts:
         out.append(f'  <g id="{sid}-vertical" data-layer="vertical">')
-        for n, am in enumerate(cuts, 1):
+        for am in cuts:
             x, z, w, h = am["rect_m"]
             host = next((rm for rm in report["rooms"] if rm["world_m"][0] - 1e-6 <= x + w / 2 <= rm["world_m"][0] + rm["world_m"][2] + 1e-6
                          and rm["world_m"][1] - 1e-6 <= z + h / 2 <= rm["world_m"][1] + rm["world_m"][3] + 1e-6), None)
             space = f' data-space-id="{host["space_id"]}"' if host else ""
             grow(x, z); grow(x + w, z + h)
-            out.append(f'    <rect id="{sid}-{am["kind"]}-{n:02d}" class="opening" data-godot-type="{am["kind"]}"{space} data-vertical-id="{am["vertical_id"]}" '
+            cut_id = f'{sector_id}/{am["vertical_id"]}:{am["kind"]}'
+            out.append(f'    <rect id="{element_id(cut_id)}" class="opening" data-godot-type="{am["kind"]}"{space} data-vertical-id="{am["vertical_id"]}" data-stable-id="{cut_id}" '
                        f'data-vertical-role="shaft" x="{fmt(x)}" y="{fmt(z)}" width="{fmt(w)}" height="{fmt(h)}" />')
         out.append("  </g>")
 
