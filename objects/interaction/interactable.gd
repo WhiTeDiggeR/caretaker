@@ -33,6 +33,10 @@ const DEFAULT_PROMPT := "ВЗАИМОДЕЙСТВОВАТЬ"
 ## Sound (data/audio/sfx.json) of a refused use while unavailable, e.g. a rattled locked
 ## handle; empty plays the common refusal.
 @export var denied_sound: StringName = &""
+## An electronic control (panel, button) answers with the interface click, completion chime and
+## refusal buzz. Off for mechanisms, doors, pickups and the like (#209): they sound only through
+## their owner, with no electronic beeps.
+@export var ui_feedback := false
 
 var used := false
 
