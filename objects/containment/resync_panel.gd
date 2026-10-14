@@ -85,7 +85,7 @@ func refresh() -> void:
 			rows.append_array(_rows(WRONG_LINE, &"alarm"))
 		var slots := PackedStringArray()
 		for index in DreamKnowledge.code(id).size():
-			slots.append(entered[index] if index < entered.size() else EMPTY_SLOT)
+			slots.append(DreamKnowledge.label(entered[index]) if index < entered.size() else EMPTY_SLOT)
 		rows.append({"text": "Введите знаки печати:", "status": &""})
 		rows.append({"text": DreamKnowledge.SEPARATOR.join(slots), "status": &"", "large": true})
 	var powered := section.is_empty() or GameState.is_section_powered(section)
@@ -145,11 +145,14 @@ func _build_button(glyph: String, index: int) -> Interactable:
 	shape.size = BUTTON_SIZE + Vector3(0.02, 0.02, 0.04)
 	collision.shape = shape
 	body.add_child(collision)
-	var text := UiStyle.sign_label(glyph)
-	text.position = Vector3(0, 0, BUTTON_SIZE.z * 0.5 + 0.005)
+	var text := UiStyle.sign_label(DreamKnowledge.label(glyph), 22)
+	text.position = Vector3(0, -BUTTON_SIZE.y * 0.32, BUTTON_SIZE.z * 0.5 + 0.005)
 	body.add_child(text)
+	var mark := DreamGlyph.mesh_instance(glyph, BUTTON_SIZE.y * 0.55, DreamGlyph.flat_material(UiStyle.SIGN_TEXT))
+	mark.position = Vector3(0, BUTTON_SIZE.y * 0.08, BUTTON_SIZE.z * 0.5 + 0.004)
+	body.add_child(mark)
 	var interactable := Interactable.new()
-	interactable.prompt = "ВВЕСТИ ЗНАК «%s»" % glyph
+	interactable.prompt = "ВВЕСТИ ЗНАК · %s" % DreamKnowledge.label(glyph)
 	interactable.set_meta(&"glyph", glyph)
 	interactable.interacted.connect(press.bind(glyph))
 	body.add_child(interactable)

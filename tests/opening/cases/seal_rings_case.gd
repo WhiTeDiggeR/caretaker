@@ -27,6 +27,24 @@ func run(c: OpeningCheck) -> void:
 		c.is_true(not seal.is_ring_aligned(ring), "ring %d starts off its place" % ring)
 	c.equal(seal.levers.size(), DreamSealRings.RING_COUNT, "a lever per ring")
 
+	# #194: the glyph inside its image stays muted until its ring comes into place.
+	for ring in DreamSealRings.RING_COUNT:
+		for sector in DreamSealRings.POSITIONS:
+			c.is_true(not seal.is_glyph_revealed(ring, sector), "ring %d glyph %d is muted while the ring is off" % [ring, sector])
+	var muted := seal._glyph_images[0][seal.correct_position(0)] as DreamGlyphImage
+	var muted_contrast := muted.crack_contrast()
+	c.is_true(muted_contrast < 0.3, "a muted glyph barely stands out of its image")
+	while not seal.is_ring_aligned(0):
+		seal.turn(0)
+	c.is_true(seal.is_glyph_revealed(0, seal.correct_position(0)), "the code glyph shows once its ring is in place")
+	c.is_true(muted.crack_contrast() > muted_contrast + 1.0, "a shown glyph stands out of its image")
+	for sector in DreamSealRings.POSITIONS:
+		if sector != seal.correct_position(0):
+			c.is_true(not seal.is_glyph_revealed(0, sector), "other glyphs of the ring stay muted")
+	c.is_true(not seal.is_glyph_revealed(1, seal.correct_position(1)) or seal.is_ring_aligned(1), "a ring off its place keeps its glyph muted")
+	seal.turn(0)
+	c.is_true(not seal.is_glyph_revealed(0, seal.correct_position(0)), "turning the ring away mutes the glyph again")
+
 	# A wrong turn costs nothing (B-10).
 	var calm := Containment.get_instability(MODULE)
 	# From the right position the next turn is surely wrong.
