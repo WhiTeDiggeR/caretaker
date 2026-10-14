@@ -114,7 +114,9 @@ func _ui_case(c: OpeningCheck) -> void:
 	c.is_true(GameState.has_access(&"caretaker"), "protocol grants caretaker access")
 	c.equal(gate.lock_reason(), "", "gate unlocks after the protocol")
 	c.equal(GameState.objective_id, &"sandbox_gate", "protocol sets the objective")
-	await c.tree.create_timer(TerminalScreen.AUTO_NEXT_PAUSE + 0.2).timeout
+	await c.tree.create_timer(1.0).timeout
+	c.is_true(screen.screen_id == "protocol" and screen.waiting_next, "a printed step screen waits for a key press")
+	c.is_true(screen.advance(), "a key press pages the step screen on")
 	c.equal(screen.screen_id, "main_caretaker", "procedure returns to the caretaker main screen")
 	screen.close()
 	await c.tree.process_frame

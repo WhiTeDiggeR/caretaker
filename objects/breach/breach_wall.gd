@@ -34,8 +34,9 @@ const ROOM_LIGHT_RANGE := 6.0
 const LEAK_LIGHT_COLOR := Color(1.0, 0.82, 0.55)
 const LEAK_LIGHT_ENERGY := 2.5
 const LEAK_LIGHT_RANGE := 3.0
-## Width of the slit before the first hit and how much each hit widens it, m.
-const CRACK_WIDTH := 0.035
+## Width of the slit before the first hit (wide enough to see into the room, #219) and how
+## much each hit widens it, m.
+const CRACK_WIDTH := 0.08
 const CRACK_GROWTH := 0.03
 ## Outline of the opening for a 1.2 × 2.0 m opening, from the floor at the left, over the top,
 ## down to the floor at the right. Every point lies outside the clear 1.2 × 2.0 rectangle, so
