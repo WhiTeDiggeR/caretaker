@@ -14,6 +14,9 @@ signal stage_shown(stage: float)
 
 enum Stage { CALM, ALARM, UNREST, PRE_WAKE }
 
+## The stage to show changed (the blend starts); the dream sound follows it (#201).
+signal stage_changed(stage: Stage)
+
 const TRANSITION_SECONDS := 2.5
 const GATE_CALM_RADIUS := 12.0
 const PRE_WAKE_FROM := 3  # Containment stage of the sleeper that forces pre-wake
@@ -47,6 +50,7 @@ var _sky_material: ShaderMaterial
 var _lava_material: ShaderMaterial
 var _tween: Tween
 var _player: Node3D
+var _announced: Stage = Stage.ALARM
 
 @onready var _sun: DirectionalLight3D = get_node_or_null(sun_path)
 @onready var _lava_surface: MeshInstance3D = get_node_or_null(lava_surface_path)
@@ -68,7 +72,8 @@ func _ready() -> void:
 			apply())
 	if Dreams.in_dream and Dreams.seal_restored:
 		event_stage = Stage.CALM  # a later visit, the sleep already resynchronised
-	shown_stage = float(target_stage())
+	_announced = target_stage()
+	shown_stage = float(_announced)
 	_show(shown_stage)
 	set_physics_process(_gate != null and event_stage != Stage.CALM)
 
@@ -87,6 +92,9 @@ func _physics_process(_delta: float) -> void:
 func apply() -> void:
 	if not is_node_ready():
 		return
+	if target_stage() != _announced:
+		_announced = target_stage()
+		stage_changed.emit(_announced)
 	var target := float(target_stage())
 	if is_equal_approx(target, shown_stage):
 		return
