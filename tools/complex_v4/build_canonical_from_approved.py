@@ -668,7 +668,8 @@ def clear_opening_corners(orient: str, fixed: float, lo: float, hi: float, walls
 
 def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
                  finishes: dict[str, Any] | None = None, shared_level: list[dict[str, Any]] | None = None) -> tuple[str, dict[str, Any], Path]:
-    """Build one sector; ``shared_level`` holds the already built sectors of its level, which own shared faces."""
+    """Build one sector. ``shared_level`` holds the already built sectors of its level, which own shared faces (D-49);
+    without it the sector is built alone, as before the ownership rule."""
     global SNAP_PX
     if finishes is None:
         finishes = json.loads(FINISHES.read_text(encoding="utf-8")) if FINISHES.is_file() else {}
@@ -753,8 +754,9 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
     owners = list(shared_level or [])
     faces: dict[str, Any] = {"rank": list(shared_face_rank(sector_id, entry)), "owners": [o["sector_id"] for o in owners],
                               "snapped_edges": [], "dropped_walls": [], "trimmed_walls": [], "dropped_openings": [], "moved_openings": []}
-    snap_close_edges(rooms, xs, ys, tf, faces["snapped_edges"])
-    snap_to_owner_edges(rooms, xs, ys, tf, owners, faces["snapped_edges"])
+    if shared_level is not None:        # the ownership rule applies when the complex is built (build_all)
+        snap_close_edges(rooms, xs, ys, tf, faces["snapped_edges"])
+        snap_to_owner_edges(rooms, xs, ys, tf, owners, faces["snapped_edges"])
     seen: dict[str, int] = {}
     group_space: dict[str, str] = {}
     for r in rooms:
@@ -1029,7 +1031,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
                     report["anomalies"].append({"type": "shared_opening_missing_in_owner", "id": dropped_id, "owner": owner_id, "world_m": [round(v, 3) for v in p],
                                                 "note": "the wall belongs to the owner sector, which has no opening here"})
                 continue
-            new_lo, new_hi = clear_opening_corners(orient_m, fixed_m, lo_m, hi_m, walls)
+            new_lo, new_hi = clear_opening_corners(orient_m, fixed_m, lo_m, hi_m, walls) if shared_level is not None else (lo_m, hi_m)
             if abs(new_lo - lo_m) > 1e-6:
                 faces["moved_openings"].append({"id": c["src"], "shift_m": round(new_lo - lo_m, 3), "reason": "jamb inside a perpendicular wall"})
                 p = _axis_q(orient_m, fixed_m, round(new_lo, 3), round(new_hi, 3))
@@ -1111,13 +1113,14 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
     margin = 2.0
     vx, vy = bbox[0] - margin, bbox[1] - margin
     vw, vh = bbox[2] - bbox[0] + 2 * margin, bbox[3] - bbox[1] + 2 * margin
+    shared_mark = f' data-shared-faces="{SHARED_FACES_RULE}"' if shared_level is not None else ""
     header = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         f'<svg xmlns="http://www.w3.org/2000/svg" data-presentation-only="false" data-generator-input="true" '
         f'viewBox="{fmt(vx)} {fmt(vy)} {fmt(vw)} {fmt(vh)}" width="{fmt(vw * 12)}" height="{fmt(vh * 12)}" '
         f'data-scale="1" data-scale-unit="m-per-svg-unit" data-grid-size="1" data-artifact-id="APPROVED-{sector_id}-SVG-01" '
         f'data-plan-style-id="caretaker-style-b-v1" data-sector-id="{sector_id}" data-level="{level["level_id"]}" '
-        f'data-source-plan="{entry.get('plan') or 'overview'}" data-derivation="approved-plan-scaled-by-overview" data-shared-faces="{SHARED_FACES_RULE}">',
+        f'data-source-plan="{entry.get('plan') or 'overview'}" data-derivation="approved-plan-scaled-by-overview"{shared_mark}>',
         f'  <title>{sector_id} — метрический источник из утверждённого плана</title>',
         f'  <desc>+X восток, +Z юг, метры. Построено из {entry.get('plan') or 'общего плана этажа'}; масштаб и положение — по общему плану этажа. Геометрия не исправлялась.</desc>',
         '  <style>.floor{fill:#b9c9d2;fill-opacity:.55;stroke:none}.ceiling{fill:none;stroke:none}.wall{stroke:#253038;stroke-width:.12}</style>',
