@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scenes/review/dream_viewer.gd" id="1_viewer"]
+[ext_resource type="PackedScene" path="res://scenes/dreams/bowser_dream.tscn" id="2_dream"]
+
+[node name="DreamViewer" type="Node3D"]
+script = ExtResource("1_viewer")
+
+[node name="BowserDream" parent="." instance=ExtResource("2_dream")]

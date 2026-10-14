@@ -8,6 +8,7 @@ extends RefCounted
 
 const SANDBOX := "res://scenes/sandbox/opening_sandbox.tscn"
 const MAIN_MENU := "res://scenes/shell/main_menu.tscn"
+const DREAM_VIEWER := "res://scenes/review/dream_viewer.tscn"
 const CHECKLIST := "res://docs/review/manual_checklist.md"
 
 const STATIONS: Array[Dictionary] = [
@@ -74,6 +75,12 @@ const STATIONS: Array[Dictionary] = [
 		"dream": {"module": "module_4", "chair": "sandbox_chair", "seal": "restored", "exit": "gate"},
 		"check": "Откройте журнал и найдите зарисовку печати; подойдите к панели ресинхронизации рядом с креслом, наберите знаки, нажмите ВВОД, затем ошибитесь и сбросьте.",
 		"expect": "На клавишах и в слотах экрана нарисованы остовы (код Ф-n на клавише мелко); СБРОС до ВВОДА бесплатен, неверный ВВОД добавляет +5 и держит слоты на экране.",
+	},
+	{
+		"id": "dream_art", "issue": 204, "title": "Сон Боузера: осмотр арта",
+		"scene": DREAM_VIEWER,
+		"check": "Облетите сон (мышь, WASD, Q/E), переключите стадии 1–4 и пройдите точки 5–0: двор, ниша героя, след оператора, печать, мост, арка; H скрывает подсказки.",
+		"expect": "Небо, свет, звук, пепел и угли меняются со стадией; знамёна, декали, образы и огонь видны; стражи стоят в дворе, боя и смерти нет.",
 	},
 ]
 

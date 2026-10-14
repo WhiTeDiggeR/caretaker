@@ -129,6 +129,7 @@ res://tests/dreams/bowser_dream_fx_check.tscn|BOWSER_DREAM_FX_OK checks=[0-9]+
 res://tests/opening/shell_e2e.tscn|SHELL_E2E_OK
 res://tests/debug/moments_check.tscn|DEBUG_MOMENTS_OK moments=[0-9]+
 res://tests/review/review_hub_check.tscn|REVIEW_HUB_OK stations=[0-9]+
+res://tests/review/dream_viewer_check.tscn|DREAM_VIEWER_OK checks=[0-9]+
 res://tools/props/check_props.gd|PROPS_CHECK props=[0-9]+ errors=0
 CHECKS
 
