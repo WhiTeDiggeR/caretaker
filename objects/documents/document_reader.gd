@@ -160,7 +160,8 @@ func _add_objectives() -> bool:
 	return true
 
 
-## Knowledge remembered in dreams (DreamKnowledge), newest first; spent entries are muted.
+## Knowledge remembered in dreams (DreamKnowledge), newest first, each with its sketch
+## (DreamSketch); spent entries are muted.
 func _add_knowledge() -> bool:
 	var entries := DreamKnowledge.journal_entries()
 	if entries.is_empty():
@@ -169,6 +170,9 @@ func _add_knowledge() -> bool:
 	for entry in entries:
 		var used := bool(entry["used"])
 		_add_line((DONE_MARK if used else CURRENT_MARK) + str(entry["text"]), 20 if used else 21, MUTED if used else UiStyle.TEXT)
+		var sketch := DreamSketch.create(entry)
+		sketch.set_meta(OBJECTIVE_META, true)
+		list_box.add_child(sketch)
 	return true
 
 

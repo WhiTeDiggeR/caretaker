@@ -2,18 +2,22 @@ class_name ResyncPanel
 extends StaticBody3D
 
 ## Capsule resync panel of a module (D7, docs/game_design/03-first-dream.md): the hero
-## enters the glyphs remembered at the dream's seal. The sequence is checked once it is
-## complete; a match calms the sleep, a mistake disturbs it and the input starts over.
-## Glyph buttons are built from data/dreams/knowledge.json. The state is shown on a
-## late-era world screen in the status grammar, the glyphs on the buttons like a sign plate
-## (issue #165).
+## types the glyphs remembered at the dream's seal on eight phase-mark keys (4 × 2, Ф-1…Ф-8)
+## and confirms with ВВОД (З-Р7, #196; 07-dream-glyphs.md, 05_resync_panel.svg). ВВОД is
+## unavailable until the code is complete; a match calms the sleep, a mistake disturbs it
+## (+5, З-4) and the wrong slots stay on the screen for HOLD_SECONDS. СБРОС before ВВОД is
+## free. Keys are built from data/dreams/knowledge.json; the code length comes from the data.
+## The state is shown on a late-era world screen in the status grammar (issue #165).
 
-const BUTTON_SIZE := Vector3(0.24, 0.16, 0.06)
-const BUTTON_COLUMNS := 3
-const BUTTON_STEP := Vector2(0.3, 0.22)
-const BUTTON_ORIGIN := Vector3(-0.3, 1.2, 0.18)
+const BUTTON_SIZE := Vector3(0.2, 0.16, 0.06)
+const BUTTON_COLUMNS := 4
+const BUTTON_STEP := Vector2(0.235, 0.22)
+const BUTTON_ORIGIN := Vector3(-0.3525, 1.2, 0.18)
 const BUTTON_COLOR := Color(0.13, 0.14, 0.15)
 const RESET_CAPTION := "СБРОС"
+const ENTER_CAPTION := "ВВОД"
+const HOLD_SECONDS := 1.5
+const NEED_GLYPHS := "НУЖНО %d ЗНАКА"
 const CAPTION_SIZE := 26
 const TITLE := "РЕСИНХРОНИЗАЦИЯ КАПСУЛЫ · %s"
 const EMPTY_SLOT := "_"
@@ -31,9 +35,12 @@ const AWAKE_LINE := "Объект бодрствует.\nРесинхрониз�
 
 @onready var _screen: WorldScreen = $Screen
 @onready var _reset: Interactable = $ResetButton/Interactable
+@onready var _enter: Interactable = $EnterButton/Interactable
 
 var entered := PackedStringArray()
 var last_result := -1
+## The wrong code kept on the screen after a mistake (empty once the hold is over).
+var held := PackedStringArray()
 var _buttons: Array[Interactable] = []
 
 
@@ -42,8 +49,11 @@ func _ready() -> void:
 	_caption($ResetButton, RESET_CAPTION)
 	_reset.interacted.connect(func() -> void:
 		entered.clear()
-		last_result = -1
+		_clear_hold()
 		refresh())
+	_enter.prompt = "ВВОД"
+	_caption($EnterButton, ENTER_CAPTION)
+	_enter.interacted.connect(enter)
 	var glyphs := DreamKnowledge.glyphs()
 	for index in glyphs.size():
 		_buttons.append(_build_button(glyphs[index], index))
@@ -53,17 +63,36 @@ func _ready() -> void:
 	refresh()
 
 
-## Enters one glyph; the sequence is checked once it has the knowledge's length.
+## Adds one glyph to the input; extra presses beyond the code length are ignored.
 func press(glyph: String) -> void:
 	var id := DreamKnowledge.active_for(module_id)
-	if id.is_empty():
+	if id.is_empty() or entered.size() >= DreamKnowledge.code(id).size():
 		return
+	_clear_hold()
 	entered.append(glyph)
-	last_result = -1
-	if entered.size() >= DreamKnowledge.code(id).size():
-		last_result = DreamKnowledge.resync(module_id, entered)
-		entered.clear()
 	refresh()
+
+
+## ВВОД: checks a complete input. A mistake keeps the slots on screen for HOLD_SECONDS.
+func enter() -> void:
+	var id := DreamKnowledge.active_for(module_id)
+	if id.is_empty() or entered.size() < DreamKnowledge.code(id).size():
+		return
+	last_result = DreamKnowledge.resync(module_id, entered)
+	if last_result == DreamKnowledge.Result.WRONG:
+		held = entered.duplicate()
+		var shown := held
+		get_tree().create_timer(HOLD_SECONDS).timeout.connect(func() -> void:
+			if held == shown:
+				held.clear()
+				refresh())
+	entered.clear()
+	refresh()
+
+
+func _clear_hold() -> void:
+	held.clear()
+	last_result = -1
 
 
 func refresh() -> void:
@@ -83,9 +112,10 @@ func refresh() -> void:
 	elif lock.is_empty():
 		if last_result == DreamKnowledge.Result.WRONG:
 			rows.append_array(_rows(WRONG_LINE, &"alarm"))
+		var shown := held if entered.is_empty() and not held.is_empty() else entered
 		var slots := PackedStringArray()
 		for index in DreamKnowledge.code(id).size():
-			slots.append(DreamKnowledge.label(entered[index]) if index < entered.size() else EMPTY_SLOT)
+			slots.append(DreamKnowledge.label(shown[index]) if index < shown.size() else EMPTY_SLOT)
 		rows.append({"text": "Введите знаки печати:", "status": &""})
 		rows.append({"text": DreamKnowledge.SEPARATOR.join(slots), "status": &"", "large": true})
 	var powered := section.is_empty() or GameState.is_section_powered(section)
@@ -99,6 +129,9 @@ func refresh() -> void:
 		button.unavailable_prompt = lock
 	_reset.available = lock.is_empty() and not entered.is_empty()
 	_reset.unavailable_prompt = ""
+	var needed := DreamKnowledge.code(id).size()
+	_enter.available = lock.is_empty() and entered.size() >= needed
+	_enter.unavailable_prompt = lock if not lock.is_empty() else NEED_GLYPHS % needed
 
 
 ## A sign under a button.
