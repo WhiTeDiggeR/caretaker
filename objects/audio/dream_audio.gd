@@ -8,9 +8,10 @@ extends Node
 ## veil; placeholder within the sound budget) or, once recorded, a Sfx id (`sound`). Which
 ## dream uses what and the stage thresholds — data/audio/dream_audio.json.
 ## It only listens to existing signals: the dream scenes do not refer to it.
-## Stage of a configured dream: pre-awakening at a high instability stage of the sleeper,
-## unease while the ambush is on (until the seal), calm on a repeat visit (V2+) to a quiet
-## sleeper, alarm otherwise (the entry, the way to the seal and after it).
+## Stage of a configured dream: the one its sky and light show (DreamStageMood, #202) when the
+## dream has it; otherwise pre-awakening at a high instability stage of the sleeper, unease
+## while the ambush is on (until the seal), calm on a repeat visit (V2+) to a quiet sleeper,
+## alarm otherwise (the entry, the way to the seal and after it).
 
 signal stage_changed(stage: StringName)
 signal stinger_played(event: StringName, id: StringName)
@@ -23,6 +24,8 @@ const UNEASE := &"unease"
 const PREAWAKE := &"preawake"
 const SILENT_DB := -60.0
 const DEFAULT_CROSSFADE := 2.5
+## DreamStageMood.Stage -> stage of the sound.
+const MOOD_STAGES: Array[StringName] = [CALM, ALARM, UNEASE, PREAWAKE]
 const DRONE_RATE := 11025
 const DRONE_SECONDS := 8.0  # every tone and pulse of a drone makes whole cycles in it
 const DRONE_SEAM := 0.5
@@ -44,6 +47,7 @@ var _current := 0
 var _fade: Tween
 ## "<module>/<stage>" -> looping stream
 var _loops: Dictionary[String, AudioStream] = {}
+var _mood: DreamStageMood
 
 
 func _ready() -> void:
@@ -79,6 +83,8 @@ func desired_stage() -> StringName:
 	var cfg := config(Dreams.module_id)
 	if not Dreams.in_dream or cfg.is_empty():
 		return SILENT
+	if _mood and is_instance_valid(_mood) and _mood.is_node_ready():
+		return MOOD_STAGES[_mood.target_stage()]
 	var level: int = instability_stage.call(Dreams.module_id)
 	if level >= int(cfg.get("preawake_min_stage", 3)):
 		return PREAWAKE
@@ -230,6 +236,14 @@ func _on_seal_restored(id: StringName) -> void:
 func _on_node_added(node: Node) -> void:
 	if node is DreamAmbush:
 		(node as DreamAmbush).ambush_started.connect(_on_ambush_started)
+	elif node is DreamStageMood:
+		var mood := node as DreamStageMood
+		_mood = mood
+		mood.ready.connect(refresh)
+		mood.stage_changed.connect(func(_stage: int) -> void: refresh())
+		mood.tree_exiting.connect(func() -> void:
+			if _mood == mood:
+				_mood = null)
 	elif node is DreamCombat:
 		(node as DreamCombat).attacked.connect(_on_attacked)
 

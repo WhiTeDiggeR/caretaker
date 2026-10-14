@@ -4,7 +4,8 @@ extends Node
 ## in the Sfx catalogue and load, every stage builds a looping stream, the stage of Bowser's dream switches the background loop
 ## (alarm on entry, unease at the ambush, alarm after the seal, pre-awakening at a high
 ## instability stage, calm on a repeat visit, silence outside) and the ambush, the seal, a
-## strike of the chain and the exit through the gate start their stingers.
+## strike of the chain and the exit through the gate start their stingers. With the sky and
+## light of the dream (DreamStageMood, #202) in the scene the sound follows its stage.
 ## Prints `DREAM_AUDIO_CHECK_OK checks=<n>` on success.
 
 const MODULE := &"module_4"
@@ -90,6 +91,18 @@ func _run() -> void:
 	Dreams.seal_restored = false
 	Dreams.entered.emit(MODULE)
 	_expect(DreamAudio.CALM, "repeat visit")
+
+	# The sky and light of the dream lead: the sound follows their stage.
+	var mood := DreamStageMood.new()
+	mood.environment = Environment.new()
+	add_child(mood)
+	_expect(DreamAudio.ALARM, "the mood's entry stage")
+	mood.set_event_stage(DreamStageMood.Stage.UNREST)
+	_expect(DreamAudio.UNEASE, "the mood's unrest")
+	mood.set_event_stage(DreamStageMood.Stage.CALM)
+	_expect(DreamAudio.CALM, "the mood's calm by the gate")
+	mood.queue_free()
+	await _frames(2)
 	Dreams.abort()
 	DreamAudio.refresh()
 	_expect(DreamAudio.SILENT, "after abort")
