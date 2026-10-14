@@ -1,0 +1,79 @@
+{
+  "_comment": "Звуковой фон и стингеры снов по стадиям (#201). Стадии — docs/art/dream-bowser-s.md §2. Фон стадии — процедурный гул (drone: тона в Гц с целым числом периодов за 8 с, ветер — отфильтрованный шум, пульс — Гц) или, если задан sound, id из data/audio/sfx.json (финальная запись). Стингеры — id из data/audio/sfx.json. Плеер: objects/audio/dream_audio.gd (автозагрузка DreamAudio).",
+  "crossfade_seconds": 2.5,
+  "dreams": {
+    "module_4": {
+      "stages": {
+        "calm": {
+          "drone": {
+            "tones": [
+              55.0,
+              82.5,
+              110.0
+            ],
+            "wind_cutoff": 300,
+            "wind": 1.5,
+            "pulse": 0.25,
+            "depth": 0.2
+          },
+          "volume_db": -14
+        },
+        "alarm": {
+          "drone": {
+            "tones": [
+              49.0,
+              51.875,
+              73.5
+            ],
+            "wind_cutoff": 450,
+            "wind": 2.5,
+            "pulse": 0.5,
+            "depth": 0.3
+          },
+          "volume_db": -12
+        },
+        "unease": {
+          "drone": {
+            "tones": [
+              41.25,
+              43.75,
+              87.5,
+              92.5
+            ],
+            "wind_cutoff": 700,
+            "wind": 3.5,
+            "pulse": 1.25,
+            "depth": 0.45
+          },
+          "volume_db": -10
+        },
+        "preawake": {
+          "drone": {
+            "tones": [
+              36.75,
+              38.875,
+              52.0,
+              155.5
+            ],
+            "wind_cutoff": 1000,
+            "wind": 5.0,
+            "pulse": 0.625,
+            "depth": 0.6
+          },
+          "volume_db": -9
+        }
+      },
+      "calm_max_stage": 0,
+      "preawake_min_stage": 3,
+      "stingers": {
+        "ambush": "dream_ambush",
+        "seal": "dream_seal",
+        "gate": "dream_gate",
+        "chain_hit": "dream_chain_hit"
+      },
+      "chain_weapons": [
+        "dream_chain"
+      ]
+    }
+  }
+}

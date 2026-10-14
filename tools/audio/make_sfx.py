@@ -326,6 +326,38 @@ def breath(rng):
     return mul(air, envelope(samples(d), 0.18, 0.55), lfo(1.3, d, 0.8, 0.2), 0.6)
 
 
+# Bowser's dream (#201): stingers. The stage loops are synthesised in the game
+# (objects/audio/dream_audio.gd) to keep the placeholders within their budget.
+
+
+def dream_ambush(rng):
+    d = 1.0
+    rise = mul(add(sweep(90, 420, d), mul(sweep(95, 445, d), 0.8)), 0.4, envelope(samples(d), 0.6, 0.4))
+    return add(mul(thud(0.9, rng, 45.0), 1.4), rise)
+
+
+def dream_seal(rng):
+    d = 1.3
+    n = samples(d)
+    bell = add(*(mul(sine(f, d), a, decay(n, t)) for f, a, t in ((660, 0.5, 0.6), (990, 0.35, 0.45), (1320, 0.3, 0.35), (1980, 0.15, 0.2))))
+    return add(click(rng, 0.03, 2500), mul(bell, envelope(n, 0.005, 0.6)))
+
+
+def dream_gate(rng):
+    d = 1.1
+    n = samples(d)
+    whoosh = mul(highpass(lowpass(noise(d, rng), 2500), 300), lfo(0.5 / d, d, 0.0, 1.0))
+    shimmer = mul(add(sweep(600, 1500, d), mul(sine(2400, d), 0.3)), 0.3, lfo(9, d, 0.6, 0.4))
+    return mul(add(whoosh, shimmer), envelope(n, 0.2, 0.6))
+
+
+def dream_chain_hit(rng):
+    d = 0.5
+    n = samples(d)
+    ring = add(*(mul(sine(f, d), a, decay(n, t)) for f, a, t in ((520, 0.5, 0.25), (1340, 0.35, 0.15), (2210, 0.25, 0.1))))
+    return add(thud(d, rng, 80.0), ring, click(rng, 0.02, 3000))
+
+
 RECIPES = {
     "door_motor": door_motor,
     "door_mech": door_mech,
@@ -359,6 +391,10 @@ RECIPES = {
     "step_ladder": step_ladder,
     "land": land,
     "breath": breath,
+    "dream_ambush": dream_ambush,
+    "dream_seal": dream_seal,
+    "dream_gate": dream_gate,
+    "dream_chain_hit": dream_chain_hit,
 }
 
 # Each sound's random generator is seeded by its place here: new sounds are appended so
@@ -370,6 +406,8 @@ SEED_ORDER = [
     "recharge", "switch", "terminal_beep", "terminal_error", "terminal_type", "valve", "vent",
     # #134
     "step_concrete", "step_metal", "step_grate", "step_crawl", "step_ladder", "land", "breath",
+    # #201
+    "dream_ambush", "dream_seal", "dream_gate", "dream_chain_hit",
 ]
 
 
