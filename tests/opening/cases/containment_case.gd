@@ -90,7 +90,7 @@ func run(c: OpeningCheck) -> void:
 	c.equal(lines[1], Containment.LINE_INDENT + Containment.OFFLINE_LINE, "an offline system gives no forecast and says why")
 	GameState.set_flag(&"containment_online")
 	c.is_true(Containment.monitor_lines()[1].begins_with(Containment.LINE_INDENT + "Прогноз пробуждения: около "), "an active disturbed module shows an approximate forecast")
-	c.is_true(Containment.monitor_lines()[1].ends_with("Затем — химический протокол."), "an armed module says the protocol follows the forecast")
+	c.is_true(not "\n".join(Containment.monitor_lines()).to_lower().contains("химическ"), "an armed module does not announce the chemical protocol ahead (#221)")
 	GameState.grant_access(&"module_3")
 	c.equal(Containment.monitor_lines()[0], "МОДУЛЬ 3 — СТАБИЛЬНЫЙ СОН", "a stable module is named stable")
 	c.equal(Containment.monitor_lines()[1], Containment.LINE_INDENT + Containment.STABLE_LINE, "a stable module has no awakening threat")
