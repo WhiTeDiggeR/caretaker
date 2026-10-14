@@ -34,6 +34,9 @@ def valve_wheel(k: Kit):
 
 
 # ----------------------------------------------------------------------------- P-011
+NEEDLE_ANGLE = -50.0  # degrees about +Z from 12 o'clock (negative = clockwise): ≈ 6.9 бар on the 0-10 face
+
+
 @prop("pressure_gauge", "P-011", (0.2, 0.2, 0.09), "wall", 2000)
 def pressure_gauge(k: Kit):
     r = 0.095
@@ -46,8 +49,11 @@ def pressure_gauge(k: Kit):
     k.decal((0, 0, 0.0758), (2 * r - 0.008, 2 * r - 0.008), "instrument_faces", uv("instrument_faces", "pressure"))
     k.cyl(r - 0.004, 0.003, (0, 0, 0.085), "z", "glass_dirty", 28)
     k.group("Needle", pivot=(0, 0, 0.0805))
-    k.box((0.006, 0.075, 0.003), (0, 0.025, 0.0805), "red_paint_worn", 0.0, rot=(0, 0, -50))
-    k.box((0.006, 0.02, 0.003), (0, -0.01, 0.0805), "red_paint_worn", 0.0, rot=(0, 0, -50))
+    # box rot spins about the box's own centre, so place both parts along the needle direction to keep them on the hub
+    ang = math.radians(NEEDLE_ANGLE)
+    along = (-math.sin(ang), math.cos(ang))
+    k.box((0.006, 0.075, 0.003), (along[0] * 0.025, along[1] * 0.025, 0.0805), "red_paint_worn", 0.0, rot=(0, 0, NEEDLE_ANGLE))
+    k.box((0.006, 0.02, 0.003), (along[0] * -0.01, along[1] * -0.01, 0.0805), "red_paint_worn", 0.0, rot=(0, 0, NEEDLE_ANGLE))
     k.body()
     k.cyl(0.012, 0.004, (0, 0, 0.0815), "z", "steel_bare", 10)
 

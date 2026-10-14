@@ -256,7 +256,7 @@ def build() -> Scene:
     s.light("CorrLight", "OmniLight3D", (-0.9, 3.0, 0), cold, 1.6, 6.0, shadow=True)
     s.light("ExitGlow", "OmniLight3D", (2.7, 2.8, 1.0), (0.3, 0.9, 0.45), 0.35, 2.5)
     for i, (lx, lz) in enumerate(((5.5, -1.5), (9.0, -2.0), (8.0, 2.5))):
-        s.light(f"LampLight{i}", "OmniLight3D", (lx, bh - 1.45, lz), warm, 4.5, 10.0, shadow=i != 2)
+        s.light(f"LampLight{i}", "OmniLight3D", (lx, bh - 1.45, lz), warm, 4.5, 10.0, shadow=True)
     s.light("BeaconLightB", "OmniLight3D", (bx0 + 0.3, 3.2, 2.3), red, 0.7, 4.0)
     s.light("FanGlow", "OmniLight3D", (bx1 - 1.2, 0.8, -bz + 1.6), (1.0, 0.5, 0.25), 0.3, 2.5)
     s.ext.insert(0, '[ext_resource type="Script" path="res://scenes/sandbox/lookdev_flicker.gd" id="flicker"]')
