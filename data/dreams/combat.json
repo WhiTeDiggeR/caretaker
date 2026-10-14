@@ -5,7 +5,13 @@
     "regen_per_second": 4.0,
     "focus": 100,
     "focus_per_second": 10.0,
-    "hit_push": 4.0
+    "hit_push": 4.0,
+    "dash": {
+      "distance": 4.0,
+      "time": 0.18,
+      "invulnerable": 0.35,
+      "cooldown": 1.2
+    }
   },
   "weapons": {
     "dream_blade": {
@@ -28,6 +34,17 @@
       "cooldown": 0.8,
       "focus_cost": 25,
       "knockback": 2.5
+    },
+    "dream_chain": {
+      "title": "Цепь с грузом",
+      "kind": "melee",
+      "action": "dream_attack",
+      "damage": 34,
+      "range": 2.2,
+      "arc_degrees": 80,
+      "cooldown": 0.5,
+      "knockback": 5.0,
+      "hint": "dream_strike"
     }
   },
   "enemies": {
@@ -42,6 +59,16 @@
       "damage": 18,
       "attack_cooldown": 1.2,
       "stagger": 0.35
+    }
+  },
+  "ambushes": {
+    "bowser_first_fight": {
+      "enemy": "shade",
+      "count": 2,
+      "assemble_seconds": 1.5,
+      "art": "res://loads/props/dream_shade_guard/dream_shade_guard.gltf",
+      "art_material": "res://materials/dream_bowser/shadow.tres",
+      "art_eye_height": 1.39
     }
   }
 }

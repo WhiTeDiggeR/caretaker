@@ -103,7 +103,7 @@ def control_desk(k: Kit):
     prof = [(0.4, 0.0), (0.4, 0.78), (0.37, 0.82), (-0.02, 0.97), (-0.4, 0.97), (-0.4, 0.0)]
     k.prism_x(prof, w, 0, "painted_metal", bevel=0.006)
     k.box((w + 0.02, 0.06, 0.78), (0, 0.03, 0.0), "painted_metal", 0.006)                          # toe plinth
-    k.box((w - 0.1, 0.9, 0.01), (0, 0.45, 0.405), "painted_metal", 0.0)                           # access panel look
+    k.box((w - 0.1, 0.68, 0.01), (0, 0.4, 0.405), "painted_metal", 0.0)                           # access panel, below the lip
     for x in (-0.55, 0.55):
         k.hex_bolt((x, 0.3, 0.41), 0.01, 0.006)
         k.hex_bolt((x, 0.66, 0.41), 0.01, 0.006)
@@ -116,7 +116,7 @@ def control_desk(k: Kit):
         return (x, y + n[1] * lift, z + n[2] * lift)
     # screen strip (top rear of the slope)
     k.group("Screen", pivot=on_slope(-0.45, 0.68))
-    k.decal(on_slope(-0.45, 0.62, 0.0015), (0.5, 0.2), "screens", uv("screens", "terminal_off"), tilt=-ang, offset=0.0)
+    k.decal(on_slope(-0.45, 0.62, 0.0075), (0.5, 0.2), "screens", uv("screens", "terminal_off"), normal="+y", tilt=ang, offset=0.0)
     k.body()
     k.box((0.54, 0.012, 0.28), on_slope(-0.45, 0.62, 0.0), "plastic_panel", 0.002, rot=(ang, 0, 0))
     # button banks
@@ -128,19 +128,24 @@ def control_desk(k: Kit):
             k.cyl(0.022, 0.014, (px, py, pz), "y", "steel_bare", 12, rot=(ang, 0, 0))
             px, py, pz = on_slope(x + 0.05, t, 0.0145)
             k.cyl(0.015, 0.005, (px, py, pz), "y", mat, 10, rot=(ang, 0, 0))
-    for i, name in enumerate(("ПУСК", "СТОП", "СБРОС", "ТЕСТ")):
-        k.decal(on_slope(0.12 + i * 0.14, 0.38, 0.0015), (0.12, 0.03), "panel_labels", uv("panel_labels", name), tilt=-ang, offset=0.0)
-    # knife switch (the interactable): base plate and a pivoting handle
-    bx = 0.58
-    px, py, pz = on_slope(bx, 0.45, 0.012)
-    k.box((0.2, 0.012, 0.26), on_slope(bx, 0.45, 0.006), "steel_bare", 0.002, rot=(ang, 0, 0))
-    for dz in (-0.1, 0.1):
-        k.box((0.05, 0.03, 0.03), on_slope(bx, 0.45 + dz * 1.4, 0.026), "plastic_panel", 0.004, rot=(ang, 0, 0))
-    hp = on_slope(bx, 0.55, 0.045)
+    for i, name in enumerate(("ПУСК", "СТОП", "СБРОС", "ТЕСТ")):          # one label over each pair of buttons
+        k.decal(on_slope(0.0475 + i * 0.15, 0.38, 0.0015), (0.12, 0.03), "panel_labels", uv("panel_labels", name), normal="+y", tilt=ang, offset=0.0)
+    # knife switch (the interactable): base plate right of the buttons, two posts, a hub on an axle along X and a
+    # handle leaning 30 degrees from the panel normal toward the operator, with the knob on its tip
+    bx = 0.67
+    k.box((0.16, 0.012, 0.26), on_slope(bx, 0.5, 0.006), "steel_bare", 0.002, rot=(ang, 0, 0))
+    for dx in (-0.045, 0.045):
+        k.box((0.03, 0.04, 0.04), on_slope(bx + dx, 0.6, 0.032), "plastic_panel", 0.004, rot=(ang, 0, 0))
+    hp = on_slope(bx, 0.6, 0.032)
+    lean = math.radians(ang + 30)
+    hd = (0.0, math.cos(lean), math.sin(lean))     # handle direction: rot=(ang + 30, 0, 0) turns +Y onto it
+
+    def along(dist):
+        return (hp[0], hp[1] + hd[1] * dist, hp[2] + hd[2] * dist)
     k.group("Switch", pivot=hp)
-    k.cyl(0.011, 0.13, (hp[0], hp[1] + 0.05, hp[2] - 0.015), "y", "steel_bare", 10, rot=(ang + 30, 0, 0))
-    k.sphere(0.026, (hp[0], hp[1] + 0.12, hp[2] - 0.045), "rubber_black", 12)
-    k.cyl(0.016, 0.06, hp, "x", "steel_bare", 10)
+    k.cyl(0.014, 0.06, hp, "x", "steel_bare", 10)
+    k.cyl(0.011, 0.13, along(0.06), "y", "steel_bare", 10, rot=(ang + 30, 0, 0))
+    k.sphere(0.026, along(0.14), "rubber_black", 12)
     k.body()
     # side steps, cable gland and warning label
     k.decal((-0.55, 0.62, 0.411), (0.25, 0.125), "signs_ru", uv("signs_ru", "danger"), offset=0.0)
@@ -158,12 +163,12 @@ def terminal_console(k: Kit):
     for x in (-0.5, 0.5):
         k.hex_bolt((x, 0.2, 0.36), 0.01, 0.006)
         k.hex_bolt((x, 0.66, 0.36), 0.01, 0.006)
-    # keyboard on the shelf
-    k.box((0.62, 0.022, 0.2), (0, 0.91, 0.1), "plastic_panel", 0.004)
+    # keyboard on the flat shelf (z -0.2..0.12), clear of the slope in front of it
+    k.box((0.62, 0.022, 0.19), (0, 0.91, 0.025), "plastic_panel", 0.004)
     for i in range(3):
-        k.box((0.58, 0.01, 0.045), (0, 0.926, 0.04 + i * 0.05), "rubber_black", 0.002)
-    k.box((0.12, 0.012, 0.09), (0.46, 0.906, 0.1), "plastic_panel", 0.003)                       # trackball plate
-    k.sphere(0.022, (0.46, 0.914, 0.1), "steel_bare", 10)
+        k.box((0.58, 0.01, 0.045), (0, 0.926, -0.025 + i * 0.05), "rubber_black", 0.002)
+    k.box((0.12, 0.012, 0.09), (0.46, 0.906, 0.025), "plastic_panel", 0.003)                     # trackball plate
+    k.sphere(0.022, (0.46, 0.914, 0.025), "steel_bare", 10)
     # monitor on a post
     k.box((0.16, 0.22, 0.12), (0, 1.0, -0.14), "painted_metal", 0.006)
     k.box((1.0, 0.46, 0.14), (0, 1.27, -0.1), "painted_metal", 0.012, rot=(-8, 0, 0))

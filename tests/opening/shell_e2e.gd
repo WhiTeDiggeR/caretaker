@@ -36,6 +36,21 @@ func _run() -> void:
 	await _capture("shell_1_menu")
 
 	_check(_has_button(menu, "Полигон (отладка)"), "debug builds offer the test range")
+	# #166: waking in the capsule starts after the loading screen, not under it.
+	var wake_while_loading: Array[bool] = []
+	var on_effect := func(id: StringName) -> void:
+		if id == &"wake_up":
+			wake_while_loading.append(Shell.loading or Shell._loading_layer.visible)
+	ScreenEffects.effect_started.connect(on_effect)
+	var story_scene := Shell.new_game_scene
+	Shell.new_game_scene = SANDBOX
+	Shell.new_game()
+	await _until(func() -> bool: return _scene_is(SANDBOX))
+	await _frames(3)
+	Shell.new_game_scene = story_scene
+	ScreenEffects.effect_started.disconnect(on_effect)
+	_check(wake_while_loading == [false], "waking starts once the loading screen is gone: %s" % [wake_while_loading])
+	ScreenEffects.stop()
 	GameState.set_flag(&"left_over")
 	Shell.start_sandbox()
 	await _until(func() -> bool: return _scene_is(SANDBOX))
@@ -98,6 +113,30 @@ func _run() -> void:
 	_check(GameState.has_flag(&"e2e_marker"), "the range keeps the loaded flags")
 	var loaded_player := tree.current_scene.get_node(^"Player") as Node3D
 	_check(loaded_player.global_position.distance_to(Vector3(2, 0.9, -1)) < 0.2, "continue restores the hero position")
+	# #123: a checkpoint, then the catastrophe, then back to the checkpoint.
+	GameState.set_flag(&"containment_online")
+	var checkpoint := tree.current_scene.get_node(^"Stations/Checkpoint") as Checkpoint
+	loaded_player.global_position = checkpoint.global_position + Vector3(0, 0.9, 0)
+	await _until(func() -> bool: return Saves.exists(Saves.AUTO))
+	_check(checkpoint.is_reached(), "walking into the checkpoint saves the game")
+	Containment.add_instability(&"module_3", 100.0)
+	Containment.add_instability(&"module_4", 100.0)
+	await _frames(2)
+	_check(Shell.is_defeated() and tree.paused, "the catastrophe ends the game")
+	await _capture("shell_6_defeat")
+	var defeat := Shell.find_children("*", "DefeatScreen", false, false)
+	_check(defeat.size() == 1 and not (defeat[0] as DefeatScreen).checkpoint_button.disabled, "the defeat screen offers the checkpoint")
+	_press_cancel()
+	await _frames(2)
+	_check(Shell.is_defeated(), "Esc does not dismiss the defeat")
+	if defeat.size() == 1:
+		(defeat[0] as DefeatScreen).checkpoint_button.pressed.emit()
+	await _until(func() -> bool: return not Shell.loading and _scene_is(SANDBOX) and not Shell.is_defeated())
+	await _frames(5)
+	_check(not tree.paused, "loading the checkpoint resumes the game")
+	_check(not GameState.has_flag(Containment.CATASTROPHE_FLAG), "the checkpoint is from before the catastrophe")
+	_check(not Containment.is_awake(&"module_3") and not Containment.is_awake(&"module_4"), "the modules sleep again")
+
 	for slot in Saves.SLOTS:
 		Saves.delete(slot)
 

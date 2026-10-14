@@ -5,7 +5,7 @@ extends SceneTree
 
 const PROPS_DIR := "res://loads/props"
 const WRAPPERS_DIR := "res://objects/art"
-const NO_COLLISION := ["chain_hanging", "cable_hang", "document_sheet", "personal_key"]
+const NO_COLLISION := ["chain_hanging", "cable_hang", "document_sheet", "personal_key", "sleeper_herobrine", "sleeper_bowser"]
 const TEXTURED_MATERIALS := [
 	"painted_metal", "steel_bare", "rusted_steel", "diamond_plate", "rubber_black", "plastic_panel",
 	"vinyl_worn", "duct_galvanized", "concrete_rubble", "paper_aged", "wood_old", "fabric_dark", "painted_metal_green",

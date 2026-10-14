@@ -4,7 +4,7 @@
 Usage: python3 tools/props/import_textures.py [material ...]
 Output per material (same paths as make_textures.py, so every model picks them up unchanged):
   loads/textures/<m>/<m>_albedo.jpg (graded into the palette), <m>_normal.png (OpenGL), <m>_orm.jpg (Poly Haven ARM =
-  occlusion, roughness, metal). Writes the tile size in metres (Poly Haven real-world dimensions) to sourced_tiles.json
+  occlusion, roughness, metal). Optional "blocks": [length, height] cuts running-bond joints into the scan. Writes the tile size in metres (Poly Haven real-world dimensions) to sourced_tiles.json
   and records provenance in manifest.json. Licence: CC0 (polyhaven.com/license).
 """
 from __future__ import annotations
@@ -39,6 +39,33 @@ def grade(img: Image.Image, sat: float, lum: float, tint=None, tint_mix: float =
     return Image.fromarray((a * 255 + 0.5).astype(np.uint8))
 
 
+def block_joints(size: int, tile: float, block: list[float], width_m: float = 0.035) -> np.ndarray:
+    """Running-bond joints of `block` = [length, height] metres over one tile: 1 in the joint, 0 on the block face."""
+    yy, xx = np.mgrid[0:size, 0:size].astype(np.float32) * (tile / size)
+    row = np.floor(yy / block[1])
+    u = (xx + (row % 2) * block[0] * 0.5) % block[0]
+    v = yy % block[1]
+    d = np.minimum(np.minimum(u, block[0] - u), np.minimum(v, block[1] - v))
+    return np.clip(1.0 - d / width_m, 0.0, 1.0)
+
+
+def add_blocks(albedo: Image.Image, normal: Image.Image, orm: Image.Image, tile: float, block: list[float]):
+    """Cuts large block joints (decision D-1) into a scan: darker albedo, a groove in the normal map, less AO."""
+    sys.path.insert(0, str(HERE))
+    import texlib as T
+    j = block_joints(albedo.width, tile, block)
+    a = np.asarray(albedo, np.float32) / 255.0 * (1.0 - 0.6 * j[..., None])
+    groove = T.normal_from_height(1.0 - T.blur(j, 1.5), 3.0) * 2.0 - 1.0
+    n = np.asarray(normal.resize(albedo.size), np.float32) / 127.5 - 1.0
+    n = n + groove * np.array([1.0, 1.0, 0.0], np.float32)
+    n /= np.linalg.norm(n, axis=-1, keepdims=True)
+    o = np.asarray(orm.resize(albedo.size), np.float32) / 255.0
+    o[..., 0] *= 1.0 - 0.5 * j
+    o[..., 1] = np.maximum(o[..., 1], 0.85 * j)
+    to8 = lambda x: Image.fromarray((np.clip(x, 0, 1) * 255 + 0.5).astype(np.uint8))
+    return to8(a), to8(n * 0.5 + 0.5), to8(o)
+
+
 def import_material(name: str, cfg: dict, manifest: dict, tiles: dict):
     asset = cfg["asset"]
     files = json.loads(fetch(f"https://api.polyhaven.com/files/{asset}"))
@@ -46,16 +73,23 @@ def import_material(name: str, cfg: dict, manifest: dict, tiles: dict):
     out = REPO / "loads" / "textures" / name
     out.mkdir(parents=True, exist_ok=True)
     diff = Image.open(io.BytesIO(fetch(files["Diffuse"][RES]["jpg"]["url"])))
-    grade(diff, cfg["sat"], cfg["lum"], cfg.get("tint"), cfg.get("tint_mix", 0.0)).save(out / f"{name}_albedo.jpg", quality=92, subsampling=0, optimize=True)
-    Image.open(io.BytesIO(fetch(files["nor_gl"][RES]["jpg"]["url"]))).convert("RGB").save(out / f"{name}_normal.png", optimize=True)
-    Image.open(io.BytesIO(fetch(files["arm"][RES]["jpg"]["url"]))).convert("RGB").save(out / f"{name}_orm.jpg", quality=95, subsampling=0, optimize=True)
+    albedo = grade(diff, cfg["sat"], cfg["lum"], cfg.get("tint"), cfg.get("tint_mix", 0.0))
+    normal = Image.open(io.BytesIO(fetch(files["nor_gl"][RES]["jpg"]["url"]))).convert("RGB")
+    orm = Image.open(io.BytesIO(fetch(files["arm"][RES]["jpg"]["url"]))).convert("RGB")
     dims = info.get("dimensions") or [2000, 2000]
     tiles[name] = cfg.get("tile") or round(max(dims[0], dims[1]) / 1000.0, 3)
+    if cfg.get("blocks"):
+        albedo, normal, orm = add_blocks(albedo, normal, orm, tiles[name], cfg["blocks"])
+    albedo.save(out / f"{name}_albedo.jpg", quality=92, subsampling=0, optimize=True)
+    normal.save(out / f"{name}_normal.png", optimize=True)
+    orm.save(out / f"{name}_orm.jpg", quality=95, subsampling=0, optimize=True)
     manifest["entries"] = [e for e in manifest["entries"] if e.get("glob") != f"loads/textures/{name}/*"]
     manifest["entries"].insert(0, {
         "glob": f"loads/textures/{name}/*", "kind": "texture", "source": f"https://polyhaven.com/a/{asset}",
         "author": ", ".join(info.get("authors", {}).keys()) or "Poly Haven", "license": "CC0-1.0",
-        "modified": f"graded into the palette by tools/props/import_textures.py ({RES}, sat {cfg['sat']}, lum {cfg['lum']})"})
+        "modified": f"graded into the palette by tools/props/import_textures.py ({RES}, sat {cfg['sat']}, lum {cfg['lum']}"
+                    + (f", tint {cfg['tint']} x {cfg.get('tint_mix', 0.0)}" if cfg.get("tint") else "")
+                    + (f", block joints {cfg['blocks'][0]} x {cfg['blocks'][1]} m" if cfg.get("blocks") else "") + ")"})
     print(f"{name:20s} <- {asset:24s} tile {tiles[name]} m  by {manifest['entries'][0]['author']}")
 
 

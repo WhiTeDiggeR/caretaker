@@ -56,23 +56,11 @@ func _ready() -> void:
 	rows.add_child(crt_toggle)
 	ShellUI.label(rows, "Скан-линии, свечение и помехи терминалов и мониторов комплекса.", &"ShellNote")
 
-	_section(rows, "Клавиши")
-	var grid := GridContainer.new()
-	grid.columns = 2
-	grid.add_theme_constant_override(&"h_separation", 24)
-	grid.add_theme_constant_override(&"v_separation", 6)
-	rows.add_child(grid)
-	for action in Settings.ACTIONS:
-		var label := Label.new()
-		label.text = Settings.ACTION_NAMES[action]
-		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		grid.add_child(label)
-		var button := Button.new()
-		button.theme_type_variation = &"KeyButton"
-		button.custom_minimum_size = Vector2(200, 38)
-		button.pressed.connect(begin_remap.bind(action))
-		grid.add_child(button)
-		key_buttons[action] = button
+	_section(rows, "Клавиши: комплекс")
+	_key_grid(rows, Settings.ACTIONS)
+	_section(rows, "Клавиши: сон")
+	ShellUI.label(rows, "Действуют только во сне, поэтому могут совпадать с клавишами комплекса. Можно назначить кнопку мыши.", &"ShellNote")
+	_key_grid(rows, Settings.DREAM_ACTIONS)
 	_note = ShellUI.label(rows, "", &"ShellNote")
 	ShellUI.button(rows, "Сбросить клавиши", func() -> void:
 		Settings.reset_keys()
@@ -84,7 +72,7 @@ func _ready() -> void:
 
 func begin_remap(action: StringName) -> void:
 	waiting_action = action
-	key_buttons[action].text = "нажмите клавишу…"
+	key_buttons[action].text = "нажмите кнопку мыши или клавишу…" if action in Settings.DREAM_ACTIONS else "нажмите клавишу…"
 	_note.text = "Esc — отменить."
 
 
@@ -107,6 +95,12 @@ func _input(event: InputEvent) -> void:
 			close()
 			get_viewport().set_input_as_handled()
 		return
+	# Dream actions also take a mouse button (attacks are on the mouse by default).
+	var button := event as InputEventMouseButton
+	if button and button.pressed and waiting_action in Settings.DREAM_ACTIONS:
+		get_viewport().set_input_as_handled()
+		finish_remap(Settings.mouse_code(button.button_index))
+		return
 	var key := event as InputEventKey
 	if key == null or not key.pressed or key.echo:
 		return
@@ -122,6 +116,25 @@ func _input(event: InputEvent) -> void:
 func _refresh_keys() -> void:
 	for action in key_buttons:
 		key_buttons[action].text = Settings.key_name(Settings.primary_key(action))
+
+
+func _key_grid(parent: Control, actions: Array[StringName]) -> void:
+	var grid := GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override(&"h_separation", 24)
+	grid.add_theme_constant_override(&"v_separation", 6)
+	parent.add_child(grid)
+	for action in actions:
+		var label := Label.new()
+		label.text = Settings.ACTION_NAMES[action]
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		grid.add_child(label)
+		var button := Button.new()
+		button.theme_type_variation = &"KeyButton"
+		button.custom_minimum_size = Vector2(200, 38)
+		button.pressed.connect(begin_remap.bind(action))
+		grid.add_child(button)
+		key_buttons[action] = button
 
 
 func _section(parent: Control, title: String) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=163 format=3]
+[gd_scene load_steps=171 format=3]
 
 [ext_resource type="Material" path="res://gen/l/l_freight_service/Generated/Architecture/floor_material.tres" id="1_floor_material"]
 
@@ -402,6 +402,30 @@ size = Vector3(4, 5, 0.3)
 
 [sub_resource type="BoxShape3D" id="Box_49"]
 size = Vector3(1.8495, 5, 0.3)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_1"]
+size = Vector3(13.046, 0.96, 0.093)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_1"]
+size = Vector3(13.046, 0.96, 0.093)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_2"]
+size = Vector3(13.046, 0.96, 0.093)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_2"]
+size = Vector3(13.046, 0.96, 0.093)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_3"]
+size = Vector3(0.093, 0.96, 7.76)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_3"]
+size = Vector3(0.093, 0.96, 7.76)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_4"]
+size = Vector3(0.093, 0.96, 7.76)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_4"]
+size = Vector3(0.093, 0.96, 7.76)
 
 [node name="l_freight_service_generated" type="Node3D"]
 
@@ -1564,3 +1588,69 @@ metadata/type = "door"
 metadata/source_id = "l-freight-service-door-12"
 metadata/opening_bottom = "0.0"
 metadata/opening_height = "4.5"
+
+[node name="Closures" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Closures"]
+
+[node name="Collisions" type="Node3D" parent="Closures"]
+
+[node name="Lining_01_VT-FREIGHT-LIFT_N" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(17.65, -6.5, 69.5735)
+mesh = SubResource("ClosureMesh_1")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_01_VT-FREIGHT-LIFT_N" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(17.65, -6.5, 69.5735)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_01_VT-FREIGHT-LIFT_N"]
+shape = SubResource("ClosureShape_1")
+
+[node name="Lining_01_VT-FREIGHT-LIFT_S" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(17.65, -6.5, 77.4265)
+mesh = SubResource("ClosureMesh_2")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_01_VT-FREIGHT-LIFT_S" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(17.65, -6.5, 77.4265)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_01_VT-FREIGHT-LIFT_S"]
+shape = SubResource("ClosureShape_2")
+
+[node name="Lining_01_VT-FREIGHT-LIFT_W" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(11.1735, -6.5, 73.5)
+mesh = SubResource("ClosureMesh_3")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_01_VT-FREIGHT-LIFT_W" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(11.1735, -6.5, 73.5)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_01_VT-FREIGHT-LIFT_W"]
+shape = SubResource("ClosureShape_3")
+
+[node name="Lining_01_VT-FREIGHT-LIFT_E" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(24.1265, -6.5, 73.5)
+mesh = SubResource("ClosureMesh_4")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_01_VT-FREIGHT-LIFT_E" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(24.1265, -6.5, 73.5)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_01_VT-FREIGHT-LIFT_E"]
+shape = SubResource("ClosureShape_4")

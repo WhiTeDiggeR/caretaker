@@ -51,11 +51,20 @@ func run(c: OpeningCheck) -> void:
 
 	var screen := SettingsScreen.open(c.root)
 	await c.tree.process_frame
-	c.equal(screen.key_buttons.size(), Settings.ACTIONS.size(), "settings screen lists every action")
+	c.equal(screen.key_buttons.size(), Settings.all_actions().size(), "settings screen lists every action, the dream group too")
+	c.is_true(Settings.DREAM_ACTIONS.has(DreamCombat.DASH_ACTION) and screen.key_buttons.has(&"dream_attack"), "dream combat actions are remappable")
 	screen.begin_remap(&"journal")
 	screen.finish_remap(KEY_K)
 	c.equal(Settings.primary_key(&"journal"), KEY_K, "settings screen remaps a key")
 	c.equal(screen.key_buttons[&"journal"].text, Settings.key_name(KEY_K), "the row shows the new key")
+	c.equal(screen.key_buttons[&"dream_attack"].text, "ЛКМ", "the attack shows its mouse button")
+	screen.begin_remap(&"dream_dash")
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_XBUTTON1
+	click.pressed = true
+	screen._input(click)
+	c.equal(Settings.primary_key(&"dream_dash"), Settings.mouse_code(MOUSE_BUTTON_XBUTTON1), "a dream action takes a mouse button")
+	c.equal(screen.key_buttons[&"dream_dash"].text, "Мышь 4", "the row shows the mouse button")
 	screen.close()
 
 	Settings.reset_all()

@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://materials/dream_bowser/lava.gdshader" id="1"]
+[ext_resource type="Texture2D" path="res://loads/textures/dream_lava/dream_lava_albedo.jpg" id="2"]
+[ext_resource type="Texture2D" path="res://loads/textures/dream_lava/dream_lava_orm.jpg" id="3"]
+[ext_resource type="Texture2D" path="res://loads/textures/dream_lava/dream_lava_normal.png" id="4"]
+[ext_resource type="Texture2D" path="res://loads/textures/dream_lava/dream_lava_heat.png" id="5"]
+
+[resource]
+resource_name = "dream_lava"
+render_priority = 0
+shader = ExtResource("1")
+shader_parameter/albedo_texture = ExtResource("2")
+shader_parameter/orm_texture = ExtResource("3")
+shader_parameter/normal_texture = ExtResource("4")
+shader_parameter/heat_texture = ExtResource("5")

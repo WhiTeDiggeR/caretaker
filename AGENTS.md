@@ -4,11 +4,17 @@
 
 - This is a Godot 4.7 stable 3D game written in GDScript.
 - The renderer is Forward Plus and 3D physics uses Jolt Physics.
-- The startup scene is `res://scenes/underground_research_complex.tscn`.
+- The startup scene is the main menu `res://scenes/shell/main_menu.tscn`; «Новая игра» loads the complex `res://scenes/underground_research_complex.tscn` (`Shell.new_game_scene`).
 - Gameplay scripts and composed scenes live in `scenes/`.
 - Reusable props and interactions live in `objects/`.
 - Materials and shaders live in `materials/`; imported source assets live in `loads/`.
 - Player-facing text is Russian. Preserve UTF-8 and do not replace Russian text with transliteration.
+
+## Communication with the author
+
+- Keep replies, issue summaries and handoff comments short: 3–5 lines, outcome first, only what the author needs to know or decide.
+- No long recaps, check lists or file inventories unless the author asks for details.
+- Write to the author in Russian.
 
 ## Source of truth
 
@@ -34,7 +40,7 @@
 - Avoid parallel edits to `scenes/underground_research_complex.tscn`; it is the current integration hotspot.
 - Read the latest issue comments and `git status` before changing files.
 - Preserve unrelated dirty-worktree changes. Never reset, restore, or reformat files outside the task.
-- Prefer reusable sub-scenes and scripts over adding more inline resources to the large startup scene.
+- Prefer reusable sub-scenes and scripts over adding more inline resources to the large complex scene.
 - Do not hand-edit `.uid` or `.import` files. Let Godot generate metadata when source assets change.
 - Do not add or replace large binary assets unless the issue explicitly authorizes it and records licensing/provenance.
 - New binary assets go through Git LFS (`docs/LFS.md`): run `git lfs install` once; `tools/ci/lfs_check.py` rejects binaries committed without it.
@@ -54,7 +60,7 @@
 Run the strongest available checks before delivery:
 
 1. `godot --headless --editor --path . --quit`
-2. `godot --headless --path . --quit-after 5`
+2. `godot --headless --path . --quit-after 5` (main menu) and `godot --headless --path . res://scenes/underground_research_complex.tscn --quit-after 5` (complex)
 3. Open and exercise the affected scene in Godot 4.7 when the change is visual, interactive, physics-related, or audio-related.
 4. Run `git diff --check` and inspect the final diff for accidental scene churn.
 5. For changes to the generation flow, tools, plans or generated packages run `bash tools/ci/run_checks.sh` (all Python suites and headless Godot checks; CI runs the same script). Set `SVG_TOOL_ROOT` and `STAIR_TOOL_ROOT` to also run the tests that need the generation tools.
@@ -64,6 +70,10 @@ Locating Godot: use the `GODOT_BIN` environment variable if it is set, otherwise
 Generation tools: use the `svg-plan-to-godot` (svg_to_godot3d >= 1.19.0) and `generate-godot-stairs` (generate_godot_stairs >= 2.9.0) skills installed for the agent that is running. Pass their roots explicitly (`--svg-tool-root`, `--stair-tool-root`, `COMPLEX_V4_*`, `SVG_TOOL_ROOT`/`STAIR_TOOL_ROOT`). If a compatible installed skill is missing, ask the user for the paths; do not search drives, fall back to another agent's skill directory, or use another version.
 
 If Godot is unavailable, say so explicitly in the issue or delivery summary; do not claim runtime verification.
+
+## Handoff for manual review
+
+- When work is ready for the author to check by hand, the final message (and the issue summary) gives the branch preview link `caretaker://open/<branch>` and the fallback command `powershell -ExecutionPolicy Bypass -File tools\dev\open_branch.ps1 <branch>` (`docs/branch-preview.md`). Not every client makes custom links clickable, so always include both.
 
 ## Definition of done
 

@@ -4,6 +4,7 @@ const HERMETIC := "res://objects/doors/hermetic_door.tscn"
 const MECHANICAL := "res://objects/doors/mechanical_door.tscn"
 const GATE := "res://objects/doors/access_gate.tscn"
 const AIRLOCK := "res://objects/doors/airlock.tscn"
+const SERVICE := "res://objects/doors/service_door.tscn"
 const FAST := 0.05
 
 
@@ -37,14 +38,56 @@ func run(c: OpeningCheck) -> void:
 	await door.closed
 	c.near(leaf.position.length(), 0.0, 0.001, "leaf returned")
 
-	# Mechanical door works without power, by holding the wheel.
+	# Mechanical door works without power, by holding the wheel; the wheel turns with the hold (#174).
 	var manual := _door(c, MECHANICAL, &"")
 	var wheel := manual.get_node(^"ControlBack").get_meta(Interactable.META) as Interactable
+	var wheel_model := manual.get_node(^"ControlBack").find_child("Wheel", true, false) as Node3D
+	var full_turn := TAU * FacilityDoor.WHEEL_TURNS
 	c.equal(wheel.mode, Interactable.Mode.HOLD, "mechanical door uses a hold control")
 	c.equal(manual.lock_reason(), "", "mechanical door needs no power")
-	wheel.trigger()
+	var interactor := Interactor.new()
+	c.add(interactor)
+	interactor.set_physics_process(false)  # driven by hand below
+	var dt := manual.hold_time * 0.25
+	interactor.step(wheel, true, true, dt)
+	interactor.step(wheel, true, false, dt)
+	c.near(wheel_model.rotation.z, full_turn * 0.5, 0.001, "wheel turns with the hold progress")
+	c.is_true(manual.is_closed(), "a half hold does not open the door")
+	interactor.step(wheel, false, false, dt)
+	await c.tree.create_timer(FacilityDoor.WHEEL_RETURN_TIME + 0.1).timeout
+	c.near(wheel_model.rotation.z, 0.0, 0.001, "a released wheel rolls back")
+	c.is_true(manual.is_closed(), "an interrupted hold leaves the door closed")
+	for i in 5:  # one step more than needed: float steps must not fall short of a full hold
+		interactor.step(wheel, true, i == 0, dt)
+	c.near(wheel_model.rotation.z, full_turn, 0.001, "a full hold turns the wheel all the way")
+	c.equal(manual.state, FacilityDoor.State.OPENING, "a full hold opens the door")
 	await manual.opened
 	c.is_true(manual.is_open(), "wheel opens the mechanical door")
+	c.near(wheel_model.rotation.z, full_turn, 0.001, "the wheel stays turned on an open door")
+	interactor.step(wheel, true, true, dt)
+	c.near(wheel_model.rotation.z, full_turn * 0.75, 0.001, "closing turns the wheel back")
+	interactor.step(null, false, false, dt)
+	await c.tree.create_timer(FacilityDoor.WHEEL_RETURN_TIME + 0.1).timeout
+	c.near(wheel_model.rotation.z, full_turn, 0.001, "looking away rolls the wheel back to the open rest")
+	c.is_true(manual.is_open(), "an interrupted closing hold leaves the door open")
+
+	# Service door: a handle on the leaf at the edge away from the hinges, no lamp, a large zone (#174).
+	var service := _door(c, SERVICE, &"")
+	var service_leaf := service.get_node(^"Leaf") as Node3D
+	for path: NodePath in [^"Leaf/ControlFront", ^"Leaf/ControlBack"]:
+		var handle := service.get_node_or_null(path) as Node3D
+		c.is_true(handle != null and handle.get_meta(Interactable.META, null) is Interactable, "handle %s is on the leaf" % path)
+		c.is_true(handle.position.x > service.width * 0.5, "handle %s is on the free edge" % path)
+		c.is_true(handle.find_child("Lamp", true, false) == null, "handle %s has no lamp" % path)
+		var zone := (handle.get_child(0) as CollisionShape3D).shape as BoxShape3D
+		c.is_true(zone.size.x >= 0.3 and zone.size.y >= 0.3, "handle %s zone is larger than the handle" % path)
+	c.is_true(service.get_node_or_null(^"ControlFront") == null, "no handle on the frame")
+	var handle_front := service.get_node(^"Leaf/ControlFront") as Node3D
+	var closed_at := handle_front.global_position
+	c.is_true(service.open(), "service door opens")
+	await service.opened
+	c.is_true(handle_front.global_position.distance_to(closed_at) > 0.5, "the handle leaves with the leaf")
+	c.near(service_leaf.rotation.y, -FacilityDoor.SWING_ANGLE, 0.001, "service leaf swung open")
 
 	# The old-core «historic» door is hinged.
 	var historic := _door(c, "res://objects/doors/historic_door.tscn", &"")

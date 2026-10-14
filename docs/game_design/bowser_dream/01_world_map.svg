@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 690" font-family="'PT Sans', 'Segoe UI', Arial, sans-serif">
+  <title>Сон Боузера — общая карта мира (набросок, #167)</title>
+  <style>
+    .t{font-size:13px;fill:#2a2026}
+    .s{font-size:11px;fill:#4a3d3a}
+    .h{font-size:20px;font-weight:700;fill:#2a2026}
+    .ar{font-size:15px;font-weight:700;fill:#2a2026}
+    .later{fill:#e2dbd2;stroke:#7d716b;stroke-width:1.5;stroke-dasharray:6 4}
+    .ev{fill:#fff;stroke:#2a2026;stroke-width:1.5}
+    .evt{font-size:11px;font-weight:700;fill:#2a2026;text-anchor:middle}
+  </style>
+  <rect width="1000" height="690" fill="#efe7dc"/>
+  <text x="20" y="32" class="h">Сон Боузера — общая карта (первое посещение + будущие области)</text>
+  <text x="20" y="52" class="s">Вид сверху. 1 клетка = 25 м. Сплошное — первый запуск; пунктир — повторные посещения (V2–V4). Цифры в кружках — события.</text>
+  <!-- grid -->
+  <g stroke="#ddd2c5" stroke-width="1">
+    <path d="M0 70H1000M0 120H1000M0 170H1000M0 220H1000M0 270H1000M0 320H1000M0 370H1000M0 420H1000M0 470H1000M0 520H1000M0 570H1000M0 620H1000"/>
+    <path d="M50 60V690M100 60V690M150 60V690M200 60V690M250 60V690M300 60V690M350 60V690M400 60V690M450 60V690M500 60V690M550 60V690M600 60V690M650 60V690M700 60V690M750 60V690M800 60V690M850 60V690M900 60V690M950 60V690"/>
+  </g>
+  <!-- lava field -->
+  <path d="M175 690 L195 520 L265 450 L385 400 L505 350 L625 330 L640 480 L560 570 L430 650 L400 690 Z" fill="#f4a36a" stroke="#d8541f" stroke-width="2"/>
+  <text x="300" y="610" class="t" style="fill:#8a2f1a">лавовое плато (непроходимо)</text>
+  <!-- moat around fortress -->
+  <rect x="630" y="95" width="300" height="380" fill="#f4a36a" stroke="#d8541f" stroke-width="2"/>
+  <!-- later areas -->
+  <rect x="60" y="120" width="170" height="140" rx="6" class="later"/>
+  <text x="72" y="145" class="t">Руины старой крепости</text>
+  <text x="72" y="162" class="s">храм, воспоминания (V2+, добровольно)</text>
+  <rect x="400" y="130" width="170" height="130" rx="6" class="later"/>
+  <text x="412" y="155" class="t">Кузница</text>
+  <text x="412" y="172" class="s">печать горна, лава в шлюзах (V2)</text>
+  <rect x="725" y="62" width="110" height="28" rx="4" class="later"/>
+  <text x="733" y="81" class="s">Цепная башня (V3)</text>
+  <!-- fortress -->
+  <rect x="660" y="125" width="240" height="320" fill="#c9bdb3" stroke="#3b3236" stroke-width="3"/>
+  <rect x="680" y="300" width="130" height="125" fill="#ddd2c8" stroke="#6b5a55"/>
+  <text x="690" y="320" class="s">Двор (50×60 м)</text>
+  <rect x="750" y="150" width="90" height="70" fill="#a99a90" stroke="#2a2026" stroke-width="2"/>
+  <text x="757" y="170" class="s">Зал печати</text>
+  <text x="757" y="184" class="s">44×34 м</text>
+  <rect x="690" y="235" width="190" height="45" class="later"/>
+  <text x="700" y="262" class="s">Темница под крепостью (V3)</text>
+  <text x="670" y="146" class="ar">КРЕПОСТЬ</text>
+  <!-- bastion + gates -->
+  <rect x="930" y="250" width="55" height="80" fill="#c9bdb3" stroke="#3b3236" stroke-width="2"/>
+  <path d="M900 285 H930" stroke="#3b3236" stroke-width="6"/>
+  <path d="M945 312 v-26 a12 12 0 0 1 24 0 v26" fill="none" stroke="#1a1718" stroke-width="4"/>
+  <text x="922" y="346" class="s">Бастион</text>
+  <text x="922" y="360" class="s">и врата D6</text>
+  <!-- terrace -->
+  <rect x="55" y="555" width="115" height="60" rx="4" fill="#d8ccc0" stroke="#3b3236" stroke-width="2"/>
+  <text x="62" y="545" class="ar">D1 Тихая окраина</text>
+  <!-- main path D1-D4 -->
+  <polyline points="120,585 200,565 250,522" fill="none" stroke="#3b3236" stroke-width="6" stroke-linecap="round"/>
+  <polyline points="250,522 320,482" fill="none" stroke="#7a3a1e" stroke-width="5" stroke-dasharray="8 4"/>
+  <polyline points="320,482 365,462 425,432 440,422" fill="none" stroke="#3b3236" stroke-width="6" stroke-linecap="round"/>
+  <polyline points="440,422 520,382" fill="none" stroke="#7a3a1e" stroke-width="5" stroke-dasharray="8 4"/>
+  <polyline points="520,382 600,385" fill="none" stroke="#3b3236" stroke-width="6"/>
+  <rect x="560" y="355" width="65" height="60" fill="#d8ccc0" stroke="#3b3236" stroke-width="2"/>
+  <path d="M625 385 H662" stroke="#7a3a1e" stroke-width="10"/>
+  <polyline points="662,385 745,385 745,240 790,220" fill="none" stroke="#3b3236" stroke-width="4" stroke-dasharray="2 5" stroke-linecap="round"/>
+  <text x="290" y="392" class="ar">D2 Дорога</text>
+  <text x="290" y="408" class="s">карниз, 2 цепных моста, гейзеры (~200 м)</text>
+  <text x="548" y="345" class="ar">D3 Мост</text>
+  <!-- escape route D5 -->
+  <polyline points="840,190 880,190 880,285 945,300" fill="none" stroke="#c0281a" stroke-width="3" stroke-dasharray="7 4"/>
+  <text x="886" y="235" class="s" style="fill:#c0281a">D5</text>
+  <!-- events -->
+  <g>
+    <circle cx="130" cy="570" r="10" class="ev"/><text x="130" y="574" class="evt">1</text>
+    <circle cx="90" cy="630" r="10" class="ev"/><text x="90" y="634" class="evt">✦</text>
+    <circle cx="380" cy="440" r="10" class="ev"/><text x="380" y="444" class="evt">2</text>
+    <circle cx="435" cy="400" r="10" class="ev"/><text x="435" y="404" class="evt">3</text>
+    <circle cx="485" cy="415" r="10" class="ev"/><text x="485" y="419" class="evt">✦</text>
+    <circle cx="590" cy="430" r="10" class="ev"/><text x="590" y="434" class="evt">4</text>
+    <circle cx="795" cy="200" r="10" class="ev"/><text x="795" y="204" class="evt">5</text>
+    <circle cx="745" cy="360" r="10" class="ev"/><text x="745" y="364" class="evt">6</text>
+    <circle cx="957" cy="275" r="10" class="ev"/><text x="957" y="279" class="evt">7</text>
+  </g>
+  <!-- legend -->
+  <g transform="translate(640,490)">
+    <rect x="0" y="0" width="350" height="190" rx="6" fill="#fffaf4" stroke="#7d716b"/>
+    <text x="12" y="20" class="t" font-weight="700">События</text>
+    <text x="12" y="38" class="s">1 силуэт №2 говорит и распадается</text>
+    <text x="12" y="54" class="s">2 лава поднимается: мир показывает «тревогу»</text>
+    <text x="12" y="70" class="s">3 гейзеры с ритмом 4 с; скриптовый обвал карниза</text>
+    <text x="12" y="86" class="s">4 противовесы и барельеф (головоломка моста)</text>
+    <text x="12" y="102" class="s">5 печать (кольца) → толчок, сон заметил героя</text>
+    <text x="12" y="118" class="s">6 решётки падают, стражи во дворе (бой или обход)</text>
+    <text x="12" y="134" class="s">7 арка-врата → кресло модуля 4</text>
+    <text x="12" y="150" class="s">✦ осколок воспоминания (добровольно)</text>
+    <line x1="12" y1="168" x2="42" y2="168" stroke="#7a3a1e" stroke-width="5" stroke-dasharray="8 4"/>
+    <text x="48" y="172" class="s">цепной мост</text>
+    <line x1="130" y1="168" x2="160" y2="168" stroke="#c0281a" stroke-width="3" stroke-dasharray="7 4"/>
+    <text x="166" y="172" class="s">маршрут побега</text>
+  </g>
+  <!-- scale bar -->
+  <g transform="translate(20,665)">
+    <rect x="0" y="0" width="50" height="6" fill="#2a2026"/>
+    <rect x="50" y="0" width="50" height="6" fill="#fff" stroke="#2a2026"/>
+    <text x="0" y="20" class="s">0</text><text x="45" y="20" class="s">25</text><text x="92" y="20" class="s">50 м</text>
+  </g>
+  <g transform="translate(965,90)">
+    <path d="M0 -18 L7 6 L0 0 L-7 6 Z" fill="#2a2026"/>
+    <text x="-4" y="22" class="s">С</text>
+  </g>
+</svg>

@@ -37,7 +37,18 @@ SOURCES: dict[str, tuple[str, str]] = {
     "377203": ("kiddpark", "FX kill switch single record.wav"),
     "386208": ("ldezem", "Ratchet drill - Unbranded - Tighten"),
     "829092": ("-+Fugu+-", "locked door"),
+    "322920": ("jedspear", "Automatic garage door opening"),
+    "406197": ("kyles", "door metal big heavy close kinda slam thud echo offmic.wav"),
+    "438732": ("craigsmith", "G45-30-Submarine Hatch Opening.wav"),
+    "583059": ("Profispiesser", "FX SaSc Door 01 Metal Rattle Open Close 2 Versions.wav"),
+    "709272": ("Skybonator", "Honda Generator Start-Up."),
+    "606933": ("Garuda1982", "large diesel emergency generator is running"),
 }
+
+# Generator (objects/audio/generator_sound.gd): start once, then the running loop.
+GEN_START = ("709272", 0.0, 7.0, 1.5)  # source, start s, end s, fade-out s
+GEN_IDLE = (4.0, 6.5)  # steady idle inside the start, the loop is matched to its loudness
+GEN_RUN = ("606933", 10.0, 26.0, 1.0)  # source, start s, end s, loop crossfade s
 
 # Single steps: catalogue id -> (source, step length s, steps kept, high-pass Hz)
 STEPS: dict[str, tuple[str, float, int, float]] = {
@@ -55,6 +66,12 @@ ONE_SHOTS: dict[str, tuple[list[tuple[str, float, float, float, float]], float]]
     "switch": ([("139970", 1.25, 2.45, 1.0, 0.0), ("377203", 0.62, 1.82, 0.6, 0.0)], 0.5),
     "lever": ([("386208", 1.35, 2.05, 1.0, 0.0)], 0.15),
     "door_locked": ([("829092", 1.70, 2.32, 1.0, 0.0)], 0.12),
+    # Doors: lengths follow the move (hermetic and mechanical 1.4 s, service 0.8 s); door_stop
+    # plays separately when a powered or mechanical door reaches its end.
+    "door_motor": ([("322920", 1.90, 3.60, 1.0, 0.0)], 0.3),
+    "door_stop": ([("406197", 0.28, 1.30, 1.0, 0.0)], 0.5),
+    "door_mech": ([("438732", 4.00, 5.50, 1.0, 0.0)], 0.3),
+    "door_swing": ([("583059", 5.05, 5.85, 1.0, 0.0)], 0.3),
 }
 
 
@@ -188,6 +205,46 @@ def build_one_shots(src: Path, out: Path) -> dict:
     return files
 
 
+def write_ogg(path: Path, x: np.ndarray) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pcm = np.clip(np.round(x * 32767), -32768, 32767).astype("<i2").tobytes()
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "s16le", "-ar", str(RATE), "-ac", "1", "-i", "-",
+                    "-c:a", "libvorbis", "-q:a", "5", str(path)], input=pcm, check=True)
+
+
+def rms(x: np.ndarray) -> float:
+    return float(np.sqrt(np.mean(x ** 2)))
+
+
+def build_generator(src: Path, out: Path) -> dict:
+    sid, start, end, fade_out = GEN_START
+    raw = highpass(source(src, sid)[int(start * RATE):int(end * RATE)], 30.0)
+    gen_start = normalise(fade(raw, 0.005, fade_out))
+    idle = gen_start[int(GEN_IDLE[0] * RATE):int(GEN_IDLE[1] * RATE)]
+    write_ogg(out / "gen_start.ogg", gen_start)
+
+    run_sid, run_start, run_end, xfade = GEN_RUN
+    full = highpass(source(src, run_sid), 30.0)
+    body = full[int(run_start * RATE):int(run_end * RATE)]
+    tail = full[int(run_end * RATE):int((run_end + xfade) * RATE)]
+    n = len(tail)
+    ramp = np.linspace(0.0, 1.0, n)
+    body = body.copy()
+    # the loop end flows into its start; equal-power weights keep the noisy engine level steady
+    body[:n] = body[:n] * np.sqrt(ramp) + tail * np.sqrt(1.0 - ramp)
+    body = body - body.mean()
+    body *= rms(idle) / max(rms(body), 1e-9)
+    if np.max(np.abs(body)) > 0.95:
+        body *= 0.95 / np.max(np.abs(body))
+    write_ogg(out / "gen_run.ogg", body)
+    return {
+        "gen_start.ogg": entry(sid, f"cut {start:.1f}-{end:.1f} s (pull start, catch, idle), high-pass 30 Hz, "
+                                    f"fade-out {fade_out} s, normalised, mono 44.1 kHz, Ogg Vorbis q5"),
+        "gen_run.ogg": entry(run_sid, f"loop {run_start:.1f}-{run_end:.1f} s, {xfade} s crossfade of the end into the "
+                                      f"start, high-pass 30 Hz, loudness matched to the idle of gen_start, Ogg Vorbis q5"),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--src", type=Path, required=True)
@@ -195,6 +252,7 @@ def main() -> int:
     args = parser.parse_args()
     files = build_steps(args.src, args.out)
     files.update(build_one_shots(args.src, args.out))
+    files.update(build_generator(args.src, args.out))
     manifest = {"note": "Recorded CC0 sounds (#137). Built by tools/audio/cc0_sounds.py.", "files": files}
     (args.out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"{len(files)} files in {args.out}")

@@ -2,7 +2,8 @@ class_name DreamSeal
 extends StaticBody3D
 
 ## Seal holding the prisoner asleep. Restoring it (hold) calms the dream and, with a
-## `knowledge_id`, makes the hero remember its glyphs (DreamKnowledge).
+## `knowledge_id`, makes the hero remember its glyphs (DreamKnowledge). Puzzle seals
+## (`DreamSealRings`) end in the same `complete()`.
 
 const CRACKED := Color(0.9, 0.35, 0.1)
 const RESTORED := Color(0.55, 0.85, 1.0)
@@ -22,17 +23,19 @@ var _material: StandardMaterial3D
 func _ready() -> void:
 	_material = (_glow.get_surface_override_material(0) as StandardMaterial3D).duplicate()
 	_glow.set_surface_override_material(0, _material)
-	_interactable.interacted.connect(_on_restored)
+	_interactable.interacted.connect(complete)
 	_show(Dreams.in_dream and Dreams.seal_restored)
 
 
-func _on_restored() -> void:
+## Restores the seal: the visit's main task (`Dreams.restore_seal()`) and, the first time in
+## the visit, the glyphs remembered (journal) with a message.
+func complete() -> void:
 	var first := Dreams.in_dream and not Dreams.seal_restored
 	Dreams.restore_seal()
 	_show(true)
 	if first and not knowledge_id.is_empty():
 		var code := DreamKnowledge.grant(knowledge_id)
-		get_tree().call_group(MESSAGE_GROUP, "show_message", REMEMBERED_TITLE, REMEMBERED_TEXT % DreamKnowledge.SEPARATOR.join(code))
+		get_tree().call_group(MESSAGE_GROUP, "show_message", REMEMBERED_TITLE, REMEMBERED_TEXT % DreamKnowledge.labels_text(code))
 
 
 func _show(restored: bool) -> void:

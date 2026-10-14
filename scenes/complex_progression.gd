@@ -1,5 +1,12 @@
 extends Node3D
 
+## Physics layer the progression triggers watch. Only the player is put on it: with the default
+## mask the triggers also tracked the static walls and floors of the v4 sectors, and Godot 4.7
+## release templates fail to disconnect an Area3D from tracked bodies when it stops monitoring
+## (Area3D::_clear_monitoring), which logged 84 errors on every quit of an exported build (#171).
+const TRIGGER_LAYER := 2
+const PLAYER_GROUP := &"player"
+
 @onready var objective_label: Label = $CanvasLayer/ObjectiveLabel
 @onready var start_hint: Label = $CanvasLayer/StartHint
 @onready var message_panel: PanelContainer = $CanvasLayer/MessagePanel
@@ -24,6 +31,7 @@ func _ready() -> void:
 		InputPromptFormatter.action_label(&"sprint"),
 		InputPromptFormatter.action_label(&"interact"),
 	]
+	_watch_player_only()
 	$ProgressionTriggers/ControlReached.body_entered.connect(_on_stage_area.bind(0))
 	$ProgressionTriggers/TechnicalReached.body_entered.connect(_on_stage_area.bind(1))
 	$ProgressionTriggers/ContainmentReached.body_entered.connect(_on_stage_area.bind(2))
@@ -31,6 +39,13 @@ func _ready() -> void:
 	var tween := create_tween()
 	tween.tween_interval(6.0)
 	tween.tween_property(start_hint, "modulate:a", 0.0, 1.0)
+
+func _watch_player_only() -> void:
+	for trigger: Node in $ProgressionTriggers.get_children():
+		(trigger as Area3D).collision_mask = 1 << (TRIGGER_LAYER - 1)
+	var player := get_tree().get_first_node_in_group(PLAYER_GROUP) as CollisionObject3D
+	if player != null:
+		player.set_collision_layer_value(TRIGGER_LAYER, true)
 
 func _on_stage_area(body: Node3D, required_stage: int) -> void:
 	if not body is CharacterBody3D or stage != required_stage:

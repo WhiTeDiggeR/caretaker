@@ -104,7 +104,12 @@ func run(c: OpeningCheck) -> void:
 	var panel: ReagentPanel = c.add((load("res://objects/containment/reagent_panel.tscn") as PackedScene).instantiate())
 	panel.module_id = C
 	panel.refresh()
-	c.is_true((panel.get_node(^"Status") as Label3D).text.contains("Запас реагента: 0"), "reagent panel shows the stock")
+	c.is_true(panel.screen_text().contains("Запас реагента: 0"), "reagent panel shows the stock")
+	var stock_row: Dictionary = panel.screen_rows().back()
+	c.equal(stock_row.get("status"), &"warn", "an empty reagent stock is a warning on the screen")
+	panel.section = &"chemical_case_section"
+	panel.refresh()
+	c.is_true(not (panel.get_node(^"Screen") as WorldScreen).view.powered, "the screen is dark without power in its section")
 
 	Containment.chemical_warning.disconnect(on_warning)
 	Containment.module_sealed.disconnect(on_sealed)

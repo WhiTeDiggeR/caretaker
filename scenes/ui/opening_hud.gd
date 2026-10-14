@@ -36,6 +36,9 @@ const ALERT_SECONDS := 8.0
 const ALERT_WARNING := "ХИМИЧЕСКИЙ ПРОТОКОЛ · %s · ГЕРМЕТИЗАЦИЯ ЧЕРЕЗ %s"
 const ALERT_SEALED := "%s ЗАПОЛНЕН СНОТВОРНЫМ · ОКНО РЕМОНТА %s"
 const SAVE_ICON_SIZE := 52.0
+## The save indicator has its own layer above the screen effects (40: gas, waking) and under
+## the dream veil (50), the pause menu and the loading screen (#166).
+const SAVE_LAYER := 45
 const SAVE_WRITING := "ЗАПИСЬ ЖУРНАЛА СМЕНЫ"
 const SAVE_DONE := "ЗАПИСАНО"
 ## The record itself is instant; the arc runs this long so the player sees it, then closes.
@@ -344,6 +347,11 @@ static func _clock(seconds: float) -> String:
 
 ## Bottom right: the save icon with a mono line. Runs while the game is paused too.
 func _build_save_indicator() -> void:
+	var save_layer := CanvasLayer.new()
+	save_layer.name = "SaveLayer"
+	save_layer.layer = SAVE_LAYER
+	save_layer.add_to_group(Saves.HUD_GROUP)
+	add_child(save_layer)
 	save_indicator = HBoxContainer.new()
 	save_indicator.name = "SaveIndicator"
 	save_indicator.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -356,7 +364,7 @@ func _build_save_indicator() -> void:
 	save_indicator.offset_top = -36.0 - SAVE_ICON_SIZE
 	save_indicator.offset_bottom = -36.0
 	save_indicator.visible = false
-	add_child(save_indicator)
+	save_layer.add_child(save_indicator)
 	save_label = Label.new()
 	save_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	save_label.size_flags_vertical = Control.SIZE_FILL

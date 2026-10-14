@@ -177,12 +177,20 @@ def staff_pod(k: Kit):
     k.body()
     # panel stand at the feet (as in the placeholder: post 1.0 high, panel at 1.1 tilted 20 degrees)
     pz = L / 2 + 0.12
+    tilt = 20.0
+    pc = (0.0, 1.1, pz + 0.02)
+
+    def on_panel(x, v, d):
+        """A point on the tilted panel: x across, v up its face, d out of it (0.035 is the front face)."""
+        a = math.radians(tilt)
+        return (pc[0] + x, pc[1] + v * math.cos(a) + d * math.sin(a), pc[2] - v * math.sin(a) + d * math.cos(a))
+
     k.box((0.12, 1.0, 0.12), (0, 0.5, pz), "painted_metal", 0.01)
-    k.box((0.46, 0.34, 0.07), (0, 1.1, pz + 0.02), "painted_metal", 0.012, rot=(-20, 0, 0))
-    k.decal((0, 1.115, pz + 0.055 + 0.0), (0.34, 0.17), "screens", uv("screens", "terminal_boot"), tilt=20, offset=0.003)
+    k.box((0.46, 0.34, 0.07), pc, "painted_metal", 0.012, rot=(-tilt, 0, 0))
+    k.decal(on_panel(0, -0.01, 0.035), (0.34, 0.17), "screens", uv("screens", "terminal_boot"), tilt=-tilt, offset=0.003)
     for i, m in enumerate(("emit_led_green", "emit_led_amber", "emit_led_red")):
-        k.cyl(0.011, 0.012, (-0.12 + i * 0.12, 0.99, pz + 0.1), "z", m, 10, rot=(-20, 0, 0))
-    k.decal((0, 1.25, pz + 0.004), (0.26, 0.06), "panel_labels", uv("panel_labels", "КАПСУЛА"), tilt=20, offset=0.06)
+        k.cyl(0.011, 0.012, on_panel(-0.12 + i * 0.12, -0.13, 0.039), "z", m, 10, rot=(-tilt, 0, 0))
+    k.decal(on_panel(0, 0.125, 0.035), (0.26, 0.06), "panel_labels", uv("panel_labels", "КАПСУЛА"), tilt=-tilt, offset=0.003)
     # service hoses at the head end
     for x in (-0.25, 0.0, 0.25):
         pts = [(x, 0.4, -L / 2), (x * 1.2, 0.3, -L / 2 - 0.08), (x * 1.3, 0.1, -L / 2 - 0.12), (x * 1.3, 0.03, -L / 2 - 0.13)]

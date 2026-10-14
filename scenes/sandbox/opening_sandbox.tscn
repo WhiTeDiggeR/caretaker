@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/surface_station.tscn" id="18_surfaces"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/event_station.tscn" id="17_events"]
 [ext_resource type="PackedScene" path="res://objects/containment/resync_panel.tscn" id="17_resync"]
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stations/breach_station.tscn" id="19_breach"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
@@ -48,6 +49,15 @@ size = Vector3(80, 0.2, 80)
 
 [sub_resource type="BoxShape3D" id="chamber_shape"]
 size = Vector3(4, 3, 4)
+
+[sub_resource type="StandardMaterial3D" id="chamber_zone_material"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.55, 0.9, 0.4, 0.22)
+
+[sub_resource type="PlaneMesh" id="chamber_zone_mesh"]
+material = SubResource("chamber_zone_material")
+size = Vector2(4, 4)
 
 [sub_resource type="BoxShape3D" id="floor_shape"]
 size = Vector3(80, 0.2, 80)
@@ -100,7 +110,8 @@ required_access = &"module_4"
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -3, 3.3, 9.5)
 pixel_size = 0.005
 text = "КРЕСЛО ПОГРУЖЕНИЯ · МОДУЛЬ 4
-тестовый сон: печать, врата, лава"
+тестовый сон: печать, врата, лава
+зелёный пол — камера: газ при запечатывании (F6)"
 font_size = 44
 outline_size = 10
 [node name="ReagentPanel" parent="Stations" instance=ExtResource("12_reagent")]
@@ -114,6 +125,12 @@ script = ExtResource("13_chamber")
 
 [node name="Collision" type="CollisionShape3D" parent="Stations/ModuleChamber"]
 shape = SubResource("chamber_shape")
+
+[node name="Zone" type="MeshInstance3D" parent="Stations/ModuleChamber"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.48, 0)
+cast_shadow = 0
+mesh = SubResource("chamber_zone_mesh")
+
 [node name="PropStation" parent="Stations" instance=ExtResource("14_props")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24, 0, -22)
 [node name="Checkpoint" parent="Stations" instance=ExtResource("15_checkpoint")]
@@ -135,6 +152,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -20)
 
 [node name="EventStation" parent="Stations" instance=ExtResource("17_events")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 24)
+
+[node name="BreachStation" parent="Stations" instance=ExtResource("19_breach")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 30)
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)

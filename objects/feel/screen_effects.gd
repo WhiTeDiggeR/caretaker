@@ -1,11 +1,13 @@
 extends CanvasLayer
 
 ## Full-screen state effects (autoload `ScreenEffects`, #134): waking in the capsule, the
-## chemical protocol's gas, leaving a dream, a hit in the dream. An effect is a list of
+## chemical protocol's gas, coming back from a dream, a hit in the dream. An effect is a list of
 ## keyframes over its duration (data/feel/screen_effects.json); the layer interpolates the
 ## shader parameters and hides itself when nothing plays. `play()` replaces the current one.
 ## An effect with `"hold": true` stays on its last keyframe until `stop()` or a load (gas
 ## knocks the hero out; the defeat screen or the reloaded save takes over).
+## Order of layers (#166): HUD < effects (40) < dream veil (50) < loading screen (90), so a
+## veil or the loading screen is never overdrawn and the effects start only after them.
 
 signal effect_started(id: StringName)
 signal effect_finished(id: StringName)
@@ -14,6 +16,9 @@ const DATA_PATH := "res://data/feel/screen_effects.json"
 const SHADER := preload("res://objects/feel/screen_effects.gdshader")
 const PARAMETERS: Array[String] = ["blur", "darken", "tint", "vignette", "flash"]
 const COLORS: Array[String] = ["tint_color", "vignette_color"]
+## Aftertaste of a dream by `Dreams.Exit`, started once the hero is back and the veil of
+## DreamTransition (layer 50, above this one) lifts; each continues the colour of its veil.
+const EXIT_EFFECTS: Array[StringName] = [&"dream_exit", &"dream_eject", &"dream_woken"]
 
 var effects: Dictionary = {}
 var current: StringName = &""
@@ -37,8 +42,7 @@ func _ready() -> void:
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH))
 	effects = (parsed as Dictionary).get("effects", {}) if parsed is Dictionary else {}
 	Containment.hero_gassed.connect(func(_id: StringName) -> void: play(&"gas"))
-	Dreams.left.connect(func(_id: StringName, reason: int) -> void:
-		play(&"dream_exit" if reason == Dreams.Exit.GATE else &"dream_eject"))
+	Dreams.arrived.connect(func(_id: StringName, reason: int) -> void: play(EXIT_EFFECTS[reason]))
 	GameState.state_loaded.connect(stop)
 	Shell.scene_changed.connect(func(_path: String) -> void: stop())
 	Shell.new_game_started.connect(play.bind(&"wake_up"))

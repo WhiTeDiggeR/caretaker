@@ -176,7 +176,7 @@ func _settings(c: OpeningCheck) -> void:
 
 
 func _screen_effects(c: OpeningCheck) -> void:
-	for id: StringName in [&"wake_up", &"gas", &"dream_exit", &"dream_eject", &"dream_hit"]:
+	for id: StringName in [&"wake_up", &"gas", &"dream_exit", &"dream_eject", &"dream_woken", &"dream_hit"]:
 		c.is_true(ScreenEffects.duration(id) > 0.0, "screen effect %s is defined" % id)
 	var keys := [{"t": 0.0, "blur": 1.0}, {"t": 2.0, "blur": 0.0, "darken": 1.0}]
 	c.near(ScreenEffects._sample(keys, "blur", 1.0), 0.5, 0.0001, "keyframes interpolate")
@@ -208,11 +208,19 @@ func _screen_effects(c: OpeningCheck) -> void:
 	GameState.state_loaded.emit()
 	c.is_true(not ScreenEffects.is_playing(), "loading clears the screen")
 	Dreams.left.emit(&"module_4", Dreams.Exit.GATE)
-	c.is_true(ScreenEffects.is_playing(&"dream_exit"), "leaving through the gate flashes softly")
-	Dreams.left.emit(&"module_4", Dreams.Exit.DEATH)
+	c.is_true(not ScreenEffects.is_playing(), "leaving a dream draws nothing under the veil")
+	Dreams.arrived.emit(&"module_4", Dreams.Exit.GATE)
+	c.is_true(ScreenEffects.is_playing(&"dream_exit"), "coming back through the gate flashes softly")
+	c.near(ScreenEffects.value("flash"), 0.9, 0.0001, "the gate aftertaste continues the white veil")
+	Dreams.arrived.emit(&"module_4", Dreams.Exit.DEATH)
 	c.is_true(ScreenEffects.is_playing(&"dream_eject"), "being thrown out of the dream is harsh")
+	c.near(ScreenEffects.value("flash"), 0.0, 0.0001, "the death aftertaste has no white flash over the dark red veil")
+	Dreams.arrived.emit(&"module_4", Dreams.Exit.WOKEN)
+	c.is_true(ScreenEffects.is_playing(&"dream_woken"), "the forced awakening has its own dim aftertaste")
 	ScreenEffects.stop()
-	c.equal(started, [&"dream_hit", &"wake_up", &"gas", &"dream_exit", &"dream_eject"] as Array[StringName], "every hook starts its effect")
+	c.equal(started, [&"dream_hit", &"wake_up", &"gas", &"dream_exit", &"dream_eject", &"dream_woken"] as Array[StringName], "every hook starts its effect")
+	# Layers (#166): the effects never cover the dream veil or the loading screen.
+	c.is_true(ScreenEffects.layer < Dreams._fade.layer and Dreams._fade.layer < Shell._loading_layer.layer, "effects lie under the dream veil and the loading screen")
 	ScreenEffects.effect_started.disconnect(on_start)
 	ScreenEffects.effect_finished.disconnect(on_finish)
 

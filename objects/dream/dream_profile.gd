@@ -42,6 +42,11 @@ static func for_module(module_id: StringName) -> DreamProfile:
 	return load_profile(StringName(str(entry.get("profile", FALLBACK))))
 
 
+## Profile of the dream being played now (the neutral one outside dreams).
+static func current() -> DreamProfile:
+	return for_module(Dreams.module_id) if Dreams.in_dream else load_profile(FALLBACK)
+
+
 ## 0..1: how strongly an anomalous sleeper (Herobrine) currently leaks into other dreams and
 ## late screens. Zero while every such sleeper stays below its threshold.
 static func leak_strength() -> float:

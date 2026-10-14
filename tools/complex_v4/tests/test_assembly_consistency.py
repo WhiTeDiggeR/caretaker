@@ -89,13 +89,27 @@ class StairPackageTests(unittest.TestCase):
             drawn = {float(v) for v in re.findall(r'data-wall-height="([0-9.]+)"', text)}
             self.assertEqual(drawn, {self.wall_height(sector)}, sector_id)
 
-    def test_shaft_walls_overlap_the_lower_walls_and_reach_the_upper_floor(self) -> None:
+    def test_every_floor_opening_is_lined_and_every_stair_has_a_threshold(self) -> None:
+        import json
+        import vertical_closures
         self.assertGreaterEqual(len(self.reports), 6)
+        for sector_id, sector in self.sectors.items():
+            report = json.loads((self.root / sector["output_resource_dir"].removeprefix("res://") / "regeneration_report.json").read_text(encoding="utf-8"))
+            closures = report.get("vertical_closures", [])
+            floor_openings = vertical_closures.openings(self.root / sector["source_svg"], "floor-opening")
+            self.assertEqual(sum(1 for c in closures if c["kind"] == "lining"), 4 * len(floor_openings), f"{sector_id}: every floor opening needs four lining walls")
+            for generator in sector.get("vertical_generators", []):
+                self.assertTrue(any(c["kind"] == "threshold" and c["name"].endswith(generator["vertical_id"]) for c in closures), f"{sector_id}: {generator['vertical_id']} has no exit threshold")
+            for closure in closures:
+                if closure["kind"] == "lining":
+                    lower_top = closure["center"][1] - closure["size"][1] / 2
+                    upper_top = closure["center"][1] + closure["size"][1] / 2
+                    self.assertAlmostEqual(upper_top, float(sector["metric_settings"]["elevation_m"]) - vertical_closures.Z_FIGHT_OFFSET_M, places=3, msg=closure["name"])
+                    self.assertLess(lower_top, float(sector["metric_settings"]["elevation_m"]) - 0.2, closure["name"])
+
+    def test_stairs_have_no_generator_shaft_walls(self) -> None:
         for sector_id, generator, report in self.reports:
-            lower = self.sectors[generator["levels"]["lower"]["sector_id"]]
-            settings = report["settings"]
-            self.assertAlmostEqual(settings["shaft_wall_bottom"], self.wall_height(lower), places=2, msg=f"{generator['vertical_id']}: shaft wall must start where the lower walls end")
-            self.assertAlmostEqual(settings["shaft_wall_top"], settings["floor_height"], places=2, msg=generator["vertical_id"])
+            self.assertTrue(report["settings"]["no_shaft"], f"{generator['vertical_id']}: shaft walls come from vertical_closures")
 
     def test_flights_are_continuous_and_the_landing_spans_the_shaft(self) -> None:
         for sector_id, generator, report in self.reports:

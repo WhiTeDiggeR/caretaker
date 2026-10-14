@@ -51,7 +51,16 @@ class ResolverTests(unittest.TestCase):
 
     @staticmethod
     def pairs(arguments: list) -> dict:
-        return {arguments[i]: arguments[i + 1] for i in range(0, len(arguments), 2) if arguments[i].startswith("--")}
+        values, index = {}, 0
+        while index < len(arguments):
+            flag = arguments[index]
+            if index + 1 < len(arguments) and not arguments[index + 1].startswith("--"):
+                values[flag] = arguments[index + 1]
+                index += 2
+            else:
+                values[flag] = True  # a flag without a value, e.g. --no-shaft
+                index += 1
+        return values
 
     def test_u_turn_on_the_north_side_matches_the_hand_written_route_a_values(self) -> None:
         self.write((-52.15, 6, -50.65, 6), (-54.35, 6, -52.85, 6))
@@ -61,7 +70,7 @@ class ResolverTests(unittest.TestCase):
         self.assertEqual(values["--shaft-length"], "7")
         self.assertEqual((values["--floor-height"], values["--layout"], values["--stair-width"]), ("6", "u-turn", "1.5"))
         self.assertEqual((values["--lower-entry-side"], values["--upper-exit-side"]), ("north", "north"))
-        self.assertEqual((values["--shaft-wall-bottom"], values["--shaft-wall-top"]), ("3.4", "6"))
+        self.assertIn("--no-shaft", result["args"])
         self.assertEqual(values["--scene-name"], "x")
         self.assertEqual(result["local_to_world"]["origin"], [-52.5, -6.0, 9.51])
         self.assertEqual(result["local_to_world"]["basis_x"], [-1, 0, 0])
@@ -129,9 +138,9 @@ class RouteARegressionTests(unittest.TestCase):
         resolved = resolver.resolve_sector_verticals(sector, manifest, ROOT)["vertical_generators"][0]
         values = ResolverTests.pairs(resolved["args"])
         self.assertEqual(
-            {key: values[key] for key in ("--shaft-width", "--shaft-length", "--floor-height", "--layout", "--stair-width", "--lower-entry-side", "--upper-exit-side", "--shaft-wall-bottom", "--shaft-wall-top")},
+            {key: values[key] for key in ("--shaft-width", "--shaft-length", "--floor-height", "--layout", "--stair-width", "--lower-entry-side", "--upper-exit-side")},
             {"--shaft-width": "6.647", "--shaft-length": "7.777", "--floor-height": "6", "--layout": "u-turn", "--stair-width": "1.8",
-             "--lower-entry-side": "north", "--upper-exit-side": "north", "--shaft-wall-bottom": "5", "--shaft-wall-top": "6"},
+             "--lower-entry-side": "north", "--upper-exit-side": "north"},
         )
         self.assertEqual(resolved["local_to_world"]["origin"], [-52.2225, -6.0, 15.7655])
 

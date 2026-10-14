@@ -24,6 +24,15 @@ const EYE_COLOR := Color(1.0, 0.45, 0.1)
 const WINDUP_COLOR := Color(1.0, 0.95, 0.6)
 
 @export var enemy_type: StringName = &"shade"
+## Optional look (#199, С-01): a model standing on the floor with its front to +Z, drawn with
+## `art_material`; the eyes move to `art_eye_height` over the body centre. Collision and
+## behaviour stay the capsule's. Without it the shade is the plain capsule.
+@export var art: PackedScene
+@export var art_material: Material
+@export var art_eye_height := EYE_HEIGHT
+## Optional `func(point: Vector3) -> bool`: ground the shade must not step on (a hall threshold
+## of an ambush, DreamAmbush); it stops at the border as at an edge.
+var forbidden_zone: Callable = Callable()
 
 var state := State.PATROL
 var health := 1.0
@@ -141,7 +150,7 @@ func _walk_to(target: Vector3, speed: float) -> void:
 		return
 	var direction := to.normalized()
 	look_at(global_position + direction, Vector3.UP)
-	if not _ground_ahead(direction):
+	if not _ground_ahead(direction) or _forbidden_ahead(direction):
 		_stop()
 		return
 	velocity.x = direction.x * speed
@@ -151,6 +160,10 @@ func _walk_to(target: Vector3, speed: float) -> void:
 func _stop() -> void:
 	velocity.x = 0.0
 	velocity.z = 0.0
+
+
+func _forbidden_ahead(direction: Vector3) -> bool:
+	return forbidden_zone.is_valid() and bool(forbidden_zone.call(global_position + direction * (RADIUS + EDGE_PROBE)))
 
 
 func _ground_ahead(direction: Vector3) -> bool:
@@ -183,15 +196,25 @@ func _combat_of(hero: Node) -> DreamCombat:
 
 
 func _die() -> void:
+	_fade_out(DEATH_SECONDS)
+	died.emit()
+
+
+## Dissolves without dying (the dream calmed down, e.g. its seal is restored): no `died`.
+func vanish(seconds: float) -> void:
+	if not is_dead():
+		_fade_out(seconds)
+
+
+func _fade_out(seconds: float) -> void:
 	state = State.DEAD
 	health = 0.0
 	_stop()
 	collision_layer = 0
 	collision_mask = 0
 	remove_from_group(GROUP)
-	died.emit()
 	var tween := create_tween()
-	tween.tween_property(self, "scale", Vector3(0.05, 0.05, 0.05), DEATH_SECONDS)
+	tween.tween_property(self, "scale", Vector3(0.05, 0.05, 0.05), seconds)
 	tween.tween_callback(queue_free)
 
 
@@ -208,13 +231,17 @@ func _build() -> void:
 	var collision := CollisionShape3D.new()
 	collision.shape = shape
 	add_child(collision)
-	var body := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = RADIUS
-	mesh.height = HEIGHT
-	mesh.material = PropKit.material(BODY_COLOR)
-	body.mesh = mesh
-	add_child(body)
+	if art:
+		_build_art()
+	else:
+		var body := MeshInstance3D.new()
+		var mesh := CapsuleMesh.new()
+		mesh.radius = RADIUS
+		mesh.height = HEIGHT
+		mesh.material = PropKit.material(BODY_COLOR)
+		body.mesh = mesh
+		add_child(body)
+	var eye_height := art_eye_height if art else EYE_HEIGHT
 	_eye_material = PropKit.material(EYE_COLOR, true)
 	for side: float in [-1.0, 1.0]:
 		var eye := MeshInstance3D.new()
@@ -223,5 +250,16 @@ func _build() -> void:
 		sphere.height = 0.1
 		sphere.material = _eye_material
 		eye.mesh = sphere
-		eye.position = Vector3(side * 0.11, EYE_HEIGHT, -RADIUS + 0.03)
+		eye.position = Vector3(side * 0.11, eye_height, -RADIUS + 0.03)
 		add_child(eye)
+
+
+func _build_art() -> void:
+	var look := art.instantiate() as Node3D
+	look.name = "Art"
+	look.position = Vector3(0, -HEIGHT * 0.5, 0)
+	look.rotation.y = PI
+	add_child(look)
+	if art_material:
+		for mesh: Node in look.find_children("*", "MeshInstance3D", true, false):
+			(mesh as MeshInstance3D).material_override = art_material

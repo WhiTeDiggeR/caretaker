@@ -4,7 +4,8 @@ extends Control
 ## every state without playing the game. Run with F6. The pages use the same scenes and
 ## resources as the game; nothing here restyles them.
 
-const PAGES: Array[String] = ["Экраны мира", "Терминалы", "HUD", "Бумага", "Сон", "Оболочка"]
+const PAGES: Array[String] = ["Экраны мира", "Терминалы", "HUD", "Бумага", "Сон", "Бой во сне", "Оболочка"]
+const COMBAT_PROFILES := {"Нейтральный": &"neutral", "Боузер": &"bowser", "Херобрин": &"herobrine"}
 const STATES: Array[String] = ["Норма", "Внимание", "Тревога", "Включение", "Нет питания"]
 const RESOLUTIONS: Array[Vector2i] = [Vector2i(1280, 720), Vector2i(1920, 1080), Vector2i(3840, 2160)]
 const HUD_SCENE := preload("res://scenes/ui/opening_hud.tscn")
@@ -26,6 +27,7 @@ var views: Array[ScreenView] = []
 
 var _content: Control
 var _hud: OpeningHud
+var _combat_hud: DreamCombatHud
 
 
 func _ready() -> void:
@@ -68,6 +70,9 @@ func show_page(name: String) -> void:
 	if _hud:
 		_hud.queue_free()
 		_hud = null
+	if _combat_hud:
+		_combat_hud.queue_free()
+		_combat_hud = null
 	for child in _content.get_children():
 		_content.remove_child(child)
 		child.queue_free()
@@ -82,12 +87,14 @@ func show_page(name: String) -> void:
 			_page_buttons("Документы со шапкой, штампами, вымаркой и рукописным листом; Esc закрывает.", DOCUMENTS, func(id: String) -> void: DocumentReader.open_document_scene(get_tree(), id))
 		"Сон":
 			_page_buttons("Оверлей между мирами (щелчок — следующий режим скрывает предыдущий).", ["Вход", "Врата", "Смерть во сне", "Экстренное пробуждение", "Скрыть"], show_veil)
+		"Бой во сне":
+			_page_buttons("HUD боя в цветах спящего: шкалы со следом потери, ключи оружия; кристаллы образов тех же цветов.", COMBAT_PROFILES.keys(), show_combat_hud)
 		"Оболочка":
 			_page_shell()
 
 
-## Elements of the shell (variant A) and the entries to its screens; the splash and the
-## loading screen are variant B.
+## Elements of the shell (variant A) and the entries to its screens; the loading screen is
+## variant B.
 func _page_shell() -> void:
 	var column := VBoxContainer.new()
 	column.position = Vector2(32, 32)
@@ -125,9 +132,7 @@ func _page_shell() -> void:
 	ShellUI.button(column, "Загрузка (вариант Б, 2 с)", func() -> void:
 		Shell._loading_layer.visible = true
 		get_tree().create_timer(2.0).timeout.connect(func() -> void: Shell._loading_layer.visible = false))
-	ShellUI.button(column, "Главное меню с заставкой (вариант Б)", func() -> void:
-		MainMenu.splash_seen = false
-		get_tree().change_scene_to_file(Shell.MAIN_MENU))
+	ShellUI.button(column, "Главное меню", func() -> void: get_tree().change_scene_to_file(Shell.MAIN_MENU))
 
 
 ## Three world screens side by side and the state switcher.
@@ -207,6 +212,19 @@ func show_veil(mode: String) -> void:
 		"Экстренное пробуждение":
 			veil.show_mode(DreamTransition.Mode.WOKEN, Dreams.exit_line(Dreams.Exit.WOKEN))
 	veil.veil = 0.0 if mode == "Скрыть" else 0.92
+
+
+## The fight HUD of one sleeper: resolve low and still melting after a hit, focus full.
+func show_combat_hud(profile_name: String) -> void:
+	if _combat_hud:
+		_combat_hud.queue_free()
+	_combat_hud = DreamCombatHud.new()
+	_combat_hud.profile = DreamProfile.load_profile(COMBAT_PROFILES[profile_name])
+	add_child(_combat_hud)
+	_combat_hud.resolve_meter.reset(0.45, 1.0)
+	_combat_hud.resolve_meter.set_value(0.2, 1.0)
+	_combat_hud.focus_meter.reset(0.8, 1.0)
+	_combat_hud.show_weapons([&"dream_blade", &"dream_pulse"])
 
 
 func _exit_tree() -> void:

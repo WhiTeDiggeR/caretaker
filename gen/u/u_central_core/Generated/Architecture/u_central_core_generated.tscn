@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3]
+[gd_scene load_steps=121 format=3]
 
 [ext_resource type="Material" path="res://gen/u/u_central_core/Generated/Architecture/floor_material.tres" id="1_floor_material"]
 
@@ -252,6 +252,60 @@ size = Vector3(14.727, 5, 0.3)
 
 [sub_resource type="BoxShape3D" id="Box_27"]
 size = Vector3(5.176, 5, 0.3)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_1"]
+size = Vector3(6.546, 0.96, 0.093)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_1"]
+size = Vector3(6.546, 0.96, 0.093)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_2"]
+size = Vector3(6.546, 0.96, 0.093)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_2"]
+size = Vector3(6.546, 0.96, 0.093)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_3"]
+size = Vector3(0.093, 0.96, 11.86)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_3"]
+size = Vector3(0.093, 0.96, 11.86)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_4"]
+size = Vector3(0.093, 0.96, 11.86)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_4"]
+size = Vector3(0.093, 0.96, 11.86)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_5"]
+size = Vector3(4.546, 0.96, 0.093)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_5"]
+size = Vector3(4.546, 0.96, 0.093)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_6"]
+size = Vector3(4.546, 0.96, 0.093)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_6"]
+size = Vector3(4.546, 0.96, 0.093)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_7"]
+size = Vector3(0.093, 0.96, 4.86)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_7"]
+size = Vector3(0.093, 0.96, 4.86)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_8"]
+size = Vector3(0.093, 0.96, 4.86)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_8"]
+size = Vector3(0.093, 0.96, 4.86)
+
+[sub_resource type="BoxMesh" id="ClosureMesh_9"]
+size = Vector3(6.396, 0.18, 0.008)
+
+[sub_resource type="BoxShape3D" id="ClosureShape_9"]
+size = Vector3(6.396, 0.18, 0.008)
 
 [node name="u_central_core_generated" type="Node3D"]
 
@@ -947,3 +1001,144 @@ metadata/type = "door"
 metadata/source_id = "u-central-core-door-07"
 metadata/opening_bottom = "0.0"
 metadata/opening_height = "2.8"
+
+[node name="Closures" type="Node3D" parent="."]
+
+[node name="Visual" type="Node3D" parent="Closures"]
+
+[node name="Collisions" type="Node3D" parent="Closures"]
+
+[node name="Lining_01_VT-MAIN-STAIR_N" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(3.5, -0.5, 0.0735)
+mesh = SubResource("ClosureMesh_1")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_01_VT-MAIN-STAIR_N" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(3.5, -0.5, 0.0735)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_01_VT-MAIN-STAIR_N"]
+shape = SubResource("ClosureShape_1")
+
+[node name="Lining_01_VT-MAIN-STAIR_S" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(3.5, -0.5, 12.0265)
+mesh = SubResource("ClosureMesh_2")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_01_VT-MAIN-STAIR_S" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(3.5, -0.5, 12.0265)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_01_VT-MAIN-STAIR_S"]
+shape = SubResource("ClosureShape_2")
+
+[node name="Lining_01_VT-MAIN-STAIR_W" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(0.2735, -0.5, 6.05)
+mesh = SubResource("ClosureMesh_3")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_01_VT-MAIN-STAIR_W" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(0.2735, -0.5, 6.05)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_01_VT-MAIN-STAIR_W"]
+shape = SubResource("ClosureShape_3")
+
+[node name="Lining_01_VT-MAIN-STAIR_E" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(6.7265, -0.5, 6.05)
+mesh = SubResource("ClosureMesh_4")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_01_VT-MAIN-STAIR_E" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(6.7265, -0.5, 6.05)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_01_VT-MAIN-STAIR_E"]
+shape = SubResource("ClosureShape_4")
+
+[node name="Lining_02_VT-MAIN-ELEVATOR_N" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(-4.5, -0.5, 5.0735)
+mesh = SubResource("ClosureMesh_5")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_02_VT-MAIN-ELEVATOR_N" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(-4.5, -0.5, 5.0735)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_02_VT-MAIN-ELEVATOR_N"]
+shape = SubResource("ClosureShape_5")
+
+[node name="Lining_02_VT-MAIN-ELEVATOR_S" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(-4.5, -0.5, 10.0265)
+mesh = SubResource("ClosureMesh_6")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_02_VT-MAIN-ELEVATOR_S" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(-4.5, -0.5, 10.0265)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_02_VT-MAIN-ELEVATOR_S"]
+shape = SubResource("ClosureShape_6")
+
+[node name="Lining_02_VT-MAIN-ELEVATOR_W" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(-6.7265, -0.5, 7.55)
+mesh = SubResource("ClosureMesh_7")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_02_VT-MAIN-ELEVATOR_W" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(-6.7265, -0.5, 7.55)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_02_VT-MAIN-ELEVATOR_W"]
+shape = SubResource("ClosureShape_7")
+
+[node name="Lining_02_VT-MAIN-ELEVATOR_E" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(-2.2735, -0.5, 7.55)
+mesh = SubResource("ClosureMesh_8")
+material_override = ExtResource("3_wall_material")
+metadata/closure_kind = "lining"
+
+[node name="Lining_02_VT-MAIN-ELEVATOR_E" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(-2.2735, -0.5, 7.55)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "lining"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Lining_02_VT-MAIN-ELEVATOR_E"]
+shape = SubResource("ClosureShape_8")
+
+[node name="Threshold_VT-MAIN-STAIR" type="MeshInstance3D" parent="Closures/Visual"]
+position = Vector3(3.5, -0.09, 11.994)
+mesh = SubResource("ClosureMesh_9")
+material_override = ExtResource("1_floor_material")
+metadata/closure_kind = "threshold"
+
+[node name="Threshold_VT-MAIN-STAIR" type="StaticBody3D" parent="Closures/Collisions"]
+position = Vector3(3.5, -0.09, 11.994)
+collision_layer = 1
+collision_mask = 1
+metadata/closure_kind = "threshold"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Closures/Collisions/Threshold_VT-MAIN-STAIR"]
+shape = SubResource("ClosureShape_9")
