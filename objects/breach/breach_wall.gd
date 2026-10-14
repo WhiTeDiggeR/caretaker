@@ -74,8 +74,8 @@ const DUST_AMOUNT := 40
 ## The opening matches the breach door of L-OLD-CORE (#177): 1.2 × 2.0 m.
 @export var opening_width := 1.2
 @export var opening_height := 2.0
-@export var hit_sound: StringName = &"door_stop"
-@export var break_sound: StringName = &"land"
+@export var hit_sound: StringName = &"breach_hit"
+@export var break_sound: StringName = &"breach_break"
 
 var interactable: Interactable
 var room_light: OmniLight3D

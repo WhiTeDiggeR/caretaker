@@ -2,7 +2,8 @@ extends RefCounted
 
 ## #126: the sound catalogue and the events that request sounds.
 
-const MAX_TOTAL_BYTES := 2 * 1024 * 1024
+## Recorded sounds (#137, #209) replace the placeholders; long ones are Ogg Vorbis.
+const MAX_TOTAL_BYTES := 4 * 1024 * 1024
 
 
 func run(c: OpeningCheck) -> void:
@@ -11,7 +12,7 @@ func run(c: OpeningCheck) -> void:
 	for id: StringName in Sfx.sounds:
 		var file := FileAccess.open(str(Sfx.sounds[id]["file"]), FileAccess.READ)
 		total += file.get_length() if file else 0
-	c.is_true(total > 0 and total <= MAX_TOTAL_BYTES, "placeholder sounds stay within 2 MB (%d KiB)" % (total / 1024))
+	c.is_true(total > 0 and total <= MAX_TOTAL_BYTES, "catalogued sounds stay within 4 MB (%d KiB)" % (total / 1024))
 
 	var heard: Array[StringName] = []
 	var on_request := func(id: StringName) -> void: heard.append(id)
@@ -28,23 +29,36 @@ func run(c: OpeningCheck) -> void:
 	c.equal(heard, [&"door_mech", &"door_stop"] as Array[StringName], "a mechanical door grinds and stops")
 	heard.clear()
 
-	# Interaction: a press clicks, a blocked press is refused, a finished hold confirms.
+	# Interaction: an electronic control clicks on a press, buzzes when blocked, chimes after a hold.
 	var interactor := Interactor.new()
 	c.add(interactor)
 	var press := Interactable.new()
+	press.ui_feedback = true
 	c.add(press)
 	interactor.step(press, true, true, 0.016)
 	press.available = false
 	interactor.step(press, true, true, 0.016)
 	var hold := Interactable.new()
+	hold.ui_feedback = true
 	hold.mode = Interactable.Mode.HOLD
 	hold.hold_time = 0.1
 	c.add(hold)
 	interactor.step(hold, true, true, 0.2)
 	c.equal(heard, [&"interact_click", &"interact_denied", &"hold_done"] as Array[StringName], "press, refusal and hold sounds")
 	heard.clear()
+	# #209: a mechanism has no electronic beeps; it sounds only through its owner.
+	var mechanism := Interactable.new()
+	c.add(mechanism)
+	interactor.step(mechanism, true, true, 0.016)
+	mechanism.mode = Interactable.Mode.HOLD
+	mechanism.hold_time = 0.1
+	interactor.step(mechanism, true, true, 0.2)
+	mechanism.available = false
+	interactor.step(mechanism, true, true, 0.016)
+	c.equal(heard, [] as Array[StringName], "a mechanism neither clicks, chimes nor buzzes")
+	heard.clear()
 
-	# #137: a locked handle rattles; a wheel and a powered door's panel keep the common refusal.
+	# #137, #209: a locked handle rattles, a locked wheel jerks; a powered door's panel buzzes.
 	var manual := FacilityDoor.new()
 	manual.kind = FacilityDoor.Kind.MANUAL
 	manual.emergency_lock = true
@@ -60,7 +74,7 @@ func run(c: OpeningCheck) -> void:
 	interactor.step(manual._controls[0], true, true, 0.016)
 	interactor.step(wheel._controls[0], true, true, 0.016)
 	interactor.step(powered._controls[0], true, true, 0.016)
-	c.equal(heard, [&"door_locked", &"interact_denied", &"interact_denied"] as Array[StringName], "only a locked handle rattles")
+	c.equal(heard, [&"door_locked", &"door_wheel_jammed", &"interact_denied"] as Array[StringName], "a locked mechanism sounds itself, only a panel buzzes")
 	manual.emergency_lock = false
 	c.equal(manual._controls[0].denied_sound, &"", "an unlocked door has no rattle")
 	heard.clear()

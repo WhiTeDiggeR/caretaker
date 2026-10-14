@@ -1,5 +1,5 @@
 {
-  "_comment": "Звуковой фон и стингеры снов по стадиям (#201). Стадии — docs/art/dream-bowser-s.md §2. Фон стадии — процедурный гул (drone: тона в Гц с целым числом периодов за 8 с, ветер — отфильтрованный шум, пульс — Гц) или, если задан sound, id из data/audio/sfx.json (финальная запись). Стингеры — id из data/audio/sfx.json. Плеер: objects/audio/dream_audio.gd (автозагрузка DreamAudio).",
+  "_comment": "Звуковой фон и стингеры снов по стадиям (#201). Стадии — docs/art/dream-bowser-s.md §2. Фон стадии — процедурный гул (drone: тона в Гц с целым числом периодов за 8 с, ветер — отфильтрованный шум, пульс — Гц) или, если задан sound, id из data/audio/sfx.json (запись CC0, #209; гул остаётся запасным вариантом). Стингеры — id из data/audio/sfx.json. Плеер: objects/audio/dream_audio.gd (автозагрузка DreamAudio).",
   "crossfade_seconds": 2.5,
   "dreams": {
     "module_4": {
@@ -16,7 +16,8 @@
             "pulse": 0.25,
             "depth": 0.2
           },
-          "volume_db": -14
+          "volume_db": -14,
+          "sound": "dream_stage_calm"
         },
         "alarm": {
           "drone": {
@@ -30,7 +31,8 @@
             "pulse": 0.5,
             "depth": 0.3
           },
-          "volume_db": -12
+          "volume_db": -12,
+          "sound": "dream_stage_alarm"
         },
         "unease": {
           "drone": {
@@ -45,7 +47,8 @@
             "pulse": 1.25,
             "depth": 0.45
           },
-          "volume_db": -10
+          "volume_db": -10,
+          "sound": "dream_stage_unease"
         },
         "preawake": {
           "drone": {
@@ -60,7 +63,8 @@
             "pulse": 0.625,
             "depth": 0.6
           },
-          "volume_db": -9
+          "volume_db": -9,
+          "sound": "dream_stage_preawake"
         }
       },
       "calm_max_stage": 0,

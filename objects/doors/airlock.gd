@@ -39,6 +39,7 @@ func _ready() -> void:
 		synced_door = door_b
 	_panel = $CyclePanel/Interactable
 	_panel.prompt = PROMPT
+	_panel.ui_feedback = true
 	_panel.interacted.connect(start_cycle)
 	GameState.section_power_changed.connect(func(_s: StringName, _p: int) -> void: _refresh())
 	door_a.refresh()
@@ -92,10 +93,11 @@ func _run_cycle(from: FacilityDoor, to: FacilityDoor) -> void:
 	cycling = true
 	_set_cycle_lock(true)
 	cycle_started.emit()
-	Sfx.play(&"airlock_cycle", self)
 	if not from.is_closed():
 		from.force(false)
 		await from.closed
+	# The chamber is ventilated only once both doors are shut (#209).
+	Sfx.play(&"airlock_cycle", self)
 	await get_tree().create_timer(cycle_time).timeout
 	synced_door = to
 	to.force(true)

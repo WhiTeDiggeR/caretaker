@@ -28,6 +28,9 @@ OVERRIDES = {
                       ((0.0, 4.225, 0.0), (5.6, 0.55, 0.7), 0.0)],
 }
 
+# id -> footstep surface of the walkable prop (`surface` meta, objects/feel/first_person_feel.gd, #209)
+SURFACES = {"floor_grate": "grate"}
+
 
 def pascal(pid: str) -> str:
     return "".join(p.capitalize() for p in pid.replace("__", "_").split("_"))
@@ -46,8 +49,10 @@ def write(pid: str):
              f'[ext_resource type="PackedScene" path="res://loads/props/{rel}" id="1_model"]', ""]
     for i, (_, size, _) in enumerate(shapes or []):
         lines += [f'[sub_resource type="BoxShape3D" id="Shape{i}"]', f"size = Vector3({size[0]}, {size[1]}, {size[2]})", ""]
-    lines += [f'[node name="{pascal(pid)}" type="StaticBody3D"]', "",
-              '[node name="Model" parent="." instance=ExtResource("1_model")]', ""]
+    lines.append(f'[node name="{pascal(pid)}" type="StaticBody3D"]')
+    if pid in SURFACES:
+        lines.append(f'metadata/surface = "{SURFACES[pid]}"')
+    lines += ["", '[node name="Model" parent="." instance=ExtResource("1_model")]', ""]
     for i, (centre, _, rz) in enumerate(shapes or []):
         name = "Collision" if len(shapes) == 1 else f"Collision{i + 1}"
         lines += [f'[node name="{name}" type="CollisionShape3D" parent="."]']
