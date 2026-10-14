@@ -110,6 +110,7 @@ func run(c: OpeningCheck) -> void:
 	c.equal(panel.entered.size(), 0, "input starts over after a mistake")
 	c.equal(panel.held, wrong, "the wrong slots stay on the screen")
 	c.is_true(panel.screen_text().contains(DreamKnowledge.label(wrong[0])), "the screen shows the held slots")
+	c.is_true(screen.view.rows.any(func(row: Dictionary) -> bool: return Array(row.get("glyphs", [])) == Array(wrong)), "the held slots are drawn as glyphs")
 	c.equal(DreamKnowledge.active_for(MODULE), KNOWLEDGE, "a mistake does not spend the knowledge")
 
 	# Reset clears a partial input.
