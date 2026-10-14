@@ -17,6 +17,21 @@
 [ext_resource type="Material" path="res://materials/dream_bowser/iron.tres" id="15_iron"]
 [ext_resource type="Material" path="res://materials/dream_bowser/chain.tres" id="16_chain"]
 [ext_resource type="ShaderMaterial" path="res://materials/dream_bowser/lava.tres" id="17_lava"]
+[ext_resource type="Script" path="res://objects/dream/dream_kit_fill.gd" id="20_fill"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_wall/dream_wall.gltf" id="21_dream_wall"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_wall_crown/dream_wall_crown.gltf" id="22_dream_wall_crown"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_floor_plate/dream_floor_plate.gltf" id="23_dream_floor_plate"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_column/dream_column.gltf" id="24_dream_column"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_column_fallen/dream_column_fallen.gltf" id="25_dream_column_fallen"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_parapet/dream_parapet.gltf" id="26_dream_parapet"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_ledge/dream_ledge.gltf" id="27_dream_ledge"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_chain_bridge/dream_chain_bridge.gltf" id="28_dream_chain_bridge"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_stone_bridge/dream_stone_bridge.gltf" id="29_dream_stone_bridge"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_portal/dream_portal.gltf" id="30_dream_portal"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_gate_bowser/dream_gate_bowser.gltf" id="31_dream_gate_bowser"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_seal/dream_seal.gltf" id="32_dream_seal"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_seal_wheel/dream_seal_wheel.gltf" id="33_dream_seal_wheel"]
+[ext_resource type="PackedScene" path="res://loads/props/ph_dream_rock_face/ph_dream_rock_face.gltf" id="34_rock_face"]
 
 [sub_resource type="StandardMaterial3D" id="mat_dark"]
 albedo_color = Color(0.06, 0.05, 0.07, 1)
@@ -422,10 +437,17 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 4, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -0.75, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Terrace/Floor"]
+visible = false
 mesh = SubResource("box_0")
 
 [node name="Collision" type="CollisionShape3D" parent="Terrace/Floor"]
 shape = SubResource("shape_0")
+
+[node name="Art" type="Node3D" parent="Terrace/Floor"]
+script = ExtResource("20_fill")
+module = ExtResource("23_dream_floor_plate")
+module_size = Vector3(4, 0.5, 4)
+tile_depth = true
 
 [node name="SilhouetteSpot" type="Marker3D" parent="Terrace"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
@@ -436,15 +458,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, -0.75, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Path/Ledge"]
+visible = false
 mesh = SubResource("box_1")
 
 [node name="Collision" type="CollisionShape3D" parent="Path/Ledge"]
 shape = SubResource("shape_1")
 
+[node name="Art" parent="Path/Ledge" instance=ExtResource("27_dream_ledge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
 [node name="LedgeStep" type="StaticBody3D" parent="Path"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, -0.15, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Path/LedgeStep"]
+visible = false
 mesh = SubResource("box_2")
 
 [node name="Collision" type="CollisionShape3D" parent="Path/LedgeStep"]
@@ -454,15 +481,20 @@ shape = SubResource("shape_2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Path/Bridge"]
+visible = false
 mesh = SubResource("box_3")
 
 [node name="Collision" type="CollisionShape3D" parent="Path/Bridge"]
 shape = SubResource("shape_3")
 
+[node name="Art" parent="Path/Bridge" instance=ExtResource("28_dream_chain_bridge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
 [node name="ChainLeft" type="StaticBody3D" parent="Path"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1.7, -1)
 
 [node name="Mesh" type="MeshInstance3D" parent="Path/ChainLeft"]
+visible = false
 mesh = SubResource("box_4")
 
 [node name="Collision" type="CollisionShape3D" parent="Path/ChainLeft"]
@@ -472,10 +504,28 @@ shape = SubResource("shape_4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 1.7, 1)
 
 [node name="Mesh" type="MeshInstance3D" parent="Path/ChainRight"]
+visible = false
 mesh = SubResource("box_4")
 
 [node name="Collision" type="CollisionShape3D" parent="Path/ChainRight"]
 shape = SubResource("shape_4")
+
+[node name="Rocks" type="Node3D" parent="Path"]
+
+[node name="Rock1" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
+transform = Transform3D(1.474, 0, -0.6231, 0, 1.6, 0, 0.6231, 0, 1.474, 6, -5, -10)
+
+[node name="Rock2" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
+transform = Transform3D(-0.8239, 0, -1.132, 0, 1.4, 0, 1.132, 0, -0.8239, 18, -5, 9)
+
+[node name="Rock3" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
+transform = Transform3D(0.7711, 0, 1.515, 0, 1.7, 0, -1.515, 0, 0.7711, 31, -5, -8)
+
+[node name="Rock4" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
+transform = Transform3D(-1.485, 0, -0.2117, 0, 1.5, 0, 0.2117, 0, -1.485, 43, -5, 11)
+
+[node name="Rock5" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
+transform = Transform3D(0.5885, 0, -2.12, 0, 2.2, 0, 2.12, 0, 0.5885, 26, -5, -14)
 
 [node name="Yard" type="Node3D" parent="."]
 
@@ -483,100 +533,177 @@ shape = SubResource("shape_4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 0.45, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/Floor"]
+visible = false
 mesh = SubResource("box_5")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/Floor"]
 shape = SubResource("shape_5")
 
+[node name="Art" type="Node3D" parent="Yard/Floor"]
+script = ExtResource("20_fill")
+module = ExtResource("23_dream_floor_plate")
+module_size = Vector3(4, 0.5, 4)
+tile_depth = true
+
 [node name="WallNorth" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.5, 5.2, -9.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/WallNorth"]
+visible = false
 mesh = SubResource("box_6")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/WallNorth"]
 shape = SubResource("shape_6")
 
+[node name="Art" type="Node3D" parent="Yard/WallNorth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+cap = ExtResource("22_dream_wall_crown")
+
 [node name="WallSouthWest" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.75, 5.2, 9.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/WallSouthWest"]
+visible = false
 mesh = SubResource("box_7")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/WallSouthWest"]
 shape = SubResource("shape_7")
 
+[node name="Art" type="Node3D" parent="Yard/WallSouthWest"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+cap = ExtResource("22_dream_wall_crown")
+
 [node name="WallSouthEast" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.75, 5.2, 9.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/WallSouthEast"]
+visible = false
 mesh = SubResource("box_8")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/WallSouthEast"]
 shape = SubResource("shape_8")
 
+[node name="Art" type="Node3D" parent="Yard/WallSouthEast"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+cap = ExtResource("22_dream_wall_crown")
+
 [node name="LintelSouth" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62, 7.45, 9.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/LintelSouth"]
+visible = false
 mesh = SubResource("box_9")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/LintelSouth"]
 shape = SubResource("shape_9")
 
+[node name="Art" type="Node3D" parent="Yard/LintelSouth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+cap = ExtResource("22_dream_wall_crown")
+
 [node name="WallWestNorth" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.5, 5.2, -6)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/WallWestNorth"]
+visible = false
 mesh = SubResource("box_10")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/WallWestNorth"]
 shape = SubResource("shape_10")
 
+[node name="Art" type="Node3D" parent="Yard/WallWestNorth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+cap = ExtResource("22_dream_wall_crown")
+
 [node name="WallWestSouth" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.5, 5.2, 6)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/WallWestSouth"]
+visible = false
 mesh = SubResource("box_10")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/WallWestSouth"]
 shape = SubResource("shape_10")
 
+[node name="Art" type="Node3D" parent="Yard/WallWestSouth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+cap = ExtResource("22_dream_wall_crown")
+
 [node name="LintelWest" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.5, 7.7, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/LintelWest"]
+visible = false
 mesh = SubResource("box_11")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/LintelWest"]
 shape = SubResource("shape_11")
 
+[node name="Art" type="Node3D" parent="Yard/LintelWest"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+cap = ExtResource("22_dream_wall_crown")
+
+[node name="Portal" parent="Yard/LintelWest" instance=ExtResource("30_dream_portal")]
+transform = Transform3D(0, 0, -0.8, 0, 0.714, 0, 1, 0, 0, 0, -6.5, 0)
+
 [node name="ColumnNorth" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 5.2, -4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/ColumnNorth"]
+visible = false
 mesh = SubResource("box_12")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/ColumnNorth"]
 shape = SubResource("shape_12")
 
+[node name="Art" type="Node3D" parent="Yard/ColumnNorth"]
+script = ExtResource("20_fill")
+module = ExtResource("24_dream_column")
+module_size = Vector3(2, 10, 2)
+
 [node name="ColumnSouth" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58, 5.2, 4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/ColumnSouth"]
+visible = false
 mesh = SubResource("box_12")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/ColumnSouth"]
 shape = SubResource("shape_12")
 
+[node name="Art" type="Node3D" parent="Yard/ColumnSouth"]
+script = ExtResource("20_fill")
+module = ExtResource("24_dream_column")
+module_size = Vector3(2, 10, 2)
+
 [node name="FallenPillar" type="StaticBody3D" parent="Yard"]
 transform = Transform3D(0.9781, 0, 0.2079, 0, 1, 0, -0.2079, 0, 0.9781, 50.75, 1.8, -4.8)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/FallenPillar"]
+visible = false
 mesh = SubResource("box_13")
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/FallenPillar"]
 shape = SubResource("shape_13")
+
+[node name="Art" type="Node3D" parent="Yard/FallenPillar"]
+script = ExtResource("20_fill")
+module = ExtResource("25_dream_column_fallen")
+module_size = Vector3(5, 1, 1.6)
 
 [node name="RemainsNiche" type="Node3D" parent="Yard"]
 
@@ -674,136 +801,237 @@ transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 70, 1.2, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0.45, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/Floor"]
+visible = false
 mesh = SubResource("box_23")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/Floor"]
 shape = SubResource("shape_17")
 
+[node name="Art" type="Node3D" parent="SealHall/Floor"]
+script = ExtResource("20_fill")
+module = ExtResource("23_dream_floor_plate")
+module_size = Vector3(4, 0.5, 4)
+tile_depth = true
+
 [node name="WallWestNorth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 7.2, -5.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/WallWestNorth"]
+visible = false
 mesh = SubResource("box_24")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/WallWestNorth"]
 shape = SubResource("shape_18")
 
+[node name="Art" type="Node3D" parent="SealHall/WallWestNorth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
 [node name="WallWestSouth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 7.2, 5.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/WallWestSouth"]
+visible = false
 mesh = SubResource("box_24")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/WallWestSouth"]
 shape = SubResource("shape_18")
 
+[node name="Art" type="Node3D" parent="SealHall/WallWestSouth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
 [node name="LintelWest" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 10.7, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/LintelWest"]
+visible = false
 mesh = SubResource("box_25")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/LintelWest"]
 shape = SubResource("shape_19")
 
+[node name="Art" type="Node3D" parent="SealHall/LintelWest"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
+[node name="Portal" parent="SealHall/LintelWest" instance=ExtResource("30_dream_portal")]
+transform = Transform3D(0, 0, -0.8, 0, 1, 0, 1, 0, 0, 0, -9.5, 0)
+
 [node name="WallNorthWest" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 7.2, -8.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/WallNorthWest"]
+visible = false
 mesh = SubResource("box_26")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/WallNorthWest"]
 shape = SubResource("shape_20")
 
+[node name="Art" type="Node3D" parent="SealHall/WallNorthWest"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
 [node name="WallNorthEast" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.25, 7.2, -8.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/WallNorthEast"]
+visible = false
 mesh = SubResource("box_27")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/WallNorthEast"]
 shape = SubResource("shape_21")
 
+[node name="Art" type="Node3D" parent="SealHall/WallNorthEast"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
 [node name="LintelNorth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 9.7, -8.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/LintelNorth"]
+visible = false
 mesh = SubResource("box_28")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/LintelNorth"]
 shape = SubResource("shape_22")
 
+[node name="Art" type="Node3D" parent="SealHall/LintelNorth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
+[node name="Portal" parent="SealHall/LintelNorth" instance=ExtResource("30_dream_portal")]
+transform = Transform3D(0.6, 0, 0, 0, 0.714, 0, 0, 0, 1, 0, -8.5, 0)
+
 [node name="WallSouth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.25, 7.2, 8.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/WallSouth"]
+visible = false
 mesh = SubResource("box_29")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/WallSouth"]
 shape = SubResource("shape_23")
 
+[node name="Art" type="Node3D" parent="SealHall/WallSouth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
 [node name="WallEastNorth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 7.2, -5.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/WallEastNorth"]
+visible = false
 mesh = SubResource("box_30")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/WallEastNorth"]
 shape = SubResource("shape_24")
 
+[node name="Art" type="Node3D" parent="SealHall/WallEastNorth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
 [node name="WallEastSouth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 7.2, 5.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/WallEastSouth"]
+visible = false
 mesh = SubResource("box_30")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/WallEastSouth"]
 shape = SubResource("shape_24")
 
+[node name="Art" type="Node3D" parent="SealHall/WallEastSouth"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
 [node name="LintelEast" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 9.7, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/LintelEast"]
+visible = false
 mesh = SubResource("box_31")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/LintelEast"]
 shape = SubResource("shape_25")
 
+[node name="Art" type="Node3D" parent="SealHall/LintelEast"]
+script = ExtResource("20_fill")
+module = ExtResource("21_dream_wall")
+module_size = Vector3(4, 4, 1)
+
 [node name="CeilingNorth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.25, 13.7, -5.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/CeilingNorth"]
+visible = false
 mesh = SubResource("box_32")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/CeilingNorth"]
 shape = SubResource("shape_26")
 
+[node name="Art" type="Node3D" parent="SealHall/CeilingNorth"]
+script = ExtResource("20_fill")
+module = ExtResource("23_dream_floor_plate")
+module_size = Vector3(4, 0.5, 4)
+tile_depth = true
+
 [node name="CeilingSouth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.25, 13.7, 5.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/CeilingSouth"]
+visible = false
 mesh = SubResource("box_32")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/CeilingSouth"]
 shape = SubResource("shape_26")
 
+[node name="Art" type="Node3D" parent="SealHall/CeilingSouth"]
+script = ExtResource("20_fill")
+module = ExtResource("23_dream_floor_plate")
+module_size = Vector3(4, 0.5, 4)
+tile_depth = true
+
 [node name="CeilingWest" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.75, 13.7, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/CeilingWest"]
+visible = false
 mesh = SubResource("box_33")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/CeilingWest"]
 shape = SubResource("shape_27")
 
+[node name="Art" type="Node3D" parent="SealHall/CeilingWest"]
+script = ExtResource("20_fill")
+module = ExtResource("23_dream_floor_plate")
+module_size = Vector3(4, 0.5, 4)
+tile_depth = true
+
 [node name="CeilingEast" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.5, 13.7, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="SealHall/CeilingEast"]
+visible = false
 mesh = SubResource("box_34")
 
 [node name="Collision" type="CollisionShape3D" parent="SealHall/CeilingEast"]
 shape = SubResource("shape_28")
+
+[node name="Art" type="Node3D" parent="SealHall/CeilingEast"]
+script = ExtResource("20_fill")
+module = ExtResource("23_dream_floor_plate")
+module_size = Vector3(4, 0.5, 4)
+tile_depth = true
 
 [node name="SealSlot" type="Marker3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.2, 0)
@@ -824,6 +1052,8 @@ shape = SubResource("side_grate_shape")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.2, 0)
 knowledge_id = &"module_4_seal"
 radius = 4.0
+art = ExtResource("32_dream_seal")
+wheel_art = ExtResource("33_dream_seal_wheel")
 
 [node name="Bastion" type="Node3D" parent="."]
 
@@ -831,15 +1061,20 @@ radius = 4.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0.7, -14)
 
 [node name="Mesh" type="MeshInstance3D" parent="Bastion/Bridge"]
+visible = false
 mesh = SubResource("box_35")
 
 [node name="Collision" type="CollisionShape3D" parent="Bastion/Bridge"]
 shape = SubResource("shape_29")
 
+[node name="Art" parent="Bastion/Bridge" instance=ExtResource("29_dream_stone_bridge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
 [node name="RailWest" type="StaticBody3D" parent="Bastion"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78.6, 1.65, -14.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Bastion/RailWest"]
+visible = false
 mesh = SubResource("box_36")
 
 [node name="Collision" type="CollisionShape3D" parent="Bastion/RailWest"]
@@ -849,6 +1084,7 @@ shape = SubResource("shape_30")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.4, 1.65, -14.5)
 
 [node name="Mesh" type="MeshInstance3D" parent="Bastion/RailEast"]
+visible = false
 mesh = SubResource("box_36")
 
 [node name="Collision" type="CollisionShape3D" parent="Bastion/RailEast"]
@@ -858,41 +1094,68 @@ shape = SubResource("shape_30")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0.45, -24)
 
 [node name="Mesh" type="MeshInstance3D" parent="Bastion/Floor"]
+visible = false
 mesh = SubResource("box_37")
 
 [node name="Collision" type="CollisionShape3D" parent="Bastion/Floor"]
 shape = SubResource("shape_31")
 
+[node name="Art" type="Node3D" parent="Bastion/Floor"]
+script = ExtResource("20_fill")
+module = ExtResource("23_dream_floor_plate")
+module_size = Vector3(4, 0.5, 4)
+tile_depth = true
+
 [node name="ParapetNorth" type="StaticBody3D" parent="Bastion"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.7, -27.8)
 
 [node name="Mesh" type="MeshInstance3D" parent="Bastion/ParapetNorth"]
+visible = false
 mesh = SubResource("box_38")
 
 [node name="Collision" type="CollisionShape3D" parent="Bastion/ParapetNorth"]
 shape = SubResource("shape_32")
 
+[node name="Art" type="Node3D" parent="Bastion/ParapetNorth"]
+script = ExtResource("20_fill")
+module = ExtResource("26_dream_parapet")
+module_size = Vector3(4, 1.2, 0.6)
+
 [node name="ParapetWest" type="StaticBody3D" parent="Bastion"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.2, 1.7, -24)
 
 [node name="Mesh" type="MeshInstance3D" parent="Bastion/ParapetWest"]
+visible = false
 mesh = SubResource("box_39")
 
 [node name="Collision" type="CollisionShape3D" parent="Bastion/ParapetWest"]
 shape = SubResource("shape_33")
 
+[node name="Art" type="Node3D" parent="Bastion/ParapetWest"]
+script = ExtResource("20_fill")
+module = ExtResource("26_dream_parapet")
+module_size = Vector3(4, 1.2, 0.6)
+
 [node name="ParapetEast" type="StaticBody3D" parent="Bastion"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.8, 1.7, -24)
 
 [node name="Mesh" type="MeshInstance3D" parent="Bastion/ParapetEast"]
+visible = false
 mesh = SubResource("box_39")
 
 [node name="Collision" type="CollisionShape3D" parent="Bastion/ParapetEast"]
 shape = SubResource("shape_33")
 
+[node name="Art" type="Node3D" parent="Bastion/ParapetEast"]
+script = ExtResource("20_fill")
+module = ExtResource("26_dream_parapet")
+module_size = Vector3(4, 1.2, 0.6)
+
 [node name="Gate" parent="Bastion" instance=ExtResource("5_gate")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 1.2, -25)
 requires_seal = true
+
+[node name="BowserArt" parent="Bastion/Gate" instance=ExtResource("31_dream_gate_bowser")]
 
 [node name="Branches" type="Node3D" parent="."]
 
