@@ -123,6 +123,7 @@ res://scenes/complex_v4/review/opening_route_check.gd|OPENING_ROUTE_CHECK mode=r
 res://tests/opening/opening_checks.tscn|OPENING_CHECKS checks=[0-9]+ failures=0
 res://tests/opening/dream_e2e.tscn|DREAM_E2E_OK
 res://tests/dreams/bowser_dream_check.tscn|BOWSER_DREAM_CHECK_OK checks=[0-9]+
+res://tests/dreams/bowser_dream_mood_check.tscn|BOWSER_DREAM_MOOD_OK checks=[0-9]+
 res://tests/opening/shell_e2e.tscn|SHELL_E2E_OK
 res://tests/debug/moments_check.tscn|DEBUG_MOMENTS_OK moments=[0-9]+
 res://tests/review/review_hub_check.tscn|REVIEW_HUB_OK stations=[0-9]+
