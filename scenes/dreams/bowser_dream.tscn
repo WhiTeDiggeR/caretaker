@@ -32,6 +32,14 @@
 [ext_resource type="PackedScene" path="res://loads/props/dream_seal/dream_seal.gltf" id="32_dream_seal"]
 [ext_resource type="PackedScene" path="res://loads/props/dream_seal_wheel/dream_seal_wheel.gltf" id="33_dream_seal_wheel"]
 [ext_resource type="PackedScene" path="res://loads/props/ph_dream_rock_face/ph_dream_rock_face.gltf" id="34_rock_face"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_rubble_arch/dream_rubble_arch.gltf" id="35_dream_rubble_arch"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_grate/dream_grate.gltf" id="36_dream_grate"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_stair_collapsed/dream_stair_collapsed.gltf" id="37_dream_stair_collapsed"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_hero_remains/dream_hero_remains.gltf" id="38_dream_hero_remains"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_brazier/dream_brazier.gltf" id="39_dream_brazier"]
+[ext_resource type="PackedScene" path="res://loads/props/dream_guard_niche/dream_guard_niche.gltf" id="40_dream_guard_niche"]
+[ext_resource type="ArrayMesh" path="res://objects/dream/operator_trace_mesh.tres" id="41_operator_trace"]
+[ext_resource type="Material" path="res://materials/dream_bowser/operator_trace.tres" id="42_operator_trace_mat"]
 
 [sub_resource type="StandardMaterial3D" id="mat_dark"]
 albedo_color = Color(0.06, 0.05, 0.07, 1)
@@ -41,9 +49,6 @@ albedo_color = Color(0.72, 0.68, 0.6, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_seal"]
 albedo_color = Color(0.43, 0.39, 0.38, 1)
-
-[sub_resource type="StandardMaterial3D" id="mat_mark"]
-albedo_color = Color(0.85, 0.88, 0.9, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_threshold"]
 shading_mode = 0
@@ -175,7 +180,7 @@ size = Vector3(0.3, 0.03, 4)
 
 [sub_resource type="BoxMesh" id="box_19"]
 material = SubResource("mat_bone")
-size = Vector3(1.8, 0.35, 0.6)
+size = Vector3(1.2, 1, 1.2)
 
 [sub_resource type="BoxMesh" id="box_21"]
 material = ExtResource("15_iron")
@@ -183,10 +188,6 @@ size = Vector3(0.8, 1, 0.8)
 
 [sub_resource type="BoxShape3D" id="shape_16"]
 size = Vector3(0.8, 1, 0.8)
-
-[sub_resource type="BoxMesh" id="box_22"]
-material = SubResource("mat_mark")
-size = Vector3(0.55, 0.02, 0.35)
 
 [sub_resource type="BoxMesh" id="box_23"]
 material = ExtResource("14_stone_floor")
@@ -742,9 +743,15 @@ mesh = SubResource("box_16")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.425, 2.95, -5.75)
 mesh = SubResource("box_17")
 
+[node name="GuardNicheNorthArt" parent="Yard" instance=ExtResource("40_dream_guard_niche")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 69.35, 1.2, -5.75)
+
 [node name="GuardNicheSouth" type="MeshInstance3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.425, 2.95, 6.25)
 mesh = SubResource("box_17")
+
+[node name="GuardNicheSouthArt" parent="Yard" instance=ExtResource("40_dream_guard_niche")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 69.35, 1.2, 6.25)
 
 [node name="ThresholdLine" type="MeshInstance3D" parent="Yard"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 1.215, 0)
@@ -754,8 +761,12 @@ mesh = SubResource("box_18")
 script = ExtResource("9_remains")
 
 [node name="Body" type="MeshInstance3D" parent="Yard/Remains"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.6, 1.375, -7.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.6, 1.7, -8.15)
+visible = false
 mesh = SubResource("box_19")
+
+[node name="Art" parent="Yard/Remains" instance=ExtResource("38_dream_hero_remains")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.81, 1.2, -8.05)
 
 [node name="WeaponSpot" type="Marker3D" parent="Yard/Remains"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.9, 1.2, -7)
@@ -764,7 +775,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.9, 1.2, -7)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53, 1.7, -8)
 
 [node name="Mesh" type="MeshInstance3D" parent="Yard/Remains/Brazier"]
+visible = false
 mesh = SubResource("box_21")
+
+[node name="Art" parent="Yard/Remains/Brazier" instance=ExtResource("39_dream_brazier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="Collision" type="CollisionShape3D" parent="Yard/Remains/Brazier"]
 shape = SubResource("shape_16")
@@ -783,8 +798,9 @@ threshold = NodePath("HallThreshold")
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 56, 1.2, 0)
 
 [node name="OperatorTrace" type="MeshInstance3D" parent="Yard/Ambush"]
-transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 57.4, 1.21, 1.7)
-mesh = SubResource("box_22")
+transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 57.4, 1.2, 1.7)
+mesh = ExtResource("41_operator_trace")
+surface_material_override/0 = ExtResource("42_operator_trace_mat")
 
 [node name="GuardSpawnNorth" type="Marker3D" parent="Yard/Ambush"]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 68.5, 1.2, -5.75)
@@ -1161,10 +1177,14 @@ requires_seal = true
 
 [node name="RubbleSouth" type="Node3D" parent="Branches"]
 
+[node name="Art" parent="Branches/RubbleSouth" instance=ExtResource("35_dream_rubble_arch")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 62, 1.2, 9.5)
+
 [node name="StoneA" type="StaticBody3D" parent="Branches/RubbleSouth"]
 transform = Transform3D(0.9511, 0, 0.309, 0, 1, 0, -0.309, 0, 0.9511, 61.2, 2.2, 9.6)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/RubbleSouth/StoneA"]
+visible = false
 mesh = SubResource("box_40")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/RubbleSouth/StoneA"]
@@ -1174,6 +1194,7 @@ shape = SubResource("shape_34")
 transform = Transform3D(0.9063, 0, -0.4226, 0, 1, 0, 0.4226, 0, 0.9063, 62.6, 2, 9.4)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/RubbleSouth/StoneB"]
+visible = false
 mesh = SubResource("box_41")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/RubbleSouth/StoneB"]
@@ -1183,6 +1204,7 @@ shape = SubResource("shape_35")
 transform = Transform3D(0.9945, 0, 0.1045, 0, 1, 0, -0.1045, 0, 0.9945, 62, 3.8, 9.6)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/RubbleSouth/StoneC"]
+visible = false
 mesh = SubResource("box_42")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/RubbleSouth/StoneC"]
@@ -1190,10 +1212,14 @@ shape = SubResource("shape_36")
 
 [node name="CollapsedStair" type="Node3D" parent="Branches"]
 
+[node name="Art" parent="Branches/CollapsedStair" instance=ExtResource("37_dream_stair_collapsed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63, 1.2, -8.25)
+
 [node name="Step1" type="StaticBody3D" parent="Branches/CollapsedStair"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.5, 1.45, -8.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/CollapsedStair/Step1"]
+visible = false
 mesh = SubResource("box_43")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/CollapsedStair/Step1"]
@@ -1203,6 +1229,7 @@ shape = SubResource("shape_37")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.5, 1.7, -8.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/CollapsedStair/Step2"]
+visible = false
 mesh = SubResource("box_44")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/CollapsedStair/Step2"]
@@ -1212,6 +1239,7 @@ shape = SubResource("shape_38")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.5, 1.95, -8.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/CollapsedStair/Step3"]
+visible = false
 mesh = SubResource("box_45")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/CollapsedStair/Step3"]
@@ -1221,6 +1249,7 @@ shape = SubResource("shape_39")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.5, 2.2, -8.25)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/CollapsedStair/Step4"]
+visible = false
 mesh = SubResource("box_46")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/CollapsedStair/Step4"]
@@ -1230,6 +1259,7 @@ shape = SubResource("shape_40")
 transform = Transform3D(0.866, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866, 68, 1.6, -6.8)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/CollapsedStair/Broken"]
+visible = false
 mesh = SubResource("box_47")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/CollapsedStair/Broken"]
@@ -1237,10 +1267,14 @@ shape = SubResource("shape_41")
 
 [node name="GrateEast" type="Node3D" parent="Branches"]
 
+[node name="Art" parent="Branches/GrateEast" instance=ExtResource("36_dream_grate")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 90.5, 1.2, 0)
+
 [node name="Bar1" type="StaticBody3D" parent="Branches/GrateEast"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 3.7, -1.2)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/GrateEast/Bar1"]
+visible = false
 mesh = SubResource("box_48")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/GrateEast/Bar1"]
@@ -1250,6 +1284,7 @@ shape = SubResource("shape_42")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 3.7, -0.6)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/GrateEast/Bar2"]
+visible = false
 mesh = SubResource("box_49")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/GrateEast/Bar2"]
@@ -1259,6 +1294,7 @@ shape = SubResource("shape_43")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 3.7, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/GrateEast/Bar3"]
+visible = false
 mesh = SubResource("box_50")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/GrateEast/Bar3"]
@@ -1268,6 +1304,7 @@ shape = SubResource("shape_44")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 3.7, 0.6)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/GrateEast/Bar4"]
+visible = false
 mesh = SubResource("box_49")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/GrateEast/Bar4"]
@@ -1277,6 +1314,7 @@ shape = SubResource("shape_43")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 3.7, 1.2)
 
 [node name="Mesh" type="MeshInstance3D" parent="Branches/GrateEast/Bar5"]
+visible = false
 mesh = SubResource("box_48")
 
 [node name="Collision" type="CollisionShape3D" parent="Branches/GrateEast/Bar5"]

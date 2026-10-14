@@ -98,6 +98,10 @@ func _spawn(niche: Node3D, index: int, assemble: float) -> DreamEnemy:
 	guard.name = "Guard%d" % (index + 1)
 	guard.enemy_type = StringName(str(config.get("enemy", "shade")))
 	guard.forbidden_zone = in_threshold
+	if config.has("art"):
+		guard.art = load(str(config["art"])) as PackedScene
+		guard.art_material = load(str(config.get("art_material", ""))) as Material if config.has("art_material") else null
+		guard.art_eye_height = float(config.get("art_eye_height", DreamEnemy.EYE_HEIGHT))
 	add_child(guard)
 	guard.global_transform = niche.global_transform
 	guard.set_physics_process(false)

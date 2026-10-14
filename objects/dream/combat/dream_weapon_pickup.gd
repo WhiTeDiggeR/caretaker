@@ -15,8 +15,11 @@ const AWAKE_COLOR := Color(1.0, 1.0, 1.0)
 const FLASH_ENERGY := 4.0
 const AWAKE_ENERGY := 1.2
 const FLASH_SECONDS := 0.8
-const LINK_SIZE := Vector3(0.14, 0.05, 0.08)
-const LINK_COUNT := 6
+const LINK_RADIUS := 0.04
+const LINK_STEP := 0.095
+const LINK_COUNT := 10
+const SHACKLE_RADIUS := 0.12
+const WEIGHT_RADIUS := 0.2
 
 @export var weapon_id: StringName = &"dream_blade"
 ## Lies dark on the floor until awakened; the prompt does not call it a weapon.
@@ -81,12 +84,39 @@ func _build_crystal(kind: String) -> void:
 	PropKit.box(self, Vector3(0, 1.2, 0), Vector3(0.6, 0.8, 0.6), null, true).visible = false
 
 
-## A run of links ending in a weight, flat on the floor; one shared material so it flashes as one.
+## A shackle, a run of links and a shackle weight (Д-4: reads as fetters before the fight), flat
+## on the floor; one shared material so it flashes as one.
 func _build_chain() -> void:
 	_chain_material = PropKit.material(DORMANT_COLOR)
+	_torus(Vector3(-0.62, 0.03, 0.0), SHACKLE_RADIUS, 0.025, Vector3.ZERO)
 	for i in LINK_COUNT:
-		var turn := Vector3(0, deg_to_rad(15.0 * (i % 2)), deg_to_rad(90.0 * (i % 2)))
-		PropKit.box(self, Vector3(-0.35 + i * 0.12, LINK_SIZE.y * 0.5, 0.02 * (i % 3)), LINK_SIZE, _chain_material, false, turn)
-	PropKit.box(self, Vector3(0.42, 0.09, 0.03), Vector3(0.18, 0.18, 0.18), _chain_material)
+		var upright := i % 2 == 1
+		var turn := Vector3(deg_to_rad(90.0), 0, 0) if upright else Vector3.ZERO
+		var lift := LINK_RADIUS if upright else 0.012
+		_torus(Vector3(-0.45 + i * LINK_STEP, lift, 0.015 * (i % 3)), LINK_RADIUS, 0.012, turn, Vector3(1.6, 1, 1))
+	var weight := MeshInstance3D.new()
+	var ball := SphereMesh.new()
+	ball.radius = WEIGHT_RADIUS
+	ball.height = WEIGHT_RADIUS * 1.8
+	ball.material = _chain_material
+	weight.mesh = ball
+	weight.position = Vector3(0.62, WEIGHT_RADIUS * 0.9, 0.04)
+	add_child(weight)
+	_torus(Vector3(0.62 - WEIGHT_RADIUS - 0.02, WEIGHT_RADIUS, 0.04), 0.05, 0.015, Vector3(deg_to_rad(90.0), 0, 0))
 	# Low invisible box the interaction ray hits.
-	PropKit.box(self, Vector3(0.05, 0.15, 0.0), Vector3(1.0, 0.3, 0.4), null, true).visible = false
+	PropKit.box(self, Vector3(0.0, 0.15, 0.0), Vector3(1.6, 0.4, 0.5), null, true).visible = false
+
+
+func _torus(at: Vector3, radius: float, thickness: float, turn: Vector3, stretch := Vector3.ONE) -> void:
+	var ring := MeshInstance3D.new()
+	var mesh := TorusMesh.new()
+	mesh.inner_radius = radius - thickness
+	mesh.outer_radius = radius + thickness
+	mesh.rings = 12
+	mesh.ring_segments = 6
+	mesh.material = _chain_material
+	ring.mesh = mesh
+	ring.position = at
+	ring.rotation = turn
+	ring.scale = stretch
+	add_child(ring)
