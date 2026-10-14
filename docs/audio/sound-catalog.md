@@ -152,6 +152,8 @@
 | H11 | Врата: петля и проход | `dream_gate` | 2 | P1 | П |
 | H12 | Сон Херобрина: шёпот, пространственные искажения, ложные звуки | позже | — | P2 | ИИ, П |
 
+Заглушки сна Боузера S (#201): фон по стадиям H08 — `dream_bg_calm`, `dream_bg_alarm`, `dream_bg_unease`, `dream_bg_preawake` (петли 8 с, шина `Ambience`, кроссфейд); стингеры — `dream_ambush` (засада), `dream_seal` (печать встала), `dream_gate` (выход через врата, H11), `dream_chain_hit` (удар цепи, H10). Все синтезированы `tools/audio/make_sfx.py`, без сторонних источников (см. `loads/audio/sfx/README.md`). Какой сон какие звуки берёт — `data/audio/dream_audio.json`; плеер — автозагрузка `DreamAudio` (`objects/audio/dream_audio.gd`). Финальные звуки заменяют заглушки в `data/audio/sfx.json` без правки кода.
+
 ## V. Голос
 
 | ID | Звук | Приор. | Источник |
