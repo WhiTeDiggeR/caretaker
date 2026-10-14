@@ -99,6 +99,23 @@
 
 Материалы без текстур (по образцу `materials_def.py`): `emit_dream_white` (`#eef6ff`, 4–6), `emit_dream_lava` (`#ff5a1a`, по стадии), `emit_dream_ember` (`#ffb35a`, 2), `emit_dream_eye` (`#ff7a2a`, 3).
 
+### 3.1. Сделано в ПР-1…ПР-3 (#193): источники и лицензии
+
+Материалы — `materials/dream_bowser/`, текстуры 1024² — `loads/textures/dream_*` (Git LFS). Провенанс каждого набора записан и в `tools/props/manifest.json`.
+
+| ID | Материал | Текстуры | Источник | Автор | Лицензия | Обработка |
+|---|---|---|---|---|---|---|
+| DT-01 | `stone_wall.tres` (и завалы веток) | `dream_stone_wall` | [castle_wall_slates](https://polyhaven.com/a/castle_wall_slates) | Rob Tuytel | CC0-1.0 | `import_textures.py`: тонировка в лиловый, швы крупных блоков 2 × 1 м (Д-1) |
+| DT-02 | `stone_floor.tres` | `dream_stone_floor` | [slate_floor](https://polyhaven.com/a/slate_floor) | Dimitrios Savva | CC0-1.0 | тонировка в лиловый |
+| DT-03 | `rock.tres` | `dream_rock` | [dark_rock](https://polyhaven.com/a/dark_rock) | Amal Kumar | CC0-1.0 | тонировка, плитка 4 м |
+| DT-01b | `spike_bone.tres` | `dream_spike_bone` | процедурно, `make_textures.py` | проект | своя | — |
+| DT-05 | `iron.tres` | `dream_iron` | процедурно | проект | своя | — |
+| DT-06 | `chain.tres` | `steel_bare` (есть) | процедурно | проект | своя | затемнение цветом материала |
+| DT-07 | `bronze.tres` | `dream_bronze` | процедурно | проект | своя | — |
+| DT-04 | `lava.tres` + `lava.gdshader` | `dream_lava` (+ маска свечения `_heat`) | процедурно | проект | своя | параметры стадии: `glow_color`, `emission_energy`, `pulse_hz`, `level_offset` |
+
+Эмиссивные `emit_dream_*` добавлены в `tools/props/materials_def.py` для моделей ПР-4 и далее.
+
 ## 4. Модели
 
 Масштаб гиганта ×2,5 (`06` §3), сетка 4 м как в блокауте #182. Бюджеты — классы `style-guide.md`: малый ≤ 1 500, фон ≤ 5 000, интерактив 3 000–15 000, «герой» ≤ 40 000. Способ: **Скр** — `tools/props` (Blender `bpy`, `@prop`), **Скач** — CC0 Poly Haven + `import_models.py`, **Ген** — text-to-3d (только по О-1). Приоритет: **О** — обязательно для S, **З** — можно заглушку из блокаута.

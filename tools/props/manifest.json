@@ -3,6 +3,30 @@
   "note": "Every file under loads/props and loads/textures must be covered by an entry. Downloaded assets get one entry each (url, author, licence); procedural assets are covered by their generator.",
   "entries": [
     {
+      "glob": "loads/textures/dream_rock/*",
+      "kind": "texture",
+      "source": "https://polyhaven.com/a/dark_rock",
+      "author": "Amal Kumar",
+      "license": "CC0-1.0",
+      "modified": "graded into the palette by tools/props/import_textures.py (1k, sat 0.4, lum 0.09, tint [0.15, 0.1, 0.13] x 0.35)"
+    },
+    {
+      "glob": "loads/textures/dream_stone_floor/*",
+      "kind": "texture",
+      "source": "https://polyhaven.com/a/slate_floor",
+      "author": "Dimitrios Savva",
+      "license": "CC0-1.0",
+      "modified": "graded into the palette by tools/props/import_textures.py (1k, sat 0.35, lum 0.12, tint [0.17, 0.12, 0.19] x 0.35)"
+    },
+    {
+      "glob": "loads/textures/dream_stone_wall/*",
+      "kind": "texture",
+      "source": "https://polyhaven.com/a/castle_wall_slates",
+      "author": "Rob Tuytel",
+      "license": "CC0-1.0",
+      "modified": "graded into the palette by tools/props/import_textures.py (1k, sat 0.35, lum 0.11, tint [0.17, 0.12, 0.19] x 0.45, block joints 2.0 x 1.0 m)"
+    },
+    {
       "glob": "loads/textures/arch_paint_band/*",
       "kind": "texture",
       "source": "https://polyhaven.com/a/painted_concrete_02",
@@ -463,6 +487,14 @@
       "kind": "model",
       "source": "procedural",
       "generator": "tools/props/build_props.py",
+      "author": "project",
+      "license": "project-original"
+    },
+    {
+      "glob": "loads/textures/dream_lava/dream_lava_heat.png",
+      "kind": "texture",
+      "source": "procedural",
+      "generator": "tools/props/make_textures.py",
       "author": "project",
       "license": "project-original"
     }
