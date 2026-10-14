@@ -57,6 +57,7 @@ python_suite tools/complex_v4/composition_validator/tests
 python_suite tools/complex_v4/repair_package/tests
 python_suite tools/complex_v3_pilots/tests
 python_suite tools/dream/tests
+python_suite tools/props/tests
 python_script "scene index matches the passports" scenes/complex_v4/validate_sector_scenes.py
 python_script "generated sounds match their recipes" tools/audio/make_sfx.py --check
 python_script "floor plan page builds from the canonical SVGs" tools/complex_v4/floor_plans/build_floor_plans.py --check
