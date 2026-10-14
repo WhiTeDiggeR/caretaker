@@ -131,10 +131,17 @@ func run(c: OpeningCheck) -> void:
 	await a.opened
 	c.equal(b.lock_reason(), "", "inner door panel stays usable: it calls the airlock")
 	c.is_true(not b.open(), "inner door does not open while the outer is open")
+	var vent_closed: Array[bool] = []
+	var on_sound := func(id: StringName) -> void:
+		if id == &"airlock_cycle":
+			vent_closed.append(a.is_closed() and b.is_closed())
+	Sfx.requested.connect(on_sound)
 	c.is_true(airlock.start_cycle(), "cycle starts")
 	c.equal(a.lock_reason(), FacilityDoor.REASON_CYCLE, "doors are locked during the cycle")
 	c.is_true(not airlock.start_cycle(), "second cycle is refused while running")
 	await airlock.cycle_finished
+	Sfx.requested.disconnect(on_sound)
+	c.equal(vent_closed, [true] as Array[bool], "#209: ventilation starts only once both doors are shut")
 	c.is_true(a.is_closed() and b.is_open(), "cycle closed the outer door and opened the inner")
 	c.is_true(airlock.start_cycle(), "cycle back starts")
 	await airlock.cycle_finished

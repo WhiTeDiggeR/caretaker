@@ -51,8 +51,12 @@ const SOUND_STOP := &"door_stop"
 ## The wheel being let go: the stop sound, quieter and shortened (a short roll-back knock).
 const WHEEL_KNOCK_TIME := 0.7
 const WHEEL_KNOCK_DB := -6.0
-## A locked handle rattles (manual doors only); wheels and powered panels keep the common refusal.
+## A locked handle rattles, a locked wheel jerks against its stop; only a powered door's panel
+## gives the electronic refusal (#209).
 const SOUND_LOCKED := &"door_locked"
+const SOUND_WHEEL_JAMMED := &"door_wheel_jammed"
+## The hand wheel turning under the hold; the leaf then moves with its own sound (#209).
+const SOUND_WHEEL := &"door_wheel"
 
 @export var kind: Kind = Kind.POWERED
 @export var width := 1.8
@@ -212,8 +216,7 @@ func refresh() -> void:
 	for control in _controls:
 		control.available = available
 		control.unavailable_prompt = reason
-		var rattles := kind == Kind.MANUAL and not reason.is_empty() and reason != REASON_MOVING
-		control.denied_sound = SOUND_LOCKED if rattles else &""
+		control.denied_sound = _denied_sound(reason)
 		control.prompt = _prompt()
 	var lamp_color := LAMP_READY if available else LAMP_LOCKED
 	if not is_powered():
@@ -233,6 +236,19 @@ func _prompt() -> String:
 	if operator.is_valid():
 		return "ОТКРЫТЬ ШЛЮЗ"
 	return "ПОВЕРНУТЬ ШТУРВАЛ" if kind == Kind.MECHANICAL else "ОТКРЫТЬ ДВЕРЬ"
+
+
+## Refusal sound of a control locked for `reason`: the mechanism itself (a rattled handle, a jammed
+## wheel); empty for a powered panel (the common refusal) and for a door still moving.
+func _denied_sound(reason: String) -> StringName:
+	if reason.is_empty():  # free, or still moving (REASON_MOVING)
+		return &""
+	match kind:
+		Kind.MANUAL:
+			return SOUND_LOCKED
+		Kind.MECHANICAL:
+			return SOUND_WHEEL_JAMMED
+	return &""
 
 
 func _move(open_door: bool) -> void:
@@ -313,7 +329,7 @@ func _on_wheel_progress(ratio: float) -> void:
 	_wheel_turn = rest + (1.0 - 2.0 * rest) * clampf(ratio, 0.0, 1.0)
 	if _wheel_audio and not _wheel_turning_sound:
 		_wheel_turning_sound = true
-		Sfx.play_on(_wheel_audio, SOUND_MOVE[kind], hold_time * (1.0 - ratio))
+		Sfx.play_on(_wheel_audio, SOUND_WHEEL, hold_time * (1.0 - ratio))
 
 
 ## A hold let go early: the wheel rolls back to its rest with a short knock.
@@ -400,6 +416,7 @@ func _build() -> void:
 		interactable.mode = Interactable.Mode.HOLD if kind == Kind.MECHANICAL else Interactable.Mode.PRESS
 		interactable.hold_time = hold_time
 		interactable.prompt = _prompt()
+		interactable.ui_feedback = kind == Kind.POWERED
 		control.add_child(interactable)
 		if not Engine.is_editor_hint():
 			interactable.interacted.connect(_on_control_used)
