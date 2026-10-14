@@ -10,6 +10,12 @@
 - Materials and shaders live in `materials/`; imported source assets live in `loads/`.
 - Player-facing text is Russian. Preserve UTF-8 and do not replace Russian text with transliteration.
 
+## Communication with the author
+
+- Keep replies, issue summaries and handoff comments short: 3–5 lines, outcome first, only what the author needs to know or decide.
+- No long recaps, check lists or file inventories unless the author asks for details.
+- Write to the author in Russian.
+
 ## Source of truth
 
 - GitHub Issues are the task source of truth. Do not begin untracked feature work.
