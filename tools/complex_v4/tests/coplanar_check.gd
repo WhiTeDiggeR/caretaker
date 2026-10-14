@@ -1,13 +1,17 @@
 extends SceneTree
-## Finds flickering surfaces (z-fighting) around stairs and shafts: faces of different meshes that lie in the same plane, face the
-## same way and overlap, where one of them belongs to a stair or a shaft closure. Only meshes near those layers are checked.
+## Finds flickering surfaces (z-fighting) in the whole assembled complex: faces of different meshes that lie in the
+## same plane, face the same way and overlap. Every visible mesh of every sector is checked against every other
+## (shared walls and slabs between sectors, #205; stairs and shafts, #95).
+## A sector whose generated package was built from an older canonical SVG than the current one (the source sha256 in
+## its generation_manifest.json differs) is waiting for regeneration: its pairs outside stairs and shafts are listed
+## as pending, not as overlaps. Stair and shaft pairs are always strict.
 ## godot --headless --path . --script res://tools/complex_v4/tests/coplanar_check.gd
-## Prints COPLANAR_CHECK meshes=<n> overlaps=<n>; exit 1 on overlaps.
+## Prints COPLANAR_CHECK meshes=<n> overlaps=<n> pending=<n>; exit 1 on overlaps.
 
 const ASSEMBLY := "res://scenes/complex_v4/complex_v4_blockout.tscn"
+const MANIFEST := "res://tools/complex_v4/sector_generation_manifest.json"
 const PLANE_TOLERANCE_M := 0.001
 const MIN_OVERLAP_M2 := 0.002  # smaller overlaps are edge slivers of touching faces
-const NEAR_M := 0.5
 
 
 func _initialize() -> void:
@@ -15,11 +19,12 @@ func _initialize() -> void:
 
 
 func _run() -> void:
+	var stale := _stale_sectors()
 	var assembly: Node = (load(ASSEMBLY) as PackedScene).instantiate()
 	root.add_child(assembly)
 	await process_frame
-	var meshes: Array[MeshInstance3D] = []
-	var focus: Array[AABB] = []
+	var buckets := {}
+	var checked := 0
 	for node: Node in assembly.find_children("*", "MeshInstance3D", true, false):
 		var mesh := node as MeshInstance3D
 		if mesh.mesh == null or not mesh.is_visible_in_tree():
@@ -27,35 +32,56 @@ func _run() -> void:
 		var path := str(mesh.get_path())
 		if path.contains("/Railings") or path.contains("_Riser_"):
 			continue  # a riser top is always covered by the tread above it
-		meshes.append(mesh)
-		if path.contains("/Generated/Stairs/") or path.contains("/Closures/"):
-			focus.append((mesh.global_transform * mesh.mesh.get_aabb()).grow(NEAR_M))
-	var buckets := {}
-	var checked := 0
-	for mesh: MeshInstance3D in meshes:
-		var box := mesh.global_transform * mesh.mesh.get_aabb()
-		if not focus.any(func(area: AABB) -> bool: return area.intersects(box)):
-			continue
 		checked += 1
 		_collect(mesh, buckets)
-	var overlaps: Array[String] = []
+	var overlaps := {}
+	var pending := {}
 	for key: String in buckets:
 		var faces: Array = buckets[key]
 		for i in faces.size():
 			for j in range(i + 1, faces.size()):
-				if faces[i][0] == faces[j][0]:
+				var first: String = faces[i][0]
+				var second: String = faces[j][0]
+				if first == second:
 					continue
 				var area := _overlap(faces[i][1], faces[j][1])
-				var near_stair: bool = str(faces[i][0]).contains("Stairs/") or str(faces[i][0]).contains("Closures/") or str(faces[j][0]).contains("Stairs/") or str(faces[j][0]).contains("Closures/")
-				if area > MIN_OVERLAP_M2 and near_stair:
-					overlaps.append("%s: %s / %s (%.4f m2)" % [key, faces[i][0], faces[j][0], area])
-	var unique := {}
-	for line: String in overlaps:
-		unique[line.get_slice(" (", 0)] = line
-	for line: String in unique.values():
+				if area <= MIN_OVERLAP_M2:
+					continue
+				var pair := "%s: %s / %s" % [key, first, second]
+				var line := "%s (%.4f m2)" % [pair, area]
+				if not _is_vertical(first) and not _is_vertical(second) and (stale.has(_sector(first)) or stale.has(_sector(second))):
+					pending[pair] = line
+				else:
+					overlaps[pair] = line
+	for line: String in overlaps.values():
 		print("  ", line)
-	print("COPLANAR_CHECK meshes=%d overlaps=%d" % [checked, unique.size()])
-	quit(0 if unique.is_empty() else 1)
+	if not pending.is_empty():
+		var waiting: Array = stale.keys()
+		waiting.sort()
+		print("  pending regeneration (%d pairs): %s" % [pending.size(), ", ".join(waiting)])
+	print("COPLANAR_CHECK meshes=%d overlaps=%d pending=%d" % [checked, overlaps.size(), pending.size()])
+	quit(0 if overlaps.is_empty() else 1)
+
+
+## Node names (L_ARCHIVE_A) of sectors whose package is older than their canonical SVG.
+func _stale_sectors() -> Dictionary:
+	var stale := {}
+	var manifest := JSON.parse_string(FileAccess.get_file_as_string(MANIFEST)) as Dictionary
+	for sector: Dictionary in manifest["sectors"]:
+		var generation := JSON.parse_string(FileAccess.get_file_as_string(str(sector["output_resource_dir"]) + "/generation_manifest.json")) as Dictionary
+		var built := str((generation.get("source", {}) as Dictionary).get("sha256", "")) if generation else ""
+		var current := "sha256:" + FileAccess.get_sha256("res://" + str(sector["source_svg"]))
+		if built != current:
+			stale[str(sector["sector_id"]).replace("-", "_")] = true
+	return stale
+
+
+func _sector(name: String) -> String:
+	return name.get_slice("/", 0)
+
+
+func _is_vertical(name: String) -> bool:
+	return name.contains("Stairs/") or name.contains("Closures/")
 
 
 func _collect(mesh: MeshInstance3D, buckets: Dictionary) -> void:

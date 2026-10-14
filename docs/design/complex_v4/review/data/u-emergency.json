@@ -143,19 +143,19 @@
         355.0,
         125.0,
         285.0,
-        315.0
+        315.6
       ],
       "world_m": [
         -83.333,
         -3.778,
         21.111,
-        23.334
+        23.378
       ],
       "size_m": [
         21.11,
-        23.33
+        23.38
       ],
-      "area_m2": 492.6
+      "area_m2": 493.5
     }
   ],
   "openings": [
@@ -240,22 +240,6 @@
         14.95,
         -83.333,
         16.75
-      ]
-    },
-    {
-      "id": "u-emergency-opening-06",
-      "type": "opening",
-      "source": "amendment D-04",
-      "source_id": "amendment-D-04",
-      "width_m": 4.5,
-      "rooms": [
-        "U-EMERGENCY/raspredelitelnyy-holl-person"
-      ],
-      "world_m": [
-        -75.05,
-        19.556,
-        -70.55,
-        19.556
       ]
     }
   ],
@@ -638,5 +622,99 @@
     "D-04"
   ],
   "feature_rects_ignored": 0,
+  "shared_faces": {
+    "rank": [
+      1,
+      "U-EMERGENCY"
+    ],
+    "owners": [
+      "U-CIRCULATION",
+      "U-CENTRAL-CORE",
+      "U-CHAMBER-4",
+      "U-CHAMBER-6",
+      "U-CONTROL",
+      "U-DOMESTIC",
+      "U-EAST-SUPPORT"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "h",
+        "from_m": 19.556,
+        "to_m": 19.6,
+        "owner": "U-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "u-emergency-wall-07",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          -83.333,
+          19.6,
+          -62.222,
+          19.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "u-emergency-wall-11",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          -83.333,
+          -3.778,
+          -83.333,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            -3.778,
+            19.3
+          ]
+        ]
+      },
+      {
+        "id": "u-emergency-wall-12",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          -62.222,
+          -3.778,
+          -62.222,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            -3.778,
+            19.3
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "u-emergency-opening-06",
+        "type": "opening",
+        "owner": "U-CIRCULATION",
+        "owner_opening": "u-circulation-opening-01",
+        "rooms": [
+          "U-EMERGENCY/raspredelitelnyy-holl-person"
+        ],
+        "world_m": [
+          -75.05,
+          19.6,
+          -70.55,
+          19.6
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 4
 }

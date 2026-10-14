@@ -98,19 +98,19 @@
         215.0,
         50.0,
         80.0,
-        600.0
+        601.0
       ],
       "world_m": [
         16.444,
         -7.111,
         3.556,
-        26.667
+        26.711
       ],
       "size_m": [
         3.56,
-        26.67
+        26.71
       ],
-      "area_m2": 94.8
+      "area_m2": 95.0
     },
     {
       "id": "u-east-support-floor-05",
@@ -146,19 +146,19 @@
         320.0,
         560.0,
         225.0,
-        90.0
+        91.0
       ],
       "world_m": [
         21.111,
         15.556,
         10.0,
-        4.0
+        4.044
       ],
       "size_m": [
         10.0,
-        4.0
+        4.04
       ],
-      "area_m2": 40.0
+      "area_m2": 40.4
     }
   ],
   "openings": [
@@ -211,38 +211,6 @@
         8.833,
         16.444,
         9.833
-      ]
-    },
-    {
-      "id": "u-east-support-door-04",
-      "type": "door",
-      "source": "door-gap",
-      "source_id": "u_east_support-opening-013",
-      "width_m": 2.04,
-      "rooms": [
-        "U-EAST-SUPPORT/vnutrenniy-sluzhebnyy-korido"
-      ],
-      "world_m": [
-        14.533,
-        19.556,
-        16.578,
-        19.556
-      ]
-    },
-    {
-      "id": "u-east-support-door-05",
-      "type": "door",
-      "source": "stair-gap",
-      "source_id": "u_east_support-opening-016",
-      "width_m": 1.8,
-      "rooms": [
-        "U-EAST-SUPPORT/protivopozharnyy-tambur"
-      ],
-      "world_m": [
-        25.233,
-        19.556,
-        27.033,
-        19.556
       ]
     },
     {
@@ -336,5 +304,161 @@
     "D-15g"
   ],
   "feature_rects_ignored": 6,
+  "shared_faces": {
+    "rank": [
+      1,
+      "U-EAST-SUPPORT"
+    ],
+    "owners": [
+      "U-CIRCULATION",
+      "U-CENTRAL-CORE",
+      "U-CHAMBER-4",
+      "U-CHAMBER-6",
+      "U-CONTROL",
+      "U-DOMESTIC"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "h",
+        "from_m": 19.556,
+        "to_m": 19.6,
+        "owner": "U-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "u-east-support-wall-05",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          16.444,
+          19.6,
+          20.0,
+          19.6
+        ]
+      },
+      {
+        "id": "u-east-support-wall-08",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          21.111,
+          19.6,
+          31.111,
+          19.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "u-east-support-wall-10",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          16.444,
+          -7.111,
+          16.444,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            -7.111,
+            19.3
+          ]
+        ]
+      },
+      {
+        "id": "u-east-support-wall-11",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          20.0,
+          -7.111,
+          20.0,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            -7.111,
+            19.3
+          ]
+        ]
+      },
+      {
+        "id": "u-east-support-wall-12",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          21.111,
+          7.667,
+          21.111,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            7.667,
+            19.3
+          ]
+        ]
+      },
+      {
+        "id": "u-east-support-wall-13",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          31.111,
+          7.667,
+          31.111,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            7.667,
+            19.3
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "u-east-support-door-04",
+        "type": "door",
+        "owner": "U-CIRCULATION",
+        "owner_opening": "u-circulation-door-03",
+        "rooms": [
+          "U-EAST-SUPPORT/vnutrenniy-sluzhebnyy-korido"
+        ],
+        "world_m": [
+          14.533,
+          19.6,
+          16.578,
+          19.6
+        ]
+      },
+      {
+        "id": "u-east-support-door-05",
+        "type": "door",
+        "owner": "U-CIRCULATION",
+        "owner_opening": "u-circulation-door-04",
+        "rooms": [
+          "U-EAST-SUPPORT/protivopozharnyy-tambur"
+        ],
+        "world_m": [
+          25.233,
+          19.6,
+          27.033,
+          19.6
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 2
 }

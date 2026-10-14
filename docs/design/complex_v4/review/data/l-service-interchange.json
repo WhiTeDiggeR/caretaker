@@ -50,19 +50,19 @@
         250.0,
         250.1,
         140.0,
-        270.0
+        270.6
       ],
       "world_m": [
         -47.778,
         53.208,
         4.667,
-        8.571
+        8.592
       ],
       "size_m": [
         4.67,
-        8.57
+        8.59
       ],
-      "area_m2": 40.0
+      "area_m2": 40.1
     },
     {
       "id": "l-service-interchange-floor-03",
@@ -98,19 +98,19 @@
         540.0,
         250.1,
         110.0,
-        270.0
+        270.6
       ],
       "world_m": [
         -38.111,
         53.208,
         3.667,
-        8.571
+        8.592
       ],
       "size_m": [
         3.67,
-        8.57
+        8.59
       ],
-      "area_m2": 31.4
+      "area_m2": 31.5
     },
     {
       "id": "l-service-interchange-floor-05",
@@ -122,19 +122,19 @@
         390.0,
         385.3,
         150.0,
-        134.8
+        135.4
       ],
       "world_m": [
         -43.111,
         57.5,
         5.0,
-        4.279
+        4.3
       ],
       "size_m": [
         5.0,
-        4.28
+        4.3
       ],
-      "area_m2": 21.4
+      "area_m2": 21.5
     }
   ],
   "openings": [
@@ -221,22 +221,6 @@
         -39.71,
         57.5
       ]
-    },
-    {
-      "id": "l-service-interchange-door-06",
-      "type": "door",
-      "source": "amendment D-27j",
-      "source_id": "amendment-D-27j",
-      "width_m": 4.5,
-      "rooms": [
-        "L-SERVICE-INTERCHANGE/shlyuz-2"
-      ],
-      "world_m": [
-        -42.86,
-        61.779,
-        -38.36,
-        61.779
-      ]
     }
   ],
   "ignored": [
@@ -288,5 +272,179 @@
     "D-42f"
   ],
   "feature_rects_ignored": 2,
+  "shared_faces": {
+    "rank": [
+      1,
+      "L-SERVICE-INTERCHANGE"
+    ],
+    "owners": [
+      "L-CIRCULATION",
+      "L-ARCHIVE-A",
+      "L-CENTRAL-CORE",
+      "L-CHAMBER-1",
+      "L-CHAMBER-2",
+      "L-CHAMBER-3",
+      "L-CHAMBER-5",
+      "L-EAST-STAIR",
+      "L-FREIGHT-SERVICE",
+      "L-OLD-CORE",
+      "L-OLD-RECEIVING"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "h",
+        "from_m": 61.779,
+        "to_m": 61.8,
+        "owner": "L-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "l-service-interchange-wall-03",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -47.778,
+          61.8,
+          -34.444,
+          61.8
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "l-service-interchange-wall-01",
+        "owner": [
+          "L-CHAMBER-2",
+          "L-CHAMBER-3"
+        ],
+        "world_m": [
+          -47.778,
+          48.444,
+          -34.444,
+          48.444
+        ],
+        "pieces_m": [
+          [
+            -47.478,
+            -34.744
+          ]
+        ]
+      },
+      {
+        "id": "l-service-interchange-wall-02",
+        "owner": [
+          "L-CHAMBER-2",
+          "L-CHAMBER-3"
+        ],
+        "world_m": [
+          -47.778,
+          53.208,
+          -34.444,
+          53.208
+        ],
+        "pieces_m": [
+          [
+            -47.478,
+            -34.744
+          ]
+        ]
+      },
+      {
+        "id": "l-service-interchange-wall-05",
+        "owner": [
+          "L-CHAMBER-2",
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -47.778,
+          48.444,
+          -47.778,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            56.521,
+            61.5
+          ]
+        ]
+      },
+      {
+        "id": "l-service-interchange-wall-06",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -43.111,
+          53.208,
+          -43.111,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            53.208,
+            61.5
+          ]
+        ]
+      },
+      {
+        "id": "l-service-interchange-wall-07",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -38.111,
+          53.208,
+          -38.111,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            53.208,
+            61.5
+          ]
+        ]
+      },
+      {
+        "id": "l-service-interchange-wall-08",
+        "owner": [
+          "L-CHAMBER-3",
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -34.444,
+          48.444,
+          -34.444,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            56.521,
+            61.5
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "l-service-interchange-door-06",
+        "type": "door",
+        "owner": "L-CIRCULATION",
+        "owner_opening": "l-circulation-door-10",
+        "rooms": [
+          "L-SERVICE-INTERCHANGE/shlyuz-2"
+        ],
+        "world_m": [
+          -42.86,
+          61.8,
+          -38.36,
+          61.8
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 0
 }

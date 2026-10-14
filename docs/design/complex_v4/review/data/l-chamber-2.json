@@ -167,19 +167,19 @@
         297.3,
         520.0,
         272.9,
-        84.0
+        83.7
       ],
       "world_m": [
         -65.83,
         56.221,
         13.4,
-        5.599
+        5.579
       ],
       "size_m": [
         13.4,
-        5.6
+        5.58
       ],
-      "area_m2": 75.0
+      "area_m2": 74.8
     },
     {
       "id": "l-chamber-2-floor-06",
@@ -333,22 +333,6 @@
       ]
     },
     {
-      "id": "l-chamber-2-door-07",
-      "type": "door",
-      "source": "amendment D-24o",
-      "source_id": "amendment-D-24o",
-      "width_m": 4.5,
-      "rooms": [
-        "L-CHAMBER-2/gruzovoy-tambur"
-      ],
-      "world_m": [
-        -61.38,
-        61.82,
-        -56.88,
-        61.82
-      ]
-    },
-    {
       "id": "l-chamber-2-door-08",
       "type": "door",
       "source": "amendment D-24p",
@@ -438,5 +422,96 @@
     "D-24q"
   ],
   "feature_rects_ignored": 3,
+  "shared_faces": {
+    "rank": [
+      1,
+      "L-CHAMBER-2"
+    ],
+    "owners": [
+      "L-CIRCULATION",
+      "L-ARCHIVE-A",
+      "L-CENTRAL-CORE",
+      "L-CHAMBER-1"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "h",
+        "from_m": 61.82,
+        "to_m": 61.8,
+        "owner": "L-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "l-chamber-2-wall-08",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -65.83,
+          61.8,
+          -52.43,
+          61.8
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "l-chamber-2-wall-13",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -65.83,
+          56.221,
+          -65.83,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            56.221,
+            61.5
+          ]
+        ]
+      },
+      {
+        "id": "l-chamber-2-wall-17",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -52.43,
+          56.221,
+          -52.43,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            56.221,
+            61.5
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "l-chamber-2-door-07",
+        "type": "door",
+        "owner": "L-CIRCULATION",
+        "owner_opening": "l-circulation-door-05",
+        "rooms": [
+          "L-CHAMBER-2/gruzovoy-tambur"
+        ],
+        "world_m": [
+          -61.38,
+          61.8,
+          -56.88,
+          61.8
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 0
 }

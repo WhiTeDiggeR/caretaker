@@ -24,21 +24,21 @@
       "source_id": "t_freight-equipment-001",
       "plan_px": [
         195.3,
-        477.7,
+        478.6,
         695.8,
-        182.9
+        181.9
       ],
       "world_m": [
         -15.7,
-        69.56,
+        69.6,
         26.8,
-        8.0
+        7.96
       ],
       "size_m": [
         26.8,
-        8.0
+        7.96
       ],
-      "area_m2": 214.4
+      "area_m2": 213.3
     },
     {
       "id": "t-freight-floor-02",
@@ -72,21 +72,21 @@
       "source_id": "t_freight-space-003",
       "plan_px": [
         891.1,
-        477.7,
+        478.6,
         340.1,
-        182.9
+        181.9
       ],
       "world_m": [
         11.1,
-        69.56,
+        69.6,
         13.1,
-        8.0
+        7.96
       ],
       "size_m": [
         13.1,
-        8.0
+        7.96
       ],
-      "area_m2": 104.8
+      "area_m2": 104.3
     },
     {
       "id": "t-freight-floor-04",
@@ -96,21 +96,21 @@
       "source_id": "t_freight-space-004",
       "plan_px": [
         1231.2,
-        477.7,
+        478.6,
         90.9,
-        91.4
+        90.5
       ],
       "world_m": [
         24.2,
-        69.56,
+        69.6,
         3.5,
-        4.0
+        3.96
       ],
       "size_m": [
         3.5,
-        4.0
+        3.96
       ],
-      "area_m2": 14.0
+      "area_m2": 13.9
     },
     {
       "id": "t-freight-floor-05",
@@ -145,20 +145,20 @@
       "plan_px": [
         891.1,
         660.6,
-        433.6,
+        431.0,
         45.7
       ],
       "world_m": [
         11.1,
         77.56,
-        16.7,
+        16.6,
         2.0
       ],
       "size_m": [
-        16.7,
+        16.6,
         2.0
       ],
-      "area_m2": 33.4
+      "area_m2": 33.2
     }
   ],
   "openings": [
@@ -177,22 +177,6 @@
         70.86,
         24.2,
         72.76
-      ]
-    },
-    {
-      "id": "t-freight-door-02",
-      "type": "door",
-      "source": "amendment D-33i",
-      "source_id": "amendment-D-33i",
-      "width_m": 4.5,
-      "rooms": [
-        "T-FREIGHT/tehnicheskaya-servisnaya-pri"
-      ],
-      "world_m": [
-        -4.55,
-        69.56,
-        -0.05,
-        69.56
       ]
     },
     {
@@ -314,7 +298,7 @@
     }
   ],
   "anomalies": [],
-  "wall_segments": 9,
+  "wall_segments": 8,
   "amendments": [
     "D-33a",
     "D-33b",
@@ -340,5 +324,137 @@
     "D-33p"
   ],
   "feature_rects_ignored": 3,
+  "shared_faces": {
+    "rank": [
+      1,
+      "T-FREIGHT"
+    ],
+    "owners": [
+      "T-CIRCULATION",
+      "T-EAST-VERTICAL",
+      "T-ENERGY"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "v",
+        "from_m": 27.8,
+        "to_m": 27.7,
+        "reason": "parallel walls of this sector closer than the wall thickness"
+      },
+      {
+        "orient": "h",
+        "from_m": 69.56,
+        "to_m": 69.6,
+        "owner": "T-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "t-freight-wall-01",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -15.7,
+          69.6,
+          27.7,
+          69.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "t-freight-wall-05",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -15.7,
+          69.6,
+          -15.7,
+          79.56
+        ],
+        "pieces_m": [
+          [
+            69.9,
+            79.56
+          ]
+        ]
+      },
+      {
+        "id": "t-freight-wall-06",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          11.1,
+          69.6,
+          11.1,
+          79.56
+        ],
+        "pieces_m": [
+          [
+            69.9,
+            79.56
+          ]
+        ]
+      },
+      {
+        "id": "t-freight-wall-07",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          24.2,
+          69.6,
+          24.2,
+          77.56
+        ],
+        "pieces_m": [
+          [
+            69.9,
+            77.56
+          ]
+        ]
+      },
+      {
+        "id": "t-freight-wall-08",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          27.7,
+          69.6,
+          27.7,
+          79.56
+        ],
+        "pieces_m": [
+          [
+            69.9,
+            79.56
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "t-freight-door-02",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation-door-18",
+        "rooms": [
+          "T-FREIGHT/tehnicheskaya-servisnaya-pri"
+        ],
+        "world_m": [
+          -4.55,
+          69.6,
+          -0.05,
+          69.6
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 0
 }
