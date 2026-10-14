@@ -1,0 +1,80 @@
+{
+  "schema_id": "caretaker.complex_v4_room_finishes",
+  "schema_version": "1.0.0",
+  "notes": [
+    "Классы отделки помещений комплекса v4 (#206). Класс помещения: sectors.<SECTOR>.rooms.<room> (часть space_id после '/'), иначе sectors.<SECTOR>.default; без класса остаётся материал пакета gen/.",
+    "build_canonical_from_approved.py пишет класс в канонический SVG (data-finish-class), room_finishes.py после генерации назначает материалы стенам, полу и потолку.",
+    "Стена между помещениями разных классов получает класс с меньшим priority (один материал на стену)."
+  ],
+  "classes": {
+    "medical": {
+      "label": "медицина",
+      "priority": 1,
+      "materials": {
+        "wall": "res://materials/complex_v4/finish/medical_wall.tres",
+        "floor": "res://materials/complex_v4/finish/medical_floor.tres",
+        "ceiling": "res://materials/complex_v4/finish/medical_ceiling.tres"
+      }
+    },
+    "containment": {
+      "label": "содержание",
+      "priority": 2,
+      "materials": {
+        "wall": "res://materials/complex_v4/finish/containment_wall.tres",
+        "floor": "res://materials/complex_v4/finish/containment_floor.tres",
+        "ceiling": "res://materials/complex_v4/finish/containment_ceiling.tres"
+      }
+    },
+    "command": {
+      "label": "управление",
+      "priority": 3,
+      "materials": {
+        "wall": "res://materials/complex_v4/finish/command_wall.tres",
+        "floor": "res://materials/complex_v4/finish/command_floor.tres",
+        "ceiling": "res://materials/complex_v4/finish/command_ceiling.tres"
+      }
+    },
+    "domestic": {
+      "label": "жилой",
+      "priority": 4,
+      "materials": {
+        "wall": "res://materials/complex_v4/finish/domestic_wall.tres",
+        "floor": "res://materials/complex_v4/finish/domestic_floor.tres",
+        "ceiling": "res://materials/complex_v4/finish/domestic_ceiling.tres"
+      }
+    },
+    "historic": {
+      "label": "старый",
+      "priority": 5,
+      "materials": {
+        "wall": "res://materials/complex_v4/finish/historic_wall.tres",
+        "floor": "res://materials/complex_v4/finish/historic_floor.tres",
+        "ceiling": "res://materials/complex_v4/finish/historic_ceiling.tres"
+      }
+    },
+    "freight": {
+      "label": "грузовой",
+      "priority": 6,
+      "materials": {
+        "wall": "res://materials/complex_v4/finish/freight_wall.tres",
+        "floor": "res://materials/complex_v4/finish/freight_floor.tres",
+        "ceiling": "res://materials/complex_v4/finish/freight_ceiling.tres"
+      }
+    },
+    "utility": {
+      "label": "технический",
+      "priority": 7,
+      "materials": {
+        "wall": "res://materials/complex_v4/finish/utility_wall.tres",
+        "floor": "res://materials/complex_v4/finish/utility_floor.tres",
+        "ceiling": "res://materials/complex_v4/finish/utility_ceiling.tres"
+      }
+    }
+  },
+  "sectors": {
+    "U-SECURITY": {
+      "default": "command",
+      "rooms": {}
+    }
+  }
+}

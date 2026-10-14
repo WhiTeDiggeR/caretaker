@@ -30,6 +30,9 @@ creating staging, the backend validates the complete manifest contract and check
 `generate_godot_stairs >= 2.9.0`. `data-scale="relative"` is not accepted as a
 metric transform. Non-empty material overrides remain blocked because converter
 1.19 has no explicit material-override input; the backend never guesses them.
+Room finishes are a separate post-generation stage instead: `room_finishes.py` points floor, ceiling and wall
+meshes at the materials of the rooms' finish classes (`room_finishes.json`, materials outside `gen/`), after the
+vertical closures; see `docs/design/complex_v4/README.md`.
 
 Exit code `0` means the staging package passed this backend's checks. Exit code `2` means no usable package was produced; a caller must not promote it.
 
