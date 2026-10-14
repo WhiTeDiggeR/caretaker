@@ -41,7 +41,7 @@
 | 10 | Тело старшего сотрудника | осмотр | `senior_body` | — |
 | 10 | Ключ (подбор) | действие | — | `senior_key_taken` |
 | 10 | Записка на пульте | документ | `senior_note` | — |
-| 10 | Терминал аварийного управления | терминал | `opening_succession` | требует `senior_key_taken`; выдаёт `caretaker`, `module_4`, ставит `caretaker_assigned`, цель `reach_module_4` |
+| 10 | Терминал аварийного управления | терминал | `opening_succession` | требует `senior_key_taken`; шаги (#219): проверка ключа → идентификация оператора → статус смотрителя (`opening/succession_*`), пункты меню открываются по ходу, экраны листаются по нажатию; протокол выдаёт `caretaker`, `module_4`, ставит `caretaker_assigned`, цель `reach_module_4` |
 | 12 | Окно модуля 4 | осмотр | `module_4_window` | — |
 | 12 | Пульт поста контроля | терминал | `opening_module4_post` | ставит `module4_ready`, цель `enter_dream` |
 

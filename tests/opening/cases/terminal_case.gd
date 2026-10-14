@@ -2,6 +2,9 @@ extends RefCounted
 
 const DATA_DIR := "res://data/terminals"
 const SANDBOX := "res://scenes/sandbox/opening_sandbox.tscn"
+## #221: the chemical protocol is routine; terminals name it only when it starts (the monitor
+## and the HUD do that from Containment), never ahead in authored programs.
+const EARLY_CHEMICAL := ["химическ", "снотвор", "реагент"]
 
 const SAMPLE := {
 	"id": "sample",
@@ -41,6 +44,9 @@ func run(c: OpeningCheck) -> void:
 		programs += 1
 		var authored := TerminalProgram.load_file(DATA_DIR.path_join(file))
 		c.equal(authored.errors, PackedStringArray(), "%s is valid" % file)
+		var text := FileAccess.get_file_as_string(DATA_DIR.path_join(file)).to_lower()
+		for word: String in EARLY_CHEMICAL:
+			c.is_true(not text.contains(word), "%s does not mention the chemical protocol ahead (%s)" % [file, word])
 	c.is_true(programs > 0, "authored terminal programs exist")
 
 	# Model behaviour.
@@ -114,7 +120,9 @@ func _ui_case(c: OpeningCheck) -> void:
 	c.is_true(GameState.has_access(&"caretaker"), "protocol grants caretaker access")
 	c.equal(gate.lock_reason(), "", "gate unlocks after the protocol")
 	c.equal(GameState.objective_id, &"sandbox_gate", "protocol sets the objective")
-	await c.tree.create_timer(TerminalScreen.AUTO_NEXT_PAUSE + 0.2).timeout
+	await c.tree.create_timer(1.0).timeout
+	c.is_true(screen.screen_id == "protocol" and screen.waiting_next, "a printed step screen waits for a key press")
+	c.is_true(screen.advance(), "a key press pages the step screen on")
 	c.equal(screen.screen_id, "main_caretaker", "procedure returns to the caretaker main screen")
 	screen.close()
 	await c.tree.process_frame

@@ -4,6 +4,7 @@ extends RefCounted
 ## and the door locked by the senior officer's access, on the sandbox station.
 ## #211: the electronic door with pass readers, the senior officer's computer granting the
 ## access, the plug of the wall's own material and the crack as a real slit.
+## #219: a wider crack, the computer's dialogue in steps that open the menu items one by one.
 
 const STATION := "res://scenes/sandbox/stations/breach_station.tscn"
 const SECTION := &"sandbox_a"
@@ -59,9 +60,29 @@ func run(c: OpeningCheck) -> void:
 	var computer := station.get_node(^"SeniorComputer") as Terminal
 	c.equal(computer.program.id, "opening_succession", "the computer in the room runs the succession protocol")
 	c.is_true(computer.is_powered(), "the computer works on the section power")
+	var program := computer.program
+	c.equal(_options(program), ["Проверка ключа", "Выход"], "on login only the key check is offered")
+	c.equal(program.choose("main", 0), "", "without the key the check is locked")
 	GameState.set_flag(&"senior_key_taken")
-	c.equal(computer.program.choose("main", 0), "protocol", "with the key the protocol opens")
-	computer.program.complete("protocol")
+	# #219: login → key check → operator identification → caretaker status → protocol; each
+	# step opens the next menu item.
+	var steps := [
+		["key_check", "Идентификация оператора", "ПОДЛИННЫЙ"],
+		["identify", "Статус смотрителя", "НЕ ПРИНАДЛЕЖИТ ОПЕРАТОРУ"],
+		["status", "Протокол преемственности", "НЕ НА СВЯЗИ"],
+	]
+	for index in steps.size():
+		var step: Array = steps[index]
+		c.is_true(not _options(program).has(step[1]), "%s is closed before %s" % [step[1], step[0]])
+		c.equal(program.choose("main", index), step[0], "the menu leads to %s" % step[0])
+		var lines := (program.enter(step[0])["lines"] as Array).map(func(line: Dictionary) -> String: return str(line["text"]).to_upper())
+		c.is_true(lines.any(func(line: String) -> bool: return line.contains(step[2])), "%s says %s" % [step[0], step[2]])
+		program.complete(step[0])
+		c.equal(program.enter(step[0])["next"], "main", "%s returns to the menu" % step[0])
+		c.is_true(_options(program).has(step[1]), "%s opens %s" % [step[0], step[1]])
+		c.is_true(not GameState.has_access(ACCESS), "%s does not grant the access yet" % step[0])
+	c.equal(program.choose("main", 3), "protocol", "after the status check the protocol opens")
+	program.complete("protocol")
 	c.is_true(GameState.has_access(ACCESS), "the protocol grants the senior officer's access")
 	c.is_true(door.lock_reason().is_empty() and control.is_available(), "the granted access opens the way back to ЦУ")
 	c.is_true((station.get_node(^"ReaderInside") as AccessReader).scan() and door.state == FacilityDoor.State.OPENING, "the reader lets the pass through and opens the door")
@@ -108,6 +129,11 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(not crowbar.visible and wall.room_light.visible, "loading restores the taken crowbar and the light")
 	interactor.queue_free()
 	GameState.reset()
+
+
+## Texts of the menu options the main screen shows now.
+func _options(program: TerminalProgram) -> Array:
+	return (program.enter("main")["options"] as Array).map(func(option: Dictionary) -> String: return str(option["text"]))
 
 
 ## Whether something solid stands in the opening of the wall.

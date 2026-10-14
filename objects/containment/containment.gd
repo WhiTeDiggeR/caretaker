@@ -41,7 +41,6 @@ const LINE_INDENT := "    "
 const STABLE_LINE := "Сон стабилен. Угрозы пробуждения нет."
 const OFFLINE_LINE := "Прогноза нет: система наблюдения не в сети."
 const AWAKE_LINE := "ОБЪЕКТ БОДРСТВУЕТ. Содержание нарушено."
-const FORECAST_ARMED := "Прогноз пробуждения: %s. Затем — химический протокол."
 const FORECAST_PLAIN := "Прогноз пробуждения: %s."
 const WARNING_LINE := "ВНИМАНИЕ: герметизация и подача газа через %s."
 const SEALED_LINE := "Химический сон: окно ремонта %s. Нестабильность не растёт."
@@ -238,9 +237,8 @@ func _status_lines(id: StringName) -> PackedStringArray:
 	var lines := PackedStringArray()
 	if forecast_seconds(id) < 0.0:
 		lines.append(OFFLINE_LINE)
-	elif protocol and is_charged(id) and not has_gas(id):
-		lines.append(FORECAST_ARMED % forecast_text(id))
 	else:
+		# The chemical protocol is routine: it is named only when it starts (#221).
 		lines.append(FORECAST_PLAIN % forecast_text(id))
 	if protocol and not is_charged(id):
 		if is_venting(id):

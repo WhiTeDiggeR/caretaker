@@ -4,13 +4,14 @@ extends CanvasLayer
 ## Full-screen terminal UI. Types the lines of each screen, then lists its options. Looks like
 ## the screen of its program's era (ScreenStyle: casing, phosphor, CRT picture, typing).
 ## Keys: up/down or digits choose, Enter/E confirm, Enter/E while typing shows the whole
-## screen, Esc leaves. The player's controls are locked while the terminal is open.
+## screen, Enter/E on a step screen (no options, a `next`) pages on (#219), Esc leaves. The player's controls are locked while the terminal is open.
 
 signal closed
 
 ## A key click every N printed characters (not every one: 140 per second is a buzz).
 const TYPE_SOUND_EVERY := 6
-const AUTO_NEXT_PAUSE := 0.8
+## Prompt under a step screen that waits for a key press before the next one (#219).
+const NEXT_PROMPT := "%s — далее"
 const PLAYER_GROUP := &"player"
 const SELECT_MARK := "> "
 const HINT_SIZE := 16
@@ -36,7 +37,8 @@ var _shown_text := ""
 var _current := ""
 var _typed := 0.0
 var _wait := 0.0
-var _auto_next := -1.0
+## A step screen is printed and waits for a key press to show `view.next`.
+var waiting_next := false
 
 
 ## `emergency_power` makes the picture flicker (the section runs on its reserve line).
@@ -65,7 +67,7 @@ func show_screen(id: String) -> void:
 	_current = ""
 	_typed = 0.0
 	_wait = 0.0
-	_auto_next = -1.0
+	waiting_next = false
 	typing = true
 	_clear_options()
 	_next_line()
@@ -77,6 +79,15 @@ func finish_typing() -> void:
 		_current = ""
 		_next_line()
 	body_label.text = _shown_text
+
+
+## Shows the next screen of a printed step screen; false when the screen does not wait.
+func advance() -> bool:
+	if not waiting_next:
+		return false
+	Sfx.play(&"terminal_beep")
+	show_screen(view["next"])
+	return true
 
 
 func choose(option_position: int) -> void:
@@ -96,11 +107,6 @@ func choose(option_position: int) -> void:
 
 
 func _process(delta: float) -> void:
-	if _auto_next >= 0.0:
-		_auto_next -= delta
-		if _auto_next < 0.0:
-			show_screen(view["next"])
-		return
 	if not typing:
 		return
 	if _wait > 0.0:
@@ -137,7 +143,11 @@ func _show_options() -> void:
 	_clear_options()
 	var options: Array = view.get("options", [])
 	if options.is_empty() and not str(view.get("next", "")).is_empty():
-		_auto_next = AUTO_NEXT_PAUSE
+		waiting_next = true
+		var prompt := Label.new()
+		options_box.add_child(prompt)
+		style.style_label(prompt, style.dim)
+		prompt.text = "  " + NEXT_PROMPT % InputPromptFormatter.action_label(&"interact")
 		return
 	for position in options.size():
 		var option: Dictionary = options[position]
@@ -204,6 +214,10 @@ func _input(event: InputEvent) -> void:
 	if typing:
 		if confirm:
 			finish_typing()
+		return
+	if waiting_next:
+		if confirm:
+			advance()
 		return
 	var count := options_box.get_child_count()
 	if count == 0:
