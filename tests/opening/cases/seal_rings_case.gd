@@ -18,6 +18,8 @@ func run(c: OpeningCheck) -> void:
 	Dreams.in_dream = true
 	Dreams.module_id = MODULE
 	Dreams.seal_restored = false
+	# #217: the hero cannot know the names of the glyphs, the message of the seal names none.
+	c.is_true(not DreamSeal.REMEMBERED_TEXT.contains("%s") and not DreamSeal.REMEMBERED_TEXT.contains("Ф-"), "the restored seal names no glyph")
 	var seal := _seal(c)
 	await c.tree.process_frame
 	var code := seal.code()
@@ -39,7 +41,9 @@ func run(c: OpeningCheck) -> void:
 	while not seal.is_ring_aligned(0):
 		seal.turn(0)
 	c.is_true(seal.is_glyph_revealed(0, seal.correct_position(0)), "the code glyph shows once its ring is in place")
-	c.is_true(muted.crack_contrast() > muted_contrast + 1.0, "a shown glyph stands out of its image")
+	c.is_true(muted.crack_contrast() > muted_contrast + 0.5, "a shown glyph stands out of its image")
+	# #217: pale and warm, never burnt into a white spot.
+	c.is_true(muted._crack_material.emission_energy_multiplier <= 0.5, "a shown glyph glows softly")
 	for sector in DreamSealRings.POSITIONS:
 		if sector != seal.correct_position(0):
 			c.is_true(not seal.is_glyph_revealed(0, sector), "other glyphs of the ring stay muted")

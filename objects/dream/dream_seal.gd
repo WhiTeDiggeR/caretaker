@@ -9,7 +9,8 @@ const CRACKED := Color(0.9, 0.35, 0.1)
 const RESTORED := Color(0.55, 0.85, 1.0)
 const MESSAGE_GROUP := &"message_display"
 const REMEMBERED_TITLE := "ПЕЧАТЬ ВОССТАНОВЛЕНА"
-const REMEMBERED_TEXT := "Знаки на печати сложились: %s.\nЗапомните их — в реальности капсулу нужно ресинхронизировать. Запись появилась в журнале."
+## The hero cannot know what the glyphs are called (#217): the message names no glyph.
+const REMEMBERED_TEXT := "Знаки на печати сложились.\nЗапомните их — в реальности капсулу нужно ресинхронизировать. Запись появилась в журнале."
 
 ## Knowledge granted when the seal is restored (data/dreams/knowledge.json); empty for none.
 @export var knowledge_id: StringName = &""
@@ -34,8 +35,8 @@ func complete() -> void:
 	Dreams.restore_seal()
 	_show(true)
 	if first and not knowledge_id.is_empty():
-		var code := DreamKnowledge.grant(knowledge_id)
-		get_tree().call_group(MESSAGE_GROUP, "show_message", REMEMBERED_TITLE, REMEMBERED_TEXT % DreamKnowledge.labels_text(code))
+		DreamKnowledge.grant(knowledge_id)
+		get_tree().call_group(MESSAGE_GROUP, "show_message", REMEMBERED_TITLE, REMEMBERED_TEXT)
 
 
 func _show(restored: bool) -> void:

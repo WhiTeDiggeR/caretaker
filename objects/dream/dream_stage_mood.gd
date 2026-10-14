@@ -8,6 +8,8 @@ extends DreamMood
 ## near awakening forces pre-wake. Every change blends over TRANSITION_SECONDS: the sky shader
 ## (`stage`), fog, ambient, the back light and the lava surface (glow, pulse, level).
 ## No preset is white (Б-5): white light stays with the seal, the gate, the chain and the trace.
+## The threat grows in colour, the sky, the lava and its pulse, not in darkness: the light and
+## the fog keep the level readable at every stage (#217).
 
 ## Every shown (possibly fractional) stage, for the particles of the dream (ПР-13).
 signal stage_shown(stage: float)
@@ -25,12 +27,12 @@ const SKY_SHADER := preload("res://materials/dream_bowser/sky.gdshader")
 
 const SKY_TOP: Array[Color] = [Color("#4a2436"), Color("#2e1622"), Color("#1c0c16"), Color("#0c060c")]
 const SKY_HORIZON: Array[Color] = [Color("#c8642a"), Color("#9a3a22"), Color("#5a1a2a"), Color("#2a0f1f")]
-const FOG_COLOR: Array[Color] = [Color("#8a4a32"), Color("#6a2a1e"), Color("#4a1622"), Color("#2a0f1f")]
-const FOG_DENSITY: Array[float] = [0.010, 0.016, 0.024, 0.035]
+const FOG_COLOR: Array[Color] = [Color("#8a4a32"), Color("#8a3e2c"), Color("#8a3430"), Color("#883036")]
+const FOG_DENSITY: Array[float] = [0.010, 0.012, 0.014, 0.016]
 const AMBIENT_COLOR := Color("#6b4a48")
-const AMBIENT_ENERGY: Array[float] = [0.35, 0.28, 0.20, 0.12]
-const SUN_COLOR: Array[Color] = [Color("#ffb070"), Color("#ff8a4a"), Color("#d0503a"), Color("#a03030")]
-const SUN_ENERGY: Array[float] = [0.6, 0.45, 0.3, 0.1]
+const AMBIENT_ENERGY: Array[float] = [0.4, 0.42, 0.44, 0.46]
+const SUN_COLOR: Array[Color] = [Color("#ffb070"), Color("#ff8a4a"), Color("#f06a44"), Color("#e04a3a")]
+const SUN_ENERGY: Array[float] = [0.6, 0.6, 0.62, 0.64]
 const LAVA_COLOR: Array[Color] = [Color("#ff8a2a"), Color("#ff6a1a"), Color("#ff5a1a"), Color("#ff3a12")]
 const LAVA_ENERGY: Array[float] = [2.0, 2.6, 3.2, 4.0]
 const LAVA_PULSE_HZ: Array[float] = [0.0, 0.0, 0.0, 0.6]

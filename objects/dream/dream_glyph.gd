@@ -35,13 +35,14 @@ static func polylines(id: String) -> Array[PackedVector2Array]:
 	return result
 
 
-## A flat mesh of the glyph in the XY plane, centred, `size` metres wide, facing +Z.
-static func build_mesh(id: String, size: float) -> ArrayMesh:
+## A flat mesh of the glyph in the XY plane, centred, `size` metres wide, facing +Z; `width_scale`
+## widens the stroke (a glow under it, #217).
+static func build_mesh(id: String, size: float, width_scale := 1.0) -> ArrayMesh:
 	var vertices := PackedVector3Array()
-	var half := size * WIDTH * 0.5
+	var half := size * WIDTH * 0.5 * width_scale
 	for line in polylines(id):
 		if line.size() == 1:
-			_disc(vertices, _to_3d(line[0], size), size * DOT_RADIUS, JOINT_SEGMENTS * 2)
+			_disc(vertices, _to_3d(line[0], size), size * DOT_RADIUS * width_scale, JOINT_SEGMENTS * 2)
 			continue
 		for index in line.size():
 			_disc(vertices, _to_3d(line[index], size), half, JOINT_SEGMENTS)
