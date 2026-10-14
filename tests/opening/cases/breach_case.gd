@@ -2,6 +2,8 @@ extends RefCounted
 
 ## #178: the cracked wall between the relay room and the senior officer's room, the crowbar
 ## and the door locked by the senior officer's access, on the sandbox station.
+## #211: the electronic door with pass readers, the senior officer's computer granting the
+## access, the plug of the wall's own material and the crack as a real slit.
 
 const STATION := "res://scenes/sandbox/stations/breach_station.tscn"
 const SECTION := &"sandbox_a"
@@ -17,6 +19,13 @@ func run(c: OpeningCheck) -> void:
 	var door := station.get_node(^"SeniorDoor") as FacilityDoor
 	var crowbar := station.get_node(^"Crowbar") as CrowbarPickup
 	var interactable := wall.interactable
+	var plug := wall.get_node(^"Plug")
+	var pieces := plug.find_children("Piece*", "MeshInstance3D", false, false)
+	var wall_mesh := wall.get_node(^"WallMesh") as MeshInstance3D
+	c.equal(pieces.size(), 2, "the crack splits the plug in two pieces")
+	c.is_true(pieces.all(func(piece: Node) -> bool: return (piece as MeshInstance3D).mesh.surface_get_material(0) == wall_mesh.mesh.surface_get_material(0)), "the plug and the wall share one material")
+	c.is_true(not _solid_at_crack(pieces), "the crack is a real slit through the plug")
+	var start_width := wall.crack_width()
 	c.is_true(DocumentLibrary.has(BreachWall.TEXT_DARK) and DocumentLibrary.has(BreachWall.TEXT_LIT), "crack inspect texts exist")
 	c.is_true(_blocked(wall), "the crack blocks the way")
 
@@ -41,8 +50,23 @@ func run(c: OpeningCheck) -> void:
 	c.equal(door.required_access, ACCESS, "the door to the room needs the access of the succession protocol")
 	c.equal(door.lock_reason(), FacilityDoor.REASON_NO_ACCESS, "without the access the door is locked")
 	c.is_true(not door.open() and not control.is_available() and control.unavailable_prompt == FacilityDoor.REASON_NO_ACCESS, "the locked door does not open and says why")
-	GameState.grant_access(ACCESS)
+	var reader := station.get_node(^"ReaderOutside") as AccessReader
+	c.equal(reader.idle_text(), "СЧИТЫВАТЕЛЬ\nДОПУСК СТАРШЕГО", "the reader names the access the door wants")
+	c.is_true(not reader.scan() and reader.screen.text.contains("2-117") and reader.screen.text.contains("ОТКАЗАНО"), "the reader refuses the guard's pass and says why")
+	c.is_true(door.is_closed(), "a refused pass leaves the door closed")
+
+	# The senior officer's computer: the key, then the succession protocol grants the access.
+	var computer := station.get_node(^"SeniorComputer") as Terminal
+	c.equal(computer.program.id, "opening_succession", "the computer in the room runs the succession protocol")
+	c.is_true(computer.is_powered(), "the computer works on the section power")
+	GameState.set_flag(&"senior_key_taken")
+	c.equal(computer.program.choose("main", 0), "protocol", "with the key the protocol opens")
+	computer.program.complete("protocol")
+	c.is_true(GameState.has_access(ACCESS), "the protocol grants the senior officer's access")
 	c.is_true(door.lock_reason().is_empty() and control.is_available(), "the granted access opens the way back to ЦУ")
+	c.is_true((station.get_node(^"ReaderInside") as AccessReader).scan() and door.state == FacilityDoor.State.OPENING, "the reader lets the pass through and opens the door")
+	await c.physics_frames(int((door.open_time + 0.3) * Engine.physics_ticks_per_second))
+	c.is_true(door.is_open(), "the electronic door opens")
 	GameState.revoke_access(ACCESS)
 	c.equal(control.unavailable_prompt, FacilityDoor.REASON_NO_ACCESS, "revoking the access locks the door again")
 	c.is_true(wall.is_in_group(BreachWall.ROUTE_PASSABLE_GROUP), "the route check treats the breach as passable")
@@ -67,6 +91,7 @@ func run(c: OpeningCheck) -> void:
 	interactor.step(interactable, false, false, 0.1)
 	c.equal(wall.hits_done(), wall.hits_required - 1, "a released hold is not a hit")
 	interactor.step(interactable, true, true, wall.hit_time + 0.01)
+	c.is_true(wall.crack_width() > start_width, "every hit widens the crack")
 	c.is_true(wall.is_open() and GameState.has_flag(wall.flag), "the last hit breaks the wall open")
 	await c.physics_frames(2)
 	c.is_true(not _blocked(wall) and not interactable.is_available(), "the hole lets the hero through")
@@ -93,3 +118,14 @@ func _blocked(wall: BreachWall) -> bool:
 	query.shape = probe
 	query.transform = Transform3D(wall.global_basis, wall.global_transform * Vector3(0, wall.opening_height * 0.5, 0))
 	return not wall.get_world_3d().direct_space_state.intersect_shape(query, 1).is_empty()
+
+
+## Whether a plug piece covers the middle of the crack (the crack line at mid-height).
+func _solid_at_crack(pieces: Array[Node]) -> bool:
+	var origin := Vector3(BreachWall.CRACK_LINE[3].x, BreachWall.CRACK_LINE[3].y, 1.0)
+	for piece: Node in pieces:
+		var faces := (piece as MeshInstance3D).mesh.get_faces()
+		for index in range(0, faces.size(), 3):
+			if Geometry3D.ray_intersects_triangle(origin, Vector3.FORWARD, faces[index], faces[index + 1], faces[index + 2]) != null:
+				return true
+	return false
