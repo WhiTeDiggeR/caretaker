@@ -54,7 +54,7 @@ func _run() -> void:
 	await _frames(5)
 	# #183: the seal of rings — each lever turns its ring until the glyph of the code is under the mark.
 	var seal := dream.get_node(SEAL) as DreamSealRings
-	for ring in DreamSealRings.RING_COUNT:
+	for ring in seal.ring_count:
 		while not seal.is_ring_aligned(ring):
 			seal.levers[ring].trigger()
 	_check(Dreams.seal_restored, "the aligned rings restore the seal")
