@@ -14,23 +14,23 @@ const BUTTON_COLUMNS := 4
 const BUTTON_STEP := Vector2(0.235, 0.22)
 const BUTTON_ORIGIN := Vector3(-0.3525, 1.2, 0.18)
 const BUTTON_COLOR := Color(0.13, 0.14, 0.15)
-const RESET_CAPTION := "СБРОС"
-const ENTER_CAPTION := "ВВОД"
 const HOLD_SECONDS := 1.5
-const NEED_GLYPHS := "НУЖНО %d ЗНАКА"
 const CAPTION_SIZE := 26
 ## Share of the key height the glyph takes; the phase code under it is small.
 const KEY_GLYPH_SHARE := 0.66
 const KEY_CODE_SIZE := 14
-const TITLE := "РЕСИНХРОНИЗАЦИЯ КАПСУЛЫ · %s"
 const EMPTY_SLOT := "_"
-const LOCK_NO_KNOWLEDGE := "НУЖНЫ ЗНАКИ ИЗ СНА"
-const LOCK_AWAKE := "ОБЪЕКТ БОДРСТВУЕТ"
-const LOCK_NO_POWER := "НЕТ ПИТАНИЯ"
-const NO_KNOWLEDGE_LINES := "Нет данных для ресинхронизации.\nНужны знаки печати из сна модуля:\nпогружение → печать → врата."
-const SYNCED_LINE := "СИНХРОНИЗАЦИЯ ЗАВЕРШЕНА.\nСон стабилен."
-const WRONG_LINE := "ОШИБКА СИНХРОНИЗАЦИИ.\nНестабильность выросла. Повторите ввод."
-const AWAKE_LINE := "Объект бодрствует.\nРесинхронизация невозможна."
+## One-time hints and the caretaker's remark (data/hints/dreams.json, Hints of #125): the
+## remark and the keys hint come at the first look at the panel with a code to enter, the
+## mistake hint after the first wrong ВВОД.
+const HINT_FIRST_LOOK := &"resync_first_look"
+const HINT_KEYS := &"resync_keys"
+const HINT_WRONG := &"resync_wrong"
+const PLAYER_GROUP := &"player"
+## Player-facing texts are the `panel_*` keys of data/dreams/knowledge.json (#200).
+const LOCK_NO_KNOWLEDGE := "panel_lock_no_knowledge"
+const LOCK_AWAKE := "panel_lock_awake"
+const LOCK_NO_POWER := "panel_lock_no_power"
 
 @export var module_id: StringName = &"module_4"
 ## Power section of the panel; none keeps the screen always on.
@@ -44,18 +44,17 @@ var entered := PackedStringArray()
 var last_result := -1
 ## The wrong code kept on the screen after a mistake (empty once the hold is over).
 var held := PackedStringArray()
+## СБРОС was pressed; the screen says so until the next key.
+var was_reset := false
 var _buttons: Array[Interactable] = []
 
 
 func _ready() -> void:
-	_reset.prompt = "СБРОСИТЬ ВВОД"
-	_caption($ResetButton, RESET_CAPTION)
-	_reset.interacted.connect(func() -> void:
-		entered.clear()
-		_clear_hold()
-		refresh())
-	_enter.prompt = "ВВОД"
-	_caption($EnterButton, ENTER_CAPTION)
+	_reset.prompt = _text("panel_reset_prompt")
+	_caption($ResetButton, _text("panel_reset_caption"))
+	_reset.interacted.connect(reset)
+	_enter.prompt = _text("panel_enter_prompt")
+	_caption($EnterButton, _text("panel_enter_caption"))
 	_enter.interacted.connect(enter)
 	var glyphs := DreamKnowledge.glyphs()
 	for index in glyphs.size():
@@ -64,6 +63,7 @@ func _ready() -> void:
 	GameState.state_loaded.connect(refresh)
 	GameState.section_power_changed.connect(func(_section: StringName, _power: int) -> void: refresh())
 	refresh()
+	_watch_player.call_deferred()
 
 
 ## Adds one glyph to the input; extra presses beyond the code length are ignored.
@@ -72,7 +72,16 @@ func press(glyph: String) -> void:
 	if id.is_empty() or entered.size() >= DreamKnowledge.code(id).size():
 		return
 	_clear_hold()
+	was_reset = false
 	entered.append(glyph)
+	refresh()
+
+
+## СБРОС: clears the input before ВВОД, free of charge (З-4).
+func reset() -> void:
+	entered.clear()
+	_clear_hold()
+	was_reset = true
 	refresh()
 
 
@@ -82,7 +91,9 @@ func enter() -> void:
 	if id.is_empty() or entered.size() < DreamKnowledge.code(id).size():
 		return
 	last_result = DreamKnowledge.resync(module_id, entered)
+	was_reset = false
 	if last_result == DreamKnowledge.Result.WRONG:
+		Hints.request(HINT_WRONG)
 		held = entered.duplicate()
 		var shown := held
 		get_tree().create_timer(HOLD_SECONDS).timeout.connect(func() -> void:
@@ -104,32 +115,34 @@ func refresh() -> void:
 	var id := DreamKnowledge.active_for(module_id)
 	var lock := ""
 	if Containment.is_awake(module_id):
-		lock = LOCK_AWAKE
-		rows.append_array(_rows(AWAKE_LINE, &"warn"))
+		lock = _text(LOCK_AWAKE)
+		rows.append_array(_rows(_text("panel_awake"), &"warn"))
 	elif last_result == DreamKnowledge.Result.SYNCED:
-		rows.append_array(_rows(SYNCED_LINE, &"ok"))
+		rows.append_array(_rows(_text("panel_synced"), &"ok"))
 	if lock.is_empty() and id.is_empty():
-		lock = LOCK_NO_KNOWLEDGE
+		lock = _text(LOCK_NO_KNOWLEDGE)
 		if last_result != DreamKnowledge.Result.SYNCED:
-			rows.append_array(_rows(NO_KNOWLEDGE_LINES, &""))
+			rows.append_array(_rows(_text("panel_no_knowledge"), &""))
 	elif lock.is_empty():
 		if last_result == DreamKnowledge.Result.WRONG:
-			rows.append_array(_rows(WRONG_LINE, &"alarm"))
+			rows.append_array(_rows(_text("panel_wrong") % int(DreamKnowledge.resync_param("failure_penalty", 5)), &"alarm"))
+		elif was_reset:
+			rows.append_array(_rows(_text("panel_reset_done"), &""))
 		var shown := held if entered.is_empty() and not held.is_empty() else entered
 		var slots := PackedStringArray()
 		var glyphs: Array[String] = []
 		for index in DreamKnowledge.code(id).size():
 			slots.append(DreamKnowledge.label(shown[index]) if index < shown.size() else EMPTY_SLOT)
 			glyphs.append(shown[index] if index < shown.size() else "")
-		rows.append({"text": "Введите знаки печати:", "status": &""})
+		rows.append({"text": _text("panel_enter_invite"), "status": &""})
 		# The slots are drawn as glyphs (#198); the text is their plain reading for tests.
 		rows.append({"text": DreamKnowledge.SEPARATOR.join(slots), "status": &"", "large": true, "glyphs": glyphs})
 	var powered := section.is_empty() or GameState.is_section_powered(section)
 	_screen.set_powered(powered)
 	if powered:
-		_screen.show_rows(TITLE % label, rows)
+		_screen.show_rows(_text("panel_title") % label, rows)
 	else:
-		lock = LOCK_NO_POWER
+		lock = _text(LOCK_NO_POWER)
 	for button in _buttons:
 		button.available = lock.is_empty()
 		button.unavailable_prompt = lock
@@ -137,7 +150,27 @@ func refresh() -> void:
 	_reset.unavailable_prompt = ""
 	var needed := DreamKnowledge.code(id).size()
 	_enter.available = lock.is_empty() and entered.size() >= needed
-	_enter.unavailable_prompt = lock if not lock.is_empty() else NEED_GLYPHS % needed
+	_enter.unavailable_prompt = lock if not lock.is_empty() else _text("panel_need_glyphs") % needed
+
+
+static func _text(key: String) -> String:
+	return str(DreamKnowledge.text(key))
+
+
+## The caretaker's first look at the panel: the player's Interactor aims at one of its keys.
+func _watch_player() -> void:
+	var player := get_tree().get_first_node_in_group(PLAYER_GROUP) if is_inside_tree() else null
+	var interactor: Interactor = player.get(&"interactor") if player else null
+	if interactor:
+		interactor.target_changed.connect(_on_target_changed)
+
+
+func _on_target_changed(target: Object) -> void:
+	if target == null or DreamKnowledge.active_for(module_id).is_empty():
+		return
+	if target == _reset or target == _enter or target in _buttons:
+		Hints.request(HINT_FIRST_LOOK)
+		Hints.request(HINT_KEYS)
 
 
 ## A sign under a button.
@@ -192,7 +225,7 @@ func _build_button(glyph: String, index: int) -> Interactable:
 	mark.position = Vector3(0, BUTTON_SIZE.y * 0.1, BUTTON_SIZE.z * 0.5 + 0.004)
 	body.add_child(mark)
 	var interactable := Interactable.new()
-	interactable.prompt = "ВВЕСТИ ЗНАК · %s" % DreamKnowledge.label(glyph)
+	interactable.prompt = _text("panel_key_prompt") % DreamKnowledge.label(glyph)
 	interactable.set_meta(&"glyph", glyph)
 	interactable.interacted.connect(press.bind(glyph))
 	body.add_child(interactable)

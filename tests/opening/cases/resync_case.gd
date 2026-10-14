@@ -6,6 +6,9 @@ const PANEL := "res://objects/containment/resync_panel.tscn"
 const SEAL := "res://objects/dream/dream_seal.tscn"
 const MODULE := &"module_4"
 const KNOWLEDGE := &"module_4_seal"
+## Scripts of the glyph screens whose texts live in data/dreams/knowledge.json (#200).
+const TEXT_SCRIPTS: Array[String] = ["res://objects/containment/resync_panel.gd", "res://objects/dream/dream_seal_rings.gd"]
+const LINE_JOIN := "\n"
 
 
 func run(c: OpeningCheck) -> void:
@@ -33,13 +36,14 @@ func run(c: OpeningCheck) -> void:
 	c.is_true(DreamKnowledge.prepare(KNOWLEDGE)[0] in glyphs, "a fresh code replaces the old pending one")
 	GameState.reset()
 	c.equal(DreamKnowledge.definition(KNOWLEDGE).get("module"), "module_4", "seal knowledge belongs to module 4")
+	_check_texts(c)
 
 	var panel := (load(PANEL) as PackedScene).instantiate() as ResyncPanel
 	c.add(panel)
 	var first := panel.glyph_button(glyphs[0])
 	c.is_true(first != null, "panel has a button per glyph")
 	c.is_true(not first.is_available(), "without knowledge the panel is locked")
-	c.equal(first.get_prompt_text(), ResyncPanel.LOCK_NO_KNOWLEDGE, "the lock says what is needed")
+	c.equal(first.get_prompt_text(), DreamKnowledge.text(ResyncPanel.LOCK_NO_KNOWLEDGE), "the lock says what is needed")
 	c.equal(first.prompt, "ВВЕСТИ ЗНАК · Ф-1", "the key names the phase code")
 	c.is_true(panel.screen_text().contains("Нужны знаки"), "the screen explains how to get the glyphs")
 
@@ -70,7 +74,7 @@ func run(c: OpeningCheck) -> void:
 			sketches.append(child)
 		else:
 			texts.append((child as Label).text)
-	c.is_true(DocumentReader.KNOWLEDGE_TITLE in texts, "journal has the dream knowledge section")
+	c.is_true(DocumentReader.knowledge_title() in texts, "journal has the dream knowledge section")
 	c.is_true(not "\n".join(texts).contains(DreamKnowledge.label(code[0])), "the journal does not name the phase codes")
 	c.equal(sketches.size(), 1, "the knowledge entry has a sketch")
 	c.equal(sketches[0].sketch, DreamKnowledge.SKETCH_SEAL, "after the first visit the journal sketches the whole seal")
@@ -96,7 +100,7 @@ func run(c: OpeningCheck) -> void:
 	var enter := panel.get_node(^"EnterButton/Interactable") as Interactable
 	for index in wrong.size():
 		c.is_true(not enter.is_available(), "ВВОД waits for a complete code (%d)" % index)
-		c.equal(enter.get_prompt_text(), ResyncPanel.NEED_GLYPHS % code.size(), "ВВОД says how many glyphs it needs")
+		c.equal(enter.get_prompt_text(), str(DreamKnowledge.text("panel_need_glyphs")) % code.size(), "ВВОД says how many glyphs it needs")
 		panel.glyph_button(wrong[index]).trigger()
 	c.is_true(enter.is_available(), "a complete code unlocks ВВОД")
 	panel.glyph_button(code[0]).trigger()
@@ -121,6 +125,7 @@ func run(c: OpeningCheck) -> void:
 	(panel.get_node(^"ResetButton/Interactable") as Interactable).trigger()
 	c.equal(panel.entered.size(), 0, "reset clears the input")
 	c.near(Containment.get_instability(MODULE), before, 0.001, "reset before ВВОД is free")
+	c.is_true(panel.screen_text().contains(str(DreamKnowledge.text("panel_reset_done"))), "the screen confirms the reset")
 
 	# The right sequence brings the sleep to full stability and spends the knowledge.
 	for glyph in code:
@@ -145,5 +150,38 @@ func run(c: OpeningCheck) -> void:
 	Containment.add_instability(MODULE, 100.0)
 	c.equal(DreamKnowledge.resync(MODULE, DreamKnowledge.code(KNOWLEDGE)), DreamKnowledge.Result.AWAKE, "an awake prisoner is beyond resync")
 	panel.refresh()
-	c.equal(first.get_prompt_text(), ResyncPanel.LOCK_AWAKE, "the panel says the prisoner is awake")
+	c.equal(first.get_prompt_text(), DreamKnowledge.text(ResyncPanel.LOCK_AWAKE), "the panel says the prisoner is awake")
 	Containment.set_process(true)
+
+
+## #200: the glyph screens keep no player-facing strings in code; every text key they use
+## (and every hint they request) is in the data.
+func _check_texts(c: OpeningCheck) -> void:
+	var cyrillic := RegEx.create_from_string("\"[^\"\\n]*[\\x{0400}-\\x{04FF}][^\"\\n]*\"")
+	var key_call := RegEx.create_from_string("(?:DreamKnowledge\\.text|_text)\\(\"([a-z0-9_]+)(?:_%d)?\"")
+	var key_const := RegEx.create_from_string("const [A-Z_]+ := \"(panel_[a-z_]+)\"")
+	for path in TEXT_SCRIPTS:
+		var source := FileAccess.get_file_as_string(path)
+		var code_lines := PackedStringArray()
+		for line in source.split("\n"):
+			if not line.strip_edges().begins_with("#"):
+				code_lines.append(line)
+		var found := cyrillic.search(LINE_JOIN.join(code_lines))
+		c.is_true(found == null, "%s keeps no Russian strings in code%s" % [path.get_file(), "" if found == null else ": " + found.get_string()])
+		var keys := key_call.search_all(source) + key_const.search_all(source)
+		for hit in keys:
+			var key := hit.get_string(1)
+			if hit.get_string(0).contains("_%d"):
+				for count in [3, 4]:
+					c.is_true(DreamKnowledge.has_text("%s_%d" % [key, count]), "text %s_%d is in the data" % [key, count])
+			else:
+				c.is_true(DreamKnowledge.has_text(key), "text %s is in the data" % key)
+		c.is_true(not keys.is_empty(), "%s takes its texts from the data" % path.get_file())
+	for hint in [ResyncPanel.HINT_FIRST_LOOK, ResyncPanel.HINT_KEYS, ResyncPanel.HINT_WRONG]:
+		c.is_true(not str(Hints.hints.get(hint, {}).get("text", "")).is_empty(), "hint %s is in the data" % hint)
+	var journal: Dictionary = DreamKnowledge.definition(KNOWLEDGE).get("journal", {})
+	for sketch in [DreamKnowledge.SKETCH_SEAL, DreamKnowledge.SKETCH_IMAGES]:
+		c.is_true(not str(journal.get(String(sketch), "")).is_empty(), "journal text for the %s sketch" % sketch)
+	var seal_text := str(journal.get(String(DreamKnowledge.SKETCH_SEAL), ""))
+	for glyph in DreamKnowledge.glyphs():
+		c.is_true(not seal_text.contains(DreamKnowledge.label(glyph)), "the first journal entry does not name %s" % DreamKnowledge.label(glyph))
