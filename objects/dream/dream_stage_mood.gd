@@ -9,6 +9,9 @@ extends DreamMood
 ## (`stage`), fog, ambient, the back light and the lava surface (glow, pulse, level).
 ## No preset is white (Б-5): white light stays with the seal, the gate, the chain and the trace.
 
+## Every shown (possibly fractional) stage, for the particles of the dream (ПР-13).
+signal stage_shown(stage: float)
+
 enum Stage { CALM, ALARM, UNREST, PRE_WAKE }
 
 const TRANSITION_SECONDS := 2.5
@@ -150,6 +153,7 @@ func _show(stage: float) -> void:
 		_lava_material.set_shader_parameter(&"emission_energy", lerpf(LAVA_ENERGY[a], LAVA_ENERGY[b], t))
 		_lava_material.set_shader_parameter(&"pulse_hz", lerpf(LAVA_PULSE_HZ[a], LAVA_PULSE_HZ[b], t))
 		_lava_material.set_shader_parameter(&"level_offset", lerpf(LAVA_LEVEL[a], LAVA_LEVEL[b], t))
+	stage_shown.emit(stage)
 
 
 func _on_ambush_started() -> void:
