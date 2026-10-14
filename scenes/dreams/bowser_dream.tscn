@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" path="res://loads/props/dream_gate_bowser/dream_gate_bowser.gltf" id="31_dream_gate_bowser"]
 [ext_resource type="PackedScene" path="res://loads/props/dream_seal/dream_seal.gltf" id="32_dream_seal"]
 [ext_resource type="PackedScene" path="res://loads/props/dream_seal_wheel/dream_seal_wheel.gltf" id="33_dream_seal_wheel"]
-[ext_resource type="PackedScene" path="res://loads/props/ph_dream_rock_face/ph_dream_rock_face.gltf" id="34_rock_face"]
+[ext_resource type="PackedScene" path="res://objects/dream/dream_lava_rock.tscn" id="34_rock_face"]
 [ext_resource type="PackedScene" path="res://loads/props/dream_rubble_arch/dream_rubble_arch.gltf" id="35_dream_rubble_arch"]
 [ext_resource type="PackedScene" path="res://loads/props/dream_grate/dream_grate.gltf" id="36_dream_grate"]
 [ext_resource type="PackedScene" path="res://loads/props/dream_stair_collapsed/dream_stair_collapsed.gltf" id="37_dream_stair_collapsed"]
@@ -516,33 +516,43 @@ shape = SubResource("shape_4")
 
 [node name="Rock1" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(1.474, 0, -0.6231, 0, 1.6, 0, 0.6231, 0, 1.474, 6, -5, -10)
+rock_seed = 11
 
 [node name="Back" parent="Path/Rocks/Rock1" instance=ExtResource("34_rock_face")]
-transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
+transform = Transform3D(0.42, 0, 0.3, 0, 0.5, 0, -0.3, 0, 0.42, 3.4, -0.2, 1.2)
+rock_seed = 12
 
 [node name="Rock2" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(-0.8239, 0, -1.132, 0, 1.4, 0, 1.132, 0, -0.8239, 18, -5, 9)
+rock_seed = 23
 
 [node name="Back" parent="Path/Rocks/Rock2" instance=ExtResource("34_rock_face")]
-transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
+transform = Transform3D(0.45, 0, -0.25, 0, 0.55, 0, 0.25, 0, 0.45, -3.3, -0.2, 1.0)
+rock_seed = 24
 
 [node name="Rock3" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(0.7711, 0, 1.515, 0, 1.7, 0, -1.515, 0, 0.7711, 31, -5, -8)
+rock_seed = 37
 
 [node name="Back" parent="Path/Rocks/Rock3" instance=ExtResource("34_rock_face")]
-transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
+transform = Transform3D(0.4, 0, 0.32, 0, 0.45, 0, -0.32, 0, 0.4, 3.2, -0.2, -1.1)
+rock_seed = 38
 
 [node name="Rock4" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(-1.485, 0, -0.2117, 0, 1.5, 0, 0.2117, 0, -1.485, 43, -5, 11)
+rock_seed = 41
 
 [node name="Back" parent="Path/Rocks/Rock4" instance=ExtResource("34_rock_face")]
-transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
+transform = Transform3D(0.5, 0, 0.2, 0, 0.6, 0, -0.2, 0, 0.5, -3.4, -0.2, -0.8)
+rock_seed = 42
 
 [node name="Rock5" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(0.5885, 0, -2.12, 0, 2.2, 0, 2.12, 0, 0.5885, 26, -5, -14)
+rock_seed = 53
 
 [node name="Back" parent="Path/Rocks/Rock5" instance=ExtResource("34_rock_face")]
-transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
+transform = Transform3D(0.38, 0, -0.28, 0, 0.42, 0, 0.28, 0, 0.38, 3.0, -0.2, 1.4)
+rock_seed = 54
 
 [node name="Yard" type="Node3D" parent="."]
 

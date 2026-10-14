@@ -43,6 +43,11 @@ const HALO_BRIGHT := 0.9
 const HALO_COLOR := Color(1.0, 0.96, 0.88)
 ## Height of the glyph images over the ring top: clear of the ring and of the crack.
 const GLYPH_LIFT := 0.03
+## Share of the room on a ring an image medallion takes without art (#217).
+const TILE_FILL := 0.9
+## Diameter of an image medallion in the art: inside the bronze rim of a glyph socket (Ø 0.84,
+## tools/props/props_dream.py).
+const ART_SOCKET := 0.78
 const RESTORED_LIGHT_ENERGY := 2.5
 const TURN_TIME := 0.45
 const RING_HEIGHT := 0.12
@@ -398,7 +403,7 @@ func _build_ring(ring: int) -> void:
 		var angle := float(sector) * TAU / POSITIONS
 		var image := DreamGlyphImage.new()
 		image.glyph_id = glyphs[sector]
-		image.size = minf(radii.y - radii.x, 0.9) * 0.8
+		image.size = _tile_side(ring, radii) * DreamGlyphImage.GLYPH_SHARE
 		# Lies flat on the ring, read from the edge looking at the core.
 		image.position = Vector3(sin(angle) * middle, _ring_top(ring) + GLYPH_LIFT, cos(angle) * middle)
 		image.rotation = Vector3(-PI * 0.5, angle, 0)
@@ -428,6 +433,16 @@ func _build_ring(ring: int) -> void:
 	halo.position.y = HALO_LIFT - CRACK_HEIGHT * 0.5
 	crack.add_child(halo)
 	_halo_materials.append(halo_mesh.material)
+
+
+## Diameter of an image medallion on `ring`: the socket of the art, or else within the ring's
+## width and a sixth of the ring each.
+func _tile_side(ring: int, radii: Vector2) -> float:
+	if _art and ring >= _extra_rings():
+		return ART_SOCKET * radius / ART_RADIUS
+	var middle := (radii.x + radii.y) * 0.5
+	var spread := tan(PI / POSITIONS)
+	return minf((radii.y - radii.x) * TILE_FILL, 2.0 * middle * spread / (1.0 + spread) * TILE_FILL)
 
 
 ## Additive glow fading out across the crack (bright in the middle, nothing at the edges).
