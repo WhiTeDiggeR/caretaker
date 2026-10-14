@@ -1,5 +1,8 @@
 """Walls and slabs shared by two sectors are drawn once (#205)."""
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from tools.complex_v4 import build_canonical_from_approved as builder
 from tools.complex_v4 import check_cross_openings, check_shared_faces
@@ -52,13 +55,38 @@ class OwnershipRuleTests(unittest.TestCase):
 
 
 class CanonicalSourcesTests(unittest.TestCase):
+    """The canonical SVGs as the builder produces them now (the committed ones are rebuilt by the author with gen/)."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.tmp = tempfile.TemporaryDirectory()
+        reg = json.loads(builder.REGISTRATION.read_text(encoding="utf-8"))
+        cls.reports = {}
+        for sector_id, svg, report, target in builder.build_all(reg):
+            out = Path(cls.tmp.name) / target.parent.name / target.name
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(svg, encoding="utf-8")
+            cls.reports[sector_id] = report
+        cls.sectors = check_shared_faces.load_sectors(Path(cls.tmp.name))
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.tmp.cleanup()
+
     def test_canonical_svgs_have_no_shared_or_flickering_faces(self) -> None:
-        findings = check_shared_faces.find(check_shared_faces.load_sectors())
+        self.assertEqual(len(self.sectors), 32)
+        findings = check_shared_faces.find(self.sectors)
         self.assertEqual(findings, [], "\n".join(str(item) for item in findings[:20]))
 
     def test_openings_on_shared_walls_open_from_both_sides(self) -> None:
-        missing = check_cross_openings.find_missing(check_cross_openings.load())
+        missing = check_cross_openings.find_missing(self.reports)
         self.assertEqual(missing, [], "\n".join(str(item) for item in missing[:20]))
+
+    def test_every_svg_is_marked_with_the_ownership_rule(self) -> None:
+        for sector_id, report in self.reports.items():
+            self.assertIn("dropped_walls", report["shared_faces"], sector_id)
+        for path in Path(self.tmp.name).glob("*/*.svg"):
+            self.assertIn(f'data-shared-faces="{builder.SHARED_FACES_RULE}"', path.read_text(encoding="utf-8"), path.name)
 
 
 if __name__ == "__main__":

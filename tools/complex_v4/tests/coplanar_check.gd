@@ -2,9 +2,10 @@ extends SceneTree
 ## Finds flickering surfaces (z-fighting) in the whole assembled complex: faces of different meshes that lie in the
 ## same plane, face the same way and overlap. Every visible mesh of every sector is checked against every other
 ## (shared walls and slabs between sectors, #205; stairs and shafts, #95).
-## A sector whose generated package was built from an older canonical SVG than the current one (the source sha256 in
-## its generation_manifest.json differs) is waiting for regeneration: its pairs outside stairs and shafts are listed
-## as pending, not as overlaps. Stair and shaft pairs are always strict.
+## A sector waits for regeneration while its canonical SVG predates the ownership rule (no data-shared-faces on the SVG
+## root, D-49) or its generated package was built from another SVG than the current one (the source sha256 in its
+## generation_manifest.json differs): its pairs outside stairs and shafts are listed as pending, not as overlaps.
+## Stair and shaft pairs are always strict.
 ## godot --headless --path . --script res://tools/complex_v4/tests/coplanar_check.gd
 ## Prints COPLANAR_CHECK meshes=<n> overlaps=<n> pending=<n>; exit 1 on overlaps.
 
@@ -63,15 +64,16 @@ func _run() -> void:
 	quit(0 if overlaps.is_empty() else 1)
 
 
-## Node names (L_ARCHIVE_A) of sectors whose package is older than their canonical SVG.
+## Node names (L_ARCHIVE_A) of sectors whose SVG or package is not yet built with the ownership rule.
 func _stale_sectors() -> Dictionary:
 	var stale := {}
 	var manifest := JSON.parse_string(FileAccess.get_file_as_string(MANIFEST)) as Dictionary
 	for sector: Dictionary in manifest["sectors"]:
 		var generation := JSON.parse_string(FileAccess.get_file_as_string(str(sector["output_resource_dir"]) + "/generation_manifest.json")) as Dictionary
 		var built := str((generation.get("source", {}) as Dictionary).get("sha256", "")) if generation else ""
-		var current := "sha256:" + FileAccess.get_sha256("res://" + str(sector["source_svg"]))
-		if built != current:
+		var svg := "res://" + str(sector["source_svg"])
+		var current := "sha256:" + FileAccess.get_sha256(svg)
+		if built != current or not FileAccess.get_file_as_string(svg).contains("data-shared-faces="):
 			stale[str(sector["sector_id"]).replace("-", "_")] = true
 	return stale
 

@@ -47,21 +47,21 @@
       "source_id": "l_freight_service-space-002",
       "plan_px": [
         70.0,
-        250.9,
+        250.0,
         155.0,
-        159.1
+        160.0
       ],
       "world_m": [
         -15.657,
-        69.6,
+        69.556,
         7.829,
-        7.956
+        8.0
       ],
       "size_m": [
         7.83,
-        7.96
+        8.0
       ],
-      "area_m2": 62.3
+      "area_m2": 62.6
     },
     {
       "id": "l-freight-service-floor-02",
@@ -71,21 +71,21 @@
       "source_id": "l_freight_service-space-003",
       "plan_px": [
         225.0,
-        250.9,
+        250.0,
         155.0,
-        159.1
+        160.0
       ],
       "world_m": [
         -7.828,
-        69.6,
+        69.556,
         7.828,
-        7.956
+        8.0
       ],
       "size_m": [
         7.83,
-        7.96
+        8.0
       ],
-      "area_m2": 62.3
+      "area_m2": 62.6
     },
     {
       "id": "l-freight-service-floor-03",
@@ -95,21 +95,21 @@
       "source_id": "l_freight_service-geometry-001",
       "plan_px": [
         380.0,
-        250.9,
+        250.0,
         220.0,
-        159.1
+        160.0
       ],
       "world_m": [
         0.0,
-        69.6,
+        69.556,
         11.111,
-        7.956
+        8.0
       ],
       "size_m": [
         11.11,
-        7.96
+        8.0
       ],
-      "area_m2": 88.4
+      "area_m2": 88.9
     },
     {
       "id": "l-freight-service-floor-04",
@@ -143,21 +143,21 @@
       "source_id": "l_freight_service-geometry-003",
       "plan_px": [
         600.0,
-        250.9,
+        250.0,
         260.0,
-        159.1
+        160.0
       ],
       "world_m": [
         11.111,
-        69.6,
+        69.556,
         13.131,
-        7.956
+        8.0
       ],
       "size_m": [
         13.13,
-        7.96
+        8.0
       ],
-      "area_m2": 104.5
+      "area_m2": 105.0
     },
     {
       "id": "l-freight-service-floor-06",
@@ -167,21 +167,21 @@
       "source_id": "l_freight_service-space-004",
       "plan_px": [
         860.0,
-        250.9,
+        250.0,
         70.0,
-        79.1
+        80.0
       ],
       "world_m": [
         24.242,
-        69.6,
+        69.556,
         3.536,
-        3.956
+        4.0
       ],
       "size_m": [
         3.54,
-        3.96
+        4.0
       ],
-      "area_m2": 14.0
+      "area_m2": 14.1
     },
     {
       "id": "l-freight-service-floor-07",
@@ -248,6 +248,38 @@
         70.956,
         24.242,
         72.806
+      ]
+    },
+    {
+      "id": "l-freight-service-door-02",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_freight_service-opening-001",
+      "width_m": 1.8,
+      "rooms": [
+        "L-FREIGHT-SERVICE/ventilyaciya"
+      ],
+      "world_m": [
+        -12.77,
+        69.556,
+        -10.97,
+        69.556
+      ]
+    },
+    {
+      "id": "l-freight-service-door-03",
+      "type": "door",
+      "source": "support-gap",
+      "source_id": "l_freight_service-opening-003",
+      "width_m": 1.8,
+      "rooms": [
+        "L-FREIGHT-SERVICE/raspredelitelnaya"
+      ],
+      "world_m": [
+        -4.94,
+        69.556,
+        -3.14,
+        69.556
       ]
     },
     {
@@ -385,6 +417,22 @@
         26.5,
         77.556
       ]
+    },
+    {
+      "id": "l-freight-service-door-12",
+      "type": "door",
+      "source": "amendment D-34c3",
+      "source_id": "amendment-D-34c3",
+      "width_m": 4.5,
+      "rooms": [
+        "L-FREIGHT-SERVICE/gruzovaya-platforma"
+      ],
+      "world_m": [
+        3.3,
+        69.556,
+        7.8,
+        69.556
+      ]
     }
   ],
   "ignored": [
@@ -422,202 +470,5 @@
     "D-34c3"
   ],
   "feature_rects_ignored": 5,
-  "shared_faces": {
-    "rank": [
-      1,
-      "L-FREIGHT-SERVICE"
-    ],
-    "owners": [
-      "L-CIRCULATION",
-      "L-ARCHIVE-A",
-      "L-CENTRAL-CORE",
-      "L-CHAMBER-1",
-      "L-CHAMBER-2",
-      "L-CHAMBER-3",
-      "L-CHAMBER-5",
-      "L-EAST-STAIR"
-    ],
-    "snapped_edges": [
-      {
-        "orient": "h",
-        "from_m": 69.556,
-        "to_m": 69.6,
-        "owner": "L-CIRCULATION",
-        "reason": "edge facing the owner's room"
-      }
-    ],
-    "dropped_walls": [
-      {
-        "id": "l-freight-service-wall-01",
-        "owner": [
-          "L-CIRCULATION"
-        ],
-        "world_m": [
-          -15.657,
-          69.6,
-          27.778,
-          69.6
-        ]
-      }
-    ],
-    "trimmed_walls": [
-      {
-        "id": "l-freight-service-wall-05",
-        "owner": [
-          "L-CIRCULATION"
-        ],
-        "world_m": [
-          -15.657,
-          69.6,
-          -15.657,
-          79.556
-        ],
-        "pieces_m": [
-          [
-            69.9,
-            79.556
-          ]
-        ]
-      },
-      {
-        "id": "l-freight-service-wall-06",
-        "owner": [
-          "L-CIRCULATION"
-        ],
-        "world_m": [
-          -7.828,
-          69.6,
-          -7.828,
-          77.556
-        ],
-        "pieces_m": [
-          [
-            69.9,
-            77.556
-          ]
-        ]
-      },
-      {
-        "id": "l-freight-service-wall-07",
-        "owner": [
-          "L-CIRCULATION"
-        ],
-        "world_m": [
-          0.0,
-          69.6,
-          0.0,
-          77.556
-        ],
-        "pieces_m": [
-          [
-            69.9,
-            77.556
-          ]
-        ]
-      },
-      {
-        "id": "l-freight-service-wall-08",
-        "owner": [
-          "L-CIRCULATION"
-        ],
-        "world_m": [
-          11.111,
-          69.6,
-          11.111,
-          79.556
-        ],
-        "pieces_m": [
-          [
-            69.9,
-            79.556
-          ]
-        ]
-      },
-      {
-        "id": "l-freight-service-wall-09",
-        "owner": [
-          "L-CIRCULATION"
-        ],
-        "world_m": [
-          24.242,
-          69.6,
-          24.242,
-          77.556
-        ],
-        "pieces_m": [
-          [
-            69.9,
-            77.556
-          ]
-        ]
-      },
-      {
-        "id": "l-freight-service-wall-10",
-        "owner": [
-          "L-CIRCULATION"
-        ],
-        "world_m": [
-          27.778,
-          69.6,
-          27.778,
-          79.556
-        ],
-        "pieces_m": [
-          [
-            69.9,
-            79.556
-          ]
-        ]
-      }
-    ],
-    "dropped_openings": [
-      {
-        "id": "l-freight-service-door-02",
-        "type": "door",
-        "owner": "L-CIRCULATION",
-        "owner_opening": "l-circulation-door-15",
-        "rooms": [
-          "L-FREIGHT-SERVICE/ventilyaciya"
-        ],
-        "world_m": [
-          -12.77,
-          69.6,
-          -10.97,
-          69.6
-        ]
-      },
-      {
-        "id": "l-freight-service-door-03",
-        "type": "door",
-        "owner": "L-CIRCULATION",
-        "owner_opening": "l-circulation-door-16",
-        "rooms": [
-          "L-FREIGHT-SERVICE/raspredelitelnaya"
-        ],
-        "world_m": [
-          -4.94,
-          69.6,
-          -3.14,
-          69.6
-        ]
-      },
-      {
-        "id": "l-freight-service-door-12",
-        "type": "door",
-        "owner": "L-CIRCULATION",
-        "owner_opening": "l-circulation-door-17",
-        "rooms": [
-          "L-FREIGHT-SERVICE/gruzovaya-platforma"
-        ],
-        "world_m": [
-          3.3,
-          69.6,
-          7.8,
-          69.6
-        ]
-      }
-    ],
-    "moved_openings": []
-  },
   "unmapped_other_elements": 0
 }
