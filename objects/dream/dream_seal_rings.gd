@@ -31,6 +31,12 @@ const RING_HEIGHT := 0.12
 const DISC_HEIGHT := 0.3
 const CORE_RADIUS := 0.6
 const LEVER_GAP := 0.7
+## The art (#195) is modelled for a disc of this radius; another radius scales it.
+const ART_RADIUS := 4.0
+## Tops of the art rings above the floor, outer first (stepped, docs/art/dream-bowser-s.md ПЧ-1).
+const ART_RING_TOPS: Array[float] = [0.45, 0.6, 0.75]
+const ART_WHEEL_OFFSET := Vector3(0, 0, -0.15)
+const ART_LABEL_HEIGHT := 1.75
 const PROMPT_TURN := "ПОВЕРНУТЬ %s КОЛЬЦО"
 const PROMPT_DONE := "ПЕЧАТЬ ВОССТАНОВЛЕНА"
 const INSPECT_TITLE := "ПЕЧАТЬ"
@@ -41,6 +47,11 @@ const INSPECT_TEXT := "Три кольца со знаками, в каждом 
 @export var turn_sound: StringName = &"valve"
 @export var wrong_sound: StringName = &"breaker"
 @export var aligned_sound: StringName = &"switch"
+## Art of the disc and rings (loads/props/dream_seal): its nodes Ring1…Ring3 turn with the rings;
+## each ring has empty sockets where the glyphs lie (#188). Without it the seal is built of primitives.
+@export var art: PackedScene
+## Art of a lever (loads/props/dream_seal_wheel): its node Wheel spins with every turn.
+@export var wheel_art: PackedScene
 
 ## Positions of the rings, 0…5 sixths of a turn.
 var positions: Array[int] = [0, 0, 0]
@@ -52,6 +63,8 @@ var _glyph_labels: Array[Label3D] = []
 var _sparks: Array[CPUParticles3D] = []
 var _tweens: Array[Tween] = [null, null, null]
 var _light: OmniLight3D
+var _art: Node3D
+var _wheels: Array[Node3D] = []
 
 
 func _ready() -> void:
@@ -220,6 +233,9 @@ func _animate(ring: int) -> void:
 	var tween := create_tween()
 	tween.tween_property(pivot, "rotation:y", pivot.rotation.y - TAU / POSITIONS, TURN_TIME)
 	tween.tween_callback(func() -> void: pivot.rotation.y = _angle(positions[ring]))
+	var wheel := _wheels[ring]
+	if wheel:
+		tween.parallel().tween_property(wheel, "rotation:z", wheel.rotation.z + TAU / POSITIONS, TURN_TIME)
 	_tweens[ring] = tween
 
 
@@ -234,16 +250,26 @@ func _ring_radii(ring: int) -> Vector2:
 	return Vector2(outer - width, outer)
 
 
+## Height of the top of `ring` above its pivot (the disc top): glyphs and cracks lie on it.
+func _ring_top(ring: int) -> float:
+	return ART_RING_TOPS[ring] - DISC_HEIGHT if _art else RING_HEIGHT * 0.5
+
+
 func _build() -> void:
-	var disc := MeshInstance3D.new()
-	var disc_mesh := CylinderMesh.new()
-	disc_mesh.top_radius = radius
-	disc_mesh.bottom_radius = radius + 0.1
-	disc_mesh.height = DISC_HEIGHT
-	disc_mesh.material = PropKit.material(STONE)
-	disc.mesh = disc_mesh
-	disc.position.y = DISC_HEIGHT * 0.5
-	add_child(disc)
+	if art:
+		_art = art.instantiate() as Node3D
+		_art.scale = Vector3(radius / ART_RADIUS, 1.0, radius / ART_RADIUS)
+		add_child(_art)
+	else:
+		var disc := MeshInstance3D.new()
+		var disc_mesh := CylinderMesh.new()
+		disc_mesh.top_radius = radius
+		disc_mesh.bottom_radius = radius + 0.1
+		disc_mesh.height = DISC_HEIGHT
+		disc_mesh.material = PropKit.material(STONE)
+		disc.mesh = disc_mesh
+		disc.position.y = DISC_HEIGHT * 0.5
+		add_child(disc)
 	var shape := CollisionShape3D.new()
 	var cylinder := CylinderShape3D.new()
 	cylinder.radius = radius
@@ -273,14 +299,19 @@ func _build_ring(ring: int) -> void:
 	pivot.position.y = DISC_HEIGHT
 	add_child(pivot)
 	_pivots.append(pivot)
-	var band := MeshInstance3D.new()
-	var torus := TorusMesh.new()
-	torus.inner_radius = radii.x + 0.04
-	torus.outer_radius = radii.y - 0.04
-	torus.material = PropKit.material(RING_STONE)
-	band.mesh = torus
-	band.scale = Vector3(1, RING_HEIGHT / maxf(radii.y - radii.x, 0.01), 1)
-	pivot.add_child(band)
+	var ring_art := _art.get_node_or_null(NodePath("Ring%d" % (ring + 1))) as Node3D if _art else null
+	if ring_art:
+		ring_art.reparent(pivot, false)
+		ring_art.transform = Transform3D(Basis.from_scale(_art.scale), Vector3.ZERO)
+	else:
+		var band := MeshInstance3D.new()
+		var torus := TorusMesh.new()
+		torus.inner_radius = radii.x + 0.04
+		torus.outer_radius = radii.y - 0.04
+		torus.material = PropKit.material(RING_STONE)
+		band.mesh = torus
+		band.scale = Vector3(1, RING_HEIGHT / maxf(radii.y - radii.x, 0.01), 1)
+		pivot.add_child(band)
 	var glyphs := ring_glyphs(ring)
 	var middle := (radii.x + radii.y) * 0.5
 	for sector in POSITIONS:
@@ -291,7 +322,7 @@ func _build_ring(ring: int) -> void:
 		label.pixel_size = 0.004 * (1.0 + 0.3 * (RING_COUNT - 1 - ring) / float(RING_COUNT))
 		label.outline_size = 8
 		# Lies flat on the ring, read from the edge looking at the core.
-		label.position = Vector3(sin(angle) * (middle + 0.12), RING_HEIGHT * 0.5 + 0.01, cos(angle) * (middle + 0.12))
+		label.position = Vector3(sin(angle) * (middle + 0.12), _ring_top(ring) + 0.01, cos(angle) * (middle + 0.12))
 		label.rotation = Vector3(-PI * 0.5, angle, 0)
 		pivot.add_child(label)
 		_glyph_labels.append(label)
@@ -314,7 +345,7 @@ func _place_cracks() -> void:
 		var radii := _ring_radii(ring)
 		var middle := (radii.x + radii.y) * 0.5
 		var angle := float(correct_position(ring)) * TAU / POSITIONS
-		crack.position = Vector3(sin(angle) * (middle - 0.12), RING_HEIGHT * 0.5 + 0.02, cos(angle) * (middle - 0.12))
+		crack.position = Vector3(sin(angle) * (middle - 0.12), _ring_top(ring) + 0.02, cos(angle) * (middle - 0.12))
 		crack.rotation = Vector3(0, angle, 0)
 
 
@@ -324,29 +355,38 @@ func _build_lever(ring: int) -> void:
 	lever.position = Vector3((ring - 1) * 1.2, 0, radius + LEVER_GAP)
 	add_child(lever)
 	var dark := PropKit.material(Color(0.22, 0.2, 0.19))
-	PropKit.box(lever, Vector3(0, 0.5, 0), Vector3(0.2, 1.0, 0.2), dark, true)
-	var wheel := MeshInstance3D.new()
-	var torus := TorusMesh.new()
-	torus.inner_radius = 0.22
-	torus.outer_radius = 0.3
-	torus.material = PropKit.material(RING_STONE)
-	wheel.mesh = torus
-	wheel.position = Vector3(0, 1.05, 0.12)
-	wheel.rotation = Vector3(PI * 0.5, 0, 0)
-	lever.add_child(wheel)
+	var post := PropKit.box(lever, Vector3(0, 0.5, 0), Vector3(0.2, 1.0, 0.2), dark, true)
+	var wheel_node: Node3D = null
+	if wheel_art:
+		post.visible = false
+		var lever_art := wheel_art.instantiate() as Node3D
+		lever_art.position = ART_WHEEL_OFFSET
+		lever.add_child(lever_art)
+		wheel_node = lever_art.get_node_or_null(^"Wheel") as Node3D
+	else:
+		var wheel := MeshInstance3D.new()
+		var torus := TorusMesh.new()
+		torus.inner_radius = 0.22
+		torus.outer_radius = 0.3
+		torus.material = PropKit.material(RING_STONE)
+		wheel.mesh = torus
+		wheel.position = Vector3(0, 1.05, 0.12)
+		wheel.rotation = Vector3(PI * 0.5, 0, 0)
+		lever.add_child(wheel)
+	_wheels.append(wheel_node)
 	var reach := CollisionShape3D.new()
 	var reach_shape := BoxShape3D.new()
 	reach_shape.size = Vector3(0.7, 0.7, 0.4)
 	reach.shape = reach_shape
 	reach.position = Vector3(0, 1.05, 0.1)
 	lever.add_child(reach)
-	PropKit.label(lever, Vector3(0, 1.5, 0.12), RING_NAMES[ring], 28)
+	PropKit.label(lever, Vector3(0, ART_LABEL_HEIGHT if wheel_art else 1.5, 0.12), RING_NAMES[ring], 28)
 	var interactable := PropKit.interactable(lever, Interactable.Mode.PRESS, PROMPT_TURN % RING_NAMES[ring])
 	interactable.interacted.connect(turn.bind(ring))
 	levers.append(interactable)
 	var sparks := CPUParticles3D.new()
 	var radii := _ring_radii(ring)
-	sparks.position = Vector3(0, DISC_HEIGHT + 0.1, (radii.x + radii.y) * 0.5)
+	sparks.position = Vector3(0, DISC_HEIGHT + (_ring_top(ring) if _art else 0.0) + 0.1, (radii.x + radii.y) * 0.5)
 	sparks.emitting = false
 	sparks.one_shot = true
 	sparks.amount = 24
