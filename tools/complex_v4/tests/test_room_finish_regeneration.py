@@ -126,8 +126,12 @@ class RoomFinishRegenerationTests(unittest.TestCase):
 
     def test_stable_ids_are_unique_and_keep_the_geometry_of_all_sectors(self) -> None:
         canonical = ROOT / "docs/design/complex_v4/plans/generation"
+        # committed SVGs built with the shared-face ownership rule (D-49, #205) are compared with the whole-complex build
+        complex_build = {sector_id: svg for sector_id, svg, _report, _target in BUILD.build_all(self.registration)}
         for sector_id, entry in self.registration["sectors"].items():
             svg, _report, target = BUILD.build_sector(sector_id, entry, self.registration)
+            if "data-shared-faces=" in target.read_text(encoding="utf-8"):
+                svg = complex_build[sector_id]
             built = list(elements(svg).values())
             ids = [el.get("id") for el in built]
             self.assertEqual(len(ids), len(set(ids)), sector_id)
