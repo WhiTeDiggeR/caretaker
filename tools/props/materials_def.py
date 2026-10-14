@@ -16,8 +16,7 @@ EMIT = {
     "emit_beacon_red": ((0.0, 0.0, 0.0), (0.9, 0.12, 0.06), 1.6),
     "crystal_core": ((0.35, 0.65, 0.95), (0.3, 0.6, 1.0), 2.0),
     "emit_cold_blue": ((0.0, 0.0, 0.0), (0.12, 0.4, 1.0), 1.3),
-    "emit_haze_green": ((0.0, 0.0, 0.0), (0.2, 0.75, 0.3), 0.7),
-    "emit_haze_blue": ((0.0, 0.0, 0.0), (0.1, 0.4, 0.95), 0.8),
+    "emit_lamp_white": ((0.0, 0.0, 0.0), (1.0, 0.95, 0.85), 3.0),
     "emit_green_soft": ((0.0, 0.0, 0.0), (0.3, 0.85, 0.35), 1.2),
     "emit_eye_white": ((0.0, 0.0, 0.0), (0.95, 0.97, 1.0), 4.0),
     # Bowser's dream (docs/art/dream-bowser-s.md §3)
@@ -32,6 +31,9 @@ PLAIN = {"glass_dirty": ((0.08, 0.1, 0.11), 0.25, 0.0, 0.28), "chrome_dull": ((0
          "red_paint_worn": ((0.36, 0.07, 0.05), 0.65, 0.0, 1.0),
          # prisoner capsules (#130): tinted observation glass and the sleepers inside
          "glass_green": ((0.03, 0.07, 0.04), 0.04, 0.0, 0.08), "glass_blue": ((0.02, 0.04, 0.08), 0.04, 0.0, 0.08),
+         # the liquid the sleepers float in (#210): its colour is the backdrop of the figure; bubbles rise through it
+         "liquid_blue": ((0.04, 0.2, 0.5), 0.05, 0.0, 0.13), "liquid_green": ((0.06, 0.38, 0.14), 0.05, 0.0, 0.13),
+         "liquid_bubble": ((0.8, 0.9, 0.95), 0.05, 0.0, 0.35),
          # object No. 4 sleeper (#162): saturated so the figure reads through the green glass
          "skin_yellow": ((0.8, 0.58, 0.14), 0.62, 0.0, 1.0), "shell_green": ((0.1, 0.42, 0.12), 0.38, 0.0, 1.0),
          "horn_bone": ((0.86, 0.8, 0.64), 0.5, 0.0, 1.0), "hair_red": ((0.78, 0.16, 0.05), 0.75, 0.0, 1.0),
@@ -47,6 +49,10 @@ ATLAS = {"signs_ru": ("decals/signs_ru.png", True, 0.0), "hazard_stripes": ("dec
          "capsule_screens": ("decals/capsule_screens.png", False, 1.5),
          # blocky sleeper skin (#162): lit by the capsule light, not self-lit, so the blocks keep their shading
          "sleeper_skins": ("decals/sleeper_skins.png", False, 0.0)}
+# atlas material -> base colour factor (darkens a shared texture without repainting it)
+ATLAS_TINT = {"sleeper_skins": 0.75}                   # object No. 3 a touch darker (#210)
+# materials seen from both sides: thin glass and the capsule liquid, whose surface is seen from below
+DOUBLE_SIDED = {"glass_dirty", "liquid_blue", "liquid_green"}
 
 
 # Materials replaced by downloaded scans (import_textures.py) carry their real-world tile size.

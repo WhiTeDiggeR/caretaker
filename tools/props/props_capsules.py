@@ -16,6 +16,7 @@ Units: metres, length along X, floor at y = 0, front +Z. Movable/switchable node
 from __future__ import annotations
 
 import math
+import random
 from dataclasses import dataclass
 
 from propkit import Kit
@@ -107,7 +108,8 @@ class Capsule:
     length: float       # middle hull (window section) length
     drum_r: float       # end drum radius
     emit: str           # accent light material
-    haze: str           # interior back-light material
+    liquid: str         # the liquid the sleeper floats in: its colour is the backdrop of the figure
+    lamp: str           # interior lamp (the visible source of the interior light)
     glass: str          # window glass material
     accent: str         # painted accent parts (bands, collars)
 
@@ -122,10 +124,19 @@ class Capsule:
 
 
 HEROBRINE = Capsule("3", d=2.1, h=2.3, r=0.38, yc=1.7, win_w=3.0, win_y0=1.0, win_y1=2.4, win_r=0.42, length=3.5,
-                    drum_r=1.28, emit="emit_cold_blue", haze="emit_haze_blue", glass="glass_blue", accent="painted_metal")
+                    drum_r=1.28, emit="emit_cold_blue", liquid="liquid_blue", lamp="emit_lamp_cold", glass="glass_blue",
+                    accent="painted_metal")
 BOWSER = Capsule("4", d=2.4, h=2.7, r=0.45, yc=1.9, win_w=3.3, win_y0=1.08, win_y1=2.72, win_r=0.5, length=3.8,
-                 drum_r=1.48, emit="emit_led_green", haze="emit_haze_green", glass="glass_green", accent="painted_metal_green")
+                 drum_r=1.48, emit="emit_led_green", liquid="liquid_green", lamp="emit_lamp_white", glass="glass_green",
+                 accent="painted_metal_green")
 DRUM_LEN, DISC_LEN, PORT_LEN = 0.5, 0.1, 0.06
+LAMP_Z = 0.35                   # interior lamp bar: in front of the sleeper, just above the window top
+LIQUID_GAP = 0.02               # liquid surface below the window top, so the surface line shows through the glass
+
+
+def lamp_pos(c: Capsule):
+    """Centre of the lamp bar's glowing underside; make_capsule_assemblies.py puts InteriorLight just below it."""
+    return (0.0, round(c.win_y1 + 0.1, 3), LAMP_Z)
 
 
 def plinth_size(c: Capsule):
@@ -172,14 +183,9 @@ def build_capsule(k: Kit, c: Capsule):
     k.prism_x(c_profile(d, h, r, yc, t, y0s, y1s), c.length, 0.0, "painted_metal", bevel=0.0)
     for sx in (-1, 1):
         k.prism_x(rrect_contour(d + 0.08, h + 0.08, r + 0.04, yc)[1:], 0.24, sx * (half + 0.0), c.accent, bevel=0.012)
-    # dark interior: a black liner on the back wall carries a framed glow panel, the backdrop the sleeper is seen
-    # against; the floor is black rubber with light lines along the back, so the figure stays the brightest thing
-    back_z, wy = -d / 2 + t, (c.win_y0 + c.win_y1) / 2
-    k.box((c.length - 0.3, h - 2 * r, 0.03), (0, yc, back_z + 0.015), "rubber_black", 0.0)  # flat part of the back wall
-    pw, ph = c.win_w - 0.15, c.win_y1 - c.win_y0 - 0.06                # a touch inside the window outline
-    k.prism(stadium(pw, ph, min(c.win_r, ph / 2), wy), 0.02, (0, 0, back_z + 0.04), c.haze, "z", bevel=0.0)
-    edge = stadium(pw + 0.04, ph + 0.04, min(c.win_r, ph / 2) + 0.02, wy, n=10)
-    k.tube([(x, y, back_z + 0.05) for x, y in edge + [edge[0], edge[1]]], 0.016, "steel_bare", 8, caps=False)
+    # interior (#210): the back wall is the hull's own painted metal; the colour behind the sleeper comes from the
+    # liquid it floats in and from the lamp bar above it, the visible source of the interior light
+    back_z = -d / 2 + t
     floor_y = c.win_y0 - 0.06
     k.box((c.length - 0.3, floor_y - (bottom + t), d - 2 * t - 0.1), (0, (floor_y + bottom + t) / 2, 0), "painted_metal", 0.01)
     k.box((c.length - 0.5, 0.012, d - 2 * t - 0.3), (0, floor_y + 0.006, 0), "rubber_black", 0.0)
@@ -187,6 +193,30 @@ def build_capsule(k: Kit, c: Capsule):
     for lz in (back_z + 0.1, back_z + 0.22):                              # light lines in the floor along the back
         k.box((c.length - 0.7, 0.008, 0.025), (0, floor_y + 0.016, lz), c.emit, 0.0)
     k.body()
+    ceil = top - t
+    lx, ly, lz = lamp_pos(c)
+    lamp_len = c.win_w - 0.5
+    k.box((lamp_len + 0.1, 0.1, 0.2), (0, ly + 0.05, lz), "painted_metal", 0.012)          # lamp bar housing
+    for sx in (-1, 1):                                                     # hangers from the ceiling
+        k.cyl(0.018, ceil - ly - 0.1, (sx * lamp_len * 0.4, (ceil + ly + 0.1) / 2, lz), "y", "steel_bare", 8)
+    k.group("Emit_Lamp", pivot=(0, ly, lz))
+    k.box((lamp_len, 0.012, 0.12), (0, ly - 0.004, lz), c.lamp, 0.0)
+    k.body()
+    k.group("Liquid", pivot=(0, floor_y, 0))
+    lx0, lz0, lz1 = c.length / 2 - 0.13, back_z + 0.01, fz - 0.06      # inside the collars, the back wall and the glass
+    level = c.win_y1 - LIQUID_GAP
+    k.box((2 * lx0, level - floor_y - 0.02, lz1 - lz0), (0, (level + floor_y + 0.02) / 2, (lz0 + lz1) / 2), c.liquid, 0.0)
+    k.body()
+    rng = random.Random(int(c.obj) * 210)                  # bubbles rising from nozzles in the floor
+    for bx in (-0.92, -0.62, 0.62, 0.92):
+        bx *= lx0
+        bz = back_z + 0.35 + rng.uniform(-0.05, 0.05)
+        k.cyl(0.035, 0.03, (bx, floor_y + 0.015, bz), "y", "steel_bare", 12)
+        y = floor_y + 0.08
+        while y < level - 0.06:
+            rb = rng.uniform(0.012, 0.03)
+            k.sphere(rb, (bx + rng.uniform(-0.04, 0.04), y, bz + rng.uniform(-0.04, 0.04)), "liquid_bubble", 8)
+            y += rng.uniform(0.09, 0.2)
 
     # ---- bulkhead with the stadium window, glass, frame ring and its bolted lugs
     inner = stadium(c.win_w, c.win_y1 - c.win_y0, c.win_r, (c.win_y0 + c.win_y1) / 2)
@@ -356,44 +386,121 @@ def _skin_quad(k: Kit, c, U, V, rect, xf):
     k._commit(bm, "sleeper_skins", uv="given")
 
 
-def _skin_box(k: Kit, lo, hi, faces, xf):
-    """A blocky limb from texel corner lo to hi (standing frame: x = figure's left, y up, z front)."""
+def _skin_box(k: Kit, lo, hi, faces, xf, rows=(0.0, 1.0)):
+    """A blocky limb from texel corner lo to hi (standing frame: x = figure's left, y up, z front). `rows` takes a
+    vertical slice of the side textures (0 = top, 1 = bottom), so a limb can be split at its joint."""
     p = HB_PX
     cx, cy, cz = ((lo[i] + hi[i]) / 2 * p for i in range(3))
     hx, hy, hz = ((hi[i] - lo[i]) / 2 * p for i in range(3))
     sk = {n: uv("sleeper_skins", n) for n in set(faces.values())}
-    fr = lambda n: sk[n]  # noqa: E731
+
+    def fr(n, side=True):
+        u0, v0, u1, v1 = sk[n]
+        return (u0, v0 + (v1 - v0) * rows[0], u1, v0 + (v1 - v0) * rows[1]) if side else (u0, v0, u1, v1)
     flip = lambda r: (r[2], r[1], r[0], r[3])  # noqa: E731
     _skin_quad(k, (cx, cy, cz + hz), (hx, 0, 0), (0, hy, 0), fr(faces["front"]), xf)
     _skin_quad(k, (cx, cy, cz - hz), (-hx, 0, 0), (0, hy, 0), fr(faces["back"]), xf)
     _skin_quad(k, (cx - hx, cy, cz), (0, 0, hz), (0, hy, 0), fr(faces["side"]), xf)
     _skin_quad(k, (cx + hx, cy, cz), (0, 0, -hz), (0, hy, 0), flip(fr(faces["side"])), xf)
-    _skin_quad(k, (cx, cy + hy, cz), (hx, 0, 0), (0, 0, -hz), fr(faces["top"]), xf)
-    _skin_quad(k, (cx, cy - hy, cz), (hx, 0, 0), (0, 0, hz), fr(faces["bottom"]), xf)
+    _skin_quad(k, (cx, cy + hy, cz), (hx, 0, 0), (0, 0, -hz), fr(faces["top"], False), xf)
+    _skin_quad(k, (cx, cy - hy, cz), (hx, 0, 0), (0, 0, hz), fr(faces["bottom"], False), xf)
 
 
-@prop("sleeper_herobrine", "P-106s", (2.24, 1.12, 0.57), "free", 2000, tolerance=0.03,
+def _joint(pivot, rx=0.0, rz=0.0):
+    """Rotation of the standing frame about a joint `pivot` (in texels): rx swings the part's top towards the front
+    (+z), so a negative rx swings a hanging limb forward; rz tips the part's top towards the figure's right (-x).
+    Returns a point transform in metres."""
+    ax, az = math.radians(rx), math.radians(rz)
+    pv = [v * HB_PX for v in pivot]
+
+    def f(q):
+        x, y, z = (q[i] - pv[i] for i in range(3))
+        y, z = y * math.cos(ax) - z * math.sin(ax), y * math.sin(ax) + z * math.cos(ax)
+        x, y = x * math.cos(az) - y * math.sin(az), x * math.sin(az) + y * math.cos(az)
+        return (x + pv[0], y + pv[1], z + pv[2])
+    return f
+
+
+# Sleeping pose of object No. 3 (#210): curled a little on his left side, floating. Each part: name, texel box, skin,
+# side rows of its texture, joint chain from the part outwards (pivot, rx, rz). Bent limbs are split at elbow / knee.
+_HB_TORSO = ((0, 12, 0), 10, 0)
+_HB_POSE = [
+    ("head", (-4, 24, -4), (4, 32, 4), "head", (0, 1), [((0, 24, 0), 18, -8), _HB_TORSO]),
+    ("body", (-4, 12, -2), (4, 24, 2), "body", (0, 1), [_HB_TORSO]),
+    # left arm (underneath) forward and bent towards the chin; right arm resting forward over the body
+    ("arm_l_up", (4, 17.5, -2), (8, 24, 2), "arm", (0, 0.54), [((6, 22, 0), -55, 4), _HB_TORSO]),
+    ("arm_l_lo", (4, 12, -2), (8, 18.5, 2), "arm", (0.46, 1), [((6, 18, 0), -55, 0), ((6, 22, 0), -55, 4), _HB_TORSO]),
+    ("arm_r_up", (-8, 17.5, -2), (-4, 24, 2), "arm", (0, 0.54), [((-6, 22, 0), -35, 8), _HB_TORSO]),
+    ("arm_r_lo", (-8, 12, -2), (-4, 18.5, 2), "arm", (0.46, 1), [((-6, 18, 0), -30, 0), ((-6, 22, 0), -35, 8), _HB_TORSO]),
+    # legs drawn up, knees bent; the right (upper) leg further forward
+    ("leg_l_up", (0, 5.5, -2), (4, 12, 2), "leg", (0, 0.54), [((2, 12, 0), -35, 0)]),
+    ("leg_l_lo", (0, 0, -2), (4, 6.5, 2), "leg", (0.46, 1), [((2, 6, 0), 70, 0), ((2, 12, 0), -35, 0)]),
+    ("leg_r_up", (-4, 5.5, -2), (0, 12, 2), "leg", (0, 0.54), [((-2, 12, 0), -65, 0)]),
+    ("leg_r_lo", (-4, 0, -2), (0, 6.5, 2), "leg", (0.46, 1), [((-2, 6, 0), 90, 0), ((-2, 12, 0), -65, 0)]),
+]
+_HB_TILT = 6.0                  # the whole figure drifts head-up by a few degrees: floating, not laid out on a slab
+_HB_ROLL = -15.0                # rolled a little face-down, so the window shows the curl, not limbs pointing at it
+HB_SKINS = {
+    "head": {"front": "head_front", "back": "head_back", "side": "head_side", "top": "head_top", "bottom": "head_bottom"},
+    "body": {"front": "body_front", "back": "body_back", "side": "body_side", "top": "body_end", "bottom": "body_end"},
+    "arm": {"front": "arm_side", "back": "arm_side", "side": "arm_side", "top": "arm_top", "bottom": "arm_end"},
+    "leg": {"front": "leg_side", "back": "leg_side", "side": "leg_side", "top": "leg_top", "bottom": "leg_end"},
+}
+
+
+def _hb_lying(p):
+    """Standing frame -> lying on the left side, head towards +X, face to the window, tilted by _HB_TILT."""
+    x, y, z = p[1] - 16 * HB_PX, -p[0], p[2]
+    r = math.radians(_HB_ROLL)                  # roll about the long axis: + turns the face up
+    y, z = y * math.cos(r) + z * math.sin(r), -y * math.sin(r) + z * math.cos(r)
+    a = math.radians(_HB_TILT)
+    return (x * math.cos(a) - y * math.sin(a), x * math.sin(a) + y * math.cos(a), z)
+
+
+def _hb_part_xf(chain, c0=(0.0, 0.0, 0.0)):
+    joints = [_joint(*j) for j in chain]
+
+    def f(q):
+        for j in joints:
+            q = j(q)
+        return tuple(v - c0[i] for i, v in enumerate(_hb_lying(q)))
+    return f
+
+
+def _hb_center():
+    """Centre of the posed figure's bounding box: the prop origin (the capsule SOCKET) stays the figure centre."""
+    pts = []
+    for _, lo, hi, _, _, chain in _HB_POSE:
+        f = _hb_part_xf(chain)
+        pts += [f(tuple((lo, hi)[(i >> a) & 1][a] * HB_PX for a in range(3))) for i in range(8)]
+    return tuple((min(q[a] for q in pts) + max(q[a] for q in pts)) / 2 for a in range(3))
+
+
+def hb_eye_centre():
+    """Centre between the eyes in the prop frame (make_capsule_assemblies.py puts EyeGlow in front of it)."""
+    head = _hb_part_xf(_HB_POSE[0][5], _hb_center())
+    return tuple(round(v, 3) for v in head((0.0, 27.5 * HB_PX, 4 * HB_PX)))
+
+
+@prop("sleeper_herobrine", "P-106s", (2.22, 1.33, 0.99), "free", 2000, tolerance=0.03,
       views=[((0.0, 0.0, 1.0), (0, 0, 0)), ((0.6, 0.35, 0.9), (0, 0, 0)), ((-0.8, 0.3, 0.7), (0, 0, 0))])
 def sleeper_herobrine(k: Kit):
-    """Object No. 3 asleep: the blocky figure (8-texel head, 32 texels tall) floating on its side with the face to the
-    window, head towards +X, glowing white eyes. Origin = figure centre = the capsule's SOCKET."""
-    def xf(p):  # standing frame -> lying: up becomes +X, the figure's left becomes -Y
-        return (p[1] - 16 * HB_PX, -p[0], p[2])
-
-    head = {"front": "head_front", "back": "head_back", "side": "head_side", "top": "head_top", "bottom": "head_bottom"}
-    body = {"front": "body_front", "back": "body_back", "side": "body_side", "top": "body_end", "bottom": "body_end"}
-    arm = {"front": "arm_side", "back": "arm_side", "side": "arm_side", "top": "arm_top", "bottom": "arm_end"}
-    leg = {"front": "leg_side", "back": "leg_side", "side": "leg_side", "top": "leg_top", "bottom": "leg_end"}
-    _skin_box(k, (-4, 24, -4), (4, 32, 4), head, xf)
-    _skin_box(k, (-4, 12, -2), (4, 24, 2), body, xf)
-    for sx in (-1, 1):
-        _skin_box(k, (4 if sx > 0 else -8, 12, -2), (8 if sx > 0 else -4, 24, 2), arm, xf)
-        _skin_box(k, (0 if sx > 0 else -4, 0, -2), (4 if sx > 0 else 0, 12, 2), leg, xf)
+    """Object No. 3 asleep: the blocky figure (8-texel head, 32 texels tall) floating on his left side with the face
+    to the window, head towards +X, curled a little (_HB_POSE), glowing white eyes. Origin = figure centre = SOCKET."""
+    c0 = _hb_center()
+    for _, lo, hi, skin, rows, chain in _HB_POSE:
+        _skin_box(k, lo, hi, HB_SKINS[skin], _hb_part_xf(chain, c0), rows)
     # the eyes glow: thin emissive plates over the white eye texels (row 4 of the face, columns 1-2 and 5-6)
-    k.group("Emit_Eyes", pivot=xf((0, 27.5 * HB_PX, 4 * HB_PX)))
+    head = _hb_part_xf(_HB_POSE[0][5], c0)
+    k.group("Emit_Eyes", pivot=head((0.0, 27.5 * HB_PX, 4 * HB_PX)))
+    from mathutils import Vector
+    import bmesh
     for ex in (-2, 2):
-        c = xf((ex * HB_PX, 27.5 * HB_PX, 4 * HB_PX + 0.004))
-        k.box((HB_PX * 0.92, HB_PX * 1.84, 0.004), c, "emit_eye_white", 0.0)
+        bm = bmesh.new()
+        vs = [bm.verts.new(Vector(head(((ex + su * 0.92) * HB_PX, (27.5 + sv * 0.46) * HB_PX, 4 * HB_PX + 0.004))))
+              for su, sv in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+        bm.faces.new(vs)
+        k._commit(bm, "emit_eye_white")
     k.body()
 
 

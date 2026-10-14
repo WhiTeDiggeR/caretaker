@@ -17,21 +17,22 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 OUT = REPO / "objects" / "containment"
 
-# name -> (socket = Capsule.socket in props_capsules.py, room links = outer flange faces of room_links(), light
-# colour, light energy). Keep in step with props_capsules.py when the capsule dimensions change.
+# name -> (socket = Capsule.socket in props_capsules.py, room links = outer flange faces of room_links(), lamp =
+# lamp_pos() (the glowing underside of the interior lamp bar; InteriorLight hangs just below it), light colour, light
+# energy). Keep in step with props_capsules.py when the capsule dimensions change.
 CAPSULES = {
-    "herobrine": ((0.0, 1.7, 0.0), [(-0.9, 0.14, -1.55), (0.9, 0.14, -1.55)], "0.55, 0.8, 1", 1.8),
-    "bowser": ((0.0, 1.9, 0.0), [(-0.9, 0.14, -1.7), (0.9, 0.14, -1.7)], "1, 0.95, 0.85", 1.5),
+    "herobrine": ((0.0, 1.7, 0.0), [(-0.9, 0.14, -1.55), (0.9, 0.14, -1.55)], (0.0, 2.5, 0.35), "0.55, 0.8, 1", 1.8),
+    "bowser": ((0.0, 1.9, 0.0), [(-0.9, 0.14, -1.7), (0.9, 0.14, -1.7)], (0.0, 2.82, 0.35), "1, 0.95, 0.85", 1.5),
 }
 # Lights that belong to the sleeper rather than the capsule: name -> [(node, offset from the socket, colour, energy,
-# range)]. Herobrine's eyes cast a small cold glow on his face.
+# range)]. Herobrine's eyes cast a small cold glow on his face (in front of props_capsules.hb_eye_centre()).
 # name -> sleeper scene; the scripted figure by default, a generated one lives in objects/characters/.
 SLEEPERS = {
     "herobrine": "res://objects/art/sleeper_herobrine.tscn",
     "bowser": "res://objects/art/sleeper_bowser.tscn",
 }
 SLEEPER_LIGHTS = {
-    "herobrine": [("EyeGlow", (0.84, 0.0, 0.6), "0.75, 0.92, 1", 0.25, 0.5)],
+    "herobrine": [("EyeGlow", (0.58, 0.0, 0.5), "0.75, 0.92, 1", 0.25, 0.5)],
 }
 
 
@@ -40,7 +41,7 @@ def pos(p) -> str:
 
 
 def write(name: str, sleeper: str) -> Path:
-    socket, links, light, energy = CAPSULES[name]
+    socket, links, lamp, light, energy = CAPSULES[name]
     pascal = name.capitalize()
     lines = ["[gd_scene format=3]", "",
              f'[ext_resource type="PackedScene" path="res://objects/art/capsule_{name}.tscn" id="1_capsule"]',
@@ -49,7 +50,7 @@ def write(name: str, sleeper: str) -> Path:
              '[node name="Capsule" parent="." instance=ExtResource("1_capsule")]', "",
              '[node name="Sleeper" parent="." instance=ExtResource("2_sleeper")]', f"transform = {pos(socket)}", "",
              '[node name="InteriorLight" type="OmniLight3D" parent="."]',
-             f"transform = {pos((socket[0], socket[1] + 0.45, socket[2] + 0.75))}",
+             f"transform = {pos((lamp[0], round(lamp[1] - 0.12, 3), lamp[2]))}",
              f"light_color = Color({light}, 1)", f"light_energy = {energy}", "omni_range = 2.8", "omni_attenuation = 0.8", ""]
     for node, off, colour, e, rng in SLEEPER_LIGHTS.get(name, []):
         lines += [f'[node name="{node}" type="OmniLight3D" parent="Sleeper"]', f"transform = {pos(off)}",
