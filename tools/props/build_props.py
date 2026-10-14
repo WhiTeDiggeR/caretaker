@@ -16,7 +16,7 @@ from propkit import Kit  # noqa: E402
 from registry import PROPS, dump_specs  # noqa: E402
 import props_start  # noqa: E402,F401  (registers wave 1)
 
-for _mod in ("props_repair", "props_set", "props_fix", "props_kits", "props_capsules", "props_doors"):
+for _mod in ("props_repair", "props_set", "props_fix", "props_kits", "props_capsules", "props_doors", "props_dream"):
     try:
         __import__(_mod)
     except ModuleNotFoundError:
