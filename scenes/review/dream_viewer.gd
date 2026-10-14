@@ -21,10 +21,10 @@ const STAGE_NAMES: Array[String] = ["покой", "тревога", "беспо�
 const VIEW_KEYS: Array[Key] = [KEY_5, KEY_6, KEY_7, KEY_8, KEY_9, KEY_0]
 ## Key places: `node` of the dream to look at, the camera at node + `from`, aimed at node + `at`.
 const VIEWS: Array[Dictionary] = [
-	{"title": "двор", "node": ^"Yard", "from": Vector3(-12, 7, 10), "at": Vector3(0, 1, 0)},
-	{"title": "ниша героя", "node": ^"Yard/Remains", "from": Vector3(0, 2.2, 5), "at": Vector3(0, 0.8, 0)},
+	{"title": "двор", "node": ^"Yard/Floor", "from": Vector3(-14, 8, 10), "at": Vector3(4, 1, 0)},
+	{"title": "ниша героя", "node": ^"Yard/RemainsNiche/Shadow", "from": Vector3(0, 1.6, 6), "at": Vector3(0, 0.6, 0)},
 	{"title": "след оператора", "node": ^"Yard/Ambush/OperatorTrace", "from": Vector3(2.5, 2.0, 2.5), "at": Vector3.ZERO},
-	{"title": "печать", "node": ^"SealHall/Seal", "from": Vector3(-7, 3.5, 0), "at": Vector3(0, 2, 0)},
+	{"title": "печать", "node": ^"SealHall/Seal", "from": Vector3(-6, 3, 0), "at": Vector3(0, 2, 0)},
 	{"title": "мост", "node": ^"Path/Bridge", "from": Vector3(-6, 5, 8), "at": Vector3.ZERO},
 	{"title": "арка", "node": ^"Bastion/Gate", "from": Vector3(0, 3, 10), "at": Vector3(0, 2.5, 0)},
 ]
