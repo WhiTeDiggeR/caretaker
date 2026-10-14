@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://objects/dream/fx/dream_banner.tres" id="1_cloth"]
+[ext_resource type="Material" path="res://materials/dream_bowser/iron.tres" id="2_iron"]
+
+[sub_resource type="QuadMesh" id="cloth_mesh"]
+material = ExtResource("1_cloth")
+size = Vector2(2, 6)
+subdivide_width = 3
+subdivide_depth = 11
+
+[sub_resource type="BoxMesh" id="pole_mesh"]
+material = ExtResource("2_iron")
+size = Vector3(2.3, 0.08, 0.08)
+
+[node name="DreamBanner" type="Node3D"]
+
+[node name="Pole" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.04, 0.05)
+mesh = SubResource("pole_mesh")
+
+[node name="Cloth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1)
+mesh = SubResource("cloth_mesh")

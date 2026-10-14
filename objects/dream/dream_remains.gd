@@ -83,9 +83,7 @@ func awaken() -> void:
 	create_tween().tween_property(brazier_light, "light_energy", BRAZIER_ENERGY, BRAZIER_LIGHT_SECONDS)
 	Sfx.play(RING_SOUND, _weapon_spot)
 	if _trace:
-		var glow := PropKit.material(TRACE_COLOR, true)
-		glow.emission_energy_multiplier = TRACE_ENERGY
-		_trace.material_override = glow
+		_trace.material_override = _awake_trace_material()
 	if not weapon_taken:
 		_echo_timer.start(echo_seconds)
 		var combat := get_tree().get_first_node_in_group(DreamCombat.GROUP) as DreamCombat
@@ -110,6 +108,19 @@ func _echo() -> void:
 func _on_taken() -> void:
 	weapon_taken = true
 	_echo_timer.stop()
+
+
+## The trace keeps its dim flicker (its own shader), only brighter; plain white otherwise.
+func _awake_trace_material() -> Material:
+	var mesh := _trace as MeshInstance3D
+	var base := mesh.get_active_material(0) if mesh and mesh.mesh else null
+	if base is ShaderMaterial:
+		var flicker := base.duplicate() as ShaderMaterial
+		flicker.set_shader_parameter(&"glow_energy", TRACE_ENERGY)
+		return flicker
+	var glow := PropKit.material(TRACE_COLOR, true)
+	glow.emission_energy_multiplier = TRACE_ENERGY
+	return glow
 
 
 ## A body to look at (the remains are a plain mesh in the scene) with the inspect text.
