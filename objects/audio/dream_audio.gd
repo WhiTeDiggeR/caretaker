@@ -3,7 +3,8 @@ extends Node
 ## Dream sound (autoload `DreamAudio`, #201): a background loop per stage of the dream (calm,
 ## alarm, unease, pre-awakening — docs/art/dream-bowser-s.md §2), cross-faded on a change, and
 ## stingers on the dream's events: the ambush (#184), the seal restored (#183/#197), the exit
-## through the gate (#190) and a strike of the chain (#186). Stingers are ids of the Sfx
+## through the gate (#190), a swing of the chain (#186) and the fight (#218: a blow that lands on
+## an enemy, an enemy dissolving, the hero hurt). Stingers are ids of the Sfx
 ## catalogue. A stage loop is a drone synthesised here when the dream is entered (under the
 ## veil; placeholder within the sound budget) or, once recorded, a Sfx id (`sound`). Which
 ## dream uses what and the stage thresholds — data/audio/dream_audio.json.
@@ -120,7 +121,8 @@ func stage_stream(module_id: StringName, stage_id: StringName) -> AudioStream:
 	return _loops[key]
 
 
-## Plays the stinger of `event` (ambush, seal, gate, chain_hit) of the dream `module_id`.
+## Plays the stinger of `event` (ambush, seal, gate, chain_hit, strike, enemy_died, hurt) of the
+## dream `module_id`.
 func stinger(event: StringName, module_id: StringName = Dreams.module_id) -> void:
 	var id := StringName(str((config(module_id).get("stingers", {}) as Dictionary).get(String(event), "")))
 	if id == &"":
@@ -246,6 +248,10 @@ func _on_node_added(node: Node) -> void:
 				_mood = null)
 	elif node is DreamCombat:
 		(node as DreamCombat).attacked.connect(_on_attacked)
+		(node as DreamCombat).hurt.connect(func(_amount: float) -> void: _fight_stinger(&"hurt"))
+	elif node is DreamEnemy:
+		(node as DreamEnemy).hit_taken.connect(func(_damage: float) -> void: _fight_stinger(&"strike"))
+		(node as DreamEnemy).died.connect(func() -> void: _fight_stinger(&"enemy_died"))
 
 
 func _on_ambush_started() -> void:
@@ -260,3 +266,8 @@ func _on_attacked(weapon_id: StringName) -> void:
 	var weapons: Array = config(Dreams.module_id).get("chain_weapons", [])
 	if Dreams.in_dream and weapons.has(String(weapon_id)):
 		stinger(&"chain_hit")
+
+
+func _fight_stinger(event: StringName) -> void:
+	if Dreams.in_dream:
+		stinger(event)
