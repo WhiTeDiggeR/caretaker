@@ -64,10 +64,18 @@ func run(c: OpeningCheck) -> void:
 	# Journal section.
 	var journal := DocumentReader.open_journal_scene(c.tree)
 	var texts := PackedStringArray()
+	var sketches: Array[DreamSketch] = []
 	for child in journal.list_box.get_children():
-		texts.append((child as Label).text)
+		if child is DreamSketch:
+			sketches.append(child)
+		else:
+			texts.append((child as Label).text)
 	c.is_true(DocumentReader.KNOWLEDGE_TITLE in texts, "journal has the dream knowledge section")
-	c.is_true("\n".join(texts).contains(DreamKnowledge.code_text(KNOWLEDGE)), "journal shows the glyphs")
+	c.is_true(not "\n".join(texts).contains(DreamKnowledge.label(code[0])), "the journal does not name the phase codes")
+	c.equal(sketches.size(), 1, "the knowledge entry has a sketch")
+	c.equal(sketches[0].sketch, DreamKnowledge.SKETCH_SEAL, "after the first visit the journal sketches the whole seal")
+	c.equal(sketches[0].code, code, "the seal sketch holds the visit's code")
+	c.equal(sketches[0].dream, &"bowser", "the sketch draws the dream's images")
 	c.equal(journal.document_lines().size(), 1, "knowledge lines are not selectable documents")
 	journal.close()
 
@@ -85,24 +93,38 @@ func run(c: OpeningCheck) -> void:
 	Containment.add_instability(MODULE, 40.0)
 	var wrong := code.duplicate()
 	wrong.reverse()
-	for glyph in wrong:
-		panel.glyph_button(glyph).trigger()
+	var enter := panel.get_node(^"EnterButton/Interactable") as Interactable
+	for index in wrong.size():
+		c.is_true(not enter.is_available(), "ВВОД waits for a complete code (%d)" % index)
+		c.equal(enter.get_prompt_text(), ResyncPanel.NEED_GLYPHS % code.size(), "ВВОД says how many glyphs it needs")
+		panel.glyph_button(wrong[index]).trigger()
+	c.is_true(enter.is_available(), "a complete code unlocks ВВОД")
+	panel.glyph_button(code[0]).trigger()
+	c.equal(panel.entered.size(), code.size(), "extra keys beyond the code length are ignored")
+	c.near(Containment.get_instability(MODULE), 40.0, 0.001, "typing is free until ВВОД")
+	enter.trigger()
 	c.equal(panel.last_result, DreamKnowledge.Result.WRONG, "reversed glyphs are a mistake")
 	var screen := panel.get_node(^"Screen") as WorldScreen
 	c.is_true(screen.view.rows.any(func(row: Dictionary) -> bool: return row.get("status") == &"alarm"), "the mistake is an alarm on the screen")
 	c.near(Containment.get_instability(MODULE), 40.0 + DreamKnowledge.resync_param("failure_penalty", 0.0), 0.001, "a mistake raises the instability")
 	c.equal(panel.entered.size(), 0, "input starts over after a mistake")
+	c.equal(panel.held, wrong, "the wrong slots stay on the screen")
+	c.is_true(panel.screen_text().contains(DreamKnowledge.label(wrong[0])), "the screen shows the held slots")
 	c.equal(DreamKnowledge.active_for(MODULE), KNOWLEDGE, "a mistake does not spend the knowledge")
 
 	# Reset clears a partial input.
 	panel.glyph_button(code[0]).trigger()
 	c.equal(panel.entered.size(), 1, "partial input is kept")
+	c.is_true(panel.held.is_empty(), "a new key ends the hold")
+	var before := Containment.get_instability(MODULE)
 	(panel.get_node(^"ResetButton/Interactable") as Interactable).trigger()
 	c.equal(panel.entered.size(), 0, "reset clears the input")
+	c.near(Containment.get_instability(MODULE), before, 0.001, "reset before ВВОД is free")
 
 	# The right sequence brings the sleep to full stability and spends the knowledge.
 	for glyph in code:
 		panel.glyph_button(glyph).trigger()
+	enter.trigger()
 	c.equal(panel.last_result, DreamKnowledge.Result.SYNCED, "remembered glyphs resync the capsule")
 	c.is_true(Containment.is_stable(MODULE) and Containment.forecast_seconds(MODULE) < 0.0, "resync removes the awakening forecast")
 	c.is_true(DreamKnowledge.is_used(KNOWLEDGE) and DreamKnowledge.active_for(MODULE).is_empty(), "the knowledge is spent")
@@ -116,6 +138,7 @@ func run(c: OpeningCheck) -> void:
 	DreamKnowledge.grant(KNOWLEDGE, rng)
 	c.is_true(not DreamKnowledge.is_used(KNOWLEDGE), "a new visit grants fresh knowledge")
 	c.equal(DreamKnowledge.journal_entries().size(), 1, "the journal keeps one entry per knowledge")
+	c.equal(DreamKnowledge.journal_entries()[0]["sketch"], DreamKnowledge.SKETCH_IMAGES, "later visits sketch the images one by one")
 
 	# An awake prisoner cannot be resynced.
 	Containment.add_instability(MODULE, 100.0)
