@@ -7,16 +7,19 @@ blockout become explicit marker anchors (``data-anchor-id``) so gameplay can be 
 
 Modes:
   --write                      write ``docs/design/dream_bowser/plans/*.svg`` from the specification below
-  --check                      validate the committed plans without the generator (CI); drift from the specification
-                               is reported as a warning so the plans can later be edited by hand
-  --generate --svg-tool-root R run the external svg-plan-to-godot (inspect + convert) for every plan into
-                               ``gen/dreams/bowser_s/<plan>/Generated/Architecture``; add --dry-run to print the commands
+  --check                      validate the committed plans without the generator (CI) against the rules every complex
+                               v4 canonical plan satisfies plus the dream specifics; drift from the specification is a
+                               warning so the plans can later be edited by hand
+  --generate --svg-tool-root R the author's strict run (#214): --check, tool version, strict inspect + convert with the
+                               complex v4 production settings into ``gen/dreams/bowser_s/<plan>/Generated/Architecture``,
+                               collision winding fix and report checks as in regenerate_sector.py; --dry-run prints commands
 """
 from __future__ import annotations
 
 import argparse
 import json
 import math
+import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
@@ -29,8 +32,17 @@ GEN_DIR = "gen/dreams/bowser_s"
 MAP_ID = "caretaker-dream-bowser-s"
 SPACE = "DREAM-S"
 DRAWABLE = {"rect", "line", "polyline", "polygon", "path", "circle", "ellipse", "text"}
-# Converter settings shared by every plan (same values as the complex v4 production manifest).
-SHARED_ARGS = ["--wall-thickness", "0.3", "--floor-thickness", "0.2", "--ceiling-thickness", "0.2", "--strict-wall-overlaps"]
+PRODUCTION_MANIFEST = ROOT / "tools/complex_v4/sector_generation_manifest.json"
+# Converter settings shared by every plan: the strict set of the complex v4 production manifest without --wall-height
+# (every dream wall carries its own data-wall-height). --check compares them with the manifest (#214).
+SHARED_ARGS = ["--wall-thickness", "0.3", "--floor-thickness", "0.2", "--ceiling-thickness", "0.2", "--strict-wall-overlaps",
+               "--strict-ceiling-alignment"]
+DEFAULT_WALL_THICKNESS = 0.3
+MIN_SVG_VERSION = (1, 19, 0)
+# Semantic types used by the canonical complex plans; anything else is "unrecognized" for the strict inspector.
+KNOWN_TYPES = {"floor", "ceiling", "floor-opening", "ceiling-opening", "wall", "door", "window", "opening", "marker", "ignore"}
+ALIGN_TOLERANCE = 0.01  # converter ceiling_alignment_tolerance
+MIN_SHARED_EDGE_M = 0.05
 MIN_PASSAGE_M = 0.8  # player capsule 0.7 m (scenes/player.tscn) plus margin
 ON_LINE_TOLERANCE = 1e-6
 MARKER_DOOR_TOLERANCE = 0.6
@@ -108,7 +120,9 @@ def _wall(key: str, p1: tuple[float, float], p2: tuple[float, float], height: fl
     return Wall(key, p1[0], p1[1], p2[0], p2[1], height, thickness, source, doors or [])
 
 
-# Walls run between the centre lines of the blockout boxes, so their faces coincide with the blockout faces.
+# Walls run between the centre lines of the blockout boxes, so their faces coincide with the blockout faces. Floors and
+# ceilings bounded by a wall end on its centre line like in the complex v4 plans; the converter extends them to the wall
+# outer face (floor_extent wall-outer), so the walkable area still matches the blockout (#214).
 PLANS = [
     Plan(
         "s_low", "Сон Боузера S — нижний уровень (терраса и карниз), отметка 0,0", 0.0,
@@ -134,15 +148,16 @@ PLANS = [
         "s_high", "Сон Боузера S — верхний уровень (мост, двор, зал печати, бастион), отметка 1,2", 1.2,
         floors=[
             Floor("step", "ВЕРХ УСТУПА 1,2 М", 26, -1.5, 4, 3, "Path/LedgeStep"),
-            Floor("chain-bridge", "ЦЕПНОЙ МОСТ 16 М / над лавой", 30, -1, 16, 2, "Path/Bridge"),
-            Floor("yard", "S3 ДВОР ПЕРВОГО БОЯ 24×18 / открытое небо", 46, -9, 23.5, 18, "Yard/Floor"),
-            Floor("seal-hall", "S4 ЗАЛ ПЕЧАТИ 20×16, высота 12", 70.5, -8, 19.5, 16, "SealHall/Floor"),
-            Floor("bastion-bridge", "МОСТ К БАСТИОНУ 12 М / над лавой", 78.5, -20, 3, 11, "Bastion/Bridge"),
-            Floor("bastion", "S5 БАСТИОН 10×8 / врата", 75, -28, 10, 8, "Bastion/Floor"),
+            Floor("chain-bridge", "ЦЕПНОЙ МОСТ 16 М / над лавой", 30, -1, 15.5, 2, "Path/Bridge"),
+            Floor("yard", "S3 ДВОР ПЕРВОГО БОЯ 24×18 / открытое небо", 45.5, -9.5, 24.5, 19, "Yard/Floor"),
+            Floor("seal-hall", "S4 ЗАЛ ПЕЧАТИ 20×16, высота 12", 70, -8.5, 20.5, 17, "SealHall/Floor"),
+            Floor("bastion-bridge", "МОСТ К БАСТИОНУ 12 М / над лавой", 78.6, -20, 2.8, 11.5, "Bastion/Bridge"),
+            Floor("bastion", "S5 БАСТИОН 10×8 / врата", 75.2, -27.8, 9.6, 7.8, "Bastion/Floor"),
         ],
         walls=[
-            _wall("chain-north", (30, -1.0), (46, -1.0), 1.0, 0.1, "Path/ChainLeft"),
-            _wall("chain-south", (30, 1.0), (46, 1.0), 1.0, 0.1, "Path/ChainRight"),
+            # The chains stop at the outer face of the yard wall instead of crossing it in the doorway.
+            _wall("chain-north", (30, -1.0), (45, -1.0), 1.0, 0.1, "Path/ChainLeft"),
+            _wall("chain-south", (30, 1.0), (45, 1.0), 1.0, 0.1, "Path/ChainRight"),
             _wall("yard-west", (45.5, -9.5), (45.5, 9.5), 8.0, 1.0, "Yard/WallWestNorth+WallWestSouth+LintelWest",
                   [Door("yard-entry", -2.0, 2.0, 5.0, "giant-arch", "Yard/LintelWest")]),
             _wall("yard-north", (45.5, -9.5), (70, -9.5), 8.0, 1.0, "Yard/WallNorth"),
@@ -170,7 +185,7 @@ PLANS = [
             _wall("parapet-east", (84.8, -27.8), (84.8, -20), 1.0, 0.4, "Bastion/ParapetEast"),
         ],
         ceilings=[
-            Ceiling("seal-hall", 70.5, -8, 19.5, 16, 13.2,
+            Ceiling("seal-hall", 70, -8.5, 20.5, 17, 13.2,
                     [("oculus", 78, -2, 4, 4, "SealHall/CeilingWest+CeilingEast (просвет над печатью)")]),
         ],
         markers=[
@@ -289,7 +304,10 @@ def write() -> int:
 # --- validation without the generator -------------------------------------------------------------------------------
 
 def _f(element: ET.Element, name: str) -> float:
-    return float(element.get(name, "nan"))
+    try:
+        return float(element.get(name, "nan"))
+    except ValueError:
+        return math.nan
 
 
 def _local(tag: str) -> str:
@@ -309,6 +327,128 @@ def _in_rect(px: float, pz: float, rect: tuple[float, float, float, float], tole
     return x - tolerance <= px <= x + w + tolerance and z - tolerance <= pz <= z + d + tolerance
 
 
+def _rect(element: ET.Element) -> tuple[float, float, float, float]:
+    return _f(element, "x"), _f(element, "y"), _f(element, "width"), _f(element, "height")
+
+
+def _line(element: ET.Element) -> tuple[float, float, float, float]:
+    return _f(element, "x1"), _f(element, "y1"), _f(element, "x2"), _f(element, "y2")
+
+
+def _rect_edges(rect: tuple[float, float, float, float]) -> list[tuple[bool, float, float, float]]:
+    """(vertical, fixed coordinate, span start, span end) for the four edges of a plan rectangle."""
+    x, z, w, d = rect
+    return [(True, x, z, z + d), (True, x + w, z, z + d), (False, z, x, x + w), (False, z + d, x, x + w)]
+
+
+def _parallel_walls(edge: tuple[bool, float, float, float], walls: list[dict]) -> list[tuple[dict, float]]:
+    """Walls parallel to a rectangle edge sharing more than MIN_SHARED_EDGE_M of it, with their centre-line distance."""
+    vertical, fixed, start, end = edge
+    result = []
+    for wall in walls:
+        x1, z1, x2, z2 = wall["line"]
+        if vertical and math.isclose(x1, x2, abs_tol=1e-9):
+            offset, lo, hi = abs(x1 - fixed), min(z1, z2), max(z1, z2)
+        elif not vertical and math.isclose(z1, z2, abs_tol=1e-9):
+            offset, lo, hi = abs(z1 - fixed), min(x1, x2), max(x1, x2)
+        else:
+            continue
+        if min(hi, end) - max(lo, start) > MIN_SHARED_EDGE_M:
+            result.append((wall, offset))
+    return result
+
+
+def format_errors(root: ET.Element, label: str, elevation: float, ceiling_alignment: bool = True) -> tuple[list[str], dict]:
+    """Rules every canonical complex v4 plan satisfies (tests run them on all 32 sectors), so the dream plans follow the
+    same contract as the plans the generator already accepts in strict mode."""
+    errors: list[str] = []
+    parsed: dict[str, list] = {"floors": [], "ceilings": [], "ceiling_openings": [], "walls": [], "doors": [], "markers": []}
+    ids: set[str] = set()
+    for element in root.iter():
+        if _local(element.tag) not in DRAWABLE:
+            continue
+        element_id = element.get("id", "")
+        kind = element.get("data-godot-type")
+        if not element_id:
+            errors.append(f"{label}: drawable <{_local(element.tag)}> has no stable id")
+        elif element_id in ids:
+            errors.append(f"{label}: duplicate id {element_id}")
+        ids.add(element_id)
+        if not kind:
+            errors.append(f"{label}: {element_id} has no data-godot-type")
+            continue
+        if kind not in KNOWN_TYPES:
+            errors.append(f"{label}: {element_id} has unknown data-godot-type {kind!r} (strict inspection: unrecognized)")
+            continue
+        if element.get("data-anchor-role") and not element.get("data-anchor-id"):
+            errors.append(f"{label}: explicit anchor {element_id} has no data-anchor-id")
+        if kind in ("floor", "ceiling", "ceiling-opening") and _local(element.tag) != "rect":
+            errors.append(f"{label}: {kind} {element_id} must be a rect")
+            continue
+        if kind == "floor":
+            if not element.get("data-space-id"):
+                errors.append(f"{label}: floor {element_id} has no data-space-id")
+            parsed["floors"].append({"id": element_id, "rect": _rect(element)})
+        elif kind == "ceiling":
+            ceiling_elevation = _f(element, "data-ceiling-elevation")
+            if not ceiling_elevation > elevation:
+                errors.append(f"{label}: ceiling {element_id} is not above the floor elevation")
+            parsed["ceilings"].append({"id": element_id, "rect": _rect(element), "elevation": ceiling_elevation})
+        elif kind == "ceiling-opening":
+            parsed["ceiling_openings"].append({"id": element_id, "rect": _rect(element)})
+        elif kind == "wall" and _local(element.tag) == "line":
+            line = _line(element)
+            if not (math.isclose(line[0], line[2]) or math.isclose(line[1], line[3])):
+                errors.append(f"{label}: wall {element_id} is not axis aligned")
+            if not element.get("data-surface-side-id") or element.get("data-normal-side") not in ("normal", "opposite"):
+                errors.append(f"{label}: wall {element_id} has no surface side")
+            height = _f(element, "data-wall-height")
+            thickness = _f(element, "data-wall-thickness") if element.get("data-wall-thickness") else DEFAULT_WALL_THICKNESS
+            if not height > 0 or not thickness > 0:
+                errors.append(f"{label}: wall {element_id} needs a positive data-wall-height / data-wall-thickness")
+            parsed["walls"].append({"id": element_id, "line": line, "height": height, "thickness": thickness})
+        elif kind == "door" and _local(element.tag) == "line":
+            if element.get("data-inside-side") not in ("normal", "opposite"):
+                errors.append(f"{label}: door {element_id} has no data-inside-side")
+            height = _f(element, "data-door-height")
+            if not height > 0:
+                errors.append(f"{label}: door {element_id} has no data-door-height")
+            parsed["doors"].append({"id": element_id, "line": _line(element), "height": height})
+        elif kind == "marker":
+            parsed["markers"].append({"id": element_id, "x": _f(element, "cx"), "z": _f(element, "cy"),
+                                      "anchor": element.get("data-anchor-id"), "role": element.get("data-anchor-role"),
+                                      "hook": element.get("data-hook-node")})
+    for opening in parsed["ceiling_openings"]:
+        x, z, w, d = opening["rect"]
+        if not any(_in_rect(x, z, c["rect"]) and _in_rect(x + w, z + d, c["rect"]) for c in parsed["ceilings"]):
+            errors.append(f"{label}: ceiling opening {opening['id']} is not inside a ceiling")
+    # Floor and ceiling edges that run inside a wall footprint sit exactly on its centre line (complex v4: 773 of 773).
+    for kind in ("floors", "ceilings"):
+        for item in parsed[kind]:
+            for edge in _rect_edges(item["rect"]):
+                for wall, offset in _parallel_walls(edge, parsed["walls"]):
+                    if ALIGN_TOLERANCE < offset <= wall["thickness"] / 2 + ALIGN_TOLERANCE:
+                        errors.append(f"{label}: {kind[:-1]} {item['id']} edge is {offset:.3f} m off the centre line of wall "
+                                      f"{wall['id']} (draw it on the wall axis, the converter extends it to the outer face)")
+    # --strict-ceiling-alignment: a ceiling meets the top of every wall on its edges.
+    if ceiling_alignment:
+        for ceiling in parsed["ceilings"]:
+            for edge in _rect_edges(ceiling["rect"]):
+                for wall, offset in _parallel_walls(edge, parsed["walls"]):
+                    if offset <= ALIGN_TOLERANCE and abs(elevation + wall["height"] - ceiling["elevation"]) > ALIGN_TOLERANCE:
+                        errors.append(f"{label}: ceiling {ceiling['id']} at {ceiling['elevation']} does not meet the top of wall "
+                                      f"{wall['id']} ({elevation} + {wall['height']})")
+    floors = parsed["floors"]
+    for i, first in enumerate(floors):
+        ax, az, aw, ad = first["rect"]
+        for second in floors[i + 1:]:
+            bx, bz, bw, bd = second["rect"]
+            overlap = max(0.0, min(ax + aw, bx + bw) - max(ax, bx)) * max(0.0, min(az + ad, bz + bd) - max(az, bz))
+            if overlap > 1e-4:
+                errors.append(f"{label}: floors {first['id']} and {second['id']} overlap by {overlap:.3f} m2")
+    return errors, parsed
+
+
 def check_plan(path: Path, errors: list[str], seen_ids: set[str], seen_anchors: set[str]) -> dict:
     label = path.name
     root = ET.parse(path).getroot()
@@ -316,74 +456,69 @@ def check_plan(path: Path, errors: list[str], seen_ids: set[str], seen_anchors: 
         errors.append(f"{label}: generator input policy metadata is missing")
     if root.get("data-scale") != "1":
         errors.append(f"{label}: data-scale must be 1 (metres)")
-    elevation = float(root.get("data-elevation-m", "nan"))
+    elevation = _f(root, "data-elevation-m")
     if not math.isfinite(elevation):
         errors.append(f"{label}: data-elevation-m is missing")
-    floors: list[tuple[float, float, float, float]] = []
-    walls: list[tuple[str, tuple[float, float, float, float], float]] = []
-    doors: list[tuple[str, tuple[float, float, float, float], float]] = []
-    ceilings: list[tuple[float, float, float, float]] = []
-    markers: list[tuple[str, float, float]] = []
+    plan_errors, parsed = format_errors(root, label, elevation)
+    errors.extend(plan_errors)
+    prefix = f"bowser-{path.stem.replace('_', '-')}-"
     for element in root.iter():
-        if _local(element.tag) not in DRAWABLE:
-            continue
         element_id = element.get("id", "")
-        kind = element.get("data-godot-type")
-        if not element_id:
-            errors.append(f"{label}: drawable without id")
-        elif element_id in seen_ids:
-            errors.append(f"{label}: duplicate id {element_id}")
-        seen_ids.add(element_id)
-        if not kind:
-            errors.append(f"{label}: {element_id} has no data-godot-type")
-            continue
-        if kind == "floor":
-            if not element.get("data-space-id"):
-                errors.append(f"{label}: floor {element_id} has no data-space-id")
-            floors.append((_f(element, "x"), _f(element, "y"), _f(element, "width"), _f(element, "height")))
-        elif kind == "ceiling":
-            ceilings.append((_f(element, "x"), _f(element, "y"), _f(element, "width"), _f(element, "height")))
-            if _f(element, "data-ceiling-elevation") <= elevation:
-                errors.append(f"{label}: ceiling {element_id} is not above the floor elevation")
-        elif kind == "ceiling-opening":
-            rect = (_f(element, "x"), _f(element, "y"), _f(element, "width"), _f(element, "height"))
-            if not any(_in_rect(rect[0], rect[1], c) and _in_rect(rect[0] + rect[2], rect[1] + rect[3], c) for c in ceilings):
-                errors.append(f"{label}: ceiling opening {element_id} is not inside a ceiling")
-        elif kind == "wall":
-            line = (_f(element, "x1"), _f(element, "y1"), _f(element, "x2"), _f(element, "y2"))
-            if not (math.isclose(line[0], line[2]) or math.isclose(line[1], line[3])):
-                errors.append(f"{label}: wall {element_id} is not axis aligned")
-            if not element.get("data-surface-side-id") or not element.get("data-normal-side"):
-                errors.append(f"{label}: wall {element_id} has no surface side")
-            walls.append((element_id, line, _f(element, "data-wall-height")))
-        elif kind == "door":
-            line = (_f(element, "x1"), _f(element, "y1"), _f(element, "x2"), _f(element, "y2"))
-            doors.append((element_id, line, _f(element, "data-door-height")))
-        elif kind == "marker":
-            anchor = element.get("data-anchor-id")
-            if not anchor or not element.get("data-anchor-role"):
-                errors.append(f"{label}: marker {element_id} has no data-anchor-id / data-anchor-role")
-            elif anchor in seen_anchors:
-                errors.append(f"{label}: duplicate anchor {anchor}")
-            else:
-                seen_anchors.add(anchor)
-            markers.append((element_id, _f(element, "cx"), _f(element, "cy")))
-    for door_id, line, height in doors:
-        width = math.hypot(line[2] - line[0], line[3] - line[1])
-        hosts = [(wall_id, wall_height) for wall_id, wall_line, wall_height in walls
-                 if _on_segment(line[0], line[1], wall_line, ON_LINE_TOLERANCE) and _on_segment(line[2], line[3], wall_line, ON_LINE_TOLERANCE)]
+        if _local(element.tag) in DRAWABLE and element_id:
+            if element_id in seen_ids:
+                errors.append(f"{label}: id {element_id} is also used by another dream plan")
+            seen_ids.add(element_id)
+            if not element_id.startswith(prefix):
+                errors.append(f"{label}: id {element_id} does not start with {prefix}")
+        # The dream has no stair generator manifest: vertical markup would be silently dropped.
+        if any(name.startswith("data-vertical-") for name in element.attrib):
+            errors.append(f"{label}: {element_id or _local(element.tag)} has data-vertical-* markup but the dream has no stair generator")
+    walls = parsed["walls"]
+    for door in parsed["doors"]:
+        x1, z1, x2, z2 = door["line"]
+        width = math.hypot(x2 - x1, z2 - z1)
+        hosts = [w for w in walls if _on_segment(x1, z1, w["line"], ON_LINE_TOLERANCE) and _on_segment(x2, z2, w["line"], ON_LINE_TOLERANCE)]
         if len(hosts) != 1:
-            errors.append(f"{label}: door {door_id} must lie on exactly one wall, found {len(hosts)}")
-        elif not 2.0 <= height < hosts[0][1]:
-            errors.append(f"{label}: door {door_id} height {height} must be at least 2.0 and below its wall {hosts[0][1]}")
+            errors.append(f"{label}: door {door['id']} must lie on exactly one wall, found {len(hosts)}")
+        elif not 2.0 <= door["height"] < hosts[0]["height"]:
+            errors.append(f"{label}: door {door['id']} height {door['height']} must be at least 2.0 and below its wall {hosts[0]['height']}")
         if width < MIN_PASSAGE_M:
-            errors.append(f"{label}: door {door_id} is {width:.2f} m wide, narrower than {MIN_PASSAGE_M} m")
-    for marker_id, x, z in markers:
-        on_floor = any(_in_rect(x, z, f) for f in floors)
-        on_door = any(_on_segment(x, z, line, MARKER_DOOR_TOLERANCE) for _, line, _ in doors)
+            errors.append(f"{label}: door {door['id']} is {width:.2f} m wide, narrower than {MIN_PASSAGE_M} m")
+        crossing = [w["id"] for w in walls if w not in hosts and (_on_segment(*w["line"][:2], door["line"], ON_LINE_TOLERANCE)
+                                                                  or _on_segment(*w["line"][2:], door["line"], ON_LINE_TOLERANCE))]
+        if crossing:
+            errors.append(f"{label}: door {door['id']} is blocked by wall end(s) {', '.join(crossing)}")
+    for marker in parsed["markers"]:
+        anchor = marker["anchor"]
+        if not anchor or not marker["role"] or not marker["hook"]:
+            errors.append(f"{label}: marker {marker['id']} needs data-anchor-id, data-anchor-role and data-hook-node")
+        elif anchor in seen_anchors:
+            errors.append(f"{label}: duplicate anchor {anchor}")
+        else:
+            seen_anchors.add(anchor)
+            # The converter publishes the frame as svg:<element id>:point, so the element id must stay derived from the anchor.
+            if marker["id"] != f"{prefix}marker-{anchor.rsplit('/', 1)[-1]}":
+                errors.append(f"{label}: marker {marker['id']} id does not follow its anchor {anchor}")
+        on_floor = any(_in_rect(marker["x"], marker["z"], f["rect"]) for f in parsed["floors"])
+        on_door = any(_on_segment(marker["x"], marker["z"], d["line"], MARKER_DOOR_TOLERANCE) for d in parsed["doors"])
         if not (on_floor or on_door):
-            errors.append(f"{label}: marker {marker_id} is neither on a floor nor at a door")
-    return {"elevation": elevation, "floors": floors, "doors": doors, "walls": walls}
+            errors.append(f"{label}: marker {marker['id']} is neither on a floor nor at a door")
+    return {"elevation": elevation, "floors": [f["rect"] for f in parsed["floors"]],
+            "doors": [(d["id"], d["line"], d["height"]) for d in parsed["doors"]], "walls": walls,
+            "markers": parsed["markers"], "ceilings": len(parsed["ceilings"])}
+
+
+def production_shared_args(manifest_path: Path = PRODUCTION_MANIFEST) -> list[str]:
+    """The strictest shared converter arguments of the complex v4 production manifest without --wall-height."""
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    variants = []
+    for sector in manifest["sectors"]:
+        args = list(sector["shared_args"])
+        if "--wall-height" in args:
+            index = args.index("--wall-height")
+            del args[index:index + 2]
+        variants.append(args)
+    return max(variants, key=len)
 
 
 def check() -> int:
@@ -392,6 +527,9 @@ def check() -> int:
     plans: dict[str, dict] = {}
     seen_ids: set[str] = set()
     seen_anchors: set[str] = set()
+    production = production_shared_args()
+    if SHARED_ARGS != production:
+        errors.append(f"converter settings {SHARED_ARGS} differ from the complex v4 production strict settings {production}")
     for plan in PLANS:
         path = PLAN_DIR / f"{plan.slug}.svg"
         if not path.is_file():
@@ -402,6 +540,8 @@ def check() -> int:
         except ET.ParseError as exc:
             errors.append(f"{path.name}: invalid XML: {exc}")
             continue
+        if not math.isclose(plans[plan.slug]["elevation"], plan.elevation):
+            errors.append(f"{path.name}: data-elevation-m differs from the --elevation {plan.elevation} passed to the converter")
         if path.read_text(encoding="utf-8") != render(plan):
             warnings.append(f"{path.name} differs from the specification in tools/dream/bowser_s_plans.py (hand edit?)")
     # Every waypoint of BowserDream.route() must stand on a floor (or in a doorway) of the plan of its level.
@@ -433,21 +573,90 @@ def _tool_script(root: Path, name: str) -> Path:
     return root / "scripts" / name
 
 
+def _version(text: object) -> tuple[int, ...] | None:
+    match = re.search(r"(\d+)\.(\d+)\.(\d+)", str(text or ""))
+    return tuple(int(part) for part in match.groups()) if match else None
+
+
+def verify_generation(plan: Plan, preflight: dict, conversion: dict) -> list[str]:
+    """What regenerate_sector.py of the complex requires from a package, plus the dream specifics (#214)."""
+    errors: list[str] = []
+    version = _version(conversion.get("generator_version"))
+    if version is None or version < MIN_SVG_VERSION:
+        errors.append(f"generator_version {conversion.get('generator_version')} is older than 1.19.0")
+    if conversion.get("errors"):
+        errors.append(f"conversion errors: {conversion['errors']}")
+    summary = preflight.get("summary", {})
+    for key in ("unrecognized", "invalid"):
+        if preflight.get(key) or summary.get(key):
+            errors.append(f"strict inspection left {key} elements")
+    if preflight.get("spatial_handoff") != conversion.get("spatial_handoff"):
+        errors.append("inspector and converter spatial_handoff differ for identical settings")
+    handoff = conversion.get("spatial_handoff", {})
+    if handoff.get("anchor_frame_issues"):
+        errors.append(f"anchor_frame_issues: {handoff['anchor_frame_issues']}")
+    counts = conversion.get("counts", {})
+    expected = {"input_floor": len(plan.floors), "input_wall": len(plan.walls), "input_door": sum(len(w.doors) for w in plan.walls),
+                "input_ceiling": len(plan.ceilings), "input_marker": len(plan.markers),
+                "ceiling_openings_requested": sum(len(c.openings) for c in plan.ceilings)}
+    for key, value in expected.items():
+        if int(counts.get(key, 0)) != value:
+            errors.append(f"counts.{key} is {counts.get(key, 0)}, expected {value}")
+    if int(counts.get("ceiling_openings_applied", 0)) != expected["ceiling_openings_requested"]:
+        errors.append("not every ceiling opening was applied")
+    # Open sky: the converter must not invent ceilings over the floors that have none.
+    if int(counts.get("ceiling_polygons_before_normalization", 0)) != len(plan.ceilings):
+        errors.append(f"ceiling polygons {counts.get('ceiling_polygons_before_normalization')} != declared ceilings {len(plan.ceilings)}")
+    for key in ("ceiling_wall_alignment_issues", "wall_volume_overlaps"):
+        if int(counts.get(key, 0)):
+            errors.append(f"counts.{key} is {counts[key]}")
+    frames = {frame.get("anchor_id"): frame for frame in handoff.get("anchor_frames", [])}
+    sid = f"bowser-{plan.slug.replace('_', '-')}"
+    for marker in plan.markers:
+        frame = frames.get(f"svg:{sid}-marker-{marker.key}:point")
+        if frame is None:
+            errors.append(f"anchor frame svg:{sid}-marker-{marker.key}:point ({SPACE}/{marker.key}) is missing")
+        elif frame.get("role") != "gameplay_hook":
+            errors.append(f"anchor frame of {SPACE}/{marker.key} has role {frame.get('role')}")
+    return errors
+
+
+def _normalize_collision_winding(scene: Path) -> None:
+    """The complex backend flips converter 1.19 floor/ceiling collision faces to Godot's front; reuse it as is."""
+    sys.path.insert(0, str(ROOT / "tools/complex_v4"))
+    try:
+        from regenerate_sector import normalize_surface_collision_winding
+    finally:
+        sys.path.pop(0)
+    normalize_surface_collision_winding(scene)
+
+
 def generate(svg_tool_root: Path, python: str, dry_run: bool) -> int:
     inspector = _tool_script(svg_tool_root, "inspect_svg_plan.py")
     converter = _tool_script(svg_tool_root, "svg_to_godot3d.py")
-    if not dry_run and not (inspector.is_file() and converter.is_file()):
-        print(f"svg-plan-to-godot scripts not found under {svg_tool_root}", file=sys.stderr)
-        return 2
+    if not dry_run:
+        if check() != 0:
+            print("--check failed; fix the plans before generation", file=sys.stderr)
+            return 1
+        if not (inspector.is_file() and converter.is_file()):
+            print(f"svg-plan-to-godot scripts not found under {svg_tool_root}", file=sys.stderr)
+            return 2
+        probe = subprocess.run([python, str(inspector), "--version"], cwd=ROOT, text=True, capture_output=True)
+        version = _version(probe.stdout)
+        if probe.returncode != 0 or version is None or version < MIN_SVG_VERSION:
+            print(f"svg-plan-to-godot >= 1.19.0 required, inspector reports {probe.stdout.strip() or probe.stderr.strip()!r}", file=sys.stderr)
+            return 2
+    failed = 0
     for plan in PLANS:
         source = PLAN_DIR / f"{plan.slug}.svg"
         out_dir = f"{GEN_DIR}/{plan.slug}/Generated/Architecture"
         common = ["--profile", "generic", "--scale", "1", "--origin", "none", "--elevation", fmt(plan.elevation), *SHARED_ARGS]
         report = f"{GEN_DIR}/{plan.slug}/preflight_report.json"
+        scene_name = f"bowser_{plan.slug}_generated"
         commands = [
             [python, str(inspector), str(source.relative_to(ROOT)), *common, "--json", "--output-json", report, "--strict"],
             [python, str(converter), str(source.relative_to(ROOT)), out_dir, *common,
-             "--resource-dir", f"res://{out_dir}", "--scene-name", f"bowser_{plan.slug}_generated", "--strict"],
+             "--resource-dir", f"res://{out_dir}", "--scene-name", scene_name, "--strict"],
         ]
         for command in commands:
             print(" ".join(command))
@@ -458,13 +667,19 @@ def generate(svg_tool_root: Path, python: str, dry_run: bool) -> int:
             if completed.returncode != 0:
                 print(f"{plan.slug}: command failed with exit {completed.returncode}", file=sys.stderr)
                 return completed.returncode
-        if not dry_run:
-            conversion = json.loads((ROOT / out_dir / "conversion_report.json").read_text(encoding="utf-8"))
-            if conversion.get("errors"):
-                print(f"{plan.slug}: conversion report has errors", file=sys.stderr)
-                return 1
-            print(f"{plan.slug}: version {conversion.get('generator_version')} counts {json.dumps(conversion.get('counts', {}))}")
-    return 0
+        if dry_run:
+            continue
+        preflight = json.loads((ROOT / report).read_text(encoding="utf-8"))
+        conversion = json.loads((ROOT / out_dir / "conversion_report.json").read_text(encoding="utf-8"))
+        _normalize_collision_winding(ROOT / out_dir / f"{scene_name}.tscn")
+        problems = verify_generation(plan, preflight, conversion)
+        for problem in problems:
+            print(f"ERROR {plan.slug}: {problem}")
+        failed += bool(problems)
+        print(f"{plan.slug}: version {conversion.get('generator_version')} counts {json.dumps(conversion.get('counts', {}))}")
+    if not dry_run:
+        print(f"DREAM_GENERATION plans={len(PLANS)} failed={failed}")
+    return 1 if failed else 0
 
 
 def main() -> int:
