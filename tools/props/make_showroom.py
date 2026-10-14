@@ -15,6 +15,14 @@ OUT = REPO / "scenes" / "sandbox" / "art_showroom.tscn"
 GAP = 1.2           # free space between props in a row, metres
 ROW_GAP = 2.5       # free space between rows
 ROW_WIDTH = 34.0    # wrap rows after this length
+# debug labels (#207): small type wrapped to the prop's slot, every other label raised so neighbours do not overlap,
+# faded out beyond LABEL_RANGE; F1 hides them all (scenes/sandbox/art_showroom.gd)
+LABEL_GROUP = "showroom_labels"
+LABEL_PIXEL = 0.003      # metres per font pixel
+LABEL_FONT = 32
+LABEL_STAGGER = 0.22     # extra height of every other label in a row, metres
+LABEL_RANGE = 9.0        # labels fade out beyond this distance, metres
+LABEL_FADE = 1.5
 
 
 def rows_for(specs: dict):
@@ -33,6 +41,7 @@ def main() -> int:
     from materials_def import TILE
 
     ext, sub, nodes = [], [], []
+    ext.append('[ext_resource type="Script" path="res://scenes/sandbox/art_showroom.gd" id="showroom_script"]')
     ext.append('[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="player"]')
     ext.append('[ext_resource type="PackedScene" path="res://scenes/ui/opening_hud.tscn" id="hud"]')
     ext.append('[ext_resource type="Material" path="res://materials/hangar_concrete_floor.tres" id="floor_mat"]')
@@ -45,7 +54,8 @@ def main() -> int:
             '[sub_resource type="BoxShape3D" id="floor_shape"]', "size = Vector3(120, 0.2, 120)", "",
             '[sub_resource type="BoxMesh" id="swatch_mesh"]', "size = Vector3(1, 1, 0.1)", ""]
 
-    nodes += ['[node name="ArtShowroom" type="Node3D"]', "",
+    fade = [f"visibility_range_end = {LABEL_RANGE}", f"visibility_range_end_margin = {LABEL_FADE}", "visibility_range_fade_mode = 1"]
+    nodes += ['[node name="ArtShowroom" type="Node3D"]', 'script = ExtResource("showroom_script")', "",
               '[node name="WorldEnvironment" type="WorldEnvironment" parent="."]', 'environment = SubResource("env")', "",
               '[node name="Moon" type="DirectionalLight3D" parent="."]',
               "transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 12, 0)",
@@ -61,16 +71,16 @@ def main() -> int:
     for title, ids in rows_for(specs):
         if not ids:
             continue
-        nodes += [f'[node name="Title{light_i}" type="Label3D" parent="Props"]',
+        nodes += [f'[node name="Title{light_i}" type="Label3D" parent="Props" groups=["{LABEL_GROUP}"]]',
                   f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3.2, {z:.2f})", f'text = "{title}"',
                   "font_size = 96", "outline_size = 12", "modulate = Color(1, 0.85, 0.45, 1)", ""]
-        x, row_depth = 0.0, 0.0
+        x, row_depth, in_row = 0.0, 0.0, 0
         for pid in ids:
             s = specs[pid]
             w, h, d = s["size"]
             if x > 0 and x + w > ROW_WIDTH:
                 z += row_depth + ROW_GAP
-                x, row_depth = 0.0, 0.0
+                x, row_depth, in_row = 0.0, 0.0, 0
             cx = x + w / 2
             y = 0.0
             if s["anchor"] == "ceiling":
@@ -80,14 +90,20 @@ def main() -> int:
             elif s["anchor"] == "free":
                 y = h / 2 + 0.05
             idx = len(ext) + 1
-            ext.append(f'[ext_resource type="PackedScene" path="res://objects/art/{pid}.tscn" id="p{idx}"]')
+            wrapper = f"objects/art/{pid}.tscn"
+            if not (REPO / wrapper).exists():   # dream kit modules have no wrapper: show the bare model
+                wrapper = f"loads/props/{s.get('gltf', f'{pid}/{pid}.gltf')}"
+            ext.append(f'[ext_resource type="PackedScene" path="res://{wrapper}" id="p{idx}"]')
             name = pid.replace("__", "_")
             nodes += [f'[node name="{name}" parent="Props" instance=ExtResource("p{idx}")]',
                       f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {cx:.3f}, {y:.3f}, {z:.3f})", "",
-                      f'[node name="{name}_label" type="Label3D" parent="Props"]',
-                      f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {cx:.3f}, {max(y + h + 0.25, 0.4):.3f}, {z + d / 2 + 0.05:.3f})",
-                      f'text = "{pid}\\n{s["catalog"]}  {w:.2f}×{h:.2f}×{d:.2f}"', "font_size = 28", "outline_size = 6",
-                      "billboard = 1", "modulate = Color(0.85, 0.88, 0.9, 1)", ""]
+                      f'[node name="{name}_label" type="Label3D" parent="Props" groups=["{LABEL_GROUP}"]]',
+                      f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {cx:.3f}, "
+                      f"{max(y + h + 0.2, 0.4) + LABEL_STAGGER * (in_row % 2):.3f}, {z + d / 2 + 0.05:.3f})",
+                      *fade, f"pixel_size = {LABEL_PIXEL}", "billboard = 1", "modulate = Color(0.85, 0.88, 0.9, 1)",
+                      f'text = "{pid}\\n{s["catalog"]}  {w:.2f}×{h:.2f}×{d:.2f}"', f"font_size = {LABEL_FONT}", "outline_size = 6",
+                      "autowrap_mode = 1", f"width = {int((w + GAP) * 0.9 / LABEL_PIXEL)}", ""]
+            in_row += 1
             if light_i % 3 == 0:
                 warm = (light_i // 3) % 2 == 0
                 nodes += [f'[node name="Lamp{light_i}" type="OmniLight3D" parent="Props"]',
@@ -114,9 +130,10 @@ def main() -> int:
         nodes += [f'[node name="Swatch_{mat}" type="MeshInstance3D" parent="."]',
                   f"transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, {sx:.2f}, {sy:.2f}, -3)",
                   'mesh = SubResource("swatch_mesh")', f'surface_material_override/0 = SubResource("m_{mat}")', "",
-                  f'[node name="Swatch_{mat}_label" type="Label3D" parent="."]',
-                  f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {sx:.2f}, {sy - 0.72:.2f}, -2.9)",
-                  f'text = "{mat}{" (Poly Haven)" if mat in materials else ""}"', "font_size = 24", "outline_size = 6", ""]
+                  f'[node name="Swatch_{mat}_label" type="Label3D" parent="." groups=["{LABEL_GROUP}"]]',
+                  f"transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, {sx:.2f}, {sy - 0.72:.2f}, -2.9)", *fade,
+                  f"pixel_size = {LABEL_PIXEL}", f'text = "{mat}{" (Poly Haven)" if mat in materials else ""}"',
+                  f"font_size = {LABEL_FONT}", "outline_size = 6", "autowrap_mode = 1", f"width = {int(1.4 / LABEL_PIXEL)}", ""]
     nodes += ['[node name="SwatchLight" type="OmniLight3D" parent="."]',
               "transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 2.5, -1)", "light_energy = 1.4", "omni_range = 8.0", ""]
 
