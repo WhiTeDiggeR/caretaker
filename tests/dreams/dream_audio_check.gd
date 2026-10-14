@@ -34,8 +34,8 @@ func _run() -> void:
 		var id := StringName(str(cfg.stingers[event]))
 		_check(Sfx.sounds.has(id), "stinger %s: %s is in the Sfx catalogue" % [event, id])
 	for stage_id: String in [DreamAudio.CALM, DreamAudio.ALARM, DreamAudio.UNEASE, DreamAudio.PREAWAKE]:
-		var stream := DreamAudio.stage_stream(MODULE, StringName(stage_id)) as AudioStreamWAV
-		var loops := stream != null and stream.loop_mode == AudioStreamWAV.LOOP_FORWARD and stream.get_length() > 1.0
+		var stream := DreamAudio.stage_stream(MODULE, StringName(stage_id))
+		var loops := _loops(stream) and stream.get_length() > 1.0
 		_check(loops, "stage %s has a looping background" % stage_id)
 	_check(Sfx.validate().is_empty(), "the Sfx catalogue loads: %s" % [Sfx.validate()])
 	_check(DreamAudio.stage == DreamAudio.SILENT, "silent outside a dream")
@@ -119,8 +119,16 @@ func _expect(stage: StringName, label: String) -> void:
 ## Stage of the loop that plays in front (the other player only fades out).
 func _playing() -> StringName:
 	var player: AudioStreamPlayer = DreamAudio._players[DreamAudio._current]
-	var looped := player.stream is AudioStreamWAV and (player.stream as AudioStreamWAV).loop_mode == AudioStreamWAV.LOOP_FORWARD
-	return DreamAudio.current_sound if player.playing and looped else &""
+	return DreamAudio.current_sound if player.playing and _loops(player.stream) else &""
+
+
+## A synthesised drone (WAV) or a recorded stage loop (#209, Ogg Vorbis) set to loop.
+func _loops(stream: AudioStream) -> bool:
+	if stream is AudioStreamWAV:
+		return (stream as AudioStreamWAV).loop_mode == AudioStreamWAV.LOOP_FORWARD
+	if stream is AudioStreamOggVorbis:
+		return (stream as AudioStreamOggVorbis).loop
+	return false
 
 
 func _frames(count: int) -> void:
