@@ -5,6 +5,8 @@
   правок, валидация имени ветки и то, что основной клон не меняется. Сценарий идёт дважды: в обычной
   папке и в папке с кириллицей и пробелом, где скрипт запускается с консольной кодировкой cp866,
   как в Windows PowerShell на русской Windows (вывод git декодируется по [Console]::OutputEncoding).
+  Ссылки caretaker://inkscape/<путь> (#222): разбор пути, отказ на путь вне клона и не-.svg, запуск
+  подменённого Inkscape (INKSCAPE_BIN) с путём одним аргументом — запуск только вне Windows.
 #>
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = "Stop"
@@ -53,6 +55,19 @@ function Open-Branch([string[]]$Arguments, [string]$InputText = '') {
     return $LASTEXITCODE
 }
 
+## Ссылка caretaker://inkscape/...; без -Launch Inkscape не запускается (-NoGodot).
+function Open-Inkscape([string]$Link, [bool]$Launch = $false) {
+    $extra = @('-Uri', $Link)
+    if ($Launch) {
+        $all = @('-NoProfile', '-File')
+        if ($script:cp866) { $all += @($wrapper, $script) } else { $all += @($script) }
+        $output = '' | & $pwshBin @($all + @('-Repo', $main) + $extra) 2>&1
+        $script:lastOutput = ($output | Out-String)
+        return $LASTEXITCODE
+    }
+    return (Open-Branch $extra)
+}
+
 function Get-MainState {
     return @{
         Head = (G $main rev-parse HEAD)
@@ -81,6 +96,8 @@ function Invoke-Scenario([string]$Label, [string]$Parent, [string]$CloneName, [b
     Write-File (Join-Path $seed "notes.txt") "integration`n"
     Write-File (Join-Path $seed "scenes/room.tscn") "[gd_scene load_steps=2 format=3 uid=`"uid://aaa`"]`n`n[node name=`"Room`" type=`"Node3D`" unique_id=1]`ntext = `"Комната смотрителя`"`n"
     Write-File (Join-Path $seed "docs/заметки.txt") "кириллица в имени файла`n"
+    Write-File (Join-Path $seed "plans/lower/l_core.svg") "<svg xmlns=`"http://www.w3.org/2000/svg`"/>`n"
+    Write-File (Join-Path $seed "plans/мой план.svg") "<svg xmlns=`"http://www.w3.org/2000/svg`"/>`n"
     G $seed add -A | Out-Null
     G $seed commit --quiet -m "integration" | Out-Null
     G $seed checkout --quiet -b task/1-feature | Out-Null
@@ -162,10 +179,59 @@ function Invoke-Scenario([string]$Label, [string]$Parent, [string]$CloneName, [b
     Check ($after.Status -eq $before.Status) "main clone status (uncommitted work) is unchanged"
     Check ($after.File -eq $before.File) "main clone uncommitted file content is unchanged"
     Check (@(Get-ChildItem -LiteralPath $base -Force | Where-Object { $_.Name -ne 'origin.git' -and $_.Name -ne 'seed' }).Count -eq 2) "nothing is created next to the clone except the review copy"
+
+    # 7. caretaker://inkscape/<путь>: только существующий .svg внутри основного клона (#222).
+    $plan = Join-Path $main "plans/lower/l_core.svg"
+    $code = Open-Inkscape 'caretaker://inkscape/plans/lower/l_core.svg'
+    Check ($code -eq 0 -and $script:lastOutput.Contains($plan)) "inkscape link resolves a plan inside the main clone"
+    $code = Open-Inkscape 'caretaker://inkscape/plans/%D0%BC%D0%BE%D0%B9%20%D0%BF%D0%BB%D0%B0%D0%BD.svg'
+    Check ($code -eq 0 -and $script:lastOutput.Contains((Join-Path $main "plans/мой план.svg"))) "inkscape link with percent-encoded Cyrillic and a space"
+    $code = Open-Inkscape 'CARETAKER://inkscape/plans%2Flower%2Fl_core.svg'
+    Check ($code -eq 0 -and $script:lastOutput.Contains($plan)) "inkscape link: scheme case and encoded slashes"
+    Write-File (Join-Path $base "outside.svg") "<svg/>"
+    Write-File (Join-Path $main "notes.svg.txt") "not svg"
+    $linked = $false
+    try { New-Item -ItemType SymbolicLink -Path (Join-Path $main "link") -Target $base -ErrorAction Stop | Out-Null; $linked = $true } catch { $linked = $false }
+    $bad = @('caretaker://inkscape/notes.txt', 'caretaker://inkscape/notes.svg.txt', 'caretaker://inkscape/../outside.svg',
+        'caretaker://inkscape/plans/%2E%2E/%2E%2E/outside.svg', 'caretaker://inkscape//etc/outside.svg',
+        'caretaker://inkscape/C:%5Coutside.svg', 'caretaker://inkscape/plans%5C..%5C..%5Coutside.svg',
+        'caretaker://inkscape/plans/missing.svg', 'caretaker://inkscape/', 'caretaker://inkscape/plans/l_core.svg%00.txt',
+        'caretaker://inkscape/-x.svg', 'caretaker://inkscape/plans/lower/l_core.svg%22%20-Force', 'caretaker://inkscape/.git/x.svg/..')
+    if ($linked) { $bad += 'caretaker://inkscape/link/outside.svg' }
+    foreach ($uri in $bad) {
+        $code = Open-Inkscape $uri
+        Check ($code -ne 0) "inkscape rejects $uri"
+    }
+    if ($linked) { Remove-Item -LiteralPath (Join-Path $main "link") -Force }
+    Remove-Item -LiteralPath (Join-Path $main "notes.svg.txt") -Force
+
+    # 8. Запуск Inkscape: путь доходит до программы одним аргументом (апостроф, кириллица, пробел).
+    if (-not $onWindows) {
+        $argsFile = Join-Path $root "inkscape-args.txt"
+        if (Test-Path $argsFile) { Remove-Item -LiteralPath $argsFile -Force }
+        $env:INKSCAPE_BIN = $fakeInkscape
+        $env:INKSCAPE_TEST_OUT = $argsFile
+        try {
+            $code = Open-Inkscape 'caretaker://inkscape/plans/%D0%BC%D0%BE%D0%B9%20%D0%BF%D0%BB%D0%B0%D0%BD.svg' -Launch $true
+        } finally {
+            Remove-Item Env:INKSCAPE_BIN, Env:INKSCAPE_TEST_OUT -ErrorAction SilentlyContinue
+        }
+        for ($i = 0; $i -lt 50 -and -not (Test-Path $argsFile); $i++) { Start-Sleep -Milliseconds 100 }
+        $received = @()
+        if (Test-Path $argsFile) { $received = @([IO.File]::ReadAllLines($argsFile)) }
+        Check ($code -eq 0 -and $received.Count -eq 1 -and $received[0] -eq (Join-Path $main "plans/мой план.svg")) "Inkscape gets the plan path as one argument"
+        $env:INKSCAPE_BIN = Join-Path $root "missing-inkscape"
+        try { $code = Open-Inkscape 'caretaker://inkscape/plans/lower/l_core.svg' -Launch $true } finally { Remove-Item Env:INKSCAPE_BIN }
+        Check ($code -ne 0 -and $script:lastOutput.Contains('INKSCAPE_BIN')) "missing INKSCAPE_BIN is reported"
+    }
+    Check ((Get-MainState).Status -eq $before.Status) "inkscape links do not change the main clone"
 }
 
 # Обёртка: запускает open_branch.ps1 с консольной кодировкой cp866 (OEM русской Windows).
 $wrapper = Join-Path $root "cp866_wrapper.ps1"
+# Подмена Inkscape: записывает полученные аргументы построчно в $INKSCAPE_TEST_OUT.
+$fakeInkscape = Join-Path $root "fake-inkscape.sh"
+$onWindows = ($PSVersionTable.PSEdition -eq 'Desktop') -or ((Test-Path variable:IsWindows) -and $IsWindows)
 
 try {
     New-Item -ItemType Directory -Path $root | Out-Null
@@ -177,6 +243,10 @@ $rest = @($args | Select-Object -Skip 1)
 & $target @rest
 exit $LASTEXITCODE
 '@)
+    if (-not $onWindows) {
+        [IO.File]::WriteAllText($fakeInkscape, "#!/bin/sh`nprintf '%s\n' `"`$@`" > `"`$INKSCAPE_TEST_OUT`"`n")
+        & chmod +x $fakeInkscape
+    }
     Invoke-Scenario "" "ascii" "caretaker" $false
     Invoke-Scenario "[кириллица и апостроф cp866] " "Документы/Godot" "dima's-first-game" $true
     Invoke-Scenario "[кириллица и пробел cp866] " "Проверка кириллицы/Мои проекты" "клон игры" $true

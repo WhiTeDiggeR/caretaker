@@ -52,6 +52,11 @@ h1{font-family:var(--font-display);font-weight:600;font-size:1.6rem;margin:0;tex
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
 .tool{border:1px solid var(--line);border-radius:6px}
 .tool:focus-visible,.seg button:focus-visible{outline:2px solid var(--route);outline-offset:1px}
+.planbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.88rem}
+.planbar select{font:inherit;font-size:.88rem;background:var(--sheet);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 6px;max-width:100%}
+a.tool{text-decoration:none;display:inline-block}
+.planbar .path{color:var(--ink-2);overflow-wrap:anywhere;min-width:0}
+.planbar select:focus-visible,a.tool:focus-visible{outline:2px solid var(--route);outline-offset:1px}
 label.chk{display:inline-flex;gap:5px;align-items:center;font-size:.88rem;color:var(--ink-2);margin-left:4px}
 .sheet{position:relative;background:var(--sheet);border:1px solid var(--line);border-radius:6px;height:min(74vh,820px);min-height:380px;overflow:hidden;touch-action:none}
 .sheet svg{width:100%;height:100%;display:block;cursor:grab}
@@ -115,9 +120,16 @@ label.chk{display:inline-flex;gap:5px;align-items:center;font-size:.88rem;color:
       <label class="chk"><input type="checkbox" id="t-route" checked> маршрут</label>
       <label class="chk"><input type="checkbox" id="t-sec"> сектора</label>
     </div>
+    <div class="planbar">
+      <label for="plan-sel">План сектора</label>
+      <select id="plan-sel" aria-label="План сектора"></select>
+      <a class="tool" id="ink-open" href="#">Открыть в Inkscape</a>
+      <button class="tool" id="ink-copy" type="button">Копировать ссылку</button>
+      <span class="path mono" id="plan-path"></span>
+    </div>
     <div class="sheet" id="sheet">
       <svg id="plan" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="План этажа"></svg>
-      <div class="info" id="info"><b>Нажмите на помещение</b>чтобы увидеть полное название, сектор и размеры. Колесо или щипок — масштаб, перетаскивание — сдвиг.</div>
+      <div class="info" id="info"><b>Нажмите на помещение</b>чтобы увидеть полное название, сектор и размеры и выбрать план сектора для Inkscape. Колесо или щипок — масштаб, перетаскивание — сдвиг.</div>
     </div>
     <div class="legend">
       <span><i style="border-color:var(--wall)"></i>стена</span>
@@ -181,7 +193,18 @@ function render(){
   full=bounds(L);
   applyToggles();
 }
+// Plan of the selected sector: caretaker://inkscape/<path from the repo root> (issue #222, tools/dev/open_branch.ps1).
+const planSel=document.getElementById('plan-sel'), inkOpen=document.getElementById('ink-open'), inkCopy=document.getElementById('ink-copy'), planPath=document.getElementById('plan-path');
+const inkLink=f=>'caretaker://inkscape/'+f.split('/').map(encodeURIComponent).join('/');
+function fillPlans(){planSel.innerHTML='';for(const s of [...D[lv].sectors].sort((a,b)=>a.id.localeCompare(b.id))){const o=document.createElement('option');o.value=s.f;o.textContent=s.id;planSel.appendChild(o)}showPlan()}
+function showPlan(){const f=planSel.value;inkOpen.href=inkLink(f);inkOpen.title=inkLink(f);planPath.textContent=f}
+function pickPlan(sector){const s=D[lv].sectors.find(x=>x.id===sector);if(s){planSel.value=s.f;showPlan()}}
+planSel.onchange=showPlan;
+inkCopy.onclick=()=>{const t=inkLink(planSel.value);const done=()=>{inkCopy.textContent='Скопировано';setTimeout(()=>inkCopy.textContent='Копировать ссылку',1500)};
+  const fallback=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){window.prompt('Скопируйте ссылку',t)}a.remove()};
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(done,fallback);else fallback()};
 function select(r){
+  pickPlan(r.s);
   document.querySelectorAll('.room.sel').forEach(e=>e.classList.remove('sel'));
   roomEls[r.id]&&roomEls[r.id].classList.add('sel');
   const parts=(r.l||'(без названия)').split(' / ');
@@ -189,7 +212,7 @@ function select(r){
   if(parts.length>1){const p=document.createElement('div');p.textContent=parts.slice(1).join(' · ');info.appendChild(p)}
   const m=document.createElement('div');m.className='mono';m.style.color='var(--ink-2)';m.textContent=r.id+' · '+r.w.toFixed(1)+' × '+r.h.toFixed(1)+' м · '+(r.w*r.h).toFixed(0)+' м²';info.appendChild(m);
 }
-function setLevel(n,keep){lv=n;document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lv===n));render();if(!keep)setVB(full.slice());}
+function setLevel(n,keep){lv=n;document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lv===n));render();fillPlans();if(!keep)setVB(full.slice());}
 function focusRoom(level,id){setLevel(level,true);const r=D[level].rooms.find(x=>x.id===id);if(!r){setVB(full.slice());return}
   const pad=Math.max(r.w,r.h)*2.2+10;const ar=sheet.clientWidth/sheet.clientHeight||1.4;let w=pad*ar,h=pad;setVB([r.x+r.w/2-w/2,r.y+r.h/2-h/2,w,h]);select(r)}
 // zoom/pan

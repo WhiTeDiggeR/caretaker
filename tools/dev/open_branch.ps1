@@ -13,25 +13,30 @@
   Основной клон (его ветка, индекс и файлы) не меняется: обновляются только ссылки origin/*.
   Копия просмотра одноразовая — из неё не коммитят. Скрипт ничего не коммитит и не пушит.
 
+  Ссылка caretaker://inkscape/<путь к .svg от корня репозитория> открывает SVG из основного клона
+  в Inkscape (issue #222). Принимаются только существующие файлы .svg внутри основного клона.
+
 .EXAMPLE
   powershell -File tools\dev\open_branch.ps1 task/174-door-feedback
 .EXAMPLE
   powershell -File tools\dev\open_branch.ps1          # список последних веток с origin
 .EXAMPLE
   open_branch.ps1 -Uri caretaker://open/task/174-door-feedback   # так вызывает протокол
+.EXAMPLE
+  open_branch.ps1 -Uri caretaker://inkscape/docs/design/complex_v4/plans/generation/lower/l_old_core.svg
 #>
 [CmdletBinding()]
 param(
     # Имя ветки на origin, например task/174-door-feedback.
     [Parameter(Position = 0)]
     [string]$Branch = "",
-    # Ссылка caretaker://open/<ветка> (передаёт обработчик протокола).
+    # Ссылка caretaker://open/<ветка> или caretaker://inkscape/<путь .svg> (передаёт обработчик протокола).
     [string]$Uri = "",
     # Основной клон. По умолчанию — клон, в котором лежит скрипт.
     [string]$Repo = "",
     # Копия просмотра. По умолчанию «<основной клон>-review».
     [string]$ReviewPath = "",
-    # Не запускать Godot (для проверок).
+    # Не запускать Godot и Inkscape (для проверок).
     [switch]$NoGodot,
     # Сбросить копию просмотра без вопроса, даже если в ней есть ручные правки.
     [switch]$Force,
@@ -44,6 +49,9 @@ $ErrorActionPreference = "Stop"
 
 $BranchPattern = '^[A-Za-z0-9._/-]+$'
 $UriPrefix = "caretaker://open/"
+$InkscapeUriPrefix = "caretaker://inkscape/"
+# Символы, недопустимые в пути к плану (кроме управляющих): двоеточие, обратный слэш, кавычки, маски.
+$BadPathChars = [char[]]':\"<>|*?'
 $RecentBranchCount = 20
 # Файлы, которые Godot создаёт или переписывает сам при открытии проекта.
 $GeneratedPatterns = @('*.import', '*.uid')
@@ -141,10 +149,13 @@ function Get-ManualChange([string]$Review) {
     return $manual.ToArray()
 }
 
+function Test-OnWindows {
+    return ($PSVersionTable.PSEdition -eq 'Desktop') -or ((Test-Path variable:IsWindows) -and $IsWindows)
+}
+
 ## Godot, открытый на копии просмотра (только Windows: командная строка процессов через CIM).
 function Get-GodotOnReview([string]$Review) {
-    $onWindows = ($PSVersionTable.PSEdition -eq 'Desktop') -or ((Test-Path variable:IsWindows) -and $IsWindows)
-    if (-not $onWindows) { return @() }
+    if (-not (Test-OnWindows)) { return @() }
     $full = [IO.Path]::GetFullPath($Review).TrimEnd('\')
     $found = Get-CimInstance Win32_Process -Filter "Name LIKE 'Godot%'" -ErrorAction SilentlyContinue |
         Where-Object { $_.CommandLine -and $_.CommandLine.IndexOf($full, [StringComparison]::OrdinalIgnoreCase) -ge 0 }
@@ -188,9 +199,99 @@ function Find-Godot {
     throw "Godot не найден: задайте GODOT_BIN (консольная обёртка Godot_v4.7-stable_win64_console.exe) или добавьте godot в PATH"
 }
 
-function Open-Branch {
+## Путь к файлу из ссылки caretaker://inkscape/<путь от корня репозитория>. Ссылка может прийти
+## откуда угодно, поэтому принимается только существующий .svg внутри основного клона: без «..»,
+## абсолютных путей, двоеточий, обратных слэшей и символических ссылок по дороге.
+function Resolve-InkscapeTarget([string]$Main, [string]$Value) {
+    $raw = $Value.Trim()
+    if (-not $raw.StartsWith($InkscapeUriPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Ожидалась ссылка вида ${InkscapeUriPrefix}<путь к .svg>, получено: $Value"
+    }
+    $relative = [Uri]::UnescapeDataString($raw.Substring($InkscapeUriPrefix.Length))
+    if ($relative.Length -eq 0 -or $relative.IndexOfAny($BadPathChars) -ge 0 -or $relative -match '[\x00-\x1f\x7f]' `
+            -or $relative.StartsWith('/') -or $relative.StartsWith('-')) {
+        throw "Недопустимый путь к плану: '$relative'"
+    }
+    foreach ($segment in $relative.Split('/')) {
+        if ($segment -eq '' -or $segment -eq '.' -or $segment -eq '..' -or $segment.EndsWith('.') -or $segment.EndsWith(' ')) {
+            throw "Недопустимый путь к плану: '$relative'"
+        }
+    }
+    if (-not $relative.EndsWith('.svg', [StringComparison]::OrdinalIgnoreCase)) {
+        throw "В Inkscape открываются только файлы .svg: '$relative'"
+    }
+    $separator = [IO.Path]::DirectorySeparatorChar
+    $root = [IO.Path]::GetFullPath($Main).TrimEnd('\', '/')
+    $full = [IO.Path]::GetFullPath($root + $separator + ($relative -replace '/', $separator))
+    if (-not $full.StartsWith($root + $separator, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Путь выходит за пределы клона: '$relative'"
+    }
+    if (-not (Test-Path -LiteralPath $full -PathType Leaf)) {
+        throw "Файл не найден в клоне $root`: $relative"
+    }
+    $current = $full
+    while ($current.Length -gt $root.Length) {
+        if ((Get-Item -LiteralPath $current -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) {
+            throw "Путь к плану проходит через символическую ссылку: '$relative'"
+        }
+        $current = Split-Path -Path $current -Parent
+    }
+    return $full
+}
+
+## Значение по умолчанию ключа реестра (пустая строка, если ключа нет).
+function Get-RegistryDefault([string]$Key) {
+    if (-not (Test-Path -LiteralPath $Key)) { return "" }
+    $value = (Get-Item -LiteralPath $Key).GetValue('')
+    if ($null -eq $value) { return "" }
+    return ([string]$value).Trim().Trim('"')
+}
+
+## Inkscape: INKSCAPE_BIN -> реестр (App Paths, ключ установщика) -> Program Files -> PATH.
+function Find-Inkscape {
+    if ($env:INKSCAPE_BIN) {
+        if (Test-Path -LiteralPath $env:INKSCAPE_BIN -PathType Leaf) { return $env:INKSCAPE_BIN }
+        throw "INKSCAPE_BIN указывает на несуществующий файл: $env:INKSCAPE_BIN"
+    }
+    $candidates = New-Object System.Collections.Generic.List[string]
+    if (Test-OnWindows) {
+        foreach ($hive in @('HKCU:', 'HKLM:')) {
+            $exe = Get-RegistryDefault "$hive\Software\Microsoft\Windows\CurrentVersion\App Paths\inkscape.exe"
+            if ($exe) { $candidates.Add($exe) }
+        }
+        foreach ($key in @('HKCU:\Software\Inkscape\Inkscape', 'HKLM:\Software\Inkscape\Inkscape', 'HKLM:\Software\WOW6432Node\Inkscape\Inkscape')) {
+            $dir = Get-RegistryDefault $key
+            if ($dir) { $candidates.Add((Join-Path $dir 'bin\inkscape.exe')); $candidates.Add((Join-Path $dir 'inkscape.exe')) }
+        }
+        foreach ($base in @($env:ProgramFiles, $env:ProgramW6432, ${env:ProgramFiles(x86)}, (Join-Path ([string]$env:LOCALAPPDATA) 'Programs'))) {
+            if ($base) { $candidates.Add((Join-Path $base 'Inkscape\bin\inkscape.exe')) }
+        }
+    }
+    foreach ($candidate in $candidates) {
+        if ($candidate -and (Test-Path -LiteralPath $candidate -PathType Leaf)) { return $candidate }
+    }
+    $command = Get-Command inkscape -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($command) { return $command.Source }
+    throw "Inkscape не найден: установите его (inkscape.org) или задайте INKSCAPE_BIN с путём к inkscape.exe"
+}
+
+function Get-MainFromParameter {
     if ($Repo) { $start = $Repo } else { $start = $PSScriptRoot }
-    $main = Get-MainClone (Resolve-Path -LiteralPath $start).Path
+    return Get-MainClone (Resolve-Path -LiteralPath $start).Path
+}
+
+function Open-Inkscape {
+    $main = Get-MainFromParameter
+    $file = Resolve-InkscapeTarget $main $Uri
+    Write-Host "План: $file" -ForegroundColor Green
+    if ($NoGodot) { return }
+    $inkscape = Find-Inkscape
+    Write-Step "Открываю Inkscape"
+    Start-Process -FilePath $inkscape -ArgumentList @("`"$file`"") | Out-Null
+}
+
+function Open-Branch {
+    $main = Get-MainFromParameter
     if ($ReviewPath) { $review = $ReviewPath } else { $review = "$main-review" }
     $review = [IO.Path]::GetFullPath($review)
     if ([IO.Path]::GetFullPath($main).TrimEnd('\', '/') -eq $review.TrimEnd('\', '/')) {
@@ -270,7 +371,11 @@ try {
 $OutputEncoding = $Utf8NoBom
 $exitCode = 0
 try {
-    Open-Branch
+    if ($Uri -and $Uri.Trim().StartsWith($InkscapeUriPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+        Open-Inkscape
+    } else {
+        Open-Branch
+    }
     if ($PauseAtEnd) { Start-Sleep -Seconds 3 }
 } catch {
     Write-Host "Ошибка: $($_.Exception.Message)" -ForegroundColor Red

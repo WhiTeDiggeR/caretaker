@@ -49,6 +49,18 @@
 
 Имя ветки проверяется строго: только латиница, цифры и `. _ / -`, без `..`. Ссылка с любыми другими символами отклоняется и ничего не запускает.
 
+## Планы в Inkscape
+
+Ссылка `caretaker://inkscape/<путь к .svg от корня репозитория>` открывает план из **основного клона** в Inkscape (issue #222), например `caretaker://inkscape/docs/design/complex_v4/plans/generation/lower/l_old_core.svg`. На странице планов (`python tools/complex_v4/floor_plans/build_floor_plans.py` → `build/floor_plans.html`) у выбранного сектора есть кнопки «Открыть в Inkscape» и «Копировать ссылку» (из claude.ai такие ссылки не открываются — вставьте скопированную в `Win+R`).
+
+- Inkscape ищется так: переменная `INKSCAPE_BIN` → реестр (App Paths, ключ установщика) → `Program Files\Inkscape\bin\inkscape.exe` → `inkscape` в `PATH`.
+- Открывается только существующий файл `.svg` внутри основного клона: ссылки с `..`, абсолютным путём, `:` или `\`, на другие типы файлов или через символическую ссылку наружу отклоняются.
+
+После обновления скриптов переустановите протокол одной командой из основного клона:
+```powershell
+git pull --ff-only; powershell -ExecutionPolicy Bypass -File .\tools\dev\install_branch_protocol.ps1
+```
+
 ## Удаление
 
 ```powershell
@@ -60,4 +72,4 @@ git worktree remove --force ..\caretaker-review
 
 ## Проверка скрипта
 
-Git-логика проверяется на временном репозитории без Godot: `pwsh -NoProfile -File tools/dev/tests/open_branch_test.ps1`. Тест входит в `tools/ci/run_checks.sh` и пропускается, если `pwsh` не установлен.
+Git-логика и разбор ссылок `caretaker://inkscape/` проверяются на временном репозитории без Godot и Inkscape: `pwsh -NoProfile -File tools/dev/tests/open_branch_test.ps1`. Тест входит в `tools/ci/run_checks.sh` и пропускается, если `pwsh` не установлен.

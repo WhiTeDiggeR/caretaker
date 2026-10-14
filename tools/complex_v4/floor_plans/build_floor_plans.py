@@ -3,6 +3,7 @@
 
 Reads the canonical metric sector SVGs (docs/design/complex_v4/plans/generation/{upper,lower,technical}/*.svg),
 which share one world frame in metres, and the story annotations in annotations.json (route, marks, callouts).
+Each sector keeps its SVG path from the repository root: the page links it as caretaker://inkscape/<path> (issue #222).
 
     python tools/complex_v4/floor_plans/build_floor_plans.py            # -> build/floor_plans.html
     python tools/complex_v4/floor_plans/build_floor_plans.py --out x.html
@@ -12,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -23,6 +25,9 @@ REPO = HERE.parents[2]
 PLANS = REPO / "docs/design/complex_v4/plans/generation"
 LEVELS = ("upper", "lower", "technical")
 WALL_LIKE = {"wall", "door", "window", "opening"}
+INKSCAPE_LINK = "caretaker://inkscape/"
+# What tools/dev/open_branch.ps1 accepts for caretaker://inkscape/ (segments without .., no : \ " < > | * ?).
+SAFE_PLAN_PATH = re.compile(r'^(?!-)(?:[^/:\\"<>|*?\x00-\x1f]+/)*[^/:\\"<>|*?\x00-\x1f]+\.svg$')
 
 
 def _num(element: ET.Element, key: str) -> float:
@@ -34,7 +39,9 @@ def read_level(folder: Path) -> dict:
     for path in sorted(folder.glob("*.svg")):
         root = ET.parse(path).getroot()
         sector = root.get("data-sector-id")
-        level["sectors"].append({"id": sector, "vb": [float(v) for v in root.get("viewBox").split()]})
+        level["sectors"].append({
+            "id": sector, "vb": [float(v) for v in root.get("viewBox").split()], "f": path.relative_to(REPO).as_posix(),
+        })
         for element in root.iter():
             tag = element.tag.split("}")[-1]
             kind = element.get("data-godot-type")
@@ -66,6 +73,13 @@ def validate(data: dict, annotations: dict) -> list[str]:
     windows = {lvl: {w["id"] for w in data[lvl]["windows"]} for lvl in LEVELS}
     sectors = {s["id"] for lvl in LEVELS for s in data[lvl]["sectors"]}
     errors = []
+    for lvl in LEVELS:
+        for sector in data[lvl]["sectors"]:
+            plan = sector["f"]
+            parts = plan.split("/")
+            if not SAFE_PLAN_PATH.match(plan) or any(p in ("", ".", "..") or p.endswith((".", " ")) for p in parts) \
+                    or not (REPO / plan).is_file():
+                errors.append(f"plan path is not openable by {INKSCAPE_LINK}: {plan}")
     for item in annotations.get("marks", []) + annotations.get("scenes", []):
         if item["level"] not in rooms or item["room"] not in rooms[item["level"]]:
             errors.append(f"unknown room {item['level']}:{item['room']}")
@@ -93,7 +107,7 @@ def build(out: Path) -> dict:
     annotations = json.loads((HERE / "annotations.json").read_text(encoding="utf-8"))
     errors = validate(data, annotations)
     if errors:
-        raise SystemExit("annotations.json: " + "; ".join(errors))
+        raise SystemExit("floor plans: " + "; ".join(errors))
     page = (HERE / "template.html").read_text(encoding="utf-8")
     page = page.replace("__DATA__", json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
     page = page.replace("__ANN__", json.dumps(annotations, ensure_ascii=False).replace("</", "<\\/"))
@@ -110,6 +124,11 @@ def main() -> int:
     args = parser.parse_args()
     out = Path(tempfile.mkdtemp()) / "floor_plans.html" if args.check else args.out
     data = build(out)
+    if args.check:
+        page = out.read_text(encoding="utf-8")
+        missing = [marker for marker in ('id="ink-open"', 'id="ink-copy"', INKSCAPE_LINK) if marker not in page]
+        if missing:
+            raise SystemExit(f"floor plans: page lacks the Inkscape buttons: {missing}")
     for lvl in LEVELS:
         level = data[lvl]
         print(f"{lvl}: {len(level['sectors'])} sectors, {len(level['rooms'])} rooms, {len(level['doors'])} doors, {len(level['windows'])} windows")
