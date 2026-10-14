@@ -1,6 +1,7 @@
 ﻿<#
 .SYNOPSIS
-  Регистрирует ссылки caretaker://open/<ветка> для текущего пользователя Windows (issue #175).
+  Регистрирует ссылки caretaker://open/<ветка> (issue #175) и caretaker://inkscape/<путь к .svg>
+  (issue #222) для текущего пользователя Windows.
 
 .DESCRIPTION
   Без прав администратора: ключ HKCU\Software\Classes\caretaker. Скрипт open_branch.ps1 копируется
@@ -60,15 +61,17 @@ New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot "open_branch.ps1") -Destination $InstalledScript -Force
 
 $powershell = Join-Path $env:SystemRoot "System32\WindowsPowerShell\v1.0\powershell.exe"
-# %1 — вся ссылка; open_branch.ps1 сам проверяет её и принимает только имя ветки из [A-Za-z0-9._/-].
+# %1 — вся ссылка; open_branch.ps1 сам проверяет её: имя ветки только из [A-Za-z0-9._/-],
+# путь для Inkscape — только существующий .svg внутри основного клона.
 $command = "`"$powershell`" -NoProfile -ExecutionPolicy Bypass -File `"$InstalledScript`" -Repo `"$main`" -PauseAtEnd -Uri `"%1`""
 
 New-Item -Path $ClassKey -Force | Out-Null
-Set-ItemProperty -Path $ClassKey -Name "(default)" -Value "URL:Caretaker branch preview"
+Set-ItemProperty -Path $ClassKey -Name "(default)" -Value "URL:Caretaker branch preview and plans"
 Set-ItemProperty -Path $ClassKey -Name "URL Protocol" -Value ""
 New-Item -Path "$ClassKey\shell\open\command" -Force | Out-Null
 Set-ItemProperty -Path "$ClassKey\shell\open\command" -Name "(default)" -Value $command
 
 Write-Host "Готово: ссылки ${Scheme}://open/<ветка> открывают ветку из клона $main"
+Write-Host "        ссылки ${Scheme}://inkscape/<путь к .svg> открывают план из этого клона в Inkscape"
 Write-Host "Скрипт: $InstalledScript"
 Write-Host "Проверка: Win+R -> ${Scheme}://open/team/integration"

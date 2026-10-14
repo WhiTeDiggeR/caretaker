@@ -44,7 +44,7 @@ Attach `logs/godot.log` to bug reports. The first log line written by the game n
 
 ## Preview a branch (Windows)
 
-`caretaker://open/<branch>` links (or `powershell -ExecutionPolicy Bypass -File tools\dev\open_branch.ps1 <branch>`) open the latest version of a branch in a separate review worktree next to your clone and start Godot; your own clone is not touched. One-time setup and details: [docs/branch-preview.md](docs/branch-preview.md).
+`caretaker://open/<branch>` links (or `powershell -ExecutionPolicy Bypass -File tools\dev\open_branch.ps1 <branch>`) open the latest version of a branch in a separate review worktree next to your clone and start Godot; your own clone is not touched. `caretaker://inkscape/<path to .svg>` opens a plan from your clone in Inkscape (buttons on the floor plan page). One-time setup and details: [docs/branch-preview.md](docs/branch-preview.md). After the scripts change, reinstall the protocol from your clone: `powershell -ExecutionPolicy Bypass -File tools\dev\install_branch_protocol.ps1`.
 
 ## Team development
 
