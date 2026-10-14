@@ -22,7 +22,7 @@ REPO = Path(__file__).resolve().parents[2]
 TEX_DIR = REPO / "loads" / "textures"
 PROPS_DIR = REPO / "loads" / "props"
 
-from materials_def import ATLAS, EMIT, PLAIN, TILE  # noqa: E402
+from materials_def import ATLAS, ATLAS_TINT, DOUBLE_SIDED, EMIT, PLAIN, TILE  # noqa: E402
 
 
 DECAL_MIN_OFFSET = 0.003  # metres between a decal and the surface it labels
@@ -408,7 +408,8 @@ def finish_gltf(path: Path):
         elif name in ATLAS:
             uri, blend, emissive = ATLAS[name]
             pbr["baseColorTexture"] = {"index": tex(f"{rel}/{uri}")}
-            pbr["baseColorFactor"] = [1, 1, 1, 1]
+            f = ATLAS_TINT.get(name, 1)
+            pbr["baseColorFactor"] = [f, f, f, 1]
             pbr["metallicFactor"] = 0.0
             pbr["roughnessFactor"] = 0.7
             if blend:
@@ -422,7 +423,7 @@ def finish_gltf(path: Path):
                     data["extensionsUsed"].append("KHR_materials_emissive_strength")
         if name in PLAIN and PLAIN[name][3] < 1.0:
             m["alphaMode"] = "BLEND"
-        m["doubleSided"] = name in ("glass_dirty",) or m.get("doubleSided", False)
+        m["doubleSided"] = name in DOUBLE_SIDED or m.get("doubleSided", False)
     if images:
         data["images"] = [{"uri": u} for u in images]
         data["textures"] = textures
