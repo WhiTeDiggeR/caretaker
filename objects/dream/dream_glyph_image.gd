@@ -3,12 +3,16 @@ extends Node3D
 
 ## A glyph as the dream sees it (07-dream-glyphs.md, З-2 «А»): the dream's image — for now a
 ## flat tinted plate standing in for the relief art of З-Р4 — with the glyph cut inside as a
-## crack. The crack stays muted, close to the plate and hard to read, until `revealed` (the
-## ring of the seal has come into place); then it shows white (Б-5).
+## crack. The crack stays muted — cut darker into the plate, readable up close but not lit —
+## until `revealed` (the ring of the seal has come into place); then it shows a pale white
+## glow (Б-5), soft enough not to drown in the light crack of the seal (#208).
 
 const PLATE_HEIGHT := 0.02
-const MUTED_MIX := 0.18
-const REVEALED_ENERGY := 2.5
+const MUTED_DARKEN := 0.5
+const REVEALED_MIX := 0.75  # tint → white: the glyph keeps a trace of its image
+const REVEALED_ENERGY := 1.0
+## Height of the glyph over the plate face; enough to keep the depth test steady at a distance.
+const GLYPH_LIFT := 0.006
 const DEFAULT_TINT := Color(0.42, 0.38, 0.34)
 
 @export var glyph_id := ""
@@ -45,9 +49,8 @@ func _ready() -> void:
 	_crack_material = StandardMaterial3D.new()
 	_crack_material.cull_mode = BaseMaterial3D.CULL_DISABLED
 	_crack_material.emission_enabled = true
-	_crack_material.emission = Color.WHITE
 	var crack := DreamGlyph.mesh_instance(glyph_id, size, _crack_material)
-	crack.position.z = 0.002
+	crack.position.z = GLYPH_LIFT
 	add_child(crack)
 	_apply()
 
@@ -60,8 +63,15 @@ func crack_contrast() -> float:
 	return absf(albedo.get_luminance() - _tint.get_luminance()) + _crack_material.emission_energy_multiplier
 
 
+## Colour of a muted glyph cut into an image of `tint` (also the afterimage of the dream).
+static func muted_color(tint: Color) -> Color:
+	return tint.darkened(MUTED_DARKEN)
+
+
 func _apply() -> void:
 	if _crack_material == null:
 		return
-	_crack_material.albedo_color = Color.WHITE if revealed else _tint.lerp(Color.WHITE, MUTED_MIX)
+	var shown := _tint.lerp(Color.WHITE, REVEALED_MIX)
+	_crack_material.albedo_color = shown if revealed else muted_color(_tint)
+	_crack_material.emission = shown
 	_crack_material.emission_energy_multiplier = REVEALED_ENERGY if revealed else 0.0
