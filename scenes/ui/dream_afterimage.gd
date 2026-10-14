@@ -19,8 +19,6 @@ const IMAGE_RATIO := 0.8
 const LINE_WIDTH := 2.0
 const INK := Color("#1d2a33")
 const DEFAULT_TINT := Color(0.42, 0.38, 0.34)
-## How far the glyph lifts from its image towards white: the dream's muted mix (DreamGlyphImage).
-const GLYPH_MIX := DreamGlyphImage.MUTED_MIX
 
 var dream: StringName = &""
 ## The glyphs of the seal, outer ring first.
@@ -71,9 +69,9 @@ func alpha() -> float:
 	return _canvas.modulate.a if visible else 0.0
 
 
-## Colour of the glyph inside the image of `id`: the image's tint barely lifted.
+## Colour of the glyph inside the image of `id`: muted as in the dream (DreamGlyphImage).
 func glyph_color(id: String) -> Color:
-	return image_tint(id).lerp(Color.WHITE, GLYPH_MIX)
+	return DreamGlyphImage.muted_color(image_tint(id))
 
 
 func image_tint(id: String) -> Color:

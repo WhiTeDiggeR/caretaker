@@ -9,7 +9,8 @@ extends DreamSeal
 ## (`DreamKnowledge.prepare`): ring i is right when the glyph code[i] stands under the
 ## reading mark (outer → inner), and then its piece of the light crack lies on the mark too.
 ## The glyph inside an image stays muted until its ring is right; then the code glyph under
-## the mark shows white (#194, author's note to З-2). When all three are right the crack runs unbroken from the edge to the core and the seal
+## the mark shows (#194, author's note to З-2). The levers carry no names (#208): which wheel
+## turns which ring is for the player to find out. When all three are right the crack runs unbroken from the edge to the core and the seal
 ## ends in the same chain as `DreamSeal` (`complete()`). The art (#195) has three rings; a longer
 ## code adds plain stone rings outside it, so the code still reads outer → inner. A wrong turn costs only time (B-10):
 ## a hum and sparks. The glow is white (B-5). The ring positions are kept in GameState system
@@ -30,7 +31,18 @@ const WHITE := Color(1.0, 1.0, 1.0)
 const STONE := Color(0.3, 0.27, 0.25)
 const RING_STONE := Color(0.36, 0.33, 0.3)
 const CRACK_DIM := 0.6
-const CRACK_BRIGHT := 3.5
+const CRACK_BRIGHT := 4.0
+## The crack lies under the glyph plates (#208): its light shows on both sides of an image
+## and does not run over the glyph. A soft additive halo around it makes it read as light.
+const CRACK_HEIGHT := 0.015
+const CRACK_WIDTH := 0.07
+const HALO_WIDTH := 0.5
+const HALO_LIFT := 0.004
+const HALO_DIM := 0.15
+const HALO_BRIGHT := 0.9
+const HALO_COLOR := Color(1.0, 0.96, 0.88)
+## Height of the glyph images over the ring top: clear of the ring and of the crack.
+const GLYPH_LIFT := 0.03
 const RESTORED_LIGHT_ENERGY := 2.5
 const TURN_TIME := 0.45
 const RING_HEIGHT := 0.12
@@ -42,12 +54,10 @@ const ART_RADIUS := 4.0
 ## Tops of the art rings above the floor, outer first (stepped, docs/art/dream-bowser-s.md ПЧ-1).
 const ART_RING_TOPS: Array[float] = [0.45, 0.6, 0.75]
 const ART_WHEEL_OFFSET := Vector3(0, 0, -0.15)
-const ART_LABEL_HEIGHT := 1.75
 ## An added ring outside the art steps down by this much from the art's outer ring.
 const ART_RING_STEP := 0.15
 const LEVER_SPACING := 1.2
-## Texts (prompts, inspection, lever names by the number of rings, outer first) are the
-## `seal_*` keys of data/dreams/knowledge.json (#200).
+## Texts (prompts, inspection) are the `seal_*` keys of data/dreams/knowledge.json (#200).
 
 ## Radius of the disc; the rings share it evenly outside the core.
 @export var radius := 3.0
@@ -68,6 +78,7 @@ var levers: Array[Interactable] = []
 var _code := PackedStringArray()
 var _pivots: Array[Node3D] = []
 var _crack_materials: Array[StandardMaterial3D] = []
+var _halo_materials: Array[StandardMaterial3D] = []
 var _glyph_images: Array[Array] = []
 var _sparks: Array[CPUParticles3D] = []
 var _tweens: Array[Tween] = []
@@ -183,6 +194,7 @@ func _refresh() -> void:
 	for ring in ring_count:
 		var lit := restored or is_ring_aligned(ring)
 		_crack_materials[ring].emission_energy_multiplier = CRACK_BRIGHT if lit else CRACK_DIM
+		_halo_materials[ring].albedo_color = _halo(HALO_BRIGHT if lit else HALO_DIM)
 		levers[ring].available = not restored
 		levers[ring].unavailable_prompt = str(DreamKnowledge.text("seal_prompt_done")) if restored else ""
 	for ring in ring_count:
@@ -305,6 +317,7 @@ func _clear() -> void:
 	_light = null
 	_pivots.clear()
 	_crack_materials.clear()
+	_halo_materials.clear()
 	_glyph_images.clear()
 	_sparks.clear()
 	_tweens.clear()
@@ -387,20 +400,57 @@ func _build_ring(ring: int) -> void:
 		image.glyph_id = glyphs[sector]
 		image.size = minf(radii.y - radii.x, 0.9) * 0.8
 		# Lies flat on the ring, read from the edge looking at the core.
-		image.position = Vector3(sin(angle) * middle, _ring_top(ring) + 0.012, cos(angle) * middle)
+		image.position = Vector3(sin(angle) * middle, _ring_top(ring) + GLYPH_LIFT, cos(angle) * middle)
 		image.rotation = Vector3(-PI * 0.5, angle, 0)
 		pivot.add_child(image)
 		_glyph_images[ring].append(image)
 	var crack := MeshInstance3D.new()
 	crack.name = "Crack"
 	var crack_mesh := BoxMesh.new()
-	crack_mesh.size = Vector3(0.08, 0.03, radii.y - radii.x)
+	crack_mesh.size = Vector3(CRACK_WIDTH, CRACK_HEIGHT, radii.y - radii.x)
 	var material := PropKit.material(WHITE, true)
+	material.albedo_color = Color.BLACK  # all of its look is the light it gives
 	material.emission_energy_multiplier = CRACK_DIM
 	crack_mesh.material = material
 	crack.mesh = crack_mesh
+	crack.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	pivot.add_child(crack)
 	_crack_materials.append(material)
+	var halo := MeshInstance3D.new()
+	halo.name = "Halo"
+	var halo_mesh := QuadMesh.new()
+	halo_mesh.size = Vector2(HALO_WIDTH, radii.y - radii.x)
+	halo_mesh.orientation = PlaneMesh.FACE_Y
+	halo_mesh.material = _halo_material()
+	halo.mesh = halo_mesh
+	halo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	# Under the crack, so it moves and turns with it.
+	halo.position.y = HALO_LIFT - CRACK_HEIGHT * 0.5
+	crack.add_child(halo)
+	_halo_materials.append(halo_mesh.material)
+
+
+## Additive glow fading out across the crack (bright in the middle, nothing at the edges).
+static func _halo_material() -> StandardMaterial3D:
+	var gradient := Gradient.new()
+	gradient.offsets = PackedFloat32Array([0.0, 0.5, 1.0])
+	gradient.colors = PackedColorArray([Color.BLACK, Color.WHITE, Color.BLACK])
+	gradient.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_CUBIC
+	var texture := GradientTexture2D.new()
+	texture.gradient = gradient
+	texture.width = 64
+	texture.height = 4
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.albedo_texture = texture
+	material.albedo_color = _halo(HALO_DIM)
+	return material
+
+
+static func _halo(energy: float) -> Color:
+	return Color(HALO_COLOR * energy, 1.0)
 
 
 ## Each ring's piece of the crack lies on the sector of its code glyph.
@@ -410,7 +460,7 @@ func _place_cracks() -> void:
 		var radii := _ring_radii(ring)
 		var middle := (radii.x + radii.y) * 0.5
 		var angle := float(correct_position(ring)) * TAU / POSITIONS
-		crack.position = Vector3(sin(angle) * (middle - 0.12), _ring_top(ring) + 0.02, cos(angle) * (middle - 0.12))
+		crack.position = Vector3(sin(angle) * (middle - 0.12), _ring_top(ring) + CRACK_HEIGHT * 0.5, cos(angle) * (middle - 0.12))
 		crack.rotation = Vector3(0, angle, 0)
 
 
@@ -445,9 +495,7 @@ func _build_lever(ring: int) -> void:
 	reach.shape = reach_shape
 	reach.position = Vector3(0, 1.05, 0.1)
 	lever.add_child(reach)
-	var ring_name := str((DreamKnowledge.text("seal_ring_names_%d" % ring_count) as Array)[ring])
-	PropKit.label(lever, Vector3(0, ART_LABEL_HEIGHT if wheel_art else 1.5, 0.12), ring_name, 28)
-	var interactable := PropKit.interactable(lever, Interactable.Mode.PRESS, str(DreamKnowledge.text("seal_prompt_turn")) % ring_name)
+	var interactable := PropKit.interactable(lever, Interactable.Mode.PRESS, str(DreamKnowledge.text("seal_prompt_turn")))
 	interactable.interacted.connect(turn.bind(ring))
 	levers.append(interactable)
 	var sparks := CPUParticles3D.new()

@@ -517,17 +517,32 @@ shape = SubResource("shape_4")
 [node name="Rock1" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(1.474, 0, -0.6231, 0, 1.6, 0, 0.6231, 0, 1.474, 6, -5, -10)
 
+[node name="Back" parent="Path/Rocks/Rock1" instance=ExtResource("34_rock_face")]
+transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
+
 [node name="Rock2" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(-0.8239, 0, -1.132, 0, 1.4, 0, 1.132, 0, -0.8239, 18, -5, 9)
+
+[node name="Back" parent="Path/Rocks/Rock2" instance=ExtResource("34_rock_face")]
+transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
 
 [node name="Rock3" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(0.7711, 0, 1.515, 0, 1.7, 0, -1.515, 0, 0.7711, 31, -5, -8)
 
+[node name="Back" parent="Path/Rocks/Rock3" instance=ExtResource("34_rock_face")]
+transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
+
 [node name="Rock4" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(-1.485, 0, -0.2117, 0, 1.5, 0, 0.2117, 0, -1.485, 43, -5, 11)
 
+[node name="Back" parent="Path/Rocks/Rock4" instance=ExtResource("34_rock_face")]
+transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
+
 [node name="Rock5" parent="Path/Rocks" instance=ExtResource("34_rock_face")]
 transform = Transform3D(0.5885, 0, -2.12, 0, 2.2, 0, 2.12, 0, 0.5885, 26, -5, -14)
+
+[node name="Back" parent="Path/Rocks/Rock5" instance=ExtResource("34_rock_face")]
+transform = Transform3D(-0.92, 0, 0, 0, 0.86, 0, 0, 0, -0.92, 0.3, 0, -0.5)
 
 [node name="Yard" type="Node3D" parent="."]
 
@@ -561,6 +576,7 @@ shape = SubResource("shape_6")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 cap = ExtResource("22_dream_wall_crown")
 
 [node name="WallSouthWest" type="StaticBody3D" parent="Yard"]
@@ -577,6 +593,7 @@ shape = SubResource("shape_7")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 cap = ExtResource("22_dream_wall_crown")
 
 [node name="WallSouthEast" type="StaticBody3D" parent="Yard"]
@@ -593,6 +610,7 @@ shape = SubResource("shape_8")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 cap = ExtResource("22_dream_wall_crown")
 
 [node name="LintelSouth" type="StaticBody3D" parent="Yard"]
@@ -625,6 +643,7 @@ shape = SubResource("shape_10")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 cap = ExtResource("22_dream_wall_crown")
 
 [node name="WallWestSouth" type="StaticBody3D" parent="Yard"]
@@ -641,6 +660,7 @@ shape = SubResource("shape_10")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 cap = ExtResource("22_dream_wall_crown")
 
 [node name="LintelWest" type="StaticBody3D" parent="Yard"]
@@ -844,6 +864,7 @@ shape = SubResource("shape_18")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 
 [node name="WallWestSouth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 7.2, 5.5)
@@ -859,6 +880,7 @@ shape = SubResource("shape_18")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 
 [node name="LintelWest" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 10.7, 0)
@@ -892,6 +914,7 @@ shape = SubResource("shape_20")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 
 [node name="WallNorthEast" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.25, 7.2, -8.5)
@@ -907,6 +930,7 @@ shape = SubResource("shape_21")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 
 [node name="LintelNorth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 9.7, -8.5)
@@ -940,6 +964,7 @@ shape = SubResource("shape_23")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 
 [node name="WallEastNorth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 7.2, -5.25)
@@ -955,6 +980,7 @@ shape = SubResource("shape_24")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 
 [node name="WallEastSouth" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 7.2, 5.25)
@@ -970,6 +996,7 @@ shape = SubResource("shape_24")
 script = ExtResource("20_fill")
 module = ExtResource("21_dream_wall")
 module_size = Vector3(4, 4, 1)
+foundation = 8.0
 
 [node name="LintelEast" type="StaticBody3D" parent="SealHall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 90.5, 9.7, 0)
@@ -1071,6 +1098,42 @@ knowledge_id = &"module_4_seal"
 radius = 4.0
 art = ExtResource("32_dream_seal")
 wheel_art = ExtResource("33_dream_seal_wheel")
+
+[node name="Lights" type="Node3D" parent="SealHall"]
+
+[node name="NorthWest" type="OmniLight3D" parent="SealHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73, 6.5, -5.5)
+light_color = Color(1, 0.56, 0.32, 1)
+light_energy = 1.6
+omni_range = 11.0
+omni_attenuation = 0.8
+
+[node name="NorthEast" type="OmniLight3D" parent="SealHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87, 6.5, -5.5)
+light_color = Color(1, 0.56, 0.32, 1)
+light_energy = 1.6
+omni_range = 11.0
+omni_attenuation = 0.8
+
+[node name="SouthWest" type="OmniLight3D" parent="SealHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73, 6.5, 5.5)
+light_color = Color(1, 0.56, 0.32, 1)
+light_energy = 1.6
+omni_range = 11.0
+omni_attenuation = 0.8
+
+[node name="SouthEast" type="OmniLight3D" parent="SealHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87, 6.5, 5.5)
+light_color = Color(1, 0.56, 0.32, 1)
+light_energy = 1.6
+omni_range = 11.0
+omni_attenuation = 0.8
+
+[node name="Levers" type="OmniLight3D" parent="SealHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 4, 7)
+light_color = Color(1, 0.62, 0.38, 1)
+light_energy = 1.0
+omni_range = 7.0
 
 [node name="Bastion" type="Node3D" parent="."]
 
