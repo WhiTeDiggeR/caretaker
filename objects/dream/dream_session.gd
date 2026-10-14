@@ -12,6 +12,9 @@ signal left(module_id: StringName, reason: Exit)
 ## here, not under the veil — #166).
 signal arrived(module_id: StringName, reason: Exit)
 signal seal_restored_signal(module_id: StringName)
+## The afterimage of the seal restored this visit shows after the gate (З-Р5, #197): the
+## knowledge it carries and its code, outer ring first — for the journal (#196).
+signal afterimage_shown(module_id: StringName, knowledge_id: StringName, code: PackedStringArray)
 
 ## GATE — voluntary exit, DEATH — killed in the dream, WOKEN — the module was gassed and
 ## object 2 pulled the connected hero out (chemical protocol).
@@ -49,6 +52,7 @@ var scene_loader: Callable = _change_scene
 var _return_scene := ""
 var _return_chair: StringName = &""
 var _fade: DreamTransition
+var _afterimage: DreamAfterimage
 
 
 func _ready() -> void:
@@ -56,6 +60,8 @@ func _ready() -> void:
 	# The veil between the worlds: white on entry and at the gate, noise on death.
 	_fade = DreamTransition.new()
 	add_child(_fade)
+	_afterimage = DreamAfterimage.new()
+	add_child(_afterimage)
 	Containment.hero_woken.connect(func(id: StringName) -> void:
 		if in_dream and id == module_id:
 			_leave(Exit.WOKEN))
@@ -115,6 +121,8 @@ func abort() -> void:
 	_return_chair = &""
 	if _fade:
 		_fade.veil = 0.0
+	if _afterimage:
+		_afterimage.hide_now()
 
 
 ## The hero passed through the gate.
@@ -189,6 +197,8 @@ func _leave(reason: Exit) -> void:
 		return
 	in_dream = false
 	var id := module_id
+	# Only the gate after a restored seal leaves its afterimage.
+	var knowledge := DreamKnowledge.active_for(id) if reason == Exit.GATE and seal_restored else &""
 	# Story conditions (objectives) need to know a module's dream was visited.
 	GameState.set_flag(StringName(RETURNED_PREFIX + String(id)))
 	_fade.show_mode(TRANSITION_BY_EXIT[reason], exit_line(reason))
@@ -200,8 +210,18 @@ func _leave(reason: Exit) -> void:
 		await get_tree().process_frame
 		if get_tree().current_scene:
 			arrive_in_reality(get_tree().current_scene, reason)
+	if not knowledge.is_empty():
+		_show_afterimage(id, knowledge)
 	arrived.emit(id, reason)
 	await _fade_to(0.0)
+
+
+func _show_afterimage(id: StringName, knowledge: StringName) -> void:
+	var code := DreamKnowledge.code(knowledge)
+	if code.is_empty():
+		return
+	_afterimage.play(StringName(DreamKnowledge.definition(knowledge).get("dream", "")), code)
+	afterimage_shown.emit(id, knowledge, code)
 
 
 func _change_scene(path: String) -> void:

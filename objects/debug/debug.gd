@@ -139,7 +139,7 @@ func _restore_seal(scene: Node) -> void:
 	for node in scene.find_children("*", "StaticBody3D", true, false):
 		var rings := node as DreamSealRings
 		if rings:
-			for ring in DreamSealRings.RING_COUNT:
+			for ring in rings.ring_count:
 				for _turn in DreamSealRings.POSITIONS:
 					if rings.is_ring_aligned(ring):
 						break
