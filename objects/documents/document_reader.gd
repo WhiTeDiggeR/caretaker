@@ -30,7 +30,6 @@ const NOTE_SIZE := 26
 const STAMP_ANGLE := -11.0
 const STAMP_STEP := Vector2(-36.0, 64.0)
 const GRAIN_ALPHA := 0.16
-const KNOWLEDGE_TITLE := "ЗНАНИЯ ИЗ СНА"
 const OBJECTIVE_META := &"objective_line"
 const EMPTY_JOURNAL := "Журнал пуст. Найденные документы появятся здесь."
 
@@ -160,13 +159,18 @@ func _add_objectives() -> bool:
 	return true
 
 
+## Title of the dream knowledge section (data/dreams/knowledge.json, #200).
+static func knowledge_title() -> String:
+	return str(DreamKnowledge.text("journal_section"))
+
+
 ## Knowledge remembered in dreams (DreamKnowledge), newest first, each with its sketch
 ## (DreamSketch); spent entries are muted.
 func _add_knowledge() -> bool:
 	var entries := DreamKnowledge.journal_entries()
 	if entries.is_empty():
 		return false
-	_add_line(KNOWLEDGE_TITLE, 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
+	_add_line(knowledge_title(), 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
 	for entry in entries:
 		var used := bool(entry["used"])
 		_add_line((DONE_MARK if used else CURRENT_MARK) + str(entry["text"]), 20 if used else 21, MUTED if used else UiStyle.TEXT)

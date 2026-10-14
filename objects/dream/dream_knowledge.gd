@@ -28,6 +28,22 @@ static func reload() -> void:
 	_loaded = true
 
 
+## A player-facing text of the glyph screens (panel, seal, journal; #200): `texts.<key>` of
+## the data. A missing key is reported and shown as the key itself, so the gap is visible.
+static func text(key: String) -> Variant:
+	_ensure()
+	var texts: Dictionary = _data.get("texts", {})
+	if not texts.has(key):
+		push_error("DreamKnowledge: no text '%s' in %s" % [key, DATA_PATH])
+		return key
+	return texts[key]
+
+
+static func has_text(key: String) -> bool:
+	_ensure()
+	return (_data.get("texts", {}) as Dictionary).has(key)
+
+
 ## Story version of the current visit (v1…v4); picks `length_by_version` of a knowledge.
 static var visit_version: StringName = &""
 

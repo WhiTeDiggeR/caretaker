@@ -25,12 +25,6 @@ const POSITIONS := 6
 ## Each ring lists six glyphs from its own place in the set, so the rings do not read alike;
 ## the code glyph replaces the last one when the ring's six lack it.
 const RING_OFFSETS: Array[int] = [0, 2, 4, 6]
-## Lever names by the number of rings, outer first.
-const RING_NAMES := {
-	3: ["НАРУЖНОЕ", "СРЕДНЕЕ", "ВНУТРЕННЕЕ"],
-	4: ["НАРУЖНОЕ", "ВТОРОЕ", "ТРЕТЬЕ", "ВНУТРЕННЕЕ"],
-}
-const COUNT_WORDS := {3: "Три", 4: "Четыре"}
 const SYSTEM := &"dream_seal_rings"
 const WHITE := Color(1.0, 1.0, 1.0)
 const STONE := Color(0.3, 0.27, 0.25)
@@ -52,10 +46,8 @@ const ART_LABEL_HEIGHT := 1.75
 ## An added ring outside the art steps down by this much from the art's outer ring.
 const ART_RING_STEP := 0.15
 const LEVER_SPACING := 1.2
-const PROMPT_TURN := "ПОВЕРНУТЬ %s КОЛЬЦО"
-const PROMPT_DONE := "ПЕЧАТЬ ВОССТАНОВЛЕНА"
-const INSPECT_TITLE := "ПЕЧАТЬ"
-const INSPECT_TEXT := "%s кольца со знаками, в каждом — трещина. Под меткой у края сходятся знаки колец. Трещина света должна пройти от края до ядра."
+## Texts (prompts, inspection, lever names by the number of rings, outer first) are the
+## `seal_*` keys of data/dreams/knowledge.json (#200).
 
 ## Radius of the disc; the rings share it evenly outside the core.
 @export var radius := 3.0
@@ -90,7 +82,7 @@ func _ready() -> void:
 	_material = (_glow.get_surface_override_material(0) as StandardMaterial3D).duplicate()
 	_glow.set_surface_override_material(0, _material)
 	_interactable.mode = Interactable.Mode.INSPECT
-	_interactable.inspect_title = INSPECT_TITLE
+	_interactable.inspect_title = str(DreamKnowledge.text("seal_inspect_title"))
 	_scene_children = get_children()
 	_code = _visit_code()
 	_build()
@@ -192,7 +184,7 @@ func _refresh() -> void:
 		var lit := restored or is_ring_aligned(ring)
 		_crack_materials[ring].emission_energy_multiplier = CRACK_BRIGHT if lit else CRACK_DIM
 		levers[ring].available = not restored
-		levers[ring].unavailable_prompt = PROMPT_DONE if restored else ""
+		levers[ring].unavailable_prompt = str(DreamKnowledge.text("seal_prompt_done")) if restored else ""
 	for ring in ring_count:
 		for sector in POSITIONS:
 			var lit := (restored or is_ring_aligned(ring)) and sector == positions[ring]
@@ -325,7 +317,7 @@ func _build() -> void:
 	positions.resize(ring_count)
 	positions.fill(0)
 	_tweens.resize(ring_count)
-	_interactable.inspect_text = INSPECT_TEXT % COUNT_WORDS[ring_count]
+	_interactable.inspect_text = str(DreamKnowledge.text("seal_inspect_text")) % str(DreamKnowledge.text("seal_count_%d" % ring_count))
 	if art:
 		_art = art.instantiate() as Node3D
 		_art.scale = Vector3(radius / ART_RADIUS, 1.0, radius / ART_RADIUS)
@@ -453,9 +445,9 @@ func _build_lever(ring: int) -> void:
 	reach.shape = reach_shape
 	reach.position = Vector3(0, 1.05, 0.1)
 	lever.add_child(reach)
-	var ring_name: String = RING_NAMES[ring_count][ring]
+	var ring_name := str((DreamKnowledge.text("seal_ring_names_%d" % ring_count) as Array)[ring])
 	PropKit.label(lever, Vector3(0, ART_LABEL_HEIGHT if wheel_art else 1.5, 0.12), ring_name, 28)
-	var interactable := PropKit.interactable(lever, Interactable.Mode.PRESS, PROMPT_TURN % ring_name)
+	var interactable := PropKit.interactable(lever, Interactable.Mode.PRESS, str(DreamKnowledge.text("seal_prompt_turn")) % ring_name)
 	interactable.interacted.connect(turn.bind(ring))
 	levers.append(interactable)
 	var sparks := CPUParticles3D.new()
