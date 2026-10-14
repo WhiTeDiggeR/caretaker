@@ -17,6 +17,10 @@ const STATUSES: Array[StringName] = [&"ok", &"warn", &"alarm", &"none", &""]
 const BLINK_WARN := 0.6
 const BLINK_ALARM := 0.3
 const LARGE_SCALE := 1.6
+## Code slots: a frame of SLOT_SCALE line heights with the glyph inset by SLOT_INSET of it.
+const SLOT_SCALE := 2.4
+const SLOT_GAP := 24.0
+const SLOT_INSET := 0.18
 
 var style: ScreenStyle
 var title := ""
@@ -37,8 +41,10 @@ func setup(screen_style: ScreenStyle) -> void:
 	queue_redraw()
 
 
-## Rows: [{text, status (ok/warn/alarm/none/""), indent (bool), large (bool)}]. Returns true
-## if anything changed. A large row is an input line (code slots) read from further away.
+## Rows: [{text, status (ok/warn/alarm/none/""), indent (bool), large (bool), glyphs}]. Returns
+## true if anything changed. A large row is an input line (code slots) read from further away;
+## with `glyphs` (glyph ids, "" for an empty slot) it is drawn as framed slots with the glyphs
+## (DreamGlyphView) and `text` stays its plain reading for tests.
 func show_rows(new_title: String, new_rows: Array[Dictionary]) -> bool:
 	if new_title == title and new_rows == rows:
 		return false
@@ -117,11 +123,29 @@ func _draw() -> void:
 		var color := style.status_color(status) if status != &"" else style.phosphor
 		if _hidden_by_blink(status):
 			color = style.dim
+		if row.has("glyphs"):
+			y += _draw_slots(row["glyphs"], Vector2(indent, y), font.get_height(font_size) * SLOT_SCALE, color)
+			continue
 		var row_size := roundi(font_size * LARGE_SCALE) if row.get("large", false) else font_size
 		# Long lines wrap under their own indent.
 		var width := size.x - indent - margin.x
 		draw_multiline_string(font, Vector2(indent, y + font.get_ascent(row_size)), text, HORIZONTAL_ALIGNMENT_LEFT, width, row_size, -1, color)
 		y += font.get_multiline_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, width, row_size).y + ROW_GAP * text_scale
+
+
+## Framed code slots in a row from `origin`; an empty slot shows a short dash. Returns the height.
+func _draw_slots(glyphs: Array, origin: Vector2, side: float, color: Color) -> float:
+	var frame_width := maxf(2.0, side * 0.03)
+	for index in glyphs.size():
+		var rect := Rect2(origin + Vector2((side + SLOT_GAP * text_scale) * index, 0), Vector2(side, side))
+		draw_rect(rect, color, false, frame_width)
+		var id := str(glyphs[index])
+		if id.is_empty():
+			var mid := rect.position + Vector2(side * 0.35, side * 0.8)
+			draw_line(mid, mid + Vector2(side * 0.3, 0), Color(style.dim, 0.9), frame_width)
+		else:
+			DreamGlyphView.draw_glyph(self, id, rect.grow(-side * SLOT_INSET), color)
+	return side + ROW_GAP * text_scale
 
 
 func _hidden_by_blink(status: StringName) -> bool:
