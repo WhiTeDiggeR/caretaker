@@ -2,6 +2,9 @@ extends RefCounted
 
 const DATA_DIR := "res://data/terminals"
 const SANDBOX := "res://scenes/sandbox/opening_sandbox.tscn"
+## #221: the chemical protocol is routine; terminals name it only when it starts (the monitor
+## and the HUD do that from Containment), never ahead in authored programs.
+const EARLY_CHEMICAL := ["химическ", "снотвор", "реагент"]
 
 const SAMPLE := {
 	"id": "sample",
@@ -41,6 +44,9 @@ func run(c: OpeningCheck) -> void:
 		programs += 1
 		var authored := TerminalProgram.load_file(DATA_DIR.path_join(file))
 		c.equal(authored.errors, PackedStringArray(), "%s is valid" % file)
+		var text := FileAccess.get_file_as_string(DATA_DIR.path_join(file)).to_lower()
+		for word: String in EARLY_CHEMICAL:
+			c.is_true(not text.contains(word), "%s does not mention the chemical protocol ahead (%s)" % [file, word])
 	c.is_true(programs > 0, "authored terminal programs exist")
 
 	# Model behaviour.
