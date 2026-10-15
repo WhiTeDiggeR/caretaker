@@ -1,5 +1,540 @@
 [gd_scene format=3]
 
+[ext_resource type="Script" path="res://scenes/complex_v4/regeneration/anchored_object_3d.gd" id="1_anchored"]
+[ext_resource type="PackedScene" path="res://objects/props/staff_capsule_occupied.tscn" id="2_occupied"]
+[ext_resource type="PackedScene" path="res://objects/props/staff_capsule_empty.tscn" id="3_empty"]
+[ext_resource type="PackedScene" path="res://objects/props/staff_capsule_hero.tscn" id="4_hero"]
+[ext_resource type="PackedScene" path="res://objects/doors/hermetic_door.tscn" id="5_hermetic"]
+[ext_resource type="Script" path="res://objects/doors/airlock.gd" id="6_airlock"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="7_interactable"]
+[ext_resource type="PackedScene" path="res://objects/emergency_light.tscn" id="8_beacon"]
+[ext_resource type="PackedScene" path="res://objects/caged_light.tscn" id="9_lamp"]
+[ext_resource type="PackedScene" path="res://objects/art/evac_sign.tscn" id="10_sign"]
+[ext_resource type="PackedScene" path="res://objects/art/emergency_cabinet.tscn" id="11_cabinet"]
+
+[sub_resource type="StandardMaterial3D" id="PanelMaterial"]
+albedo_color = Color(0.16, 0.17, 0.18, 1)
+metallic = 0.4
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="LampMaterial"]
+albedo_color = Color(0.95, 0.6, 0.12, 1)
+emission_enabled = true
+emission = Color(1, 0.62, 0.1, 1)
+emission_energy_multiplier = 2.5
+
+[sub_resource type="BoxMesh" id="PostMesh"]
+material = SubResource("PanelMaterial")
+size = Vector3(0.12, 1.1, 0.12)
+
+[sub_resource type="BoxMesh" id="HeadMesh"]
+material = SubResource("PanelMaterial")
+size = Vector3(0.46, 0.34, 0.08)
+
+[sub_resource type="BoxMesh" id="LampMesh"]
+material = SubResource("LampMaterial")
+size = Vector3(0.07, 0.07, 0.02)
+
+[sub_resource type="BoxShape3D" id="PanelShape"]
+size = Vector3(0.48, 1.4, 0.3)
+
 [node name="U_EMERGENCY_SetDressing" type="Node3D"]
 metadata/sector_id = "U-EMERGENCY"
 metadata/material_family = "medical"
+[node name="CapsuleHall" type="Node3D" parent="."]
+
+[node name="Capsules" type="Node3D" parent="CapsuleHall"]
+
+[node name="CapsuleN01" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -105.9, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n01"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN01" instance=ExtResource("3_empty")]
+
+[node name="CapsuleN02" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.1, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n02"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN02" instance=ExtResource("2_occupied")]
+
+[node name="CapsuleN03" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -102.3, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n03"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN03" instance=ExtResource("3_empty")]
+
+[node name="CapsuleN04" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -100.5, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n04"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN04" instance=ExtResource("2_occupied")]
+
+[node name="CapsuleN05" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.7, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n05"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN05" instance=ExtResource("3_empty")]
+
+[node name="CapsuleN06" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.9, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n06"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN06" instance=ExtResource("3_empty")]
+
+[node name="CapsuleN07" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.1, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n07"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+metadata/opening_start = true
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN07" instance=ExtResource("4_hero")]
+
+[node name="PlayerStart" type="Marker3D" parent="CapsuleHall/Capsules/CapsuleN07"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62, 0)
+
+[node name="CapsuleN08" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93.3, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n08"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN08" instance=ExtResource("3_empty")]
+
+[node name="CapsuleN09" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.5, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n09"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN09" instance=ExtResource("2_occupied")]
+
+[node name="CapsuleN10" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.7, 0, -5.7)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-n10"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleN10" instance=ExtResource("3_empty")]
+
+[node name="CapsuleS01" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -106.1, 0, 8.1)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-s01"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleS01" instance=ExtResource("3_empty")]
+
+[node name="CapsuleS02" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -99.9, 0, 8.1)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-s02"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleS02" instance=ExtResource("3_empty")]
+
+[node name="CapsuleS03" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -98.1, 0, 8.1)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-s03"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleS03" instance=ExtResource("3_empty")]
+
+[node name="CapsuleS04" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -96.3, 0, 8.1)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-s04"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleS04" instance=ExtResource("2_occupied")]
+
+[node name="CapsuleS05" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -94.5, 0, 8.1)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-s05"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleS05" instance=ExtResource("3_empty")]
+
+[node name="CapsuleS06" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -92.7, 0, 8.1)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-s06"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleS06" instance=ExtResource("3_empty")]
+
+[node name="CapsuleS07" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -90.9, 0, 8.1)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-s07"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleS07" instance=ExtResource("2_occupied")]
+
+[node name="CapsuleS08" type="Node3D" parent="CapsuleHall/Capsules"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -89.1, 0, 8.1)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/capsule-s08"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.75, 2, 3)
+metadata/footprint_center_m = Vector3(0.275, 1, 0.2)
+
+[node name="Content" parent="CapsuleHall/Capsules/CapsuleS08" instance=ExtResource("3_empty")]
+
+[node name="Lights" type="Node3D" parent="CapsuleHall"]
+
+[node name="LampN1" type="Node3D" parent="CapsuleHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.2, 5, -3.6)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-n1"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="CapsuleHall/Lights/LampN1" instance=ExtResource("9_lamp")]
+base_energy = 5.5
+fixture_color = Color(0.62, 0.76, 0.95, 1)
+
+[node name="LampN2" type="Node3D" parent="CapsuleHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -99.6, 5, -3.6)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-n2"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="CapsuleHall/Lights/LampN2" instance=ExtResource("9_lamp")]
+base_energy = 5.0
+fixture_color = Color(0.62, 0.76, 0.95, 1)
+
+[node name="LampN3" type="Node3D" parent="CapsuleHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.6, 5, -3.6)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-n3"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="CapsuleHall/Lights/LampN3" instance=ExtResource("9_lamp")]
+base_energy = 5.5
+fixture_color = Color(0.62, 0.76, 0.95, 1)
+
+[node name="LampS1" type="Node3D" parent="CapsuleHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -102.3, 5, 6)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-s1"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="CapsuleHall/Lights/LampS1" instance=ExtResource("9_lamp")]
+base_energy = 4.5
+fixture_color = Color(0.62, 0.76, 0.95, 1)
+flicker_enabled = true
+
+[node name="LampS2" type="Node3D" parent="CapsuleHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.1, 5, 6)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-s2"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="CapsuleHall/Lights/LampS2" instance=ExtResource("9_lamp")]
+base_energy = 5.5
+fixture_color = Color(0.62, 0.76, 0.95, 1)
+
+[node name="LampS3" type="Node3D" parent="CapsuleHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -90.6, 5, 6)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-s3"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="CapsuleHall/Lights/LampS3" instance=ExtResource("9_lamp")]
+base_energy = 5.0
+fixture_color = Color(0.62, 0.76, 0.95, 1)
+
+[node name="HeroLamp" type="Node3D" parent="CapsuleHall/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.1, 5, -5.4)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-hero"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="CapsuleHall/Lights/HeroLamp" instance=ExtResource("9_lamp")]
+base_energy = 7.5
+fixture_color = Color(0.86, 0.9, 1, 1)
+
+[node name="Beacons" type="Node3D" parent="CapsuleHall"]
+
+[node name="BeaconHero" type="Node3D" parent="CapsuleHall/Beacons"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.1, 3.4, -8.072)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/beacon-hero"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--north:wall"
+expected_anchor_type = "wall"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.5, 0.22, 0.2)
+metadata/footprint_center_m = Vector3(0, 0, 0.1)
+
+[node name="Content" parent="CapsuleHall/Beacons/BeaconHero" instance=ExtResource("8_beacon")]
+
+[node name="BeaconExit" type="Node3D" parent="CapsuleHall/Beacons"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -86.817, 3.2, 0.4)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/beacon-exit"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--east--outer:wall"
+expected_anchor_type = "wall"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.5, 0.22, 0.2)
+metadata/footprint_center_m = Vector3(0, 0, 0.1)
+
+[node name="Content" parent="CapsuleHall/Beacons/BeaconExit" instance=ExtResource("8_beacon")]
+
+[node name="ExitSign" type="Node3D" parent="CapsuleHall/Beacons"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -86.817, 3.25, 3.741)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/exit-sign"
+anchor_id = "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--east--germotambur:wall"
+expected_anchor_type = "wall"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.45, 0.25, 0.08)
+metadata/footprint_center_m = Vector3(0, 0.1, 0.03)
+
+[node name="Content" parent="CapsuleHall/Beacons/ExitSign" instance=ExtResource("10_sign")]
+
+[node name="TechRoom" type="Node3D" parent="."]
+
+[node name="EmergencyCabinet" type="Node3D" parent="TechRoom"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -107.33, 0, 14.5)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/emergency-cabinet"
+anchor_id = "svg:u-emergency--vnutrennee--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.85, 1.9, 0.5)
+metadata/footprint_center_m = Vector3(0, 0.95, 0.03)
+
+[node name="Content" parent="TechRoom/EmergencyCabinet" instance=ExtResource("11_cabinet")]
+
+[node name="Lamp" type="Node3D" parent="TechRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.9, 5, 14.55)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-tech"
+anchor_id = "svg:u-emergency--vnutrennee--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="TechRoom/Lamp" instance=ExtResource("9_lamp")]
+base_energy = 3.5
+fixture_color = Color(0.62, 0.76, 0.95, 1)
+
+[node name="Airlock" type="Node3D" parent="."]
+
+[node name="DoorA" type="Node3D" parent="Airlock"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -86.667, 0, 3.741)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/airlock-door-a"
+anchor_id = "svg:u-emergency--germotambur--door--kapsulnyy-zal-avariynogo-blo:door:center"
+expected_anchor_type = "door"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.8, 2.8, 0.3)
+metadata/footprint_center_m = Vector3(0, 1.4, 0)
+
+[node name="Door" parent="Airlock/DoorA" instance=ExtResource("5_hermetic")]
+
+[node name="DoorB" type="Node3D" parent="Airlock"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -83.333, 0, 3.741)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/airlock-door-b"
+anchor_id = "svg:u-emergency--germotambur--door--raspredelitelnyy-holl-person:door:center"
+expected_anchor_type = "door"
+apply_on_ready = false
+metadata/footprint_m = Vector3(1.8, 2.8, 0.3)
+metadata/footprint_center_m = Vector3(0, 1.4, 0)
+
+[node name="Door" parent="Airlock/DoorB" instance=ExtResource("5_hermetic")]
+
+[node name="CyclePost" type="Node3D" parent="Airlock"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85, 0, 1.76)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/airlock-cycle-panel"
+anchor_id = "svg:u-emergency--germotambur--floor:floor"
+expected_anchor_type = "floor"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.5, 1.45, 0.35)
+metadata/footprint_center_m = Vector3(0, 0.725, 0.03)
+
+[node name="Airlock" type="Node3D" parent="Airlock/CyclePost" node_paths=PackedStringArray("door_a", "door_b")]
+script = ExtResource("6_airlock")
+door_a = NodePath("../../DoorA/Door")
+door_b = NodePath("../../DoorB/Door")
+section = &"emergency_block"
+
+[node name="CyclePanel" type="StaticBody3D" parent="Airlock/CyclePost/Airlock"]
+
+[node name="Post" type="MeshInstance3D" parent="Airlock/CyclePost/Airlock/CyclePanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+mesh = SubResource("PostMesh")
+
+[node name="Head" type="MeshInstance3D" parent="Airlock/CyclePost/Airlock/CyclePanel"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 1.25, 0.03)
+mesh = SubResource("HeadMesh")
+
+[node name="Lamp" type="MeshInstance3D" parent="Airlock/CyclePost/Airlock/CyclePanel"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0.16, 1.33, 0.07)
+mesh = SubResource("LampMesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Airlock/CyclePost/Airlock/CyclePanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0.02)
+shape = SubResource("PanelShape")
+
+[node name="Interactable" type="Node" parent="Airlock/CyclePost/Airlock/CyclePanel"]
+script = ExtResource("7_interactable")
+
+[node name="Lamp" type="Node3D" parent="Airlock"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85, 5, 3.74)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/lamp-airlock"
+anchor_id = "svg:u-emergency--germotambur--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="Airlock/Lamp" instance=ExtResource("9_lamp")]
+base_energy = 4.0
+fixture_color = Color(0.62, 0.76, 0.95, 1)
+
+[node name="DistributionHall" type="Node3D" parent="."]
+
+[node name="LampWest" type="Node3D" parent="DistributionHall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.5, 5, 3.74)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/hub-west"
+anchor_id = "svg:u-emergency--raspredelitelnyy-holl-person--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="DistributionHall/LampWest" instance=ExtResource("9_lamp")]
+base_energy = 4.5
+fixture_color = Color(0.9, 0.82, 0.7, 1)
+
+[node name="LampCentre" type="Node3D" parent="DistributionHall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72, 5, 7.9)
+script = ExtResource("1_anchored")
+object_id = "u-emergency/hub-centre"
+anchor_id = "svg:u-emergency--raspredelitelnyy-holl-person--ceiling:ceiling"
+expected_anchor_type = "ceiling"
+apply_on_ready = false
+metadata/footprint_m = Vector3(0.6, 0.8, 0.6)
+metadata/footprint_center_m = Vector3(0, -0.4, 0)
+
+[node name="Content" parent="DistributionHall/LampCentre" instance=ExtResource("9_lamp")]
+base_energy = 4.5
+fixture_color = Color(0.9, 0.82, 0.7, 1)

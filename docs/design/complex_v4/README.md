@@ -66,7 +66,20 @@
 на одной стороне несколько стен или дверей, к ID добавляется сосед (`…:north:koridor`), при совпадении — `-2`, `-3`.
 
 **Предметы** ставятся в `scenes/complex_v4/set_dressing/sectors/<сектор>_dressing.tscn` с привязкой к якорям
-(`AnchoredObject3D`, `scenes/complex_v4/bindings/*.bindings.json`); ручная поправка — `author_correction`.
+(`AnchoredObject3D`, `scenes/complex_v4/bindings/*.bindings.json`); ручная поправка — `author_correction`. Порядок (пилот —
+капсульный зал U-EMERGENCY, #224, `docs/art/u-emergency-capsule-hall.md`):
+
+1. Поставить объект в сцене расстановки как `AnchoredObject3D` (папки — простые `Node3D`, свободных объектов нет) и задать
+   `object_id`, `anchor_id` (стабильный ID из таблицы выше), `expected_anchor_type` и `metadata/footprint_m`
+   (+ `footprint_center_m`) — габарит, которым объект должен поместиться в якорь.
+2. `python tools/complex_v4/check_bindings.py --sector <ID> --write-bindings` — записать привязки из положения объектов
+   (расстояние от ближайшего края якоря: при изменении помещения объект держится ближайшей стены) и композицию
+   `scenes/complex_v4/bindings/<сектор>.composition.json` для `safe_regenerate.py`; при первом наличии композиции
+   пересобрать `build_sector_manifest.py` и `scenes/complex_v4/scripts/generate_sector_scenes.py`.
+3. `python tools/complex_v4/check_bindings.py [--sector <ID>]` — каждая привязка ищется по ID: `ok` — якорь в пакете,
+   `pending` — пакет старше SVG, якорь пока только в плане (положение проверено по якорям, предсказанным из SVG), `LOST` /
+   `INVALID` — элемент переименован или удалён / объект больше не помещается. После перегенерации — с `--strict`
+   (ожидание перегенерации тоже ошибка).
 
 **Отделка.** Класс помещения задаётся в `tools/complex_v4/room_finishes.json`: `sectors.<сектор>.rooms.<помещение>` (часть
 `space_id` после `/`) или `sectors.<сектор>.default`. Классы — медицина, содержание, управление, жилой, старый, грузовой,
@@ -86,4 +99,4 @@
 - удаление элемента — привязки к нему блокируются (`resolve_bindings.py`), ближайший якорь не подставляется.
 
 После правки плана: `python tools/complex_v4/build_canonical_from_approved.py`, затем `safe_regenerate.py` для изменённых
-секторов и `bash tools/ci/run_checks.sh`.
+секторов, `python tools/complex_v4/check_bindings.py --strict` и `bash tools/ci/run_checks.sh`.

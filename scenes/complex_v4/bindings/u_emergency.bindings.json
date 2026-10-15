@@ -3,5 +3,1822 @@
   "schema_version": "1.0.0",
   "map_id": "caretaker-complex-v4",
   "sector_id": "U-EMERGENCY",
-  "bindings": []
+  "bindings": [
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/airlock-cycle-panel",
+      "object_ref": {
+        "object_id": "u-emergency/airlock-cycle-panel",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "Airlock/CyclePost"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--germotambur--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 1.667
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 0.501
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.5,
+        1.45,
+        0.35
+      ],
+      "footprint_center_m": [
+        0.0,
+        0.725,
+        0.03
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/airlock-door-a",
+      "object_ref": {
+        "object_id": "u-emergency/airlock-door-a",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "Airlock/DoorA"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--germotambur--door--kapsulnyy-zal-avariynogo-blo:door:center",
+        "expected_type": "door"
+      },
+      "placement": {
+        "mode": "linear",
+        "linear": {
+          "along": {
+            "policy": "from_start_m",
+            "distance_m": 0.9
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.8,
+        2.8,
+        0.3
+      ],
+      "footprint_center_m": [
+        0.0,
+        1.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/airlock-door-b",
+      "object_ref": {
+        "object_id": "u-emergency/airlock-door-b",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "Airlock/DoorB"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--germotambur--door--raspredelitelnyy-holl-person:door:center",
+        "expected_type": "door"
+      },
+      "placement": {
+        "mode": "linear",
+        "linear": {
+          "along": {
+            "policy": "from_start_m",
+            "distance_m": 0.9
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.8,
+        2.8,
+        0.3
+      ],
+      "footprint_center_m": [
+        0.0,
+        1.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/beacon-exit",
+      "object_ref": {
+        "object_id": "u-emergency/beacon-exit",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Beacons/BeaconExit"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--east--outer:wall",
+        "expected_type": "wall"
+      },
+      "placement": {
+        "mode": "linear",
+        "linear": {
+          "along": {
+            "policy": "from_end_m",
+            "distance_m": 0.859
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 3.2,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.5,
+        0.22,
+        0.2
+      ],
+      "footprint_center_m": [
+        0.0,
+        0.0,
+        0.1
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/beacon-hero",
+      "object_ref": {
+        "object_id": "u-emergency/beacon-hero",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Beacons/BeaconHero"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--north:wall",
+        "expected_type": "wall"
+      },
+      "placement": {
+        "mode": "linear",
+        "linear": {
+          "along": {
+            "policy": "from_end_m",
+            "distance_m": 8.433
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 3.4,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.5,
+        0.22,
+        0.2
+      ],
+      "footprint_center_m": [
+        0.0,
+        0.0,
+        0.1
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n01",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n01",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN01"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 1.878
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n02",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n02",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN02"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 3.678
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n03",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n03",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN03"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 5.478
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n04",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n04",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN04"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 7.278
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n05",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n05",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN05"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 9.078
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n06",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n06",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN06"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 10.233
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n07",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n07",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN07"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 8.433
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n08",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n08",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN08"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 6.633
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n09",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n09",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN09"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 4.833
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-n10",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-n10",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleN10"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 3.033
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.522
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-s01",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-s01",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleS01"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 1.678
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 2.567
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            -180.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-s02",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-s02",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleS02"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 7.878
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 2.567
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            -180.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-s03",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-s03",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleS03"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 9.678
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 2.567
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            -180.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-s04",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-s04",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleS04"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 9.633
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 2.567
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            -180.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-s05",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-s05",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleS05"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 7.833
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 2.567
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            -180.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-s06",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-s06",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleS06"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 6.033
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 2.567
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            -180.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-s07",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-s07",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleS07"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 4.233
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 2.567
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            -180.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/capsule-s08",
+      "object_ref": {
+        "object_id": "u-emergency/capsule-s08",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Capsules/CapsuleS08"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 2.433
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 2.567
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            -180.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        1.75,
+        2.0,
+        3.0
+      ],
+      "footprint_center_m": [
+        0.275,
+        1.0,
+        0.2
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/emergency-cabinet",
+      "object_ref": {
+        "object_id": "u-emergency/emergency-cabinet",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "TechRoom/EmergencyCabinet"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--vnutrennee--floor:floor",
+        "expected_type": "floor"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 0.448
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 3.833
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            90.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.85,
+        1.9,
+        0.5
+      ],
+      "footprint_center_m": [
+        0.0,
+        0.95,
+        0.03
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/exit-sign",
+      "object_ref": {
+        "object_id": "u-emergency/exit-sign",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Beacons/ExitSign"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--east--germotambur:wall",
+        "expected_type": "wall"
+      },
+      "placement": {
+        "mode": "linear",
+        "linear": {
+          "along": {
+            "policy": "from_end_m",
+            "distance_m": 2.481
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 3.25,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.45,
+        0.25,
+        0.08
+      ],
+      "footprint_center_m": [
+        0.0,
+        0.1,
+        0.03
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/hub-centre",
+      "object_ref": {
+        "object_id": "u-emergency/hub-centre",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "DistributionHall/LampCentre"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--raspredelitelnyy-holl-person--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 9.778
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 11.678
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/hub-west",
+      "object_ref": {
+        "object_id": "u-emergency/hub-west",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "DistributionHall/LampWest"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--raspredelitelnyy-holl-person--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 3.833
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 7.518
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-airlock",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-airlock",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "Airlock/Lamp"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--germotambur--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 1.667
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.481
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-hero",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-hero",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Lights/HeroLamp"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 8.433
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 2.822
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-n1",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-n1",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Lights/LampN1"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 4.578
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 4.622
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-n2",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-n2",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Lights/LampN2"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 8.178
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 4.622
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-n3",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-n3",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Lights/LampN3"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 3.933
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 4.622
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-s1",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-s1",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Lights/LampS1"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 5.478
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 4.667
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-s2",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-s2",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Lights/LampS2"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 8.433
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 4.667
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-s3",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-s3",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "CapsuleHall/Lights/LampS3"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--kapsulnyy-zal-avariynogo-blo--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_end_m",
+            "distance_m": 3.933
+          },
+          "v": {
+            "policy": "from_end_m",
+            "distance_m": 4.667
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    },
+    {
+      "binding_id": "BIND-U-EMERGENCY-u-emergency/lamp-tech",
+      "object_ref": {
+        "object_id": "u-emergency/lamp-tech",
+        "scene": "res://scenes/complex_v4/set_dressing/sectors/u_emergency_dressing.tscn",
+        "node_path_hint": "TechRoom/Lamp"
+      },
+      "anchor_ref": {
+        "anchor_id": "svg:u-emergency--vnutrennee--ceiling:ceiling",
+        "expected_type": "ceiling"
+      },
+      "placement": {
+        "mode": "surface",
+        "surface": {
+          "u": {
+            "policy": "from_start_m",
+            "distance_m": 3.878
+          },
+          "v": {
+            "policy": "from_start_m",
+            "distance_m": 3.883
+          }
+        },
+        "normal_offset_m": 0.0,
+        "height_m": 0.0,
+        "rotation": {
+          "representation": "euler_deg",
+          "order": "YXZ",
+          "yaw_pitch_roll": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "footprint_m": [
+        0.6,
+        0.8,
+        0.6
+      ],
+      "footprint_center_m": [
+        0.0,
+        -0.4,
+        0.0
+      ],
+      "constraints": {
+        "inside_anchor_bounds": true,
+        "collision_free": false
+      },
+      "on_missing_anchor": "block"
+    }
+  ]
 }

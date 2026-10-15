@@ -10,11 +10,12 @@ extends SceneTree
 ## Report mode: blocked legs are printed as `BLOCKED` and counted, but the check still exits 0 while the route is
 ## known to be incomplete. Pass `-- --strict` to fail on any blocked route leg, `-- --verbose` to print the paths.
 
-const BLOCKOUT_SCENE := preload("res://scenes/complex_v4/complex_v4_blockout.tscn")
+## Loaded at run time, not preloaded: placed props use autoloads (GameState), which a preload at parse time precedes.
+const BLOCKOUT_SCENE := "res://scenes/complex_v4/complex_v4_blockout.tscn"
 
 ## The agent is the standing player capsule (`scenes/player/player.tscn`: height 1.8 m, radius 0.35 m rounded up to the cell,
-## steps up to STEP_MAX_HEIGHT 0.3 m in `scenes/player/player.gd`). Doors are openings in the generated geometry, so the check
-## sees every door open; lock states (G-05) are gameplay, not geometry.
+## steps up to STEP_MAX_HEIGHT 0.3 m in `scenes/player/player.gd`). Doors are openings in the generated geometry and placed
+## door objects are opened before baking, so the check sees every door open; lock states (G-05) are gameplay, not geometry.
 const AGENT_HEIGHT := 1.8
 const AGENT_RADIUS := 0.4
 const AGENT_MAX_CLIMB := 0.3
@@ -94,8 +95,11 @@ var _verbose := false
 func _initialize() -> void:
 	_strict = OS.get_cmdline_user_args().has("--strict")
 	_verbose = OS.get_cmdline_user_args().has("--verbose")
-	var blockout := BLOCKOUT_SCENE.instantiate() as ComplexV4Blockout
+	var blockout := (load(BLOCKOUT_SCENE) as PackedScene).instantiate() as ComplexV4Blockout
 	root.add_child(blockout)
+	# By class name and method only: a typed reference would compile the door script before the autoloads exist.
+	for door: Node in blockout.find_children("*", "FacilityDoor", true, false):
+		door.call("load_state", {"open": true})
 	for _i: int in SETTLE_FRAMES:
 		await physics_frame
 
