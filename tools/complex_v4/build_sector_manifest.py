@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[2]
 CATALOG = ROOT / "scenes" / "complex_v4" / "sector_catalog.json"
 OUTPUT = Path(__file__).with_name("sector_generation_manifest.json")
 VERTICAL_DEFINITIONS = Path(__file__).with_name("vertical_definitions.json")
+AUTHORED_BINDINGS = "scenes/complex_v4/bindings"
 SOURCE_MANIFESTS = (
     Path(__file__).with_name("rollouts") / "lower_generation_manifest.json",
     Path(__file__).with_name("rollouts") / "upper_generation_manifest.json",
@@ -119,6 +120,15 @@ def main(argv: list[str] | None = None) -> int:
         slug = sector_id.lower().replace("-", "_")
         base = f"scenes/complex_v4/regeneration/rollout/{level_dir}/AuthoredContent/{slug}"
         source_by_id[sector_id]["safe_regeneration"] = {"composition_input": f"{base}/composition.json", "bindings_input": f"{base}/object_bindings.json"}
+    # A sector placed through stable-ID bindings (#224) keeps its authored inputs next to its bindings document in
+    # scenes/complex_v4/bindings/; the rollout AuthoredContent stays the generated bootstrap (build_floor_rollout.py).
+    for sector_id, source in source_by_id.items():
+        slug = sector_id.lower().replace("-", "_")
+        if (ROOT / f"{AUTHORED_BINDINGS}/{slug}.composition.json").is_file():
+            source["safe_regeneration"] = {
+                "composition_input": f"{AUTHORED_BINDINGS}/{slug}.composition.json",
+                "bindings_input": f"{AUTHORED_BINDINGS}/{slug}.bindings.json",
+            }
     apply_vertical_definitions(source_by_id)
     if set(source_by_id) != set(catalog_by_id):
         missing = sorted(set(catalog_by_id) - set(source_by_id))

@@ -9,6 +9,7 @@
 | [texture-catalog.md](texture-catalog.md) | Список текстур, декалей и атласов |
 | [sourcing.md](sourcing.md) | Где искать готовое, какие домены нужны, лицензии, порядок отказа к генерации |
 | [decisions.md](decisions.md) | Решения пайплайна: принятые исполнителем и ожидающие автора |
+| [u-emergency-capsule-hall.md](u-emergency-capsule-hall.md) | Капсульный зал персонала (U-EMERGENCY): вид, свет, отделка, расстановка (#224) |
 
 Исходные скрипты — `tools/props/`. Результаты — `loads/props/` (модели), `loads/textures/` (текстуры), `materials/props/` (материалы). Происхождение каждого файла — `tools/props/manifest.json`.
 

@@ -1,7 +1,8 @@
 extends SceneTree
 
 const CATALOG_PATH := "res://scenes/complex_v4/sector_catalog.json"
-const BLOCKOUT_SCENE := preload("res://scenes/complex_v4/complex_v4_blockout.tscn")
+## Loaded at run time, not preloaded: placed props use autoloads (GameState), which a preload at parse time precedes.
+const BLOCKOUT_SCENE := "res://scenes/complex_v4/complex_v4_blockout.tscn"
 
 
 func _initialize() -> void:
@@ -33,7 +34,7 @@ func _initialize() -> void:
 		part.queue_free()
 		await process_frame
 
-	var blockout := BLOCKOUT_SCENE.instantiate() as ComplexV4Blockout
+	var blockout := (load(BLOCKOUT_SCENE) as PackedScene).instantiate() as ComplexV4Blockout
 	blockout.include_ceilings = false
 	root.add_child(blockout)
 	await process_frame
