@@ -39,14 +39,37 @@ IRON_L = "#4a4447"
 STONE = "#3b3236"
 STONE_L = "#4d4247"
 
-# С-01 shade guard
-SHADOW = "#120d10"
-SHADOW_B = "#1f171c"
-SHADOW_RIM = "#5b4656"
+# С-01 dream guard (canon colours, dimmed by the dream light)
 SMOKE = "#3a2a35"
 EYE = "#ff7a2a"
-ARMOR = "#4a3f3a"     # neutral base colour for generation (the shader overrides it in game)
-ARMOR_L = "#6a5c54"
+K_SKIN = "#b89a45"
+K_SKIN_D = "#8a7232"
+K_SHELL = "#3f6b3a"
+K_SHELL_D = "#2c4a29"
+K_SHELL_B = "#6d6a66"   # the bone guard's grey cracked shell
+K_RIM = "#cfc29a"
+K_BELLY = "#d2c38e"
+K_BELLY_D = "#a8996a"
+K_MUZZLE = "#d9c48a"
+K_SCLERA = "#e6dcc0"    # cream, not white: white belongs to the system (Б-5)
+K_IRON = "#45444c"
+K_IRON_L = "#6a6873"
+K_SPIKE = "#cfc8b8"
+K_BOOT = "#5a3a2a"
+
+# Ст-01 senior officer
+SR_JACKET = "#2f3a4a"
+SR_JACKET_D = "#253040"
+SR_COLLAR = "#4f5862"
+SR_PANTS = "#3b424a"
+SR_SKIN = "#c8aa98"
+SR_SKIN_D = "#8e6f60"
+SR_HAIR = "#8d8a86"
+SR_CORD = "#a8382c"
+SR_PIPE = "#6b5a4a"
+SR_PIPE_D = "#4a3e33"
+SR_CONSOLE = "#2b3036"
+SR_CONSOLE_L = "#3e4650"
 
 # P-106s Herobrine
 HB_SKIN = "#b88d6c"
@@ -192,230 +215,370 @@ def info(x: float, y: float, sections: list, chars: int = 62) -> str:
     return "\n".join(s) + "\n"
 
 
-# ============================================================================= С-01 shade guard
-def guard_front(v: V, fill: str = SHADOW_B, rim: str = SHADOW_RIM, arm_out: float = 0.0, glow: bool = True) -> str:
-    """Front view, 2.6 m. arm_out — degrees the arms are raised out to the sides (A-pose ≈ 35)."""
+# ============================================================================= С-01 dream guard: three variants
+def koopa_front(v: V, kind: str = "armored", glow: bool = True) -> str:
+    """Front view of an upright turtle guard. kind: armored (а) · bones (б) · hammer (в). Feet on y = 0."""
+    bones = kind == "bones"
+    skin = BONE if bones else K_SKIN
+    skin_d = BONE_D if bones else K_SKIN_D
+    shell = K_SHELL_B if bones else K_SHELL
+    rim = BONE_D if bones else K_RIM
+    tall = 1.06 if kind == "hammer" else 1.0          # the hammer guard is taller and has a larger shell
     s = []
     if glow:
-        s.append(v.ell(0, 0.08, 0.7, 0.12, SMOKE, 'filter="url(#soft)" opacity="0.9"'))
-    for sx in (-1, 1):
-        s.append(v.poly([(sx * 0.1, 1.3), (sx * 0.42, 1.3), (sx * 0.38, 0.8), (sx * 0.13, 0.8)], fill))
-        s.append(v.poly([(sx * 0.13, 0.84), (sx * 0.37, 0.84), (sx * 0.33, 0.14), (sx * 0.16, 0.14)], fill))
-        s.append(v.poly([(sx * 0.08, 0.15), (sx * 0.42, 0.15), (sx * 0.45, 0.0), (sx * 0.05, 0.0)], fill))
-        for c in (-0.09, 0.0, 0.09):
-            s.append(v.poly([(sx * 0.25 + c - 0.035, 0.02), (sx * 0.25 + c + 0.035, 0.02), (sx * 0.25 + c, -0.04)], fill))
-        s.append(v.poly([(sx * 0.18, 0.86), (sx * 0.32, 0.86), (sx * 0.25, 1.02)], rim))            # knee spike
-    s.append(v.ell(0, 1.84, 0.66, 0.62, fill))                                                     # carapace behind
-    for sx in (-1, 1):
-        for y0, ln in ((2.2, 0.26), (1.85, 0.32), (1.48, 0.24)):
-            s.append(v.poly([(sx * 0.6, y0 + 0.08), (sx * 0.6, y0 - 0.08), (sx * (0.6 + ln), y0)], fill))
-    s.append(v.ell(0, 1.38, 0.37, 0.25, fill))
-    s.append(v.ell(0, 1.8, 0.5, 0.46, fill))
-    for sx in (-1, 1):                                                                               # arms
-        arm = []
-        arm.append(v.poly([(sx * 0.5, 2.06), (sx * 0.78, 2.06), (sx * 0.76, 1.56), (sx * 0.56, 1.56)], fill))
-        arm.append(v.poly([(sx * 0.56, 1.58), (sx * 0.8, 1.58), (sx * 0.82, 1.08), (sx * 0.6, 1.08)], fill))
-        arm.append(v.rect(sx * 0.58, 1.26, sx * 0.84, 1.36, rim))                                    # spiked bracer
-        arm.append(v.poly([(sx * 0.84, 1.36), (sx * 0.84, 1.26), (sx * 0.96, 1.31)], rim))
-        arm.append(v.ell(sx * 0.71, 1.0, 0.13, 0.11, fill))
-        for c in (-0.07, 0.0, 0.07):
-            arm.append(v.poly([(sx * 0.71 + c - 0.03, 0.94), (sx * 0.71 + c + 0.03, 0.94), (sx * 0.71 + c, 0.78)], fill))
-        a = "".join(arm)
-        s.append(v.rot(-sx * arm_out, sx * 0.62, 2.04, a) if arm_out else a)
-        s.append(v.ell(sx * 0.6, 2.1, 0.26, 0.19, fill))                                            # pauldron
-        s.append(v.poly([(sx * 0.52, 2.22), (sx * 0.7, 2.22), (sx * 0.64, 2.52)], fill))
-        s.append(v.poly([(sx * 0.8, 2.16), (sx * 0.8, 2.04), (sx * 1.02, 2.12)], fill))
-    s.append(v.rect(-0.14, 2.22, 0.14, 2.36, fill))
-    s.append(v.ell(0, 2.45, 0.23, 0.2, fill))
-    s.append(v.rect(-0.16, 2.28, 0.16, 2.4, fill))
-    for sx in (-1, 1):                                                                              # curled horns
-        s.append(v.curve(["M", (sx * 0.15, 2.52), "Q", (sx * 0.42, 2.58), (sx * 0.46, 2.76), "Q", (sx * 0.5, 2.6),
-                          (sx * 0.38, 2.56)], fill, 0.07))
-    s.append(v.poly([(-0.05, 2.6), (0.05, 2.6), (0, 2.7)], fill))
-    # rim light (fresnel) and plate lines
-    s.append(v.curve(["M", (-0.5, 1.8), "Q", (-0.5, 2.26), (0, 2.26), "Q", (0.5, 2.26), (0.5, 1.8)], rim, 0.012))
-    for y in (1.62, 1.44):
-        s.append(v.line([(-0.24, y), (0.24, y)], rim, 0.01))
-    s.append(v.line([(0, 1.36), (0, 1.66)], rim, 0.01))
-    if glow:
+        s.append(v.ell(0, 0.06, 0.62, 0.1, SMOKE, 'filter="url(#soft)" opacity="0.8"'))
+    for sx in (-1, 1):                                                                       # legs and boots
+        if bones:
+            s.append(v.line([(sx * 0.2, 0.12), (sx * 0.2, 0.62)], skin, 0.07))
+            s.append(v.ell(sx * 0.2, 0.42, 0.06, 0.05, skin))
+        else:
+            s.append(v.poly([(sx * 0.08, 0.64), (sx * 0.34, 0.64), (sx * 0.32, 0.12), (sx * 0.1, 0.12)], skin))
+        s.append(v.ell(sx * 0.24, 0.08, 0.2, 0.09, K_BOOT))
+        s.append(v.rect(sx * 0.06, 0.0, sx * 0.42, 0.04, K_BOOT))
+    s.append(v.ell(0, 1.22 * tall, 0.66 * tall, 0.66 * tall, rim))                         # shell rim behind
+    s.append(v.ell(0, 1.24 * tall, 0.6 * tall, 0.6 * tall, shell))
+    if kind == "armored":                                                                    # spikes on the shell edge
+        for y0 in (1.62, 1.22, 0.84):
+            for sx in (-1, 1):
+                s.append(v.poly([(sx * 0.6, y0 + 0.07), (sx * 0.6, y0 - 0.07), (sx * 0.84, y0)], K_SPIKE))
+    if bones:                                                                                # cracks in the grey shell
+        s.append(v.line([(-0.5, 1.5), (-0.36, 1.36), (-0.44, 1.18)], K_SHELL_D, 0.014))
+        s.append(v.line([(0.46, 0.9), (0.34, 1.02), (0.4, 1.16)], K_SHELL_D, 0.014))
+        s.append(v.line([(0, 0.62), (0, 1.68)], skin, 0.07))                                  # spine
+        for i, y in enumerate((1.5, 1.38, 1.26, 1.14)):                                       # ribs
+            w = 0.3 - i * 0.03
+            s.append(v.curve(["M", (-w, y - 0.06), "Q", (0, y + 0.06), (w, y - 0.06)], skin, 0.035))
+        s.append(v.ell(0, 0.68, 0.24, 0.08, skin))                                            # pelvis
+    else:
+        s.append(v.ell(0, 1.12 * tall, 0.36, 0.5 * tall, K_BELLY))                           # belly plate
+        for y in (0.82, 1.02, 1.22, 1.42):
+            s.append(v.line([(-0.3, y * tall), (0.3, y * tall)], K_BELLY_D, 0.012))
+    for sx in (-1, 1):                                                                       # arms
+        if bones:
+            s.append(v.line([(sx * 0.42, 1.62), (sx * 0.62, 1.3), (sx * 0.66, 1.0)], skin, 0.055))
+        else:
+            s.append(v.poly([(sx * 0.44, 1.7 * tall), (sx * 0.64, 1.66 * tall), (sx * 0.7, 1.02), (sx * 0.54, 1.0)], skin))
+        s.append(v.ell(sx * 0.63, 0.94, 0.1, 0.09, skin))
+        for c in (-0.05, 0.0, 0.05):
+            s.append(v.poly([(sx * 0.63 + c - 0.02, 0.88), (sx * 0.63 + c + 0.02, 0.88), (sx * 0.63 + c, 0.8)], skin_d))
+        if kind == "armored":                                                                # spiked cuffs and pauldrons
+            s.append(v.rect(sx * 0.53, 1.08, sx * 0.73, 1.2, K_IRON))
+            s.append(v.poly([(sx * 0.73, 1.19), (sx * 0.73, 1.09), (sx * 0.84, 1.14)], K_SPIKE))
+            s.append(v.ell(sx * 0.52, 1.72, 0.2, 0.13, K_IRON))
+            s.append(v.poly([(sx * 0.46, 1.82), (sx * 0.6, 1.82), (sx * 0.55, 2.0)], K_SPIKE))
+    if kind == "armored":                                                                    # spiked collar
+        s.append(v.rect(-0.26, 1.7, 0.26, 1.8, K_IRON))
+        for c in (-0.18, 0.0, 0.18):
+            s.append(v.poly([(c - 0.04, 1.8), (c + 0.04, 1.8), (c, 1.88)], K_SPIKE))
+    hy = 2.0 * tall if not bones else 1.94                                                  # head
+    s.append(v.rect(-0.1, hy - 0.26, 0.1, hy - 0.12, skin))
+    s.append(v.ell(0, hy, 0.25, 0.26, skin))
+    s.append(v.ell(0, hy - 0.12, 0.17, 0.11, K_MUZZLE if not bones else BONE_D))           # muzzle / beak
+    s.append(v.line([(-0.1, hy - 0.16), (0, hy - 0.19), (0.1, hy - 0.16)], skin_d, 0.012))
+    for sx in (-1, 1):                                                                       # eyes
+        if bones:
+            s.append(v.ell(sx * 0.09, hy + 0.06, 0.07, 0.08, "#0b0809"))
+        else:
+            s.append(v.ell(sx * 0.08, hy + 0.06, 0.065, 0.1, K_SCLERA))
+        if glow:
+            s.append(v.ell(sx * 0.08, hy + 0.05, 0.08, 0.08, "url(#eyeg)"))
+        s.append(v.ell(sx * 0.07, hy + 0.04, 0.025, 0.04, EYE, 'filter="url(#glow)"' if glow else ""))
+    if kind == "armored":                                                                    # spiked helmet
+        s.append(v.curve(["M", (-0.29, hy + 0.1), "Q", (-0.3, hy + 0.36), (0, hy + 0.36), "Q", (0.3, hy + 0.36),
+                          (0.29, hy + 0.1), "Z"], K_IRON_L, 0.006, K_IRON))
+        s.append(v.rect(-0.31, hy + 0.08, 0.31, hy + 0.13, K_IRON_L))
+        s.append(v.poly([(-0.06, hy + 0.34), (0.06, hy + 0.34), (0, hy + 0.5)], K_SPIKE))
         for sx in (-1, 1):
-            s.append(v.ell(sx * 0.08, 2.43, 0.1, 0.08, "url(#eyeg)"))
-            s.append(v.ell(sx * 0.08, 2.43, 0.04, 0.018, EYE, 'filter="url(#glow)"'))
-        s.append(v.line([(0.1, 1.95), (0.16, 1.82), (0.12, 1.7), (0.2, 1.58)], EYE, 0.012, 'filter="url(#glow)" opacity="0.9"'))
-        s.append(v.line([(-0.22, 1.9), (-0.14, 1.78), (-0.2, 1.66)], EYE, 0.01, 'filter="url(#glow)" opacity="0.8"'))
+            s.append(v.poly([(sx * 0.17, hy + 0.3), (sx * 0.25, hy + 0.26), (sx * 0.27, hy + 0.4)], K_SPIKE))
+    elif kind == "hammer":                                                                   # round helmet, shell colour
+        s.append(v.curve(["M", (-0.27, hy + 0.12), "Q", (-0.27, hy + 0.34), (0, hy + 0.34), "Q", (0.27, hy + 0.34),
+                          (0.27, hy + 0.12), "Z"], K_RIM, 0.008, K_SHELL))
+        s.append(v.line([(0.64, 0.98), (0.7, 1.4), (0.78, 1.9)], WOOD, 0.04))              # hammer raised
+        s.append(v.rot(-8, 0.79, 1.98, v.rect(0.66, 1.9, 0.92, 2.08, K_IRON)))
+        s.append(v.line([(0.74, 1.88), (0.82, 1.92)], WOOD_D, 0.02))
+        s.append(v.line([(-0.36, 0.72), (-0.36, 0.42)], WOOD, 0.035))                      # spare hammer at the belt
+        s.append(v.rect(-0.44, 0.7, -0.28, 0.8, K_IRON))
     return "".join(s)
 
 
-def guard_side(v: V, fill: str = SHADOW_B, rim: str = SHADOW_RIM, glow: bool = True) -> str:
-    """Side view, front to +x."""
+def koopa_side(v: V) -> str:
+    """Variant а, side view, face to +x."""
     s = []
-    if glow:
-        s.append(v.ell(0, 0.08, 0.6, 0.12, SMOKE, 'filter="url(#soft)" opacity="0.9"'))
-    s.append(v.poly([(-0.18, 1.3), (0.2, 1.3), (0.18, 0.82), (-0.12, 0.8)], fill))
-    s.append(v.poly([(-0.12, 0.84), (0.16, 0.84), (0.1, 0.14), (-0.1, 0.14)], fill))
-    s.append(v.poly([(-0.16, 0.15), (0.34, 0.15), (0.44, 0.0), (-0.18, 0.0)], fill))
-    s.append(v.poly([(0.4, 0.06), (0.4, 0.0), (0.52, 0.0)], fill))
-    s.append(v.poly([(0.14, 0.9), (0.14, 0.76), (0.34, 0.8)], rim))
-    s.append(v.ell(0, 1.38, 0.3, 0.25, fill))
-    s.append(v.ell(0.04, 1.8, 0.38, 0.46, fill))
-    s.append(v.ell(-0.3, 1.84, 0.36, 0.64, fill))                                  # carapace dome on the back
-    for y0, ln in ((2.28, 0.34), (1.92, 0.42), (1.52, 0.34)):
-        s.append(v.poly([(-0.6, y0 + 0.1), (-0.6, y0 - 0.1), (-0.62 - ln, y0 - 0.06)], fill))
-    s.append(v.curve(["M", (-0.6, 1.3), "Q", (-0.78, 1.84), (-0.48, 2.4)], rim, 0.014))
-    s.append(v.ell(0.0, 2.1, 0.24, 0.2, fill))
-    s.append(v.poly([(-0.08, 2.24), (0.1, 2.24), (0.0, 2.54)], fill))
-    s.append(v.poly([(0.08, 2.06), (0.1, 1.56), (0.3, 1.56), (0.26, 2.06)], fill))
-    s.append(v.poly([(0.14, 1.58), (0.34, 1.58), (0.42, 1.1), (0.22, 1.08)], fill))
-    s.append(v.rect(0.16, 1.26, 0.42, 1.36, rim))
-    s.append(v.ell(0.34, 1.0, 0.11, 0.12, fill))
-    s.append(v.poly([(0.36, 0.94), (0.46, 0.94), (0.5, 0.8)], fill))
-    s.append(v.rect(0.0, 2.22, 0.18, 2.36, fill))
-    s.append(v.ell(0.1, 2.46, 0.2, 0.19, fill))
-    s.append(v.poly([(0.16, 2.4), (0.36, 2.36), (0.32, 2.28), (0.12, 2.3)], fill))                  # jaw guard / visor
-    s.append(v.curve(["M", (0.02, 2.56), "Q", (-0.2, 2.74), (-0.26, 2.56), "Q", (-0.28, 2.44), (-0.18, 2.42)], fill, 0.07))
-    s.append(v.poly([(0.06, 2.6), (0.14, 2.6), (0.08, 2.7)], fill))
-    if glow:
-        s.append(v.ell(0.24, 2.44, 0.09, 0.07, "url(#eyeg)"))
-        s.append(v.ell(0.25, 2.44, 0.035, 0.016, EYE, 'filter="url(#glow)"'))
+    s.append(v.ell(0, 0.06, 0.55, 0.1, SMOKE, 'filter="url(#soft)" opacity="0.8"'))
+    s.append(v.poly([(-0.08, 0.64), (0.2, 0.64), (0.18, 0.12), (-0.04, 0.12)], K_SKIN))
+    s.append(v.ell(0.12, 0.08, 0.24, 0.09, K_BOOT) + v.rect(-0.12, 0.0, 0.36, 0.04, K_BOOT))
+    s.append(v.ell(-0.18, 1.24, 0.42, 0.62, K_RIM))
+    s.append(v.ell(-0.2, 1.24, 0.37, 0.57, K_SHELL))
+    for y0 in (1.7, 1.38, 1.04, 0.74):                                                       # back spikes
+        s.append(v.poly([(-0.54, y0 + 0.08), (-0.54, y0 - 0.08), (-0.8, y0 - 0.02)], K_SPIKE))
+    s.append(v.curve(["M", (-0.5, 1.0), "Q", (-0.3, 1.24), (-0.48, 1.5)], K_SHELL_D, 0.012))
+    s.append(v.ell(0.12, 1.12, 0.2, 0.48, K_BELLY))
+    s.append(v.ell(0.0, 1.7, 0.16, 0.12, K_IRON))                                            # pauldron
+    s.append(v.poly([(-0.04, 1.8), (0.08, 1.8), (0.02, 1.98)], K_SPIKE))
+    s.append(v.poly([(0.02, 1.66), (0.18, 1.62), (0.26, 1.02), (0.1, 1.0)], K_SKIN))
+    s.append(v.rect(0.08, 1.08, 0.3, 1.2, K_IRON))
+    s.append(v.ell(0.2, 0.94, 0.09, 0.09, K_SKIN))
+    s.append(v.rect(0.02, 1.74, 0.2, 1.88, K_SKIN))                                          # neck
+    s.append(v.ell(0.14, 2.0, 0.22, 0.24, K_SKIN))
+    s.append(v.ell(0.34, 1.9, 0.15, 0.1, K_MUZZLE))                                          # snout forward
+    s.append(v.ell(0.24, 2.06, 0.05, 0.09, K_SCLERA))
+    s.append(v.ell(0.26, 2.05, 0.022, 0.04, EYE, 'filter="url(#glow)"'))
+    s.append(v.curve(["M", (-0.12, 2.1), "Q", (-0.1, 2.36), (0.14, 2.36), "Q", (0.36, 2.34), (0.36, 2.12), "Z"],
+                     K_IRON_L, 0.006, K_IRON))
+    s.append(v.poly([(0.06, 2.34), (0.18, 2.34), (0.12, 2.5)], K_SPIKE))
     return "".join(s)
+
+
+GUARD_VARIANTS = [
+    ("armored", "а. Купа-латник · 2,3 м", "по мотивам Koopatrol",
+     "Элитная охрана замка: шлем с шипом, шипастый панцирь, наплечники и браслеты. Ближе всего к роли «страж»."),
+    ("bones", "б. Костяной купа · 2,2 м", "по мотивам Dry Bones",
+     "Скелет черепахи с треснувшим панцирем. Сам «собирается» и «рассыпается» — как наш телеграф 1,5 с."),
+    ("hammer", "в. Молот-страж · 2,4 м", "по мотивам Hammer Bro",
+     "Выше, панцирь больше, круглый шлем, тяжёлый молот в руке и запасной на поясе. Удар молотом."),
+]
 
 
 def sheet_guard() -> str:
-    s = [head("С-01 · Страж-тень — враг сна Боузера",
-              "Двор первого боя S3, засада bowser_first_fight: 2 стража выходят из ниш. Сейчас: dream_shade_guard.gltf "
-              "(скрипт, примитивы, без скелета) + шейдер dream_shadow")]
-    s.append(panel(24, 92, 856, 780, "Силуэт: спереди (A-поза для генерации и рига) · сбоку · в игре под шейдером"))
-    v = V(250, 820, 170)
-    s.append(guard_front(v, ARMOR, ARMOR_L, arm_out=24, glow=False))
-    s.append(txt(250, 852, "спереди, A-поза, нейтральная текстура", 12, MUTED, "middle"))
-    v2 = V(620, 820, 170)
-    s.append(guard_side(v2, ARMOR, ARMOR_L, glow=False))
-    s.append(txt(620, 852, "сбоку, лицом вправо", 12, MUTED, "middle"))
-    s.append(dim(v2, -1.05, 0, 2.6, "2,6 м", -1))
-    v3 = V(780, 420, 95)
-    s.append(f'<rect x="{v3.X(-0.95):.0f}" y="{v3.Y(2.95):.0f}" width="{1.9 * 95:.0f}" height="{3.12 * 95:.0f}" rx="8" fill="#0c090b"/>')
-    s.append(guard_front(v3))
-    s.append(txt(780, 452, "в игре: dream_shadow", 11, MUTED, "middle"))
-    s.append(txt(780, 467, "(#120d10, френель-дым,", 11, MUTED, "middle"))
-    s.append(txt(780, 482, "глаза и трещины #ff7a2a)", 11, MUTED, "middle"))
-    s.append(hero(V(800, 820, 170), 0.0))
-    s.append(ground(v, -1.05, 1.05) + ground(v2, -1.0, 1.4))
+    s = [head("С-01 · Страж сна Боузера — 3 варианта ближе к образам вселенной",
+              "Двор S3, засада bowser_first_fight: 2 стража выходят из ниш. Прошлый «страж-тень» отклонён. "
+              "Свои рисунки по описаниям, без чужих картинок")]
+    s.append(panel(24, 92, 1352, 500, "Спереди · вариант «а» сбоку · игрок 1,8 м (для генерации — A-поза, В-2 «а»)"))
+    k = 165
+    xs = (200, 470, 740)
+    for x, (kind, title, ref, _) in zip(xs, GUARD_VARIANTS):
+        v = V(x, 540, k)
+        s.append(koopa_front(v, kind))
+        s.append(ground(v, -1.0, 1.0))
+        s.append(txt(x, 566, title, 14, ACCENT if kind == "armored" else TEXT, "middle", "700"))
+        s.append(txt(x, 583, ref, 12, MUTED, "middle"))
+    v4 = V(1000, 540, k)
+    s.append(koopa_side(v4))
+    s.append(ground(v4, -0.9, 0.7))
+    s.append(dim(v4, 0.62, 0, 2.5, "2,3 м + шип", 1))
+    s.append(txt(1000, 566, "а. сбоку, лицом вправо", 12, MUTED, "middle"))
+    s.append(hero(V(1260, 540, k), 0.0))
+    # variants, palette, notes
+    y = 618
+    for i, (kind, title, ref, line) in enumerate(GUARD_VARIANTS):
+        x = 32 + i * 330
+        s.append(f'<rect x="{x - 8}" y="{y - 20}" width="318" height="140" rx="8" fill="{PANEL}" '
+                 f'stroke="{ACCENT if kind == "armored" else GRID}"/>')
+        s.append(txt(x + 4, y, title + (" — рекомендация" if kind == "armored" else ""), 13, ACCENT, weight="700"))
+        yy = y + 20
+        for part in textwrap.wrap(line, 44):
+            s.append(txt(x + 4, yy, part, 12, TEXT))
+            yy += 16
+    pros = [
+        ("а", "+ читается как «стража», ближний бой, шипы держат силуэт в темноте; − шипы осложняют авториг"),
+        ("б", "+ сборка/распад «бесплатно», риф с останками Н-01; − тонкие кости хуже читаются на 12 м"),
+        ("в", "+ самый узнаваемый; − молот просит бросок (новая механика), длинный замах"),
+    ]
+    yy = y + 92
+    for i, (_, line) in enumerate(pros):
+        x = 32 + i * 330
+        for j, part in enumerate(textwrap.wrap(line, 50)[:3]):
+            s.append(txt(x + 4, yy - 14 + j * 15, part, 11, MUTED))
+    s.append(info(1016, 618, [
+        ("Палитра (вариант «а»)", [(K_SHELL, "панцирь"), (K_SKIN, "кожа"), (K_BELLY, "брюшной щит"), (K_IRON, "латы"),
+                                   (K_SPIKE, "шипы"), (EYE, "зрачки, эмиссия")]),
+    ], 40))
+    s.append(txt(32, 790, "Цвет (В-11): канонные цвета, приглушённые светом сна; дым dream_shadow — только на «сборке» и гибели. "
+                          "Белого на стражах нет (Б-5): белки глаз кремовые.", 12, TEXT))
+    s.append(txt(32, 810, "Референсы (описания, ссылки — без копий в репо): mariowiki.com/Koopatrol · mariowiki.com/Dry_Bones · "
+                          "mariowiki.com/Hammer_Bro · mariowiki.com/Magikoopa (маг — на будущие сны, не страж).", 12, MUTED))
+    s.append(txt(32, 830, "Риск О-10: узнаваемость по Б-2 — силуэт и роль, а не копия. Свои пропорции (рост 2,2–2,4 м, "
+                          "«взрослое» тело), без надписей и логотипов; в промптах этапа 2 — описание, не имя персонажа.", 12, MUTED))
+    s.append(txt(32, 850, "Для генерации (этап 2): риг по A-позе, 3–5 клипов (стойка, шаг, замах 0,45 с, удар, гибель). "
+                          "До 15 тыс. треугольников, 1K. Статуи Д-02 — тот же меш в камне (В-6).", 12, MUTED))
+    s.append("</svg>\n")
+    return "".join(s)
+
+
+# ============================================================================= Н-01 remains of the world's hero, lying
+def remains_lying_side(v: V) -> str:
+    """Side view: lying on the back under the cloak, head to −x (the niche wall), feet to +x; y = 0 the floor."""
+    s = []
+    s.append(v.rect(-1.15, 0, -1.0, 0.6, STONE))                                                 # niche back wall
+    s.append(v.ell(-0.95, 0.07, 0.17, 0.07, CAP))                                                # the cap by the head
+    s.append(v.rect(-1.1, 0.0, -0.8, 0.025, CAP_D))
+    s.append(v.ell(-0.95, 0.08, 0.045, 0.035, BADGE))
+    s.append(v.curve(["M", (-0.86, 0.0), "Q", (-0.88, 0.2), (-0.7, 0.24), "Q", (-0.5, 0.3), (-0.3, 0.3), "Q", (-0.05, 0.3),
+                      (0.1, 0.22), "Q", (0.3, 0.18), (0.45, 0.2), "Q", (0.58, 0.18), (0.62, 0.1), "L", (0.66, 0.0), "Z"],
+                     CLOAK_D, 0.004, CLOAK))
+    s.append(v.ell(-0.7, 0.13, 0.08, 0.07, "#0b0809"))                                           # hood opening, empty dark
+    s.append(v.curve(["M", (-0.8, 0.2), "Q", (-0.72, 0.26), (-0.62, 0.22)], CLOAK_L, 0.012))
+    for x0 in (-0.35, -0.05, 0.25):                                                               # folds
+        s.append(v.line([(x0, 0.27), (x0 + 0.06, 0.02)], CLOAK_D, 0.01))
+    s.append(v.poly([(0.5, 0.0), (0.58, 0.06), (0.68, 0.0)], CLOAK_D))                            # torn hem
+    s.append(v.line([(0.58, 0.1), (0.86, 0.07)], BONE, 0.055))                                    # shins sticking out
+    s.append(v.ell(0.88, 0.09, 0.04, 0.07, BONE_D))                                               # foot bones up
+    s.append(v.line([(0.88, 0.14), (0.9, 0.2)], BONE, 0.018))
+    s.append(v.line([(-0.26, 0.05), (-0.14, 0.02), (-0.02, 0.01)], BONE, 0.035))                  # hand out at the side
+    for f in (-0.03, 0.0, 0.03):
+        s.append(v.line([(-0.02, 0.01), (0.04, 0.0 + f * 0.2)], BONE, 0.01))
+    return "".join(s)
+
+
+def remains_lying_top(v: V) -> str:
+    """Top view: head to −x, y across the niche (+y — towards the yard)."""
+    s = []
+    s.append(v.rect(-1.15, -0.55, -1.0, 0.75, STONE))
+    s.append(v.curve(["M", (-0.86, 0.0), "Q", (-0.86, 0.2), (-0.66, 0.22), "Q", (-0.4, 0.34), (-0.1, 0.3), "Q", (0.3, 0.26),
+                      (0.62, 0.18), "L", (0.66, -0.18), "Q", (0.3, -0.26), (-0.1, -0.3), "Q", (-0.4, -0.34), (-0.66, -0.22),
+                      "Q", (-0.86, -0.2), (-0.86, 0.0), "Z"], CLOAK_D, 0.004, CLOAK))
+    s.append(v.ell(-0.72, 0.0, 0.12, 0.13, CLOAK_L))                                              # hood
+    s.append(v.ell(-0.7, 0.0, 0.07, 0.08, "#0b0809"))
+    for y0 in (-0.15, 0.0, 0.15):
+        s.append(v.line([(-0.5, y0 * 1.4), (0.55, y0)], CLOAK_D, 0.01))
+    for sy in (-1, 1):                                                                            # shins and feet
+        s.append(v.line([(0.6, sy * 0.1), (0.86, sy * 0.12)], BONE, 0.05))
+        s.append(v.ell(0.9, sy * 0.13, 0.05, 0.04, BONE_D))
+    s.append(v.line([(-0.24, 0.3), (-0.16, 0.44), (-0.02, 0.52)], BONE, 0.035))                   # right hand to the note
+    for f in (-0.03, 0.0, 0.03):
+        s.append(v.line([(-0.02, 0.52), (0.04, 0.54 + f)], BONE, 0.01))
+    s.append(v.rect(0.06, 0.48, 0.3, 0.64, "#d8cfbf", 'opacity="0.9"'))                            # predecessor's note
+    s.append(v.ell(-0.95, 0.4, 0.15, 0.12, CAP) + v.ell(-0.95, 0.4, 0.05, 0.05, BADGE))           # cap
+    s.append(v.line([(0.2, -0.36), (0.6, -0.42)], WOOD, 0.035))                                  # mallet
+    s.append(v.rect(0.6, -0.54, 0.74, -0.3, WOOD) + v.rect(0.64, -0.54, 0.68, -0.3, IRON_L))
+    # chain with the shackle weight (separate pickup, Д-4а) — context only
+    s.append(v.line([(-0.5, -0.4), (-0.2, -0.48), (0.1, -0.44), (0.3, -0.5)], IRON_L, 0.02, 'stroke-dasharray="4 3"'))
+    s.append(v.rect(-0.66, -0.48, -0.5, -0.34, IRON))
+    return "".join(s)
+
+
+def sheet_remains() -> str:
+    s = [head("Н-01 · Останки героя мира — лежат под плащом, ниша у цепи",
+              "Двор S3, Yard/Remains: «ОСМОТРЕТЬ ОСТАНКИ», рядом цепь с грузом. Решение автора: не сидят, а лежат, "
+              "накрыты плащом, из-под него торчат кости. Сейчас: dream_hero_remains.gltf (скрипт)")]
+    s.append(panel(24, 92, 856, 780, "Сбоку · сверху · масштаб рядом с игроком"))
+    v = V(450, 330, 300)
+    s.append(remains_lying_side(v))
+    s.append(ground(v, -1.15, 1.05))
+    s.append(txt(450, 362, "сбоку: на спине, головой к стене ниши, плащ до макушки; торчат голени, стопы и кисть", 12, MUTED, "middle"))
+    s.append(dim(v, 1.08, 0, 0.3, "0,3 м", 1))
+    v2 = V(450, 560, 240)
+    s.append(remains_lying_top(v2))
+    s.append(txt(450, 716, "сверху: правая кисть тянется к записке, кепка у головы, молот и цепь сбоку", 12, MUTED, "middle"))
+    v3 = V(150, 830, 55)
+    s.append(remains_lying_side(v3))
+    s.append(ground(v3, -1.2, 2.4))
+    s.append(hero(v3, 1.9))
+    s.append(txt(330, 800, "Масштаб: длина ≈ 1,75 м, высота холма плаща ≈ 0,3 м", 12, MUTED))
     s.append(info(900, 112, [
-        ("Палитра", [(SHADOW, "тень (шейдер)"), (SMOKE, "дым по краю"), (EYE, "глаза, трещины"),
-                     (ARMOR, "база для генерации"), (ARMOR_L, "кромки пластин"), (SHADOW_RIM, "френель")]),
-        ("Материалы", ["Один материал на всю модель: в игре его заменяет шейдер DT-12 dream_shadow. Текстура генерации "
-                       "нужна только для чтения формы: тёмный матовый панцирь, без яркой раскраски."]),
-        ("Ключевые детали", ["Шипастый панцирь на спине: 7 конических шипов в 3 ряда, торчат назад и в стороны.",
-                             "Рогатый шлем, морда скрыта забралом — видны только две щели глаз.",
-                             "Наплечники с шипом вверх и вбок, браслеты с шипом, по три когтя на руке и ноге.",
-                             "Шипы на коленях, пластины брюха — силуэт «черепаха-воин», без лица хозяина."]),
-        ("Поза", ["Генерация: A-поза (руки на 30–35° от тела), ноги на ширине плеч, взгляд вперёд — под авториг.",
-                  "Анимации: стойка, шаг, замах 0,45 с, удар, «сборка» из дыма 1,5 с (шейдер), смерть-рассыпание."]),
-        ("Масштаб", ["2,6 м — на 0,8 м выше игрока; рога и гребень заканчиваются на 2,6 м. Коллизия — капсула "
-                     "DreamEnemy, глаза на 1,39 м над центром тела (art_eye_height)."]),
-        ("Канон", ["Д-2 «а» в docs/art/dream-bowser-s.md: панцирный воин, узнаваемый при Б-2 (облик Боузера, "
-                   "его стражи), читается тенью. Бой: docs/game_design/05-dream-combat.md, data/dreams/combat.json."]),
-        ("Для генерации (этап 2)", ["С ригом: гуманоидный скелет, 3–5 клипов. До 15 тыс. треугольников, текстуры 1K."]),
+        ("Палитра", [(CLOAK, "истлевший плащ"), (CLOAK_L, "кромка, капюшон"), (BONE, "кости"), (CAP, "кепка, вытертая"),
+                     (BADGE, "пустой круг-эмблема"), (WOOD, "молот, дерево")]),
+        ("Материалы", ["Плащ — грубая шерсть, тяжёлые складки по форме тела, рваный подол, пыль и пепел.",
+                       "Кости — матовые, тёплые, без глянца. Кепка — выцветшая красная ткань, эмблема — пустой круг (Д-7).",
+                       "Молот — тёмное дерево, железный обод. Без надписей: тексты — в данных (#186)."]),
+        ("Ключевые детали", ["Плащ накрывает всё тело с головой; капюшон пустой и тёмный (Д-3 «б», В-7).",
+                             "Из-под подола торчат голени и стопы, сбоку — кисть, тянется к записке (В-1 «а»).",
+                             "Кепка упала у головы — единственный узнаваемый мотив героя.",
+                             "Цепь с кандальной гирей — отдельный подбор (DreamWeaponPickup), не в модели."]),
+        ("Поза", ["Лежит на спине вдоль ниши, головой к стене; по складкам читаются плечи, таз, колени.",
+                  "Статика, без рига, коллизия — низкий бокс. Сцена: точка осмотра опускается к полу."]),
+        ("Масштаб", ["≈ 1,75 × 0,7 × 0,3 м без молота; плащ шире тела на 0,1 м с боков."]),
+        ("Канон", ["#186: останки — герой этого мира, побеждённый хозяином (Б-1, Б-12). "
+                   "Д-3, Д-4 в docs/art/dream-bowser-s.md; сцена — docs/game_design/06-bowser-dream-world.md §5."]),
+        ("Для генерации (этап 2)", ["Статика: до 8 тыс. треугольников, 1K. Кепку, молот, записку — отдельными мешами."]),
     ]))
     s.append("</svg>\n")
     return "".join(s)
 
 
-# ============================================================================= Н-01 remains of the world's hero
-def remains_front(v: V) -> str:
+# ============================================================================= senior officer killed by the riser pipe
+def console_side(v: V) -> str:
+    """The operator console seen from the side, its front to +x; x 0…0.8."""
     s = []
-    s.append(v.rect(-1.0, 0, 1.0, 1.7, STONE))                                                   # niche back wall
-    for y in (0.5, 1.0, 1.5):
-        s.append(v.line([(-1.0, y), (1.0, y)], STONE_L, 0.006))
-    s.append(v.curve(["M", (-0.58, 0.0), "Q", (-0.5, 0.5), (-0.24, 0.78), "Q", (-0.2, 1.1), (0.0, 1.13), "Q", (0.2, 1.1),
-                      (0.24, 0.78), "Q", (0.5, 0.5), (0.58, 0.0), "Z"], CLOAK_D, 0.004, CLOAK))
-    s.append(v.ell(0, 0.9, 0.12, 0.13, "#0b0809"))                                               # empty hood
-    s.append(v.curve(["M", (-0.16, 0.98), "Q", (0, 1.08), (0.16, 0.98)], CLOAK_L, 0.012))
-    for x0 in (-0.42, -0.2, 0.18, 0.4):                                                            # rotted folds
-        s.append(v.line([(x0 * 0.8, 0.7), (x0, 0.05)], CLOAK_D, 0.01))
-    s.append(v.poly([(-0.6, 0.0), (-0.44, 0.08), (-0.3, 0.0)], CLOAK_D))
-    s.append(v.poly([(0.3, 0.0), (0.46, 0.06), (0.62, 0.0)], CLOAK_D))
-    for sx in (-1, 1):                                                                              # knees and shins
-        s.append(v.line([(sx * 0.17, 0.4), (sx * 0.2, 0.05)], BONE, 0.07))
-        s.append(v.ell(sx * 0.17, 0.4, 0.06, 0.055, BONE))
-        s.append(v.ell(sx * 0.2, 0.03, 0.07, 0.035, BONE_D))
-    s.append(v.line([(-0.3, 0.62), (-0.32, 0.45), (-0.2, 0.42)], BONE, 0.05))                       # left hand on the knee
-    s.append(v.line([(0.3, 0.62), (0.42, 0.34), (0.4, 0.06)], BONE, 0.05))                          # right hand to the note
-    for f in (-0.03, 0.0, 0.03):
-        s.append(v.line([(0.4 + f, 0.06), (0.42 + f * 1.4, 0.0)], BONE, 0.012))
-    s.append(v.rect(0.42, 0.0, 0.7, 0.01, "#d8cfbf"))                                                # predecessor's note
-    s.append(v.ell(-0.58, 0.07, 0.17, 0.08, CAP))                                                   # the cap
-    s.append(v.rect(-0.76, 0.0, -0.4, 0.025, CAP_D))
-    s.append(v.ell(-0.58, 0.08, 0.05, 0.04, BADGE))
-    s.append(v.line([(0.7, 0.03), (0.92, 0.38)], WOOD, 0.035))                                     # the mallet
-    s.append(v.rect(0.82, 0.3, 1.0, 0.54, WOOD))
-    s.append(v.rect(0.82, 0.4, 1.0, 0.44, IRON_L))
-    # chain with the shackle weight (separate pickup, Д-4а) — context only
-    s.append(v.line([(-0.2, 0.02), (-0.05, 0.03), (0.1, 0.02), (0.22, 0.04)], IRON_L, 0.02, 'stroke-dasharray="4 3"'))
-    s.append(v.poly([(-0.36, 0.0), (-0.22, 0.0), (-0.25, 0.12), (-0.33, 0.12)], IRON))
+    s.append(v.poly([(-0.1, 0.0), (0.6, 0.0), (0.6, 0.72), (0.8, 0.92), (-0.1, 1.08)], SR_CONSOLE))
+    s.append(v.poly([(0.6, 0.72), (0.8, 0.92), (0.74, 0.96), (0.54, 0.76)], SR_CONSOLE_L))
+    s.append(v.rect(0.05, 0.86, 0.3, 1.08, SR_CONSOLE_L))
+    s.append(v.rect(0.12, 1.0, 0.2, 1.06, "#7fd0a0", 'opacity="0.6"'))                            # status lamp, mug next to it
+    s.append(v.rect(-0.05, 1.08, 0.06, 1.18, "#6a5c54"))
     return "".join(s)
 
 
-def remains_side(v: V) -> str:
-    """Side view: the niche wall on the left, the body sits facing +x."""
+def senior_side(v: V) -> str:
+    """The senior officer on his right side at the console foot, head to −x, knees a little bent, face to the viewer."""
     s = []
-    s.append(v.rect(-0.55, 0, -0.4, 1.7, STONE))
-    s.append(v.curve(["M", (-0.4, 0.0), "L", (-0.4, 0.7), "Q", (-0.36, 1.06), (-0.12, 1.12), "Q", (0.06, 1.08), (0.08, 0.92),
-                      "Q", (0.02, 0.72), (0.1, 0.5), "Q", (0.16, 0.2), (0.3, 0.0), "Z"], CLOAK_D, 0.004, CLOAK))
-    s.append(v.ell(0.02, 0.9, 0.06, 0.11, "#0b0809"))
-    s.append(v.line([(-0.05, 0.22), (0.38, 0.4), (0.72, 0.05)], BONE, 0.07))                       # thigh, shin
-    s.append(v.ell(0.38, 0.4, 0.06, 0.06, BONE))
-    s.append(v.rect(0.66, 0.0, 0.9, 0.05, BONE_D))
-    s.append(v.line([(-0.14, 0.62), (0.1, 0.5), (0.34, 0.45)], BONE, 0.05))
-    s.append(v.poly([(-0.4, 0.0), (0.45, 0.0), (0.3, 0.06), (-0.2, 0.08)], CLOAK_D))
+    s.append(v.ell(1.0, 0.11, 0.1, 0.11, SR_SKIN))                                                 # head on the floor
+    s.append(v.curve(["M", (0.92, 0.18), "Q", (0.98, 0.25), (1.08, 0.2)], SR_HAIR, 0.05))
+    s.append(v.line([(0.95, 0.09), (0.99, 0.08)], SR_SKIN_D, 0.008))                               # closed eye
+    s.append(v.poly([(1.08, 0.04), (1.08, 0.28), (1.62, 0.26), (1.66, 0.04)], SR_JACKET))         # torso
+    s.append(v.rect(1.08, 0.23, 1.2, 0.28, SR_COLLAR))
+    s.append(v.rect(1.3, 0.1, 1.42, 0.14, STRIPE))                                                 # sleeve stripe
+    s.append(v.line([(1.12, 0.16), (1.34, 0.08), (1.18, 0.02)], SR_JACKET_D, 0.07))                # arm towards the key
+    s.append(v.ell(1.17, 0.02, 0.04, 0.03, SR_SKIN))
+    s.append(v.line([(1.14, 0.24), (1.08, 0.12), (1.02, 0.03)], SR_CORD, 0.008))                   # lanyard cord
+    s.append(v.rect(0.98, 0.0, 1.04, 0.03, "#c9a640"))                                             # the key
+    s.append(v.poly([(1.62, 0.04), (1.66, 0.24), (1.96, 0.22), (2.1, 0.12), (2.1, 0.02)], SR_PANTS))  # hips, thighs
+    s.append(v.poly([(2.06, 0.02), (2.1, 0.14), (2.5, 0.1), (2.56, 0.0)], SR_PANTS))              # shins
+    s.append(v.rect(2.52, 0.0, 2.66, 0.12, "#2a2d31"))                                             # boots
     return "".join(s)
 
 
-def sheet_remains() -> str:
-    s = [head("Н-01 · Останки героя мира — сон Боузера, ниша у цепи",
-              "Двор S3, Yard/Remains: точка осмотра «ОСМОТРЕТЬ ОСТАНКИ», рядом цепь с грузом. "
-              "Сейчас: dream_hero_remains.gltf (скрипт, примитивы)")]
-    s.append(panel(24, 92, 856, 780, "Силуэт: спереди (в нише) · сбоку · масштаб рядом с игроком"))
-    v = V(290, 560, 220)
-    s.append(remains_front(v))
-    s.append(ground(v, -1.0, 1.05))
-    s.append(txt(290, 590, "спереди: плащ, пустой капюшон, колени, кепка у колена, молот, записка", 12, MUTED, "middle"))
-    s.append(dim(v, -1.12, 0, 1.12, "1,1 м", -1))
-    v2 = V(700, 560, 180)
-    s.append(remains_side(v2))
-    s.append(ground(v2, -0.6, 0.95))
-    s.append(txt(700, 590, "сбоку: спиной к стене ниши", 12, MUTED, "middle"))
-    v3 = V(180, 830, 110)
-    s.append(remains_front(v3))
-    s.append(hero(v3, 1.45))
-    s.append(ground(v3, -1.0, 1.75))
-    s.append(txt(60, 640, "Масштаб (1:2,7): сидя ≈ 1,1 м, в рост был бы ≈ 1,7 м", 12, MUTED))
-    # glove / trophy variants for question В-1
-    s.append(txt(560, 640, "В-1: что видно из-под плаща", 12, ACCENT, weight="700"))
-    for i, (lbl, col) in enumerate((("а. кости", BONE), ("б. перчатка", "#f2eee6"), ("в. скрыто", CLOAK))):
-        x = 560 + i * 100
-        vv = V(x + 25, 800, 260)
-        s.append(vv.ell(0, 0.18, 0.14, 0.18, CLOAK))
-        s.append(vv.ell(0, 0.04, 0.07, 0.04, col))
-        if col != CLOAK:
-            for f in (-0.04, 0.0, 0.04):
-                s.append(vv.line([(f, 0.03), (f * 1.3, -0.04)], col, 0.016 if col == BONE else 0.03))
-        s.append(txt(x + 25, 830, lbl, 11, MUTED, "middle"))
+def riser_side(v: V) -> str:
+    """The riser pipe that tore off: upper end on the console edge, across the chest, lower end on the floor."""
+    s = []
+    s.append(v.line([(0.78, 1.0), (1.36, 0.36), (1.94, 0.16)], SR_PIPE_D, 0.17))
+    s.append(v.line([(0.78, 1.0), (1.36, 0.36), (1.94, 0.16)], SR_PIPE, 0.13))
+    s.append(v.ell(0.78, 1.0, 0.09, 0.09, SR_PIPE_D) + v.ell(0.78, 1.0, 0.05, 0.05, "#1a1614"))    # open end
+    s.append(v.rect(1.9, 0.06, 2.0, 0.26, SR_PIPE_D))                                              # flange on the floor end
+    return "".join(s)
+
+
+def senior_top(v: V) -> str:
+    """Top view: the console along −x, the body along x, the pipe across the chest; y across the room."""
+    s = []
+    s.append(v.rect(-0.1, -0.7, 0.6, 0.7, SR_CONSOLE) + v.rect(0.6, -0.7, 0.8, 0.7, SR_CONSOLE_L))
+    s.append(v.ell(0.2, 0.36, 0.06, 0.06, "#6a5c54"))                                               # mug
+    s.append(v.rect(0.3, -0.46, 0.46, -0.3, "#cfc4b4"))                                             # photo, face down
+    s.append(v.ell(1.0, 0.0, 0.1, 0.09, SR_SKIN) + v.ell(0.96, 0.0, 0.06, 0.09, SR_HAIR))
+    s.append(v.poly([(1.08, -0.22), (1.08, 0.22), (1.64, 0.2), (1.64, -0.2)], SR_JACKET))
+    s.append(v.line([(1.12, -0.24), (1.32, -0.3), (1.2, -0.36)], SR_JACKET_D, 0.07))
+    s.append(v.poly([(1.64, -0.2), (1.64, 0.2), (2.08, 0.18), (2.08, -0.18)], SR_PANTS))
+    for sy in (-1, 1):
+        s.append(v.line([(2.08, sy * 0.1), (2.56, sy * 0.12)], SR_PANTS, 0.12))
+        s.append(v.rect(2.54, sy * 0.06, 2.66, sy * 0.18, "#2a2d31"))
+    s.append(v.line([(1.12, -0.1), (1.04, -0.3), (1.0, -0.4)], SR_CORD, 0.01))
+    s.append(v.rect(0.97, -0.44, 1.03, -0.38, "#c9a640"))                                           # key on the floor
+    s.append(v.line([(0.78, 0.5), (1.4, 0.06), (1.94, -0.36)], SR_PIPE_D, 0.17))
+    s.append(v.line([(0.78, 0.5), (1.4, 0.06), (1.94, -0.36)], SR_PIPE, 0.13))
+    s.append(v.rect(-0.1, -0.8, 3.0, -0.76, STONE_L))                                               # broken wall to the relay
+    s.append(txt(v.X(3.06), v.Y(-0.8), "пролом в релейную", 11, MUTED))
+    return "".join(s)
+
+
+def sheet_senior() -> str:
+    s = [head("Ст-01 · Останки старшего сотрудника — кабинет, под сорвавшейся трубой",
+              "Комплекс, старое ядро: L-OLD-CORE/senior_room (Р-2, #170, #178). Осмотр senior_body, ключ на шнурке. "
+              "Сейчас: бокс-примитив и труба в breach_station.gd (_build_body), в комплексе модели нет")]
+    s.append(panel(24, 92, 856, 780, "Сбоку (пульт слева) · сверху · масштаб рядом с игроком"))
+    v = V(110, 470, 190)
+    s.append(console_side(v) + senior_side(v) + riser_side(v))
+    s.append(ground(v, -0.2, 3.9))
+    s.append(hero(v, 3.5))
+    s.append(txt(450, 500, "сбоку: на правом боку у подножия пульта, лицом к пролому; стояк сорвался с потолка и лёг", 12, MUTED, "middle"))
+    s.append(txt(450, 516, "верхним концом на край пульта, поперёк груди, нижним — на пол. Крови нет, глаза закрыты", 12, MUTED, "middle"))
+    v2 = V(150, 690, 170)
+    s.append(senior_top(v2))
+    s.append(txt(450, 852, "сверху: кружка и перевёрнутая фотография на пульте, ключ на шнурке у руки", 12, MUTED, "middle"))
     s.append(info(900, 112, [
-        ("Палитра", [(CLOAK, "истлевший плащ"), (CLOAK_L, "кромка плаща"), (BONE, "кости"), (CAP, "кепка, вытертая"),
-                     (BADGE, "пустой круг-эмблема"), (WOOD, "молот, дерево")]),
-        ("Материалы", ["Плащ — грубая шерсть, рваные края, пыль и пепел. Кости — матовые, тёплые, без глянца.",
-                       "Кепка — выцветшая красная ткань, эмблема — пустой белый круг (Д-7, без букв).",
-                       "Молот — тёмное дерево, железный обод. Без надписей: тексты — в данных (#186)."]),
-        ("Ключевые детали", ["Пустой капюшон: лица нет (Д-3 «б»).",
-                             "Колени торчат из-под плаща, правая рука тянется к записке на полу, левая на колене.",
-                             "Кепка упала к колену — единственный узнаваемый мотив героя.",
-                             "Цепь с кандальной гирей — отдельный предмет-подбор (DreamWeaponPickup), не в модели."]),
-        ("Поза", ["Сидит, спиной к стене ниши, обмяк вперёд. Статичная модель, без рига, коллизия — простая."]),
-        ("Масштаб", ["Габарит ≈ 1,4 × 1,1 × 1,0 м без молота (Н-01). Пол — под телом, спина к −Z."]),
-        ("Канон", ["#186: останки — герой этого мира, побеждённый хозяином (Б-1, Б-12). "
-                   "Д-3 «б», Д-4 «а» в docs/art/dream-bowser-s.md; сцена — docs/game_design/06-bowser-dream-world.md §5."]),
-        ("Для генерации (этап 2)", ["Статика: до 8 тыс. треугольников, текстуры 1K. Кепку и молот — отдельными мешами."]),
+        ("Палитра", [(SR_JACKET, "китель старшего"), (SR_PANTS, "брюки"), (STRIPE, "нашивка, полоса"), (SR_SKIN, "кожа, бледная"),
+                     (SR_HAIR, "седина"), (SR_PIPE, "стояк, ржавая сталь")]),
+        ("Материалы", ["Плотный тёмный китель поверх комбинезона персонала, нашивка старшего на рукаве, пропуск на груди без текста.",
+                       "Кожа бледная, без ран и крови (сцена «тихая», 01-opening). Пыль от пролома на плечах.",
+                       "Стояк — стальная труба Ø 0,15 м, ржавчина, оторванный фланец и скоба."]),
+        ("Ключевые детали", ["Лицо видно со стороны пролома: глаза закрыты, «будто задремал» (senior_body).",
+                             "Шнурок с ключом выпал из ворота и лежит у руки — ключ остаётся отдельным подбором.",
+                             "Стояк придавил грудь: одежда смята под трубой, тело и труба не пересекаются."]),
+        ("Поза", ["На правом боку у подножия пульта, колени чуть согнуты, нижняя рука под телом, верхняя к ключу (В-8 «а»).",
+                  "Статика, без рига. Генерация в A-позе + поза в Blender по авторигу, затем риг удаляется."]),
+        ("Масштаб", ["Рост 1,78 м, лёжа ≈ 1,7 × 0,5 × 0,3 м. Стояк ≈ 2,6 м (как в breach_station), пульт 0,9–1,1 м."]),
+        ("Канон", ["01-opening Р-2: удар побега объекта №1 сорвал стояк, он убил старшего и проломил стену к релейной; "
+                   "«первое тело в игре»; senior_body: «лежит у пульта, стояк придавил его». 03-complex: ключ старшего."]),
+        ("Для генерации (этап 2)", ["До 8 тыс. треугольников, 1K. Трубу — мешем сцены (В-9 «а»), фото и кружка уже есть "
+                                     "(personal_items.gd)."]),
     ]))
     s.append("</svg>\n")
     return "".join(s)
@@ -589,10 +752,12 @@ def sheet_staff() -> str:
 
 # ============================================================================= inventory and line-up
 ROWS = [
-    ("С-01", "Страж-тень", "Сон Боузера, двор S3: засада, 2 шт.", "dream_shade_guard.gltf (loads/props)",
-     "data/dreams/combat.json → ambushes.bowser_first_fight.art", "заменить, с ригом"),
+    ("С-01", "Страж сна (3 варианта)", "Сон Боузера, двор S3: засада, 2 шт.", "dream_shade_guard.gltf (loads/props)",
+     "data/dreams/combat.json → ambushes.bowser_first_fight.art", "заменить, с ригом (В-10)"),
     ("Н-01", "Останки героя мира", "Сон Боузера, ниша у цепи (Yard/Remains)", "dream_hero_remains.gltf (loads/props)",
-     "scenes/dreams/bowser_dream.tscn → Yard/Remains/Art", "заменить, статика"),
+     "scenes/dreams/bowser_dream.tscn → Yard/Remains/Art", "лёжа под плащом, статика"),
+    ("Ст-01", "Останки старшего", "Комплекс, L-OLD-CORE/senior_room", "бокс + труба в breach_station.gd",
+     "_build_body(); в комплексе модели нет", "новая, статика"),
     ("P-106s", "Херобрин, объект №3", "Комплекс, капсула №3", "objects/art/sleeper_herobrine.tscn",
      "prisoner_capsule_herobrine.tscn (make_capsule_assemblies.py)", "см. В-3"),
     ("—", "Спящий сотрудник", "Капсульный зал персонала", "objects/props/staff_capsule.gd",
@@ -603,7 +768,6 @@ ROWS = [
      "docs/art/dream-bowser-s.md: «поза С-01, камень»", "из меша С-01"),
     ("—", "Враги тестового сна", "scenes/dreams/test_dream.tscn", "CapsuleMesh в dream_enemy.gd",
      "отладочная сцена", "не менять"),
-    ("—", "Останки в комплексе", "нет ни одной модели", "—", "канон: погибший учёный у капсулы №3", "см. В-5"),
 ]
 
 
@@ -642,20 +806,21 @@ def sheet_lineup() -> str:
     for m in (1, 2, 3):
         s.append(f'<line x1="40" y1="{g - m * k}" x2="{W - 40}" y2="{g - m * k}" stroke="{GRID}" stroke-dasharray="4 6"/>')
         s.append(txt(48, g - m * k - 6, f"{m} м", 11, MUTED))
-    s.append(hero(V(150, g, k), 0.0))
-    v = V(380, g, k)
-    s.append(guard_front(v))
-    s.append(txt(380, g + 30, "С-01 страж-тень · 2,6 м", 13, TEXT, "middle"))
-    s.append(remains_front(V(670, g, k)))
-    s.append(txt(670, g + 30, "Н-01 останки · сидя 1,1 м", 13, TEXT, "middle"))
-    s.append(herobrine_stand(V(900, g, k)))
-    s.append(txt(900, g + 30, "P-106s Херобрин · 2,24 м", 13, TEXT, "middle"))
-    vs = V(1150, g, k)
+    s.append(hero(V(100, g, k), 0.0))
+    s.append(koopa_front(V(290, g, k), "armored"))
+    s.append(txt(290, g + 30, "С-01 «а» купа-латник · 2,3 м", 13, TEXT, "middle"))
+    s.append(remains_lying_side(V(600, g, k)))
+    s.append(txt(600, g + 30, "Н-01 останки · лёжа 1,75 м", 13, TEXT, "middle"))
+    s.append(herobrine_stand(V(850, g, k)))
+    s.append(txt(850, g + 30, "Херобрин · 2,24 м", 13, TEXT, "middle"))
+    vs = V(1000, g, k)
     s.append(vs.rect(-0.2, 0.0, -0.04, 0.85, COVER_D) + vs.rect(0.04, 0.0, 0.2, 0.85, COVER_D))
     s.append(vs.rect(-0.23, 0.82, 0.23, 1.45, COVER) + vs.rect(-0.23, 1.05, 0.23, 1.08, STRIPE))
     s.append(vs.rect(-0.3, 0.86, -0.23, 1.42, COVER_L) + vs.rect(0.23, 0.86, 0.3, 1.42, COVER_L))
     s.append(vs.ell(0, 1.6, 0.11, 0.13, SKIN_S) + vs.ell(0, 1.68, 0.11, 0.06, HAIR_S))
-    s.append(txt(1150, g + 30, "сотрудник · 1,75 м", 13, TEXT, "middle"))
+    s.append(txt(1000, g + 30, "сотрудник · 1,75 м", 13, TEXT, "middle"))
+    s.append(senior_side(V(1080 - 0.9 * k, g, k)))
+    s.append(txt(1215, g + 30, "Ст-01 старший · 1,78 м лёжа", 13, TEXT, "middle"))
     s.append("</svg>\n")
     return "".join(s)
 
@@ -667,6 +832,7 @@ SHEETS = {
     "03_herobrine_sleeper.svg": sheet_herobrine,
     "04_staff_sleeper.svg": sheet_staff,
     "05_scale_lineup.svg": sheet_lineup,
+    "06_senior_remains.svg": sheet_senior,
 }
 
 if __name__ == "__main__":
