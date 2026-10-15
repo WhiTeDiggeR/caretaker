@@ -20,6 +20,8 @@ const FONT_SCREEN_LATE_STRONG: FontVariation = preload("res://materials/ui/fonts
 const FONT_DREAM: FontVariation = preload("res://materials/ui/fonts/dream_display.tres")
 const FONT_DREAM_STRONG: FontVariation = preload("res://materials/ui/fonts/dream_display_strong.tres")
 const FONT_HAND: FontVariation = preload("res://materials/ui/fonts/hand.tres")
+## Headings of the hero's notebook (#223).
+const FONT_HAND_BOLD: FontVariation = preload("res://materials/ui/fonts/hand_bold.tres")
 
 # --- Shell and HUD -----------------------------------------------------------------
 const ACCENT := Color(0.95, 0.72, 0.32)  # #f2b852, the shell accent (ShellUI.ACCENT)
@@ -42,6 +44,8 @@ const PAPER := Color(0.86, 0.83, 0.72)
 const INK := Color("#221f1b")
 const STAMP := Color("#a8321f")
 const PENCIL := Color("#3d4150")
+## Ballpoint of the hero's notebook (#223).
+const PEN := Color("#1f2c5c")
 
 # --- Signs on equipment ------------------------------------------------------------
 const SIGN_TEXT := Color("#e6e8e3")
