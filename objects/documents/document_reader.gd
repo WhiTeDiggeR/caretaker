@@ -191,7 +191,7 @@ func _fill_list() -> void:
 			label.add_theme_font_override(&"font", UiStyle.FONT_HAND_BOLD)
 			chosen = label
 	if chosen:
-		_scroll_to.call_deferred(chosen)
+		_scroll_to(chosen)
 
 
 ## The hero copies a document's title into the notebook in ordinary case.
@@ -199,7 +199,9 @@ static func entry_title(title: String) -> String:
 	return title.substr(0, 1).to_upper() + title.substr(1).to_lower() if not title.is_empty() else title
 
 
+## Keeps the chosen entry in view once the new lines have their size (one frame later).
 func _scroll_to(line: Label) -> void:
+	await get_tree().process_frame
 	if is_instance_valid(line) and line.is_inside_tree():
 		list_scroll.ensure_control_visible(line)
 
