@@ -19,6 +19,8 @@ var sketch: StringName = DreamKnowledge.SKETCH_SEAL
 var dream: StringName = &""
 var code := PackedStringArray()
 var spent := false
+## Stroke colour: pale on a dark plate, pencil when drawn on the journal's paper (#223).
+var line_color := LINE
 
 
 static func create(entry: Dictionary) -> DreamSketch:
@@ -46,10 +48,10 @@ func _draw_seal() -> void:
 	var band := outer / (count + 0.6)
 	for index in code.size():
 		var radius := outer - band * index
-		draw_arc(center, radius, 0.0, TAU, 64, LINE, RING_WIDTH, true)
+		draw_arc(center, radius, 0.0, TAU, 64, line_color, RING_WIDTH, true)
 		_draw_image(code[index], center - Vector2(0, radius - band * 0.5), band * 0.42)
-	draw_arc(center, outer - band * count, 0.0, TAU, 32, LINE, RING_WIDTH, true)
-	draw_line(center - Vector2(0, outer + 6.0), center - Vector2(0, outer - band * count), LINE * Color(1, 1, 1, 0.35), 1.0)
+	draw_arc(center, outer - band * count, 0.0, TAU, 32, line_color, RING_WIDTH, true)
+	draw_line(center - Vector2(0, outer + 6.0), center - Vector2(0, outer - band * count), line_color * Color(1, 1, 1, 0.35), 1.0)
 
 
 func _draw_images() -> void:
@@ -70,7 +72,7 @@ func _draw_image(glyph_id: String, center: Vector2, radius: float) -> void:
 		hexagon.append(center + Vector2.from_angle(TAU * corner / 6.0 - PI * 0.5) * radius)
 	draw_colored_polygon(hexagon, plate)
 	hexagon.append(hexagon[0])
-	draw_polyline(hexagon, LINE, 1.5, true)
+	draw_polyline(hexagon, line_color, 1.5, true)
 	var side := radius * 1.1
 	var origin := center - Vector2(side, side) * 0.5
 	var glyph_color := plate.lerp(tint.darkened(0.4), GLYPH_MIX)

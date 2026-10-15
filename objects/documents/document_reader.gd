@@ -6,20 +6,26 @@ extends CanvasLayer
 ## Journal: ↑↓ choose, E/Enter open, Esc/J close. The player is locked while open.
 ## A document is drawn as paper of the complex (docs/ui/style-guide.md, issue #148):
 ## typewritten body, optional form header, stamps, a handwritten margin note or a fully
-## handwritten sheet; redactions are the █ characters of the text itself. The journal is the
-## player's tool, so it takes the look of the shell instead of paper (issue #144).
+## handwritten sheet; redactions are the █ characters of the text itself. Both lie on a
+## PaperSheet with a torn edge (#223). The journal is the hero's own notebook: a squared page
+## written by hand in ballpoint — headings, objectives, dream sketches and read documents.
 
 signal closed
 
 const SCENE_PATH := "res://objects/documents/document_reader.tscn"
 const PLAYER_GROUP := &"player"
 const SCROLL_STEP := 60
+## Caveat has no arrows, boxes or check marks: the notebook marks with what a pen draws.
 const SELECT_MARK := "> "
-const OBJECTIVES_TITLE := "ЦЕЛИ"
-const DOCUMENTS_TITLE := "ДОКУМЕНТЫ"
-const CURRENT_MARK := ">  "
+const UNSELECTED_MARK := "    "
+const JOURNAL_TITLE := "Журнал"
+const JOURNAL_META := "цели, сны и прочитанные бумаги"
+const OBJECTIVES_TITLE := "Что делать"
+const DOCUMENTS_TITLE := "Прочитано"
+const CURRENT_MARK := "•  "
 const DONE_MARK := "—  "
-const MUTED := UiStyle.MUTED
+## Struck-out and finished lines of the notebook: the same pen, faded.
+const PEN_FADED := Color(UiStyle.PEN, 0.55)
 const META_COLOR := Color(0.36, 0.32, 0.26)
 const TITLE_SIZE := 25
 const BODY_SIZE := 19
@@ -29,7 +35,16 @@ const STAMP_SIZE := 24
 const NOTE_SIZE := 26
 const STAMP_ANGLE := -11.0
 const STAMP_STEP := Vector2(-36.0, 64.0)
-const GRAIN_ALPHA := 0.16
+const HINT_SIZE := 24
+## Caveat is small for its size: the notebook is written larger than the typed sheets.
+const JOURNAL_TITLE_SIZE := 50
+const JOURNAL_META_SIZE := 26
+const SECTION_SIZE := 36
+const ENTRY_SIZE := 32
+const DONE_SIZE := 30
+const MARGIN_LEFT := 44
+## Text of the notebook starts right of the red margin of PaperSheet.
+const JOURNAL_MARGIN_LEFT := 84
 const OBJECTIVE_META := &"objective_line"
 const EMPTY_JOURNAL := "Журнал пуст. Найденные документы появятся здесь."
 
@@ -37,21 +52,21 @@ const EMPTY_JOURNAL := "Журнал пуст. Найденные докумен
 @onready var meta_label: Label = $Paper/Margin/Rows/Meta
 @onready var scroll: ScrollContainer = $Paper/Margin/Rows/Scroll
 @onready var body_label: Label = $Paper/Margin/Rows/Scroll/Body
-@onready var list_box: VBoxContainer = $Paper/Margin/Rows/List
+@onready var list_box: VBoxContainer = $Paper/Margin/Rows/ListScroll/List
+@onready var list_scroll: ScrollContainer = $Paper/Margin/Rows/ListScroll
 @onready var hint_label: Label = $Paper/Margin/Rows/Hint
 @onready var form_box: HBoxContainer = $Paper/Margin/Rows/Form
 @onready var marks: Control = $Paper/Marks
 @onready var _form_office: Label = $Paper/Margin/Rows/Form/Office
 @onready var _form_number: Label = $Paper/Margin/Rows/Form/Number
 @onready var _form_rule: ColorRect = $Paper/Margin/Rows/FormRule
-@onready var _grain: TextureRect = $Paper/Grain
+@onready var sheet: PaperSheet = $Paper/Sheet
+@onready var _margin: MarginContainer = $Paper/Margin
 
 var document_id := ""
 var in_journal := false
 var selected := 0
 var _from_journal := false
-var _paper_theme: Theme
-var _paper_box: StyleBox
 
 
 func _ready() -> void:
@@ -92,8 +107,8 @@ func show_document(id: String, from_journal: bool = false) -> void:
 	_show_marks(document.get("stamps", []), document.get("note", ""))
 	scroll.visible = true
 	scroll.scroll_vertical = 0
-	list_box.visible = false
-	hint_label.text = "↑↓ — прокрутка    %s / %s — %s" % [
+	list_scroll.visible = false
+	hint_label.text = "вверх/вниз — листать    %s / %s — %s" % [
 		InputPromptFormatter.action_label(&"ui_cancel"), InputPromptFormatter.action_label(&"interact"),
 		"к журналу" if from_journal else "закрыть"]
 
@@ -101,17 +116,17 @@ func show_document(id: String, from_journal: bool = false) -> void:
 func show_journal() -> void:
 	in_journal = true
 	document_id = ""
-	title_label.text = "ЖУРНАЛ"
-	meta_label.text = "Цели и прочитанные документы"
+	title_label.text = JOURNAL_TITLE
+	meta_label.text = JOURNAL_META
 	meta_label.visible = true
 	scroll.visible = false
-	list_box.visible = true
+	list_scroll.visible = true
 	_set_look(true)
 	_show_form({})
 	_show_marks([], "")
 	selected = clampi(selected, 0, maxi(DocumentLibrary.read_ids().size() - 1, 0))
 	_fill_list()
-	hint_label.text = "↑↓ — выбор    %s — открыть    %s — закрыть" % [
+	hint_label.text = "вверх/вниз — выбор    %s — открыть    %s — закрыть" % [
 		InputPromptFormatter.action_label(&"interact"), InputPromptFormatter.action_label(&"ui_cancel")]
 
 
@@ -128,20 +143,32 @@ func _fill_list() -> void:
 	var sections := _add_objectives()
 	sections = _add_knowledge() or sections
 	if sections:
-		_add_line(DOCUMENTS_TITLE, 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
+		_add_heading(DOCUMENTS_TITLE)
 	var ids := DocumentLibrary.read_ids()
 	if ids.is_empty():
-		var empty := Label.new()
-		empty.text = EMPTY_JOURNAL
-		list_box.add_child(empty)
+		var empty := _add_line(EMPTY_JOURNAL, DONE_SIZE, PEN_FADED)
+		empty.remove_meta(OBJECTIVE_META)
 		return
+	var chosen: Label
 	for index in ids.size():
-		var label := Label.new()
-		var title := str(DocumentLibrary.get_document(ids[index]).get("title", ids[index]))
-		label.text = (SELECT_MARK if index == selected else "   ") + title
-		label.add_theme_font_size_override(&"font_size", 21)
-		label.add_theme_color_override(&"font_color", UiStyle.ACCENT if index == selected else UiStyle.TEXT)
-		list_box.add_child(label)
+		var title := entry_title(str(DocumentLibrary.get_document(ids[index]).get("title", ids[index])))
+		var label := _add_line((SELECT_MARK if index == selected else UNSELECTED_MARK) + title, ENTRY_SIZE, UiStyle.PEN if index == selected else PEN_FADED)
+		label.remove_meta(OBJECTIVE_META)
+		if index == selected:
+			label.add_theme_font_override(&"font", UiStyle.FONT_HAND_BOLD)
+			chosen = label
+	if chosen:
+		_scroll_to.call_deferred(chosen)
+
+
+## The hero copies a document's title into the notebook in ordinary case.
+static func entry_title(title: String) -> String:
+	return title.substr(0, 1).to_upper() + title.substr(1).to_lower() if not title.is_empty() else title
+
+
+func _scroll_to(line: Label) -> void:
+	if is_instance_valid(line) and line.is_inside_tree():
+		list_scroll.ensure_control_visible(line)
 
 
 ## Objectives section above the documents: the current one and the finished ones.
@@ -151,11 +178,11 @@ func _add_objectives() -> bool:
 	var done := Objectives.completed_texts()
 	if current.is_empty() and done.is_empty():
 		return false
-	_add_line(OBJECTIVES_TITLE, 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
+	_add_heading(OBJECTIVES_TITLE)
 	if not current.is_empty():
-		_add_line(CURRENT_MARK + current, 21, UiStyle.TEXT)
+		_add_line(CURRENT_MARK + current, ENTRY_SIZE, UiStyle.PEN)
 	for index in range(done.size() - 1, -1, -1):
-		_add_line(DONE_MARK + done[index], 20, MUTED)
+		_add_line(DONE_MARK + done[index], DONE_SIZE, PEN_FADED)
 	return true
 
 
@@ -170,20 +197,30 @@ func _add_knowledge() -> bool:
 	var entries := DreamKnowledge.journal_entries()
 	if entries.is_empty():
 		return false
-	_add_line(knowledge_title(), 18, UiStyle.ACCENT).theme_type_variation = &"ShellSection"
+	_add_heading(knowledge_title())
 	for entry in entries:
 		var used := bool(entry["used"])
-		_add_line((DONE_MARK if used else CURRENT_MARK) + str(entry["text"]), 20 if used else 21, MUTED if used else UiStyle.TEXT)
+		_add_line((DONE_MARK if used else CURRENT_MARK) + str(entry["text"]), DONE_SIZE if used else ENTRY_SIZE, PEN_FADED if used else UiStyle.PEN)
 		var sketch := DreamSketch.create(entry)
+		sketch.line_color = UiStyle.PENCIL
 		sketch.set_meta(OBJECTIVE_META, true)
 		list_box.add_child(sketch)
 	return true
 
 
+## A section heading of the notebook: bold hand, underlined by the page's ruling.
+func _add_heading(text: String) -> Label:
+	var label := _add_line(text, SECTION_SIZE, UiStyle.PEN)
+	label.add_theme_font_override(&"font", UiStyle.FONT_HAND_BOLD)
+	return label
+
+
+## A handwritten line of the notebook. Every line but a document entry carries OBJECTIVE_META.
 func _add_line(text: String, size: int, color: Color) -> Label:
 	var label := Label.new()
 	label.text = text
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.add_theme_font_override(&"font", UiStyle.FONT_HAND)
 	label.add_theme_font_size_override(&"font_size", size)
 	label.add_theme_color_override(&"font_color", color)
 	label.set_meta(OBJECTIVE_META, true)
@@ -198,43 +235,28 @@ func _apply_style() -> void:
 	paper_theme.default_font_size = 20
 	paper_theme.set_color(&"font_color", &"Label", UiStyle.INK)
 	$Paper.theme = paper_theme
-	_paper_theme = paper_theme
-	_paper_box = ($Paper as Control).get_theme_stylebox(&"panel")
-	title_label.add_theme_font_override(&"font", UiStyle.FONT_BODY_BOLD)
-	title_label.add_theme_font_size_override(&"font_size", TITLE_SIZE)
-	meta_label.add_theme_font_override(&"font", UiStyle.FONT_MONO)
 	meta_label.add_theme_font_size_override(&"font_size", SMALL_SIZE + 1)
-	meta_label.add_theme_color_override(&"font_color", META_COLOR)
 	for label: Label in [_form_office, _form_number]:
 		label.add_theme_font_override(&"font", UiStyle.FONT_SCREEN_OLD)
 		label.add_theme_font_size_override(&"font_size", SMALL_SIZE)
 		label.add_theme_color_override(&"font_color", UiStyle.INK)
-	hint_label.add_theme_font_override(&"font", UiStyle.FONT_MONO)
-	hint_label.add_theme_font_size_override(&"font_size", SMALL_SIZE)
-	hint_label.add_theme_color_override(&"font_color", META_COLOR)
+	# Key hints are the hero's pencil note on the sheet's corner, not an interface strip.
+	hint_label.add_theme_font_override(&"font", UiStyle.FONT_HAND)
+	hint_label.add_theme_font_size_override(&"font_size", HINT_SIZE)
+	hint_label.add_theme_color_override(&"font_color", UiStyle.PENCIL)
 	_set_hand(false)
-	var noise := FastNoiseLite.new()
-	noise.frequency = 0.35
-	noise.fractal_octaves = 3
-	var grain := NoiseTexture2D.new()
-	grain.width = 256
-	grain.height = 256
-	grain.seamless = true
-	grain.noise = noise
-	_grain.texture = grain
-	_grain.modulate = Color(0.35, 0.27, 0.16, GRAIN_ALPHA)
 
 
-## Paper for documents, the shell plate (dark, amber edge) for the journal.
+## A document's own sheet, or the squared notebook page of the journal written in pen.
 func _set_look(journal: bool) -> void:
-	var paper := $Paper as PanelContainer
-	paper.theme = ShellUI.theme() if journal else _paper_theme
-	paper.add_theme_stylebox_override(&"panel", ShellUI.theme().get_stylebox(&"panel", &"PanelContainer") if journal else _paper_box)
-	_grain.visible = not journal
-	title_label.add_theme_font_override(&"font", UiStyle.FONT_DISPLAY if journal else UiStyle.FONT_BODY_BOLD)
-	title_label.add_theme_color_override(&"font_color", UiStyle.ACCENT if journal else UiStyle.INK)
-	meta_label.add_theme_color_override(&"font_color", UiStyle.MUTED if journal else META_COLOR)
-	hint_label.add_theme_color_override(&"font_color", UiStyle.MUTED if journal else META_COLOR)
+	sheet.ruled = journal
+	_margin.add_theme_constant_override(&"margin_left", JOURNAL_MARGIN_LEFT if journal else MARGIN_LEFT)
+	title_label.add_theme_font_override(&"font", UiStyle.FONT_HAND_BOLD if journal else UiStyle.FONT_BODY_BOLD)
+	title_label.add_theme_font_size_override(&"font_size", JOURNAL_TITLE_SIZE if journal else TITLE_SIZE)
+	title_label.add_theme_color_override(&"font_color", UiStyle.PEN if journal else UiStyle.INK)
+	meta_label.add_theme_font_override(&"font", UiStyle.FONT_HAND if journal else UiStyle.FONT_MONO)
+	meta_label.add_theme_font_size_override(&"font_size", JOURNAL_META_SIZE if journal else SMALL_SIZE + 1)
+	meta_label.add_theme_color_override(&"font_color", PEN_FADED if journal else META_COLOR)
 
 
 ## Typewritten body, or the whole sheet in a hand (notes of the staff).

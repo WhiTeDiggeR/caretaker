@@ -1,14 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://objects/documents/document_reader.gd" id="1_reader"]
+[ext_resource type="Script" path="res://objects/documents/paper_sheet.gd" id="2_sheet"]
 
-[sub_resource type="StyleBoxFlat" id="paper_style"]
-bg_color = Color(0.86, 0.83, 0.72, 0.98)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.45, 0.4, 0.3, 1)
+[sub_resource type="StyleBoxEmpty" id="paper_style"]
 
 [node name="DocumentReader" type="CanvasLayer"]
 layer = 10
@@ -36,10 +31,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("paper_style")
 
-[node name="Grain" type="TextureRect" parent="Paper"]
+[node name="Sheet" type="Control" parent="Paper"]
 layout_mode = 2
 mouse_filter = 2
-stretch_mode = 1
+script = ExtResource("2_sheet")
 
 [node name="Margin" type="MarginContainer" parent="Paper"]
 layout_mode = 2
@@ -93,11 +88,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 autowrap_mode = 3
 
-[node name="List" type="VBoxContainer" parent="Paper/Margin/Rows"]
+[node name="ListScroll" type="ScrollContainer" parent="Paper/Margin/Rows"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 8
+horizontal_scroll_mode = 0
+
+[node name="List" type="VBoxContainer" parent="Paper/Margin/Rows/ListScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
 
 [node name="Hint" type="Label" parent="Paper/Margin/Rows"]
 layout_mode = 2

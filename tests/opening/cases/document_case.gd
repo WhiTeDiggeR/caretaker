@@ -74,9 +74,11 @@ func run(c: OpeningCheck) -> void:
 	var journal := DocumentReader.open_journal_scene(c.tree)
 	var lines := journal.document_lines()
 	c.is_true(journal.in_journal and lines.size() == 1, "journal lists read documents")
-	c.is_true(lines.size() == 1 and lines[0].text.ends_with("ПАМЯТКА ПОЛИГОНА"), "journal shows titles")
+	c.is_true(lines.size() == 1 and lines[0].text.ends_with("Памятка полигона"), "journal shows titles written by hand")
+	c.is_true(journal.sheet.ruled and journal.list_scroll.visible, "the journal is a squared notebook page")
 	journal.show_document("sandbox_memo", true)
 	c.is_true(not journal.in_journal and journal.scroll.visible, "journal opens a document")
+	c.is_true(not journal.sheet.ruled and not journal.list_scroll.visible, "a document from the journal lies on its own sheet")
 	journal.close()
 	await c.tree.process_frame
 	c.is_true(not player.controls_locked, "player is unlocked after the journal")
