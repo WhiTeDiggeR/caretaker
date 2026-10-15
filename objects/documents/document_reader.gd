@@ -3,12 +3,14 @@ extends CanvasLayer
 
 ## Full-screen reader for documents and the journal of read documents.
 ## Document: ↑↓/wheel scroll, Esc/E close (back to the journal when opened from it).
-## Journal: ↑↓ choose, E/Enter open, Esc/J close. The player is locked while open.
+## Journal: ↑↓ choose, E/Enter open, ←→ page («Записи» / «При себе»), Esc/J close. The player
+## is locked while open.
 ## A document is drawn as paper of the complex (docs/ui/style-guide.md, issue #148):
 ## typewritten body, optional form header, stamps, a handwritten margin note or a fully
 ## handwritten sheet; redactions are the █ characters of the text itself. Both lie on a
 ## PaperSheet with a torn edge (#223). The journal is the hero's own notebook: a squared page
-## written by hand in ballpoint — headings, objectives, dream sketches and read documents.
+## written by hand in ballpoint — headings, objectives, dream sketches and read documents — and
+## a «При себе» page of the carried items (ItemCatalog) with a pencil sketch and a note each.
 
 signal closed
 
@@ -47,6 +49,15 @@ const MARGIN_LEFT := 44
 const JOURNAL_MARGIN_LEFT := 84
 const OBJECTIVE_META := &"objective_line"
 const EMPTY_JOURNAL := "Журнал пуст. Найденные документы появятся здесь."
+const EMPTY_CARRIED := "Пока ничего не взял."
+
+enum Page { NOTES, CARRIED }
+const PAGE_TITLES: Array[String] = ["Записи", "При себе"]
+const TAB_SIZE := 30
+const TAB_GAP := 36
+const ITEM_TITLE_SIZE := 32
+const ITEM_NOTE_SIZE := 28
+const ITEM_GAP := 18
 
 @onready var title_label: Label = $Paper/Margin/Rows/Title
 @onready var meta_label: Label = $Paper/Margin/Rows/Meta
@@ -66,10 +77,13 @@ const EMPTY_JOURNAL := "Журнал пуст. Найденные докумен
 var document_id := ""
 var in_journal := false
 var selected := 0
+var page := Page.NOTES
 var _from_journal := false
+var _tabs: HBoxContainer
 
 
 func _ready() -> void:
+	_build_tabs()
 	_apply_style()
 
 
@@ -108,6 +122,7 @@ func show_document(id: String, from_journal: bool = false) -> void:
 	scroll.visible = true
 	scroll.scroll_vertical = 0
 	list_scroll.visible = false
+	_tabs.visible = false
 	hint_label.text = "вверх/вниз — листать    %s / %s — %s" % [
 		InputPromptFormatter.action_label(&"ui_cancel"), InputPromptFormatter.action_label(&"interact"),
 		"к журналу" if from_journal else "закрыть"]
@@ -121,13 +136,27 @@ func show_journal() -> void:
 	meta_label.visible = true
 	scroll.visible = false
 	list_scroll.visible = true
+	_tabs.visible = true
 	_set_look(true)
 	_show_form({})
 	_show_marks([], "")
+	show_page(page)
+
+
+## A page of the journal: the notes (objectives, dreams, documents) or the carried items.
+func show_page(target: Page) -> void:
+	page = target
+	_update_tabs()
+	list_scroll.scroll_vertical = 0
+	var cancel := InputPromptFormatter.action_label(&"ui_cancel")
+	if page == Page.CARRIED:
+		_fill_carried()
+		hint_label.text = "влево/вправо — страница    %s — закрыть" % cancel
+		return
 	selected = clampi(selected, 0, maxi(DocumentLibrary.read_ids().size() - 1, 0))
 	_fill_list()
-	hint_label.text = "вверх/вниз — выбор    %s — открыть    %s — закрыть" % [
-		InputPromptFormatter.action_label(&"interact"), InputPromptFormatter.action_label(&"ui_cancel")]
+	hint_label.text = "вверх/вниз — выбор    %s — открыть    влево/вправо — страница    %s — закрыть" % [
+		InputPromptFormatter.action_label(&"interact"), cancel]
 
 
 func close() -> void:
@@ -136,10 +165,14 @@ func close() -> void:
 	queue_free()
 
 
-func _fill_list() -> void:
+func _clear_list() -> void:
 	for child in list_box.get_children():
 		list_box.remove_child(child)
 		child.queue_free()
+
+
+func _fill_list() -> void:
+	_clear_list()
 	var sections := _add_objectives()
 	sections = _add_knowledge() or sections
 	if sections:
@@ -169,6 +202,67 @@ static func entry_title(title: String) -> String:
 func _scroll_to(line: Label) -> void:
 	if is_instance_valid(line) and line.is_inside_tree():
 		list_scroll.ensure_control_visible(line)
+
+
+## «При себе»: each carried item as a pencil sketch with its title and the hero's note.
+func _fill_carried() -> void:
+	_clear_list()
+	var items := ItemCatalog.carried()
+	if items.is_empty():
+		_add_line(EMPTY_CARRIED, DONE_SIZE, PEN_FADED)
+		return
+	for item in items:
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override(&"separation", ITEM_GAP)
+		row.set_meta(OBJECTIVE_META, true)
+		row.add_child(ItemSketch.create(str(item.get("sketch", ""))))
+		var lines := VBoxContainer.new()
+		lines.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		lines.alignment = BoxContainer.ALIGNMENT_CENTER
+		row.add_child(lines)
+		list_box.add_child(row)
+		for line: Label in [_add_line(str(item["title"]), ITEM_TITLE_SIZE, UiStyle.PEN), _add_line(str(item["note"]), ITEM_NOTE_SIZE, PEN_FADED)]:
+			line.reparent(lines)
+		(lines.get_child(0) as Label).add_theme_font_override(&"font", UiStyle.FONT_HAND_BOLD)
+
+
+## Titles of the carried items on the «При себе» page.
+func carried_titles() -> PackedStringArray:
+	var titles := PackedStringArray()
+	for row in list_box.get_children():
+		if row is HBoxContainer:
+			titles.append(((row.get_child(1) as Container).get_child(0) as Label).text)
+	return titles
+
+
+## Page tabs under the journal title, written in the same hand; the open one is underlined.
+func _build_tabs() -> void:
+	_tabs = HBoxContainer.new()
+	_tabs.name = "Tabs"
+	_tabs.add_theme_constant_override(&"separation", TAB_GAP)
+	_tabs.visible = false
+	for title in PAGE_TITLES:
+		var tab := Label.new()
+		tab.text = title
+		tab.add_theme_font_size_override(&"font_size", TAB_SIZE)
+		_tabs.add_child(tab)
+	var rows := meta_label.get_parent()
+	rows.add_child(_tabs)
+	rows.move_child(_tabs, meta_label.get_index() + 1)
+
+
+func _update_tabs() -> void:
+	for index in _tabs.get_child_count():
+		var tab := _tabs.get_child(index) as Label
+		var open := index == page
+		tab.add_theme_font_override(&"font", UiStyle.FONT_HAND_BOLD if open else UiStyle.FONT_HAND)
+		tab.add_theme_color_override(&"font_color", UiStyle.PEN if open else PEN_FADED)
+		var box := StyleBoxFlat.new()
+		box.draw_center = false
+		box.border_width_bottom = 2 if open else 0
+		box.border_color = UiStyle.PEN
+		box.content_margin_bottom = 2
+		tab.add_theme_stylebox_override(&"normal", box)
 
 
 ## Objectives section above the documents: the current one and the finished ones.
@@ -338,8 +432,15 @@ func _input(event: InputEvent) -> void:
 	var cancel := event.is_action_pressed(&"ui_cancel")
 	if in_journal:
 		var count := DocumentLibrary.read_ids().size()
+		var turn := event.is_action_pressed(&"ui_left") or event.is_action_pressed(&"move_left") \
+				or event.is_action_pressed(&"ui_right") or event.is_action_pressed(&"move_right")
 		if cancel or event.is_action_pressed(&"journal"):
 			close()
+		elif turn:
+			show_page(Page.CARRIED if page == Page.NOTES else Page.NOTES)
+		elif page == Page.CARRIED:
+			if down or up:
+				list_scroll.scroll_vertical += SCROLL_STEP * (1 if down else -1)
 		elif count > 0 and (down or up):
 			selected = (selected + (1 if down else -1) + count) % count
 			_fill_list()

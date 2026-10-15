@@ -12,6 +12,8 @@ const MESSAGE_SECONDS := 10.0
 const TOAST_SECONDS := 5.0
 const TOAST_TAG := "ЖУРНАЛ"
 const TOAST_TEXT := "Документ добавлен: «%s» · %s"
+## Short line at the bottom when the hero takes an item (data/items, #223).
+const TAKEN_TEXT := "Взято: %s"
 const MESSAGE_GROUP := &"message_display"
 const HINT_GROUP := &"hint_display"
 const OBJECTIVE_FLASH := Color(1.0, 0.9, 0.55)
@@ -183,7 +185,10 @@ func show_journal_notice(title: String) -> void:
 	_toast_timer.start(TOAST_SECONDS)
 
 
-func _on_flag_changed(flag: StringName, _value: Variant) -> void:
+func _on_flag_changed(flag: StringName, value: Variant) -> void:
+	if ItemCatalog.has(flag) and value:
+		show_hint(TAKEN_TEXT % ItemCatalog.get_item(flag)["title"])
+		return
 	if flag != DocumentLibrary.JOURNAL_FLAG:
 		return
 	var ids := DocumentLibrary.read_ids()
