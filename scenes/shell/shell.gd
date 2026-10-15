@@ -294,7 +294,15 @@ func _add_pause_items(column: VBoxContainer) -> void:
 		note.add_theme_color_override(&"font_color", ShellUI.MUTED)
 		column.add_child(note)
 	ShellUI.button(column, "Загрузить игру", func() -> void: SaveSlotsScreen.open(self, SaveSlotsScreen.Mode.LOAD))
+	ShellUI.button(column, "Журнал", open_journal)
 	ShellUI.button(column, "Настройки", open_settings)
+
+
+## The hero's notebook from the pause (#223): the game resumes under the journal, which locks
+## the player itself and closes back to gameplay.
+func open_journal() -> DocumentReader:
+	resume()
+	return DocumentReader.open_journal_scene(get_tree())
 
 
 func open_settings() -> SettingsScreen:
