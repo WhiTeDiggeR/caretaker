@@ -217,7 +217,7 @@ func _fill_carried() -> void:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override(&"separation", ITEM_GAP)
 		row.set_meta(OBJECTIVE_META, true)
-		row.add_child(ItemSketch.create(str(item.get("sketch", ""))))
+		row.add_child(ItemSketch.create(str(item.get("sketch", "")), str(item.get("tag", ""))))
 		var lines := VBoxContainer.new()
 		lines.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		lines.alignment = BoxContainer.ALIGNMENT_CENTER
