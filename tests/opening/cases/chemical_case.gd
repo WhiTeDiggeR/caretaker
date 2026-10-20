@@ -21,7 +21,7 @@ func run(c: OpeningCheck) -> void:
 
 	c.equal(Containment.chemical_phase(C), Containment.Chemical.READY, "protocol starts armed")
 	c.is_true(Containment.is_charged(C), "module 4 starts charged")
-	c.equal(Containment.reagent_stock(), 1, "one reagent charge in stock")
+	c.equal(Containment.reagent_stock(), 0, "no spare reagent before the storage cylinder (#231)")
 
 	Containment.add_instability(C, 95.0 - Containment.get_instability(C))
 	Containment.tick(0.1)
@@ -56,6 +56,8 @@ func run(c: OpeningCheck) -> void:
 	c.equal(Containment.vent_lock_reason(C), Containment.REASON_VENTING, "ventilation runs")
 	Containment.tick(30.0)
 	c.is_true(not Containment.has_gas(C), "ventilation clears the gas")
+	c.equal(Containment.recharge_lock_reason(C), Containment.REASON_NO_STOCK, "no recharge without the storage cylinder")
+	Containment.add_reagent_stock(1)
 	c.is_true(Containment.recharge(C), "recharge from the stock")
 	c.equal(Containment.reagent_stock(), 0, "stock is used")
 	c.equal(Containment.chemical_phase(C), Containment.Chemical.READY, "protocol is armed again")

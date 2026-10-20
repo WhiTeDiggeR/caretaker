@@ -44,18 +44,19 @@ static func has(flag: StringName) -> bool:
 	return _items.has(String(flag))
 
 
-## {flag, title, note, sketch}; an empty dictionary for an unknown flag.
+## {flag, title, note, sketch, until}; an empty dictionary for an unknown flag.
 static func get_item(flag: StringName) -> Dictionary:
 	_ensure()
 	return _items.get(String(flag), {})
 
 
-## Items whose flag is set, in catalogue order.
+## Items whose flag is set and whose `until` flag (a spent cylinder) is not, in catalogue order.
 static func carried() -> Array[Dictionary]:
 	_ensure()
 	var result: Array[Dictionary] = []
 	for flag: String in _items:
-		if GameState.has_flag(StringName(flag)):
+		var until := StringName(str(_items[flag].get("until", "")))
+		if GameState.has_flag(StringName(flag)) and (until.is_empty() or not GameState.has_flag(until)):
 			result.append(_items[flag])
 	return result
 

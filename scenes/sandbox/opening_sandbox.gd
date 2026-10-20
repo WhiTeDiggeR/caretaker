@@ -145,7 +145,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if Containment.is_charged(&"module_4") and not Containment.has_gas(&"module_4"):
 				print("Module 4 at the chemical threshold: sealing after the warning")
 			else:
-				print("Module 4 at the threshold, but the protocol is spent: vent and recharge it at the reagent panel or reset the sandbox (F3)")
+				print("Module 4 at the threshold, but the protocol is spent: vent it and recharge with the storage cylinder (storage station) or reset the sandbox (F3)")
 		KEY_8:
 			Containment.add_instability(&"module_3", Containment.MAX_INSTABILITY)
 			Containment.add_instability(&"module_4", Containment.MAX_INSTABILITY)
