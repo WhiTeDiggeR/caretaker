@@ -1,0 +1,41 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/lower_contour/old_plate.gd" id="1_plate"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="2_interactable"]
+[ext_resource type="FontVariation" path="res://materials/ui/fonts/old_queue_plate.tres" id="3_font"]
+
+[sub_resource type="StandardMaterial3D" id="plate_material"]
+albedo_color = Color(0.36, 0.33, 0.27, 1)
+metallic = 0.6
+roughness = 0.75
+
+[sub_resource type="BoxMesh" id="plate_mesh"]
+material = SubResource("plate_material")
+size = Vector3(0.62, 0.26, 0.03)
+
+[sub_resource type="BoxShape3D" id="plate_shape"]
+size = Vector3(0.62, 0.26, 0.06)
+
+[node name="OldPlate" type="StaticBody3D"]
+script = ExtResource("1_plate")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("plate_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("plate_shape")
+
+[node name="Label" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.017)
+pixel_size = 0.0022
+modulate = Color(0.86, 0.82, 0.7, 1)
+outline_size = 0
+font = ExtResource("3_font")
+font_size = 56
+text = "2"
+
+[node name="Interactable" type="Node" parent="."]
+script = ExtResource("2_interactable")
+mode = 2
+prompt = "ОСМОТРЕТЬ ТАБЛИЧКУ"
+inspect_text_id = "part2_old_plate"
