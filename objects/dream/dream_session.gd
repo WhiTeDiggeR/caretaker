@@ -8,13 +8,15 @@ extends Node
 
 signal entered(module_id: StringName)
 signal left(module_id: StringName, reason: Exit)
-## The hero is back in reality and the veil starts to lift (the aftertaste effects start
-## here, not under the veil — #166).
+## The hero is back in reality, after the interdream, and the veil starts to lift (the
+## aftertaste effects start here, not under the veil — #166).
 signal arrived(module_id: StringName, reason: Exit)
 signal seal_restored_signal(module_id: StringName)
 ## The afterimage of the seal restored this visit shows after the gate (З-Р5, #197): the
 ## knowledge it carries and its code, outer ring first — for the journal (#196).
 signal afterimage_shown(module_id: StringName, knowledge_id: StringName, code: PackedStringArray)
+## The interdream of this exit is over (#228): `echo_id` empty — a quiet one.
+signal interdream_finished(module_id: StringName, reason: Exit, echo_id: String, seen_seconds: float)
 
 ## GATE — voluntary exit, DEATH — killed in the dream, WOKEN — the module was gassed and
 ## object 2 pulled the connected hero out (chemical protocol).
@@ -31,6 +33,8 @@ const GATE_LINE := "ВЫХОД ЧЕРЕЗ ВРАТА · СИНХРОНИЗАЦИ
 const DEATH_LINE := "ПРИНУДИТЕЛЬНОЕ ВОЗВРАЩЕНИЕ · НЕСТАБИЛЬНОСТЬ +%d %%"
 const WOKEN_LINE := "МОДУЛЬ ЗАПОЛНЕН СНОТВОРНЫМ · ВРЕМЯ НА РЕМОНТ СОКРАЩЕНО"
 const TRANSITION_BY_EXIT: Array[DreamTransition.Mode] = [DreamTransition.Mode.GATE, DreamTransition.Mode.DEATH, DreamTransition.Mode.WOKEN]
+## A torn interdream cuts to the death/awakening veil, which stays this long to be read.
+const HARSH_VEIL_SECONDS := 0.6
 const RESYNC_LINE := "Печать восстановлена. Требуется ресинхронизация капсулы — знаки записаны в журнале."
 
 var time_ratio := 15.0
@@ -53,6 +57,9 @@ var _return_scene := ""
 var _return_chair: StringName = &""
 var _fade: DreamTransition
 var _afterimage: DreamAfterimage
+var _interdream: InterdreamOverlay
+## Bumped by abort(): an exit still under way stops where it is.
+var _serial := 0
 
 
 func _ready() -> void:
@@ -62,6 +69,9 @@ func _ready() -> void:
 	add_child(_fade)
 	_afterimage = DreamAfterimage.new()
 	add_child(_afterimage)
+	# The hero's own short dream between the dream and the chair (#228).
+	_interdream = InterdreamOverlay.new()
+	add_child(_interdream)
 	Containment.hero_woken.connect(func(id: StringName) -> void:
 		if in_dream and id == module_id:
 			_leave(Exit.WOKEN))
@@ -112,6 +122,7 @@ func enter(id: StringName, chair_id: StringName, dream_scene: String = "") -> bo
 
 ## Drops the session without a return (a defeat or a loaded save replaces the scene).
 func abort() -> void:
+	_serial += 1
 	in_dream = false
 	module_id = &""
 	seal_restored = false
@@ -123,6 +134,8 @@ func abort() -> void:
 		_fade.veil = 0.0
 	if _afterimage:
 		_afterimage.hide_now()
+	if _interdream:
+		_interdream.stop()
 
 
 ## The hero passed through the gate.
@@ -146,16 +159,25 @@ func restore_seal() -> void:
 	seal_restored_signal.emit(module_id)
 
 
-## Places the player at the chair after returning to the complex. Called once the
-## returned scene is ready; public for tests and custom scene loaders.
+## Places the player at the chair after returning to the complex and tells how long the
+## dream took. Called once the returned scene is ready; public for tests and custom loaders.
 func arrive_in_reality(scene_root: Node, reason: Exit) -> void:
+	_place_at_chair(scene_root)
+	scene_root.get_tree().call_group(MESSAGE_GROUP, "show_message", return_title(reason), return_text(reason))
+
+
+func _place_at_chair(scene_root: Node) -> void:
 	for node in scene_root.get_tree().get_nodes_in_group(CHAIR_GROUP):
 		if node.get("chair_id") == _return_chair and scene_root.is_ancestor_of(node):
 			var player := scene_root.get_tree().get_first_node_in_group(PLAYER_GROUP) as Node3D
 			if player:
 				player.global_transform = (node as Node3D).call("exit_transform")
 			break
-	scene_root.get_tree().call_group(MESSAGE_GROUP, "show_message", return_title(reason), return_text(reason))
+
+
+## The interdream that is playing (tests, the review tools).
+func interdream() -> InterdreamOverlay:
+	return _interdream
 
 
 ## System line of the veil when leaving the dream.
@@ -197,23 +219,60 @@ func _leave(reason: Exit) -> void:
 		return
 	in_dream = false
 	var id := module_id
+	var serial := _serial
 	# Only the gate after a restored seal leaves its afterimage.
 	var knowledge := DreamKnowledge.active_for(id) if reason == Exit.GATE and seal_restored else &""
 	# Story conditions (objectives) need to know a module's dream was visited.
+	# The echo is chosen before the exit sets its own flags.
+	var echo := InterdreamEchoes.pick(id, reason)
 	GameState.set_flag(StringName(RETURNED_PREFIX + String(id)))
 	_fade.show_mode(TRANSITION_BY_EXIT[reason], exit_line(reason))
 	left.emit(id, reason)
-	await _fade_to(1.0)
-	if not _return_scene.is_empty():
-		scene_loader.call(_return_scene)
-		await get_tree().process_frame
-		await get_tree().process_frame
-		if get_tree().current_scene:
-			arrive_in_reality(get_tree().current_scene, reason)
+	if reason == Exit.GATE:
+		# White veil with the system line → the corridor rises out of it, the complex loads
+		# underneath → the corridor washes back into the white.
+		await _fade_to(1.0)
+		await _load_return()
+		await _play_interdream(id, reason, echo)
+	else:
+		# Torn: the white (amber) cut over the dream at once, then the veil of the verdict.
+		_play_interdream(id, reason, echo)
+		await _load_return()
+		if _interdream.playing:
+			await _interdream.finished
+		if serial != _serial:
+			return
+		_fade.veil = 1.0
+		await get_tree().create_timer(HARSH_VEIL_SECONDS).timeout
+	if serial != _serial:
+		return
+	get_tree().call_group(PLAYER_GROUP, "set_controls_locked", false)
+	if get_tree().current_scene and not _return_scene.is_empty():
+		arrive_in_reality(get_tree().current_scene, reason)
 	if not knowledge.is_empty():
 		_show_afterimage(id, knowledge)
 	arrived.emit(id, reason)
 	await _fade_to(0.0)
+
+
+## Loads the scene the hero left for the dream and places the hero at the chair; the
+## controls stay locked while the interdream plays.
+func _load_return() -> void:
+	if _return_scene.is_empty():
+		return
+	scene_loader.call(_return_scene)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if get_tree().current_scene:
+		_place_at_chair(get_tree().current_scene)
+	get_tree().call_group(PLAYER_GROUP, "set_controls_locked", true)
+
+
+func _play_interdream(id: StringName, reason: Exit, echo: Dictionary) -> void:
+	_interdream.play(echo, reason)
+	var result: Array = await _interdream.finished
+	InterdreamEchoes.report_seen(echo, float(result[1]))
+	interdream_finished.emit(id, reason, str(result[0]), float(result[1]))
 
 
 func _show_afterimage(id: StringName, knowledge: StringName) -> void:

@@ -126,6 +126,7 @@ res://tests/opening/opening_checks.tscn|OPENING_CHECKS checks=[0-9]+ failures=0
 res://tests/opening/dream_e2e.tscn|DREAM_E2E_OK
 res://tests/dreams/bowser_dream_check.tscn|BOWSER_DREAM_CHECK_OK checks=[0-9]+
 res://tests/dreams/dream_audio_check.tscn|DREAM_AUDIO_CHECK_OK checks=[0-9]+
+res://tests/dreams/interdream_check.tscn|INTERDREAM_CHECK_OK checks=[0-9]+
 res://tests/dreams/bowser_dream_mood_check.tscn|BOWSER_DREAM_MOOD_OK checks=[0-9]+
 res://tests/dreams/bowser_dream_fx_check.tscn|BOWSER_DREAM_FX_OK checks=[0-9]+
 res://tests/opening/shell_e2e.tscn|SHELL_E2E_OK

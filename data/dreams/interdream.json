@@ -1,0 +1,53 @@
+{
+  "quiet_seconds": 3.0,
+  "echo_seconds": 4.5,
+  "torn_seconds": 1.5,
+  "min_seen_seconds": 1.5,
+  "skip_after_seconds": 1.0,
+  "echoes": {
+    "plate_2_first": {
+      "priority": 10,
+      "dreams": ["module_4"],
+      "exits": ["gate"],
+      "mandatory": true,
+      "when": {"all": [{"not_flag": "part2/recovery_map"}, {"not_flag": "interdream/shown/plate_2_first"}]},
+      "props": ["plate_2", "silhouette_far"],
+      "sounds": [{"sfx": "terminal_type", "at": 1.2}, {"sfx": "terminal_beep", "at": 2.4}],
+      "on_shown": [{"set_flag": "part2/dream_trace_2"}, {"add_document": "dream_plate_2"}]
+    },
+    "senior_key": {
+      "priority": 8,
+      "exits": ["gate"],
+      "when": {"all": [{"flag": "part2/senior_mark"}, {"not_flag": "interdream/shown/senior_key"}]},
+      "props": ["key_lanyard"],
+      "tag": "ТАБ. № ——"
+    },
+    "plate_2_healed": {
+      "priority": 7,
+      "exits": ["gate"],
+      "when": {"all": [{"flag": "part2/n2_believed"}, {"not_flag": "interdream/shown/plate_2_healed"}]},
+      "props": ["plate_2_healed"],
+      "sounds": [{"sfx": "terminal_beep", "at": 2.0}]
+    },
+    "plate_2_turned": {
+      "priority": 6,
+      "exits": ["gate"],
+      "when": {"all": [{"flag": "part2/chem_protocol_fired"}, {"not_flag": "interdream/shown/plate_2_turned"}]},
+      "props": ["plate_2_turned"],
+      "sounds": [{"sfx": "gas_release", "at": 1.0}]
+    },
+    "silhouette_near": {
+      "priority": 5,
+      "exits": ["gate"],
+      "when": {"all": [{"flag": "part2/n2_first_text"}, {"not_flag": "part2/module4_crisis_resolved"}, {"not_flag": "interdream/shown/silhouette_near"}]},
+      "props": ["silhouette_near"],
+      "sounds": [{"sfx": "terminal_beep", "at": 1.6}, {"sfx": "terminal_beep", "at": 1.9}, {"sfx": "terminal_beep", "at": 2.2}]
+    },
+    "plate_2_flash": {
+      "priority": 10,
+      "exits": ["woken"],
+      "props": ["plate_2_flash"],
+      "sounds": [{"sfx": "terminal_beep", "at": 0.5}]
+    }
+  }
+}
