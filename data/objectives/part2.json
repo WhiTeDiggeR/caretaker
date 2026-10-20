@@ -1,0 +1,12 @@
+{
+  "chains": {
+    "part2": {
+      "final_text": "",
+      "steps": [
+        {"id": "part2_old_cp", "text": "Вернуться к пульту старого пункта управления", "done_when": {"flag": "part2/recovery_map"}},
+        {"id": "part2_restore", "text": "Восстановить системы: нижний контур, верх, склад", "done_when": {"all": [{"flag": "part2/dir_lower_done"}, {"flag": "part2/dir_upper_done"}, {"flag": "part2/dir_storage_done"}]}},
+        {"id": "part2_monitor", "text": "Проверить состояние модулей", "done_when": {"flag": "part2/finale"}}
+      ]
+    }
+  }
+}

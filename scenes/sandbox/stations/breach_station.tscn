@@ -37,6 +37,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -3.55)
 program_path = "res://data/terminals/opening_succession.json"
 section = &"sandbox_a"
 
+[node name="OldControlConsole" parent="." instance=ExtResource("8_terminal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, -3.55)
+program_path = "res://data/terminals/opening_old_cp.json"
+section = &"sandbox_a"
+
+[node name="OldControlLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.2, -3.55)
+pixel_size = 0.004
+text = "ПУЛЬТ СТАРОГО ЦУ (#227)"
+font_size = 32
+outline_size = 10
+
 [node name="Desk" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 0.475, -3.45)
 mesh = SubResource("desk")

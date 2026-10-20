@@ -3,7 +3,8 @@ extends Node
 ## Objective chains (autoload `Objectives`): data/objectives/*.json describe ordered steps,
 ## each with the on-screen text and a `done_when` condition (StateRules). The active step is
 ## mirrored into GameState's objective; when its condition holds the next step starts by
-## itself. Progress is saved with the game (GameState system data). Format: README.md there.
+## itself. A chain with `next` hands over to that chain when it is done (opening → part2).
+## Progress is saved with the game (GameState system data). Format: README.md there.
 
 signal step_started(chain_id: StringName, step_id: StringName)
 signal chain_completed(chain_id: StringName)
@@ -11,7 +12,7 @@ signal chain_completed(chain_id: StringName)
 const DATA_DIR := "res://data/objectives"
 const SYSTEM := &"objectives"
 
-## chain id -> {"final_text": String, "steps": [{"id", "text", "done_when"}]}
+## chain id -> {"final_text": String, "next": String, "steps": [{"id", "text", "done_when"}]}
 var chains: Dictionary[StringName, Dictionary] = {}
 
 var _chain: StringName = &""
@@ -58,6 +59,9 @@ func validate() -> PackedStringArray:
 			if seen.has(step_id):
 				errors.append("%s: duplicate step %s" % [id, step_id])
 			seen[step_id] = true
+		var next := StringName(str(chains[id].get("next", "")))
+		if next != &"" and not chains.has(next):
+			errors.append("%s: unknown next chain %s" % [id, next])
 	return errors
 
 
@@ -120,12 +124,15 @@ func _evaluate() -> void:
 	while _index < steps.size() and StateRules.check(steps[_index].get("done_when", {})):
 		_index += 1
 		advanced = true
-	if not advanced:
-		return
-	_save()
-	_announce()
-	if _index >= steps.size():
-		chain_completed.emit(_chain)
+	if advanced:
+		_save()
+		_announce()
+		if _index >= steps.size():
+			chain_completed.emit(_chain)
+	# Also covers saves made when a finished chain had no `next` yet.
+	var next := StringName(str(chains.get(_chain, {}).get("next", "")))
+	if is_completed() and chains.has(next):
+		start(next)
 
 
 func _announce() -> void:
