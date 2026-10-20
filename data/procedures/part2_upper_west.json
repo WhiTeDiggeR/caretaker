@@ -1,0 +1,23 @@
+{
+  "id": "part2_upper_west",
+  "title": "ПОДСТАНЦИЯ ПОЗДНИХ СЕКТОРОВ · ЗАПАД",
+  "steps": [
+    {"id": "diagnose", "hint": "Прочитать журнал защиты подстанции", "done_when": {"flag": "part2/upper_west_diagnosed"}},
+    {
+      "id": "cooling",
+      "hint": "Включить оба вентилятора камеры трансформатора",
+      "all_on": ["up_west_fan_1", "up_west_fan_2"],
+      "early_error": "Сначала понять, почему отключилась подстанция."
+    },
+    {
+      "id": "breakers",
+      "hint": "Взвести автоматы: сначала ввод, потом отходящая линия",
+      "sequence": ["up_west_input", "up_west_output"],
+      "order_error": "Линия без ввода: автомат выбило. Сначала ввод.",
+      "early_error": "Трансформатор перегреется снова: вентиляция не работает."
+    }
+  ],
+  "completion_effects": [
+    {"set_power": {"section": "late_west", "power": "main"}}
+  ]
+}
