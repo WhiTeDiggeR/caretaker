@@ -1,0 +1,125 @@
+{
+  "id": "part2_post2",
+  "title": "ПОСТ НАБЛЮДЕНИЯ · КАМЕРА 2",
+  "era": "old_core",
+  "start": "main",
+  "screens": {
+    "main": {
+      "redirects": [
+        {"if": {"not_flag": "part2/n2_link_installed"}, "goto": "images"},
+        {"if": {"not_flag": "part2/n2_first_text"}, "goto": "first_text"},
+        {"if": {"flag": "part2/n2_reply"}, "goto": "after_reply"},
+        {"if": {"flag": "part2/module4_crisis_resolved"}, "goto": "reply"}
+      ],
+      "lines": [
+        "Канал камеры 2: текст.",
+        "Последнее входящее:",
+        "  МОДУЛЬ 4. ОХЛАЖДЕНИЕ. ЧАС.",
+        {"text": "Новых сообщений нет.", "wait": 1.0}
+      ],
+      "options": [
+        {"text": "Отправить запрос", "goto": "silence"},
+        {"text": "Выход", "action": "exit"}
+      ]
+    },
+    "silence": {
+      "lines": [
+        "Запрос отправлен.",
+        {"text": "Ответа нет. Канал открыт.", "wait": 2.0}
+      ],
+      "options": [{"text": "Выход", "action": "exit"}]
+    },
+    "images": {
+      "lines": [
+        "Связь с камерой 2: старая очередь.",
+        "Сигнал: есть. Текстовый канал: нет.",
+        "Вывод: образы наблюдения.",
+        {"text": "…капсула. Свет сверху. Помехи.", "wait": 1.5},
+        {"text": "…табличка «2». Та же, что во сне.", "wait": 1.5, "if": {"flag": "part2/dream_trace_2"}},
+        {"text": "…табличка «2».", "wait": 1.5, "if": {"not_flag": "part2/dream_trace_2"}},
+        {"text": "…схема узла связи, раз за разом:", "wait": 1.5},
+        "    [КАМЕРА 2]---[УЗЕЛ]---X---[ПОСТ]",
+        {"text": "Изображение держится дольше остальных.", "wait": 1.0}
+      ],
+      "options": [
+        {"text": "Осмотреть узел связи", "goto": "node"},
+        {"text": "Выход", "action": "exit"}
+      ]
+    },
+    "node": {
+      "lines": [
+        "Узел связи поста: самодиагностика.",
+        {"text": "Плата текстового канала: нет в гнезде.", "wait": 1.0},
+        "Замена: плата связи старой очереди.",
+        "ЗИП: ранняя лаборатория сна."
+      ],
+      "options": [
+        {"text": "Установить плату связи", "goto": "first_text", "requires": {"flag": "item_n2_link_part"}, "locked_text": "Нет запасной платы", "effects": [{"set_flag": "part2/n2_link_installed"}]},
+        {"text": "Назад", "goto": "images"},
+        {"text": "Выход", "action": "exit"}
+      ]
+    },
+    "first_text": {
+      "lines": [
+        "Плата связи: установлена.",
+        {"text": "Канал камеры 2: текст.", "wait": 1.5},
+        {"text": "Входящее:", "wait": 2.5},
+        {"text": "  МОДУЛЬ 4. ОХЛАЖДЕНИЕ. ЧАС.", "wait": 1.5}
+      ],
+      "effects": [{"set_flag": "part2/n2_first_text"}],
+      "options": [
+        {"text": "Кто на связи?", "goto": "silence"},
+        {"text": "Выход", "action": "exit"}
+      ]
+    },
+    "reply": {
+      "lines": [
+        "Канал камеры 2: текст.",
+        {"text": "Входящее:", "wait": 1.5},
+        {"text": "  ОХЛАЖДЕНИЕ В НОРМЕ. ТЫ УСПЕЛ.", "wait": 1.5, "if": {"flag": "part2/n2_believed"}},
+        {"text": "  ОХЛАЖДЕНИЕ В НОРМЕ. В СЛЕДУЮЩИЙ РАЗ — СРАЗУ.", "wait": 1.5, "if": {"not_flag": "part2/n2_believed"}}
+      ],
+      "options": [
+        {"text": "Кто ты?", "goto": "reply_who"},
+        {"text": "Откуда ты знал про охлаждение?", "goto": "reply_how"}
+      ]
+    },
+    "reply_how": {
+      "lines": [
+        {"text": "  НЕ ЗНАЛ. СЛЫШАЛ.", "wait": 2.0}
+      ],
+      "options": [
+        {"text": "Кто ты?", "goto": "reply_who"}
+      ]
+    },
+    "reply_who": {
+      "lines": [
+        {"text": "  ОБЪЕКТ 2. КАМЕРА ПОВРЕЖДЕНА. МНЕ НУЖЕН ОПЕРАТОР.", "wait": 2.5}
+      ],
+      "effects": [{"set_flag": "part2/n2_reply"}],
+      "options": [
+        {"text": "Расскажи о себе", "goto": "after_silence"},
+        {"text": "Выход", "action": "exit"}
+      ]
+    },
+    "after_reply": {
+      "lines": [
+        "Канал камеры 2: текст.",
+        "Последнее входящее:",
+        "  ОБЪЕКТ 2. КАМЕРА ПОВРЕЖДЕНА. МНЕ НУЖЕН ОПЕРАТОР.",
+        {"text": "Новых сообщений нет.", "wait": 1.0}
+      ],
+      "options": [
+        {"text": "Расскажи о себе", "goto": "after_silence"},
+        {"text": "Выход", "action": "exit"}
+      ]
+    },
+    "after_silence": {
+      "lines": [
+        "Запрос отправлен.",
+        {"text": "Ответа нет.", "wait": 2.5}
+      ],
+      "options": [{"text": "Выход", "action": "exit"}]
+    }
+  }
+}
