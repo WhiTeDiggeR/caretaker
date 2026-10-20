@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/storage/storage_kit.tscn" id="1_kit"]
+
+[node name="StorageStation" type="Node3D"]
+
+[node name="StorageKit" parent="." instance=ExtResource("1_kit")]
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, -1.6)
+pixel_size = 0.004
+text = "СКЛАД И МАСТЕРСКАЯ ТЕХУРОВНЯ (#231)
+баллон → панель реагента у кресла; ключ ускоряет вентиляцию"
+font_size = 36
+outline_size = 10

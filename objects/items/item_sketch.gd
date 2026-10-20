@@ -43,6 +43,17 @@ func _draw() -> void:
 			_stroke(rng, [Vector2(0.52, 0.34), Vector2(0.74, 0.34)])
 			_stroke(rng, [Vector2(0.52, 0.46), Vector2(0.7, 0.46)])
 			_stroke(rng, [Vector2(0.28, 0.68), Vector2(0.74, 0.68)])
+		"cylinder":
+			_stroke(rng, [Vector2(0.3, 0.3), Vector2(0.3, 0.86), Vector2(0.7, 0.86), Vector2(0.7, 0.3)])
+			_stroke(rng, [Vector2(0.3, 0.3), Vector2(0.4, 0.2), Vector2(0.6, 0.2), Vector2(0.7, 0.3)])
+			_stroke(rng, [Vector2(0.44, 0.2), Vector2(0.44, 0.1), Vector2(0.56, 0.1), Vector2(0.56, 0.2)])
+			_stroke(rng, [Vector2(0.3, 0.5), Vector2(0.7, 0.5)])
+			_stroke(rng, [Vector2(0.3, 0.6), Vector2(0.7, 0.6)])
+		"tool":
+			_ring(rng, Vector2(0.2, 0.5), 0.14)
+			_stroke(rng, [Vector2(0.3, 0.44), Vector2(0.82, 0.44), Vector2(0.88, 0.5), Vector2(0.82, 0.56), Vector2(0.3, 0.56)])
+			_stroke(rng, [Vector2(0.6, 0.44), Vector2(0.6, 0.56)])
+			_stroke(rng, [Vector2(0.66, 0.44), Vector2(0.66, 0.56)])
 		_:
 			_stroke(rng, [Vector2(0.2, 0.3), Vector2(0.8, 0.26), Vector2(0.84, 0.76), Vector2(0.18, 0.78), Vector2(0.2, 0.3)])
 			_stroke(rng, [Vector2(0.2, 0.3), Vector2(0.5, 0.52), Vector2(0.8, 0.26)])
