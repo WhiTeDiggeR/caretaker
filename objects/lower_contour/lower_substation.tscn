@@ -1,0 +1,131 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/lower_contour/lower_substation.gd" id="1_substation"]
+[ext_resource type="Script" path="res://objects/repair/repair_control.gd" id="2_control"]
+[ext_resource type="Script" path="res://objects/repair/repair_procedure.gd" id="3_procedure"]
+[ext_resource type="Script" path="res://objects/interaction/interactable.gd" id="4_interactable"]
+
+[sub_resource type="StandardMaterial3D" id="cabinet"]
+albedo_color = Color(0.24, 0.26, 0.22, 1)
+metallic = 0.3
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="cabinet_mesh"]
+material = SubResource("cabinet")
+size = Vector3(1.2, 1.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="cabinet_shape"]
+size = Vector3(1.2, 1.8, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="cell"]
+albedo_color = Color(0.3, 0.31, 0.29, 1)
+metallic = 0.45
+roughness = 0.55
+
+[sub_resource type="BoxMesh" id="cell_mesh"]
+material = SubResource("cell")
+size = Vector3(1.4, 2.2, 0.9)
+
+[sub_resource type="BoxShape3D" id="cell_shape"]
+size = Vector3(1.4, 2.2, 0.9)
+
+[node name="LowerSubstation" type="Node3D"]
+script = ExtResource("1_substation")
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1, 0.2)
+pixel_size = 0.004
+text = "ПОДСТАНЦИЯ НИЖНЕГО КОНТУРА"
+font_size = 44
+outline_size = 10
+
+[node name="Journal" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.9, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Journal"]
+mesh = SubResource("cabinet_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Journal"]
+shape = SubResource("cabinet_shape")
+
+[node name="Interactable" type="Node" parent="Journal"]
+script = ExtResource("4_interactable")
+mode = 2
+prompt = "ПРОЧИТАТЬ ЖУРНАЛ ЗАЩИТЫ"
+inspect_title = "ПОДСТАНЦИЯ НИЖНЕГО КОНТУРА · ЖУРНАЛ ЗАЩИТЫ"
+inspect_text = "Отключение по защите: замыкание на землю в кабеле магистрали нижнего этажа.\nКабель отключён разъединителем, на линию наложено заземление.\nПовреждённый участок выведен в обход.\nПорядок включения: снять заземление → разъединитель → подача напряжения → контроль изоляции."
+sets_flag = &"part2/lower_diagnosed"
+
+[node name="Cell" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.35)
+
+[node name="Mesh" type="MeshInstance3D" parent="Cell"]
+mesh = SubResource("cell_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Cell"]
+shape = SubResource("cell_shape")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 1.3, 0.15)
+script = ExtResource("2_control")
+kind = 2
+control_id = &"lo_ground"
+prompt_on = "СНЯТЬ ЗАЗЕМЛЕНИЕ"
+fixed_prompt = "ЗАЗЕМЛЕНИЕ СНЯТО"
+
+[node name="GroundLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 0.95, 0.15)
+pixel_size = 0.004
+text = "ЗАЗЕМЛ."
+font_size = 32
+outline_size = 10
+
+[node name="Disconnector" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 1.3, 0.15)
+script = ExtResource("2_control")
+kind = 2
+control_id = &"lo_disconnector"
+prompt_on = "ВКЛЮЧИТЬ РАЗЪЕДИНИТЕЛЬ"
+fixed_prompt = "РАЗЪЕДИНИТЕЛЬ ВКЛЮЧЁН"
+
+[node name="DisconnectorLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.95, 0.15)
+pixel_size = 0.004
+text = "РАЗЪЕД."
+font_size = 32
+outline_size = 10
+
+[node name="Lever" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0.6, 0.15)
+script = ExtResource("2_control")
+control_id = &"lo_lever"
+prompt_on = "УДЕРЖИВАТЬ: ПОДАТЬ НАПРЯЖЕНИЕ"
+hold_time = 2.0
+fixed_prompt = "НАПРЯЖЕНИЕ ПОДАНО"
+
+[node name="TestButton" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.2, 0.2)
+script = ExtResource("2_control")
+kind = 2
+control_id = &"lo_test"
+prompt_on = "КОНТРОЛЬ ИЗОЛЯЦИИ"
+fixed_prompt = "ИЗОЛЯЦИЯ В НОРМЕ"
+
+[node name="TestLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.9, 0.2)
+pixel_size = 0.004
+text = "КОНТРОЛЬ"
+font_size = 32
+outline_size = 10
+
+[node name="Board" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0.2)
+pixel_size = 0.004
+text = ""
+font_size = 32
+outline_size = 10
+
+[node name="Procedure" type="Node" parent="."]
+script = ExtResource("3_procedure")
+procedure_path = "res://data/procedures/part2_lower_substation.json"
+drive_objective = false

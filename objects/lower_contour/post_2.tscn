@@ -1,0 +1,148 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/lower_contour/old_plate.tscn" id="1_plate"]
+[ext_resource type="PackedScene" path="res://objects/staff_table.tscn" id="2_table"]
+[ext_resource type="PackedScene" path="res://objects/doors/service_door.tscn" id="3_door"]
+[ext_resource type="PackedScene" path="res://objects/documents/document_pickup.tscn" id="4_doc"]
+[ext_resource type="Material" path="res://materials/lower_contour/capsule_static.tres" id="5_static"]
+[ext_resource type="Script" path="res://objects/events/event_sequence.gd" id="6_sequence"]
+[ext_resource type="Script" path="res://objects/events/event_trigger.gd" id="7_trigger"]
+
+[sub_resource type="StandardMaterial3D" id="wall"]
+albedo_color = Color(0.4, 0.4, 0.37, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="sill_mesh"]
+material = SubResource("wall")
+size = Vector3(3.0, 1.0, 0.14)
+
+[sub_resource type="BoxMesh" id="lintel_mesh"]
+material = SubResource("wall")
+size = Vector3(3.0, 0.5, 0.14)
+
+[sub_resource type="BoxShape3D" id="window_shape"]
+size = Vector3(3.0, 2.8, 0.2)
+
+[sub_resource type="BoxMesh" id="glass_static"]
+material = ExtResource("5_static")
+size = Vector3(3.0, 1.3, 0.04)
+
+[sub_resource type="StandardMaterial3D" id="capsule_metal"]
+albedo_color = Color(0.25, 0.26, 0.26, 1)
+metallic = 0.6
+roughness = 0.45
+
+[sub_resource type="CylinderMesh" id="capsule_body"]
+material = SubResource("capsule_metal")
+top_radius = 0.75
+bottom_radius = 0.75
+height = 2.6
+
+[sub_resource type="CylinderMesh" id="capsule_window"]
+material = ExtResource("5_static")
+top_radius = 0.77
+bottom_radius = 0.77
+height = 1.4
+
+[sub_resource type="BoxMesh" id="chamber_wall_mesh"]
+material = SubResource("wall")
+size = Vector3(1.4, 2.8, 0.2)
+
+[sub_resource type="BoxShape3D" id="chamber_wall_shape"]
+size = Vector3(1.4, 2.8, 0.2)
+
+[sub_resource type="BoxShape3D" id="area_shape"]
+size = Vector3(5, 3, 4)
+
+[node name="Post2" type="Node3D"]
+
+[node name="EntrancePlate" parent="." instance=ExtResource("1_plate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 2.55, -1.32)
+plate_text = "2-П"
+
+[node name="ObservationWindow" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0, -1.4)
+
+[node name="Sill" type="MeshInstance3D" parent="ObservationWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("sill_mesh")
+
+[node name="Interference" type="MeshInstance3D" parent="ObservationWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)
+mesh = SubResource("glass_static")
+
+[node name="Lintel" type="MeshInstance3D" parent="ObservationWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.55, 0)
+mesh = SubResource("lintel_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="ObservationWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+shape = SubResource("window_shape")
+
+[node name="Capsule" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0, -3.2)
+
+[node name="Body" type="MeshInstance3D" parent="Capsule"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+mesh = SubResource("capsule_body")
+
+[node name="Window" type="MeshInstance3D" parent="Capsule"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, 0)
+mesh = SubResource("capsule_window")
+
+[node name="ChamberWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45, 0, -1.4)
+
+[node name="Mesh" type="MeshInstance3D" parent="ChamberWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+mesh = SubResource("chamber_wall_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="ChamberWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+shape = SubResource("chamber_wall_shape")
+
+[node name="ChamberDoor" parent="." instance=ExtResource("3_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, -1.4)
+emergency_lock = true
+
+[node name="ChamberPlate" parent="." instance=ExtResource("1_plate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 1.6, -1.27)
+plate_text = "2"
+
+[node name="Desk" parent="." instance=ExtResource("2_table")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, 0.6)
+
+[node name="Rule34" parent="." instance=ExtResource("4_doc")]
+transform = Transform3D(0.96, 0, -0.28, 0, 1, 0, 0.28, 0, 0.96, -1.6, 0.8, 0.5)
+document_id = "part2_rule_3_4"
+
+[node name="TerminalSpot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.8, 0.5)
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0.4)
+light_color = Color(0.8, 0.82, 0.78, 1)
+light_energy = 0.5
+omni_range = 5.0
+
+[node name="ReachedEvent" type="Node" parent="."]
+script = ExtResource("6_sequence")
+event_id = &"part2_lower_post"
+
+[node name="ReachedArea" type="Area3D" parent="." node_paths=PackedStringArray("sequence")]
+script = ExtResource("7_trigger")
+sequence = NodePath("../ReachedEvent")
+
+[node name="Shape" type="CollisionShape3D" parent="ReachedArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0.2)
+shape = SubResource("area_shape")
+
+[node name="DoneEvent" type="Node" parent="."]
+script = ExtResource("6_sequence")
+event_id = &"part2_lower_done"
+
+[node name="DoneTrigger" type="Area3D" parent="." node_paths=PackedStringArray("sequence")]
+script = ExtResource("7_trigger")
+sequence = NodePath("../DoneEvent")
+mode = 1
+condition_json = "{\"all\": [{\"flag\": \"proc/part2_lower_substation\"}, {\"flag\": \"part2/lower_lab_reached\"}, {\"flag\": \"part2/lower_post_reached\"}]}"

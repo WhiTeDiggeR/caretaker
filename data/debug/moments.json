@@ -202,6 +202,32 @@
         "objective_chain": "part2"
       },
       "expect": {"objective": "part2_restore"}
+    },
+    {
+      "id": "part2_lower",
+      "title": "Часть 2: «Нижний контур» первым",
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "spawn": {"node": "Stations/LowerStation", "offset": [-9, 1, 7], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore"}
+    },
+    {
+      "id": "part2_lower_after_upper",
+      "title": "Часть 2: «Нижний контур» после «Верха»",
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "spawn": {"node": "Stations/LowerStation", "offset": [-9, 1, 7], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/dir_upper_done", "part2/rule_3_4"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore"}
     }
   ],
   "cheats": {

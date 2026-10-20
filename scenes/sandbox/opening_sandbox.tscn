@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/breach_station.tscn" id="19_breach"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/storage_station.tscn" id="20_storage"]
 [ext_resource type="PackedScene" path="res://scenes/sandbox/stations/upper_station.tscn" id="20_upper"]
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stations/lower_station.tscn" id="21_lower"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_material"]
 sky_top_color = Color(0.18, 0.2, 0.23, 1)
@@ -163,6 +164,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -8)
 
 [node name="UpperStation" parent="Stations" instance=ExtResource("20_upper")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -32)
+
+[node name="LowerStation" parent="Stations" instance=ExtResource("21_lower")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -35)
 
 [node name="Player" parent="." node_paths=PackedStringArray("interact_label", "hold_progress_bar") instance=ExtResource("2_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
