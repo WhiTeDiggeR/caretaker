@@ -7,6 +7,7 @@
 [ext_resource type="Material" path="res://materials/lower_contour/capsule_static.tres" id="5_static"]
 [ext_resource type="Script" path="res://objects/events/event_sequence.gd" id="6_sequence"]
 [ext_resource type="Script" path="res://objects/events/event_trigger.gd" id="7_trigger"]
+[ext_resource type="PackedScene" path="res://objects/terminal/terminal.tscn" id="8_terminal"]
 
 [sub_resource type="StandardMaterial3D" id="wall"]
 albedo_color = Color(0.4, 0.4, 0.37, 1)
@@ -116,8 +117,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, 0.6)
 transform = Transform3D(0.96, 0, -0.28, 0, 1, 0, 0.28, 0, 0.96, -1.6, 0.8, 0.5)
 document_id = "part2_rule_3_4"
 
-[node name="TerminalSpot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.8, 0.5)
+[node name="Terminal" parent="." instance=ExtResource("8_terminal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, 0.5)
+program_path = "res://data/terminals/part2_post2.json"
+section = &"lower_main"
 
 [node name="Light" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0.4)
