@@ -5,7 +5,10 @@
   "start": "main",
   "screens": {
     "main": {
-      "redirects": [{"if": {"flag": "generator_started"}, "goto": "main_powered"}],
+      "redirects": [
+        {"if": {"flag": "dream/returned/module_4", "access": "caretaker"}, "goto": "recovery_map"},
+        {"if": {"flag": "generator_started"}, "goto": "main_powered"}
+      ],
       "lines": [
         "АВАРИЙНЫЙ РЕЖИМ.",
         "Питание пульта: аккумулятор.",
@@ -70,6 +73,27 @@
       "effects": [{"set_objective": {"id": "find_operator_room", "text": "Найти закрытую операторскую"}}],
       "options": [
         {"text": "Сводка состояния", "goto": "status"},
+        {"text": "Журнал событий", "goto": "events"},
+        {"text": "Выход", "action": "exit"}
+      ]
+    },
+    "recovery_map": {
+      "lines": [
+        "Оператор: смотритель. Права подтверждены.",
+        {"text": "Сбор данных о повреждениях…", "wait": 0.8},
+        "КАРТА ВОССТАНОВЛЕНИЯ",
+        "Задача: восстановить системы комплекса.",
+        {"text": "[+] Нижний контур — восстановлен.", "if": {"flag": "part2/dir_lower_done"}},
+        {"text": "[ ] Нижний контур — подстанция нижнего этажа, ранние лаборатории.", "if": {"not_flag": "part2/dir_lower_done"}},
+        {"text": "[+] Верх — восстановлен.", "if": {"flag": "part2/dir_upper_done"}},
+        {"text": "[ ] Верх — подстанции поздних секторов, центральный пункт.", "if": {"not_flag": "part2/dir_upper_done"}},
+        {"text": "[+] Склад — восстановлен.", "if": {"flag": "part2/dir_storage_done"}},
+        {"text": "[ ] Склад — мастерская и склад технического уровня.", "if": {"not_flag": "part2/dir_storage_done"}},
+        {"text": "Порядок работ — на усмотрение оператора.", "if": {"any": [{"not_flag": "part2/dir_lower_done"}, {"not_flag": "part2/dir_upper_done"}, {"not_flag": "part2/dir_storage_done"}]}},
+        {"text": "Все направления восстановлены.", "if": {"all": [{"flag": "part2/dir_lower_done"}, {"flag": "part2/dir_upper_done"}, {"flag": "part2/dir_storage_done"}]}}
+      ],
+      "effects": [{"set_flag": "part2/recovery_map"}],
+      "options": [
         {"text": "Журнал событий", "goto": "events"},
         {"text": "Выход", "action": "exit"}
       ]

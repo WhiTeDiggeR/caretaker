@@ -149,7 +149,20 @@
         "objective_chain": "opening"
       },
       "dream": {"module": "module_4", "chair": "sandbox_chair", "exit": "gate"},
-      "expect": {"objective": "", "in_dream": false, "flags": ["dream/returned/module_4"]}
+      "expect": {"objective": "part2_old_cp", "in_dream": false, "flags": ["dream/returned/module_4"]}
+    },
+    {
+      "id": "part2_recovery_map",
+      "title": "Часть 2: карта восстановления",
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "spawn": {"node": "Stations/BreachStation", "offset": [-3.5, 1, -1.8], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_old_cp"}
     }
   ],
   "cheats": {
