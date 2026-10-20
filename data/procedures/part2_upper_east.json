@@ -1,0 +1,23 @@
+{
+  "id": "part2_upper_east",
+  "title": "ПОДСТАНЦИЯ ПОЗДНИХ СЕКТОРОВ · ВОСТОК",
+  "steps": [
+    {"id": "diagnose", "hint": "Прочитать журнал защиты подстанции", "done_when": {"flag": "part2/upper_east_diagnosed"}},
+    {
+      "id": "breakers",
+      "hint": "Взвести автоматы: сначала ввод, потом секция",
+      "sequence": ["up_east_input", "up_east_section"],
+      "order_error": "Секция без ввода: автомат выбило. Сначала ввод.",
+      "early_error": "Защита сработала неспроста — сначала журнал."
+    },
+    {
+      "id": "energize",
+      "hint": "Удерживать рычаг подачи напряжения",
+      "all_on": ["up_east_lever"],
+      "early_error": "Нечего подавать: автоматы не взведены."
+    }
+  ],
+  "completion_effects": [
+    {"set_power": {"section": "late_east", "power": "main"}}
+  ]
+}
