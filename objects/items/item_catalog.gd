@@ -44,7 +44,7 @@ static func has(flag: StringName) -> bool:
 	return _items.has(String(flag))
 
 
-## {flag, title, note, sketch, until}; an empty dictionary for an unknown flag.
+## {flag, title, note, sketch, tag, until}; an empty dictionary for an unknown flag.
 static func get_item(flag: StringName) -> Dictionary:
 	_ensure()
 	return _items.get(String(flag), {})
