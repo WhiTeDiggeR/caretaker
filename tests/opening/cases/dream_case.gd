@@ -78,7 +78,9 @@ func run(c: OpeningCheck) -> void:
 	Dreams.arrived.connect(on_arrived)
 	player.global_position = Vector3(30, 0.9, 30)
 	Dreams.exit_through_gate()
-	await c.tree.create_timer(Dreams.FADE_SECONDS * 2.0 + 0.3).timeout
+	# #228: the hero arrives after the interdream (the first one, with the plate «2»).
+	await Dreams.arrived
+	await c.tree.create_timer(0.1).timeout
 	c.is_true(not Dreams.in_dream, "the gate ends the session")
 	c.equal(loads.back(), c.tree.current_scene.scene_file_path, "the complex scene is loaded back")
 	var exit_point := chair.exit_transform().origin
@@ -96,7 +98,7 @@ func run(c: OpeningCheck) -> void:
 	await Dreams.enter(&"module_4", &"test_chair")
 	c.is_true(not Dreams.seal_restored, "a new visit has its own main task")
 	Dreams.die()
-	await c.tree.create_timer(Dreams.FADE_SECONDS * 2.0 + 0.3).timeout
+	await Dreams.arrived
 	c.near(Containment.get_instability(&"module_4"), before_death + Dreams.entry_cost + Dreams.death_penalty, 0.001, "death in the dream raises the instability")
 	c.equal(reasons, [Dreams.Exit.GATE, Dreams.Exit.DEATH] as Array[int], "exits are reported with their reason")
 
