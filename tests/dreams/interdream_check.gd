@@ -85,6 +85,7 @@ func _run() -> void:
 	_check(overlay._dream.visible, "the corridor is blurred like a dream")
 	_check(Dreams._fade.veil > 0.99, "the veil is up under the corridor once it covers the dream")
 	_check(overlay.corridor and overlay.corridor.is_prop_visible("plate_2") and overlay.corridor.is_prop_visible("silhouette_far"), "the plate and the far silhouette stand in the corridor")
+	_check(overlay.corridor.props["silhouette_far"] is No2Silhouette, "the corridor shows the shared silhouette of №2")
 	_check(not overlay.skip(), "the first interdream cannot be skipped")
 	_check(arrived.is_empty(), "the hero is not in the chair while the corridor plays")
 	await _until(func() -> bool: return not arrived.is_empty())
