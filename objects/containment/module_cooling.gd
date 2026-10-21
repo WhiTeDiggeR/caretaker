@@ -12,6 +12,9 @@ extends Node
 ## («Проверка герметизации… норма»), which spends no reagent, and resolves the crisis.
 ## The repair itself is a RepairProcedure in the module's technical gallery (`repair_flag`).
 ## Runs in real time whatever scene is loaded (like Containment, same `time_scale`).
+## After the crisis the cooling runs on the emergency make-up until it is tuned by the scheme
+## from the second visit of the module's dream (#234, the tuning panel of the gallery): `tune`
+## sets the `tuned` flag, and the cooling is normal for good.
 ## Parameters: data/containment/modules.json → `cooling`. State is saved through
 ## GameState.set_system_data(&"cooling", …).
 
@@ -36,6 +39,9 @@ const LINE_OVERHEAT_NOTE := "Ремонт: техгалерея модуля."
 const LINE_DRY_TEST := "Охлаждение восстановлено. Проверка герметизации…"
 const LINE_RESOLVED := "Охлаждение: восстановлено, аварийная подпитка."
 const LINE_DRY_TEST_DONE := "Проверка герметизации: норма."
+const LINE_TUNED := "Охлаждение: норма, настроено по схеме."
+const TUNED_TITLE := "%s · ОХЛАЖДЕНИЕ"
+const TUNED_TEXT := "Охлаждение модуля 4: норма."
 
 ## Cooling parameters by module id (data/containment/modules.json → `cooling`).
 var modules: Dictionary[StringName, Dictionary] = {}
@@ -120,9 +126,32 @@ func status_lines() -> PackedStringArray:
 			Phase.DRY_TEST:
 				lines.append(LINE_DRY_TEST)
 			Phase.RESOLVED:
-				lines.append(LINE_RESOLVED)
-				lines.append(LINE_DRY_TEST_DONE)
+				if is_tuned(id):
+					lines.append(LINE_TUNED)
+				else:
+					lines.append(LINE_RESOLVED)
+					lines.append(LINE_DRY_TEST_DONE)
 	return lines
+
+
+## The crisis is over and the cooling waits for its tuning by the scheme.
+func can_tune(id: StringName) -> bool:
+	return modules.has(id) and get_phase(id) == Phase.RESOLVED and not is_tuned(id)
+
+
+func is_tuned(id: StringName) -> bool:
+	var flag := _flag(id, "tuned") if modules.has(id) else &""
+	return not flag.is_empty() and GameState.has_flag(flag)
+
+
+## The cooling of `id` is tuned by the scheme: normal for good.
+func tune(id: StringName) -> void:
+	if not can_tune(id):
+		return
+	_set_flag_of(id, "tuned")
+	phase_changed.emit(id, get_phase(id))
+	Sfx.play(&"terminal_beep")
+	_say(TUNED_TITLE % _label(id), TUNED_TEXT)
 
 
 func _flag(id: StringName, key: String) -> StringName:
@@ -195,6 +224,9 @@ func _on_flag_changed(flag: StringName, _value: Variant) -> void:
 	for id: StringName in modules:
 		if flag == StringName(str(modules[id].get("repair_flag", ""))):
 			_repaired(id)
+		elif flag == _flag(id, "resolved") and get_phase(id) != Phase.RESOLVED:
+			# Debug moments and story shortcuts that carry the outcome skip the crisis.
+			_set_phase(id, Phase.RESOLVED)
 		elif get_phase(id) == Phase.NOMINAL and StateRules.check(modules[id].get("fails_when", {})):
 			_start_leak(id)
 

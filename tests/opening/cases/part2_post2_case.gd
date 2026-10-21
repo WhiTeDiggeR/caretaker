@@ -10,6 +10,7 @@ const PART_FLAG := &"item_n2_link_part"
 const INSTALLED_FLAG := &"part2/n2_link_installed"
 const FIRST_FLAG := &"part2/n2_first_text"
 const RESOLVED_FLAG := &"part2/module4_crisis_resolved"
+const TUNED_FLAG := &"part2/module4_cooling_tuned"
 const REPLY_FLAG := &"part2/n2_reply"
 const FIRST_TEXT := "МОДУЛЬ 4. ОХЛАЖДЕНИЕ. ЧАС."
 const REPLY_TEXT := "ОБЪЕКТ 2. КАМЕРА ПОВРЕЖДЕНА. МНЕ НУЖЕН ОПЕРАТОР."
@@ -65,10 +66,12 @@ func run(c: OpeningCheck) -> void:
 	GameState.flag_changed.disconnect(count)
 	c.is_true(not _text(waiting).contains("ОБЪЕКТ 2"), "no reply before the crisis is over")
 
-	# Reply after the crisis, aware of trust.
+	# Reply once the cooling is tuned by the scheme from the second visit (#234), aware of trust.
 	GameState.set_flag(RESOLVED_FLAG)
+	c.equal(program.enter(program.start)["id"], "main", "the crisis alone does not bring the reply")
+	GameState.set_flag(TUNED_FLAG)
 	var reply := program.enter(program.start)
-	c.equal(reply["id"], "reply", "after the crisis №2 replies")
+	c.equal(reply["id"], "reply", "after the cooling is tuned №2 replies")
 	c.is_true(_text(reply).contains("СРАЗУ"), "a hero who hesitated hears a reproach")
 	GameState.set_flag(&"part2/n2_believed")
 	c.is_true(_text(program.enter("reply")).contains("ТЫ УСПЕЛ"), "a hero who believed hears it")
