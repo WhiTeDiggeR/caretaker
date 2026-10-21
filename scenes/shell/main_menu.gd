@@ -51,7 +51,8 @@ func _ready() -> void:
 	load_button = ShellUI.button(buttons, "Загрузить игру", open_load)
 	var new_game := ShellUI.button(buttons, "Новая игра", Shell.new_game)
 	if OS.is_debug_build():
-		ShellUI.button(buttons, "Полигон (отладка)", Shell.start_sandbox, "ОТЛАДКА")
+		# The list of test stands (#239); its last item is the whole old sandbox.
+		ShellUI.button(buttons, "Полигон (отладка)", func() -> void: Debug.open_menu(true), "ОТЛАДКА")
 	if ReviewHub.available():
 		ShellUI.button(buttons, "Проверка (отладка)", ReviewHub.open, "ОТЛАДКА")
 	ShellUI.button(buttons, "Настройки", func() -> void: SettingsScreen.open(self))

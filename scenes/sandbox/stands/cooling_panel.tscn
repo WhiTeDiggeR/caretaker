@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stands/stand_base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stations/module4_station.tscn" id="2_module4station"]
+
+[node name="CoolingPanelStand" instance=ExtResource("1_base")]
+show_overlay = true
+
+[node name="Module4Station" parent="Stations" instance=ExtResource("2_module4station")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Player" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)

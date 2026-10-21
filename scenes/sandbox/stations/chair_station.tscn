@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/dream/immersion_chair.tscn" id="1_chair"]
+[ext_resource type="PackedScene" path="res://objects/containment/reagent_panel.tscn" id="2_reagent"]
+[ext_resource type="PackedScene" path="res://objects/containment/resync_panel.tscn" id="3_resync"]
+[ext_resource type="Script" path="res://objects/containment/module_chamber.gd" id="4_chamber"]
+[ext_resource type="PackedScene" path="res://objects/containment/module_monitor.tscn" id="5_monitor"]
+
+[sub_resource type="BoxShape3D" id="chamber_shape"]
+size = Vector3(4, 3, 4)
+
+[sub_resource type="StandardMaterial3D" id="chamber_zone_material"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.55, 0.9, 0.4, 0.22)
+
+[sub_resource type="PlaneMesh" id="chamber_zone_mesh"]
+material = SubResource("chamber_zone_material")
+size = Vector2(4, 4)
+
+[node name="ChairStation" type="Node3D"]
+
+[node name="ImmersionChair" parent="." instance=ExtResource("1_chair")]
+chair_id = &"sandbox_chair"
+section = &"sandbox_a"
+required_access = &"module_4"
+
+[node name="ChairLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3, 0)
+pixel_size = 0.005
+text = "КРЕСЛО ПОГРУЖЕНИЯ · МОДУЛЬ 4
+зелёный пол — камера: газ при запечатывании (F6)"
+font_size = 44
+outline_size = 10
+
+[node name="ReagentPanel" parent="." instance=ExtResource("2_reagent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0)
+
+[node name="ResyncPanel" parent="." instance=ExtResource("3_resync")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0)
+
+[node name="ModuleChamber" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("4_chamber")
+
+[node name="Collision" type="CollisionShape3D" parent="ModuleChamber"]
+shape = SubResource("chamber_shape")
+
+[node name="Zone" type="MeshInstance3D" parent="ModuleChamber"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.48, 0)
+cast_shadow = 0
+mesh = SubResource("chamber_zone_mesh")
+
+[node name="ModuleMonitor" parent="." instance=ExtResource("5_monitor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 1.8, 2)
+section = &"sandbox_a"

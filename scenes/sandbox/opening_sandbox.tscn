@@ -66,8 +66,9 @@ size = Vector2(4, 4)
 [sub_resource type="BoxShape3D" id="floor_shape"]
 size = Vector3(80, 0.2, 80)
 
-[node name="OpeningSandbox" type="Node3D"]
+[node name="OpeningSandbox" type="Node3D" node_paths=PackedStringArray("chamber_zone")]
 script = ExtResource("1_sandbox")
+chamber_zone = NodePath("Stations/ModuleChamber/Zone")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("environment")
