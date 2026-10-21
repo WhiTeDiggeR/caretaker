@@ -41,7 +41,7 @@ class OwnershipRuleTests(unittest.TestCase):
     def test_wall_ending_on_the_owner_wall_stops_at_its_face(self) -> None:
         report = faces()
         kept = builder.resolve_owned_walls([wall("b-wall-02", (3.0, 0.0, 3.0, 5.0))], [owner([("a-wall-01", "h", 5.0, 0.0, 10.0)])], report)
-        self.assertEqual([w["q"] for w in kept], [(3.0, 0.0, 3.0, 5.0 - builder.WALL_THICKNESS_M)])
+        self.assertEqual([w["q"] for w in kept], [(3.0, 0.0, 3.0, 5.0 - builder.WALL_THICKNESS_M / 2)])
 
     def test_unrelated_wall_is_untouched(self) -> None:
         source = wall("b-wall-03", (0.0, 9.0, 4.0, 9.0))
