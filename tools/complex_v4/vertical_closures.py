@@ -104,6 +104,10 @@ def threshold_box(rect: Sequence[float], exit_side: str, exit_point: Sequence[fl
     # not overlap the floor top (coplanar overlap flickers)
     g = EDGE_GAP_M
     x0, z0, x1, z1 = rect[0] + g, rect[1] + g, rect[2] - g, rect[3] - g
+    # across the flight the threshold stops at the inner faces of the two side linings (they stand Z_FIGHT_OFFSET_M inside the
+    # opening and rise to the floor top); reaching on to the opening edge put it 18 mm into both linings (#243)
+    e = Z_FIGHT_OFFSET_M
+    ax0, az0, ax1, az1 = rect[0] + e, rect[1] + e, rect[2] - e, rect[3] - e
     ex, ez = exit_point[0], exit_point[2]
     if exit_side == "north":
         lo, hi, across = z0, min(max(ez, z0), z1), "x"
@@ -120,8 +124,8 @@ def threshold_box(rect: Sequence[float], exit_side: str, exit_point: Sequence[fl
     thickness = FLOOR_THICKNESS_M - Z_FIGHT_OFFSET_M
     y = elevation - thickness / 2
     if across == "x":
-        return Box(name, "threshold", ((x0 + x1) / 2, y, (lo + hi) / 2), (x1 - x0, thickness, depth))
-    return Box(name, "threshold", ((lo + hi) / 2, y, (z0 + z1) / 2), (depth, thickness, z1 - z0))
+        return Box(name, "threshold", ((ax0 + ax1) / 2, y, (lo + hi) / 2), (ax1 - ax0, thickness, depth))
+    return Box(name, "threshold", ((lo + hi) / 2, y, (az0 + az1) / 2), (depth, thickness, az1 - az0))
 
 
 def _world(local_to_world: dict[str, Any], point: Sequence[float]) -> tuple[float, float, float]:

@@ -33,10 +33,17 @@ class OwnershipRuleTests(unittest.TestCase):
         self.assertEqual(kept, [])
         self.assertEqual(report["dropped_walls"][0]["id"], "b-wall-01")
 
-    def test_wall_continuing_past_the_owner_keeps_the_rest_beyond_its_end_box(self) -> None:
+    def test_wall_continuing_past_a_free_owner_end_starts_at_that_end(self) -> None:
         report = faces()
         kept = builder.resolve_owned_walls([wall("b-wall-01", (0.0, 5.0, 10.0, 5.0))], [owner([("a-wall-01", "h", 5.0, 0.0, 4.0)])], report)
-        self.assertEqual([w["q"] for w in kept], [(4.0 + builder.WALL_THICKNESS_M, 5.0, 10.0, 5.0)])
+        self.assertEqual([w["q"] for w in kept], [(4.0, 5.0, 10.0, 5.0)])
+
+    def test_wall_continuing_past_an_owner_corner_starts_at_the_corner_box(self) -> None:
+        # the owner's wall turns a corner at x=4: its box reaches t/2 past the line end, and the rest starts there, no slit (#242)
+        report = faces()
+        corner = [owner([("a-wall-01", "h", 5.0, 0.0, 4.0), ("a-wall-02", "v", 4.0, 0.0, 5.0)])]
+        kept = builder.resolve_owned_walls([wall("b-wall-01", (0.0, 5.0, 10.0, 5.0))], corner, report)
+        self.assertEqual([w["q"] for w in kept], [(4.0 + builder.WALL_THICKNESS_M / 2, 5.0, 10.0, 5.0)])
 
     def test_wall_ending_on_the_owner_wall_stops_at_its_face(self) -> None:
         report = faces()
@@ -81,6 +88,13 @@ class CanonicalSourcesTests(unittest.TestCase):
     def test_openings_on_shared_walls_open_from_both_sides(self) -> None:
         missing = check_cross_openings.find_missing(self.reports)
         self.assertEqual(missing, [], "\n".join(str(item) for item in missing[:20]))
+
+    def test_service_stair_walls_meet_the_chemical_chamber_corners(self) -> None:
+        # lower service interchange: the stair's west and the panel room's east wall continue the walls of chemical chambers 2
+        # and 3, which turn a corner at z=56.221; they start at that corner's box (56.371), not a full thickness past it (#242)
+        trimmed = {w["id"]: w["pieces_m"] for w in self.reports["L-SERVICE-INTERCHANGE"]["shared_faces"]["trimmed_walls"]}
+        for wall_id in ("l-service-interchange--lestnica--west", "l-service-interchange--schit--east"):
+            self.assertAlmostEqual(trimmed[wall_id][0][0], 56.221 + builder.WALL_THICKNESS_M / 2, places=3, msg=wall_id)
 
     def test_every_svg_is_marked_with_the_ownership_rule(self) -> None:
         for sector_id, report in self.reports.items():
