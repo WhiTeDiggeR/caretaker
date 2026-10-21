@@ -10,6 +10,8 @@ const TAG_SIZE := Vector3(0.075, 0.003, 0.04)
 const TAG_OFFSET := Vector3(-0.1, 0.0015, 0.0)
 const TAG_FONT_SIZE := 64
 const TAG_PIXEL := 0.00022
+## Art model P-018 (loads/props/personal_key, #241), laid flat on the desk.
+const MODEL := preload("res://loads/props/personal_key/personal_key.gltf")
 
 @export var flag: StringName = &"senior_key_taken"
 @export var tag_text := "SE 067"
@@ -19,8 +21,7 @@ var _interactable: Interactable
 
 
 func _ready() -> void:
-	PropKit.box(self, Vector3(0, 0.01, 0), Vector3(0.09, 0.02, 0.035), PropKit.material(Color(0.72, 0.62, 0.3)), true)
-	PropKit.box(self, Vector3(-0.05, 0.004, 0.0), Vector3(0.03, 0.006, 0.008), PropKit.material(Color(0.15, 0.2, 0.45)))
+	PropKit.art(self, MODEL, Vector3(0, 0.004, 0), Vector3(-PI * 0.5, 0, 0))
 	PropKit.box(self, TAG_OFFSET, TAG_SIZE, PropKit.material(Color(0.86, 0.83, 0.74)))
 	_add_tag_text()
 	var shape := CollisionShape3D.new()

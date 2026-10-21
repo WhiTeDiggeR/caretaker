@@ -14,8 +14,13 @@ const REASON_NO_POWER := "НЕТ ПИТАНИЯ"
 const REASON_NO_ACCESS := "НЕТ ДОПУСКА"
 const REASON_AWAKE := "ОБЪЕКТ НЕ СПИТ"
 const REASON_IN_DREAM := "ИДЁТ ПОГРУЖЕНИЕ"
-const HOOP_UP_Y := 2.05
-const HOOP_DOWN_Y := 1.62
+## Head hoop of the art model (P-016): hangs ready above the head, lowered onto it on sitting.
+const HOOP_UP_Y := 1.62
+const HOOP_DOWN_Y := 1.42
+## The crystal floats around its rest height in the arch above the head.
+const CRYSTAL_Y := 1.78
+const CRYSTAL_BOB := 0.03
+const MODEL := preload("res://loads/props/immersion_chair/immersion_chair.gltf")
 const SEQUENCE_SECONDS := 1.2
 
 @export var chair_id: StringName = &"chair"
@@ -52,7 +57,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	_time += delta
 	if _crystal:
-		_crystal.position.y = 2.45 + sin(_time * 1.3) * 0.04
+		_crystal.position.y = CRYSTAL_Y + sin(_time * 1.3) * CRYSTAL_BOB
 		_crystal.rotation.y = _time * 0.6
 
 
@@ -100,42 +105,30 @@ func sit_down() -> void:
 		refresh()
 
 
-# --- Placeholder geometry ----------------------------------------------------
+# --- Art model -----------------------------------------------------------------
 
+## Art model P-016 (loads/props/immersion_chair, #241): its Crystal glows and floats, Hoop1
+## (the head hoop) is lowered on sitting; the arm hoop stays. Collision is one simple box.
 func _build() -> void:
 	for child in get_children():
 		if child.has_meta(&"chair_generated"):
 			child.free()
-	var metal := _material(Color(0.3, 0.32, 0.34))
-	var dark := _material(Color(0.16, 0.17, 0.18))
-	_box(Vector3(0, 0.25, 0), Vector3(0.7, 0.5, 0.7), dark, true)
-	_box(Vector3(0, 0.55, 0), Vector3(0.62, 0.1, 0.62), metal, false)
-	_box(Vector3(0, 1.05, -0.32), Vector3(0.62, 1.0, 0.1), metal, true)
-	_box(Vector3(-0.36, 0.75, 0), Vector3(0.08, 0.06, 0.5), metal, false)
-	_box(Vector3(0.36, 0.75, 0), Vector3(0.08, 0.06, 0.5), metal, false)
-	_box(Vector3(0, 1.4, -0.48), Vector3(0.12, 2.8, 0.12), dark, true)
-	_box(Vector3(0, 2.8, -0.2), Vector3(0.9, 0.1, 0.7), dark, false)
-	_hoop = Node3D.new()
-	_hoop.position = Vector3(0, HOOP_UP_Y, -0.05)
-	_generated(_hoop)
-	var hoop_mesh := MeshInstance3D.new()
-	var torus := TorusMesh.new()
-	torus.inner_radius = 0.11
-	torus.outer_radius = 0.14
-	torus.material = _material(Color(0.7, 0.72, 0.75))
-	hoop_mesh.mesh = torus
-	_hoop.add_child(hoop_mesh)
-	_crystal = MeshInstance3D.new()
-	var prism := PrismMesh.new()
-	prism.size = Vector3(0.18, 0.3, 0.18)
-	_crystal_material = _material(Color(0.6, 0.85, 1.0))
+	var model := MODEL.instantiate() as Node3D
+	_generated(model)
+	_hoop = model.get_node(^"Hoop1") as Node3D
+	_hoop.position.y = HOOP_UP_Y
+	_crystal = model.get_node(^"Crystal") as MeshInstance3D
+	_crystal_material = (_crystal.mesh.surface_get_material(0) as StandardMaterial3D).duplicate()
 	_crystal_material.emission_enabled = true
-	_crystal_material.emission = Color(0.5, 0.8, 1.0)
 	_crystal_material.emission_energy_multiplier = 1.5
-	prism.material = _crystal_material
-	_crystal.mesh = prism
-	_crystal.position = Vector3(0, 2.45, -0.15)
-	_generated(_crystal)
+	for surface in _crystal.mesh.get_surface_count():
+		_crystal.set_surface_override_material(surface, _crystal_material)
+	var shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(1.0, 2.16, 1.095)
+	shape.shape = box
+	shape.position = Vector3(0, 1.08, -0.0275)
+	_generated(shape)
 	_exit_point = Marker3D.new()
 	_exit_point.position = Vector3(0, 0.9, 1.0)
 	_exit_point.rotation.y = PI  # the hero stands up facing away from the chair
@@ -149,28 +142,3 @@ func _build() -> void:
 func _generated(node: Node) -> void:
 	node.set_meta(&"chair_generated", true)
 	add_child(node)
-
-
-func _box(position: Vector3, size: Vector3, material: Material, collide: bool) -> void:
-	var mesh_instance := MeshInstance3D.new()
-	var mesh := BoxMesh.new()
-	mesh.size = size
-	mesh.material = material
-	mesh_instance.mesh = mesh
-	mesh_instance.position = position
-	_generated(mesh_instance)
-	if collide:
-		var shape := CollisionShape3D.new()
-		var box := BoxShape3D.new()
-		box.size = size
-		shape.shape = box
-		shape.position = position
-		_generated(shape)
-
-
-func _material(color: Color) -> StandardMaterial3D:
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.metallic = 0.6
-	material.roughness = 0.4
-	return material

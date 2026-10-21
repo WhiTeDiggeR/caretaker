@@ -2,20 +2,26 @@
 class_name SimpleProp
 extends StaticBody3D
 
-## Placeholder props of the opening without their own logic (docs/game_design/02-prop-standard.md):
-## the emergency cabinet, a debris blockage, a fallen duct, an evacuation sign and the
-## old control point's mnemonic board. Sizes follow the standard; inspect texts come from
-## data/documents/opening.json.
+## Props of the opening without their own logic (docs/game_design/02-prop-standard.md): the
+## emergency cabinet, a debris blockage, a fallen duct, an evacuation sign and the old
+## control point's mnemonic board. Each shows its art model from loads/props (#241) with a
+## simple box collision; inspect texts come from data/documents/opening.json.
 
 enum Kind { EMERGENCY_CABINET, DEBRIS_BLOCKAGE, FALLEN_DUCT, EVAC_SIGN, MNEMONIC_BOARD }
 
+const CABINET_MODEL := preload("res://loads/props/emergency_cabinet/emergency_cabinet.gltf")
+const RUBBLE_MODEL := preload("res://loads/props/rubble_set/rubble_set.gltf")
+const DUCT_MODEL := preload("res://loads/props/fallen_duct/fallen_duct.gltf")
+const SIGN_MODEL := preload("res://loads/props/evac_sign/evac_sign.gltf")
+const BOARD_MODEL := preload("res://loads/props/mnemonic_panel/mnemonic_panel.gltf")
+## Width of the rubble model; a blockage of another `span` stretches it.
+const RUBBLE_WIDTH := 4.5
+const RUBBLE_SIZE := Vector3(RUBBLE_WIDTH, 2.5, 1.8)
+
 @export var kind: Kind = Kind.EMERGENCY_CABINET
-## Width of a blockage or the span of a duct.
+## Width of a blockage.
 @export var span := 4.5
-## Free height under a fallen duct (crouch: 1.05–1.8 m).
-@export var clearance := 1.25
 @export var sign_text := "МАРШРУТ A\nК АВАРИЙНОМУ БЛОКУ  →"
-@export var layout_seed := 7
 
 
 func _ready() -> void:
@@ -33,57 +39,37 @@ func _ready() -> void:
 
 
 func _cabinet() -> void:
-	var red := PropKit.material(Color(0.6, 0.12, 0.1))
-	PropKit.box(self, Vector3(0, 0.95, 0), Vector3(0.8, 1.9, 0.4), PropKit.material(Color(0.32, 0.34, 0.33)), true)
-	PropKit.box(self, Vector3(0, 0.95, 0.205), Vector3(0.72, 1.8, 0.02), PropKit.material(Color(0.42, 0.44, 0.43)))
-	PropKit.box(self, Vector3(0, 1.62, 0.22), Vector3(0.72, 0.16, 0.02), red)
-	PropKit.label(self, Vector3(0, 1.62, 0.235), "АВАРИЙНЫЙ ШКАФ", 36)
+	PropKit.art(self, CABINET_MODEL)
+	PropKit.collider(self, Vector3(0, 0.95, 0.027), Vector3(0.81, 1.9, 0.454))
 	if not Engine.is_editor_hint():
 		PropKit.interactable(self, Interactable.Mode.INSPECT, "ОТКРЫТЬ АВАРИЙНЫЙ ШКАФ", "emergency_cabinet_scheme")
 
 
 func _debris() -> void:
-	var rng := RandomNumberGenerator.new()
-	rng.seed = layout_seed
-	var concrete := PropKit.material(Color(0.4, 0.39, 0.37))
-	var steel := PropKit.material(Color(0.28, 0.24, 0.22))
-	var height := 2.6
-	var shape := CollisionShape3D.new()
-	var block := BoxShape3D.new()
-	block.size = Vector3(span, height, 1.6)
-	shape.shape = block
-	shape.position = Vector3(0, height * 0.5, 0)
-	add_child(shape)
-	for index in 9:
-		var size := Vector3(rng.randf_range(1.2, 2.4), rng.randf_range(0.25, 0.5), rng.randf_range(0.8, 1.6))
-		var position := Vector3(rng.randf_range(-span * 0.4, span * 0.4), rng.randf_range(0.2, height - 0.3), rng.randf_range(-0.4, 0.4))
-		PropKit.box(self, position, size, concrete, false, Vector3(rng.randf_range(-0.5, 0.5), rng.randf_range(-0.6, 0.6), rng.randf_range(-0.7, 0.7)))
-	for index in 3:
-		PropKit.box(self, Vector3(rng.randf_range(-span * 0.3, span * 0.3), rng.randf_range(0.8, 2.0), 0.3), Vector3(span * 0.7, 0.18, 0.18), steel, false,
-				Vector3(0, rng.randf_range(-0.3, 0.3), rng.randf_range(-0.5, 0.5)))
+	var stretch := span / RUBBLE_WIDTH
+	PropKit.art(self, RUBBLE_MODEL, Vector3.ZERO, Vector3.ZERO, Vector3(stretch, 1, 1))
+	PropKit.collider(self, Vector3(0, RUBBLE_SIZE.y * 0.5, 0), Vector3(span, RUBBLE_SIZE.y, RUBBLE_SIZE.z))
 
 
+## The model's lower end hangs at 1.25 m: the hero passes under it crouching.
 func _duct() -> void:
-	var metal := PropKit.material(Color(0.5, 0.52, 0.53))
-	PropKit.box(self, Vector3(0, clearance + 0.3, 0), Vector3(span, 0.6, 0.6), metal, true, Vector3(0, 0, deg_to_rad(4.0)))
-	PropKit.box(self, Vector3(-span * 0.5 + 0.2, (clearance + 0.3) * 0.5, 0), Vector3(0.08, clearance + 0.3, 0.08), PropKit.material(Color(0.3, 0.3, 0.3)), true)
-	PropKit.box(self, Vector3(span * 0.5 - 0.2, clearance + 1.4, 0), Vector3(0.08, 1.6, 0.08), PropKit.material(Color(0.3, 0.3, 0.3)))
+	PropKit.art(self, DUCT_MODEL)
+	PropKit.collider(self, Vector3(-0.083, 2.025, 0), Vector3(3.4, 0.5, 0.6), Vector3(0, 0, deg_to_rad(-18.0)))
 
 
+## Lit exit pictogram on the left, the route text on a plate to its right; centred on the
+## origin as before (1.2 x 0.36 m).
 func _sign() -> void:
-	PropKit.box(self, Vector3(0, 0, 0), Vector3(1.2, 0.36, 0.03), PropKit.material(Color(0.08, 0.38, 0.2), true), true)
-	var text := PropKit.label(self, Vector3(0, 0, 0.02), sign_text, 30, Color(0.92, 1.0, 0.94))
+	PropKit.art(self, SIGN_MODEL, Vector3(-0.4, -0.1, -0.015))
+	PropKit.box(self, Vector3(0.2, 0, 0), Vector3(0.8, 0.36, 0.03), PropKit.material(Color(0.08, 0.38, 0.2), true), true)
+	var text := PropKit.label(self, Vector3(0.2, 0, 0.02), sign_text, 30, Color(0.92, 1.0, 0.94))
 	text.pixel_size = 0.0024
 
 
+## Centred on the origin as before; the model's back stands on the wall plane at z = -0.025.
 func _board() -> void:
-	PropKit.box(self, Vector3(0, 0, 0), Vector3(2.0, 1.2, 0.05), PropKit.material(Color(0.82, 0.8, 0.72)), true)
-	var ink := PropKit.material(Color(0.15, 0.17, 0.2))
-	for segment: Array in [[Vector3(-0.5, 0.25, 0.03), Vector3(0.6, 0.03, 0.01)], [Vector3(0.1, 0.0, 0.03), Vector3(0.03, 0.5, 0.01)],
-			[Vector3(0.35, -0.25, 0.03), Vector3(0.5, 0.03, 0.01)], [Vector3(-0.6, -0.1, 0.03), Vector3(0.22, 0.18, 0.01)],
-			[Vector3(0.65, 0.3, 0.03), Vector3(0.22, 0.18, 0.01)]]:
-		PropKit.box(self, segment[0], segment[1], ink)
-	PropKit.box(self, Vector3(0.55, -0.2, 0.031), Vector3(0.7, 0.55, 0.005), PropKit.material(Color(0.4, 0.38, 0.35)))
-	PropKit.label(self, Vector3(0, 0.5, 0.03), "СТАРОЕ ЯДРО · ТЕХНИЧЕСКИЙ УРОВЕНЬ", 30, Color(0.15, 0.17, 0.2))
+	PropKit.art(self, BOARD_MODEL, Vector3(0, -0.6, -0.025))
+	PropKit.collider(self, Vector3(0, 0, 0.061), Vector3(2.0, 1.2, 0.172))
+	PropKit.label(self, Vector3(0, 0.66, 0.0), "СТАРОЕ ЯДРО · ТЕХНИЧЕСКИЙ УРОВЕНЬ", 30, Color(0.15, 0.17, 0.2))
 	if not Engine.is_editor_hint():
 		PropKit.interactable(self, Interactable.Mode.INSPECT, "ОСМОТРЕТЬ МНЕМОСХЕМУ", "old_cp_mnemonic")
