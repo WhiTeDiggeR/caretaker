@@ -72,6 +72,9 @@ var chemical: Dictionary = {}
 var service: Dictionary = {}
 ## Debug multiplier of the real time (sandbox); 1 in the game.
 var time_scale := 1.0
+## Extra growth per minute from module systems (overheating of a failed cooling, #232); set
+## by those systems, which restore it after a load, so it is not saved here.
+var growth_bonus: Dictionary[StringName, float] = {}
 
 ## Modules whose chamber the hero is standing in (set by ModuleChamber areas).
 var _hero_inside: Dictionary[StringName, bool] = {}
@@ -113,7 +116,7 @@ func tick(seconds: float) -> void:
 		var config: Dictionary = modules[id]
 		if is_stable(id) or is_held(id) or is_awake(id) or not StateRules.check(config.get("active_when", {})):
 			continue
-		var growth := float(config.get("growth_per_minute", 0.0)) * seconds / 60.0
+		var growth := growth_per_minute(id) * seconds / 60.0
 		if growth > 0.0:
 			_set_value(id, get_instability(id) + growth)
 
@@ -132,13 +135,18 @@ func is_stable(id: StringName) -> bool:
 func forecast_seconds(id: StringName) -> float:
 	if is_stable(id) or is_held(id) or is_awake(id):
 		return -1.0
-	var rate := float((modules.get(id, {}) as Dictionary).get("growth_per_minute", 0.0)) / 60.0
+	var rate := growth_per_minute(id) / 60.0
 	if rate <= 0.0 or not StateRules.check((modules.get(id, {}) as Dictionary).get("active_when", {})):
 		return -1.0
 	var limit := MAX_INSTABILITY
 	if has_chemical_protocol(id) and chemical_phase(id) == Chemical.READY and is_charged(id) and not has_gas(id):
 		limit = float(chemical.get("trigger_at", 95.0))
 	return maxf(limit - get_instability(id), 0.0) / rate
+
+
+## Current growth of a disturbed sleep: the module's own plus `growth_bonus`.
+func growth_per_minute(id: StringName) -> float:
+	return float((modules.get(id, {}) as Dictionary).get("growth_per_minute", 0.0)) + growth_bonus.get(id, 0.0)
 
 
 ## Approximate forecast for monitors: the damaged system does not give exact numbers.
