@@ -1,0 +1,21 @@
+{
+  "id": "part2_module4_cooling",
+  "title": "ТЕХГАЛЕРЕЯ МОДУЛЯ 4 · ОХЛАЖДЕНИЕ",
+  "steps": [
+    {"id": "leak", "hint": "Давление контура в норме", "done_when": {"flag": "part2/module4_cooling_leak"}},
+    {
+      "id": "valves",
+      "hint": "Перекрыть утечку, затем открыть подпитку",
+      "sequence": ["m4_cool_isolate", "m4_cool_feed"],
+      "order_error": "Подпитка уходит в утечку. Сначала перекрыть повреждённую ветку.",
+      "early_error": "Давление в норме: подпитка не нужна."
+    },
+    {
+      "id": "pump",
+      "hint": "Удерживать рычаг насоса подпитки",
+      "all_on": ["m4_cool_pump"],
+      "early_error": "Насос качает в утечку: сначала вентили."
+    }
+  ],
+  "completion_effects": []
+}

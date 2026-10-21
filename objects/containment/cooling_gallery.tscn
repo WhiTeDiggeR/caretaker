@@ -1,0 +1,111 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://objects/containment/cooling_gallery.gd" id="1_gallery"]
+[ext_resource type="Script" path="res://objects/repair/repair_control.gd" id="2_control"]
+[ext_resource type="Script" path="res://objects/repair/repair_procedure.gd" id="3_procedure"]
+[ext_resource type="Script" path="res://objects/repair/repair_gauge.gd" id="4_gauge"]
+
+[sub_resource type="StandardMaterial3D" id="pipe"]
+albedo_color = Color(0.36, 0.42, 0.46, 1)
+metallic = 0.6
+roughness = 0.45
+
+[sub_resource type="CylinderMesh" id="pipe_mesh"]
+material = SubResource("pipe")
+top_radius = 0.12
+bottom_radius = 0.12
+height = 5.0
+
+[sub_resource type="StandardMaterial3D" id="cabinet"]
+albedo_color = Color(0.2, 0.24, 0.26, 1)
+
+[sub_resource type="BoxMesh" id="cabinet_mesh"]
+material = SubResource("cabinet")
+size = Vector3(1.4, 1.8, 0.3)
+
+[sub_resource type="BoxShape3D" id="cabinet_shape"]
+size = Vector3(1.4, 1.8, 0.3)
+
+[node name="CoolingGallery" type="Node3D"]
+script = ExtResource("1_gallery")
+
+[node name="Pipe" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 2.2, -0.35)
+mesh = SubResource("pipe_mesh")
+
+[node name="Cabinet" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -0.2)
+
+[node name="Mesh" type="MeshInstance3D" parent="Cabinet"]
+mesh = SubResource("cabinet_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Cabinet"]
+shape = SubResource("cabinet_shape")
+
+[node name="Gauge" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, -0.02)
+script = ExtResource("4_gauge")
+value = 1.0
+green_from = 0.8
+green_to = 1.0
+caption = "ДАВЛЕНИЕ ОХЛАЖДЕНИЯ"
+
+[node name="Isolate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 1.2, 0)
+script = ExtResource("2_control")
+kind = 1
+control_id = &"m4_cool_isolate"
+prompt_on = "УДЕРЖИВАТЬ: ПЕРЕКРЫТЬ ПОВРЕЖДЁННУЮ ВЕТКУ"
+hold_time = 1.5
+fixed_prompt = "ВЕТКА ПЕРЕКРЫТА"
+
+[node name="IsolateLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0.75, 0)
+pixel_size = 0.004
+text = "ВЕТКА Б · ОТСЕЧКА"
+font_size = 32
+outline_size = 10
+
+[node name="Feed" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 1.2, 0)
+script = ExtResource("2_control")
+kind = 1
+control_id = &"m4_cool_feed"
+prompt_on = "УДЕРЖИВАТЬ: ОТКРЫТЬ ПОДПИТКУ"
+hold_time = 1.5
+fixed_prompt = "ПОДПИТКА ОТКРЫТА"
+
+[node name="FeedLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0.75, 0)
+pixel_size = 0.004
+text = "ПОДПИТКА"
+font_size = 32
+outline_size = 10
+
+[node name="Pump" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.6, 0)
+script = ExtResource("2_control")
+kind = 0
+control_id = &"m4_cool_pump"
+prompt_on = "УДЕРЖИВАТЬ РЫЧАГ НАСОСА ПОДПИТКИ"
+hold_time = 3.0
+fixed_prompt = "КОНТУР ПОДПИТАН"
+
+[node name="PumpLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.6, 0)
+pixel_size = 0.004
+text = "НАСОС ПОДПИТКИ"
+font_size = 32
+outline_size = 10
+
+[node name="Board" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75, 0)
+pixel_size = 0.004
+text = "ОХЛАЖДЕНИЕ: НОРМА"
+font_size = 40
+outline_size = 10
+
+[node name="Procedure" type="Node" parent="."]
+script = ExtResource("3_procedure")
+procedure_path = "res://data/procedures/part2_module4_cooling.json"
+drive_objective = false
