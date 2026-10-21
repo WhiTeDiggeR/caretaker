@@ -62,7 +62,8 @@
   "wall_height_m": 5.0,
   "rooms": [
     {
-      "id": "u-emergency-floor-01",
+      "id": "u-emergency--kapsulnyy-zal-avariynogo-blo--floor",
+      "stable_id": "U-EMERGENCY/kapsulnyy-zal-avariynogo-blo:floor",
       "space_id": "U-EMERGENCY/kapsulnyy-zal-avariynogo-blo",
       "label": "КАПСУЛЬНЫЙ ЗАЛ АВАРИЙНОГО БЛОКА / изолированный сон персонала · автономные системы / повреждённая",
       "class": "personnel",
@@ -86,7 +87,8 @@
       "area_m2": 398.8
     },
     {
-      "id": "u-emergency-floor-02",
+      "id": "u-emergency--vnutrennee--floor",
+      "stable_id": "U-EMERGENCY/vnutrennee:floor",
       "space_id": "U-EMERGENCY/vnutrennee",
       "label": "ВНУТРЕННЕЕ / ТЕХПОМЕЩЕНИЕ / питание · вентиляция",
       "class": "support",
@@ -110,7 +112,8 @@
       "area_m2": 60.5
     },
     {
-      "id": "u-emergency-floor-03",
+      "id": "u-emergency--germotambur--floor",
+      "stable_id": "U-EMERGENCY/germotambur:floor",
       "space_id": "U-EMERGENCY/germotambur",
       "label": "ГЕРМОТАМБУР",
       "class": "corridor",
@@ -134,7 +137,8 @@
       "area_m2": 16.5
     },
     {
-      "id": "u-emergency-floor-04",
+      "id": "u-emergency--raspredelitelnyy-holl-person--floor",
+      "stable_id": "U-EMERGENCY/raspredelitelnyy-holl-person:floor",
       "space_id": "U-EMERGENCY/raspredelitelnyy-holl-person",
       "label": "РАСПРЕДЕЛИТЕЛЬНЫЙ ХОЛЛ ПЕРСОНАЛА / самостоятельный хаб · не часть аварийного блока / доступно вручную / остров навигации / локальная связь · контроль дверей / медотсек заблокирован / проход из холла завален",
       "class": "personnel",
@@ -143,24 +147,25 @@
         355.0,
         125.0,
         285.0,
-        315.0
+        315.6
       ],
       "world_m": [
         -83.333,
         -3.778,
         21.111,
-        23.334
+        23.378
       ],
       "size_m": [
         21.11,
-        23.33
+        23.38
       ],
-      "area_m2": 492.6
+      "area_m2": 493.5
     }
   ],
   "openings": [
     {
-      "id": "u-emergency-door-01",
+      "id": "u-emergency--raspredelitelnyy-holl-person--door--outer--u-emergency-opening-002",
+      "stable_id": "U-EMERGENCY/raspredelitelnyy-holl-person:door:outer:u_emergency-opening-002",
       "type": "door",
       "source": "door-gap",
       "source_id": "u_emergency-opening-002",
@@ -176,7 +181,8 @@
       ]
     },
     {
-      "id": "u-emergency-door-02",
+      "id": "u-emergency--kapsulnyy-zal-avariynogo-blo--door--vnutrennee",
+      "stable_id": "U-EMERGENCY/kapsulnyy-zal-avariynogo-blo:door:vnutrennee",
       "type": "door",
       "source": "support-gap",
       "source_id": "u_emergency-opening-010",
@@ -193,7 +199,8 @@
       ]
     },
     {
-      "id": "u-emergency-door-03",
+      "id": "u-emergency--germotambur--door--kapsulnyy-zal-avariynogo-blo",
+      "stable_id": "U-EMERGENCY/germotambur:door:kapsulnyy-zal-avariynogo-blo",
       "type": "door",
       "source": "gate",
       "source_id": "u_emergency-annotation-001",
@@ -210,7 +217,8 @@
       ]
     },
     {
-      "id": "u-emergency-door-04",
+      "id": "u-emergency--germotambur--door--raspredelitelnyy-holl-person",
+      "stable_id": "U-EMERGENCY/germotambur:door:raspredelitelnyy-holl-person",
       "type": "door",
       "source": "gate",
       "source_id": "u_emergency-annotation-002",
@@ -227,7 +235,8 @@
       ]
     },
     {
-      "id": "u-emergency-door-05",
+      "id": "u-emergency--raspredelitelnyy-holl-person--door--outer--u-emergency-annotation-003",
+      "stable_id": "U-EMERGENCY/raspredelitelnyy-holl-person:door:outer:u_emergency-annotation-003",
       "type": "door",
       "source": "gate",
       "source_id": "u_emergency-annotation-003",
@@ -240,22 +249,6 @@
         14.95,
         -83.333,
         16.75
-      ]
-    },
-    {
-      "id": "u-emergency-opening-06",
-      "type": "opening",
-      "source": "amendment D-04",
-      "source_id": "amendment-D-04",
-      "width_m": 4.5,
-      "rooms": [
-        "U-EMERGENCY/raspredelitelnyy-holl-person"
-      ],
-      "world_m": [
-        -75.05,
-        19.556,
-        -70.55,
-        19.556
       ]
     }
   ],
@@ -629,7 +622,7 @@
       "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
     }
   ],
-  "wall_segments": 12,
+  "wall_segments": 18,
   "amendments": [
     "D-01a",
     "D-01b",
@@ -638,5 +631,99 @@
     "D-04"
   ],
   "feature_rects_ignored": 0,
+  "shared_faces": {
+    "rank": [
+      1,
+      "U-EMERGENCY"
+    ],
+    "owners": [
+      "U-CIRCULATION",
+      "U-CENTRAL-CORE",
+      "U-CHAMBER-4",
+      "U-CHAMBER-6",
+      "U-CONTROL",
+      "U-DOMESTIC",
+      "U-EAST-SUPPORT"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "h",
+        "from_m": 19.556,
+        "to_m": 19.6,
+        "owner": "U-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "u-emergency--raspredelitelnyy-holl-person--south",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          -83.333,
+          19.6,
+          -62.222,
+          19.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "u-emergency--raspredelitelnyy-holl-person--west--outer-2",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          -83.333,
+          6.222,
+          -83.333,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            6.222,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "u-emergency--raspredelitelnyy-holl-person--east",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          -62.222,
+          -3.778,
+          -62.222,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            -3.778,
+            19.45
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "U-EMERGENCY/raspredelitelnyy-holl-person:opening:outer",
+        "type": "opening",
+        "owner": "U-CIRCULATION",
+        "owner_opening": "u-circulation--glavnyy-passazhirskiy-korido--opening--outer--amendment-auto-01",
+        "rooms": [
+          "U-EMERGENCY/raspredelitelnyy-holl-person"
+        ],
+        "world_m": [
+          -75.05,
+          19.6,
+          -70.55,
+          19.6
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 4
 }

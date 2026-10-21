@@ -4,7 +4,7 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v4",
   "sector_id": "L-SERVICE-INTERCHANGE",
-  "generation_id": "sha256:57a389d6c66ec0d2a052eb65d94d2d3223ef120eac58f00e45d536a156acee0e",
+  "generation_id": "sha256:8d763c6de57e8e239d6af98cfb2c262b0f9a0356ce8ceaa52109f53009103222",
   "producer": {
     "name": "complex_v4_regenerate_sector",
     "version": "1.1.1",
@@ -418,103 +418,14 @@
       "geometry_hash": "sha256:883062867b6f79f81b3e1e20eac26dd3fa443d883d6e34c6aa8a717ecd25129c"
     },
     {
-      "anchor_id": "svg:l-service-interchange-ceiling-01:ceiling",
+      "anchor_id": "svg:l-service-interchange--lestnica--ceiling:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-ceiling-01"
-      },
-      "origin": [
-        -47.778,
-        -1.0,
-        48.444
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -1.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -47.778,
-            48.444
-          ],
-          [
-            -34.444,
-            48.444
-          ],
-          [
-            -34.444,
-            53.208
-          ],
-          [
-            -47.778,
-            53.208
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          13.334
-        ],
-        "v_range_m": [
-          0.0,
-          4.764
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:4cadf8c490801c9d9bf69f57b6e58f17df397683cc5261f2312192c535af064c"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-ceiling-02:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-ceiling-02"
+        "source_id": "l-service-interchange--lestnica--ceiling"
       },
       "origin": [
         -47.778,
@@ -552,11 +463,11 @@
           ],
           [
             -43.111,
-            61.779
+            61.8
           ],
           [
             -47.778,
-            61.779
+            61.8
           ]
         ],
         "u_range_m": [
@@ -565,7 +476,7 @@
         ],
         "v_range_m": [
           0.0,
-          8.571
+          8.592
         ],
         "holes_xz": []
       },
@@ -593,21 +504,21 @@
           ]
         }
       },
-      "geometry_hash": "sha256:3074a7f30e0f8a4126804a0dad7c44df44a4da9049d157ba8f88ff8ca5f42df1"
+      "geometry_hash": "sha256:2374022102913d27b5e8cdc37169b3b354586a2bd94b94b42e720a55570e71d4"
     },
     {
-      "anchor_id": "svg:l-service-interchange-ceiling-03:ceiling",
-      "type": "ceiling",
-      "role": "surface",
+      "anchor_id": "svg:l-service-interchange--lestnica--door--sluzhebnyy-vestibyul:door:center",
+      "type": "door",
+      "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-ceiling-03"
+        "source_id": "l-service-interchange--lestnica--door--sluzhebnyy-vestibyul"
       },
       "origin": [
-        -43.111,
-        -1.0,
+        -44.195,
+        -6.0,
         53.208
       ],
       "forward": [
@@ -617,7 +528,226 @@
       ],
       "normal": [
         0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:e4a6619cde7344b9cb72457aec172319c287ba6ae50ed16764dc4cbf8ac07a27"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--lestnica--door--sluzhebnyy-vestibyul:door:threshold_inside",
+      "type": "door",
+      "role": "threshold_inside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--lestnica--door--sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -44.195,
+        -6.0,
+        53.358
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:af7fb749d6b885bb7cf0181b2043c713bbae008f2463094b30679629f762b17d"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--lestnica--door--sluzhebnyy-vestibyul:door:threshold_outside",
+      "type": "door",
+      "role": "threshold_outside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--lestnica--door--sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -44.195,
+        -6.0,
+        53.058
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:270f4379904fc5e5c91493c86134a0a4be37933b715d7a786d5173448177ac8f"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--lestnica--east--shlyuz-1:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--lestnica--east--shlyuz-1"
+      },
+      "origin": [
+        -43.261,
+        -6.0,
+        53.208
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
         -1.0,
+        0.0,
         0.0
       ],
       "up": [
@@ -626,51 +756,37 @@
         0.0
       ],
       "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -1.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -43.111,
-            53.208
-          ],
-          [
-            -38.111,
-            53.208
-          ],
-          [
-            -38.111,
-            57.5
-          ],
-          [
-            -43.111,
-            57.5
-          ]
+        "kind": "linear_surface",
+        "length_m": 4.292,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/lestnica:east:shlyuz-1",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -43.111,
+          -6.0,
+          53.208
         ],
-        "u_range_m": [
-          0.0,
-          5.0
-        ],
-        "v_range_m": [
+        "along_range_m": [
           0.0,
           4.292
-        ],
-        "holes_xz": []
+        ]
       },
       "placement_limits": {
         "normal_offset_m": [
           0,
-          0
+          1
         ],
         "height_m": [
           0,
-          0
+          3.8
         ],
         "rotation_deg": {
           "yaw": [
-            -180,
-            180
+            0,
+            0
           ],
           "pitch": [
             0,
@@ -682,1105 +798,56 @@
           ]
         }
       },
-      "geometry_hash": "sha256:f57858fc576182450ff0e72a2f34f5be5f0af2158e1bb5af3f05b0b51ac60fa9"
+      "geometry_hash": "sha256:dfecb880820ad2b959d4425b45732f03f4a5b98949bdcfc21211abc506142907"
     },
     {
-      "anchor_id": "svg:l-service-interchange-ceiling-04:ceiling",
-      "type": "ceiling",
+      "anchor_id": "svg:l-service-interchange--lestnica--east--shlyuz-2:wall",
+      "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-ceiling-04"
+        "source_id": "l-service-interchange--lestnica--east--shlyuz-2"
       },
       "origin": [
-        -38.111,
-        -1.0,
-        53.208
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -1.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -38.111,
-            53.208
-          ],
-          [
-            -34.444,
-            53.208
-          ],
-          [
-            -34.444,
-            61.779
-          ],
-          [
-            -38.111,
-            61.779
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          3.667
-        ],
-        "v_range_m": [
-          0.0,
-          8.571
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:ba0ecc6cd1c1acb9a1438783b29fa9f537fb2abe1d52a43d10cdc238fc91556c"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-ceiling-05:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-ceiling-05"
-      },
-      "origin": [
-        -43.111,
-        -1.0,
-        57.5
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -1.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -43.111,
-            57.5
-          ],
-          [
-            -38.111,
-            57.5
-          ],
-          [
-            -38.111,
-            61.779
-          ],
-          [
-            -43.111,
-            61.779
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          5.0
-        ],
-        "v_range_m": [
-          0.0,
-          4.279
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:abb35a6ec5fff78e99d9b2d5845d97aa33bd8e085284bbe70182705f2138961d"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-02:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-02"
-      },
-      "origin": [
-        -44.195,
-        -6.0,
-        53.208
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:741907fc87f573c422ac0ed8290919254a7eabd96950882e05bf12befaa2cc47"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-02:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-02"
-      },
-      "origin": [
-        -44.195,
-        -6.0,
-        53.358
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:0eff40805008394bbb17d3f926092a7b4956326eeff0155e606daa0d125c7381"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-02:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-02"
-      },
-      "origin": [
-        -44.195,
-        -6.0,
-        53.058
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:2d4cbd66737c0e42c65041943031cb5a88eaaac697231a888a20abdcf8875fcd"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-03:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-03"
-      },
-      "origin": [
-        -40.61,
-        -6.0,
-        53.208
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:510d313df8793be03d5396c63ee44569b55acf1bb458b9d9963a8ee9eaa99b96"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-03:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-03"
-      },
-      "origin": [
-        -40.61,
-        -6.0,
-        53.358
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:8f1e4b681ebfd79d50ca6400c6c7001c9bd7d9435960b4803363d1aee3969e41"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-03:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-03"
-      },
-      "origin": [
-        -40.61,
-        -6.0,
-        53.058
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:1298ab28c4246b609d0b9f5c7a2eacf6cbdf105cc9f7c57c4b52c92544385991"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-04:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-04"
-      },
-      "origin": [
-        -36.28,
-        -6.0,
-        53.208
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:431c1fa07247f51188779b1aeaf2afe68bb0c2d983999920d7eda1382e7d53f2"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-04:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-04"
-      },
-      "origin": [
-        -36.28,
-        -6.0,
-        53.358
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:0159571a506ad71889424f75d6831780682ab9114272630f8a89fa24e9f746d6"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-04:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-04"
-      },
-      "origin": [
-        -36.28,
-        -6.0,
-        53.058
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:955f0328943a51d2dc71395f90b2539c7eadbba640b7123bf2fcdd1df51fae6c"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-05:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-05"
-      },
-      "origin": [
-        -40.61,
+        -43.261,
         -6.0,
         57.5
       ],
       "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
         0.0,
         0.0,
         1.0
       ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:3bfb0fc6f58e18fc2f66b748eba08417f3256c714bea3e69ea0e72573f5a9229"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-05:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-05"
-      },
-      "origin": [
-        -40.61,
-        -6.0,
-        57.65
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
       "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:4b6c36d8f7dae12679e9cd0a077d42acda1db3b10812a7d06cb96779e21cafa1"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-05:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-05"
-      },
-      "origin": [
-        -40.61,
-        -6.0,
-        57.35
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:54e0c7464b6963cf644b09898752c6b84f1e14d1496040184d359fe5f6c78062"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-06:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-06"
-      },
-      "origin": [
-        -40.61,
-        -6.0,
-        61.779
-      ],
-      "forward": [
         -1.0,
         0.0,
         0.0
       ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
       "up": [
         0.0,
         1.0,
         0.0
       ],
       "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
+        "kind": "linear_surface",
+        "length_m": 4.15,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -2.25,
-          2.25
+        "surface_side_id": "L-SERVICE-INTERCHANGE/lestnica:east:shlyuz-2",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -43.111,
+          -6.0,
+          57.5
         ],
-        "origin_semantics": "line_center"
+        "along_range_m": [
+          0.0,
+          4.15
+        ]
       },
       "placement_limits": {
         "normal_offset_m": [
@@ -1806,255 +873,17 @@
           ]
         }
       },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:3e5fce6862ae38d668eea5f36d9b6ed13a50e9c6b3187555cb8af725f90a85a1"
+      "geometry_hash": "sha256:36ab045b6b9e33a3cbc14ff82e79953112c0c3b05ec0257574dae018bd8818a9"
     },
     {
-      "anchor_id": "svg:l-service-interchange-door-06:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-06"
-      },
-      "origin": [
-        -40.61,
-        -6.0,
-        61.629
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -2.25,
-          2.25
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:92579afb1313941415498d64d112b827cbcc5d29f45fb0d0d32acb8ee3b4c2ec"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-door-06:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-door-06"
-      },
-      "origin": [
-        -40.61,
-        -6.0,
-        61.929
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -2.25,
-          2.25
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:f364b07c852157b2ef365cb17655ce80ee6f96c5c0c53c1bf9a6da51004019c9"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-floor-01:floor",
+      "anchor_id": "svg:l-service-interchange--lestnica--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-floor-01"
-      },
-      "origin": [
-        -47.778,
-        -6.0,
-        48.444
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -6.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -47.778,
-            48.444
-          ],
-          [
-            -34.444,
-            48.444
-          ],
-          [
-            -34.444,
-            53.208
-          ],
-          [
-            -47.778,
-            53.208
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          13.334
-        ],
-        "v_range_m": [
-          0.0,
-          4.764
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:acf05497f535b3438d38de43ea125d6d0e685262491ca0db33f063d9b4d5ec73"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-floor-02:floor",
-      "type": "floor",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-floor-02"
+        "source_id": "l-service-interchange--lestnica--floor"
       },
       "origin": [
         -47.778,
@@ -2092,11 +921,11 @@
           ],
           [
             -43.111,
-            61.779
+            61.8
           ],
           [
             -47.778,
-            61.779
+            61.8
           ]
         ],
         "u_range_m": [
@@ -2105,7 +934,7 @@
         ],
         "v_range_m": [
           0.0,
-          8.571
+          8.592
         ],
         "holes_xz": [
           [
@@ -2152,17 +981,1316 @@
           ]
         }
       },
-      "geometry_hash": "sha256:616d99e840a999a5e202566258bb65b466b547cb8083f20535f06e1d73d53602"
+      "geometry_hash": "sha256:358560ce3328311988d73614244fc3ddb9d9321f30f0cfb5830af90214c2f5a6"
     },
     {
-      "anchor_id": "svg:l-service-interchange-floor-03:floor",
+      "anchor_id": "svg:l-service-interchange--lestnica--north:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--lestnica--north"
+      },
+      "origin": [
+        -47.628,
+        -6.0,
+        53.358
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.517,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/lestnica:north",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -47.628,
+          -6.0,
+          53.208
+        ],
+        "along_range_m": [
+          0.0,
+          4.517
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:babd831f2d3881c206ec72fdfab245e29160c7dba289bffef8bf6e1b1a83787f"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--lestnica--west:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--lestnica--west"
+      },
+      "origin": [
+        -47.628,
+        -6.0,
+        61.65
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 5.129,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/lestnica:west",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -47.778,
+          -6.0,
+          61.65
+        ],
+        "along_range_m": [
+          0.0,
+          5.129
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:9c4d93d9f46b6b7e6180dd94f31b63c3be3ad3bc19ecfd6b607d2b1ba63e0e97"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--schit--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--schit--ceiling"
+      },
+      "origin": [
+        -38.111,
+        -1.0,
+        53.208
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -1.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -38.111,
+            53.208
+          ],
+          [
+            -34.444,
+            53.208
+          ],
+          [
+            -34.444,
+            61.8
+          ],
+          [
+            -38.111,
+            61.8
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          3.667
+        ],
+        "v_range_m": [
+          0.0,
+          8.592
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:ade066eb79b3bd8e17baad943a277d83dba51d5569eb90589d6d71a8d4ac04e9"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--schit--door--sluzhebnyy-vestibyul:door:center",
+      "type": "door",
+      "role": "center",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--schit--door--sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -36.28,
+        -6.0,
+        53.208
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:383d88f9cf28c3c5e0c5d53d0de9f06337137b29089ffd7407bb9c4f8642e07f"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--schit--door--sluzhebnyy-vestibyul:door:threshold_inside",
+      "type": "door",
+      "role": "threshold_inside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--schit--door--sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -36.28,
+        -6.0,
+        53.358
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:06ee665e030e98cd9ce40c2d4babb28a085822fe2b6c342938f9832d2f119203"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--schit--door--sluzhebnyy-vestibyul:door:threshold_outside",
+      "type": "door",
+      "role": "threshold_outside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--schit--door--sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -36.28,
+        -6.0,
+        53.058
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:e5043408cd1f22016f71e491bc71a2268f2787d522ab38caeb5d8c825b44dd07"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--schit--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--schit--east"
+      },
+      "origin": [
+        -34.594,
+        -6.0,
+        56.521
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 5.129,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/schit:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -34.444,
+          -6.0,
+          56.521
+        ],
+        "along_range_m": [
+          0.0,
+          5.129
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:94ee091a2084702b931f6040096f3c54817ddf88f6e9a74d3098f9cba7472740"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--schit--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-floor-03"
+        "source_id": "l-service-interchange--schit--floor"
+      },
+      "origin": [
+        -38.111,
+        -6.0,
+        53.208
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -6.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -38.111,
+            53.208
+          ],
+          [
+            -34.444,
+            53.208
+          ],
+          [
+            -34.444,
+            61.8
+          ],
+          [
+            -38.111,
+            61.8
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          3.667
+        ],
+        "v_range_m": [
+          0.0,
+          8.592
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:20786b9096bbc5087eff78f1c933513bf832700f51cf2eed22391b84b71b2ae7"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--schit--north:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--schit--north"
+      },
+      "origin": [
+        -38.111,
+        -6.0,
+        53.358
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 3.517,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/schit:north",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -38.111,
+          -6.0,
+          53.208
+        ],
+        "along_range_m": [
+          0.0,
+          3.517
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:84934bca64ecb9c462666c6c9080cebc5cdfb8c2b080e797a1862e8d76e2e640"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--ceiling"
+      },
+      "origin": [
+        -43.111,
+        -1.0,
+        53.208
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -1.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -43.111,
+            53.208
+          ],
+          [
+            -38.111,
+            53.208
+          ],
+          [
+            -38.111,
+            57.5
+          ],
+          [
+            -43.111,
+            57.5
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          5.0
+        ],
+        "v_range_m": [
+          0.0,
+          4.292
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:3a0552663acce3346d09c40a2e479184a337713b71f4bd267f1bf7dfd12a8f13"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--door--shlyuz-2:door:center",
+      "type": "door",
+      "role": "center",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--door--shlyuz-2"
+      },
+      "origin": [
+        -40.61,
+        -6.0,
+        57.5
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "opposite",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:0aa0e99cd44b5d6eb818f1e57876647ea67adcc52701b0844dd400f36d4b1382"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--door--shlyuz-2:door:threshold_inside",
+      "type": "door",
+      "role": "threshold_inside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--door--shlyuz-2"
+      },
+      "origin": [
+        -40.61,
+        -6.0,
+        57.35
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "opposite",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:5af190aa9e7825391533f8a59e6f94bcdcee7807c2f51e18013ca4a15a12db35"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--door--shlyuz-2:door:threshold_outside",
+      "type": "door",
+      "role": "threshold_outside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--door--shlyuz-2"
+      },
+      "origin": [
+        -40.61,
+        -6.0,
+        57.65
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "opposite",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:e1a0840daa6ad0018642df6f53a278b8baf54d6e06dc4d9537d88786676d0e9c"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--door--sluzhebnyy-vestibyul:door:center",
+      "type": "door",
+      "role": "center",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--door--sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -40.61,
+        -6.0,
+        53.208
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:f9700fc3bc9128541aa66ac11c276ed43792fd896a346224e36a6810649b0737"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--door--sluzhebnyy-vestibyul:door:threshold_inside",
+      "type": "door",
+      "role": "threshold_inside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--door--sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -40.61,
+        -6.0,
+        53.358
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:95e4f97bab6646b73087136e221c7c03f1265dec3190d818cfc67712e04c1d1a"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--door--sluzhebnyy-vestibyul:door:threshold_outside",
+      "type": "door",
+      "role": "threshold_outside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--door--sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -40.61,
+        -6.0,
+        53.058
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "normal",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:01d1924cd911c5f1590e89f04fb98d33b0e923b46c1bb04635370744714a5311"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--east"
+      },
+      "origin": [
+        -38.261,
+        -6.0,
+        53.208
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.292,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/shlyuz-1:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -38.111,
+          -6.0,
+          53.208
+        ],
+        "along_range_m": [
+          0.0,
+          4.292
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:e9c3d5afc37530a1e480b71b9092f5a2a3635336329dd0df00c24033fa277963"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--floor:floor",
+      "type": "floor",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-1--floor"
       },
       "origin": [
         -43.111,
@@ -2241,22 +2369,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:c0559cd344122133ddf3362790d8597506a89765f7db702453a477eab8e80389"
+      "geometry_hash": "sha256:f4cb595580554d55ca0302d753d8536f83f4e71170ae688acf48ea0d0c80717a"
     },
     {
-      "anchor_id": "svg:l-service-interchange-floor-04:floor",
-      "type": "floor",
+      "anchor_id": "svg:l-service-interchange--shlyuz-1--north:wall",
+      "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-floor-04"
+        "source_id": "l-service-interchange--shlyuz-1--north"
       },
       "origin": [
-        -38.111,
+        -43.111,
         -6.0,
-        53.208
+        53.358
       ],
       "forward": [
         1.0,
@@ -2265,7 +2393,82 @@
       ],
       "normal": [
         0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
         1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 5.0,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/shlyuz-1:north",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -43.111,
+          -6.0,
+          53.208
+        ],
+        "along_range_m": [
+          0.0,
+          5.0
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:57edc0fc589e6a4c85bde7cabdab5032d49499df7b7ed7b8a6b5e553663df69e"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-2--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-2--ceiling"
+      },
+      "origin": [
+        -43.111,
+        -1.0,
+        57.5
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
         0.0
       ],
       "up": [
@@ -2275,34 +2478,34 @@
       ],
       "bounds": {
         "kind": "planar_surface",
-        "elevation_m": -6.0,
+        "elevation_m": -1.0,
         "thickness_m": 0.2,
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -38.111,
-            53.208
-          ],
-          [
-            -34.444,
-            53.208
-          ],
-          [
-            -34.444,
-            61.779
+            -43.111,
+            57.5
           ],
           [
             -38.111,
-            61.779
+            57.5
+          ],
+          [
+            -38.111,
+            61.8
+          ],
+          [
+            -43.111,
+            61.8
           ]
         ],
         "u_range_m": [
           0.0,
-          3.667
+          5.0
         ],
         "v_range_m": [
           0.0,
-          8.571
+          4.3
         ],
         "holes_xz": []
       },
@@ -2330,17 +2533,92 @@
           ]
         }
       },
-      "geometry_hash": "sha256:a56686d24beae8435f6dbe8ec159660456267cf666c1a8ed7516813b1bc76e52"
+      "geometry_hash": "sha256:a0326ea071a07df7f7572576ba5f6bb36a488b29616146a856714482b1699c0d"
     },
     {
-      "anchor_id": "svg:l-service-interchange-floor-05:floor",
+      "anchor_id": "svg:l-service-interchange--shlyuz-2--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--shlyuz-2--east"
+      },
+      "origin": [
+        -38.261,
+        -6.0,
+        57.5
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.15,
+        "height_m": 5.0,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/shlyuz-2:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -38.111,
+          -6.0,
+          57.5
+        ],
+        "along_range_m": [
+          0.0,
+          4.15
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          3.8
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:e13a3c9c33b520eede0cd589e227f3f8c15915969bcee75b16e48a4577ef2a6a"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--shlyuz-2--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-floor-05"
+        "source_id": "l-service-interchange--shlyuz-2--floor"
       },
       "origin": [
         -43.111,
@@ -2378,11 +2656,11 @@
           ],
           [
             -38.111,
-            61.779
+            61.8
           ],
           [
             -43.111,
-            61.779
+            61.8
           ]
         ],
         "u_range_m": [
@@ -2391,7 +2669,7 @@
         ],
         "v_range_m": [
           0.0,
-          4.279
+          4.3
         ],
         "holes_xz": []
       },
@@ -2419,242 +2697,17 @@
           ]
         }
       },
-      "geometry_hash": "sha256:24596cab6a82f2f6bf7f4098a6a0cb004f7c6e0d004501b884fc6a38ac92d4c2"
+      "geometry_hash": "sha256:ea384eb89926c571f08eed583e1d2a656a0ee8dd373c447a0405c37004954727"
     },
     {
-      "anchor_id": "svg:l-service-interchange-wall-01:wall",
+      "anchor_id": "svg:l-service-interchange--shlyuz-2--north:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-wall-01"
-      },
-      "origin": [
-        -47.778,
-        -6.0,
-        48.594
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 13.334,
-        "height_m": 5.0,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-SERVICE-INTERCHANGE/wall-01",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -47.778,
-          -6.0,
-          48.444
-        ],
-        "along_range_m": [
-          0.0,
-          13.334
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:e87b243029fdb4951b71b431c6c47346648127cb4b346aa4cc418e92f8c2b3a6"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-wall-02:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-wall-02"
-      },
-      "origin": [
-        -47.778,
-        -6.0,
-        53.358
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 13.334,
-        "height_m": 5.0,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-SERVICE-INTERCHANGE/wall-02",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -47.778,
-          -6.0,
-          53.208
-        ],
-        "along_range_m": [
-          0.0,
-          13.334
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:24fa9bbc777a7dafa2d0202ad4d74885812d51b0c63d19afa1c44d387634e8a0"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-wall-03:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-wall-03"
-      },
-      "origin": [
-        -34.444,
-        -6.0,
-        61.629
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 13.334,
-        "height_m": 5.0,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-SERVICE-INTERCHANGE/wall-03",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -34.444,
-          -6.0,
-          61.779
-        ],
-        "along_range_m": [
-          0.0,
-          13.334
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:1630b460a29d7caf2cf646506cd65dc4c78cc555fbe47387dfc11ddc7af30b1b"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-wall-04:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-wall-04"
+        "source_id": "l-service-interchange--shlyuz-2--north"
       },
       "origin": [
         -43.111,
@@ -2682,7 +2735,7 @@
         "height_m": 5.0,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-SERVICE-INTERCHANGE/wall-04",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/shlyuz-2:north",
         "normal_side": "normal",
         "source_segment_index": 1,
         "centerline_origin": [
@@ -2719,31 +2772,31 @@
           ]
         }
       },
-      "geometry_hash": "sha256:f1220f4d37f111d78d5e9af8e85e1d22444d6dc4176f810a093b21927b8b1c68"
+      "geometry_hash": "sha256:fe6fbd765c9f99939decd7145e8d2d59234c542b071402559de5713ebd7ad5f9"
     },
     {
-      "anchor_id": "svg:l-service-interchange-wall-05:wall",
-      "type": "wall",
+      "anchor_id": "svg:l-service-interchange--sluzhebnyy-vestibyul--ceiling:ceiling",
+      "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-wall-05"
+        "source_id": "l-service-interchange--sluzhebnyy-vestibyul--ceiling"
       },
       "origin": [
-        -47.628,
-        -6.0,
-        61.779
+        -47.778,
+        -1.0,
+        48.444
       ],
       "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
         1.0,
         0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
         0.0
       ],
       "up": [
@@ -2752,37 +2805,51 @@
         0.0
       ],
       "bounds": {
-        "kind": "linear_surface",
-        "length_m": 13.335,
-        "height_m": 5.0,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-SERVICE-INTERCHANGE/wall-05",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -47.778,
-          -6.0,
-          61.779
+        "kind": "planar_surface",
+        "elevation_m": -1.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -47.778,
+            48.444
+          ],
+          [
+            -34.444,
+            48.444
+          ],
+          [
+            -34.444,
+            53.208
+          ],
+          [
+            -47.778,
+            53.208
+          ]
         ],
-        "along_range_m": [
+        "u_range_m": [
           0.0,
-          13.335
-        ]
+          13.334
+        ],
+        "v_range_m": [
+          0.0,
+          4.764
+        ],
+        "holes_xz": []
       },
       "placement_limits": {
         "normal_offset_m": [
           0,
-          1
+          0
         ],
         "height_m": [
           0,
-          3.8
+          0
         ],
         "rotation_deg": {
           "yaw": [
-            0,
-            0
+            -180,
+            180
           ],
           "pitch": [
             0,
@@ -2794,181 +2861,31 @@
           ]
         }
       },
-      "geometry_hash": "sha256:e19bd2954272925154847fa6db48a6aa21118b71df7568156add2191fc7ed9e6"
+      "geometry_hash": "sha256:0d2d1943989024aa2c9c79232caeab88bf7858dd74e5eb289cc44c6140ed81e9"
     },
     {
-      "anchor_id": "svg:l-service-interchange-wall-06:wall",
-      "type": "wall",
+      "anchor_id": "svg:l-service-interchange--sluzhebnyy-vestibyul--floor:floor",
+      "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "l-service-interchange-wall-06"
+        "source_id": "l-service-interchange--sluzhebnyy-vestibyul--floor"
       },
       "origin": [
-        -42.961,
-        -6.0,
-        61.779
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 8.571,
-        "height_m": 5.0,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-SERVICE-INTERCHANGE/wall-06",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -43.111,
-          -6.0,
-          61.779
-        ],
-        "along_range_m": [
-          0.0,
-          8.571
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:dc62d68f3f36b8d4b1c4fa2050e6ac81f4662bb0cd8e8cb634a0abc324230d33"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-wall-07:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-wall-07"
-      },
-      "origin": [
-        -37.961,
-        -6.0,
-        61.779
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 8.571,
-        "height_m": 5.0,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-SERVICE-INTERCHANGE/wall-07",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -38.111,
-          -6.0,
-          61.779
-        ],
-        "along_range_m": [
-          0.0,
-          8.571
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          3.8
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:111493d2b1b0d761ffcd1a809efb73a9bac59cfecc1b825648cc12e7a7501e3f"
-    },
-    {
-      "anchor_id": "svg:l-service-interchange-wall-08:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "l-service-interchange-wall-08"
-      },
-      "origin": [
-        -34.594,
+        -47.778,
         -6.0,
         48.444
       ],
       "forward": [
+        1.0,
         0.0,
-        0.0,
-        1.0
+        0.0
       ],
       "normal": [
-        -1.0,
         0.0,
+        1.0,
         0.0
       ],
       "up": [
@@ -2977,22 +2894,111 @@
         0.0
       ],
       "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -6.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -47.778,
+            48.444
+          ],
+          [
+            -34.444,
+            48.444
+          ],
+          [
+            -34.444,
+            53.208
+          ],
+          [
+            -47.778,
+            53.208
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          13.334
+        ],
+        "v_range_m": [
+          0.0,
+          4.764
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:e45443f164b81947cdf006d5c62cc5755e97a3df94f977e555c0e359f87f49ca"
+    },
+    {
+      "anchor_id": "svg:l-service-interchange--sluzhebnyy-vestibyul--north:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "l-service-interchange--sluzhebnyy-vestibyul--north"
+      },
+      "origin": [
+        -47.628,
+        -6.0,
+        48.594
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
         "kind": "linear_surface",
-        "length_m": 13.335,
+        "length_m": 13.034,
         "height_m": 5.0,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "L-SERVICE-INTERCHANGE/wall-08",
+        "surface_side_id": "L-SERVICE-INTERCHANGE/sluzhebnyy-vestibyul:north",
         "normal_side": "normal",
         "source_segment_index": 1,
         "centerline_origin": [
-          -34.444,
+          -47.628,
           -6.0,
           48.444
         ],
         "along_range_m": [
           0.0,
-          13.335
+          13.034
         ]
       },
       "placement_limits": {
@@ -3019,7 +3025,7 @@
           ]
         }
       },
-      "geometry_hash": "sha256:bcad4cafd459aca1481e7143f2f9e0fe2d9af7569bbb5daf75844a0e654addab"
+      "geometry_hash": "sha256:4622e8b5fd673717bf08a00c37cde63220d6e62058bee9a36893e48899ff1b3f"
     }
   ]
 }

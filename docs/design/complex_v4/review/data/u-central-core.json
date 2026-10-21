@@ -17,7 +17,8 @@
   "wall_height_m": 5.0,
   "rooms": [
     {
-      "id": "u-central-core-floor-01",
+      "id": "u-central-core--elektroschitovaya--floor",
+      "stable_id": "U-CENTRAL-CORE/elektroschitovaya:floor",
       "space_id": "U-CENTRAL-CORE/elektroschitovaya",
       "label": "Электрощитовая / привод · связь · аварийное / питание вертикального узла",
       "class": "service",
@@ -41,7 +42,8 @@
       "area_m2": 24.0
     },
     {
-      "id": "u-central-core-floor-02",
+      "id": "u-central-core--sluzhebnyy-dostup-1-5-m--floor",
+      "stable_id": "U-CENTRAL-CORE/sluzhebnyy-dostup-1-5-m:floor",
       "space_id": "U-CENTRAL-CORE/sluzhebnyy-dostup-1-5-m",
       "label": "СЛУЖЕБНЫЙ ДОСТУП · 1,5 М",
       "class": "passenger",
@@ -65,7 +67,8 @@
       "area_m2": 20.2
     },
     {
-      "id": "u-central-core-floor-03",
+      "id": "u-central-core--lift--floor",
+      "stable_id": "U-CENTRAL-CORE/lift:floor",
       "space_id": "U-CENTRAL-CORE/lift",
       "label": "ЛИФТ / кабина ≈ 2,6 × 2,8 м",
       "class": "vertical",
@@ -89,7 +92,8 @@
       "area_m2": 26.5
     },
     {
-      "id": "u-central-core-floor-04",
+      "id": "u-central-core--liftovoy-holl--floor",
+      "stable_id": "U-CENTRAL-CORE/liftovoy-holl:floor",
       "space_id": "U-CENTRAL-CORE/liftovoy-holl",
       "label": "Лифтовой холл / разворот носилок · шкаф связи",
       "class": "passenger",
@@ -113,7 +117,8 @@
       "area_m2": 31.8
     },
     {
-      "id": "u-central-core-floor-05",
+      "id": "u-central-core--glavnaya-lestnica--floor",
+      "stable_id": "U-CENTRAL-CORE/glavnaya-lestnica:floor",
       "space_id": "U-CENTRAL-CORE/glavnaya-lestnica",
       "label": "ГЛАВНАЯ ЛЕСТНИЦА / промежуточная площадка / МАРШ 1 · ВНИЗ / МАРШ 2 · К НИЖНЕМУ ЭТАЖУ / верхняя площадка",
       "class": "vertical",
@@ -137,7 +142,8 @@
       "area_m2": 102.4
     },
     {
-      "id": "u-central-core-floor-06",
+      "id": "u-central-core--obschiy-vestibyul-vertikalno--floor",
+      "stable_id": "U-CENTRAL-CORE/obschiy-vestibyul-vertikalno:floor",
       "space_id": "U-CENTRAL-CORE/obschiy-vestibyul-vertikalno",
       "label": "ОБЩИЙ ВЕСТИБЮЛЬ ВЕРТИКАЛЬНОГО УЗЛА / лифт и лестница читаются одновременно / свободная полоса движения ≥ 2,4 м",
       "class": "passenger",
@@ -146,24 +152,25 @@
         158.0,
         442.0,
         336.0,
-        120.0
+        119.8
       ],
       "world_m": [
         -7.025,
         14.582,
         14.05,
-        5.026
+        5.018
       ],
       "size_m": [
         14.05,
-        5.03
+        5.02
       ],
-      "area_m2": 70.6
+      "area_m2": 70.5
     }
   ],
   "openings": [
     {
-      "id": "u-central-core-door-01",
+      "id": "u-central-core--elektroschitovaya--door--sluzhebnyy-dostup-1-5-m",
+      "stable_id": "U-CENTRAL-CORE/elektroschitovaya:door:sluzhebnyy-dostup-1-5-m",
       "type": "door",
       "source": "opening",
       "source_id": "u_central_core-opening-001",
@@ -180,7 +187,8 @@
       ]
     },
     {
-      "id": "u-central-core-opening-02",
+      "id": "u-central-core--lift--opening--liftovoy-holl",
+      "stable_id": "U-CENTRAL-CORE/lift:opening:liftovoy-holl",
       "type": "opening",
       "source": "opening",
       "source_id": "u_central_core-opening-004",
@@ -197,7 +205,8 @@
       ]
     },
     {
-      "id": "u-central-core-door-03",
+      "id": "u-central-core--liftovoy-holl--door--sluzhebnyy-dostup-1-5-m",
+      "stable_id": "U-CENTRAL-CORE/liftovoy-holl:door:sluzhebnyy-dostup-1-5-m",
       "type": "door",
       "source": "opening",
       "source_id": "u_central_core-opening-006",
@@ -215,7 +224,8 @@
       ]
     },
     {
-      "id": "u-central-core-opening-04",
+      "id": "u-central-core--liftovoy-holl--opening--obschiy-vestibyul-vertikalno",
+      "stable_id": "U-CENTRAL-CORE/liftovoy-holl:opening:obschiy-vestibyul-vertikalno",
       "type": "opening",
       "source": "opening",
       "source_id": "u_central_core-opening-007",
@@ -233,7 +243,8 @@
       ]
     },
     {
-      "id": "u-central-core-opening-05",
+      "id": "u-central-core--glavnaya-lestnica--opening--obschiy-vestibyul-vertikalno",
+      "stable_id": "U-CENTRAL-CORE/glavnaya-lestnica:opening:obschiy-vestibyul-vertikalno",
       "type": "opening",
       "source": "opening",
       "source_id": "u_central_core-opening-008",
@@ -250,23 +261,8 @@
       ]
     },
     {
-      "id": "u-central-core-opening-06",
-      "type": "opening",
-      "source": "opening",
-      "source_id": "u_central_core-opening-011",
-      "width_m": 4.52,
-      "rooms": [
-        "U-CENTRAL-CORE/obschiy-vestibyul-vertikalno"
-      ],
-      "world_m": [
-        -2.258,
-        19.608,
-        2.258,
-        19.608
-      ]
-    },
-    {
-      "id": "u-central-core-door-07",
+      "id": "u-central-core--glavnaya-lestnica--door--outer",
+      "stable_id": "U-CENTRAL-CORE/glavnaya-lestnica:door:outer",
       "type": "door",
       "source": "amendment D-14f",
       "source_id": "amendment-D-14f",
@@ -459,7 +455,7 @@
     }
   ],
   "anomalies": [],
-  "wall_segments": 9,
+  "wall_segments": 19,
   "amendments": [
     "D-14b",
     "D-14c",
@@ -469,5 +465,93 @@
     "D-14g"
   ],
   "feature_rects_ignored": 0,
+  "shared_faces": {
+    "rank": [
+      1,
+      "U-CENTRAL-CORE"
+    ],
+    "owners": [
+      "U-CIRCULATION"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "h",
+        "from_m": 19.608,
+        "to_m": 19.6,
+        "owner": "U-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "u-central-core--obschiy-vestibyul-vertikalno--south",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          -7.025,
+          19.6,
+          7.025,
+          19.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "u-central-core--obschiy-vestibyul-vertikalno--west",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          -7.025,
+          14.582,
+          -7.025,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            14.582,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "u-central-core--obschiy-vestibyul-vertikalno--east",
+        "owner": [
+          "U-CIRCULATION"
+        ],
+        "world_m": [
+          7.025,
+          14.582,
+          7.025,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            14.582,
+            19.45
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "U-CENTRAL-CORE/obschiy-vestibyul-vertikalno:opening:outer",
+        "type": "opening",
+        "owner": "U-CIRCULATION",
+        "owner_opening": "u-circulation--glavnyy-passazhirskiy-korido--opening--outer--amendment-auto-02",
+        "rooms": [
+          "U-CENTRAL-CORE/obschiy-vestibyul-vertikalno"
+        ],
+        "world_m": [
+          -2.258,
+          19.6,
+          2.258,
+          19.6
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 4
 }

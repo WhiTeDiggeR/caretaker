@@ -1,7 +1,7 @@
 {
   "generator_version": "1.19.0",
   "source": "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/technical/t_workshop.svg",
-  "scene": "$STAGING/Generated/Architecture/t_workshop_generated.tscn",
+  "scene": "//?/$STAGING/Generated/Architecture/t_workshop_generated.tscn",
   "settings": {
     "scale": 1.0,
     "wall_height": 4.5,
@@ -38,9 +38,9 @@
     "strict": true
   },
   "view_box": [
-    -57.525,
+    -57.55,
     -6.887,
-    42.125,
+    42.15,
     28.487
   ],
   "profile": "generic",
@@ -59,67 +59,85 @@
     "surface_openings": [],
     "wall_construction": [
       {
-        "source_id": "t-workshop-wall-01",
+        "source_id": "t-workshop--masterskaya--east",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-02",
+        "source_id": "t-workshop--masterskaya--north",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-03",
+        "source_id": "t-workshop--masterskaya--south--outer",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-04",
+        "source_id": "t-workshop--masterskaya--south--outer-2",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-05",
+        "source_id": "t-workshop--podezd-k-masterskoy--east",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-06",
+        "source_id": "t-workshop--podezd-k-masterskoy--north",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-07",
+        "source_id": "t-workshop--podezd-k-masterskoy--west",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-08",
+        "source_id": "t-workshop--podezd-k-skladu--east",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-09",
+        "source_id": "t-workshop--podezd-k-skladu--north",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-10",
+        "source_id": "t-workshop--podezd-k-skladu--west",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
       },
       {
-        "source_id": "t-workshop-wall-11",
+        "source_id": "t-workshop--sklad-zapchastey--east",
+        "thickness_m": 0.3,
+        "height_m": 4.5,
+        "base_elevation_m": -11.5
+      },
+      {
+        "source_id": "t-workshop--sklad-zapchastey--north",
+        "thickness_m": 0.3,
+        "height_m": 4.5,
+        "base_elevation_m": -11.5
+      },
+      {
+        "source_id": "t-workshop--sklad-zapchastey--south--outer",
+        "thickness_m": 0.3,
+        "height_m": 4.5,
+        "base_elevation_m": -11.5
+      },
+      {
+        "source_id": "t-workshop--sklad-zapchastey--south--outer-2",
         "thickness_m": 0.3,
         "height_m": 4.5,
         "base_elevation_m": -11.5
@@ -127,25 +145,25 @@
     ],
     "ceiling_construction": [
       {
-        "source_id": "t-workshop-ceiling-01",
+        "source_id": "t-workshop--masterskaya--ceiling",
         "underside_elevation_m": -7.0,
         "top_elevation_m": -6.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "t-workshop-ceiling-02",
+        "source_id": "t-workshop--sklad-zapchastey--ceiling",
         "underside_elevation_m": -7.0,
         "top_elevation_m": -6.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "t-workshop-ceiling-03",
+        "source_id": "t-workshop--podezd-k-masterskoy--ceiling",
         "underside_elevation_m": -7.0,
         "top_elevation_m": -6.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "t-workshop-ceiling-04",
+        "source_id": "t-workshop--podezd-k-skladu--ceiling",
         "underside_elevation_m": -7.0,
         "top_elevation_m": -6.8,
         "thickness_m": 0.2
@@ -158,17 +176,17 @@
     "anchors": [],
     "anchor_frames": [
       {
-        "anchor_id": "svg:t-workshop-ceiling-01:ceiling",
+        "anchor_id": "svg:t-workshop--masterskaya--ceiling:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "t-workshop-ceiling-01"
+          "source_id": "t-workshop--masterskaya--ceiling"
         },
         "origin": [
-          -55.525,
+          -55.55,
           -7.0,
           -4.887
         ],
@@ -191,7 +209,7 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -55.525,
+              -55.55,
               -4.887
             ],
             [
@@ -203,7 +221,7 @@
               10.739
             ],
             [
-              -55.525,
+              -55.55,
               10.739
             ]
           ],
@@ -221,871 +239,17 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:856b1c8f1993ebb319116a8018f3ee3c870422197ec4adb492853364480531c7"
+        "geometry_hash": "sha256:fc11a7bf2b07a29b70e95a09bde8128a783da84de4b029ed7655dcd16870b045"
       },
       {
-        "anchor_id": "svg:t-workshop-ceiling-02:ceiling",
-        "type": "ceiling",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-ceiling-02"
-        },
-        "origin": [
-          -32.65,
-          -7.0,
-          -4.887
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -32.65,
-              -4.887
-            ],
-            [
-              -17.4,
-              -4.887
-            ],
-            [
-              -17.4,
-              10.739
-            ],
-            [
-              -32.65,
-              10.739
-            ]
-          ],
-          "elevation_m": -7.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:6ec9ae2c956b9105c57581a9362b484e0e06211e36c554de86f83e485bcdfccd"
-      },
-      {
-        "anchor_id": "svg:t-workshop-ceiling-03:ceiling",
-        "type": "ceiling",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-ceiling-03"
-        },
-        "origin": [
-          -47.74,
-          -7.0,
-          10.739
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -47.74,
-              10.739
-            ],
-            [
-              -43.74,
-              10.739
-            ],
-            [
-              -43.74,
-              19.6
-            ],
-            [
-              -47.74,
-              19.6
-            ]
-          ],
-          "elevation_m": -7.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:c0d1e1443fa349b22d77d064e30ba64680dc3206f4d18d5f8522cccaf600e8bf"
-      },
-      {
-        "anchor_id": "svg:t-workshop-ceiling-04:ceiling",
-        "type": "ceiling",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-ceiling-04"
-        },
-        "origin": [
-          -27.15,
-          -7.0,
-          10.739
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -27.15,
-              10.739
-            ],
-            [
-              -23.15,
-              10.739
-            ],
-            [
-              -23.15,
-              19.6
-            ],
-            [
-              -27.15,
-              19.6
-            ]
-          ],
-          "elevation_m": -7.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:16ff286aaf439e656417c4fe56b035283f9465a64f5d86dbd64fbc9edd344041"
-      },
-      {
-        "anchor_id": "svg:t-workshop-floor-01:floor",
-        "type": "floor",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-floor-01"
-        },
-        "origin": [
-          -55.525,
-          -11.5,
-          -4.887
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -55.525,
-              -4.887
-            ],
-            [
-              -32.65,
-              -4.887
-            ],
-            [
-              -32.65,
-              10.739
-            ],
-            [
-              -55.525,
-              10.739
-            ]
-          ],
-          "elevation_m": -11.5,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:b3e40f928da71aef1561ded9a5fa8e9f7e19a7142376e0053b07c9b0f9b53ec0"
-      },
-      {
-        "anchor_id": "svg:t-workshop-floor-02:floor",
-        "type": "floor",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-floor-02"
-        },
-        "origin": [
-          -32.65,
-          -11.5,
-          -4.887
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -32.65,
-              -4.887
-            ],
-            [
-              -17.4,
-              -4.887
-            ],
-            [
-              -17.4,
-              10.739
-            ],
-            [
-              -32.65,
-              10.739
-            ]
-          ],
-          "elevation_m": -11.5,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:850eaee362fd3dd602608e99f416518d11ea00acc07b4aaf49af5ceeb8387fbd"
-      },
-      {
-        "anchor_id": "svg:t-workshop-floor-03:floor",
-        "type": "floor",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-floor-03"
-        },
-        "origin": [
-          -47.74,
-          -11.5,
-          10.739
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -47.74,
-              10.739
-            ],
-            [
-              -43.74,
-              10.739
-            ],
-            [
-              -43.74,
-              19.6
-            ],
-            [
-              -47.74,
-              19.6
-            ]
-          ],
-          "elevation_m": -11.5,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:c8cf0936570f2b75b2ab0bea6dab70f7454936da441778f201eb35d0198bcb8b"
-      },
-      {
-        "anchor_id": "svg:t-workshop-floor-04:floor",
-        "type": "floor",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-floor-04"
-        },
-        "origin": [
-          -27.15,
-          -11.5,
-          10.739
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -27.15,
-              10.739
-            ],
-            [
-              -23.15,
-              10.739
-            ],
-            [
-              -23.15,
-              19.6
-            ],
-            [
-              -27.15,
-              19.6
-            ]
-          ],
-          "elevation_m": -11.5,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:0e1b51cda96538b61d0bfd178c7d8bc61c4d7ee3cf8015da31440609ca874454"
-      },
-      {
-        "anchor_id": "svg:t-workshop-wall-01:wall",
+        "anchor_id": "svg:t-workshop--masterskaya--east:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "t-workshop-wall-01"
-        },
-        "origin": [
-          -55.525,
-          -11.5,
-          -4.887
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 38.125,
-          "height_m": 4.5,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-01",
-          "normal_side": "normal",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            4.5
-          ]
-        },
-        "geometry_hash": "sha256:b6de2d351dce6890975f727fffe1c485a2776fbfd8c2a198282b8d76d3aec345"
-      },
-      {
-        "anchor_id": "svg:t-workshop-wall-02:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-wall-02"
-        },
-        "origin": [
-          -17.4,
-          -11.5,
-          10.739
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 38.125,
-          "height_m": 4.5,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-02",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            4.5
-          ]
-        },
-        "geometry_hash": "sha256:49f7bc15977675956e7a705301cac2dc69613caf69080f81f355a61610072711"
-      },
-      {
-        "anchor_id": "svg:t-workshop-wall-03:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-wall-03"
-        },
-        "origin": [
-          -43.74,
-          -11.5,
-          19.6
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 4.0,
-          "height_m": 4.5,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-03",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            4.5
-          ]
-        },
-        "geometry_hash": "sha256:fdfacd3934f95b6dd6a6c1347ce8db2c2d383c38774fc29560e6b8fdc110f69c"
-      },
-      {
-        "anchor_id": "svg:t-workshop-wall-04:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-wall-04"
-        },
-        "origin": [
-          -23.15,
-          -11.5,
-          19.6
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 4.0,
-          "height_m": 4.5,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-04",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            4.5
-          ]
-        },
-        "geometry_hash": "sha256:0bfb53f2f3b21092f45c0f6cc5ceb4aeedc9265f8fc19fccd1a8f700e028fe16"
-      },
-      {
-        "anchor_id": "svg:t-workshop-wall-05:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-wall-05"
-        },
-        "origin": [
-          -55.525,
-          -11.5,
-          10.739
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "normal": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 15.626,
-          "height_m": 4.5,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-05",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            4.5
-          ]
-        },
-        "geometry_hash": "sha256:efb8bac381ddc9d857b65ebacbbabe482016c33b12d3ce559c0c08cb45e61727"
-      },
-      {
-        "anchor_id": "svg:t-workshop-wall-06:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-wall-06"
-        },
-        "origin": [
-          -47.74,
-          -11.5,
-          19.6
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "normal": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 8.861,
-          "height_m": 4.5,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-06",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            4.5
-          ]
-        },
-        "geometry_hash": "sha256:8722f613604ddea09c1cd8c379f1b71ca662acc75e12d193e5c3fcb25eb3976f"
-      },
-      {
-        "anchor_id": "svg:t-workshop-wall-07:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-wall-07"
-        },
-        "origin": [
-          -43.74,
-          -11.5,
-          19.6
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "normal": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 8.861,
-          "height_m": 4.5,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-07",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            4.5
-          ]
-        },
-        "geometry_hash": "sha256:1b8f7c4704344db5087b4952c8a90fb0559a5969b6c29c8277d76d24528af12b"
-      },
-      {
-        "anchor_id": "svg:t-workshop-wall-08:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "t-workshop-wall-08"
+          "source_id": "t-workshop--masterskaya--east"
         },
         "origin": [
           -32.65,
@@ -1113,7 +277,7 @@
           "height_m": 4.5,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-08",
+          "surface_side_id": "T-WORKSHOP/masterskaya:east",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -1131,22 +295,500 @@
             4.5
           ]
         },
-        "geometry_hash": "sha256:ca518799daa07673e8492b55f178c9097f764e3b85a502f09ffef54c8bdf6a63"
+        "geometry_hash": "sha256:0cde999699e5a9c43c109aa3ee63508ddc81f62c860c39095a4b83035eb2b1b9"
       },
       {
-        "anchor_id": "svg:t-workshop-wall-09:wall",
+        "anchor_id": "svg:t-workshop--masterskaya--floor:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--masterskaya--floor"
+        },
+        "origin": [
+          -55.55,
+          -11.5,
+          -4.887
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -55.55,
+              -4.887
+            ],
+            [
+              -32.65,
+              -4.887
+            ],
+            [
+              -32.65,
+              10.739
+            ],
+            [
+              -55.55,
+              10.739
+            ]
+          ],
+          "elevation_m": -11.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:57d478baeb5ba3a32f2c494b6b9e13472d8334e63ed70c863c6f29eb93045847"
+      },
+      {
+        "anchor_id": "svg:t-workshop--masterskaya--north:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "t-workshop-wall-09"
+          "source_id": "t-workshop--masterskaya--north"
         },
         "origin": [
-          -27.15,
+          -55.4,
           -11.5,
-          19.6
+          -4.887
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 22.75,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/masterskaya:north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:c6f6ca03190ec4090cf2a2c5b0e57e0b731826742bd3649f8bf00bb05b337358"
+      },
+      {
+        "anchor_id": "svg:t-workshop--masterskaya--south--outer-2:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--masterskaya--south--outer-2"
+        },
+        "origin": [
+          -32.65,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 11.09,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/masterskaya:south:outer-2",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:f679ad4ae93a17dbc949e2d4f79a47214f734c93a0b669ea691afb0c04913ea4"
+      },
+      {
+        "anchor_id": "svg:t-workshop--masterskaya--south--outer:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--masterskaya--south--outer"
+        },
+        "origin": [
+          -47.74,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 7.66,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/masterskaya:south:outer",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:0db82ffa3b6483945f5e208a726c8bb10a19519bbe3c854858a03bdaa3a919d1"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-masterskoy--ceiling:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-masterskoy--ceiling"
+        },
+        "origin": [
+          -47.74,
+          -7.0,
+          10.739
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -47.74,
+              10.739
+            ],
+            [
+              -43.74,
+              10.739
+            ],
+            [
+              -43.74,
+              19.6
+            ],
+            [
+              -47.74,
+              19.6
+            ]
+          ],
+          "elevation_m": -7.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:aaecd8955b81ca45364e9c6189ac1c723908793465703edec3f85d2d714a3ac3"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-masterskoy--east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-masterskoy--east"
+        },
+        "origin": [
+          -43.74,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 8.711,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/podezd-k-masterskoy:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:05cbb4551c9fd61cfca37449ee328c49cdf5dd6df66b7deaeebeba26936d8658"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-masterskoy--floor:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-masterskoy--floor"
+        },
+        "origin": [
+          -47.74,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -47.74,
+              10.739
+            ],
+            [
+              -43.74,
+              10.739
+            ],
+            [
+              -43.74,
+              19.6
+            ],
+            [
+              -47.74,
+              19.6
+            ]
+          ],
+          "elevation_m": -11.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:7a634e1820ae18b69850f0853a9fd7ba4d11c933ed9769f6c4cde4a56a353e32"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-masterskoy--north:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-masterskoy--north"
+        },
+        "origin": [
+          -47.74,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.0,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/podezd-k-masterskoy:north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:ba6f424ac5408964d19688af578c7addb69c6e669e7893b71eaf6bb70d5bcac6"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-masterskoy--west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-masterskoy--west"
+        },
+        "origin": [
+          -47.74,
+          -11.5,
+          19.45
         ],
         "forward": [
           0.0,
@@ -1165,11 +807,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 8.861,
+          "length_m": 8.711,
           "height_m": 4.5,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-09",
+          "surface_side_id": "T-WORKSHOP/podezd-k-masterskoy:west",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -1187,22 +829,266 @@
             4.5
           ]
         },
-        "geometry_hash": "sha256:5fa2f21cafbe5cc220158d994fd54fccb910d08ba927d70cf68d3a45d7059df4"
+        "geometry_hash": "sha256:1e9f873e551264587e6cf78b25ea8674a57a264226fc34b02c550b59fdac1b42"
       },
       {
-        "anchor_id": "svg:t-workshop-wall-10:wall",
+        "anchor_id": "svg:t-workshop--podezd-k-skladu--ceiling:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-skladu--ceiling"
+        },
+        "origin": [
+          -27.15,
+          -7.0,
+          10.739
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -27.15,
+              10.739
+            ],
+            [
+              -23.15,
+              10.739
+            ],
+            [
+              -23.15,
+              19.6
+            ],
+            [
+              -27.15,
+              19.6
+            ]
+          ],
+          "elevation_m": -7.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:2c59aaed1591563aa251c8ffb9e00341255fb48b800c38edaac839216905b489"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-skladu--east:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "t-workshop-wall-10"
+          "source_id": "t-workshop--podezd-k-skladu--east"
         },
         "origin": [
           -23.15,
           -11.5,
-          19.6
+          10.739
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 8.711,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/podezd-k-skladu:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:86a8d7467a7fb2704b0140783b60afaa4809fa389cbe459ab57b95a620762ec5"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-skladu--floor:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-skladu--floor"
+        },
+        "origin": [
+          -27.15,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -27.15,
+              10.739
+            ],
+            [
+              -23.15,
+              10.739
+            ],
+            [
+              -23.15,
+              19.6
+            ],
+            [
+              -27.15,
+              19.6
+            ]
+          ],
+          "elevation_m": -11.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:50d340fd9eef4ff4e57e572087dfaac4e2c25c8bdc3c2052580e3b7adfa5b9e9"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-skladu--north:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-skladu--north"
+        },
+        "origin": [
+          -27.15,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.0,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/podezd-k-skladu:north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:a923306db6a6e4f4a1b16260122c1ad5263b8f696b3efa8892600c161dea2423"
+      },
+      {
+        "anchor_id": "svg:t-workshop--podezd-k-skladu--west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--podezd-k-skladu--west"
+        },
+        "origin": [
+          -27.15,
+          -11.5,
+          19.45
         ],
         "forward": [
           0.0,
@@ -1221,11 +1107,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 8.861,
+          "length_m": 8.711,
           "height_m": 4.5,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-10",
+          "surface_side_id": "T-WORKSHOP/podezd-k-skladu:west",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -1243,17 +1129,83 @@
             4.5
           ]
         },
-        "geometry_hash": "sha256:da6b4cb3f435ff6f2e729ce6fdb97b4b1308be8dcd9aab6f09048433b562f52e"
+        "geometry_hash": "sha256:c4ed87ec897800ca2d613f528caa71e6dc85ac81c69833a9696addd4bacb27dc"
       },
       {
-        "anchor_id": "svg:t-workshop-wall-11:wall",
+        "anchor_id": "svg:t-workshop--sklad-zapchastey--ceiling:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--sklad-zapchastey--ceiling"
+        },
+        "origin": [
+          -32.65,
+          -7.0,
+          -4.887
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -32.65,
+              -4.887
+            ],
+            [
+              -17.4,
+              -4.887
+            ],
+            [
+              -17.4,
+              10.739
+            ],
+            [
+              -32.65,
+              10.739
+            ]
+          ],
+          "elevation_m": -7.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:abe89d3c397d6f69870d1194d723592fc9474ab5bf5d6edbc27e70e8af48a066"
+      },
+      {
+        "anchor_id": "svg:t-workshop--sklad-zapchastey--east:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "t-workshop-wall-11"
+          "source_id": "t-workshop--sklad-zapchastey--east"
         },
         "origin": [
           -17.4,
@@ -1281,7 +1233,7 @@
           "height_m": 4.5,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "T-WORKSHOP/wall-11",
+          "surface_side_id": "T-WORKSHOP/sklad-zapchastey:east",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -1299,7 +1251,241 @@
             4.5
           ]
         },
-        "geometry_hash": "sha256:3c9fe895b02d346131094628266fbaf6b229d8474abcec4a22b251d1fab6be27"
+        "geometry_hash": "sha256:54161c9df5ae72ec62930b35191fd37ef74b3179f65d047505cfd3a72c8a06c5"
+      },
+      {
+        "anchor_id": "svg:t-workshop--sklad-zapchastey--floor:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--sklad-zapchastey--floor"
+        },
+        "origin": [
+          -32.65,
+          -11.5,
+          -4.887
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -32.65,
+              -4.887
+            ],
+            [
+              -17.4,
+              -4.887
+            ],
+            [
+              -17.4,
+              10.739
+            ],
+            [
+              -32.65,
+              10.739
+            ]
+          ],
+          "elevation_m": -11.5,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:843d7eb5977353ff0b123d27c1d59525d9e8588baeeed2183cc15a60fac9a839"
+      },
+      {
+        "anchor_id": "svg:t-workshop--sklad-zapchastey--north:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--sklad-zapchastey--north"
+        },
+        "origin": [
+          -32.65,
+          -11.5,
+          -4.887
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 15.25,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/sklad-zapchastey:north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:b73fc2cd5c38c3ec9bee1e0b55547badd82fe2a4863e7530141adbd179aa4b00"
+      },
+      {
+        "anchor_id": "svg:t-workshop--sklad-zapchastey--south--outer-2:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--sklad-zapchastey--south--outer-2"
+        },
+        "origin": [
+          -17.4,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 5.75,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/sklad-zapchastey:south:outer-2",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:5b83bca660b00f8e0a2efc4ae3254e57d7074e3b401673544f2517267c805fed"
+      },
+      {
+        "anchor_id": "svg:t-workshop--sklad-zapchastey--south--outer:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "t-workshop--sklad-zapchastey--south--outer"
+        },
+        "origin": [
+          -27.15,
+          -11.5,
+          10.739
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 5.5,
+          "height_m": 4.5,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "T-WORKSHOP/sklad-zapchastey:south:outer",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            4.5
+          ]
+        },
+        "geometry_hash": "sha256:87f76a287997b8255c97fc6d78912643e9c21c5a501fe7d58bd5bf2c7ccc944d"
       }
     ],
     "space_ids": []
@@ -1307,39 +1493,40 @@
   "counts": {
     "input_floor": 4,
     "input_ceiling": 4,
-    "input_wall": 11,
-    "input_opening": 5,
+    "input_wall": 14,
+    "input_opening": 3,
     "ceiling_wall_alignment_issues": 0,
     "area_floors_expanded_to_wall_outer": 0,
     "area_ceilings_expanded_to_wall_outer": 0,
-    "wall_segments_before_normalization": 12,
-    "wall_segments_after_merge": 12,
-    "wall_segments_after_normalization": 14,
-    "wall_joints_resolved": 10,
+    "wall_segments_before_normalization": 13,
+    "wall_segments_after_merge": 11,
+    "wall_segments_after_normalization": 13,
+    "wall_joints_resolved": 8,
     "wall_volume_overlaps": 0,
     "floor_polygons_before_normalization": 4,
-    "floor_cells_after_normalization": 4,
+    "floor_cells_after_normalization": 10,
     "floor_openings_requested": 0,
     "floor_openings_applied": 0,
     "ceiling_polygons_before_normalization": 4,
-    "ceiling_cells_after_normalization": 4,
+    "ceiling_cells_after_normalization": 10,
     "ceiling_openings_requested": 0,
     "ceiling_openings_applied": 0,
     "removed_stale_generated_parts": 0,
     "material_files_created": 4,
     "material_files_preserved": 0,
-    "generated_floors": 4,
-    "generated_ceilings": 4,
-    "generated_walls": 14,
+    "generated_floors": 10,
+    "generated_ceilings": 10,
+    "generated_walls": 13,
     "generated_obstacles": 0,
     "generated_markers": 0,
-    "generated_floor_visual_nodes": 4,
-    "generated_ceiling_visual_nodes": 4,
-    "generated_wall_visual_nodes": 14,
+    "generated_floor_visual_nodes": 10,
+    "generated_ceiling_visual_nodes": 10,
+    "generated_wall_visual_nodes": 13,
     "generated_obstacle_visual_nodes": 0
   },
   "assumptions": [
-    "Wall joint normalization converted 10 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap"
+    "Wall normalization merged 2 duplicate or overlapping segment(s) with tolerance 0.02 m",
+    "Wall joint normalization converted 8 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap"
   ],
   "warnings": [],
   "errors": [],
@@ -1374,28 +1561,39 @@
     "floor_geometry.obj",
     "ceiling_geometry.obj",
     "wall_geometry.obj",
-    "floor_001_t_workshop_floor_01.obj",
-    "floor_002_t_workshop_floor_03.obj",
-    "floor_003_t_workshop_floor_02.obj",
-    "floor_004_t_workshop_floor_04.obj",
-    "ceiling_001_t_workshop_ceiling_01.obj",
-    "ceiling_002_t_workshop_ceiling_03.obj",
-    "ceiling_003_t_workshop_ceiling_02.obj",
-    "ceiling_004_t_workshop_ceiling_04.obj",
-    "wall_001_t_workshop_wall_01.obj",
-    "wall_002_t_workshop_wall_01.obj",
-    "wall_003_t_workshop_wall_02.obj",
-    "wall_004_t_workshop_wall_02.obj",
-    "wall_005_t_workshop_wall_02.obj",
-    "wall_006_t_workshop_wall_02.obj",
-    "wall_007_t_workshop_wall_05.obj",
-    "wall_008_t_workshop_wall_06.obj",
-    "wall_009_t_workshop_wall_07.obj",
-    "wall_010_t_workshop_wall_08.obj",
-    "wall_011_t_workshop_wall_08.obj",
-    "wall_012_t_workshop_wall_09.obj",
-    "wall_013_t_workshop_wall_10.obj",
-    "wall_014_t_workshop_wall_11.obj",
+    "floor_001_t_workshop_masterskaya_floor.obj",
+    "floor_002_t_workshop_masterskaya_floor.obj",
+    "floor_003_t_workshop_podezd_k_masterskoy_floor.obj",
+    "floor_004_t_workshop_podezd_k_masterskoy_floor.obj",
+    "floor_005_t_workshop_podezd_k_masterskoy_floor.obj",
+    "floor_006_t_workshop_sklad_zapchastey_floor.obj",
+    "floor_007_t_workshop_sklad_zapchastey_floor.obj",
+    "floor_008_t_workshop_podezd_k_skladu_floor.obj",
+    "floor_009_t_workshop_podezd_k_skladu_floor.obj",
+    "floor_010_t_workshop_podezd_k_skladu_floor.obj",
+    "ceiling_001_t_workshop_masterskaya_ceiling.obj",
+    "ceiling_002_t_workshop_masterskaya_ceiling.obj",
+    "ceiling_003_t_workshop_podezd_k_masterskoy_ceiling.obj",
+    "ceiling_004_t_workshop_podezd_k_masterskoy_ceiling.obj",
+    "ceiling_005_t_workshop_podezd_k_masterskoy_ceiling.obj",
+    "ceiling_006_t_workshop_sklad_zapchastey_ceiling.obj",
+    "ceiling_007_t_workshop_sklad_zapchastey_ceiling.obj",
+    "ceiling_008_t_workshop_podezd_k_skladu_ceiling.obj",
+    "ceiling_009_t_workshop_podezd_k_skladu_ceiling.obj",
+    "ceiling_010_t_workshop_podezd_k_skladu_ceiling.obj",
+    "wall_001_60a4780f6460.obj",
+    "wall_002_a5057977da05.obj",
+    "wall_003_t_workshop_masterskaya_south_outer.obj",
+    "wall_004_0fcc8b0395cb.obj",
+    "wall_005_4197aa978408.obj",
+    "wall_006_t_workshop_sklad_zapchastey_south_outer_2.obj",
+    "wall_007_t_workshop_podezd_k_masterskoy_west.obj",
+    "wall_008_t_workshop_podezd_k_masterskoy_east.obj",
+    "wall_009_t_workshop_masterskaya_east.obj",
+    "wall_010_t_workshop_masterskaya_east.obj",
+    "wall_011_t_workshop_podezd_k_skladu_west.obj",
+    "wall_012_t_workshop_podezd_k_skladu_east.obj",
+    "wall_013_t_workshop_sklad_zapchastey_east.obj",
     "conversion_report.json"
   ]
 }

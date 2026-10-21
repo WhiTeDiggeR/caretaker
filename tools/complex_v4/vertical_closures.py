@@ -74,21 +74,28 @@ def lower_sector(manifest: dict[str, Any], project_root: Path, opening: dict[str
     return best
 
 
-def lining_boxes(rect: Sequence[float], bottom: float, top: float, prefix: str) -> list[Box]:
+def lining_boxes(rect: Sequence[float], bottom: float, top: float, prefix: str, low_sides: frozenset[str] = frozenset(),
+                 low_top: float | None = None) -> list[Box]:
+    """Four walls around the opening. Sides in low_sides (the exit side of a stair) stop at low_top, under the top tread and the
+    exit threshold, which close that side above it."""
     x0, z0, x1, z1 = rect
     e, t = Z_FIGHT_OFFSET_M, LINING_THICKNESS_M
-    bottom, top = bottom + e, top - e
-    height = top - bottom
-    if height <= MIN_SIZE_M:
-        return []
-    y = (bottom + top) / 2
     xa, xb = x0 + e - t, x1 - e + t          # north / south walls run over the corners
-    return [
-        Box(f"{prefix}_N", "lining", ((xa + xb) / 2, y, z0 + e - t / 2), (xb - xa, height, t)),
-        Box(f"{prefix}_S", "lining", ((xa + xb) / 2, y, z1 - e + t / 2), (xb - xa, height, t)),
-        Box(f"{prefix}_W", "lining", (x0 + e - t / 2, y, (z0 + z1) / 2), (t, height, z1 - z0 - 2 * e)),
-        Box(f"{prefix}_E", "lining", (x1 - e + t / 2, y, (z0 + z1) / 2), (t, height, z1 - z0 - 2 * e)),
-    ]
+    sides = {
+        "N": (((xa + xb) / 2, z0 + e - t / 2), (xb - xa, t)),
+        "S": (((xa + xb) / 2, z1 - e + t / 2), (xb - xa, t)),
+        "W": ((x0 + e - t / 2, (z0 + z1) / 2), (t, z1 - z0 - 2 * e)),
+        "E": ((x1 - e + t / 2, (z0 + z1) / 2), (t, z1 - z0 - 2 * e)),
+    }
+    boxes = []
+    for side, ((cx, cz), (sx, sz)) in sides.items():
+        side_top = (low_top if side in low_sides and low_top is not None else top) - e
+        side_bottom = bottom + e
+        height = side_top - side_bottom
+        if height <= MIN_SIZE_M:
+            continue
+        boxes.append(Box(f"{prefix}_{side}", "lining", (cx, (side_bottom + side_top) / 2, cz), (sx, height, sz)))
+    return boxes
 
 
 def threshold_box(rect: Sequence[float], exit_side: str, exit_point: Sequence[float], elevation: float, name: str) -> Box | None:
@@ -127,12 +134,19 @@ def plan_closures(sector: dict[str, Any], manifest: dict[str, Any], project_root
     elevation = float(sector["metric_settings"]["elevation_m"])
     floor_openings = openings(project_root / sector["source_svg"], "floor-opening")
     boxes: list[Box] = []
+    side_letter = {"north": "N", "south": "S", "west": "W", "east": "E"}
+    exit_sides = {generator.get("vertical_id"): side_letter[generator["resolved"]["exit_side"]]
+                  for generator in sector.get("vertical_generators", []) if generator.get("resolved")}
     for index, opening in enumerate(floor_openings, start=1):
         below = lower_sector(manifest, project_root, opening, elevation)
         if below is None:
             raise ValueError(f"{sector['sector_id']}: floor opening {opening['id']} ({opening['vertical_id']}) has no matching ceiling opening below")
         bottom = float(below["metric_settings"]["elevation_m"]) + _arg(below["shared_args"], "--wall-height")
-        boxes.extend(lining_boxes(opening["rect"], bottom, elevation, f"Lining_{index:02d}_{opening['vertical_id']}"))
+        # up to the upper floor; on the exit side of a stair only into the slab band, below the top tread and the threshold
+        exit_side = exit_sides.get(opening["vertical_id"])
+        boxes.extend(lining_boxes(opening["rect"], bottom, elevation, f"Lining_{index:02d}_{opening['vertical_id']}",
+                                  frozenset({exit_side}) if exit_side else frozenset(),
+                                  elevation - FLOOR_THICKNESS_M + 2 * Z_FIGHT_OFFSET_M))
     by_vertical = {opening["vertical_id"]: opening for opening in floor_openings}
     for generator, report in zip(sector.get("vertical_generators", []), stair_reports):
         opening = by_vertical.get(generator.get("vertical_id"))

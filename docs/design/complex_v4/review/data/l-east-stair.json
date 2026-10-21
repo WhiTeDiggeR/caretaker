@@ -17,7 +17,8 @@
   "wall_height_m": 5.0,
   "rooms": [
     {
-      "id": "l-east-stair-floor-01",
+      "id": "l-east-stair--avariynaya-lestnica--floor",
+      "stable_id": "L-EAST-STAIR/avariynaya-lestnica:floor",
       "space_id": "L-EAST-STAIR/avariynaya-lestnica",
       "label": "АВАРИЙНАЯ ЛЕСТНИЦА ↓ / внутренняя вертикальная связь",
       "class": "stair",
@@ -41,7 +42,8 @@
       "area_m2": 78.9
     },
     {
-      "id": "l-east-stair-floor-02",
+      "id": "l-east-stair--protivopozharnyy-tambur--floor",
+      "stable_id": "L-EAST-STAIR/protivopozharnyy-tambur:floor",
       "space_id": "L-EAST-STAIR/protivopozharnyy-tambur",
       "label": "ПРОТИВОПОЖАРНЫЙ ТАМБУР / отдельный вход из коридора",
       "class": "stair",
@@ -50,40 +52,25 @@
         320.0,
         560.0,
         225.0,
-        90.0
+        91.0
       ],
       "world_m": [
         21.111,
         15.556,
         10.0,
-        4.0
+        4.044
       ],
       "size_m": [
         10.0,
-        4.0
+        4.04
       ],
-      "area_m2": 40.0
+      "area_m2": 40.4
     }
   ],
   "openings": [
     {
-      "id": "l-east-stair-door-01",
-      "type": "door",
-      "source": "stair-gap",
-      "source_id": "l_east_stair-opening-016",
-      "width_m": 1.8,
-      "rooms": [
-        "L-EAST-STAIR/protivopozharnyy-tambur"
-      ],
-      "world_m": [
-        25.233,
-        19.556,
-        27.033,
-        19.556
-      ]
-    },
-    {
-      "id": "l-east-stair-door-02",
+      "id": "l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur",
+      "stable_id": "L-EAST-STAIR/avariynaya-lestnica:door:protivopozharnyy-tambur",
       "type": "door",
       "source": "gate",
       "source_id": "l_east_stair-annotation-001",
@@ -100,7 +87,8 @@
       ]
     },
     {
-      "id": "l-east-stair-door-03",
+      "id": "l-east-stair--protivopozharnyy-tambur--door--outer",
+      "stable_id": "L-EAST-STAIR/protivopozharnyy-tambur:door:outer",
       "type": "door",
       "source": "amendment D-41f",
       "source_id": "amendment-D-41f",
@@ -380,7 +368,7 @@
       "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
     }
   ],
-  "wall_segments": 5,
+  "wall_segments": 7,
   "amendments": [
     "D-15k",
     "D-15h",
@@ -390,5 +378,99 @@
     "D-41f"
   ],
   "feature_rects_ignored": 0,
+  "shared_faces": {
+    "rank": [
+      1,
+      "L-EAST-STAIR"
+    ],
+    "owners": [
+      "L-CIRCULATION",
+      "L-ARCHIVE-A",
+      "L-CENTRAL-CORE",
+      "L-CHAMBER-1",
+      "L-CHAMBER-2",
+      "L-CHAMBER-3",
+      "L-CHAMBER-5"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "h",
+        "from_m": 19.556,
+        "to_m": 19.6,
+        "owner": "L-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "l-east-stair--protivopozharnyy-tambur--south",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          21.111,
+          19.6,
+          31.111,
+          19.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "l-east-stair--protivopozharnyy-tambur--west",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          21.111,
+          15.556,
+          21.111,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            15.556,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "l-east-stair--protivopozharnyy-tambur--east",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          31.111,
+          15.556,
+          31.111,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            15.556,
+            19.45
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "L-EAST-STAIR/protivopozharnyy-tambur:door:outer",
+        "type": "door",
+        "owner": "L-CIRCULATION",
+        "owner_opening": "l-circulation--passazhirskiy-koridor--door--outer",
+        "rooms": [
+          "L-EAST-STAIR/protivopozharnyy-tambur"
+        ],
+        "world_m": [
+          25.233,
+          19.6,
+          27.033,
+          19.6
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 2
 }

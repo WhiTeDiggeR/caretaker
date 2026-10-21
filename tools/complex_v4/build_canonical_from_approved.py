@@ -538,6 +538,26 @@ def _move_edge(rooms: list[Rect], mapping: dict[float, float], orient: str, old:
             mapping[key] = new
 
 
+def clip_cut_to_rooms(rect_m: list[float], rooms: list[dict[str, Any]], faces: dict[str, Any]) -> tuple[float, float, float, float]:
+    """A shaft cut must stay inside the rooms it opens. When the ownership rule (D-49) pulls a room edge back onto an owner's edge,
+    a cut drawn to the old edge would stick out by less than a wall thickness; clip it to the rooms it lies in. Both levels of a
+    shaft border the same owner edge, so they are clipped alike and the shaft stays one footprint."""
+    x0, z0, w, h = rect_m
+    x1, z1 = x0 + w, z0 + h
+    covering = [rm["world_m"] for rm in rooms
+                if min(x1, rm["world_m"][0] + rm["world_m"][2]) - max(x0, rm["world_m"][0]) > 1e-6
+                and min(z1, rm["world_m"][1] + rm["world_m"][3]) - max(z0, rm["world_m"][1]) > 1e-6]
+    if not covering:
+        return x0, z0, w, h
+    lx0 = min(r[0] for r in covering); lx1 = max(r[0] + r[2] for r in covering)
+    lz0 = min(r[1] for r in covering); lz1 = max(r[1] + r[3] for r in covering)
+    clipped = (max(x0, lx0) if 0 < lx0 - x0 < WALL_THICKNESS_M else x0, max(z0, lz0) if 0 < lz0 - z0 < WALL_THICKNESS_M else z0,
+               min(x1, lx1) if 0 < x1 - lx1 < WALL_THICKNESS_M else x1, min(z1, lz1) if 0 < z1 - lz1 < WALL_THICKNESS_M else z1)
+    if clipped != (x0, z0, x1, z1):
+        faces.setdefault("clipped_cuts", []).append({"from_m": [round(v, 3) for v in (x0, z0, x1, z1)], "to_m": [round(v, 3) for v in clipped]})
+    return clipped[0], clipped[1], round(clipped[2] - clipped[0], 6), round(clipped[3] - clipped[1], 6)
+
+
 def snap_close_edges(rooms: list[Rect], xs: dict[float, float], ys: dict[float, float], tf: Transform, notes: list[dict]) -> None:
     """Inside one sector: parallel edges closer than a wall thickness whose walls would overlap become one line.
 
@@ -623,11 +643,14 @@ def resolve_owned_walls(walls: list[dict[str, Any]], owners: list[dict[str, Any]
                 continue
             face = ow["fixed"]
             for piece in pieces:
+                # The converter does not extend a free wall end, so the end of this line is where its box ends: stop it at the
+                # owner's wall face (half a wall thickness off the owner's centre line). Stopping a full thickness off left a
+                # see-through slit of t/2 at every such joint.
                 if abs(piece[1] - face) < t - 1e-6 and piece[0] < face:
-                    piece[1] = face - t                 # the end box stops at the owner's wall face
+                    piece[1] = face - t / 2
                     owners_hit.add(owner)
                 elif abs(piece[0] - face) < t - 1e-6 and piece[1] > face:
-                    piece[0] = face + t
+                    piece[0] = face + t / 2
                     owners_hit.add(owner)
         pieces = [p for p in pieces if p[1] - p[0] > 0.01]
         if not owners_hit:
@@ -1070,7 +1093,7 @@ def build_sector(sector_id: str, entry: dict[str, Any], reg: dict[str, Any],
     if cuts:
         out.append(f'  <g id="{sid}-vertical" data-layer="vertical">')
         for am in cuts:
-            x, z, w, h = am["rect_m"]
+            x, z, w, h = clip_cut_to_rooms(am["rect_m"], report["rooms"], faces)
             host = next((rm for rm in report["rooms"] if rm["world_m"][0] - 1e-6 <= x + w / 2 <= rm["world_m"][0] + rm["world_m"][2] + 1e-6
                          and rm["world_m"][1] - 1e-6 <= z + h / 2 <= rm["world_m"][1] + rm["world_m"][3] + 1e-6), None)
             space = f' data-space-id="{host["space_id"]}"' if host else ""

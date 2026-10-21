@@ -104,8 +104,10 @@ class StairPackageTests(unittest.TestCase):
                 if closure["kind"] == "lining":
                     lower_top = closure["center"][1] - closure["size"][1] / 2
                     upper_top = closure["center"][1] + closure["size"][1] / 2
-                    self.assertAlmostEqual(upper_top, float(sector["metric_settings"]["elevation_m"]) - vertical_closures.Z_FIGHT_OFFSET_M, places=3, msg=closure["name"])
-                    self.assertLess(lower_top, float(sector["metric_settings"]["elevation_m"]) - 0.2, closure["name"])
+                    elevation = float(sector["metric_settings"]["elevation_m"])
+                    tops = (elevation - vertical_closures.Z_FIGHT_OFFSET_M, elevation - vertical_closures.FLOOR_THICKNESS_M + vertical_closures.Z_FIGHT_OFFSET_M)
+                    self.assertTrue(any(abs(upper_top - value) < 1e-3 for value in tops), closure["name"])
+                    self.assertLess(lower_top, float(sector["metric_settings"]["elevation_m"]) - 0.4, closure["name"])
 
     def test_stairs_have_no_generator_shaft_walls(self) -> None:
         for sector_id, generator, report in self.reports:

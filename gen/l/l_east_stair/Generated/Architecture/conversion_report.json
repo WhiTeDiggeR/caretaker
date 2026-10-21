@@ -1,7 +1,7 @@
 {
   "generator_version": "1.19.0",
   "source": "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/lower/l_east_stair.svg",
-  "scene": "$STAGING/Generated/Architecture/l_east_stair_generated.tscn",
+  "scene": "//?/$STAGING/Generated/Architecture/l_east_stair_generated.tscn",
   "settings": {
     "scale": 1.0,
     "wall_height": 5.0,
@@ -41,7 +41,7 @@
     19.111,
     5.667,
     14.0,
-    15.889
+    15.933
   ],
   "profile": "generic",
   "spatial_handoff": {
@@ -58,8 +58,8 @@
     },
     "surface_openings": [
       {
-        "opening_id": "l-east-stair-floor-opening-02",
-        "source_id": "l-east-stair-floor-opening-02",
+        "opening_id": "l-east-stair--vt-east-stair-tl--floor-opening",
+        "source_id": "l-east-stair--vt-east-stair-tl--floor-opening",
         "surface": "floor",
         "elevation_m": -6.0,
         "applied": true,
@@ -105,8 +105,8 @@
         "space_id": "L-EAST-STAIR/avariynaya-lestnica"
       },
       {
-        "opening_id": "l-east-stair-ceiling-opening-01",
-        "source_id": "l-east-stair-ceiling-opening-01",
+        "opening_id": "l-east-stair--vt-east-stair-lu--ceiling-opening",
+        "source_id": "l-east-stair--vt-east-stair-lu--ceiling-opening",
         "surface": "ceiling",
         "elevation_m": -1.0,
         "applied": true,
@@ -149,11 +149,11 @@
         ],
         "contained_markers": [
           {
-            "source_id": "l-east-stair-door-02",
+            "source_id": "l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur",
             "type": "door"
           },
           {
-            "source_id": "l-east-stair-door-03",
+            "source_id": "l-east-stair--protivopozharnyy-tambur--door--outer",
             "type": "door"
           }
         ],
@@ -163,31 +163,37 @@
     ],
     "wall_construction": [
       {
-        "source_id": "l-east-stair-wall-01",
+        "source_id": "l-east-stair--avariynaya-lestnica--east",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-east-stair-wall-02",
+        "source_id": "l-east-stair--avariynaya-lestnica--north",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-east-stair-wall-03",
+        "source_id": "l-east-stair--avariynaya-lestnica--west",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-east-stair-wall-04",
+        "source_id": "l-east-stair--protivopozharnyy-tambur--east",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-east-stair-wall-05",
+        "source_id": "l-east-stair--protivopozharnyy-tambur--north",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-east-stair--protivopozharnyy-tambur--west",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
@@ -195,13 +201,13 @@
     ],
     "ceiling_construction": [
       {
-        "source_id": "l-east-stair-ceiling-01",
+        "source_id": "l-east-stair--avariynaya-lestnica--ceiling",
         "underside_elevation_m": -1.0,
         "top_elevation_m": -0.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "l-east-stair-ceiling-02",
+        "source_id": "l-east-stair--protivopozharnyy-tambur--ceiling",
         "underside_elevation_m": -1.0,
         "top_elevation_m": -0.8,
         "thickness_m": 0.2
@@ -212,16 +218,7 @@
     ],
     "reference_points": [
       {
-        "source_id": "l-east-stair-door-01",
-        "type": "door",
-        "position_m": [
-          26.133,
-          -4.6,
-          19.556
-        ]
-      },
-      {
-        "source_id": "l-east-stair-door-02",
+        "source_id": "l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur",
         "type": "door",
         "position_m": [
           27.361,
@@ -230,7 +227,7 @@
         ]
       },
       {
-        "source_id": "l-east-stair-door-03",
+        "source_id": "l-east-stair--protivopozharnyy-tambur--door--outer",
         "type": "door",
         "position_m": [
           24.855,
@@ -242,14 +239,14 @@
     "anchors": [],
     "anchor_frames": [
       {
-        "anchor_id": "svg:l-east-stair-ceiling-01:ceiling",
+        "anchor_id": "svg:l-east-stair--avariynaya-lestnica--ceiling:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-ceiling-01"
+          "source_id": "l-east-stair--avariynaya-lestnica--ceiling"
         },
         "origin": [
           21.111,
@@ -305,17 +302,425 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:5576fd1b925d967902c16605c11d84b88e3ad6c58fc90a05c370d70ef7759adc"
+        "geometry_hash": "sha256:34701cb90fa63f99ca91fb605cd74346edb24bc91986ef4cd897d18a2ba7942b"
       },
       {
-        "anchor_id": "svg:l-east-stair-ceiling-02:ceiling",
+        "anchor_id": "svg:l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur:door:center",
+        "type": "door",
+        "role": "center",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur"
+        },
+        "origin": [
+          27.361,
+          -6.0,
+          15.556
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "normal"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:4e91e9a5377dea8593034722383bacd4a77e4c41b38532cd10a65e66bb334849"
+      },
+      {
+        "anchor_id": "svg:l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur:door:threshold_inside",
+        "type": "door",
+        "role": "threshold_inside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur"
+        },
+        "origin": [
+          27.361,
+          -6.0,
+          15.706
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "normal"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:b919e173b6020c02978a21ad780e2104af982560eaf1a51609b05215c9ee4133"
+      },
+      {
+        "anchor_id": "svg:l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur:door:threshold_outside",
+        "type": "door",
+        "role": "threshold_outside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-east-stair--avariynaya-lestnica--door--protivopozharnyy-tambur"
+        },
+        "origin": [
+          27.361,
+          -6.0,
+          15.406
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.8,
+          "height_m": 2.8,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "normal"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.8
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:d58a9e972e0b3bb13e05ecae65c19f491fccaa938a30bbba8f40a4587c1418ba"
+      },
+      {
+        "anchor_id": "svg:l-east-stair--avariynaya-lestnica--east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-east-stair--avariynaya-lestnica--east"
+        },
+        "origin": [
+          31.111,
+          -6.0,
+          7.667
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 7.889,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-EAST-STAIR/avariynaya-lestnica:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:f645db0ac32bedb493205d22900ce63932ee3d9f7f06207616fcc1503fd52e7b"
+      },
+      {
+        "anchor_id": "svg:l-east-stair--avariynaya-lestnica--floor:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-east-stair--avariynaya-lestnica--floor"
+        },
+        "origin": [
+          21.111,
+          -6.0,
+          7.667
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              21.111,
+              7.667
+            ],
+            [
+              31.111,
+              7.667
+            ],
+            [
+              31.111,
+              15.556
+            ],
+            [
+              21.111,
+              15.556
+            ]
+          ],
+          "elevation_m": -6.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:3c2aeca43b3bd8469a9f7d87b8a7bdf008e56be7dd2d37076b2548f863a2fbc7"
+      },
+      {
+        "anchor_id": "svg:l-east-stair--avariynaya-lestnica--north:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-east-stair--avariynaya-lestnica--north"
+        },
+        "origin": [
+          21.111,
+          -6.0,
+          7.667
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 10.0,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-EAST-STAIR/avariynaya-lestnica:north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:e9a1cc0591625dfeece4266977da6d09aaf794e9a6e8c475aef93bcf60c3b4e3"
+      },
+      {
+        "anchor_id": "svg:l-east-stair--avariynaya-lestnica--west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-east-stair--avariynaya-lestnica--west"
+        },
+        "origin": [
+          21.111,
+          -6.0,
+          15.556
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 7.889,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-EAST-STAIR/avariynaya-lestnica:west",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:a952f9e66810a97dd91b07d5e6c4b98cc6990ec04f31626c077396d2b51b40bc"
+      },
+      {
+        "anchor_id": "svg:l-east-stair--protivopozharnyy-tambur--ceiling:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-ceiling-02"
+          "source_id": "l-east-stair--protivopozharnyy-tambur--ceiling"
         },
         "origin": [
           21.111,
@@ -350,11 +755,11 @@
             ],
             [
               31.111,
-              19.556
+              19.6
             ],
             [
               21.111,
-              19.556
+              19.6
             ]
           ],
           "elevation_m": -1.0,
@@ -371,365 +776,17 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:51b36d4aff5f3a118f47b4e3f37ab46026d7b6d1000ff52f3cd916babeae5fc2"
+        "geometry_hash": "sha256:3a3972f2584d86f13da5e6f08e8bb68470730ca8fd9e38c8ff434fc6ddb3397e"
       },
       {
-        "anchor_id": "svg:l-east-stair-door-01:door:center",
+        "anchor_id": "svg:l-east-stair--protivopozharnyy-tambur--door--outer:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-door-01"
-        },
-        "origin": [
-          26.133,
-          -6.0,
-          19.556
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:00cb5b33632171f90c6afca8a2452f15d2b475b2eff8aae73ccc153690abbca5"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-door-01:door:threshold_inside",
-        "type": "door",
-        "role": "threshold_inside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-door-01"
-        },
-        "origin": [
-          26.133,
-          -6.0,
-          19.406
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:f33aae1dc9fe613e250e8843131adb884c65d095f1c01c13668796abfead1ddb"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-door-01:door:threshold_outside",
-        "type": "door",
-        "role": "threshold_outside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-door-01"
-        },
-        "origin": [
-          26.133,
-          -6.0,
-          19.706
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:71e9a8d3714bc9a2701f617f9aa6e6699a6807388b12dffd779e74274ace728c"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-door-02:door:center",
-        "type": "door",
-        "role": "center",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-door-02"
-        },
-        "origin": [
-          27.361,
-          -6.0,
-          15.556
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:db6bb0628f47d1f3983e242dc420bf99144890f44e84ee63387ae0e19c24d4fe"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-door-02:door:threshold_inside",
-        "type": "door",
-        "role": "threshold_inside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-door-02"
-        },
-        "origin": [
-          27.361,
-          -6.0,
-          15.706
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:ee1f40a1b5ec0ed0cef25fca49ac0b2b4a1e60fb14c070197f2ef32a4544aa59"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-door-02:door:threshold_outside",
-        "type": "door",
-        "role": "threshold_outside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-door-02"
-        },
-        "origin": [
-          27.361,
-          -6.0,
-          15.406
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.8,
-          "height_m": 2.8,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "normal"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.8
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:ff7dd40de23e2152b837ad87465b36fdc75c1c46e35830a9dacdc99b752e01c7"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-door-03:door:center",
-        "type": "door",
-        "role": "center",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-door-03"
+          "source_id": "l-east-stair--protivopozharnyy-tambur--door--outer"
         },
         "origin": [
           24.855,
@@ -777,17 +834,17 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:fe2bcca10cc4d45e98305cf91b3a9082fbb08a2d709c70557823a010b48d1dde"
+        "geometry_hash": "sha256:b8bc5643ce33a49bf249ad242d1919e19661728cfa7fe7255e378f5b0c1efb0e"
       },
       {
-        "anchor_id": "svg:l-east-stair-door-03:door:threshold_inside",
+        "anchor_id": "svg:l-east-stair--protivopozharnyy-tambur--door--outer:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-door-03"
+          "source_id": "l-east-stair--protivopozharnyy-tambur--door--outer"
         },
         "origin": [
           24.855,
@@ -835,17 +892,17 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:f790114cda7233f0e246014c6e2fbb4859db90746c7fca676eda61c662c01dbe"
+        "geometry_hash": "sha256:2b028066a293a2f5d2b59bd775babdeb51f6a5c4a7b75d1d5d8cf4e6702eb4e2"
       },
       {
-        "anchor_id": "svg:l-east-stair-door-03:door:threshold_outside",
+        "anchor_id": "svg:l-east-stair--protivopozharnyy-tambur--door--outer:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-door-03"
+          "source_id": "l-east-stair--protivopozharnyy-tambur--door--outer"
         },
         "origin": [
           24.855,
@@ -893,31 +950,31 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:c4d210611766591673aec5d71d07989685598d4453348ba86464d755c8d96b2b"
+        "geometry_hash": "sha256:f2855d639a684af32a71d98778a054e42b9063d0a515671afe1554f3fe699bdd"
       },
       {
-        "anchor_id": "svg:l-east-stair-floor-01:floor",
-        "type": "floor",
+        "anchor_id": "svg:l-east-stair--protivopozharnyy-tambur--east:wall",
+        "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-floor-01"
+          "source_id": "l-east-stair--protivopozharnyy-tambur--east"
         },
         "origin": [
-          21.111,
+          31.111,
           -6.0,
-          7.667
+          15.556
         ],
         "forward": [
-          1.0,
           0.0,
-          0.0
+          0.0,
+          1.0
         ],
         "normal": [
+          -1.0,
           0.0,
-          1.0,
           0.0
         ],
         "up": [
@@ -926,50 +983,40 @@
           0.0
         ],
         "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              21.111,
-              7.667
-            ],
-            [
-              31.111,
-              7.667
-            ],
-            [
-              31.111,
-              15.556
-            ],
-            [
-              21.111,
-              15.556
-            ]
-          ],
-          "elevation_m": -6.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
+          "kind": "linear_surface",
+          "length_m": 3.894,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-EAST-STAIR/protivopozharnyy-tambur:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
         },
         "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
           "normal_offset_m": [
             0.0,
             0.0
           ],
           "height_m": [
             0.0,
-            0.0
+            5.0
           ]
         },
-        "geometry_hash": "sha256:39754fbac235a9661b7217829c8841754e2010dbc4f2412ee9c3dab74a0665bd"
+        "geometry_hash": "sha256:7e74bb2df5980fe96c2a6f1cfc46955b9ad19594c313f7455399be8f3aee4fcb"
       },
       {
-        "anchor_id": "svg:l-east-stair-floor-02:floor",
+        "anchor_id": "svg:l-east-stair--protivopozharnyy-tambur--floor:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-floor-02"
+          "source_id": "l-east-stair--protivopozharnyy-tambur--floor"
         },
         "origin": [
           21.111,
@@ -1004,11 +1051,11 @@
             ],
             [
               31.111,
-              19.556
+              19.6
             ],
             [
               21.111,
-              19.556
+              19.6
             ]
           ],
           "elevation_m": -6.0,
@@ -1025,73 +1072,17 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:c76a122a22fff778426efef8d2bb65f43b748e8118e91301d54f7a143a348a13"
+        "geometry_hash": "sha256:18a59fef66fcd9bc8e0517fc9ae5373811af9b7a8643625c4c4e1b8141f0cdf6"
       },
       {
-        "anchor_id": "svg:l-east-stair-wall-01:wall",
+        "anchor_id": "svg:l-east-stair--protivopozharnyy-tambur--north:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-wall-01"
-        },
-        "origin": [
-          21.111,
-          -6.0,
-          7.667
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 10.0,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-EAST-STAIR/wall-01",
-          "normal_side": "normal",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:f34676b2de299d91198c5f0be57e82d0fe41891b525b9087f0713af6ba296c86"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-wall-02:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-wall-02"
+          "source_id": "l-east-stair--protivopozharnyy-tambur--north"
         },
         "origin": [
           21.111,
@@ -1119,7 +1110,7 @@
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-EAST-STAIR/wall-02",
+          "surface_side_id": "L-EAST-STAIR/protivopozharnyy-tambur:north",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -1137,78 +1128,22 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:ca4ca20814720a4da0644e558de4261a31b12cfb7f7360a764672105b96774de"
+        "geometry_hash": "sha256:06fa3e34b0a1e01edfe4f8aa9bd777cac7b39a5cab559dbc15211f6df95e55ac"
       },
       {
-        "anchor_id": "svg:l-east-stair-wall-03:wall",
+        "anchor_id": "svg:l-east-stair--protivopozharnyy-tambur--west:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-east-stair-wall-03"
-        },
-        "origin": [
-          31.111,
-          -6.0,
-          19.556
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 10.0,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-EAST-STAIR/wall-03",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:baa38d0e19cbd82ac16681d7d149879a66375f994b612a768498bf4740858075"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-wall-04:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-wall-04"
+          "source_id": "l-east-stair--protivopozharnyy-tambur--west"
         },
         "origin": [
           21.111,
           -6.0,
-          19.556
+          19.45
         ],
         "forward": [
           0.0,
@@ -1227,11 +1162,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 11.889,
+          "length_m": 3.894,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-EAST-STAIR/wall-04",
+          "surface_side_id": "L-EAST-STAIR/protivopozharnyy-tambur:west",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -1249,63 +1184,7 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:77980bb7a96d2a0360250adfee7664942d91e4a59638d4a8bbf6a3d646eff1dd"
-      },
-      {
-        "anchor_id": "svg:l-east-stair-wall-05:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-east-stair-wall-05"
-        },
-        "origin": [
-          31.111,
-          -6.0,
-          7.667
-        ],
-        "forward": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 11.889,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-EAST-STAIR/wall-05",
-          "normal_side": "normal",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:3039e55445ee4b3f0e1dbd5ee15bbc30322daa194c39c5d7da976c7c20422321"
+        "geometry_hash": "sha256:a2f5fc1bd7368f32f2f7f6594b63abf382ccca125bdd89afbdbd445c3742e159"
       }
     ],
     "space_ids": [
@@ -1315,17 +1194,17 @@
   "counts": {
     "input_floor": 2,
     "input_ceiling": 2,
-    "input_wall": 5,
-    "input_door": 3,
+    "input_wall": 6,
+    "input_door": 2,
     "input_ceiling_opening": 1,
     "input_floor_opening": 1,
     "ceiling_wall_alignment_issues": 0,
     "area_floors_expanded_to_wall_outer": 0,
     "area_ceilings_expanded_to_wall_outer": 0,
-    "wall_segments_before_normalization": 11,
-    "wall_segments_after_merge": 11,
-    "wall_segments_after_normalization": 13,
-    "wall_joints_resolved": 6,
+    "wall_segments_before_normalization": 10,
+    "wall_segments_after_merge": 8,
+    "wall_segments_after_normalization": 10,
+    "wall_joints_resolved": 4,
     "wall_volume_overlaps": 0,
     "floor_polygons_before_normalization": 2,
     "floor_cells_after_normalization": 7,
@@ -1340,16 +1219,17 @@
     "material_files_preserved": 0,
     "generated_floors": 7,
     "generated_ceilings": 1,
-    "generated_walls": 13,
+    "generated_walls": 10,
     "generated_obstacles": 0,
-    "generated_markers": 3,
+    "generated_markers": 2,
     "generated_floor_visual_nodes": 7,
     "generated_ceiling_visual_nodes": 1,
-    "generated_wall_visual_nodes": 13,
+    "generated_wall_visual_nodes": 10,
     "generated_obstacle_visual_nodes": 0
   },
   "assumptions": [
-    "Wall joint normalization converted 6 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
+    "Wall normalization merged 2 duplicate or overlapping segment(s) with tolerance 0.02 m",
+    "Wall joint normalization converted 4 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
     "Floor openings removed 78.2645 m2 from visible and collision geometry",
     "Ceiling openings removed 78.89 m2 from visible and collision geometry"
   ],
@@ -1458,27 +1338,24 @@
     "floor_geometry.obj",
     "ceiling_geometry.obj",
     "wall_geometry.obj",
-    "floor_001_l_east_stair_floor_01.obj",
-    "floor_002_l_east_stair_floor_01.obj",
-    "floor_003_l_east_stair_floor_01.obj",
-    "floor_004_l_east_stair_floor_01.obj",
-    "floor_005_l_east_stair_floor_02.obj",
-    "floor_006_l_east_stair_floor_02.obj",
-    "floor_007_l_east_stair_floor_02.obj",
-    "ceiling_001_l_east_stair_ceiling_02.obj",
-    "wall_001_l_east_stair_wall_01.obj",
-    "wall_002_l_east_stair_wall_02.obj",
-    "wall_003_l_east_stair_wall_02.obj",
-    "wall_004_l_east_stair_wall_02.obj",
-    "wall_005_l_east_stair_wall_02.obj",
-    "wall_006_l_east_stair_wall_02.obj",
-    "wall_007_l_east_stair_wall_03.obj",
-    "wall_008_l_east_stair_wall_03.obj",
-    "wall_009_l_east_stair_wall_03.obj",
-    "wall_010_l_east_stair_wall_04.obj",
-    "wall_011_l_east_stair_wall_04.obj",
-    "wall_012_l_east_stair_wall_05.obj",
-    "wall_013_l_east_stair_wall_05.obj",
+    "floor_001_l_east_stair_avariynaya_lestnica_floor.obj",
+    "floor_002_l_east_stair_avariynaya_lestnica_floor.obj",
+    "floor_003_l_east_stair_avariynaya_lestnica_floor.obj",
+    "floor_004_l_east_stair_avariynaya_lestnica_floor.obj",
+    "floor_005_l_east_stair_protivopozharnyy_tambur_floor.obj",
+    "floor_006_l_east_stair_protivopozharnyy_tambur_floor.obj",
+    "floor_007_l_east_stair_protivopozharnyy_tambur_floor.obj",
+    "ceiling_001_l_east_stair_protivopozharnyy_tambur_ceiling.obj",
+    "wall_001_l_east_stair_avariynaya_lestnica_north.obj",
+    "wall_002_l_east_stair_protivopozharnyy_tambur_north.obj",
+    "wall_003_l_east_stair_protivopozharnyy_tambur_north.obj",
+    "wall_004_l_east_stair_protivopozharnyy_tambur_north.obj",
+    "wall_005_l_east_stair_protivopozharnyy_tambur_north.obj",
+    "wall_006_l_east_stair_protivopozharnyy_tambur_north.obj",
+    "wall_007_5657973c0bdf.obj",
+    "wall_008_b43e0e1a7b9c.obj",
+    "wall_009_487b2f0d68d0.obj",
+    "wall_010_4306bf364d4c.obj",
     "conversion_report.json"
   ]
 }
