@@ -1,7 +1,7 @@
 {
   "generator_version": "1.19.0",
   "source": "$PROJECT_ROOT/docs/design/complex_v4/plans/generation/lower/l_central_core.svg",
-  "scene": "$STAGING/Generated/Architecture/l_central_core_generated.tscn",
+  "scene": "//?/$STAGING/Generated/Architecture/l_central_core_generated.tscn",
   "settings": {
     "scale": 1.0,
     "wall_height": 5.0,
@@ -41,7 +41,7 @@
     -9.025,
     -1.995,
     18.05,
-    23.603
+    23.595
   ],
   "profile": "generic",
   "spatial_handoff": {
@@ -58,8 +58,8 @@
     },
     "surface_openings": [
       {
-        "opening_id": "l-central-core-floor-opening-03",
-        "source_id": "l-central-core-floor-opening-03",
+        "opening_id": "l-central-core--vt-main-elevator--floor-opening",
+        "source_id": "l-central-core--vt-main-elevator--floor-opening",
         "surface": "floor",
         "elevation_m": -6.0,
         "applied": true,
@@ -105,8 +105,8 @@
         "space_id": "L-CENTRAL-CORE/lift"
       },
       {
-        "opening_id": "l-central-core-ceiling-opening-01",
-        "source_id": "l-central-core-ceiling-opening-01",
+        "opening_id": "l-central-core--vt-main-stair--ceiling-opening",
+        "source_id": "l-central-core--vt-main-stair--ceiling-opening",
         "surface": "ceiling",
         "elevation_m": -1.0,
         "applied": true,
@@ -152,8 +152,8 @@
         "space_id": "L-CENTRAL-CORE/glavnaya-lestnica"
       },
       {
-        "opening_id": "l-central-core-ceiling-opening-02",
-        "source_id": "l-central-core-ceiling-opening-02",
+        "opening_id": "l-central-core--vt-main-elevator--ceiling-opening",
+        "source_id": "l-central-core--vt-main-elevator--ceiling-opening",
         "surface": "ceiling",
         "elevation_m": -1.0,
         "applied": true,
@@ -201,55 +201,109 @@
     ],
     "wall_construction": [
       {
-        "source_id": "l-central-core-wall-01",
+        "source_id": "l-central-core--elektroschitovaya--east",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-central-core-wall-02",
+        "source_id": "l-central-core--elektroschitovaya--north",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-central-core-wall-03",
+        "source_id": "l-central-core--elektroschitovaya--west",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-central-core-wall-04",
+        "source_id": "l-central-core--glavnaya-lestnica--east",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-central-core-wall-05",
+        "source_id": "l-central-core--glavnaya-lestnica--north",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-central-core-wall-06",
+        "source_id": "l-central-core--lift--east",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-central-core-wall-07",
+        "source_id": "l-central-core--lift--north",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-central-core-wall-08",
+        "source_id": "l-central-core--lift--west",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
       },
       {
-        "source_id": "l-central-core-wall-09",
+        "source_id": "l-central-core--liftovoy-holl--east",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--liftovoy-holl--north--lift",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--liftovoy-holl--north--sluzhebnyy-dostup-1-5-m",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--liftovoy-holl--west",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--obschiy-vestibyul-vertikalno--east",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--obschiy-vestibyul-vertikalno--north--glavnaya-lestnica",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--obschiy-vestibyul-vertikalno--north--liftovoy-holl",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--obschiy-vestibyul-vertikalno--west",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--sluzhebnyy-dostup-1-5-m--east",
+        "thickness_m": 0.3,
+        "height_m": 5.0,
+        "base_elevation_m": -6.0
+      },
+      {
+        "source_id": "l-central-core--sluzhebnyy-dostup-1-5-m--north",
         "thickness_m": 0.3,
         "height_m": 5.0,
         "base_elevation_m": -6.0
@@ -257,37 +311,37 @@
     ],
     "ceiling_construction": [
       {
-        "source_id": "l-central-core-ceiling-01",
+        "source_id": "l-central-core--elektroschitovaya--ceiling",
         "underside_elevation_m": -1.0,
         "top_elevation_m": -0.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "l-central-core-ceiling-02",
+        "source_id": "l-central-core--sluzhebnyy-dostup-1-5-m--ceiling",
         "underside_elevation_m": -1.0,
         "top_elevation_m": -0.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "l-central-core-ceiling-03",
+        "source_id": "l-central-core--lift--ceiling",
         "underside_elevation_m": -1.0,
         "top_elevation_m": -0.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "l-central-core-ceiling-04",
+        "source_id": "l-central-core--liftovoy-holl--ceiling",
         "underside_elevation_m": -1.0,
         "top_elevation_m": -0.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "l-central-core-ceiling-05",
+        "source_id": "l-central-core--glavnaya-lestnica--ceiling",
         "underside_elevation_m": -1.0,
         "top_elevation_m": -0.8,
         "thickness_m": 0.2
       },
       {
-        "source_id": "l-central-core-ceiling-06",
+        "source_id": "l-central-core--obschiy-vestibyul-vertikalno--ceiling",
         "underside_elevation_m": -1.0,
         "top_elevation_m": -0.8,
         "thickness_m": 0.2
@@ -298,7 +352,7 @@
     ],
     "reference_points": [
       {
-        "source_id": "l-central-core-door-01",
+        "source_id": "l-central-core--elektroschitovaya--door--sluzhebnyy-dostup-1-5-m",
         "type": "door",
         "position_m": [
           -2.007,
@@ -307,7 +361,7 @@
         ]
       },
       {
-        "source_id": "l-central-core-door-03",
+        "source_id": "l-central-core--liftovoy-holl--door--sluzhebnyy-dostup-1-5-m",
         "type": "door",
         "position_m": [
           -1.004,
@@ -316,7 +370,7 @@
         ]
       },
       {
-        "source_id": "l-central-core-door-07",
+        "source_id": "l-central-core--glavnaya-lestnica--door--outer",
         "type": "door",
         "position_m": [
           4.75,
@@ -328,14 +382,14 @@
     "anchors": [],
     "anchor_frames": [
       {
-        "anchor_id": "svg:l-central-core-ceiling-01:ceiling",
+        "anchor_id": "svg:l-central-core--elektroschitovaya--ceiling:ceiling",
         "type": "ceiling",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-ceiling-01"
+          "source_id": "l-central-core--elektroschitovaya--ceiling"
         },
         "origin": [
           -7.025,
@@ -391,347 +445,17 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:9063281764a78c0f262681fce43d19c4263f15a36868e56223d0dead897041af"
+        "geometry_hash": "sha256:e6cde42ea580d9cac8662d7a4003417bbe4d1869e486d31deadae395d2d129a7"
       },
       {
-        "anchor_id": "svg:l-central-core-ceiling-02:ceiling",
-        "type": "ceiling",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-ceiling-02"
-        },
-        "origin": [
-          -2.007,
-          -1.0,
-          0.005
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -2.007,
-              0.005
-            ],
-            [
-              0.0,
-              0.005
-            ],
-            [
-              0.0,
-              10.058
-            ],
-            [
-              -2.007,
-              10.058
-            ]
-          ],
-          "elevation_m": -1.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:a6774f7afc9456d569be01f4cde0ca95e052b0a29691542efb88ff669aec72a0"
-      },
-      {
-        "anchor_id": "svg:l-central-core-ceiling-03:ceiling",
-        "type": "ceiling",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-ceiling-03"
-        },
-        "origin": [
-          -7.025,
-          -1.0,
-          4.78
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -7.025,
-              4.78
-            ],
-            [
-              -2.007,
-              4.78
-            ],
-            [
-              -2.007,
-              10.058
-            ],
-            [
-              -7.025,
-              10.058
-            ]
-          ],
-          "elevation_m": -1.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:b65b06f02cdbfe55657c14682eb0fbc77fdc2c1001acbbd09db50dac39d9b1a5"
-      },
-      {
-        "anchor_id": "svg:l-central-core-ceiling-04:ceiling",
-        "type": "ceiling",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-ceiling-04"
-        },
-        "origin": [
-          -7.025,
-          -1.0,
-          10.058
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -7.025,
-              10.058
-            ],
-            [
-              0.0,
-              10.058
-            ],
-            [
-              0.0,
-              14.582
-            ],
-            [
-              -7.025,
-              14.582
-            ]
-          ],
-          "elevation_m": -1.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:1cfe6a3a9c2cf2752eac88f1b327cabdc2436b5bb39b894377b3a57d809c3692"
-      },
-      {
-        "anchor_id": "svg:l-central-core-ceiling-05:ceiling",
-        "type": "ceiling",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-ceiling-05"
-        },
-        "origin": [
-          0.0,
-          -1.0,
-          0.005
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              0.0,
-              0.005
-            ],
-            [
-              7.025,
-              0.005
-            ],
-            [
-              7.025,
-              14.582
-            ],
-            [
-              0.0,
-              14.582
-            ]
-          ],
-          "elevation_m": -1.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:6277a9b7c895b745c70b1b79bc5c707715f6d7fdb897bbfcca71ff3123f263cd"
-      },
-      {
-        "anchor_id": "svg:l-central-core-ceiling-06:ceiling",
-        "type": "ceiling",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-ceiling-06"
-        },
-        "origin": [
-          -7.025,
-          -1.0,
-          14.582
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -7.025,
-              14.582
-            ],
-            [
-              7.025,
-              14.582
-            ],
-            [
-              7.025,
-              19.608
-            ],
-            [
-              -7.025,
-              19.608
-            ]
-          ],
-          "elevation_m": -1.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:f9584ff12c8dba96822e2016e6a224c18234ed2d17e57e1e72403ee2aa34009a"
-      },
-      {
-        "anchor_id": "svg:l-central-core-door-01:door:center",
+        "anchor_id": "svg:l-central-core--elektroschitovaya--door--sluzhebnyy-dostup-1-5-m:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-door-01"
+          "source_id": "l-central-core--elektroschitovaya--door--sluzhebnyy-dostup-1-5-m"
         },
         "origin": [
           -2.007,
@@ -779,17 +503,17 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:3795d0d288f5811dc870264284fd0c0d0fac5a4f454aa7d203589034ab19e35d"
+        "geometry_hash": "sha256:29a9d198460a3fd0d99a12e473ec4daf1b4b9538ab8e33f99509709029ed0c6a"
       },
       {
-        "anchor_id": "svg:l-central-core-door-01:door:threshold_inside",
+        "anchor_id": "svg:l-central-core--elektroschitovaya--door--sluzhebnyy-dostup-1-5-m:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-door-01"
+          "source_id": "l-central-core--elektroschitovaya--door--sluzhebnyy-dostup-1-5-m"
         },
         "origin": [
           -1.857,
@@ -837,17 +561,17 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:4c1694c6ac91497021c51fee232cf7d0f0769a44529c734d45bfe5ddc4b20934"
+        "geometry_hash": "sha256:5d8d51b89db25b40556f8564cdac3b8a06441ff00362aaced1839d3a13924694"
       },
       {
-        "anchor_id": "svg:l-central-core-door-01:door:threshold_outside",
+        "anchor_id": "svg:l-central-core--elektroschitovaya--door--sluzhebnyy-dostup-1-5-m:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-door-01"
+          "source_id": "l-central-core--elektroschitovaya--door--sluzhebnyy-dostup-1-5-m"
         },
         "origin": [
           -2.157,
@@ -895,191 +619,317 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:3ee275c3e0d5d134e2b14ae8737be7fbcba467ee845891d6d0284f8df79c4ebe"
+        "geometry_hash": "sha256:ec81419b09b40d6b8dd4028e06bf99b6b605b619275f176eea3a84e39e18a1db"
       },
       {
-        "anchor_id": "svg:l-central-core-door-03:door:center",
+        "anchor_id": "svg:l-central-core--elektroschitovaya--east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--elektroschitovaya--east"
+        },
+        "origin": [
+          -2.007,
+          -6.0,
+          0.005
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.775,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/elektroschitovaya:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:6c2bca92b383f76bd7593e08f31a2983c91f42280d0ee43cb972707bc04eaf3d"
+      },
+      {
+        "anchor_id": "svg:l-central-core--elektroschitovaya--floor:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--elektroschitovaya--floor"
+        },
+        "origin": [
+          -7.025,
+          -6.0,
+          0.005
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -7.025,
+              0.005
+            ],
+            [
+              -2.007,
+              0.005
+            ],
+            [
+              -2.007,
+              4.78
+            ],
+            [
+              -7.025,
+              4.78
+            ]
+          ],
+          "elevation_m": -6.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:13acd25f22d5067a63dea91035d1736830189ba3ceed182374e19d98f63fa047"
+      },
+      {
+        "anchor_id": "svg:l-central-core--elektroschitovaya--north:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--elektroschitovaya--north"
+        },
+        "origin": [
+          -7.025,
+          -6.0,
+          0.005
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 5.018,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/elektroschitovaya:north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:ff7f4399159102df84a8cea14974216dea4a7e0808f5a101fb97945b930a224f"
+      },
+      {
+        "anchor_id": "svg:l-central-core--elektroschitovaya--west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--elektroschitovaya--west"
+        },
+        "origin": [
+          -7.025,
+          -6.0,
+          4.78
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.775,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/elektroschitovaya:west",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:55306a7329a9cfa5d0cf299c0558c6bedd4d8506542c8ba4a5c318617144ab13"
+      },
+      {
+        "anchor_id": "svg:l-central-core--glavnaya-lestnica--ceiling:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--glavnaya-lestnica--ceiling"
+        },
+        "origin": [
+          0.0,
+          -1.0,
+          0.005
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              0.0,
+              0.005
+            ],
+            [
+              7.025,
+              0.005
+            ],
+            [
+              7.025,
+              14.582
+            ],
+            [
+              0.0,
+              14.582
+            ]
+          ],
+          "elevation_m": -1.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:8c228d1f44d7beda8ed409a4bea2ec8c3386fc7c3903fc9f8af83d7b064db73f"
+      },
+      {
+        "anchor_id": "svg:l-central-core--glavnaya-lestnica--door--outer:door:center",
         "type": "door",
         "role": "center",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-door-03"
-        },
-        "origin": [
-          -1.004,
-          -6.0,
-          10.058
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.0,
-          "height_m": 2.1,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.1
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:4c4f198767725574731ca667aaee96b782082cf87d1b4f61593e9cee70491f8d"
-      },
-      {
-        "anchor_id": "svg:l-central-core-door-03:door:threshold_inside",
-        "type": "door",
-        "role": "threshold_inside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-door-03"
-        },
-        "origin": [
-          -1.004,
-          -6.0,
-          9.908
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.0,
-          "height_m": 2.1,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.1
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:0666b3b084246351624bc2a2f04b3e0d3976e9223b2e9c1ceab9760b78b0e62c"
-      },
-      {
-        "anchor_id": "svg:l-central-core-door-03:door:threshold_outside",
-        "type": "door",
-        "role": "threshold_outside",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-door-03"
-        },
-        "origin": [
-          -1.004,
-          -6.0,
-          10.208
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "portal",
-          "width_m": 1.0,
-          "height_m": 2.1,
-          "bottom_m": 0.0,
-          "wall_thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "inside_side": "opposite"
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            -0.15,
-            0.15
-          ],
-          "height_m": [
-            0.0,
-            2.1
-          ]
-        },
-        "metadata": {
-          "side_status": "explicit"
-        },
-        "geometry_hash": "sha256:50af6be9ff6c19cfddaa730db997b230d69eb59242be998080df5b2aed645a34"
-      },
-      {
-        "anchor_id": "svg:l-central-core-door-07:door:center",
-        "type": "door",
-        "role": "center",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-door-07"
+          "source_id": "l-central-core--glavnaya-lestnica--door--outer"
         },
         "origin": [
           4.75,
@@ -1127,17 +977,17 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:808694d080bd868813dc144a6eb67b578de8eac4b4ba98d6883a31bd1087a743"
+        "geometry_hash": "sha256:4c6bb789f5cd83d8dc49aba61144eb5ab1e4ae419c768c4ac7c62d7a96ffd16e"
       },
       {
-        "anchor_id": "svg:l-central-core-door-07:door:threshold_inside",
+        "anchor_id": "svg:l-central-core--glavnaya-lestnica--door--outer:door:threshold_inside",
         "type": "door",
         "role": "threshold_inside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-door-07"
+          "source_id": "l-central-core--glavnaya-lestnica--door--outer"
         },
         "origin": [
           4.75,
@@ -1185,17 +1035,17 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:c5da5301a4702716f4a8977f06ebc4dabe28d8713ee09eb267814c7d7fb6a088"
+        "geometry_hash": "sha256:f5c29ed943a966f415a0414c6823c2d83cdaadae77c58f03035c965b13b29e90"
       },
       {
-        "anchor_id": "svg:l-central-core-door-07:door:threshold_outside",
+        "anchor_id": "svg:l-central-core--glavnaya-lestnica--door--outer:door:threshold_outside",
         "type": "door",
         "role": "threshold_outside",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-door-07"
+          "source_id": "l-central-core--glavnaya-lestnica--door--outer"
         },
         "origin": [
           4.75,
@@ -1243,20 +1093,76 @@
         "metadata": {
           "side_status": "explicit"
         },
-        "geometry_hash": "sha256:c17a559b02d29c024162e3068db46e95d793002ee9432c89bc46114561233e09"
+        "geometry_hash": "sha256:5f166596a6a6dfe211f1f775ec8138a811438a30cf9d0fd303fcbf2b0e82bb04"
       },
       {
-        "anchor_id": "svg:l-central-core-floor-01:floor",
+        "anchor_id": "svg:l-central-core--glavnaya-lestnica--east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--glavnaya-lestnica--east"
+        },
+        "origin": [
+          7.025,
+          -6.0,
+          0.005
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 14.577,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/glavnaya-lestnica:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:0678f090cb272bc9c8aff6f88b722363db81c4b3b1e25b9de794bc88639d83d8"
+      },
+      {
+        "anchor_id": "svg:l-central-core--glavnaya-lestnica--floor:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-floor-01"
+          "source_id": "l-central-core--glavnaya-lestnica--floor"
         },
         "origin": [
-          -7.025,
+          0.0,
           -6.0,
           0.005
         ],
@@ -1279,20 +1185,20 @@
           "kind": "planar_surface",
           "polygon_xz_m": [
             [
-              -7.025,
+              0.0,
               0.005
             ],
             [
-              -2.007,
+              7.025,
               0.005
             ],
             [
-              -2.007,
-              4.78
+              7.025,
+              14.582
             ],
             [
-              -7.025,
-              4.78
+              0.0,
+              14.582
             ]
           ],
           "elevation_m": -6.0,
@@ -1309,31 +1215,153 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:9ff192e4f34cc332f32694a60c65eb547c91f0a2bfb24041c34d2de9c7b7988f"
+        "geometry_hash": "sha256:019ede75cd67b93c17beb2520061ef7f6b84086d25661e5e5272c5ae4bc50e1c"
       },
       {
-        "anchor_id": "svg:l-central-core-floor-02:floor",
-        "type": "floor",
+        "anchor_id": "svg:l-central-core--glavnaya-lestnica--north:wall",
+        "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-floor-02"
+          "source_id": "l-central-core--glavnaya-lestnica--north"
+        },
+        "origin": [
+          0.0,
+          -6.0,
+          0.005
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 7.025,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/glavnaya-lestnica:north",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:11b550278679b1c363545a89e3f0806821d385391733c4d98250f0a089d4b9e4"
+      },
+      {
+        "anchor_id": "svg:l-central-core--lift--ceiling:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--lift--ceiling"
+        },
+        "origin": [
+          -7.025,
+          -1.0,
+          4.78
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -7.025,
+              4.78
+            ],
+            [
+              -2.007,
+              4.78
+            ],
+            [
+              -2.007,
+              10.058
+            ],
+            [
+              -7.025,
+              10.058
+            ]
+          ],
+          "elevation_m": -1.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:204f90c70cce7050f35f302837e15151b04eb35e89d66959aaf2d3ecefb1ca51"
+      },
+      {
+        "anchor_id": "svg:l-central-core--lift--east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--lift--east"
         },
         "origin": [
           -2.007,
           -6.0,
-          0.005
+          4.78
         ],
         "forward": [
-          1.0,
           0.0,
-          0.0
+          0.0,
+          1.0
         ],
         "normal": [
+          -1.0,
           0.0,
-          1.0,
           0.0
         ],
         "up": [
@@ -1342,50 +1370,40 @@
           0.0
         ],
         "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -2.007,
-              0.005
-            ],
-            [
-              0.0,
-              0.005
-            ],
-            [
-              0.0,
-              10.058
-            ],
-            [
-              -2.007,
-              10.058
-            ]
-          ],
-          "elevation_m": -6.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
+          "kind": "linear_surface",
+          "length_m": 5.278,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/lift:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
         },
         "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
           "normal_offset_m": [
             0.0,
             0.0
           ],
           "height_m": [
             0.0,
-            0.0
+            5.0
           ]
         },
-        "geometry_hash": "sha256:d8978e18880bd7a700556ac3777d64651e3a9bf7fb3f5b1e2a9eacc9c5707597"
+        "geometry_hash": "sha256:db8c8fcaee94d3b20757ba3c5f6f83718f7615d0b779015a21facf787f53645d"
       },
       {
-        "anchor_id": "svg:l-central-core-floor-03:floor",
+        "anchor_id": "svg:l-central-core--lift--floor:floor",
         "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-floor-03"
+          "source_id": "l-central-core--lift--floor"
         },
         "origin": [
           -7.025,
@@ -1441,271 +1459,17 @@
             0.0
           ]
         },
-        "geometry_hash": "sha256:7c4bdc2742230ad82ba5384993d38c368003bc3114c99d631338121391d7d9c6"
+        "geometry_hash": "sha256:282aef113b716d179d7c9e12aa7b8d31e6e77b3b1916e94b8c4711b0fa2ec58c"
       },
       {
-        "anchor_id": "svg:l-central-core-floor-04:floor",
-        "type": "floor",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-floor-04"
-        },
-        "origin": [
-          -7.025,
-          -6.0,
-          10.058
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -7.025,
-              10.058
-            ],
-            [
-              0.0,
-              10.058
-            ],
-            [
-              0.0,
-              14.582
-            ],
-            [
-              -7.025,
-              14.582
-            ]
-          ],
-          "elevation_m": -6.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:9f325d996d8775374d3e299d42896ebc194500206f96e6164744ee8b977eed7e"
-      },
-      {
-        "anchor_id": "svg:l-central-core-floor-05:floor",
-        "type": "floor",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-floor-05"
-        },
-        "origin": [
-          0.0,
-          -6.0,
-          0.005
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              0.0,
-              0.005
-            ],
-            [
-              7.025,
-              0.005
-            ],
-            [
-              7.025,
-              14.582
-            ],
-            [
-              0.0,
-              14.582
-            ]
-          ],
-          "elevation_m": -6.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:e6baabb380c15b32febf737e9e9cccca9faf6f08408541a42675c1becba1a7d1"
-      },
-      {
-        "anchor_id": "svg:l-central-core-floor-06:floor",
-        "type": "floor",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-floor-06"
-        },
-        "origin": [
-          -7.025,
-          -6.0,
-          14.582
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "planar_surface",
-          "polygon_xz_m": [
-            [
-              -7.025,
-              14.582
-            ],
-            [
-              7.025,
-              14.582
-            ],
-            [
-              7.025,
-              19.608
-            ],
-            [
-              -7.025,
-              19.608
-            ]
-          ],
-          "elevation_m": -6.0,
-          "thickness_m": 0.2,
-          "orientation_policy": "world_positive_x"
-        },
-        "placement_limits": {
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            0.0
-          ]
-        },
-        "geometry_hash": "sha256:89548c914d092337f89415d4270ce29d2efd46a71bc472528f013c5c747930fe"
-      },
-      {
-        "anchor_id": "svg:l-central-core-wall-01:wall",
+        "anchor_id": "svg:l-central-core--lift--north:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-wall-01"
-        },
-        "origin": [
-          -7.025,
-          -6.0,
-          0.005
-        ],
-        "forward": [
-          1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 14.05,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-01",
-          "normal_side": "normal",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:05c3ae708b83bd3a5f6f2b8c0985c00bce2d54c9309da5c79e9b604a0df1b1aa"
-      },
-      {
-        "anchor_id": "svg:l-central-core-wall-02:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-wall-02"
+          "source_id": "l-central-core--lift--north"
         },
         "origin": [
           -7.025,
@@ -1733,7 +1497,7 @@
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-02",
+          "surface_side_id": "L-CENTRAL-CORE/lift:north",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -1751,17 +1515,435 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:51486fdb69309efd74c9212b30723c7c64e41f2427690870570e2170fd462d44"
+        "geometry_hash": "sha256:473f31e5bc009c22ed24f6bbf42ebd518dd73fadc18f8ab2ea5ae3768ef8f099"
       },
       {
-        "anchor_id": "svg:l-central-core-wall-03:wall",
+        "anchor_id": "svg:l-central-core--lift--west:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-wall-03"
+          "source_id": "l-central-core--lift--west"
+        },
+        "origin": [
+          -7.025,
+          -6.0,
+          10.058
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 5.278,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/lift:west",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:5fd9ba40143b516e2a33249a7cde1e0598f79c9bd2dbe46ae9edcd1e5b5f41ac"
+      },
+      {
+        "anchor_id": "svg:l-central-core--liftovoy-holl--ceiling:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--liftovoy-holl--ceiling"
+        },
+        "origin": [
+          -7.025,
+          -1.0,
+          10.058
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -7.025,
+              10.058
+            ],
+            [
+              0.0,
+              10.058
+            ],
+            [
+              0.0,
+              14.582
+            ],
+            [
+              -7.025,
+              14.582
+            ]
+          ],
+          "elevation_m": -1.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:38d906591d7e8b36af5a2af822da340ab07f270bc9e3804c388daa5bbf75d431"
+      },
+      {
+        "anchor_id": "svg:l-central-core--liftovoy-holl--door--sluzhebnyy-dostup-1-5-m:door:center",
+        "type": "door",
+        "role": "center",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--liftovoy-holl--door--sluzhebnyy-dostup-1-5-m"
+        },
+        "origin": [
+          -1.004,
+          -6.0,
+          10.058
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.1
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:24edefbc81035081602da033f1d57c846bff1c0ce059357f57c5b7e0061af083"
+      },
+      {
+        "anchor_id": "svg:l-central-core--liftovoy-holl--door--sluzhebnyy-dostup-1-5-m:door:threshold_inside",
+        "type": "door",
+        "role": "threshold_inside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--liftovoy-holl--door--sluzhebnyy-dostup-1-5-m"
+        },
+        "origin": [
+          -1.004,
+          -6.0,
+          9.908
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.1
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:49387713c9018a6303ee78d9e2b80921d84b16c3154e8bc89a7b18d4aeb7c30e"
+      },
+      {
+        "anchor_id": "svg:l-central-core--liftovoy-holl--door--sluzhebnyy-dostup-1-5-m:door:threshold_outside",
+        "type": "door",
+        "role": "threshold_outside",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--liftovoy-holl--door--sluzhebnyy-dostup-1-5-m"
+        },
+        "origin": [
+          -1.004,
+          -6.0,
+          10.208
+        ],
+        "forward": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "portal",
+          "width_m": 1.0,
+          "height_m": 2.1,
+          "bottom_m": 0.0,
+          "wall_thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "inside_side": "opposite"
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            -0.15,
+            0.15
+          ],
+          "height_m": [
+            0.0,
+            2.1
+          ]
+        },
+        "metadata": {
+          "side_status": "explicit"
+        },
+        "geometry_hash": "sha256:110c6ab1bb95163db147cbe69879df99b49e1d81fe5a1fa955cc6479be34f8b6"
+      },
+      {
+        "anchor_id": "svg:l-central-core--liftovoy-holl--east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--liftovoy-holl--east"
+        },
+        "origin": [
+          0.0,
+          -6.0,
+          10.058
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.524,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/liftovoy-holl:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:4e6805d5a06302eb510b341ea8e5d13eb5c00f847b7184c14aa9aa69e4dfae07"
+      },
+      {
+        "anchor_id": "svg:l-central-core--liftovoy-holl--floor:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--liftovoy-holl--floor"
+        },
+        "origin": [
+          -7.025,
+          -6.0,
+          10.058
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -7.025,
+              10.058
+            ],
+            [
+              0.0,
+              10.058
+            ],
+            [
+              0.0,
+              14.582
+            ],
+            [
+              -7.025,
+              14.582
+            ]
+          ],
+          "elevation_m": -6.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:e9d5071b866847fa1e12e8640ac66f0a4adff1bc4252485ec5b0f13b38923da5"
+      },
+      {
+        "anchor_id": "svg:l-central-core--liftovoy-holl--north--lift:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--liftovoy-holl--north--lift"
         },
         "origin": [
           -7.025,
@@ -1785,11 +1967,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 7.025,
+          "length_m": 5.018,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-03",
+          "surface_side_id": "L-CENTRAL-CORE/liftovoy-holl:north:lift",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -1807,17 +1989,373 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:56b6311dc13d37056116b343298fc4f68bb87e86589463e010cac6d539b67a94"
+        "geometry_hash": "sha256:d1dc96e0b8c0ec833ebd8dc32a816380e83c1edf9f07cfe3c710c69ebc4a58be"
       },
       {
-        "anchor_id": "svg:l-central-core-wall-04:wall",
+        "anchor_id": "svg:l-central-core--liftovoy-holl--north--sluzhebnyy-dostup-1-5-m:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-wall-04"
+          "source_id": "l-central-core--liftovoy-holl--north--sluzhebnyy-dostup-1-5-m"
+        },
+        "origin": [
+          -2.007,
+          -6.0,
+          10.058
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 2.007,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/liftovoy-holl:north:sluzhebnyy-dostup-1-5-m",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:9f50611139cec7ab72e2cd9e01540cd781e8b581398b0f95a285609dddc604e9"
+      },
+      {
+        "anchor_id": "svg:l-central-core--liftovoy-holl--west:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--liftovoy-holl--west"
+        },
+        "origin": [
+          -7.025,
+          -6.0,
+          14.582
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "normal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.524,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/liftovoy-holl:west",
+          "normal_side": "opposite",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:c60914b4dd3d068bf15c502664c28847dacf5339ef4a5f8546f950d166f9f1ab"
+      },
+      {
+        "anchor_id": "svg:l-central-core--obschiy-vestibyul-vertikalno--ceiling:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--obschiy-vestibyul-vertikalno--ceiling"
+        },
+        "origin": [
+          -7.025,
+          -1.0,
+          14.582
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -7.025,
+              14.582
+            ],
+            [
+              7.025,
+              14.582
+            ],
+            [
+              7.025,
+              19.6
+            ],
+            [
+              -7.025,
+              19.6
+            ]
+          ],
+          "elevation_m": -1.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:c7616412a534a0f3ebcb219b5b752f11f76712a7a2affc990b6bf8843dd090a1"
+      },
+      {
+        "anchor_id": "svg:l-central-core--obschiy-vestibyul-vertikalno--east:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--obschiy-vestibyul-vertikalno--east"
+        },
+        "origin": [
+          7.025,
+          -6.0,
+          14.582
+        ],
+        "forward": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "normal": [
+          -1.0,
+          0.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 4.868,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno:east",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:3e43e614737c9a29103c328f7e0ae6f096f8b2f2fe757bc508fe106800cc6b41"
+      },
+      {
+        "anchor_id": "svg:l-central-core--obschiy-vestibyul-vertikalno--floor:floor",
+        "type": "floor",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--obschiy-vestibyul-vertikalno--floor"
+        },
+        "origin": [
+          -7.025,
+          -6.0,
+          14.582
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -7.025,
+              14.582
+            ],
+            [
+              7.025,
+              14.582
+            ],
+            [
+              7.025,
+              19.6
+            ],
+            [
+              -7.025,
+              19.6
+            ]
+          ],
+          "elevation_m": -6.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:9441be4b209945cc3f6a3c191b6730d3dd82f38e9c78a95952771b305ef005a4"
+      },
+      {
+        "anchor_id": "svg:l-central-core--obschiy-vestibyul-vertikalno--north--glavnaya-lestnica:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--obschiy-vestibyul-vertikalno--north--glavnaya-lestnica"
+        },
+        "origin": [
+          0.0,
+          -6.0,
+          14.582
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "linear_surface",
+          "length_m": 7.025,
+          "height_m": 5.0,
+          "thickness_m": 0.3,
+          "orientation_policy": "canonical_endpoint_order",
+          "surface_side_id": "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno:north:glavnaya-lestnica",
+          "normal_side": "normal",
+          "source_segment_index": 1
+        },
+        "placement_limits": {
+          "along_normalized": [
+            0.0,
+            1.0
+          ],
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            5.0
+          ]
+        },
+        "geometry_hash": "sha256:d786c95dcc366b4d920944c378bec094452b8bacce32203d6d09763836b9bfdc"
+      },
+      {
+        "anchor_id": "svg:l-central-core--obschiy-vestibyul-vertikalno--north--liftovoy-holl:wall",
+        "type": "wall",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--obschiy-vestibyul-vertikalno--north--liftovoy-holl"
         },
         "origin": [
           -7.025,
@@ -1841,11 +2379,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 14.05,
+          "length_m": 7.025,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-04",
+          "surface_side_id": "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno:north:liftovoy-holl",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -1863,78 +2401,22 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:540b8adb97cc197d47da8248ae0a440bfae308de98cf1231a78ea080c0a598a0"
+        "geometry_hash": "sha256:9294c67ee7618c46f8cba07de00d60120cae8412d1845d0e0e4806cafc4d2c3c"
       },
       {
-        "anchor_id": "svg:l-central-core-wall-05:wall",
+        "anchor_id": "svg:l-central-core--obschiy-vestibyul-vertikalno--west:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-wall-05"
-        },
-        "origin": [
-          7.025,
-          -6.0,
-          19.608
-        ],
-        "forward": [
-          -1.0,
-          0.0,
-          0.0
-        ],
-        "normal": [
-          0.0,
-          0.0,
-          -1.0
-        ],
-        "up": [
-          0.0,
-          1.0,
-          0.0
-        ],
-        "bounds": {
-          "kind": "linear_surface",
-          "length_m": 14.05,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-05",
-          "normal_side": "opposite",
-          "source_segment_index": 1
-        },
-        "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
-          "normal_offset_m": [
-            0.0,
-            0.0
-          ],
-          "height_m": [
-            0.0,
-            5.0
-          ]
-        },
-        "geometry_hash": "sha256:124e9b2264621212c66a91fa8d17dc9283582c8b431a6c9d54a2121d0e314b64"
-      },
-      {
-        "anchor_id": "svg:l-central-core-wall-06:wall",
-        "type": "wall",
-        "role": "surface",
-        "status": "active",
-        "source_ref": {
-          "artifact_id": "geometry-handoff",
-          "source_kind": "svg",
-          "source_id": "l-central-core-wall-06"
+          "source_id": "l-central-core--obschiy-vestibyul-vertikalno--west"
         },
         "origin": [
           -7.025,
           -6.0,
-          19.608
+          19.45
         ],
         "forward": [
           0.0,
@@ -1953,11 +2435,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 19.603,
+          "length_m": 4.868,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-06",
+          "surface_side_id": "L-CENTRAL-CORE/obschiy-vestibyul-vertikalno:west",
           "normal_side": "opposite",
           "source_segment_index": 1
         },
@@ -1975,20 +2457,86 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:d3a2bc4aa277a1f211e015776de4ee3f7641ae8519cd38ed59b9e3a1fbec0c95"
+        "geometry_hash": "sha256:7d63742490061eb1663ffd3c282850d49890c1e6fed7754d7024cd3b47046d67"
       },
       {
-        "anchor_id": "svg:l-central-core-wall-07:wall",
+        "anchor_id": "svg:l-central-core--sluzhebnyy-dostup-1-5-m--ceiling:ceiling",
+        "type": "ceiling",
+        "role": "surface",
+        "status": "active",
+        "source_ref": {
+          "artifact_id": "geometry-handoff",
+          "source_kind": "svg",
+          "source_id": "l-central-core--sluzhebnyy-dostup-1-5-m--ceiling"
+        },
+        "origin": [
+          -2.007,
+          -1.0,
+          0.005
+        ],
+        "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "up": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "bounds": {
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -2.007,
+              0.005
+            ],
+            [
+              0.0,
+              0.005
+            ],
+            [
+              0.0,
+              10.058
+            ],
+            [
+              -2.007,
+              10.058
+            ]
+          ],
+          "elevation_m": -1.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
+        },
+        "placement_limits": {
+          "normal_offset_m": [
+            0.0,
+            0.0
+          ],
+          "height_m": [
+            0.0,
+            0.0
+          ]
+        },
+        "geometry_hash": "sha256:8099a30d45a39d78d889a6d372b8ca843fa74f79f6d57697e929dec7d8ffe09c"
+      },
+      {
+        "anchor_id": "svg:l-central-core--sluzhebnyy-dostup-1-5-m--east:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-wall-07"
+          "source_id": "l-central-core--sluzhebnyy-dostup-1-5-m--east"
         },
         "origin": [
-          -2.007,
+          0.0,
           -6.0,
           0.005
         ],
@@ -2013,7 +2561,7 @@
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-07",
+          "surface_side_id": "L-CENTRAL-CORE/sluzhebnyy-dostup-1-5-m:east",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -2031,31 +2579,31 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:21a98a11f9afaebf0b91f39aa25e2c6fa9e6cae0ae9db73998c5041ca5a8d016"
+        "geometry_hash": "sha256:06eb1c7b3047fc38f4fb32543cea7b5bbf2fcb0f93fa4266f93b498303075304"
       },
       {
-        "anchor_id": "svg:l-central-core-wall-08:wall",
-        "type": "wall",
+        "anchor_id": "svg:l-central-core--sluzhebnyy-dostup-1-5-m--floor:floor",
+        "type": "floor",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-wall-08"
+          "source_id": "l-central-core--sluzhebnyy-dostup-1-5-m--floor"
         },
         "origin": [
-          0.0,
+          -2.007,
           -6.0,
           0.005
         ],
         "forward": [
+          1.0,
           0.0,
-          0.0,
-          1.0
+          0.0
         ],
         "normal": [
-          -1.0,
           0.0,
+          1.0,
           0.0
         ],
         "up": [
@@ -2064,55 +2612,65 @@
           0.0
         ],
         "bounds": {
-          "kind": "linear_surface",
-          "length_m": 14.577,
-          "height_m": 5.0,
-          "thickness_m": 0.3,
-          "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-08",
-          "normal_side": "normal",
-          "source_segment_index": 1
+          "kind": "planar_surface",
+          "polygon_xz_m": [
+            [
+              -2.007,
+              0.005
+            ],
+            [
+              0.0,
+              0.005
+            ],
+            [
+              0.0,
+              10.058
+            ],
+            [
+              -2.007,
+              10.058
+            ]
+          ],
+          "elevation_m": -6.0,
+          "thickness_m": 0.2,
+          "orientation_policy": "world_positive_x"
         },
         "placement_limits": {
-          "along_normalized": [
-            0.0,
-            1.0
-          ],
           "normal_offset_m": [
             0.0,
             0.0
           ],
           "height_m": [
             0.0,
-            5.0
+            0.0
           ]
         },
-        "geometry_hash": "sha256:f35da8f5423c72f5510a7459567f22087c909bcde032fe882c411e88990033da"
+        "geometry_hash": "sha256:940199b0988d23038281a57125e6fabc468c8c07e10aeba5da3f2ec421ecbdf6"
       },
       {
-        "anchor_id": "svg:l-central-core-wall-09:wall",
+        "anchor_id": "svg:l-central-core--sluzhebnyy-dostup-1-5-m--north:wall",
         "type": "wall",
         "role": "surface",
         "status": "active",
         "source_ref": {
           "artifact_id": "geometry-handoff",
           "source_kind": "svg",
-          "source_id": "l-central-core-wall-09"
+          "source_id": "l-central-core--sluzhebnyy-dostup-1-5-m--north"
         },
         "origin": [
-          7.025,
+          -2.007,
           -6.0,
           0.005
         ],
         "forward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "normal": [
           0.0,
           0.0,
           1.0
-        ],
-        "normal": [
-          -1.0,
-          0.0,
-          0.0
         ],
         "up": [
           0.0,
@@ -2121,11 +2679,11 @@
         ],
         "bounds": {
           "kind": "linear_surface",
-          "length_m": 19.603,
+          "length_m": 2.007,
           "height_m": 5.0,
           "thickness_m": 0.3,
           "orientation_policy": "canonical_endpoint_order",
-          "surface_side_id": "L-CENTRAL-CORE/wall-09",
+          "surface_side_id": "L-CENTRAL-CORE/sluzhebnyy-dostup-1-5-m:north",
           "normal_side": "normal",
           "source_segment_index": 1
         },
@@ -2143,7 +2701,7 @@
             5.0
           ]
         },
-        "geometry_hash": "sha256:a262956b39d021380bbcb45dea4b3a9c093aca1bd114ddc002c3687b6e04a2d5"
+        "geometry_hash": "sha256:c8106069f3b3e78af651b85c7cedd70213b3f47c8eb46e63509e4ec941e6c545"
       }
     ],
     "space_ids": [
@@ -2154,42 +2712,43 @@
   "counts": {
     "input_floor": 6,
     "input_ceiling": 6,
-    "input_wall": 9,
+    "input_wall": 18,
     "input_door": 3,
-    "input_opening": 4,
+    "input_opening": 3,
     "input_ceiling_opening": 2,
     "input_floor_opening": 1,
     "ceiling_wall_alignment_issues": 0,
     "area_floors_expanded_to_wall_outer": 0,
     "area_ceilings_expanded_to_wall_outer": 0,
-    "wall_segments_before_normalization": 17,
-    "wall_segments_after_merge": 17,
-    "wall_segments_after_normalization": 27,
-    "wall_joints_resolved": 14,
+    "wall_segments_before_normalization": 25,
+    "wall_segments_after_merge": 15,
+    "wall_segments_after_normalization": 25,
+    "wall_joints_resolved": 12,
     "wall_volume_overlaps": 0,
     "floor_polygons_before_normalization": 6,
-    "floor_cells_after_normalization": 13,
+    "floor_cells_after_normalization": 17,
     "floor_openings_requested": 1,
     "floor_openings_applied": 1,
     "ceiling_polygons_before_normalization": 6,
-    "ceiling_cells_after_normalization": 16,
+    "ceiling_cells_after_normalization": 20,
     "ceiling_openings_requested": 2,
     "ceiling_openings_applied": 2,
     "removed_stale_generated_parts": 0,
     "material_files_created": 4,
     "material_files_preserved": 0,
-    "generated_floors": 11,
-    "generated_ceilings": 12,
-    "generated_walls": 27,
+    "generated_floors": 15,
+    "generated_ceilings": 16,
+    "generated_walls": 25,
     "generated_obstacles": 0,
     "generated_markers": 3,
-    "generated_floor_visual_nodes": 11,
-    "generated_ceiling_visual_nodes": 12,
-    "generated_wall_visual_nodes": 27,
+    "generated_floor_visual_nodes": 15,
+    "generated_ceiling_visual_nodes": 16,
+    "generated_wall_visual_nodes": 25,
     "generated_obstacle_visual_nodes": 0
   },
   "assumptions": [
-    "Wall joint normalization converted 14 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
+    "Wall normalization merged 10 duplicate or overlapping segment(s) with tolerance 0.02 m",
+    "Wall joint normalization converted 12 overlapping branch endpoint(s) to butt joints with a 0.0005 m render gap",
     "Floor openings removed 21.56 m2 from visible and collision geometry",
     "Ceiling openings removed 97.72 m2 from visible and collision geometry"
   ],
@@ -2298,56 +2857,62 @@
     "floor_geometry.obj",
     "ceiling_geometry.obj",
     "wall_geometry.obj",
-    "floor_001_l_central_core_floor_01.obj",
-    "floor_002_l_central_core_floor_03.obj",
-    "floor_003_l_central_core_floor_03.obj",
-    "floor_004_l_central_core_floor_04.obj",
-    "floor_005_l_central_core_floor_06.obj",
-    "floor_006_l_central_core_floor_02.obj",
-    "floor_007_l_central_core_floor_02.obj",
-    "floor_008_l_central_core_floor_02.obj",
-    "floor_009_l_central_core_floor_05.obj",
-    "floor_010_l_central_core_floor_05.obj",
-    "floor_011_l_central_core_floor_05.obj",
-    "ceiling_001_l_central_core_ceiling_01.obj",
-    "ceiling_002_l_central_core_ceiling_03.obj",
-    "ceiling_003_l_central_core_ceiling_03.obj",
-    "ceiling_004_l_central_core_ceiling_04.obj",
-    "ceiling_005_l_central_core_ceiling_06.obj",
-    "ceiling_006_l_central_core_ceiling_02.obj",
-    "ceiling_007_l_central_core_ceiling_02.obj",
-    "ceiling_008_l_central_core_ceiling_02.obj",
-    "ceiling_009_l_central_core_ceiling_05.obj",
-    "ceiling_010_l_central_core_ceiling_05.obj",
-    "ceiling_011_l_central_core_ceiling_05.obj",
-    "ceiling_012_l_central_core_ceiling_05.obj",
-    "wall_001_l_central_core_wall_01.obj",
-    "wall_002_l_central_core_wall_01.obj",
-    "wall_003_l_central_core_wall_01.obj",
-    "wall_004_l_central_core_wall_02.obj",
-    "wall_005_l_central_core_wall_03.obj",
-    "wall_006_l_central_core_wall_03.obj",
-    "wall_007_l_central_core_wall_03.obj",
-    "wall_008_l_central_core_wall_03.obj",
-    "wall_009_l_central_core_wall_03.obj",
-    "wall_010_l_central_core_wall_04.obj",
-    "wall_011_l_central_core_wall_04.obj",
-    "wall_012_l_central_core_wall_04.obj",
-    "wall_013_l_central_core_wall_04.obj",
-    "wall_014_l_central_core_wall_05.obj",
-    "wall_015_l_central_core_wall_05.obj",
-    "wall_016_l_central_core_wall_06.obj",
-    "wall_017_l_central_core_wall_06.obj",
-    "wall_018_l_central_core_wall_06.obj",
-    "wall_019_l_central_core_wall_06.obj",
-    "wall_020_l_central_core_wall_07.obj",
-    "wall_021_l_central_core_wall_07.obj",
-    "wall_022_l_central_core_wall_07.obj",
-    "wall_023_l_central_core_wall_07.obj",
-    "wall_024_l_central_core_wall_08.obj",
-    "wall_025_l_central_core_wall_08.obj",
-    "wall_026_l_central_core_wall_09.obj",
-    "wall_027_l_central_core_wall_09.obj",
+    "floor_001_l_central_core_elektroschitovaya_floor.obj",
+    "floor_002_l_central_core_elektroschitovaya_floor.obj",
+    "floor_003_l_central_core_lift_floor.obj",
+    "floor_004_l_central_core_lift_floor.obj",
+    "floor_005_l_central_core_lift_floor.obj",
+    "floor_006_l_central_core_liftovoy_holl_floor.obj",
+    "floor_007_l_central_core_liftovoy_holl_floor.obj",
+    "floor_008_l_central_core_obschiy_vestibyul_vertikalno_floor.obj",
+    "floor_009_l_central_core_sluzhebnyy_dostup_1_5_m_floor.obj",
+    "floor_010_l_central_core_sluzhebnyy_dostup_1_5_m_floor.obj",
+    "floor_011_l_central_core_sluzhebnyy_dostup_1_5_m_floor.obj",
+    "floor_012_l_central_core_sluzhebnyy_dostup_1_5_m_floor.obj",
+    "floor_013_l_central_core_glavnaya_lestnica_floor.obj",
+    "floor_014_l_central_core_glavnaya_lestnica_floor.obj",
+    "floor_015_l_central_core_glavnaya_lestnica_floor.obj",
+    "ceiling_001_l_central_core_elektroschitovaya_ceiling.obj",
+    "ceiling_002_l_central_core_elektroschitovaya_ceiling.obj",
+    "ceiling_003_l_central_core_lift_ceiling.obj",
+    "ceiling_004_l_central_core_lift_ceiling.obj",
+    "ceiling_005_l_central_core_lift_ceiling.obj",
+    "ceiling_006_l_central_core_liftovoy_holl_ceiling.obj",
+    "ceiling_007_l_central_core_liftovoy_holl_ceiling.obj",
+    "ceiling_008_3be8d5b44527.obj",
+    "ceiling_009_l_central_core_sluzhebnyy_dostup_1_5_m_ceiling.obj",
+    "ceiling_010_l_central_core_sluzhebnyy_dostup_1_5_m_ceiling.obj",
+    "ceiling_011_l_central_core_sluzhebnyy_dostup_1_5_m_ceiling.obj",
+    "ceiling_012_l_central_core_sluzhebnyy_dostup_1_5_m_ceiling.obj",
+    "ceiling_013_l_central_core_glavnaya_lestnica_ceiling.obj",
+    "ceiling_014_l_central_core_glavnaya_lestnica_ceiling.obj",
+    "ceiling_015_l_central_core_glavnaya_lestnica_ceiling.obj",
+    "ceiling_016_l_central_core_glavnaya_lestnica_ceiling.obj",
+    "wall_001_cc1533572342.obj",
+    "wall_002_5bbc240e31dd.obj",
+    "wall_003_b393073ffa2a.obj",
+    "wall_004_l_central_core_lift_north.obj",
+    "wall_005_l_central_core_liftovoy_holl_north_lift.obj",
+    "wall_006_0e34a9d71478.obj",
+    "wall_007_ca38ea61ebd5.obj",
+    "wall_008_b70e30fbdb69.obj",
+    "wall_009_7b31dcbbdbf6.obj",
+    "wall_010_ebda8eb1a067.obj",
+    "wall_011_0c5057088600.obj",
+    "wall_012_0d698902db25.obj",
+    "wall_013_275a8462a424.obj",
+    "wall_014_4fb9b5bc5bfd.obj",
+    "wall_015_cfc19dec1e65.obj",
+    "wall_016_4d715c31b000.obj",
+    "wall_017_b4655eabd3fc.obj",
+    "wall_018_l_central_core_elektroschitovaya_east.obj",
+    "wall_019_43ea6717f03d.obj",
+    "wall_020_a4884ebf523d.obj",
+    "wall_021_l_central_core_elektroschitovaya_east.obj",
+    "wall_022_415210860a79.obj",
+    "wall_023_35bbca6d95b2.obj",
+    "wall_024_8bed9ec9097c.obj",
+    "wall_025_85c933d8010b.obj",
     "conversion_report.json"
   ]
 }

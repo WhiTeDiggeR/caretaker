@@ -2,7 +2,7 @@
 """Find surfaces that would flicker (z-fighting) in the generated complex, from the canonical SVGs (#205).
 
 The converter (svg-plan-to-godot 1.19, ``--wall-thickness 0.3``, butt joints) turns every wall line into a
-box ``thickness`` wide that reaches ``thickness / 2`` past each end, and every floor/ceiling rect into a
+box ``thickness`` wide between the line ends (a free end is not extended; measured on the generated packages), and every floor/ceiling rect into a
 slab of exactly that rect. It resolves joints only inside one sector. So, per level:
 
 - ``floor_overlap``   floors of two sectors overlap: both floor and ceiling slabs are drawn twice;
@@ -70,8 +70,8 @@ def wall_box(wall: tuple, thickness: float = WALL_THICKNESS_M) -> tuple[float, f
     orient, fixed, lo, hi = axis
     half = thickness / 2
     if orient == "h":
-        return lo - half, fixed - half, hi + half, fixed + half
-    return fixed - half, lo - half, fixed + half, hi + half
+        return lo, fixed - half, hi, fixed + half
+    return fixed - half, lo, fixed + half, hi
 
 
 def overlap_area(a: tuple[float, float, float, float], b: tuple[float, float, float, float]) -> float:
@@ -116,7 +116,7 @@ def _inside_sector(sector: dict) -> list[dict]:
         for idb, (ob, fb, lb, hb) in walls[i + 1:]:
             if oa != ob or abs(fa - fb) <= MERGE_TOLERANCE_M or abs(fa - fb) >= WALL_THICKNESS_M - EPS:
                 continue
-            reach = min(ha, hb) - max(la, lb) + WALL_THICKNESS_M
+            reach = min(ha, hb) - max(la, lb)
             if reach > EPS:
                 area = reach * (WALL_THICKNESS_M - abs(fa - fb))
                 if area > MIN_AREA_M2:

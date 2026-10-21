@@ -17,7 +17,8 @@
   "wall_height_m": 4.5,
   "rooms": [
     {
-      "id": "t-old-access-floor-01",
+      "id": "t-old-access--staraya-lestnica--floor",
+      "stable_id": "T-OLD-ACCESS/staraya-lestnica:floor",
       "space_id": "T-OLD-ACCESS/staraya-lestnica",
       "label": "СТАРАЯ ЛЕСТНИЦА / ↑ в холл старого ядра",
       "class": "shaft",
@@ -41,7 +42,8 @@
       "area_m2": 134.0
     },
     {
-      "id": "t-old-access-floor-02",
+      "id": "t-old-access--staryy-sluzhebnyy-vestibyul--floor",
+      "stable_id": "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul:floor",
       "space_id": "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul",
       "label": "СТАРЫЙ СЛУЖЕБНЫЙ ВЕСТИБЮЛЬ",
       "class": "corridor",
@@ -65,7 +67,8 @@
       "area_m2": 163.8
     },
     {
-      "id": "t-old-access-floor-03",
+      "id": "t-old-access--podstanciya--floor",
+      "stable_id": "T-OLD-ACCESS/podstanciya:floor",
       "space_id": "T-OLD-ACCESS/podstanciya",
       "label": "ПОДСТАНЦИЯ / старого ядра · тупиковая",
       "class": "energy",
@@ -91,23 +94,8 @@
   ],
   "openings": [
     {
-      "id": "t-old-access-opening-01",
-      "type": "opening",
-      "source": "amendment D-30e",
-      "source_id": "amendment-D-30e",
-      "width_m": 4.0,
-      "rooms": [
-        "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
-      ],
-      "world_m": [
-        -89.3,
-        25.1,
-        -85.3,
-        25.1
-      ]
-    },
-    {
-      "id": "t-old-access-opening-02",
+      "id": "t-old-access--staraya-lestnica--opening--staryy-sluzhebnyy-vestibyul",
+      "stable_id": "T-OLD-ACCESS/staraya-lestnica:opening:staryy-sluzhebnyy-vestibyul",
       "type": "opening",
       "source": "amendment D-30f",
       "source_id": "amendment-D-30f",
@@ -124,7 +112,8 @@
       ]
     },
     {
-      "id": "t-old-access-door-03",
+      "id": "t-old-access--podstanciya--door--staryy-sluzhebnyy-vestibyul",
+      "stable_id": "T-OLD-ACCESS/podstanciya:door:staryy-sluzhebnyy-vestibyul",
       "type": "door",
       "source": "amendment D-30g",
       "source_id": "amendment-D-30g",
@@ -141,7 +130,8 @@
       ]
     },
     {
-      "id": "t-old-access-door-04",
+      "id": "t-old-access--staraya-lestnica--door--outer",
+      "stable_id": "T-OLD-ACCESS/staraya-lestnica:door:outer",
       "type": "door",
       "source": "amendment D-41d",
       "source_id": "amendment-D-41d",
@@ -188,7 +178,7 @@
     }
   ],
   "anomalies": [],
-  "wall_segments": 7,
+  "wall_segments": 11,
   "amendments": [
     "D-30a",
     "D-30b",
@@ -204,5 +194,88 @@
     "D-41d"
   ],
   "feature_rects_ignored": 1,
+  "shared_faces": {
+    "rank": [
+      1,
+      "T-OLD-ACCESS"
+    ],
+    "owners": [
+      "T-CIRCULATION",
+      "T-EAST-VERTICAL",
+      "T-ENERGY",
+      "T-FREIGHT"
+    ],
+    "snapped_edges": [],
+    "dropped_walls": [
+      {
+        "id": "t-old-access--staryy-sluzhebnyy-vestibyul--north",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -92.2,
+          25.1,
+          -82.39,
+          25.1
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "t-old-access--staryy-sluzhebnyy-vestibyul--west",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -92.2,
+          25.1,
+          -92.2,
+          28.4
+        ],
+        "pieces_m": [
+          [
+            25.25,
+            28.4
+          ]
+        ]
+      },
+      {
+        "id": "t-old-access--staryy-sluzhebnyy-vestibyul--east",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -82.39,
+          25.1,
+          -82.39,
+          41.8
+        ],
+        "pieces_m": [
+          [
+            25.25,
+            41.8
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul:opening:outer",
+        "type": "opening",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--glavnyy-sluzhebnyy-koridor--opening--outer--amendment-auto-05",
+        "rooms": [
+          "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul"
+        ],
+        "world_m": [
+          -89.3,
+          25.1,
+          -85.3,
+          25.1
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 1
 }

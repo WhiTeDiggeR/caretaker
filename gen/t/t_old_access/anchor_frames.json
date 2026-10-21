@@ -4,7 +4,7 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v4",
   "sector_id": "T-OLD-ACCESS",
-  "generation_id": "sha256:aae83ceb29cb73b4887a49df5724e28f619fdb68b967b66b624e963357dfd424",
+  "generation_id": "sha256:23dc1f3ce53d6735ffd136e0a2de313f9fc24b9e8aea6b129869f693429cd136",
   "producer": {
     "name": "complex_v4_regenerate_sector",
     "version": "1.1.1",
@@ -22,14 +22,786 @@
   },
   "anchors": [
     {
-      "anchor_id": "svg:t-old-access-ceiling-01:ceiling",
+      "anchor_id": "svg:t-old-access--podstanciya--ceiling:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-old-access-ceiling-01"
+        "source_id": "t-old-access--podstanciya--ceiling"
+      },
+      "origin": [
+        -102.2,
+        -7.0,
+        41.8
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -7.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -102.2,
+            41.8
+          ],
+          [
+            -82.39,
+            41.8
+          ],
+          [
+            -82.39,
+            50.87
+          ],
+          [
+            -102.2,
+            50.87
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          19.81
+        ],
+        "v_range_m": [
+          0.0,
+          9.07
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:d63dc50113aa220f5fd9ec7d84f0209df86d5c923d2bcf4f9289e35877cdf898"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--door--staryy-sluzhebnyy-vestibyul:door:center",
+      "type": "door",
+      "role": "center",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--door--staryy-sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -87.3,
+        -11.5,
+        41.8
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "opposite",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:781daf9f7fbccff6e60d77e2fa6f9ef506c4188102e92ed62e9d6bfe85d69859"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--door--staryy-sluzhebnyy-vestibyul:door:threshold_inside",
+      "type": "door",
+      "role": "threshold_inside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--door--staryy-sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -87.3,
+        -11.5,
+        41.65
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "opposite",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:db906be84d630b71c2f0649fd10fff0b69b695f361e6f0021342089e35674c7a"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--door--staryy-sluzhebnyy-vestibyul:door:threshold_outside",
+      "type": "door",
+      "role": "threshold_outside",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--door--staryy-sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -87.3,
+        -11.5,
+        41.95
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "portal",
+        "width_m": 1.8,
+        "height_m": 2.8,
+        "bottom_m": 0.0,
+        "wall_thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "inside_side": "opposite",
+        "along_range_m": [
+          -0.9,
+          0.9
+        ],
+        "origin_semantics": "line_center"
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "metadata": {
+        "side_status": "explicit"
+      },
+      "geometry_hash": "sha256:045f0b7cf677d607beeb9fb70119da29068d1ada91099db5eefd44d1a6e3c2eb"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--east"
+      },
+      "origin": [
+        -82.54,
+        -11.5,
+        41.8
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 9.07,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/podstanciya:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -82.39,
+          -11.5,
+          41.8
+        ],
+        "along_range_m": [
+          0.0,
+          9.07
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:ec333c1f0cdf41d551143f81aa4a62f943c3daa856ea5a3c12fb5f331cd36b6f"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--floor:floor",
+      "type": "floor",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--floor"
+      },
+      "origin": [
+        -102.2,
+        -11.5,
+        41.8
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -11.5,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -102.2,
+            41.8
+          ],
+          [
+            -82.39,
+            41.8
+          ],
+          [
+            -82.39,
+            50.87
+          ],
+          [
+            -102.2,
+            50.87
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          19.81
+        ],
+        "v_range_m": [
+          0.0,
+          9.07
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:0d988afe54d66875523e3fe1d558c9683a2b6eef53b773a73d3ac843166162fe"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--north--staraya-lestnica:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--north--staraya-lestnica"
+      },
+      "origin": [
+        -102.2,
+        -11.5,
+        41.95
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 10.0,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/podstanciya:north:staraya-lestnica",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -102.2,
+          -11.5,
+          41.8
+        ],
+        "along_range_m": [
+          0.0,
+          10.0
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:cfb4312118fe6c65049a0a8c0e28c41efa8c44cb5e41c5ff2fdc5a5452b59b42"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--north--staryy-sluzhebnyy-vestibyul:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--north--staryy-sluzhebnyy-vestibyul"
+      },
+      "origin": [
+        -92.2,
+        -11.5,
+        41.95
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 9.81,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/podstanciya:north:staryy-sluzhebnyy-vestibyul",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -92.2,
+          -11.5,
+          41.8
+        ],
+        "along_range_m": [
+          0.0,
+          9.81
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:53a660941b274044d1459fc555a29e9fd1a3f0904956ad7ac55ea0422bb495e9"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--south:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--south"
+      },
+      "origin": [
+        -82.39,
+        -11.5,
+        50.72
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 19.81,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/podstanciya:south",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -82.39,
+          -11.5,
+          50.87
+        ],
+        "along_range_m": [
+          0.0,
+          19.81
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:54567ce76712e8c01f5bc287831560853d6e73e4d5bb13d23de801b0ee6c3504"
+    },
+    {
+      "anchor_id": "svg:t-old-access--podstanciya--west:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--podstanciya--west"
+      },
+      "origin": [
+        -102.05,
+        -11.5,
+        50.87
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 9.07,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/podstanciya:west",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -102.2,
+          -11.5,
+          50.87
+        ],
+        "along_range_m": [
+          0.0,
+          9.07
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:a8357b447f22c9af3bd4a7a85b229d8b0e2bf8aa4efc4f16095e3f870244a88c"
+    },
+    {
+      "anchor_id": "svg:t-old-access--staraya-lestnica--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--staraya-lestnica--ceiling"
       },
       "origin": [
         -102.2,
@@ -127,414 +899,17 @@
           ]
         }
       },
-      "geometry_hash": "sha256:2302cb7a2efd90a719f46c681bd218d405b5a01c22f2ea1e189ab2d7c6307202"
+      "geometry_hash": "sha256:1c5899c1e8c72a096503526df6dca9b83ccc07c28fee6495f9e759495a423089"
     },
     {
-      "anchor_id": "svg:t-old-access-ceiling-02:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-ceiling-02"
-      },
-      "origin": [
-        -92.2,
-        -7.0,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -7.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -92.2,
-            25.1
-          ],
-          [
-            -82.39,
-            25.1
-          ],
-          [
-            -82.39,
-            41.8
-          ],
-          [
-            -92.2,
-            41.8
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          9.81
-        ],
-        "v_range_m": [
-          0.0,
-          16.7
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:fac90aed7ad5517673ce4b27fd2005c71380dd4676925f1b5cb0b603c422964c"
-    },
-    {
-      "anchor_id": "svg:t-old-access-ceiling-03:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-ceiling-03"
-      },
-      "origin": [
-        -102.2,
-        -7.0,
-        41.8
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -7.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -102.2,
-            41.8
-          ],
-          [
-            -82.39,
-            41.8
-          ],
-          [
-            -82.39,
-            50.87
-          ],
-          [
-            -102.2,
-            50.87
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          19.81
-        ],
-        "v_range_m": [
-          0.0,
-          9.07
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:06962279c80c3666e61fc88ab142bf90151280b33d1ec30306effab90902952f"
-    },
-    {
-      "anchor_id": "svg:t-old-access-door-03:door:center",
+      "anchor_id": "svg:t-old-access--staraya-lestnica--door--outer:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-old-access-door-03"
-      },
-      "origin": [
-        -87.3,
-        -11.5,
-        41.8
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:c3839046ebd395eb7dd325068ce201688cd899e8c95a429049cc9e5b7209564f"
-    },
-    {
-      "anchor_id": "svg:t-old-access-door-03:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-door-03"
-      },
-      "origin": [
-        -87.3,
-        -11.5,
-        41.65
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:5e04f228efca554af14cfdfe4ff64966a5c933f91d20e987ccff927549855ae8"
-    },
-    {
-      "anchor_id": "svg:t-old-access-door-03:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-door-03"
-      },
-      "origin": [
-        -87.3,
-        -11.5,
-        41.95
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:ea75ebf7e205e5d6d10c826ad0ce5d7aa7c74374cd2596fbb36d3b1b66997e06"
-    },
-    {
-      "anchor_id": "svg:t-old-access-door-04:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-door-04"
+        "source_id": "t-old-access--staraya-lestnica--door--outer"
       },
       "origin": [
         -94.0,
@@ -597,17 +972,17 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:e8f96bbe58a084100f89a024cc1fd7ae3abdaaca4da1bc3bd0d6788fac485b72"
+      "geometry_hash": "sha256:b482144cfbb7f690e523994be5fc0dff1b7d668429b8801dea126bad5917aa39"
     },
     {
-      "anchor_id": "svg:t-old-access-door-04:door:threshold_inside",
+      "anchor_id": "svg:t-old-access--staraya-lestnica--door--outer:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-old-access-door-04"
+        "source_id": "t-old-access--staraya-lestnica--door--outer"
       },
       "origin": [
         -94.15,
@@ -670,17 +1045,17 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:a3d5e7222d3a6e6bc9583cc6c5534305d1e79df05a3881b304140d6b17fb61f4"
+      "geometry_hash": "sha256:5c60a7def4bd72e1dc761fd204f66f292dff1c58b853ee37ff91f183a8ca1a04"
     },
     {
-      "anchor_id": "svg:t-old-access-door-04:door:threshold_outside",
+      "anchor_id": "svg:t-old-access--staraya-lestnica--door--outer:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-old-access-door-04"
+        "source_id": "t-old-access--staraya-lestnica--door--outer"
       },
       "origin": [
         -93.85,
@@ -743,17 +1118,92 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:d9a35c10e7ca1ed83a154c061d74ae8a2d75d622f69faefda64b17686cddc937"
+      "geometry_hash": "sha256:934bec11c0d944c9a47512fbb2d9ec4d7c68f5e76f9af4f147c5888c1e90fe50"
     },
     {
-      "anchor_id": "svg:t-old-access-floor-01:floor",
+      "anchor_id": "svg:t-old-access--staraya-lestnica--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--staraya-lestnica--east"
+      },
+      "origin": [
+        -92.35,
+        -11.5,
+        28.4
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 13.4,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/staraya-lestnica:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -92.2,
+          -11.5,
+          28.4
+        ],
+        "along_range_m": [
+          0.0,
+          13.4
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:baa40d17d3f2e3ec4a54f52a56176c7b8ff656e97022ef7e0776523bf78cee49"
+    },
+    {
+      "anchor_id": "svg:t-old-access--staraya-lestnica--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-old-access-floor-01"
+        "source_id": "t-old-access--staraya-lestnica--floor"
       },
       "origin": [
         -102.2,
@@ -832,17 +1282,331 @@
           ]
         }
       },
-      "geometry_hash": "sha256:87965881cc22e153fe18cd2a3f4c014ec59319a63774ff5aaaefc3d17dca2792"
+      "geometry_hash": "sha256:e66061b05fa8eb829d3d8a3af11c749dce5822c0fa0592eec95ad745643af806"
     },
     {
-      "anchor_id": "svg:t-old-access-floor-02:floor",
+      "anchor_id": "svg:t-old-access--staraya-lestnica--north:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--staraya-lestnica--north"
+      },
+      "origin": [
+        -102.2,
+        -11.5,
+        28.55
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 10.0,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/staraya-lestnica:north",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -102.2,
+          -11.5,
+          28.4
+        ],
+        "along_range_m": [
+          0.0,
+          10.0
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:aef30028c8d56d58854cf20f2d677046bef3e81a9a4000a33ee1c24daf578fa1"
+    },
+    {
+      "anchor_id": "svg:t-old-access--staraya-lestnica--west:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--staraya-lestnica--west"
+      },
+      "origin": [
+        -102.05,
+        -11.5,
+        41.8
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 13.4,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/staraya-lestnica:west",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -102.2,
+          -11.5,
+          41.8
+        ],
+        "along_range_m": [
+          0.0,
+          13.4
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:db94096dbaef9b40e4639683e9b85cb3d0087a3f2885efb4255e67895fe47341"
+    },
+    {
+      "anchor_id": "svg:t-old-access--staryy-sluzhebnyy-vestibyul--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--staryy-sluzhebnyy-vestibyul--ceiling"
+      },
+      "origin": [
+        -92.2,
+        -7.0,
+        25.1
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -7.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -92.2,
+            25.1
+          ],
+          [
+            -82.39,
+            25.1
+          ],
+          [
+            -82.39,
+            41.8
+          ],
+          [
+            -92.2,
+            41.8
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          9.81
+        ],
+        "v_range_m": [
+          0.0,
+          16.7
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:41dba63ef95e95b70a30191249c0cd2a4d756627754e95f83be0cdf63077998a"
+    },
+    {
+      "anchor_id": "svg:t-old-access--staryy-sluzhebnyy-vestibyul--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-old-access--staryy-sluzhebnyy-vestibyul--east"
+      },
+      "origin": [
+        -82.54,
+        -11.5,
+        25.25
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 16.55,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -82.39,
+          -11.5,
+          25.25
+        ],
+        "along_range_m": [
+          0.0,
+          16.55
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:90e23a077952639dad3c5e5a952e19cc98cfa5acb12d969b640c8a9bf9ba1a1a"
+    },
+    {
+      "anchor_id": "svg:t-old-access--staryy-sluzhebnyy-vestibyul--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-old-access-floor-02"
+        "source_id": "t-old-access--staryy-sluzhebnyy-vestibyul--floor"
       },
       "origin": [
         -92.2,
@@ -921,121 +1685,32 @@
           ]
         }
       },
-      "geometry_hash": "sha256:6b9f5bd477bb470c52ec8ba3928e584061e830ae12ffb7a1288906a2a64e20e9"
+      "geometry_hash": "sha256:d0ea91d5986fe6ec9d6e5d3b652e624a4e76d0df9ab7175369ef223733d44bfb"
     },
     {
-      "anchor_id": "svg:t-old-access-floor-03:floor",
-      "type": "floor",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-floor-03"
-      },
-      "origin": [
-        -102.2,
-        -11.5,
-        41.8
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -11.5,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -102.2,
-            41.8
-          ],
-          [
-            -82.39,
-            41.8
-          ],
-          [
-            -82.39,
-            50.87
-          ],
-          [
-            -102.2,
-            50.87
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          19.81
-        ],
-        "v_range_m": [
-          0.0,
-          9.07
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:1b8898a1830e7a5e7952d56ecb52bf9d5b3abe71e678d54d28e7cac3a4352093"
-    },
-    {
-      "anchor_id": "svg:t-old-access-wall-01:wall",
+      "anchor_id": "svg:t-old-access--staryy-sluzhebnyy-vestibyul--west:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-old-access-wall-01"
+        "source_id": "t-old-access--staryy-sluzhebnyy-vestibyul--west"
       },
       "origin": [
-        -92.2,
+        -92.05,
         -11.5,
-        28.25
+        28.4
       ],
       "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
         0.0,
         0.0,
         -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
       ],
       "up": [
         0.0,
@@ -1044,11 +1719,11 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 10.0,
+        "length_m": 3.15,
         "height_m": 4.5,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-OLD-ACCESS/wall-01",
+        "surface_side_id": "T-OLD-ACCESS/staryy-sluzhebnyy-vestibyul:west",
         "normal_side": "opposite",
         "source_segment_index": 1,
         "centerline_origin": [
@@ -1058,7 +1733,7 @@
         ],
         "along_range_m": [
           0.0,
-          10.0
+          3.15
         ]
       },
       "placement_limits": {
@@ -1085,457 +1760,7 @@
           ]
         }
       },
-      "geometry_hash": "sha256:31b587364bd7bda86aa653a97cc9e8856e742a9def34765beb40541654e0435a"
-    },
-    {
-      "anchor_id": "svg:t-old-access-wall-02:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-wall-02"
-      },
-      "origin": [
-        -82.39,
-        -11.5,
-        41.65
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 19.81,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-OLD-ACCESS/wall-02",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -82.39,
-          -11.5,
-          41.8
-        ],
-        "along_range_m": [
-          0.0,
-          19.81
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:2ca4e94580c722c9f290b34ae13320438e78ff88ca77b5168b75c7cb2e149087"
-    },
-    {
-      "anchor_id": "svg:t-old-access-wall-03:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-wall-03"
-      },
-      "origin": [
-        -82.39,
-        -11.5,
-        50.72
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 19.81,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-OLD-ACCESS/wall-03",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -82.39,
-          -11.5,
-          50.87
-        ],
-        "along_range_m": [
-          0.0,
-          19.81
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:fe981ec4216b80c8cdd874f92938f3b25b538f72063965367d1859551a642533"
-    },
-    {
-      "anchor_id": "svg:t-old-access-wall-04:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-wall-04"
-      },
-      "origin": [
-        -82.39,
-        -11.5,
-        24.95
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 9.81,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-OLD-ACCESS/wall-04",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -82.39,
-          -11.5,
-          25.1
-        ],
-        "along_range_m": [
-          0.0,
-          9.81
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:9d9b790281f136db2b3febce088263ac60e7c71eaf8114de0b350f98484229c0"
-    },
-    {
-      "anchor_id": "svg:t-old-access-wall-05:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-wall-05"
-      },
-      "origin": [
-        -102.05,
-        -11.5,
-        50.87
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 22.47,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-OLD-ACCESS/wall-05",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -102.2,
-          -11.5,
-          50.87
-        ],
-        "along_range_m": [
-          0.0,
-          22.47
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:fb24eec8bd1bd05be4dfc92f4c5d630fc2d0d3c56968fcad8c065b7a6e6f1a56"
-    },
-    {
-      "anchor_id": "svg:t-old-access-wall-06:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-wall-06"
-      },
-      "origin": [
-        -92.05,
-        -11.5,
-        41.8
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 16.7,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-OLD-ACCESS/wall-06",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -92.2,
-          -11.5,
-          41.8
-        ],
-        "along_range_m": [
-          0.0,
-          16.7
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:1580d76530ef0ccf0433a9f18ff19f36acd19794546a68a1840b98a8db4640ab"
-    },
-    {
-      "anchor_id": "svg:t-old-access-wall-07:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-old-access-wall-07"
-      },
-      "origin": [
-        -82.24,
-        -11.5,
-        50.87
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 25.77,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-OLD-ACCESS/wall-07",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -82.39,
-          -11.5,
-          50.87
-        ],
-        "along_range_m": [
-          0.0,
-          25.77
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:ad3980bc0da0ae407af2afe569db7bf216d434a2f3e8e912c73528eb2d03ece9"
+      "geometry_hash": "sha256:771747e79e262fabb8bd44ac7f0efd126495b8a566b0d397bc824a88ea89632e"
     }
   ]
 }

@@ -9,7 +9,7 @@ Per binding:
 - ``ok`` — the anchor is in the live package (``gen/**/anchor_frames.json``) and the placement fits it;
 - ``pending`` — the package is older than the canonical SVG (regeneration not run yet) and the anchor exists only in
   the SVG; the placement is checked against the anchor frames predicted from the SVG;
-- ``lost`` — the anchor is in neither (renamed or removed element), ``invalid`` — the anchor exists but the object no
+- ``lost`` — the anchor is in neither, or only in a package older than the SVG (renamed or removed element), ``invalid`` — the anchor exists but the object no
   longer fits it (type, bounds, placement limits).
 
 The sector must also be consistent: every bound object exists once in the authored scene and in the sector's
@@ -457,7 +457,12 @@ def check_sector(sector: dict[str, Any], write_composition: bool = False) -> dic
         anchor_id = binding["anchor_ref"]["anchor_id"]
         entry = {"object_id": object_id, "anchor_id": anchor_id}
         frame = live_frames.get(anchor_id)
-        if frame is not None:
+        if frame is not None and not fresh and anchor_id not in predicted_frames:
+            # the package still has it, but the plan no longer does: the next regeneration removes it
+            frame = None
+            entry["status"] = "lost"
+            entry["reason"] = "anchor is only in the old package; the SVG renamed or removed the element"
+        elif frame is not None:
             entry["status"] = "ok"
         elif not fresh and anchor_id in predicted_frames:
             entry["status"], frame = "pending", predicted_frames[anchor_id]

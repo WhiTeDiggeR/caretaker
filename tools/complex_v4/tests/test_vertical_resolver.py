@@ -139,10 +139,10 @@ class RouteARegressionTests(unittest.TestCase):
         values = ResolverTests.pairs(resolved["args"])
         self.assertEqual(
             {key: values[key] for key in ("--shaft-width", "--shaft-length", "--floor-height", "--layout", "--stair-width", "--lower-entry-side", "--upper-exit-side")},
-            {"--shaft-width": "6.647", "--shaft-length": "7.777", "--floor-height": "6", "--layout": "u-turn", "--stair-width": "1.8",
+            {"--shaft-width": "6.647", "--shaft-length": "7.733", "--floor-height": "6", "--layout": "u-turn", "--stair-width": "1.8",
              "--lower-entry-side": "north", "--upper-exit-side": "north"},
         )
-        self.assertEqual(resolved["local_to_world"]["origin"], [-52.2225, -6.0, 15.7655])
+        self.assertEqual(resolved["local_to_world"]["origin"], [-52.2225, -6.0, 15.7435])
 
 
 if __name__ == "__main__":

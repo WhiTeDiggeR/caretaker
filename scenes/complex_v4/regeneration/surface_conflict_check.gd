@@ -143,6 +143,7 @@ func _gather(node: Node, names: Array[String], triangles: Array[Tri]) -> void:
 		var short_name := str(instance.get_path()).get_slice("/Generated/", 1) if "/Generated/" in str(instance.get_path()) else str(instance.name)
 		names.append(short_name)
 		_stair_mesh[index] = short_name.begins_with("Stairs/")
+		_mesh_kind[index] = "closure" if short_name.contains("/Closures/") else ("slab" if short_name.contains("/Floors/") or short_name.contains("/Ceilings/") else "")
 		var xform := instance.global_transform
 		var faces := instance.mesh.get_faces()
 		for i in range(0, faces.size() - 2, 3):
@@ -166,6 +167,7 @@ func _gather(node: Node, names: Array[String], triangles: Array[Tri]) -> void:
 ## Pairs of meshes that both belong to the stair package are the stair generator's own business (posts
 ## through rails, shaft wall corners): the flow cannot change them, so they are not reported.
 var _stair_mesh: Dictionary = {}
+var _mesh_kind: Dictionary = {}
 
 
 func _pair_key(first: int, second: int) -> String:
@@ -221,7 +223,7 @@ func _find_crossings(triangles: Array[Tri], pairs: Dictionary) -> void:
 			for j in range(i + 1, members.size()):
 				var first := triangles[members[i]]
 				var second := triangles[members[j]]
-				if first.mesh == second.mesh or _stair_internal(first, second):
+				if first.mesh == second.mesh or _stair_internal(first, second) or _closure_in_slab(first, second):
 					continue
 				var pair := _pair_key(first.mesh, second.mesh)
 				if pairs.has(pair):
@@ -233,6 +235,13 @@ func _find_crossings(triangles: Array[Tri], pairs: Dictionary) -> void:
 				var depth := maxf(_penetration(first, second), _penetration(second, first))
 				if depth > CROSSING_DEPTH_M:
 					pairs[pair] = depth
+
+
+## Shaft closures (vertical_closures.py, D-48) stand on purpose a little into the floor and ceiling slabs around the
+## opening, so no gap shows at the joint; that embedding is not a defect. Closures against stairs or walls stay strict.
+func _closure_in_slab(first: Tri, second: Tri) -> bool:
+	var kinds := [str(_mesh_kind.get(first.mesh, "")), str(_mesh_kind.get(second.mesh, ""))]
+	return kinds.has("closure") and kinds.has("slab")
 
 
 func _stair_internal(first: Tri, second: Tri) -> bool:

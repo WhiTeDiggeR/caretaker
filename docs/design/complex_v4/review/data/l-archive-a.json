@@ -17,7 +17,8 @@
   "wall_height_m": 5.0,
   "rooms": [
     {
-      "id": "l-archive-a-floor-01",
+      "id": "l-archive-a--otgorozhennaya-chast-arhiva--floor",
+      "stable_id": "L-ARCHIVE-A/otgorozhennaya-chast-arhiva:floor",
       "space_id": "L-ARCHIVE-A/otgorozhennaya-chast-arhiva",
       "label": "ОТГОРОЖЕННАЯ ЧАСТЬ АРХИВА · НИЖНЯЯ ПЛОЩАДКА ЛЕСТНИЦЫ A",
       "class": "support",
@@ -26,22 +27,23 @@
         290.0,
         476.9,
         241.9,
-        246.5
+        245.5
       ],
       "world_m": [
         -58.889,
         9.4,
         10.0,
-        10.244
+        10.2
       ],
       "size_m": [
         10.0,
-        10.24
+        10.2
       ],
-      "area_m2": 102.4
+      "area_m2": 102.0
     },
     {
-      "id": "l-archive-a-floor-02",
+      "id": "l-archive-a--staryy-arhiv-edinyy-ishodnyy--floor",
+      "stable_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy:floor",
       "space_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy",
       "label": "СТАРЫЙ АРХИВ · ЕДИНЫЙ ИСХОДНЫЙ КОНТУР / штатный вход · пожарные проходы между стеллажами / учёт / ПОЗДНЯЯ ПЕРЕГОРОДКА МАРШРУТА A / нижняя часть всё ещё читается как бывший архив / ЛЕСТНИЦА A ↑ / к вентиляции и складу верхнего этажа",
       "class": "old",
@@ -65,7 +67,8 @@
       "area_m2": 311.7
     },
     {
-      "id": "l-archive-a-floor-03",
+      "id": "l-archive-a--staryy-arhiv-edinyy-ishodnyy-2--floor",
+      "stable_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy-2:floor",
       "space_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy-2",
       "label": "СТАРЫЙ АРХИВ · ЕДИНЫЙ ИСХОДНЫЙ КОНТУР / штатный вход · пожарные проходы между стеллажами / учёт / ПОЗДНЯЯ ПЕРЕГОРОДКА МАРШРУТА A / нижняя часть всё ещё читается как бывший архив / ЛЕСТНИЦА A ↑ / к вентиляции и складу верхнего этажа",
       "class": "old",
@@ -74,24 +77,25 @@
         531.9,
         476.9,
         188.1,
-        246.5
+        245.5
       ],
       "world_m": [
         -48.889,
         9.4,
         7.778,
-        10.244
+        10.2
       ],
       "size_m": [
         7.78,
-        10.24
+        10.2
       ],
-      "area_m2": 79.7
+      "area_m2": 79.3
     }
   ],
   "openings": [
     {
-      "id": "l-archive-a-door-01",
+      "id": "l-archive-a--staryy-arhiv-edinyy-ishodnyy--door--outer",
+      "stable_id": "L-ARCHIVE-A/staryy-arhiv-edinyy-ishodnyy:door:outer",
       "type": "door",
       "source": "door-gap",
       "source_id": "l_archive_a-opening-001",
@@ -107,7 +111,8 @@
       ]
     },
     {
-      "id": "l-archive-a-door-02",
+      "id": "l-archive-a--otgorozhennaya-chast-arhiva--door--outer--l-archive-a-opening-004",
+      "stable_id": "L-ARCHIVE-A/otgorozhennaya-chast-arhiva:door:outer:l_archive_a-opening-004",
       "type": "door",
       "source": "door-gap",
       "source_id": "l_archive_a-opening-004",
@@ -123,7 +128,8 @@
       ]
     },
     {
-      "id": "l-archive-a-door-03",
+      "id": "l-archive-a--otgorozhennaya-chast-arhiva--door--outer--amendment-d-06d",
+      "stable_id": "L-ARCHIVE-A/otgorozhennaya-chast-arhiva:door:outer:amendment-D-06d",
       "type": "door",
       "source": "amendment D-06d",
       "source_id": "amendment-D-06d",
@@ -215,7 +221,7 @@
       "note": "drawn opening does not lie on a wall of any room of this sector (trunk corridor or neighbour wall)"
     }
   ],
-  "wall_segments": 6,
+  "wall_segments": 9,
   "amendments": [
     "D-07a",
     "D-07b",
@@ -226,5 +232,123 @@
     "D-10"
   ],
   "feature_rects_ignored": 7,
+  "shared_faces": {
+    "rank": [
+      1,
+      "L-ARCHIVE-A"
+    ],
+    "owners": [
+      "L-CIRCULATION"
+    ],
+    "snapped_edges": [
+      {
+        "orient": "h",
+        "from_m": 19.644,
+        "to_m": 19.6,
+        "owner": "L-CIRCULATION",
+        "reason": "edge facing the owner's room"
+      }
+    ],
+    "dropped_walls": [
+      {
+        "id": "l-archive-a--otgorozhennaya-chast-arhiva--south",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -58.889,
+          19.6,
+          -48.889,
+          19.6
+        ]
+      },
+      {
+        "id": "l-archive-a--staryy-arhiv-edinyy-ishodnyy-2--south",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -48.889,
+          19.6,
+          -41.111,
+          19.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "l-archive-a--otgorozhennaya-chast-arhiva--west",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -58.889,
+          9.4,
+          -58.889,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            9.4,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "l-archive-a--otgorozhennaya-chast-arhiva--east",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -48.889,
+          9.4,
+          -48.889,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            9.4,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "l-archive-a--staryy-arhiv-edinyy-ishodnyy-2--east",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -41.111,
+          9.4,
+          -41.111,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            9.4,
+            19.45
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [],
+    "moved_openings": [],
+    "clipped_cuts": [
+      {
+        "from_m": [
+          -55.556,
+          11.867,
+          -48.889,
+          19.644
+        ],
+        "to_m": [
+          -55.556,
+          11.867,
+          -48.889,
+          19.6
+        ]
+      }
+    ]
+  },
   "unmapped_other_elements": 1
 }

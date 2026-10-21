@@ -17,7 +17,8 @@
   "wall_height_m": 5.0,
   "rooms": [
     {
-      "id": "l-sleep-lab-floor-01",
+      "id": "l-sleep-lab--vnutrenniy-koridor--floor",
+      "stable_id": "L-SLEEP-LAB/vnutrenniy-koridor:floor",
       "space_id": "L-SLEEP-LAB/vnutrenniy-koridor",
       "label": "ВНУТРЕННИЙ КОРИДОР / отдельные двери во все помещения",
       "class": "corridor",
@@ -41,7 +42,8 @@
       "area_m2": 102.9
     },
     {
-      "id": "l-sleep-lab-floor-02",
+      "id": "l-sleep-lab--neyromonitoring--floor",
+      "stable_id": "L-SLEEP-LAB/neyromonitoring:floor",
       "space_id": "L-SLEEP-LAB/neyromonitoring",
       "label": "НЕЙРОМОНИТОРИНГ / ранние стенды наблюдения сна",
       "class": "lab",
@@ -65,7 +67,8 @@
       "area_m2": 185.3
     },
     {
-      "id": "l-sleep-lab-floor-03",
+      "id": "l-sleep-lab--nablyudenie--floor",
+      "stable_id": "L-SLEEP-LAB/nablyudenie:floor",
       "space_id": "L-SLEEP-LAB/nablyudenie",
       "label": "НАБЛЮДЕНИЕ / анализ / журналирование",
       "class": "support",
@@ -89,7 +92,8 @@
       "area_m2": 56.6
     },
     {
-      "id": "l-sleep-lab-floor-04",
+      "id": "l-sleep-lab--apparatnaya--floor",
+      "stable_id": "L-SLEEP-LAB/apparatnaya:floor",
       "space_id": "L-SLEEP-LAB/apparatnaya",
       "label": "АППАРАТНАЯ / питание · запись / кабельные стойки",
       "class": "support",
@@ -113,7 +117,8 @@
       "area_m2": 56.6
     },
     {
-      "id": "l-sleep-lab-floor-05",
+      "id": "l-sleep-lab--podgotovka--floor",
+      "stable_id": "L-SLEEP-LAB/podgotovka:floor",
       "space_id": "L-SLEEP-LAB/podgotovka",
       "label": "ПОДГОТОВКА / осмотр · седативы / ВОССТАНОВЛЕНИЕ",
       "class": "lab",
@@ -139,7 +144,8 @@
   ],
   "openings": [
     {
-      "id": "l-sleep-lab-window-01",
+      "id": "l-sleep-lab--nablyudenie--window--neyromonitoring",
+      "stable_id": "L-SLEEP-LAB/nablyudenie:window:neyromonitoring",
       "type": "window",
       "source": "window",
       "source_id": "l_sleep_lab-annotation-001",
@@ -156,7 +162,8 @@
       ]
     },
     {
-      "id": "l-sleep-lab-door-02",
+      "id": "l-sleep-lab--podgotovka--door--vnutrenniy-koridor",
+      "stable_id": "L-SLEEP-LAB/podgotovka:door:vnutrenniy-koridor",
       "type": "door",
       "source": "room-gap",
       "source_id": "l_sleep_lab-opening-001",
@@ -173,7 +180,8 @@
       ]
     },
     {
-      "id": "l-sleep-lab-door-03",
+      "id": "l-sleep-lab--nablyudenie--door--vnutrenniy-koridor",
+      "stable_id": "L-SLEEP-LAB/nablyudenie:door:vnutrenniy-koridor",
       "type": "door",
       "source": "support-gap",
       "source_id": "l_sleep_lab-opening-002",
@@ -190,7 +198,8 @@
       ]
     },
     {
-      "id": "l-sleep-lab-door-04",
+      "id": "l-sleep-lab--apparatnaya--door--vnutrenniy-koridor",
+      "stable_id": "L-SLEEP-LAB/apparatnaya:door:vnutrenniy-koridor",
       "type": "door",
       "source": "support-gap",
       "source_id": "l_sleep_lab-opening-005",
@@ -207,7 +216,8 @@
       ]
     },
     {
-      "id": "l-sleep-lab-door-05",
+      "id": "l-sleep-lab--neyromonitoring--door--podgotovka",
+      "stable_id": "L-SLEEP-LAB/neyromonitoring:door:podgotovka",
       "type": "door",
       "source": "room-gap",
       "source_id": "l_sleep_lab-opening-008",
@@ -224,23 +234,8 @@
       ]
     },
     {
-      "id": "l-sleep-lab-opening-06",
-      "type": "opening",
-      "source": "door-gap",
-      "source_id": "l_sleep_lab-opening-011",
-      "width_m": 3.0,
-      "rooms": [
-        "L-SLEEP-LAB/vnutrenniy-koridor"
-      ],
-      "world_m": [
-        -23.7,
-        19.6,
-        -20.7,
-        19.6
-      ]
-    },
-    {
-      "id": "l-sleep-lab-door-07",
+      "id": "l-sleep-lab--neyromonitoring--door--vnutrenniy-koridor",
+      "stable_id": "L-SLEEP-LAB/neyromonitoring:door:vnutrenniy-koridor",
       "type": "door",
       "source": "amendment D-25f",
       "source_id": "amendment-D-25f",
@@ -299,7 +294,7 @@
     }
   ],
   "anomalies": [],
-  "wall_segments": 8,
+  "wall_segments": 16,
   "amendments": [
     "D-25a",
     "D-25b",
@@ -309,5 +304,126 @@
     "D-25f"
   ],
   "feature_rects_ignored": 5,
+  "shared_faces": {
+    "rank": [
+      1,
+      "L-SLEEP-LAB"
+    ],
+    "owners": [
+      "L-CIRCULATION",
+      "L-ARCHIVE-A",
+      "L-CENTRAL-CORE",
+      "L-CHAMBER-1",
+      "L-CHAMBER-2",
+      "L-CHAMBER-3",
+      "L-CHAMBER-5",
+      "L-EAST-STAIR",
+      "L-FREIGHT-SERVICE",
+      "L-OLD-CORE",
+      "L-OLD-RECEIVING",
+      "L-SERVICE-INTERCHANGE"
+    ],
+    "snapped_edges": [],
+    "dropped_walls": [
+      {
+        "id": "l-sleep-lab--podgotovka--south",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -33.333,
+          19.6,
+          -24.521,
+          19.6
+        ]
+      },
+      {
+        "id": "l-sleep-lab--vnutrenniy-koridor--south",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -24.521,
+          19.6,
+          -11.111,
+          19.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "l-sleep-lab--podgotovka--west",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -33.333,
+          11.923,
+          -33.333,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            11.923,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "l-sleep-lab--podgotovka--east",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -24.521,
+          11.923,
+          -24.521,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            11.923,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "l-sleep-lab--vnutrenniy-koridor--east",
+        "owner": [
+          "L-CIRCULATION"
+        ],
+        "world_m": [
+          -11.111,
+          11.923,
+          -11.111,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            11.923,
+            19.45
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "L-SLEEP-LAB/vnutrenniy-koridor:opening:outer",
+        "type": "opening",
+        "owner": "L-CIRCULATION",
+        "owner_opening": "l-circulation--passazhirskiy-koridor--opening--outer--amendment-auto-04",
+        "rooms": [
+          "L-SLEEP-LAB/vnutrenniy-koridor"
+        ],
+        "world_m": [
+          -23.7,
+          19.6,
+          -20.7,
+          19.6
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 1
 }

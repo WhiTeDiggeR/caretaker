@@ -17,7 +17,8 @@
   "wall_height_m": 4.5,
   "rooms": [
     {
-      "id": "t-utilities-floor-01",
+      "id": "t-utilities--podstanciya--floor",
+      "stable_id": "T-UTILITIES/podstanciya:floor",
       "space_id": "T-UTILITIES/podstanciya",
       "label": "ПОДСТАНЦИЯ / позднего блока",
       "class": "energy",
@@ -41,7 +42,8 @@
       "area_m2": 196.8
     },
     {
-      "id": "t-utilities-floor-02",
+      "id": "t-utilities--lestnica--floor",
+      "stable_id": "T-UTILITIES/lestnica:floor",
       "space_id": "T-UTILITIES/lestnica",
       "label": "ЛЕСТНИЦА / СЛУЖЕБНОЙ / РАЗВЯЗКИ",
       "class": "shaft",
@@ -65,7 +67,8 @@
       "area_m2": 40.1
     },
     {
-      "id": "t-utilities-floor-03",
+      "id": "t-utilities--ventilyaciya--floor",
+      "stable_id": "T-UTILITIES/ventilyaciya:floor",
       "space_id": "T-UTILITIES/ventilyaciya",
       "label": "ВЕНТИЛЯЦИЯ / насосы · теплообмен",
       "class": "utility",
@@ -89,7 +92,8 @@
       "area_m2": 213.9
     },
     {
-      "id": "t-utilities-floor-04",
+      "id": "t-utilities--gazy--floor",
+      "stable_id": "T-UTILITIES/gazy:floor",
       "space_id": "T-UTILITIES/gazy",
       "label": "ГАЗЫ / и реагенты",
       "class": "utility",
@@ -113,7 +117,8 @@
       "area_m2": 212.5
     },
     {
-      "id": "t-utilities-floor-05",
+      "id": "t-utilities--kontroliruemyy-gruzovoy-pere--floor",
+      "stable_id": "T-UTILITIES/kontroliruemyy-gruzovoy-pere:floor",
       "space_id": "T-UTILITIES/kontroliruemyy-gruzovoy-pere",
       "label": "КОНТРОЛИРУЕМЫЙ ГРУЗОВОЙ ПЕРЕХОД",
       "class": "corridor",
@@ -137,7 +142,8 @@
       "area_m2": 165.2
     },
     {
-      "id": "t-utilities-floor-06",
+      "id": "t-utilities--drenazh--floor",
+      "stable_id": "T-UTILITIES/drenazh:floor",
       "space_id": "T-UTILITIES/drenazh",
       "label": "ДРЕНАЖ / нейтрализация",
       "class": "utility",
@@ -161,7 +167,8 @@
       "area_m2": 211.9
     },
     {
-      "id": "t-utilities-floor-07",
+      "id": "t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42a--floor",
+      "stable_id": "T-UTILITIES/zaschischennyy-prohod-k-lest:amendment-D-42a:floor",
       "space_id": "T-UTILITIES/zaschischennyy-prohod-k-lest",
       "label": "ЗАЩИЩЁННЫЙ ПРОХОД К ЛЕСТНИЦЕ",
       "class": "corridor",
@@ -185,7 +192,8 @@
       "area_m2": 21.2
     },
     {
-      "id": "t-utilities-floor-08",
+      "id": "t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42b--floor",
+      "stable_id": "T-UTILITIES/zaschischennyy-prohod-k-lest:amendment-D-42b:floor",
       "space_id": "T-UTILITIES/zaschischennyy-prohod-k-lest",
       "label": "ЗАЩИЩЁННЫЙ ПРОХОД К ЛЕСТНИЦЕ",
       "class": "corridor",
@@ -211,122 +219,8 @@
   ],
   "openings": [
     {
-      "id": "t-utilities-door-01",
-      "type": "door",
-      "source": "amendment D-36h0",
-      "source_id": "amendment-D-36h0",
-      "width_m": 1.8,
-      "rooms": [
-        "T-UTILITIES/podstanciya"
-      ],
-      "world_m": [
-        -60.8,
-        25.1,
-        -59.0,
-        25.1
-      ]
-    },
-    {
-      "id": "t-utilities-door-02",
-      "type": "door",
-      "source": "amendment D-36h1",
-      "source_id": "amendment-D-36h1",
-      "width_m": 1.8,
-      "rooms": [
-        "T-UTILITIES/ventilyaciya"
-      ],
-      "world_m": [
-        -33.3,
-        25.1,
-        -31.5,
-        25.1
-      ]
-    },
-    {
-      "id": "t-utilities-door-03",
-      "type": "door",
-      "source": "amendment D-36h2",
-      "source_id": "amendment-D-36h2",
-      "width_m": 1.8,
-      "rooms": [
-        "T-UTILITIES/gazy"
-      ],
-      "world_m": [
-        -17.05,
-        25.1,
-        -15.25,
-        25.1
-      ]
-    },
-    {
-      "id": "t-utilities-door-04",
-      "type": "door",
-      "source": "amendment D-36h3",
-      "source_id": "amendment-D-36h3",
-      "width_m": 1.8,
-      "rooms": [
-        "T-UTILITIES/drenazh"
-      ],
-      "world_m": [
-        3.6,
-        25.1,
-        5.4,
-        25.1
-      ]
-    },
-    {
-      "id": "t-utilities-door-05",
-      "type": "door",
-      "source": "amendment D-36i",
-      "source_id": "amendment-D-36i",
-      "width_m": 4.5,
-      "rooms": [
-        "T-UTILITIES/drenazh",
-        "T-UTILITIES/gazy",
-        "T-UTILITIES/kontroliruemyy-gruzovoy-pere"
-      ],
-      "world_m": [
-        -8.05,
-        25.1,
-        -3.55,
-        25.1
-      ]
-    },
-    {
-      "id": "t-utilities-door-06",
-      "type": "door",
-      "source": "amendment D-36j",
-      "source_id": "amendment-D-36j",
-      "width_m": 4.5,
-      "rooms": [
-        "T-UTILITIES/kontroliruemyy-gruzovoy-pere"
-      ],
-      "world_m": [
-        -8.05,
-        61.8,
-        -3.55,
-        61.8
-      ]
-    },
-    {
-      "id": "t-utilities-door-07",
-      "type": "door",
-      "source": "amendment D-42c",
-      "source_id": "amendment-D-42c",
-      "width_m": 1.8,
-      "rooms": [
-        "T-UTILITIES/lestnica",
-        "T-UTILITIES/zaschischennyy-prohod-k-lest"
-      ],
-      "world_m": [
-        -49.68,
-        61.8,
-        -47.88,
-        61.8
-      ]
-    },
-    {
-      "id": "t-utilities-door-08",
+      "id": "t-utilities--lestnica--door--zaschischennyy-prohod-k-lest",
+      "stable_id": "T-UTILITIES/lestnica:door:zaschischennyy-prohod-k-lest",
       "type": "door",
       "source": "amendment D-42d",
       "source_id": "amendment-D-42d",
@@ -515,7 +409,7 @@
     }
   ],
   "anomalies": [],
-  "wall_segments": 20,
+  "wall_segments": 29,
   "amendments": [
     "D-32b",
     "D-36a",
@@ -549,5 +443,458 @@
     "D-42e"
   ],
   "feature_rects_ignored": 5,
+  "shared_faces": {
+    "rank": [
+      1,
+      "T-UTILITIES"
+    ],
+    "owners": [
+      "T-CIRCULATION",
+      "T-EAST-VERTICAL",
+      "T-ENERGY",
+      "T-FREIGHT",
+      "T-OLD-ACCESS"
+    ],
+    "snapped_edges": [],
+    "dropped_walls": [
+      {
+        "id": "t-utilities--podstanciya--north",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -67.4,
+          25.1,
+          -52.4,
+          25.1
+        ]
+      },
+      {
+        "id": "t-utilities--zaschischennyy-prohod-k-lest--south",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -49.78,
+          61.8,
+          -47.78,
+          61.8
+        ]
+      },
+      {
+        "id": "t-utilities--lestnica--south",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -47.78,
+          61.8,
+          -43.11,
+          61.8
+        ]
+      },
+      {
+        "id": "t-utilities--ventilyaciya--north",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -40.55,
+          25.1,
+          -24.25,
+          25.1
+        ]
+      },
+      {
+        "id": "t-utilities--gazy--north",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -24.25,
+          25.1,
+          -8.05,
+          25.1
+        ]
+      },
+      {
+        "id": "t-utilities--kontroliruemyy-gruzovoy-pere--north",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -8.05,
+          25.1,
+          -3.55,
+          25.1
+        ]
+      },
+      {
+        "id": "t-utilities--kontroliruemyy-gruzovoy-pere--south",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -8.05,
+          61.8,
+          -3.55,
+          61.8
+        ]
+      },
+      {
+        "id": "t-utilities--drenazh--north",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -3.55,
+          25.1,
+          12.6,
+          25.1
+        ]
+      },
+      {
+        "id": "t-utilities--podstanciya--west",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -67.4,
+          25.1,
+          -67.4,
+          38.22
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "t-utilities--podstanciya--south",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -67.4,
+          38.22,
+          -52.4,
+          38.22
+        ],
+        "pieces_m": [
+          [
+            -67.25,
+            -52.4
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--podstanciya--east",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -52.4,
+          25.1,
+          -52.4,
+          38.22
+        ],
+        "pieces_m": [
+          [
+            25.25,
+            38.22
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--zaschischennyy-prohod-k-lest--west",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -49.78,
+          51.21,
+          -49.78,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            51.21,
+            61.65
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--zaschischennyy-prohod-k-lest--east--lestnica",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -47.78,
+          53.21,
+          -47.78,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            53.21,
+            61.65
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--lestnica--east",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -43.11,
+          53.21,
+          -43.11,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            53.21,
+            61.65
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--ventilyaciya--west",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -40.55,
+          25.1,
+          -40.55,
+          38.22
+        ],
+        "pieces_m": [
+          [
+            25.25,
+            38.22
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--ventilyaciya--east",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -24.25,
+          25.1,
+          -24.25,
+          38.22
+        ],
+        "pieces_m": [
+          [
+            25.25,
+            38.22
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--gazy--east",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -8.05,
+          25.1,
+          -8.05,
+          38.22
+        ],
+        "pieces_m": [
+          [
+            25.25,
+            38.22
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--kontroliruemyy-gruzovoy-pere--west",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -8.05,
+          38.22,
+          -8.05,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            38.22,
+            61.65
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--kontroliruemyy-gruzovoy-pere--east--drenazh",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -3.55,
+          25.1,
+          -3.55,
+          38.22
+        ],
+        "pieces_m": [
+          [
+            25.25,
+            38.22
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--kontroliruemyy-gruzovoy-pere--east--outer",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -3.55,
+          38.22,
+          -3.55,
+          61.8
+        ],
+        "pieces_m": [
+          [
+            38.22,
+            61.65
+          ]
+        ]
+      },
+      {
+        "id": "t-utilities--drenazh--east",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          12.6,
+          25.1,
+          12.6,
+          38.22
+        ],
+        "pieces_m": [
+          [
+            25.25,
+            38.22
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "T-UTILITIES/podstanciya:door:outer",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--glavnyy-sluzhebnyy-koridor--door--outer--amendment-auto-09",
+        "rooms": [
+          "T-UTILITIES/podstanciya"
+        ],
+        "world_m": [
+          -60.8,
+          25.1,
+          -59.0,
+          25.1
+        ]
+      },
+      {
+        "id": "T-UTILITIES/ventilyaciya:door:outer",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--glavnyy-sluzhebnyy-koridor--door--outer--amendment-auto-10",
+        "rooms": [
+          "T-UTILITIES/ventilyaciya"
+        ],
+        "world_m": [
+          -33.3,
+          25.1,
+          -31.5,
+          25.1
+        ]
+      },
+      {
+        "id": "T-UTILITIES/gazy:door:outer",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--glavnyy-sluzhebnyy-koridor--door--outer--amendment-auto-11",
+        "rooms": [
+          "T-UTILITIES/gazy"
+        ],
+        "world_m": [
+          -17.05,
+          25.1,
+          -15.25,
+          25.1
+        ]
+      },
+      {
+        "id": "T-UTILITIES/drenazh:door:outer",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--glavnyy-sluzhebnyy-koridor--door--outer--amendment-auto-12",
+        "rooms": [
+          "T-UTILITIES/drenazh"
+        ],
+        "world_m": [
+          3.6,
+          25.1,
+          5.4,
+          25.1
+        ]
+      },
+      {
+        "id": "T-UTILITIES/kontroliruemyy-gruzovoy-pere:door:outer",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--glavnyy-sluzhebnyy-koridor--door--outer--amendment-auto-13",
+        "rooms": [
+          "T-UTILITIES/drenazh",
+          "T-UTILITIES/gazy",
+          "T-UTILITIES/kontroliruemyy-gruzovoy-pere"
+        ],
+        "world_m": [
+          -8.05,
+          25.1,
+          -3.55,
+          25.1
+        ]
+      },
+      {
+        "id": "T-UTILITIES/kontroliruemyy-gruzovoy-pere:door:outer",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--tyazhelaya-gruzovaya-magistr--door--outer--amendment-auto-14",
+        "rooms": [
+          "T-UTILITIES/kontroliruemyy-gruzovoy-pere"
+        ],
+        "world_m": [
+          -8.05,
+          61.8,
+          -3.55,
+          61.8
+        ]
+      },
+      {
+        "id": "T-UTILITIES/zaschischennyy-prohod-k-lest:door:outer",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--tyazhelaya-gruzovaya-magistr--door--outer--amendment-auto-15",
+        "rooms": [
+          "T-UTILITIES/lestnica",
+          "T-UTILITIES/zaschischennyy-prohod-k-lest"
+        ],
+        "world_m": [
+          -49.68,
+          61.8,
+          -47.88,
+          61.8
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 3
 }

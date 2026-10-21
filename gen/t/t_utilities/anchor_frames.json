@@ -4,7 +4,7 @@
   "contract_version": "1.0.0",
   "map_id": "caretaker-complex-v4",
   "sector_id": "T-UTILITIES",
-  "generation_id": "sha256:495bd72f940c3ae2c78bc873db68500f1d97b8741f659909e1fe47f91f7b2596",
+  "generation_id": "sha256:7a53932aa4ddb4a23d1a9437c69a6752d45bdac9e545905aece15fcb34a075f6",
   "producer": {
     "name": "complex_v4_regenerate_sector",
     "version": "1.1.1",
@@ -22,17 +22,17 @@
   },
   "anchors": [
     {
-      "anchor_id": "svg:t-utilities-ceiling-01:ceiling",
+      "anchor_id": "svg:t-utilities--drenazh--ceiling:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-ceiling-01"
+        "source_id": "t-utilities--drenazh--ceiling"
       },
       "origin": [
-        -67.4,
+        -3.55,
         -7.0,
         25.1
       ],
@@ -58,25 +58,25 @@
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -67.4,
+            -3.55,
             25.1
           ],
           [
-            -52.4,
+            12.6,
             25.1
           ],
           [
-            -52.4,
+            12.6,
             38.22
           ],
           [
-            -67.4,
+            -3.55,
             38.22
           ]
         ],
         "u_range_m": [
           0.0,
-          15.0
+          16.15
         ],
         "v_range_m": [
           0.0,
@@ -108,17 +108,987 @@
           ]
         }
       },
-      "geometry_hash": "sha256:47dcb0616419fe53845e64e41eb48c3de9ad174f7118471d288ba023ed37f7b3"
+      "geometry_hash": "sha256:78fc60f8211dce6687fc9b1c0d65a9c5290eb1bc0eb8471a123ca1a7322f5794"
     },
     {
-      "anchor_id": "svg:t-utilities-ceiling-02:ceiling",
+      "anchor_id": "svg:t-utilities--drenazh--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--drenazh--east"
+      },
+      "origin": [
+        12.45,
+        -11.5,
+        25.25
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.97,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/drenazh:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          12.6,
+          -11.5,
+          25.25
+        ],
+        "along_range_m": [
+          0.0,
+          12.97
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:8a89e70b3134053a611e9906111775ee9770c60a7cf2c76587203e9cc3774133"
+    },
+    {
+      "anchor_id": "svg:t-utilities--drenazh--floor:floor",
+      "type": "floor",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--drenazh--floor"
+      },
+      "origin": [
+        -3.55,
+        -11.5,
+        25.1
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -11.5,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -3.55,
+            25.1
+          ],
+          [
+            12.6,
+            25.1
+          ],
+          [
+            12.6,
+            38.22
+          ],
+          [
+            -3.55,
+            38.22
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          16.15
+        ],
+        "v_range_m": [
+          0.0,
+          13.12
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:5899adb30401350da4ee31bdc30a039ecb1235bff77a04114b9493eb60e67d9f"
+    },
+    {
+      "anchor_id": "svg:t-utilities--drenazh--south:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--drenazh--south"
+      },
+      "origin": [
+        12.6,
+        -11.5,
+        38.07
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 16.15,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/drenazh:south",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          12.6,
+          -11.5,
+          38.22
+        ],
+        "along_range_m": [
+          0.0,
+          16.15
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:a8956c0b59444d803ad6c067946b43a225725d82744b6053ff1a712ed264bd34"
+    },
+    {
+      "anchor_id": "svg:t-utilities--gazy--ceiling:ceiling",
       "type": "ceiling",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-ceiling-02"
+        "source_id": "t-utilities--gazy--ceiling"
+      },
+      "origin": [
+        -24.25,
+        -7.0,
+        25.1
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -7.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -24.25,
+            25.1
+          ],
+          [
+            -8.05,
+            25.1
+          ],
+          [
+            -8.05,
+            38.22
+          ],
+          [
+            -24.25,
+            38.22
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          16.2
+        ],
+        "v_range_m": [
+          0.0,
+          13.12
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:80499c47ea57d49e056c772c2023fbfa717302ed01858afab2e8580b95c9cd8c"
+    },
+    {
+      "anchor_id": "svg:t-utilities--gazy--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--gazy--east"
+      },
+      "origin": [
+        -8.2,
+        -11.5,
+        25.25
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.97,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/gazy:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -8.05,
+          -11.5,
+          25.25
+        ],
+        "along_range_m": [
+          0.0,
+          12.97
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:e4658cb0a822c5a07dfef549e2c6e16684b0771b35af294469ab6bfc14080f57"
+    },
+    {
+      "anchor_id": "svg:t-utilities--gazy--floor:floor",
+      "type": "floor",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--gazy--floor"
+      },
+      "origin": [
+        -24.25,
+        -11.5,
+        25.1
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -11.5,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -24.25,
+            25.1
+          ],
+          [
+            -8.05,
+            25.1
+          ],
+          [
+            -8.05,
+            38.22
+          ],
+          [
+            -24.25,
+            38.22
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          16.2
+        ],
+        "v_range_m": [
+          0.0,
+          13.12
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:eae6d20c35fd56b92f355352d5362d46e71242ce9518d3a4f122f99f89410e9b"
+    },
+    {
+      "anchor_id": "svg:t-utilities--gazy--south:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--gazy--south"
+      },
+      "origin": [
+        -8.05,
+        -11.5,
+        38.07
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 16.2,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/gazy:south",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -8.05,
+          -11.5,
+          38.22
+        ],
+        "along_range_m": [
+          0.0,
+          16.2
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:b1173742bd1a319f9906d27bdb2f8363c2a3c7c4da2880b7353e9f5b7229ffb5"
+    },
+    {
+      "anchor_id": "svg:t-utilities--kontroliruemyy-gruzovoy-pere--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--kontroliruemyy-gruzovoy-pere--ceiling"
+      },
+      "origin": [
+        -8.05,
+        -7.0,
+        25.1
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -7.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -8.05,
+            25.1
+          ],
+          [
+            -3.55,
+            25.1
+          ],
+          [
+            -3.55,
+            61.8
+          ],
+          [
+            -8.05,
+            61.8
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          4.5
+        ],
+        "v_range_m": [
+          0.0,
+          36.7
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:1f3a7c98497ea11ca11256fe6b234ffb72b03375b119da2942e549d3307821cc"
+    },
+    {
+      "anchor_id": "svg:t-utilities--kontroliruemyy-gruzovoy-pere--east--drenazh:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--kontroliruemyy-gruzovoy-pere--east--drenazh"
+      },
+      "origin": [
+        -3.7,
+        -11.5,
+        25.25
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.97,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/kontroliruemyy-gruzovoy-pere:east:drenazh",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -3.55,
+          -11.5,
+          25.25
+        ],
+        "along_range_m": [
+          0.0,
+          12.97
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:11e34b0f1587dd43ab6462adff9796bd49e4bc00d8ad864f4501ee6c697882ec"
+    },
+    {
+      "anchor_id": "svg:t-utilities--kontroliruemyy-gruzovoy-pere--east--outer:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--kontroliruemyy-gruzovoy-pere--east--outer"
+      },
+      "origin": [
+        -3.7,
+        -11.5,
+        38.22
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 23.43,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/kontroliruemyy-gruzovoy-pere:east:outer",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -3.55,
+          -11.5,
+          38.22
+        ],
+        "along_range_m": [
+          0.0,
+          23.43
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:2d683dbfaa6abd0e0ba998e255543265e3e5fff6d9d3557a18b20405d679cdaa"
+    },
+    {
+      "anchor_id": "svg:t-utilities--kontroliruemyy-gruzovoy-pere--floor:floor",
+      "type": "floor",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--kontroliruemyy-gruzovoy-pere--floor"
+      },
+      "origin": [
+        -8.05,
+        -11.5,
+        25.1
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -11.5,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -8.05,
+            25.1
+          ],
+          [
+            -3.55,
+            25.1
+          ],
+          [
+            -3.55,
+            61.8
+          ],
+          [
+            -8.05,
+            61.8
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          4.5
+        ],
+        "v_range_m": [
+          0.0,
+          36.7
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:0f4f529e27055476587a1a9daa81b413c67386f0d93c506bd390c5d918749277"
+    },
+    {
+      "anchor_id": "svg:t-utilities--kontroliruemyy-gruzovoy-pere--west:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--kontroliruemyy-gruzovoy-pere--west"
+      },
+      "origin": [
+        -7.9,
+        -11.5,
+        61.65
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 23.43,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/kontroliruemyy-gruzovoy-pere:west",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -8.05,
+          -11.5,
+          61.65
+        ],
+        "along_range_m": [
+          0.0,
+          23.43
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:a1b3964df0e4df2ea2394dc158b5dbec83e073e3279512ac9c104f10bde581ca"
+    },
+    {
+      "anchor_id": "svg:t-utilities--lestnica--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--lestnica--ceiling"
       },
       "origin": [
         -47.78,
@@ -216,2084 +1186,17 @@
           ]
         }
       },
-      "geometry_hash": "sha256:601250020946e0962fd652c8855f913f4c6f8ab000332b855338d83a1dfbb4c1"
+      "geometry_hash": "sha256:f4d078f7e9934d548c578bbdadb7d7ca33390767939d711b3e5f81a9f8f0fc8d"
     },
     {
-      "anchor_id": "svg:t-utilities-ceiling-03:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-ceiling-03"
-      },
-      "origin": [
-        -40.55,
-        -7.0,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -7.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -40.55,
-            25.1
-          ],
-          [
-            -24.25,
-            25.1
-          ],
-          [
-            -24.25,
-            38.22
-          ],
-          [
-            -40.55,
-            38.22
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          16.3
-        ],
-        "v_range_m": [
-          0.0,
-          13.12
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:6237ce84a332ddb9c1f3485b4bbfacc27b749abef463397e05866bd227982c39"
-    },
-    {
-      "anchor_id": "svg:t-utilities-ceiling-04:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-ceiling-04"
-      },
-      "origin": [
-        -24.25,
-        -7.0,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -7.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -24.25,
-            25.1
-          ],
-          [
-            -8.05,
-            25.1
-          ],
-          [
-            -8.05,
-            38.22
-          ],
-          [
-            -24.25,
-            38.22
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          16.2
-        ],
-        "v_range_m": [
-          0.0,
-          13.12
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:f7b5f5db4ed8551c17142dea6aa96145f02133a8e2f9083dbd17b06d859ab3d7"
-    },
-    {
-      "anchor_id": "svg:t-utilities-ceiling-05:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-ceiling-05"
-      },
-      "origin": [
-        -8.05,
-        -7.0,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -7.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -8.05,
-            25.1
-          ],
-          [
-            -3.55,
-            25.1
-          ],
-          [
-            -3.55,
-            61.8
-          ],
-          [
-            -8.05,
-            61.8
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          4.5
-        ],
-        "v_range_m": [
-          0.0,
-          36.7
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:80ebe6a178fd71dd48b013bf3e427c0ea406655c4e8f8a9d9c22344099ea341b"
-    },
-    {
-      "anchor_id": "svg:t-utilities-ceiling-06:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-ceiling-06"
-      },
-      "origin": [
-        -3.55,
-        -7.0,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -7.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -3.55,
-            25.1
-          ],
-          [
-            12.6,
-            25.1
-          ],
-          [
-            12.6,
-            38.22
-          ],
-          [
-            -3.55,
-            38.22
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          16.15
-        ],
-        "v_range_m": [
-          0.0,
-          13.12
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:8cd6194dc2b84e7fff3e90a44e077e38792ed70474d28cc289946d9944e27bef"
-    },
-    {
-      "anchor_id": "svg:t-utilities-ceiling-07:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-ceiling-07"
-      },
-      "origin": [
-        -49.78,
-        -7.0,
-        51.21
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -7.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -49.78,
-            51.21
-          ],
-          [
-            -47.78,
-            51.21
-          ],
-          [
-            -47.78,
-            61.8
-          ],
-          [
-            -49.78,
-            61.8
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          2.0
-        ],
-        "v_range_m": [
-          0.0,
-          10.59
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:9a9ecb73aec06b0ae760c3b274c6e805918d5797f6d8a2bf7517ed923ebd793b"
-    },
-    {
-      "anchor_id": "svg:t-utilities-ceiling-08:ceiling",
-      "type": "ceiling",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-ceiling-08"
-      },
-      "origin": [
-        -47.78,
-        -7.0,
-        51.21
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        -1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -7.0,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -47.78,
-            51.21
-          ],
-          [
-            -43.11,
-            51.21
-          ],
-          [
-            -43.11,
-            53.21
-          ],
-          [
-            -47.78,
-            53.21
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          4.67
-        ],
-        "v_range_m": [
-          0.0,
-          2.0
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:a6d042320125de171b6f1511b067821f523e06bb61e5fc79825f5f7079a29aec"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-01:door:center",
+      "anchor_id": "svg:t-utilities--lestnica--door--zaschischennyy-prohod-k-lest:door:center",
       "type": "door",
       "role": "center",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-door-01"
-      },
-      "origin": [
-        -59.9,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:bc85a71ce2cbcd7e552aababed6504c40d892bd2493f421a21cb577da41a7f35"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-01:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-01"
-      },
-      "origin": [
-        -59.9,
-        -11.5,
-        25.25
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:5a9f5481ba30fbe2b7a03327b5794359619bcce5f4ec2edf001e9cdf6fcc0bc7"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-01:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-01"
-      },
-      "origin": [
-        -59.9,
-        -11.5,
-        24.95
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:5ee8c04b6da791ad88d060937b84f01d7d49434fcc95e9eb303fa148ea781944"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-02:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-02"
-      },
-      "origin": [
-        -32.4,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:8edce9c08a2b71dd264732aa5316b2fc0eb2218a67a5dec7bd0f3eb0cee12992"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-02:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-02"
-      },
-      "origin": [
-        -32.4,
-        -11.5,
-        25.25
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:c873ba10019cfba085de44457a8dd01cb295734292b056505bdce32c290e377e"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-02:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-02"
-      },
-      "origin": [
-        -32.4,
-        -11.5,
-        24.95
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:814d3a261f33d844a72f9c3e38625f9ad4f96f9a488121bd01de5ca211186b5c"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-03:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-03"
-      },
-      "origin": [
-        -16.15,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:025e2138165397ad993cba6ee9233e0a4c7ab9e8f25cb63273fe8cd9f5243186"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-03:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-03"
-      },
-      "origin": [
-        -16.15,
-        -11.5,
-        25.25
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:dbe41e5cdfb11d26b7cc7ceed29380b6f88359cd53b20b56d436b9e909a9cfa0"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-03:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-03"
-      },
-      "origin": [
-        -16.15,
-        -11.5,
-        24.95
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:1ae6efe7a83bdc5a4464cd81e9b8f1b87d23f502c91532c3174a87ca1c095562"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-04:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-04"
-      },
-      "origin": [
-        4.5,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:ded2487db11da3c69e34f924a241bfd32b600a3b71b0174c68985b8065c137c9"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-04:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-04"
-      },
-      "origin": [
-        4.5,
-        -11.5,
-        25.25
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:2cad5cee9f0c823835e17cca489ea1a7f564f73f7d6d9569311c29ec8ef4bc5c"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-04:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-04"
-      },
-      "origin": [
-        4.5,
-        -11.5,
-        24.95
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:922e3b463f36d47c55b4b6be1a207dcaea70e06da970fa2949b979d6090fdf1c"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-05:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-05"
-      },
-      "origin": [
-        -5.8,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -2.25,
-          2.25
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:e7f56d2de00af05bad97ca2eabd9d168d4417f0f57da2652f38ce295372da8bb"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-05:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-05"
-      },
-      "origin": [
-        -5.8,
-        -11.5,
-        25.25
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -2.25,
-          2.25
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:77ef1af745fd4d3211e8acf8a635481519b5c757c2ee591d25704e56971a7bb5"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-05:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-05"
-      },
-      "origin": [
-        -5.8,
-        -11.5,
-        24.95
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "normal",
-        "along_range_m": [
-          -2.25,
-          2.25
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:5c94475878d45a437c4ed1f55d68768a20657385614e879726d1208886a91086"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-06:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-06"
-      },
-      "origin": [
-        -5.8,
-        -11.5,
-        61.8
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -2.25,
-          2.25
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:2e9298d3bdd83fcfc5ee788bf4ab09dcddce78f791f0f36f011aaad1cec85164"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-06:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-06"
-      },
-      "origin": [
-        -5.8,
-        -11.5,
-        61.65
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -2.25,
-          2.25
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:c6f3f4ba975b92bce059d5dc07ba6a3062ea84ce964d75fae0c130727eba2949"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-06:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-06"
-      },
-      "origin": [
-        -5.8,
-        -11.5,
-        61.95
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 4.5,
-        "height_m": 4.5,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -2.25,
-          2.25
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:1ada76e560091a531d6078cfd095e362a785b7276c52da78e1b31a451899c323"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-07:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-07"
-      },
-      "origin": [
-        -48.78,
-        -11.5,
-        61.8
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:1ef37b1143323aa46b098a619469f2edddea7265d187d45159d4148389eb16d3"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-07:door:threshold_inside",
-      "type": "door",
-      "role": "threshold_inside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-07"
-      },
-      "origin": [
-        -48.78,
-        -11.5,
-        61.65
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:93d9d59591f2a1b087dd5ad71a0bea3843370745e9da7841bd0bc56114003e1b"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-07:door:threshold_outside",
-      "type": "door",
-      "role": "threshold_outside",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-07"
-      },
-      "origin": [
-        -48.78,
-        -11.5,
-        61.95
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "portal",
-        "width_m": 1.8,
-        "height_m": 2.8,
-        "bottom_m": 0.0,
-        "wall_thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "inside_side": "opposite",
-        "along_range_m": [
-          -0.9,
-          0.9
-        ],
-        "origin_semantics": "line_center"
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "metadata": {
-        "side_status": "explicit"
-      },
-      "geometry_hash": "sha256:75030a527ef66dbe9b009ec04d40910e86fe9440a93ac84d682079e148f753c2"
-    },
-    {
-      "anchor_id": "svg:t-utilities-door-08:door:center",
-      "type": "door",
-      "role": "center",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-door-08"
+        "source_id": "t-utilities--lestnica--door--zaschischennyy-prohod-k-lest"
       },
       "origin": [
         -46.695,
@@ -2356,17 +1259,17 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:492ea7258562dc5fb4908e6485719290a737a462f95681cca59db33afd54474a"
+      "geometry_hash": "sha256:5dc60a68179d453db40f55bce77066fe518c88170de32974478b91290e1537d9"
     },
     {
-      "anchor_id": "svg:t-utilities-door-08:door:threshold_inside",
+      "anchor_id": "svg:t-utilities--lestnica--door--zaschischennyy-prohod-k-lest:door:threshold_inside",
       "type": "door",
       "role": "threshold_inside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-door-08"
+        "source_id": "t-utilities--lestnica--door--zaschischennyy-prohod-k-lest"
       },
       "origin": [
         -46.695,
@@ -2429,17 +1332,17 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:285cb87ebf07cd7f473641c9076361849df8b1b35b468a0a540454bc0c3d13b9"
+      "geometry_hash": "sha256:8fd37936a2f61ab4901661764f577a799dbc0cf578ae1f98d95820556df6e0ab"
     },
     {
-      "anchor_id": "svg:t-utilities-door-08:door:threshold_outside",
+      "anchor_id": "svg:t-utilities--lestnica--door--zaschischennyy-prohod-k-lest:door:threshold_outside",
       "type": "door",
       "role": "threshold_outside",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-door-08"
+        "source_id": "t-utilities--lestnica--door--zaschischennyy-prohod-k-lest"
       },
       "origin": [
         -46.695,
@@ -2502,17 +1405,495 @@
       "metadata": {
         "side_status": "explicit"
       },
-      "geometry_hash": "sha256:13b7b8b8825a6d0539c67a58b6c1d3aefd301448a18601390d7cafce4377e501"
+      "geometry_hash": "sha256:a3b3d531995b45381f523d14eabca857beb0ba59d3a68f85feaafc03e20f7784"
     },
     {
-      "anchor_id": "svg:t-utilities-floor-01:floor",
+      "anchor_id": "svg:t-utilities--lestnica--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--lestnica--east"
+      },
+      "origin": [
+        -43.26,
+        -11.5,
+        53.21
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 8.44,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/lestnica:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -43.11,
+          -11.5,
+          53.21
+        ],
+        "along_range_m": [
+          0.0,
+          8.44
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:f5b32283da7ac55500c017e501cf2942d687f1576f867d0d7d0661c204036b3c"
+    },
+    {
+      "anchor_id": "svg:t-utilities--lestnica--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-floor-01"
+        "source_id": "t-utilities--lestnica--floor"
+      },
+      "origin": [
+        -47.78,
+        -11.5,
+        53.21
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -11.5,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -47.78,
+            53.21
+          ],
+          [
+            -43.11,
+            53.21
+          ],
+          [
+            -43.11,
+            61.8
+          ],
+          [
+            -47.78,
+            61.8
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          4.67
+        ],
+        "v_range_m": [
+          0.0,
+          8.59
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:436ac2994d16496c6fb2f36db7f7fa446aec144052ede3bad3ef294294fff6e6"
+    },
+    {
+      "anchor_id": "svg:t-utilities--lestnica--north:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--lestnica--north"
+      },
+      "origin": [
+        -47.78,
+        -11.5,
+        53.36
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 4.67,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/lestnica:north",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -47.78,
+          -11.5,
+          53.21
+        ],
+        "along_range_m": [
+          0.0,
+          4.67
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:307ab0ffc3f805f9b0c10f2b709df9048112954ef4f5d8b9aaf47835648706d2"
+    },
+    {
+      "anchor_id": "svg:t-utilities--line--t-utilities-wall-001:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--line--t-utilities-wall-001"
+      },
+      "origin": [
+        -16.254,
+        -11.5,
+        41.625
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 5.611,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/line:t_utilities-wall-001",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -16.104,
+          -11.5,
+          41.625
+        ],
+        "along_range_m": [
+          0.0,
+          5.611
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:f519459b957667b6fd7112cb44e498d46d8917142ebbaad182e71aa662caaf62"
+    },
+    {
+      "anchor_id": "svg:t-utilities--podstanciya--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--podstanciya--ceiling"
+      },
+      "origin": [
+        -67.4,
+        -7.0,
+        25.1
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -7.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -67.4,
+            25.1
+          ],
+          [
+            -52.4,
+            25.1
+          ],
+          [
+            -52.4,
+            38.22
+          ],
+          [
+            -67.4,
+            38.22
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          15.0
+        ],
+        "v_range_m": [
+          0.0,
+          13.12
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:55251c9359418bbfad353f76ea17ffa50245890c31415661dac84c1f78d39de5"
+    },
+    {
+      "anchor_id": "svg:t-utilities--podstanciya--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--podstanciya--east"
+      },
+      "origin": [
+        -52.55,
+        -11.5,
+        25.25
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.97,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/podstanciya:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -52.4,
+          -11.5,
+          25.25
+        ],
+        "along_range_m": [
+          0.0,
+          12.97
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:20bdb8d52f8c629e35a9d10883ef7c66b5039c498f876f286494b4c0eb636c57"
+    },
+    {
+      "anchor_id": "svg:t-utilities--podstanciya--floor:floor",
+      "type": "floor",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--podstanciya--floor"
       },
       "origin": [
         -67.4,
@@ -2591,22 +1972,97 @@
           ]
         }
       },
-      "geometry_hash": "sha256:8295164a551ff9317d606771c1834bba93910fbb77d06b36ce4e68999230b50e"
+      "geometry_hash": "sha256:be0fe739088e2b2303b32cb67bb5018e081d6b440c1e32301056fce5ec125c30"
     },
     {
-      "anchor_id": "svg:t-utilities-floor-02:floor",
-      "type": "floor",
+      "anchor_id": "svg:t-utilities--podstanciya--south:wall",
+      "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-floor-02"
+        "source_id": "t-utilities--podstanciya--south"
       },
       "origin": [
-        -47.78,
+        -52.4,
         -11.5,
-        53.21
+        38.07
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 14.85,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/podstanciya:south",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -52.4,
+          -11.5,
+          38.22
+        ],
+        "along_range_m": [
+          0.0,
+          14.85
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:3653f362023a5dfb5effda26c74926d716138afc8a57bec41b6d7c220495a82e"
+    },
+    {
+      "anchor_id": "svg:t-utilities--ventilyaciya--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--ventilyaciya--ceiling"
+      },
+      "origin": [
+        -40.55,
+        -7.0,
+        25.1
       ],
       "forward": [
         1.0,
@@ -2615,7 +2071,7 @@
       ],
       "normal": [
         0.0,
-        1.0,
+        -1.0,
         0.0
       ],
       "up": [
@@ -2625,34 +2081,34 @@
       ],
       "bounds": {
         "kind": "planar_surface",
-        "elevation_m": -11.5,
+        "elevation_m": -7.0,
         "thickness_m": 0.2,
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -47.78,
-            53.21
+            -40.55,
+            25.1
           ],
           [
-            -43.11,
-            53.21
+            -24.25,
+            25.1
           ],
           [
-            -43.11,
-            61.8
+            -24.25,
+            38.22
           ],
           [
-            -47.78,
-            61.8
+            -40.55,
+            38.22
           ]
         ],
         "u_range_m": [
           0.0,
-          4.67
+          16.3
         ],
         "v_range_m": [
           0.0,
-          8.59
+          13.12
         ],
         "holes_xz": []
       },
@@ -2680,17 +2136,92 @@
           ]
         }
       },
-      "geometry_hash": "sha256:0c25ca037fb9ee547379d7140470a354e68832051c8b61ccca6c69391ae92250"
+      "geometry_hash": "sha256:cba1885045082ee7f144e99c599afee6860943b5355da8b89e3642ac2c73425d"
     },
     {
-      "anchor_id": "svg:t-utilities-floor-03:floor",
+      "anchor_id": "svg:t-utilities--ventilyaciya--east:wall",
+      "type": "wall",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--ventilyaciya--east"
+      },
+      "origin": [
+        -24.4,
+        -11.5,
+        25.25
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.97,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/ventilyaciya:east",
+        "normal_side": "normal",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -24.25,
+          -11.5,
+          25.25
+        ],
+        "along_range_m": [
+          0.0,
+          12.97
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:66b651ec58df4025a8ad61ce69edc50bbc8db6c5d126b06fde570be4605a8bf2"
+    },
+    {
+      "anchor_id": "svg:t-utilities--ventilyaciya--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-floor-03"
+        "source_id": "t-utilities--ventilyaciya--floor"
       },
       "origin": [
         -40.55,
@@ -2769,32 +2300,32 @@
           ]
         }
       },
-      "geometry_hash": "sha256:553ce44a671f4b24833618cfc911f11c7e92e5d06376c3ac9d1b72c88ef39200"
+      "geometry_hash": "sha256:516977203640d9bda457043d4a11f8819f88d11d0ae1aae5fab18a6f0ea45316"
     },
     {
-      "anchor_id": "svg:t-utilities-floor-04:floor",
-      "type": "floor",
+      "anchor_id": "svg:t-utilities--ventilyaciya--south:wall",
+      "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-floor-04"
+        "source_id": "t-utilities--ventilyaciya--south"
       },
       "origin": [
         -24.25,
         -11.5,
-        25.1
+        38.07
       ],
       "forward": [
-        1.0,
+        -1.0,
         0.0,
         0.0
       ],
       "normal": [
         0.0,
-        1.0,
-        0.0
+        0.0,
+        -1.0
       ],
       "up": [
         0.0,
@@ -2802,51 +2333,37 @@
         0.0
       ],
       "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -11.5,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -24.25,
-            25.1
-          ],
-          [
-            -8.05,
-            25.1
-          ],
-          [
-            -8.05,
-            38.22
-          ],
-          [
-            -24.25,
-            38.22
-          ]
+        "kind": "linear_surface",
+        "length_m": 16.3,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/ventilyaciya:south",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -24.25,
+          -11.5,
+          38.22
         ],
-        "u_range_m": [
+        "along_range_m": [
           0.0,
-          16.2
-        ],
-        "v_range_m": [
-          0.0,
-          13.12
-        ],
-        "holes_xz": []
+          16.3
+        ]
       },
       "placement_limits": {
         "normal_offset_m": [
           0,
-          0
+          1
         ],
         "height_m": [
           0,
-          0
+          4.2
         ],
         "rotation_deg": {
           "yaw": [
-            -180,
-            180
+            0,
+            0
           ],
           "pitch": [
             0,
@@ -2858,22 +2375,97 @@
           ]
         }
       },
-      "geometry_hash": "sha256:01cef7023e5aaf5a63c1025bdeec5be064c68e09f5d173eb9b8b212f2a590387"
+      "geometry_hash": "sha256:b485381e8da13d0c811b9e67e3b6c3f71693986b861571eae4847c6936cc8bad"
     },
     {
-      "anchor_id": "svg:t-utilities-floor-05:floor",
-      "type": "floor",
+      "anchor_id": "svg:t-utilities--ventilyaciya--west:wall",
+      "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-floor-05"
+        "source_id": "t-utilities--ventilyaciya--west"
       },
       "origin": [
-        -8.05,
+        -40.4,
         -11.5,
-        25.1
+        38.22
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "linear_surface",
+        "length_m": 12.97,
+        "height_m": 4.5,
+        "thickness_m": 0.3,
+        "orientation_policy": "canonical_endpoint_order",
+        "surface_side_id": "T-UTILITIES/ventilyaciya:west",
+        "normal_side": "opposite",
+        "source_segment_index": 1,
+        "centerline_origin": [
+          -40.55,
+          -11.5,
+          38.22
+        ],
+        "along_range_m": [
+          0.0,
+          12.97
+        ]
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          1
+        ],
+        "height_m": [
+          0,
+          4.2
+        ],
+        "rotation_deg": {
+          "yaw": [
+            0,
+            0
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:1efef1c85537fe11de28903755b692c633ca011bdb224c5c82b595be98124f7b"
+    },
+    {
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42a--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42a--ceiling"
+      },
+      "origin": [
+        -49.78,
+        -7.0,
+        51.21
       ],
       "forward": [
         1.0,
@@ -2882,7 +2474,7 @@
       ],
       "normal": [
         0.0,
-        1.0,
+        -1.0,
         0.0
       ],
       "up": [
@@ -2892,34 +2484,34 @@
       ],
       "bounds": {
         "kind": "planar_surface",
-        "elevation_m": -11.5,
+        "elevation_m": -7.0,
         "thickness_m": 0.2,
         "orientation_policy": "world_positive_x",
         "polygon_xz": [
           [
-            -8.05,
-            25.1
+            -49.78,
+            51.21
           ],
           [
-            -3.55,
-            25.1
+            -47.78,
+            51.21
           ],
           [
-            -3.55,
+            -47.78,
             61.8
           ],
           [
-            -8.05,
+            -49.78,
             61.8
           ]
         ],
         "u_range_m": [
           0.0,
-          4.5
+          2.0
         ],
         "v_range_m": [
           0.0,
-          36.7
+          10.59
         ],
         "holes_xz": []
       },
@@ -2947,106 +2539,17 @@
           ]
         }
       },
-      "geometry_hash": "sha256:bd401096a7d5bb0e5cd7e9403f1de9772f0951e62452bd5a57c5e566c26e3692"
+      "geometry_hash": "sha256:cbcf41212b3a81afef46ab41a3e75b600c11227cb11938fa73f7f9f4c946c876"
     },
     {
-      "anchor_id": "svg:t-utilities-floor-06:floor",
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42a--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-floor-06"
-      },
-      "origin": [
-        -3.55,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "planar_surface",
-        "elevation_m": -11.5,
-        "thickness_m": 0.2,
-        "orientation_policy": "world_positive_x",
-        "polygon_xz": [
-          [
-            -3.55,
-            25.1
-          ],
-          [
-            12.6,
-            25.1
-          ],
-          [
-            12.6,
-            38.22
-          ],
-          [
-            -3.55,
-            38.22
-          ]
-        ],
-        "u_range_m": [
-          0.0,
-          16.15
-        ],
-        "v_range_m": [
-          0.0,
-          13.12
-        ],
-        "holes_xz": []
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          0
-        ],
-        "height_m": [
-          0,
-          0
-        ],
-        "rotation_deg": {
-          "yaw": [
-            -180,
-            180
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:7ebd3c0abf910432ff5ccb04af19364e0479d5cee572286686b8b056bb611141"
-    },
-    {
-      "anchor_id": "svg:t-utilities-floor-07:floor",
-      "type": "floor",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-floor-07"
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42a--floor"
       },
       "origin": [
         -49.78,
@@ -3125,17 +2628,106 @@
           ]
         }
       },
-      "geometry_hash": "sha256:16a1240d2f54a954b2b5880efc85f47fcf8f7510d2aabe79d29c6968186d3978"
+      "geometry_hash": "sha256:f4585380b3f151a45ccd465b671d79710cdf95126c6697c935227073d6df4f99"
     },
     {
-      "anchor_id": "svg:t-utilities-floor-08:floor",
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42b--ceiling:ceiling",
+      "type": "ceiling",
+      "role": "surface",
+      "status": "active",
+      "source_ref": {
+        "artifact_id": "geometry-handoff",
+        "source_kind": "svg",
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42b--ceiling"
+      },
+      "origin": [
+        -47.78,
+        -7.0,
+        51.21
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "up": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "bounds": {
+        "kind": "planar_surface",
+        "elevation_m": -7.0,
+        "thickness_m": 0.2,
+        "orientation_policy": "world_positive_x",
+        "polygon_xz": [
+          [
+            -47.78,
+            51.21
+          ],
+          [
+            -43.11,
+            51.21
+          ],
+          [
+            -43.11,
+            53.21
+          ],
+          [
+            -47.78,
+            53.21
+          ]
+        ],
+        "u_range_m": [
+          0.0,
+          4.67
+        ],
+        "v_range_m": [
+          0.0,
+          2.0
+        ],
+        "holes_xz": []
+      },
+      "placement_limits": {
+        "normal_offset_m": [
+          0,
+          0
+        ],
+        "height_m": [
+          0,
+          0
+        ],
+        "rotation_deg": {
+          "yaw": [
+            -180,
+            180
+          ],
+          "pitch": [
+            0,
+            0
+          ],
+          "roll": [
+            0,
+            0
+          ]
+        }
+      },
+      "geometry_hash": "sha256:5cb044f1be001c443e1b343722fac7f0a22189e8c829f33e20126cd3e8a595f3"
+    },
+    {
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42b--floor:floor",
       "type": "floor",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-floor-08"
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--amendment-d-42b--floor"
       },
       "origin": [
         -47.78,
@@ -3214,32 +2806,32 @@
           ]
         }
       },
-      "geometry_hash": "sha256:7a0b51afc7e267aae4290e4f8372346b21b9598041a7565d27b6f129e340c87c"
+      "geometry_hash": "sha256:611e1f786131559d9fa0a31fbb5a4a7d3e18f2c196216a59c3ddcdb4358107ca"
     },
     {
-      "anchor_id": "svg:t-utilities-wall-01:wall",
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--east--lestnica:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-wall-01"
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--east--lestnica"
       },
       "origin": [
-        -52.4,
+        -47.93,
         -11.5,
-        24.95
+        53.21
       ],
       "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
         -1.0,
         0.0,
         0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
       ],
       "up": [
         0.0,
@@ -3248,21 +2840,21 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 15.0,
+        "length_m": 8.44,
         "height_m": 4.5,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-01",
-        "normal_side": "opposite",
+        "surface_side_id": "T-UTILITIES/zaschischennyy-prohod-k-lest:east:lestnica",
+        "normal_side": "normal",
         "source_segment_index": 1,
         "centerline_origin": [
-          -52.4,
+          -47.78,
           -11.5,
-          25.1
+          53.21
         ],
         "along_range_m": [
           0.0,
-          15.0
+          8.44
         ]
       },
       "placement_limits": {
@@ -3289,32 +2881,32 @@
           ]
         }
       },
-      "geometry_hash": "sha256:e5922cf910d239b20879bae220e0fd4eaf7a74fcb2b0ddd2228a6099903fb9df"
+      "geometry_hash": "sha256:e77f6f716c50d531f67916cb02fab2de5e40424f8281c57206ce146f4552d211"
     },
     {
-      "anchor_id": "svg:t-utilities-wall-02:wall",
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--east--outer:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-wall-02"
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--east--outer"
       },
       "origin": [
-        -52.4,
+        -43.26,
         -11.5,
-        38.07
+        51.21
       ],
       "forward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "normal": [
         -1.0,
         0.0,
         0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
       ],
       "up": [
         0.0,
@@ -3323,87 +2915,12 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 15.0,
+        "length_m": 2.0,
         "height_m": 4.5,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-02",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -52.4,
-          -11.5,
-          38.22
-        ],
-        "along_range_m": [
-          0.0,
-          15.0
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:8b402e3c8fe56587cc1fab6ccae369ee0b8c7c42976beeded802e46554f07848"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-03:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-03"
-      },
-      "origin": [
-        -43.11,
-        -11.5,
-        51.06
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 6.67,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-03",
-        "normal_side": "opposite",
+        "surface_side_id": "T-UTILITIES/zaschischennyy-prohod-k-lest:east:outer",
+        "normal_side": "normal",
         "source_segment_index": 1,
         "centerline_origin": [
           -43.11,
@@ -3412,7 +2929,7 @@
         ],
         "along_range_m": [
           0.0,
-          6.67
+          2.0
         ]
       },
       "placement_limits": {
@@ -3439,107 +2956,32 @@
           ]
         }
       },
-      "geometry_hash": "sha256:de13e969ff4e478405e24aebcdd4ff3f45dfe5681295c0ab1c4d945a5891cdb1"
+      "geometry_hash": "sha256:4273723d0dbe998d95d875f46d66ced9da044dfd31bb8d25e0781afe6bd0931d"
     },
     {
-      "anchor_id": "svg:t-utilities-wall-04:wall",
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--north--outer-2:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-wall-04"
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--north--outer-2"
       },
       "origin": [
-        -43.11,
+        -47.78,
         -11.5,
-        61.65
+        51.36
       ],
       "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
         1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 6.67,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-04",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -43.11,
-          -11.5,
-          61.8
-        ],
-        "along_range_m": [
-          0.0,
-          6.67
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:099dd0a7bd941adc101b4c37f6f5747b43a941df5763b056856f5ac7e9ec78ef"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-05:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-05"
-      },
-      "origin": [
-        -43.11,
-        -11.5,
-        53.06
-      ],
-      "forward": [
-        -1.0,
         0.0,
         0.0
       ],
       "normal": [
         0.0,
         0.0,
-        -1.0
+        1.0
       ],
       "up": [
         0.0,
@@ -3552,13 +2994,13 @@
         "height_m": 4.5,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-05",
-        "normal_side": "opposite",
+        "surface_side_id": "T-UTILITIES/zaschischennyy-prohod-k-lest:north:outer-2",
+        "normal_side": "normal",
         "source_segment_index": 1,
         "centerline_origin": [
-          -43.11,
+          -47.78,
           -11.5,
-          53.21
+          51.21
         ],
         "along_range_m": [
           0.0,
@@ -3589,408 +3031,33 @@
           ]
         }
       },
-      "geometry_hash": "sha256:65860e66a5c8d8c9bf986cbed22c58c8e83f03a8a7e154088d919e2d38765c37"
+      "geometry_hash": "sha256:f4a46adceccbef218fbc9fc6c8de642f0d6a17e9d4a9e8755721d802d98e5410"
     },
     {
-      "anchor_id": "svg:t-utilities-wall-06:wall",
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--north--outer:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-wall-06"
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--north--outer"
       },
       "origin": [
-        12.6,
+        -49.78,
         -11.5,
-        24.95
+        51.36
       ],
       "forward": [
-        -1.0,
+        1.0,
         0.0,
         0.0
       ],
       "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 53.15,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-06",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          12.6,
-          -11.5,
-          25.1
-        ],
-        "along_range_m": [
-          0.0,
-          53.15
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:6562a9c187f64526310bfe51efd5aba7e3adc53d3ce4c7127eb0ec952ea4b7ac"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-07:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-07"
-      },
-      "origin": [
-        -8.05,
-        -11.5,
-        38.07
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 32.5,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-07",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -8.05,
-          -11.5,
-          38.22
-        ],
-        "along_range_m": [
-          0.0,
-          32.5
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:e12b3fc6ce232e51c982eaf148496d3faa409f14a2686f9bfcb48cc7bd8d2522"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-08:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-08"
-      },
-      "origin": [
-        -3.55,
-        -11.5,
-        61.65
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 4.5,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-08",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -3.55,
-          -11.5,
-          61.8
-        ],
-        "along_range_m": [
-          0.0,
-          4.5
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:b0327a4aa88104374c1ce0bde024e3a07be7ce5ad97fdf7fc6bb5679a2316c69"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-09:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-09"
-      },
-      "origin": [
-        12.6,
-        -11.5,
-        38.07
-      ],
-      "forward": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "normal": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 16.15,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-09",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          12.6,
-          -11.5,
-          38.22
-        ],
-        "along_range_m": [
-          0.0,
-          16.15
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:3cbbd0de50b5524e402773e04ae5697aa25ec188978faab438126946050206e1"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-10:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-10"
-      },
-      "origin": [
-        -67.25,
-        -11.5,
-        38.22
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 13.12,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-10",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -67.4,
-          -11.5,
-          38.22
-        ],
-        "along_range_m": [
-          0.0,
-          13.12
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:174b4cf6b42e1f53a6e4e730ccf860299f9e7b2cac697adc6b0e5289b95f157b"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-11:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-11"
-      },
-      "origin": [
-        -52.55,
-        -11.5,
-        25.1
-      ],
-      "forward": [
         0.0,
         0.0,
         1.0
       ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
       "up": [
         0.0,
         1.0,
@@ -3998,246 +3065,21 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 13.12,
+        "length_m": 2.0,
         "height_m": 4.5,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-11",
+        "surface_side_id": "T-UTILITIES/zaschischennyy-prohod-k-lest:north:outer",
         "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -52.4,
-          -11.5,
-          25.1
-        ],
-        "along_range_m": [
-          0.0,
-          13.12
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:eb345fe2719d943ccc6f538ba4837b9554857c31d1450b800a12bdda252ace6a"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-12:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-12"
-      },
-      "origin": [
-        -49.63,
-        -11.5,
-        61.8
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 10.59,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-12",
-        "normal_side": "opposite",
         "source_segment_index": 1,
         "centerline_origin": [
           -49.78,
-          -11.5,
-          61.8
-        ],
-        "along_range_m": [
-          0.0,
-          10.59
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:74afbf86ac57fc8441f61a6b4da32107a5a14904cea513e15d15ddd11f6e3466"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-13:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-13"
-      },
-      "origin": [
-        -47.93,
-        -11.5,
-        53.21
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 8.59,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-13",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -47.78,
-          -11.5,
-          53.21
-        ],
-        "along_range_m": [
-          0.0,
-          8.59
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:cf97d9904deddb2bd2ba00beaa5035a59d859ac7e93ceae02eedb88276dfc519"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-14:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-14"
-      },
-      "origin": [
-        -43.26,
-        -11.5,
-        51.21
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 10.59,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-14",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -43.11,
           -11.5,
           51.21
         ],
         "along_range_m": [
           0.0,
-          10.59
+          2.0
         ]
       },
       "placement_limits": {
@@ -4264,22 +3106,22 @@
           ]
         }
       },
-      "geometry_hash": "sha256:8447725d75698d5ae11cb2f61b389ab264d897e570de0803f7cc321a3bdfadf9"
+      "geometry_hash": "sha256:21e34ce2ec0fc7cd30d3af05b8c22fdf44cc5d27a998a34779bc4f1e2ec4122c"
     },
     {
-      "anchor_id": "svg:t-utilities-wall-15:wall",
+      "anchor_id": "svg:t-utilities--zaschischennyy-prohod-k-lest--west:wall",
       "type": "wall",
       "role": "surface",
       "status": "active",
       "source_ref": {
         "artifact_id": "geometry-handoff",
         "source_kind": "svg",
-        "source_id": "t-utilities-wall-15"
+        "source_id": "t-utilities--zaschischennyy-prohod-k-lest--west"
       },
       "origin": [
-        -40.4,
+        -49.63,
         -11.5,
-        38.22
+        61.65
       ],
       "forward": [
         0.0,
@@ -4298,21 +3140,21 @@
       ],
       "bounds": {
         "kind": "linear_surface",
-        "length_m": 13.12,
+        "length_m": 10.44,
         "height_m": 4.5,
         "thickness_m": 0.3,
         "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-15",
+        "surface_side_id": "T-UTILITIES/zaschischennyy-prohod-k-lest:west",
         "normal_side": "opposite",
         "source_segment_index": 1,
         "centerline_origin": [
-          -40.55,
+          -49.78,
           -11.5,
-          38.22
+          61.65
         ],
         "along_range_m": [
           0.0,
-          13.12
+          10.44
         ]
       },
       "placement_limits": {
@@ -4339,382 +3181,7 @@
           ]
         }
       },
-      "geometry_hash": "sha256:812065812f46b88aec7b0025e8750b4c2498e01f5712c3bfc49978f2b27d8a4a"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-16:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-16"
-      },
-      "origin": [
-        -24.4,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 13.12,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-16",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -24.25,
-          -11.5,
-          25.1
-        ],
-        "along_range_m": [
-          0.0,
-          13.12
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:cc00a356bd3bcaf3da1cd55faa1260aff8a77fe402b46407d5a2cddd905eaa6b"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-17:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-17"
-      },
-      "origin": [
-        -7.9,
-        -11.5,
-        61.8
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        -1.0
-      ],
-      "normal": [
-        1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 36.7,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-17",
-        "normal_side": "opposite",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -8.05,
-          -11.5,
-          61.8
-        ],
-        "along_range_m": [
-          0.0,
-          36.7
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:4b65c6753c781e63a74b40ede0fdafcd644fd0680703aecaa8de3c001a684fc1"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-18:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-18"
-      },
-      "origin": [
-        -3.7,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 36.7,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-18",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -3.55,
-          -11.5,
-          25.1
-        ],
-        "along_range_m": [
-          0.0,
-          36.7
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:4037b28b1dd8e842664d4815f4fd128042c4593bbb88ab473b216370bb9ae9b6"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-19:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-19"
-      },
-      "origin": [
-        12.45,
-        -11.5,
-        25.1
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 13.12,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-19",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          12.6,
-          -11.5,
-          25.1
-        ],
-        "along_range_m": [
-          0.0,
-          13.12
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:c7a1fd16fc9edd5fefd46b2ce31b88826713430a9b8977953d2189caac4aec4b"
-    },
-    {
-      "anchor_id": "svg:t-utilities-wall-20:wall",
-      "type": "wall",
-      "role": "surface",
-      "status": "active",
-      "source_ref": {
-        "artifact_id": "geometry-handoff",
-        "source_kind": "svg",
-        "source_id": "t-utilities-wall-20"
-      },
-      "origin": [
-        -16.254,
-        -11.5,
-        41.625
-      ],
-      "forward": [
-        0.0,
-        0.0,
-        1.0
-      ],
-      "normal": [
-        -1.0,
-        0.0,
-        0.0
-      ],
-      "up": [
-        0.0,
-        1.0,
-        0.0
-      ],
-      "bounds": {
-        "kind": "linear_surface",
-        "length_m": 5.611,
-        "height_m": 4.5,
-        "thickness_m": 0.3,
-        "orientation_policy": "canonical_endpoint_order",
-        "surface_side_id": "T-UTILITIES/wall-20",
-        "normal_side": "normal",
-        "source_segment_index": 1,
-        "centerline_origin": [
-          -16.104,
-          -11.5,
-          41.625
-        ],
-        "along_range_m": [
-          0.0,
-          5.611
-        ]
-      },
-      "placement_limits": {
-        "normal_offset_m": [
-          0,
-          1
-        ],
-        "height_m": [
-          0,
-          4.2
-        ],
-        "rotation_deg": {
-          "yaw": [
-            0,
-            0
-          ],
-          "pitch": [
-            0,
-            0
-          ],
-          "roll": [
-            0,
-            0
-          ]
-        }
-      },
-      "geometry_hash": "sha256:9f9a6171762b5cc3042d9c6872b8efc1ac43b09ac6ef26c13af65c9c8a81251e"
+      "geometry_hash": "sha256:70fb82d50d28cd7ad2f4e504487551516694be8711e2f5fafe6c0cd58556765e"
     }
   ]
 }

@@ -17,7 +17,8 @@
   "wall_height_m": 4.5,
   "rooms": [
     {
-      "id": "t-energy-floor-01",
+      "id": "t-energy--generatornyy-zal--floor",
+      "stable_id": "T-ENERGY/generatornyy-zal:floor",
       "space_id": "T-ENERGY/generatornyy-zal",
       "label": "ГЕНЕРАТОРНЫЙ ЗАЛ / главный генератор · рабочий обход / только трубные вводы / непрерывный обход вокруг агрегата",
       "class": "energy",
@@ -41,7 +42,8 @@
       "area_m2": 560.6
     },
     {
-      "id": "t-energy-floor-02",
+      "id": "t-energy--pozharnyy-tambur--floor",
+      "stable_id": "T-ENERGY/pozharnyy-tambur:floor",
       "space_id": "T-ENERGY/pozharnyy-tambur",
       "label": "ПОЖАРНЫЙ ТАМБУР",
       "class": "energy",
@@ -65,7 +67,8 @@
       "area_m2": 33.3
     },
     {
-      "id": "t-energy-floor-03",
+      "id": "t-energy--schitovaya--floor",
+      "stable_id": "T-ENERGY/schitovaya:floor",
       "space_id": "T-ENERGY/schitovaya",
       "label": "ЩИТОВАЯ / операторская",
       "class": "energy",
@@ -89,7 +92,8 @@
       "area_m2": 144.3
     },
     {
-      "id": "t-energy-floor-04",
+      "id": "t-energy--ohlazhdenie--floor",
+      "stable_id": "T-ENERGY/ohlazhdenie:floor",
       "space_id": "T-ENERGY/ohlazhdenie",
       "label": "ОХЛАЖДЕНИЕ / насосы · теплообмен",
       "class": "utility",
@@ -113,7 +117,8 @@
       "area_m2": 197.5
     },
     {
-      "id": "t-energy-floor-05",
+      "id": "t-energy--sluzhebnyy-podhod--floor",
+      "stable_id": "T-ENERGY/sluzhebnyy-podhod:floor",
       "space_id": "T-ENERGY/sluzhebnyy-podhod",
       "label": "СЛУЖЕБНЫЙ ПОДХОД",
       "class": "corridor",
@@ -139,7 +144,8 @@
   ],
   "openings": [
     {
-      "id": "t-energy-window-01",
+      "id": "t-energy--generatornyy-zal--window--schitovaya",
+      "stable_id": "T-ENERGY/generatornyy-zal:window:schitovaya",
       "type": "window",
       "source": "window",
       "source_id": "t_energy-annotation-001",
@@ -156,7 +162,8 @@
       ]
     },
     {
-      "id": "t-energy-door-02",
+      "id": "t-energy--generatornyy-zal--door--pozharnyy-tambur",
+      "stable_id": "T-ENERGY/generatornyy-zal:door:pozharnyy-tambur",
       "type": "door",
       "source": "energy-gap",
       "source_id": "t_energy-opening-001",
@@ -173,7 +180,8 @@
       ]
     },
     {
-      "id": "t-energy-door-03",
+      "id": "t-energy--schitovaya--door--sluzhebnyy-podhod",
+      "stable_id": "T-ENERGY/schitovaya:door:sluzhebnyy-podhod",
       "type": "door",
       "source": "door-gap",
       "source_id": "t_energy-opening-003",
@@ -190,7 +198,8 @@
       ]
     },
     {
-      "id": "t-energy-door-04",
+      "id": "t-energy--ohlazhdenie--door--sluzhebnyy-podhod",
+      "stable_id": "T-ENERGY/ohlazhdenie:door:sluzhebnyy-podhod",
       "type": "door",
       "source": "door-gap",
       "source_id": "t_energy-opening-004",
@@ -204,38 +213,6 @@
         8.88,
         -58.65,
         10.68
-      ]
-    },
-    {
-      "id": "t-energy-opening-05",
-      "type": "opening",
-      "source": "amendment D-28f",
-      "source_id": "amendment-D-28f",
-      "width_m": 3.1,
-      "rooms": [
-        "T-ENERGY/sluzhebnyy-podhod"
-      ],
-      "world_m": [
-        -58.65,
-        19.6,
-        -55.55,
-        19.6
-      ]
-    },
-    {
-      "id": "t-energy-door-06",
-      "type": "door",
-      "source": "amendment D-28h",
-      "source_id": "amendment-D-28h",
-      "width_m": 4.5,
-      "rooms": [
-        "T-ENERGY/pozharnyy-tambur"
-      ],
-      "world_m": [
-        -91.06,
-        19.6,
-        -86.56,
-        19.6
       ]
     }
   ],
@@ -268,7 +245,7 @@
     }
   ],
   "anomalies": [],
-  "wall_segments": 11,
+  "wall_segments": 19,
   "amendments": [
     "D-28a",
     "D-28b",
@@ -280,5 +257,149 @@
     "D-28h"
   ],
   "feature_rects_ignored": 4,
+  "shared_faces": {
+    "rank": [
+      1,
+      "T-ENERGY"
+    ],
+    "owners": [
+      "T-CIRCULATION",
+      "T-EAST-VERTICAL"
+    ],
+    "snapped_edges": [],
+    "dropped_walls": [
+      {
+        "id": "t-energy--pozharnyy-tambur--south",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -93.12,
+          19.6,
+          -84.5,
+          19.6
+        ]
+      },
+      {
+        "id": "t-energy--sluzhebnyy-podhod--south",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -58.65,
+          19.6,
+          -55.55,
+          19.6
+        ]
+      }
+    ],
+    "trimmed_walls": [
+      {
+        "id": "t-energy--pozharnyy-tambur--west",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -93.12,
+          15.739,
+          -93.12,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            15.739,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "t-energy--pozharnyy-tambur--east",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -84.5,
+          15.739,
+          -84.5,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            15.739,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "t-energy--sluzhebnyy-podhod--west",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -58.65,
+          15.739,
+          -58.65,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            15.739,
+            19.45
+          ]
+        ]
+      },
+      {
+        "id": "t-energy--sluzhebnyy-podhod--east",
+        "owner": [
+          "T-CIRCULATION"
+        ],
+        "world_m": [
+          -55.55,
+          -4.889,
+          -55.55,
+          19.6
+        ],
+        "pieces_m": [
+          [
+            -4.889,
+            19.45
+          ]
+        ]
+      }
+    ],
+    "dropped_openings": [
+      {
+        "id": "T-ENERGY/sluzhebnyy-podhod:opening:outer",
+        "type": "opening",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--glavnyy-sluzhebnyy-koridor--opening--outer--amendment-auto-01",
+        "rooms": [
+          "T-ENERGY/sluzhebnyy-podhod"
+        ],
+        "world_m": [
+          -58.65,
+          19.6,
+          -55.55,
+          19.6
+        ]
+      },
+      {
+        "id": "T-ENERGY/pozharnyy-tambur:door:outer",
+        "type": "door",
+        "owner": "T-CIRCULATION",
+        "owner_opening": "t-circulation--glavnyy-sluzhebnyy-koridor--door--outer--amendment-auto-02",
+        "rooms": [
+          "T-ENERGY/pozharnyy-tambur"
+        ],
+        "world_m": [
+          -91.06,
+          19.6,
+          -86.56,
+          19.6
+        ]
+      }
+    ],
+    "moved_openings": []
+  },
   "unmapped_other_elements": 2
 }

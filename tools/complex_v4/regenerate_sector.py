@@ -8,6 +8,7 @@ import copy
 import hashlib
 import json
 import math
+import os
 import re
 import subprocess
 import sys
@@ -538,6 +539,48 @@ def normalized_anchor_document(
     }
 
 
+# Stable wall IDs (#206) make the converter's merged wall names long (it joins the IDs of collinear walls): on Windows the
+# staging path plus such a name passes MAX_PATH. The converter writes through an extended-length path, and every generated file
+# whose name is longer than GENERATED_NAME_LIMIT is renamed to a short deterministic name before anything else reads the package.
+GENERATED_NAME_LIMIT = 64
+
+
+def extended_path(path: Path) -> str:
+    """Path string that is not limited by MAX_PATH on Windows (unchanged elsewhere)."""
+    text = str(path.resolve())
+    prefix = "\\\\?\\"
+    return prefix + text if os.name == "nt" and not text.startswith(prefix) else text
+
+
+def shorten_generated_names(directory: Path) -> dict[str, str]:
+    """Rename over-long generated files to <prefix>_<index>_<hash>.<ext> and rewrite every reference to them."""
+    root = extended_path(directory)
+    renames: dict[str, str] = {}
+    for entry in os.scandir(root):
+        if not entry.is_file() or len(entry.name) <= GENERATED_NAME_LIMIT:
+            continue
+        stem, dot, ext = entry.name.rpartition(".")
+        match = re.match(r"([a-z]+_\d+)_", stem)
+        prefix = match.group(1) if match else "generated"
+        short = f"{prefix}_{hashlib.sha1(stem.encode('utf-8')).hexdigest()[:12]}{dot}{ext}"
+        if short in renames.values():
+            raise RegenerationError(f"Generated file names collide after shortening: {short}")
+        os.replace(os.path.join(root, entry.name), os.path.join(root, short))
+        renames[entry.name] = short
+    if renames:
+        for entry in os.scandir(root):
+            if entry.is_file() and entry.name.rpartition(".")[2] in ("tscn", "json", "tres", "mtl"):
+                with open(entry.path, encoding="utf-8") as stream:
+                    text = stream.read()
+                updated = text
+                for old, new in renames.items():
+                    updated = updated.replace(old, new)
+                if updated != text:
+                    with open(entry.path, "w", encoding="utf-8", newline="\n") as stream:
+                        stream.write(updated)
+    return renames
+
+
 def generate_svg(
     python: str,
     svg_root: Path,
@@ -586,11 +629,12 @@ def generate_svg(
         raise RegenerationError("Strict SVG inspection left unresolved or invalid elements")
     resource_dir = sector["output_resource_dir"].rstrip("/") + "/Generated/Architecture"
     conversion_command = [
-        python, str(converter), str(source), str(architecture), *common_args,
+        python, str(converter), str(source), extended_path(architecture), *common_args,
         "--resource-dir", resource_dir, "--scene-name", sector["scene_name"], "--strict",
     ]
     conversion = run_command(conversion_command, project_root)
     ensure_success(conversion, "SVG conversion")
+    shorten_generated_names(architecture)
     conversion_report = load_json(architecture / "conversion_report.json")
     require_version(conversion_report.get("generator_version"), MIN_SVG_VERSION, "svg-plan-to-godot")
     if conversion_report.get("errors"):

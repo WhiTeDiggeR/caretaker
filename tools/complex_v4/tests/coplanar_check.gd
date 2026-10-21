@@ -1,6 +1,6 @@
 extends SceneTree
 ## Finds flickering surfaces (z-fighting) in the whole assembled complex: faces of different meshes that lie in the
-## same plane, face the same way and overlap. Every visible mesh of every sector is checked against every other
+## same plane, face the same way and overlap. Every visible generated mesh of every sector is checked against every other
 ## (shared walls and slabs between sectors, #205; stairs and shafts, #95).
 ## A sector waits for regeneration while its canonical SVG predates the ownership rule (no data-shared-faces on the SVG
 ## root, D-49) or its generated package was built from another SVG than the current one (the source sha256 in its
@@ -33,6 +33,8 @@ func _run() -> void:
 		var path := str(mesh.get_path())
 		if path.contains("/Railings") or path.contains("_Riser_"):
 			continue  # a riser top is always covered by the tread above it
+		if path.contains("/AuthoredContent/"):
+			continue  # generated geometry only; placed props are checked with their own art checks
 		checked += 1
 		_collect(mesh, buckets)
 	var overlaps := {}
