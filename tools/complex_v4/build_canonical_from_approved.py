@@ -610,6 +610,17 @@ def _axis_q(orient: str, fixed: float, lo: float, hi: float) -> tuple[float, flo
     return (lo, fixed, hi, fixed) if orient == "h" else (fixed, lo, fixed, hi)
 
 
+def _owner_end_reach(owner_walls: list[tuple[str, dict[str, Any]]], ow: dict[str, Any], end: float) -> float:
+    """How far the owner's wall box reaches past its line end ``end``: t/2 when an owner wall crosses that point at a right
+    angle (the converter joins the corner and the perpendicular box covers it anyway), 0 at a free end."""
+    t = WALL_THICKNESS_M
+    for _owner, pw in owner_walls:
+        if (pw["orient"] != ow["orient"] and abs(pw["fixed"] - end) <= COLLINEAR_M
+                and pw["lo"] - t / 2 - 1e-6 <= ow["fixed"] <= pw["hi"] + t / 2 + 1e-6):
+            return t / 2
+    return 0.0
+
+
 def resolve_owned_walls(walls: list[dict[str, Any]], owners: list[dict[str, Any]], shared: dict[str, Any]) -> list[dict[str, Any]]:
     """Drop the parts of this sector's walls that an owner already draws and stop wall ends at the owner's face."""
     t = WALL_THICKNESS_M
@@ -626,7 +637,11 @@ def resolve_owned_walls(walls: list[dict[str, Any]], owners: list[dict[str, Any]
         for owner, ow in owner_walls:
             if ow["orient"] != orient or abs(ow["fixed"] - fixed) > COLLINEAR_M:
                 continue
-            cut_lo, cut_hi = ow["lo"] - t, ow["hi"] + t     # the owner's box plus this wall's own end reach
+            # The rest of this wall starts where the owner's wall box ends. The converter runs an owner's wall end on into a
+            # perpendicular wall at that point (a corner) by t/2 and leaves a free end where it is; this wall's own free end is
+            # not extended either. Cutting a full t past the owner's end left a see-through slit of t/2 at every corner.
+            cut_lo = ow["lo"] - _owner_end_reach(owner_walls, ow, ow["lo"])
+            cut_hi = ow["hi"] + _owner_end_reach(owner_walls, ow, ow["hi"])
             nxt = []
             for a, b in pieces:
                 if min(b, ow["hi"]) - max(a, ow["lo"]) <= 1e-6:
