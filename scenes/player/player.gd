@@ -71,6 +71,8 @@ var is_mantling := false
 var is_climbing := false
 ## Set while a full-screen UI (terminal, document) owns the input.
 var controls_locked := false
+## Multiplies the walking speeds (a load in the hands of the hero, #234).
+var speed_scale := 1.0
 ## 0 standing … 1 lying asleep on the floor (fall_asleep).
 var asleep := 0.0:
 	set(value):
@@ -177,6 +179,7 @@ func _physics_process(delta: float) -> void:
 		speed = CROUCH_SPEED
 	elif Input.is_action_pressed("sprint"):
 		speed = SPRINT_SPEED
+	speed *= speed_scale
 
 	if direction:
 		velocity.x = direction.x * speed

@@ -12,6 +12,12 @@ extends Node3D
 ## moving along its -Z, within `wake_half_width` of it), `spawn_points` (guards appear there in
 ## turn; empty means the Marker3D children of `Niches`), `threshold` (Node3D; a box of
 ## `threshold_size` around it is forbidden to the guards).
+##
+## The forge of the second visit (#234) uses the same node: `wake_by_line` off — the scene calls
+## `start()` (the first key stone is taken); `guards` in the data list several kinds
+## ([{enemy, count, art…}]), `by_stage` replaces them for the dream's stage at entry (`stage`);
+## `forbidden_boxes` (global) close more ground to the guards. `disarm()` keeps an ambush asleep
+## for the whole visit (the yard on the second visit: the dream remembers the fight).
 
 signal ambush_started
 
@@ -26,6 +32,14 @@ const VANISH_SECONDS := 0.4
 @export var wake_line: NodePath = ^"WakeLine"
 @export var spawn_points: Array[NodePath] = []
 @export var threshold: NodePath = ^"Threshold"
+## Off: the wake line is ignored and only `start()` brings the guards out.
+@export var wake_by_line := true
+
+## Stage name of the dream at entry («alarm», «unrest»); picks `by_stage` of the data.
+var stage := ""
+## More ground the guards must not step on, global boxes.
+var forbidden_boxes: Array[AABB] = []
+var disarmed := false
 
 ## True from the moment the guards step out; for listeners that connect late.
 var started := false
@@ -41,15 +55,39 @@ func _ready() -> void:
 	add_to_group(GROUP)
 	config = ((DreamCombatData.all().get("ambushes", {}) as Dictionary).get(String(ambush_id), {}) as Dictionary)
 	Dreams.seal_restored_signal.connect(_on_seal_restored)
-	if Dreams.seal_restored:
+	if Dreams.seal_restored or not wake_by_line:
 		set_physics_process(false)
 
 
 ## Whether `point` (global) is inside the threshold the guards must not enter.
 func in_threshold(point: Vector3) -> bool:
+	for box in forbidden_boxes:
+		if box.has_point(point):
+			return true
 	var local := _threshold.to_local(point)
 	var half := threshold_size * 0.5
 	return absf(local.x) <= half.x and absf(local.y) <= half.y and absf(local.z) <= half.z
+
+
+## The guards never come out on this visit.
+func disarm() -> void:
+	disarmed = true
+	set_physics_process(false)
+
+
+## The kinds and numbers of the guards: [{enemy, count, art…}] for the current `stage`.
+func roster() -> Array[Dictionary]:
+	var source: Dictionary = config
+	var by_stage: Dictionary = config.get("by_stage", {})
+	if by_stage.has(stage):
+		source = by_stage[stage]
+	var result: Array[Dictionary] = []
+	if source.has("guards"):
+		for entry: Dictionary in source["guards"]:
+			result.append(entry)
+	elif source.has("enemy"):
+		result.append(source)
+	return result
 
 
 ## Whether `point` (global) is past the wake line.
@@ -69,18 +107,20 @@ func _physics_process(_delta: float) -> void:
 
 ## Brings the guards out (once); the wake line calls it, tests and debug moments may too.
 func start() -> void:
-	if started or Dreams.seal_restored:
+	if started or disarmed or Dreams.seal_restored:
 		return
 	started = true
 	set_physics_process(false)
 	var niches := _spawn_nodes()
-	var count := int(config.get("count", 0))
 	var assemble := float(config.get("assemble_seconds", 1.5))
-	for i in count:
-		if niches.is_empty():
-			break
-		var niche := niches[i % niches.size()] as Node3D
-		guards.append(_spawn(niche, i, assemble))
+	var index := 0
+	for entry in roster():
+		for _i in int(entry.get("count", 0)):
+			if niches.is_empty():
+				break
+			var niche := niches[index % niches.size()] as Node3D
+			guards.append(_spawn(niche, index, assemble, entry))
+			index += 1
 	ambush_started.emit()
 
 
@@ -93,15 +133,15 @@ func _spawn_nodes() -> Array[Node]:
 	return nodes
 
 
-func _spawn(niche: Node3D, index: int, assemble: float) -> DreamEnemy:
+func _spawn(niche: Node3D, index: int, assemble: float, entry: Dictionary) -> DreamEnemy:
 	var guard := DreamEnemy.new()
 	guard.name = "Guard%d" % (index + 1)
-	guard.enemy_type = StringName(str(config.get("enemy", "shade")))
+	guard.enemy_type = StringName(str(entry.get("enemy", "shade")))
 	guard.forbidden_zone = in_threshold
-	if config.has("art"):
-		guard.art = load(str(config["art"])) as PackedScene
-		guard.art_material = load(str(config.get("art_material", ""))) as Material if config.has("art_material") else null
-		guard.art_eye_height = float(config.get("art_eye_height", DreamEnemy.EYE_HEIGHT))
+	if entry.has("art"):
+		guard.art = load(str(entry["art"])) as PackedScene
+		guard.art_material = load(str(entry.get("art_material", ""))) as Material if entry.has("art_material") else null
+		guard.art_eye_height = float(entry.get("art_eye_height", DreamEnemy.EYE_HEIGHT))
 	add_child(guard)
 	guard.global_transform = niche.global_transform
 	guard.set_physics_process(false)

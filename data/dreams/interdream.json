@@ -17,6 +17,7 @@
     },
     "senior_key": {
       "priority": 8,
+      "dreams": ["module_4"],
       "exits": ["gate"],
       "when": {"all": [{"flag": "part2/senior_mark"}, {"not_flag": "interdream/shown/senior_key"}]},
       "props": ["key_lanyard"],
@@ -25,14 +26,16 @@
     "plate_2_healed": {
       "priority": 7,
       "exits": ["gate"],
-      "when": {"all": [{"flag": "part2/n2_believed"}, {"not_flag": "interdream/shown/plate_2_healed"}]},
+      "dreams": ["module_4"],
+      "when": {"all": [{"flag": "part2/bowser_v2_seal"}, {"flag": "part2/n2_believed"}, {"not_flag": "interdream/shown/plate_2_healed"}]},
       "props": ["plate_2_healed"],
       "sounds": [{"sfx": "terminal_beep", "at": 2.0}]
     },
     "plate_2_turned": {
       "priority": 6,
       "exits": ["gate"],
-      "when": {"all": [{"flag": "part2/chem_protocol_fired"}, {"not_flag": "interdream/shown/plate_2_turned"}]},
+      "dreams": ["module_4"],
+      "when": {"all": [{"flag": "part2/bowser_v2_seal"}, {"not_flag": "part2/n2_believed"}, {"not_flag": "interdream/shown/plate_2_turned"}]},
       "props": ["plate_2_turned"],
       "sounds": [{"sfx": "gas_release", "at": 1.0}]
     },

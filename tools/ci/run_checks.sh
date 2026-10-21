@@ -129,6 +129,7 @@ res://tests/dreams/dream_audio_check.tscn|DREAM_AUDIO_CHECK_OK checks=[0-9]+
 res://tests/dreams/interdream_check.tscn|INTERDREAM_CHECK_OK checks=[0-9]+
 res://tests/dreams/bowser_dream_mood_check.tscn|BOWSER_DREAM_MOOD_OK checks=[0-9]+
 res://tests/dreams/bowser_dream_fx_check.tscn|BOWSER_DREAM_FX_OK checks=[0-9]+
+res://tests/dreams/bowser_forge_check.tscn|BOWSER_FORGE_CHECK_OK checks=[0-9]+
 res://tests/opening/shell_e2e.tscn|SHELL_E2E_OK
 res://tests/debug/moments_check.tscn|DEBUG_MOMENTS_OK moments=[0-9]+
 res://tests/review/review_hub_check.tscn|REVIEW_HUB_OK stations=[0-9]+

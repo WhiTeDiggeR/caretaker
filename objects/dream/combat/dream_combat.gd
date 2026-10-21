@@ -10,6 +10,8 @@ extends Node
 ## (forward without input) with a short invulnerability and a cooldown (`hero.dash` in
 ## data/dreams/combat.json). It lives here, so it exists only in dream scenes with combat;
 ## in the complex the action does nothing.
+## Busy hands (a key stone of the forge, #234) forbid the strike and the dash; a heavy blow can
+## shove the hero a set distance (`shove`), which may carry him over an edge.
 
 signal resolve_changed(value: float, maximum: float)
 signal focus_changed(value: float, maximum: float)
@@ -25,12 +27,15 @@ const GROUP := &"dream_combat"
 const ENEMY_GROUP := &"dream_enemies"
 const BOLT_SPAWN := 0.6
 const DASH_ACTION := &"dream_dash"
+const SHOVE_SECONDS := 0.25
 
 var max_resolve := 100.0
 var resolve := 100.0
 var max_focus := 100.0
 var focus := 100.0
 var weapons: Array[StringName] = []
+## The hero carries something in both hands: no strike, no dash.
+var hands_busy := false
 ## Replaced in tests; called once when resolve reaches zero.
 var expel: Callable = func() -> void: Dreams.die()
 
@@ -42,6 +47,8 @@ var _dash_left := 0.0
 var _dash_velocity := Vector3.ZERO
 var _dash_cooldown := 0.0
 var _invulnerable_left := 0.0
+var _shove_left := 0.0
+var _shove_velocity := Vector3.ZERO
 
 
 func _ready() -> void:
@@ -65,7 +72,8 @@ func give_weapon(id: StringName) -> bool:
 	return true
 
 
-func take_damage(amount: float, from: Vector3) -> void:
+## `shove_distance` > 0 throws the hero that far away from `from` (a heavy blow).
+func take_damage(amount: float, from: Vector3, shove_distance: float = 0.0) -> void:
 	if _expelled or amount <= 0.0:
 		return
 	if is_invulnerable():
@@ -81,6 +89,8 @@ func take_damage(amount: float, from: Vector3) -> void:
 		push.y = 0.0
 		if push.length_squared() > 0.0001:
 			body.velocity += push.normalized() * float(_hero.get("hit_push", 4.0))
+			if shove_distance > 0.0:
+				shove(push, shove_distance)
 	if resolve <= 0.0:
 		_expelled = true
 		expelled.emit()
@@ -104,7 +114,7 @@ func dash_cooldown() -> float:
 ## Returns true when the dash started.
 func dash(direction: Vector3 = Vector3.ZERO) -> bool:
 	var body := player()
-	if _expelled or body == null or _dash_cooldown > 0.0 or body.get("controls_locked") == true:
+	if _expelled or hands_busy or body == null or _dash_cooldown > 0.0 or body.get("controls_locked") == true:
 		return false
 	var config := _dash_config()
 	direction.y = 0.0
@@ -123,7 +133,7 @@ func dash(direction: Vector3 = Vector3.ZERO) -> bool:
 ## Uses a weapon now if it is ready. Returns true when the attack happened.
 func attack(id: StringName) -> bool:
 	var weapon := DreamCombatData.weapon(id)
-	if _expelled or not weapons.has(id) or _cooldowns.get(id, 0.0) > 0.0:
+	if _expelled or hands_busy or not weapons.has(id) or _cooldowns.get(id, 0.0) > 0.0:
 		return false
 	var cost := float(weapon.get("focus_cost", 0.0))
 	if focus < cost:
@@ -146,6 +156,7 @@ func _physics_process(delta: float) -> void:
 	_dash_cooldown = maxf(_dash_cooldown - delta, 0.0)
 	_invulnerable_left = maxf(_invulnerable_left - delta, 0.0)
 	_dash_step(delta)
+	_shove_step(delta)
 	_since_hit += delta
 	if resolve < max_resolve and _since_hit >= float(_hero.get("regen_delay", 5.0)):
 		resolve = minf(resolve + float(_hero.get("regen_per_second", 4.0)) * delta, max_resolve)
@@ -177,6 +188,27 @@ func _dash_step(delta: float) -> void:
 	var body := player()
 	if body and body.move_and_collide(_dash_velocity * step) != null:
 		_dash_left = 0.0
+
+
+## Moves the hero `distance` along `direction` (flattened) over `seconds`, whatever he does; walls
+## stop it, an edge does not.
+func shove(direction: Vector3, distance: float, seconds: float = SHOVE_SECONDS) -> void:
+	direction.y = 0.0
+	if direction.length_squared() < 0.0001 or distance <= 0.0:
+		return
+	seconds = maxf(seconds, 0.01)
+	_shove_left = seconds
+	_shove_velocity = direction.normalized() * distance / seconds
+
+
+func _shove_step(delta: float) -> void:
+	if _shove_left <= 0.0:
+		return
+	var step := minf(delta, _shove_left)
+	_shove_left -= step
+	var body := player()
+	if body and body.move_and_collide(_shove_velocity * step) != null:
+		_shove_left = 0.0
 
 
 ## The movement input in the hero's frame (the player reads the same actions).

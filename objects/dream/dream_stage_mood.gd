@@ -106,6 +106,15 @@ func apply() -> void:
 	_tween.tween_method(_show, shown_stage, target, TRANSITION_SECONDS)
 
 
+## Follows the ambush `source` instead of the yard's (the forge of the second visit, #234).
+func watch_ambush(source: DreamAmbush) -> void:
+	if _ambush and _ambush.ambush_started.is_connected(_on_ambush_started):
+		_ambush.ambush_started.disconnect(_on_ambush_started)
+	_ambush = source
+	if _ambush:
+		_ambush.ambush_started.connect(_on_ambush_started)
+
+
 ## The stage asked by an event of the dream (also for tests and debug moments).
 func set_event_stage(stage: Stage) -> void:
 	event_stage = stage

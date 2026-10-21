@@ -41,7 +41,9 @@ func _run() -> void:
 	_check(InterdreamEchoes.pick(MODULE, Dreams.Exit.GATE).get("id") == "silhouette_near", "a shown echo is not repeated")
 	GameState.set_flag(&"part2/module4_crisis_resolved")
 	GameState.set_flag(&"part2/chem_protocol_fired")
-	_check(InterdreamEchoes.pick(MODULE, Dreams.Exit.GATE).get("id") == "plate_2_turned", "the chemical protocol turns the plate away")
+	_check(InterdreamEchoes.pick(MODULE, Dreams.Exit.GATE).get("id") != "plate_2_turned", "the plate turns away only after the Forge seal (#234)")
+	GameState.set_flag(&"part2/bowser_v2_seal")
+	_check(InterdreamEchoes.pick(MODULE, Dreams.Exit.GATE).get("id") == "plate_2_turned", "hesitating or the chemical protocol turns the plate away after the Forge")
 
 	GameState.reset()
 	var echo := InterdreamEchoes.pick(MODULE, Dreams.Exit.GATE)
