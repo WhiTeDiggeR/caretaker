@@ -1,7 +1,8 @@
 class_name PropKit
 extends RefCounted
 
-## Small builders for placeholder props: boxes with optional collision and plain materials.
+## Small builders for props: art models from loads/props, invisible box collision, and boxes
+## with plain materials for parts that have no model yet.
 ## Generated nodes are not owned by the scene, so they are never saved into .tscn files.
 
 
@@ -38,6 +39,29 @@ static func box(parent: Node3D, position: Vector3, size: Vector3, mat: Material,
 		shape.rotation = rotation
 		parent.add_child(shape)
 	return mesh_instance
+
+
+## Instances an art model (a glTF scene from loads/props) under `parent` (#241).
+static func art(parent: Node3D, model: PackedScene, position: Vector3 = Vector3.ZERO, rotation: Vector3 = Vector3.ZERO, scale: Vector3 = Vector3.ONE) -> Node3D:
+	var result := model.instantiate() as Node3D
+	result.name = "Model"
+	result.position = position
+	result.rotation = rotation
+	result.scale = scale
+	parent.add_child(result)
+	return result
+
+
+## Invisible box collision of an art model: the shape stays simple, the mesh is the model's.
+static func collider(parent: CollisionObject3D, position: Vector3, size: Vector3, rotation: Vector3 = Vector3.ZERO) -> CollisionShape3D:
+	var shape := CollisionShape3D.new()
+	var box_shape := BoxShape3D.new()
+	box_shape.size = size
+	shape.shape = box_shape
+	shape.position = position
+	shape.rotation = rotation
+	parent.add_child(shape)
+	return shape
 
 
 static func label(parent: Node3D, position: Vector3, text: String, size: int = 40, color: Color = Color.WHITE) -> Label3D:

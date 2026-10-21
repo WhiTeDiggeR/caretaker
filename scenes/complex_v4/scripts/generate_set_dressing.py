@@ -36,13 +36,13 @@ from set_dressing_migration import (  # noqa: E402
 
 PROP_DATA = {
     "medical_bed": ("res://objects/medical_bed.tscn", 1.1, 2.3),
-    "loaded_cabinet": ("res://objects/loaded_cabinet.tscn", 1.2, 0.7),
+    "loaded_cabinet": ("res://objects/art/file_cabinet.tscn", 1.2, 0.7),
     "wall_terminal": ("res://objects/wall_terminal.tscn", 0.9, 0.5),
     "staff_table": ("res://objects/staff_table.tscn", 1.8, 1.2),
-    "loaded_locker": ("res://objects/loaded_locker.tscn", 1.2, 0.7),
+    "loaded_locker": ("res://objects/art/locker_tall.tscn", 1.2, 0.7),
     "loaded_shelf": ("res://objects/loaded_shelf.tscn", 1.5, 0.8),
     "server_rack": ("res://objects/server_rack.tscn", 1.0, 0.9),
-    "security_camera": ("res://objects/security_camera.tscn", 0.7, 0.7),
+    "security_camera": ("res://objects/art/ph_security_camera.tscn", 0.7, 0.7),
     "industrial_crate": ("res://objects/industrial_crate.tscn", 1.0, 0.8),
     "emergency_barrier": ("res://objects/emergency_barrier.tscn", 1.8, 0.7),
     "workbench": ("res://objects/workbench.tscn", 2.0, 1.0),

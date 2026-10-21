@@ -36,6 +36,13 @@ const SLEEPER_HEIGHT := 1.75
 const LID_OPEN_ANGLE := deg_to_rad(-90.0)  # negative lifts the free edge (hinge on +X)
 const HERO_LID_FLAG := &"opening/hero_capsule_open"
 const PANEL_TEXT := {Variant.OCCUPIED: "pod_staff_occupied", Variant.EMPTY: "pod_staff_empty", Variant.HERO: "pod_hero"}
+## Status panel on its stand at the feet, as in the art model: centre and tilt in the panel
+## body's frame; the variant lamp sits right of the "КАПСУЛА" label on the panel face.
+const PANEL_TILT_DEGREES := 20.0
+const PANEL_CENTER := Vector3(0, 1.1, 0.02)
+const PANEL_SIZE := Vector3(0.46, 0.34, 0.07)
+const PANEL_LAMP := Vector3(0.19, 1.231, 0.015)
+const MODEL := preload("res://loads/props/staff_pod/staff_pod.gltf")
 const LAMP := {Variant.OCCUPIED: Color(0.2, 0.85, 0.35), Variant.EMPTY: Color(0.08, 0.08, 0.08), Variant.HERO: Color(0.95, 0.2, 0.1)}
 
 @export var variant: Variant = Variant.OCCUPIED
@@ -76,11 +83,13 @@ func _pose_lid(open: bool) -> void:
 
 
 func _build() -> void:
-	var shell := PropKit.material(Color(0.62, 0.64, 0.64))
-	var dark := PropKit.material(Color(0.18, 0.19, 0.2))
-	PropKit.box(self, Vector3(0, BASE_HEIGHT * 0.5, 0), Vector3(WIDTH, BASE_HEIGHT, LENGTH), shell, true)
-	PropKit.box(self, Vector3(0, BASE_HEIGHT + BED_THICKNESS * 0.5, 0), Vector3(BED_WIDTH, BED_THICKNESS, BED_LENGTH), dark, true)
-	_build_tub(shell)
+	# Art model P-015 (loads/props/staff_pod) is built to these sizes; its Lid part turns with
+	# the lid body on the same +X hinge. Collision stays simple boxes (#241).
+	var model := PropKit.art(self, MODEL)
+	var lid_art := model.get_node(^"Lid") as Node3D
+	PropKit.collider(self, Vector3(0, BASE_HEIGHT * 0.5, 0), Vector3(WIDTH, BASE_HEIGHT, LENGTH))
+	PropKit.collider(self, Vector3(0, BASE_HEIGHT + BED_THICKNESS * 0.5, 0), Vector3(BED_WIDTH, BED_THICKNESS, BED_LENGTH))
+	_build_tub()
 	if variant == Variant.OCCUPIED:
 		_build_sleeper(BASE_HEIGHT + BED_THICKNESS)
 	# Lid hinged on the +X side, frosted so faces stay unreadable (opening doc, Р-6).
@@ -88,6 +97,8 @@ func _build() -> void:
 	lid.sync_to_physics = false
 	lid.position = Vector3(WIDTH * 0.5, RIM_HEIGHT, 0)
 	add_child(lid)
+	lid_art.reparent(lid, false)
+	lid_art.transform = Transform3D.IDENTITY
 	_build_lid()
 	if variant == Variant.EMPTY:
 		lid.rotation.z = LID_OPEN_ANGLE
@@ -99,31 +110,30 @@ func _build() -> void:
 	var panel := StaticBody3D.new()
 	panel.position = Vector3(0, 0, LENGTH * 0.5 + 0.12)
 	add_child(panel)
-	PropKit.box(panel, Vector3(0, 0.5, 0), Vector3(0.12, 1.0, 0.12), dark, true)
-	PropKit.box(panel, Vector3(0, 1.1, 0.02), Vector3(0.42, 0.3, 0.06), dark, true, Vector3(deg_to_rad(-20.0), 0, 0))
-	PropKit.box(panel, Vector3(0.14, 1.18, 0.07), Vector3(0.06, 0.06, 0.02), PropKit.material(LAMP[variant], true))
+	var tilt := Vector3(deg_to_rad(-PANEL_TILT_DEGREES), 0, 0)
+	PropKit.collider(panel, Vector3(0, 0.5, 0), Vector3(0.12, 1.0, 0.12))
+	PropKit.collider(panel, PANEL_CENTER, PANEL_SIZE, tilt)
+	PropKit.box(panel, PANEL_LAMP, Vector3(0.04, 0.04, 0.012), PropKit.material(LAMP[variant], true), false, tilt)
 	panel_interactable = PropKit.interactable(panel, Interactable.Mode.INSPECT, "ОСМОТРЕТЬ ПАНЕЛЬ КАПСУЛЫ", PANEL_TEXT[variant])
 
 
 ## Fixed walls around the bed from the base up to the rim.
-func _build_tub(mat: Material) -> void:
+func _build_tub() -> void:
 	var height := RIM_HEIGHT - BASE_HEIGHT
 	var y := BASE_HEIGHT + height * 0.5
 	for side: float in [-1.0, 1.0]:
-		PropKit.box(self, Vector3(side * (WIDTH - TUB_WALL) * 0.5, y, 0), Vector3(TUB_WALL, height, LENGTH), mat, true)
-		PropKit.box(self, Vector3(0, y, side * (LENGTH - TUB_WALL) * 0.5), Vector3(WIDTH, height, TUB_WALL), mat, true)
+		PropKit.collider(self, Vector3(side * (WIDTH - TUB_WALL) * 0.5, y, 0), Vector3(TUB_WALL, height, LENGTH))
+		PropKit.collider(self, Vector3(0, y, side * (LENGTH - TUB_WALL) * 0.5), Vector3(WIDTH, height, TUB_WALL))
 
 
-## Hollow frosted canopy in the lid's frame (hinge line at the origin, the shell towards -X):
-## top plate, two long walls and two end walls, each with its own thin collision.
+## Collision of the hollow canopy in the lid's frame (hinge line at the origin, the shell
+## towards -X): top plate, two long walls and two end walls.
 func _build_lid() -> void:
-	var glass := PropKit.material(Color(0.78, 0.88, 0.92), false, 0.42)
-	var frame := PropKit.material(Color(0.5, 0.52, 0.53))
 	var centre_x := -WIDTH * 0.5
-	PropKit.box(lid, Vector3(centre_x, LID_HEIGHT - LID_WALL * 0.5, 0), Vector3(WIDTH, LID_WALL, LENGTH), glass, true)
+	PropKit.collider(lid, Vector3(centre_x, LID_HEIGHT - LID_WALL * 0.5, 0), Vector3(WIDTH, LID_WALL, LENGTH))
 	for side: float in [-1.0, 1.0]:
-		PropKit.box(lid, Vector3(centre_x + side * (WIDTH - LID_WALL) * 0.5, LID_HEIGHT * 0.5, 0), Vector3(LID_WALL, LID_HEIGHT, LENGTH), glass, true)
-		PropKit.box(lid, Vector3(centre_x, LID_HEIGHT * 0.5, side * (LENGTH - LID_WALL) * 0.5), Vector3(WIDTH, LID_HEIGHT, LID_WALL), frame, true)
+		PropKit.collider(lid, Vector3(centre_x + side * (WIDTH - LID_WALL) * 0.5, LID_HEIGHT * 0.5, 0), Vector3(LID_WALL, LID_HEIGHT, LENGTH))
+		PropKit.collider(lid, Vector3(centre_x, LID_HEIGHT * 0.5, side * (LENGTH - LID_WALL) * 0.5), Vector3(WIDTH, LID_HEIGHT, LID_WALL))
 
 
 ## Lying adult on its back, head towards -Z (the panel is at the feet, +Z).

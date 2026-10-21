@@ -38,13 +38,38 @@
 
 | ID | Сцена / источник | Проблема (из §6 стандарта) | Решение | Ист. | Статус |
 |---|---|---|---|---|---|
-| P-101 | `loaded_locker` / `loads/3D_locker_3.fbx` | 0,30 м шириной, нужно 0,5 | новая модель `locker_tall` 0,5×1,9×0,53, двери `Door1/2` | Скр | **v1 готов** (в сцены не подставлялась) |
-| P-102 | `loaded_cabinet` / `loads/3D_cabinet_3.fbx` | 0,4 м, нужен картотечный 0,5×1,3 | новая модель `file_cabinet` 0,5×1,3×0,48, ящики `Drawer1–4` | Скр | **v1 готов** (в сцены не подставлялась) |
+| P-101 | `loaded_locker` / `loads/3D_locker_3.fbx` | 0,30 м шириной, нужно 0,5 | новая модель `locker_tall` 0,5×1,9×0,53, двери `Door1/2` | Скр | **v1 готов**; #241: шаблон расстановки комплекса берёт `locker_tall`, старая сцена и FBX удалены |
+| P-102 | `loaded_cabinet` / `loads/3D_cabinet_3.fbx` | 0,4 м, нужен картотечный 0,5×1,3 | новая модель `file_cabinet` 0,5×1,3×0,48, ящики `Drawer1–4` | Скр | **v1 готов**; #241: шаблон расстановки комплекса берёт `file_cabinet`, старая сцена и FBX удалены |
 | P-103 | `wall_terminal` | опора в центре | пересобрать с креплением к плоскости стены | Скр | план |
 | P-104 | `emergency_light`, `caged_light` | опора в центре / принять | опора по стандарту | Скр | план |
-| P-105 | `temporary_blast_door` | заменяется семейством дверей | рама и створка строятся `objects/doors/door_art.gd` по размерам двери; пульт `door_panel`, штурвал `door_wheel`, ручка `door_handle`, петля `door_hinge` (P-210a–d, #157) | Скр | **готово** |
+| P-105 | `temporary_blast_door` | заменяется семейством дверей | рама и створка строятся `objects/doors/door_art.gd` по размерам двери; пульт `door_panel`, штурвал `door_wheel`, ручка `door_handle`, петля `door_hinge` (P-210a–d, #157) | Скр | **готово**; сцена `temporary_blast_door` удалена (#241) |
 | P-106 | `bowser_pod`, `herobrine_pod` (по 84–88 МБ) | непомерный вес | три варианта на выбор автора (#130): облегчённая копия `loads/*_capsule/lod/` (40 тыс., нормали запечены с исходника, 2,3–2,5 МБ; `tools/props/lighten_capsules.py --bake`), скриптовые `capsule_bowser`, `capsule_herobrine` (`tools/props/props_capsules.py`); сравнение — `scenes/sandbox/capsule_compare.tscn`, `docs/art/previews/capsules_compare.jpg`. Исходники не тронуты | Прав | **решено (О-5): облегчённые копии в `scenes/bowser_pod.tscn`, `scenes/herobrine_pod.tscn`** (удалены в #216 — заменены сборками `prisoner_capsule_*` ниже); скриптовые остаются в репозитории для сравнения. **v2 (#162):** скриптовые капсулы переделаны по артам (окно-стадион, торцевые барабаны с эмблемой, консоль «РЕЖИМ СНА», общие с капсулой персонала дуги, табличка «КАПСУЛА», шланги в распределительные коробки); узники — отдельные пропы `sleeper_herobrine`, `sleeper_bowser`; сборки `objects/containment/prisoner_capsule_{herobrine,bowser}.tscn` (узел `Sleeper` меняется отдельно, маркеры `RoomLinkL/R` — точки подключения кабелей комнаты; генерирует `tools/props/make_capsule_assemblies.py`); превью `docs/art/previews/capsules_v2.jpg`. **#210:** задняя стенка из металла корпуса, узник висит в цветной жидкости (голубая / зелёная) с пузырями, свет — от видимой лампы-балки под потолком; Херобрин свернулся на боку и чуть темнее (до/после — `docs/art/previews/capsules_210_before_after.jpg`). Пакет для генерации Боузера сторонним сервисом — `docs/art/gen/bowser/README.md` (`tools/props/normalize_generated.py`, `make_capsule_assemblies.py --sleeper`) |
 | P-107 | `debris_pile` | низкий для завала | заменяется P-004 | — | план |
+
+## 2а. Аудит моделей (#241): заготовки → художественные модели
+
+Игровые сцены сохранили корень, опорную точку, узлы и логику; вместо примитивов в них стоит модель из `loads/props/`, коллизия — простые коробки (`PropKit.art`, `PropKit.collider`). До/после — `previews/model_audit_241_before_after.jpg`.
+
+| Было | Стало | Где используется |
+|---|---|---|
+| капсула персонала из примитивов (`objects/props/staff_capsule.gd`) | `staff_pod` (P-015), крышка модели ходит вместе с крышкой капсулы | капсульный зал комплекса, полигон (пропы начала) |
+| аварийный шкаф, завал, упавший воздуховод, указатель, мнемосхема (`objects/props/simple_props.gd`) | `emergency_cabinet`, `rubble_set`, `fallen_duct`, `evac_sign` (+ табличка с текстом маршрута), `mnemonic_panel` | полигон; в капсульном зале шкаф теперь игровой (осмотр схемы эвакуации), а не голая модель |
+| терминал из коробок (`objects/terminal/terminal.tscn`) | `terminal_console`; экран `Screen` — поверх экрана модели | все терминалы: пост камеры №2, модуль 4, пролом, верх, двери |
+| кресло погружения из коробок (`objects/dream/immersion_chair.gd`) | `immersion_chair` (P-016): светится и парит кристалл модели, опускается её обруч | полигон, модуль 4 |
+| рычаг, вентиль, рубильник, автомат (`objects/repair/repair_control.gd`) | `start_lever`, `valve_wheel`, `wall_breaker` (автомат — он же, 0,6); напольные рычаги опущены на пол (узел — ось рычага, 0,2 м) | генератор, верх, нижняя подстанция, охлаждение модуля 4 |
+| личный ключ из коробок (`key_pickup.gd`) | `personal_key` (P-018), бирка SE 067 осталась | полигон, пролом, журнал |
+| красный маячок-коробка (`objects/emergency_light.tscn`) | `emergency_beacon` | капсульный зал |
+| `loaded_locker`, `loaded_cabinet`, `security_camera` (FBX 4K) | `locker_tall`, `file_cabinet`, `ph_security_camera` | шаблон расстановки комплекса (`generate_set_dressing.py`); старые сцены и исходники удалены |
+| `temporary_blast_door`, `wall`, `floor`, `celling` | семейство `objects/doors/`; геометрия комплекса | ссылок не было — удалены |
+
+Осталось и почему:
+
+- **Пакеты комплекса `gen/`** старых моделей не содержат — перегенерация не нужна.
+- **Спящий сотрудник в капсуле** — заглушка из примитивов: модели фигуры нет (P-020 ждёт решения автора).
+- **Манометр/тахометр** (`repair_gauge.gd`) — свой циферблат с зелёной зоной; у `pressure_gauge` шкала нарисована и зелёной зоны нет.
+- **`debris_pile`** — низкая куча у двери закрытого крыла (верх) и мелкий мусор шаблона; `rubble_set` — завал на всю высоту, не замена.
+- **Мебель без новой версии** (`medical_bed`, `staff_table`, `workbench`, `server_rack`, `industrial_crate`, `loaded_shelf`, `emergency_barrier`, `generator_unit`, `wall_terminal`) и пропы `objects/complex_v4/` — актуальных моделей нет.
+- **Исходники старых капсул узников** (`loads/bowser_capsule`, `loads/herobrine_capsule`, 225 МБ) нужны только сцене сравнения `capsule_compare` — удалять ли её вместе с ними, решает автор.
 
 ## 3. Общие модульные наборы (В2)
 
