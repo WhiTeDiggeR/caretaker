@@ -10,7 +10,9 @@ extends Node
 ## key stone wakes the guards (by the entry stage, a hammerer among them) and busy hands forbid
 ## the strike. The forge remembers itself across a reload; the coupled seal ends the visit, the
 ## gate sets the story flags and forgets the forge; the interdream answers the mark of the
-## senior. Prints `BOWSER_FORGE_CHECK_OK checks=<n>` on success.
+## senior. The tuning panel of module 4's cooling takes the scheme in the same order (a water
+## hammer otherwise, no instability) and tunes the cooling for good.
+## Prints `BOWSER_FORGE_CHECK_OK checks=<n>` on success.
 
 const BOWSER_DREAM := "res://scenes/dreams/bowser_dream.tscn"
 const OVERHEAT := &"part2/module4_overheat"
@@ -54,6 +56,7 @@ func _run() -> void:
 	_check_memory(dream.forge)
 	await _check_seal_and_gate(dream)
 	_check_interdream()
+	await _check_tuning_panel()
 	_finish()
 
 
@@ -259,6 +262,44 @@ func _check_interdream() -> void:
 	GameState.set_flag(InterdreamEchoes.shown_flag("plate_2_turned"))
 	echo = InterdreamEchoes.pick(&"module_4", Dreams.Exit.GATE)
 	_check(str(echo.get("id", "")) == "plate_2_healed", "believing shows the healed plate (%s)" % echo.get("id", ""))
+
+
+func _check_tuning_panel() -> void:
+	var level := DreamKnowledge.scheme_level(BowserForge.SCHEME)
+	_check(level >= 1 and DreamKnowledge.active_scheme_for(&"module_4") == BowserForge.SCHEME, "the scheme waits for the panel")
+	var panel := (load("res://objects/containment/cooling_tuning_panel.tscn") as PackedScene).instantiate() as CoolingTuningPanel
+	add_child(panel)
+	await _frames(1)
+	_check(not panel.is_open(), "the panel is shut during the crisis")
+	GameState.set_flag(&"part2/module4_crisis_resolved")
+	_check(Cooling.can_tune(&"module_4") and panel.is_open(), "after the crisis the panel takes the scheme")
+	var instability := Containment.get_instability(&"module_4")
+	panel.toggle_feed()
+	_check(panel.shock_left() > 0.0 and not panel.feed_closed and not panel.is_open(), "the feed before the bypass is a water hammer")
+	panel.toggle_bypass()
+	_check(not panel.bypass_open, "the valves do not move while the circuit settles")
+	panel._process(CoolingTuningPanel.SHOCK_SECONDS + 1.0)
+	_check(panel.is_open(), "the panel opens again after the wait")
+	panel.toggle_bypass()
+	panel.toggle_feed()
+	_check(panel.bypass_open and panel.feed_closed, "bypass open, then the hot feed closed")
+	panel.next_level()
+	while panel.level == level:
+		panel.next_level()
+	panel.open_cooling()
+	_check(panel.shock_left() > 0.0 and not panel.bypass_open and panel.level == 0, "a wrong level is a water hammer too, the valves go back")
+	_check(is_equal_approx(Containment.get_instability(&"module_4"), instability), "a water hammer does not raise the instability")
+	panel._process(CoolingTuningPanel.SHOCK_SECONDS + 1.0)
+	panel.toggle_bypass()
+	panel.toggle_feed()
+	while panel.level != level:
+		panel.next_level()
+	panel.open_cooling()
+	_check(Cooling.is_tuned(&"module_4") and GameState.has_flag(&"part2/module4_cooling_tuned"), "the scheme tunes the cooling of module 4")
+	_check(DreamKnowledge.is_used(BowserForge.SCHEME) and DreamKnowledge.active_scheme_for(&"module_4").is_empty(), "the scheme is spent")
+	_check(" ".join(Cooling.status_lines()).contains("настроено"), "the post shows the tuned cooling")
+	_check(not panel.is_open(), "a tuned cooling needs no more tuning")
+	panel.queue_free()
 
 
 func _combat() -> DreamCombat:

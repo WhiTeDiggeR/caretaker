@@ -69,6 +69,10 @@ static func apply_state(state: Dictionary) -> void:
 	var instability: Dictionary = state.get("instability", {})
 	for module: String in instability:
 		Containment.set_instability(StringName(module), float(instability[module]))
+	# Schemes remembered in dreams (#234): {"<scheme id>": <level>}.
+	var schemes: Dictionary = state.get("dream_schemes", {})
+	for scheme: String in schemes:
+		DreamKnowledge.grant_scheme(StringName(scheme), int(schemes[scheme]))
 	var chain := str(state.get("objective_chain", ""))
 	if not chain.is_empty():
 		Objectives.start(StringName(chain))
