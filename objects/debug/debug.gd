@@ -1,11 +1,13 @@
 extends Node
 
 ## Playtest tools (autoload `Debug`, #169), present in debug builds only: in a release build
-## the node removes itself before doing anything. F10 opens the menu (jump to a moment of
-## the game, cheats), F12 writes a bug report. Moments and cheat lists come from
+## the node removes itself before doing anything. F10 opens the menu (open a test stand of
+## the sandbox, jump to a moment of the game, cheats), F12 writes a bug report. Stands come
+## from data/debug/stands.json (DebugStands, #239), moments and cheat lists from
 ## data/debug/moments.json (DebugMoments). Instructions: docs/playtest.md.
 
 signal moment_loaded(id: StringName)
+signal stand_loaded(id: StringName)
 signal report_written(folder: String)
 
 const MENU_ACTION := &"debug_menu"
@@ -13,7 +15,13 @@ const REPORT_ACTION := &"debug_report"
 const PLAYER_GROUP := &"player"
 const MENU_LAYER := 110
 const TOAST_LAYER := 120
-const MENU_WIDTH := 1080.0
+const MENU_WIDTH := 1500.0
+## Height of the scrolled stand and moment lists of the menu.
+const LIST_HEIGHT := 560.0
+## Prefix of the stand buttons' node names (the moment buttons are named by the moment id).
+const STAND_BUTTON := "stand_"
+## Width of the cheat column against the stand and moment lists.
+const CHEATS_RATIO := 0.7
 const TOAST_SECONDS := 3.0
 const SETTLE_FRAMES := 2
 const RETURN_FRAMES := 4
@@ -28,10 +36,12 @@ var enabled := OS.is_debug_build()
 var invulnerable := false
 var noclip := false
 var last_moment: StringName = &""
+var last_stand: StringName = &""
 var busy := false
 
 var _data: Dictionary = {}
 var _moments: Dictionary[StringName, Dictionary] = {}
+var _stands: Array[Dictionary] = []
 var _time_scales: Array[float] = []
 var _time_scale := 1.0
 var _instability_module: StringName = &""
@@ -53,6 +63,7 @@ func _ready() -> void:
 	for moment: Dictionary in _data.get("moments", []):
 		_moments[StringName(str(moment.get("id", "")))] = moment
 	_time_scales = DebugMoments.time_scales(_data)
+	_stands = DebugStands.list()
 	if not Containment.modules.is_empty():
 		_instability_module = Containment.modules.keys()[Containment.modules.size() - 1]
 	_build_toast()
@@ -60,6 +71,44 @@ func _ready() -> void:
 	# Dream combat is attached to the hero after the dream scene is ready.
 	get_tree().node_added.connect(_on_node_added)
 	_on_scene_changed()
+
+
+# --- Stands --------------------------------------------------------------------
+
+## The test stands in menu order (data/debug/stands.json).
+func stands() -> Array[Dictionary]:
+	return _stands
+
+
+func stand(id: StringName) -> Dictionary:
+	for entry in _stands:
+		if StringName(str(entry.get("id", ""))) == id:
+			return entry
+	return {}
+
+
+## Loads the stand's scene from a clean state; the stand sets its own progress on load.
+## True when it got there.
+func open_stand(id: StringName) -> bool:
+	var entry := stand(id)
+	if entry.is_empty() or busy or Shell.loading:
+		push_warning("Debug: cannot open stand %s now" % id)
+		return false
+	busy = true
+	close_menu()
+	Dreams.in_dream = false
+	GameState.reset()
+	var scene := str(entry["scene"])
+	Shell.change_scene(scene)
+	var arrived := await _wait_for_scene(scene)
+	busy = false
+	if not arrived:
+		push_error("Debug: stand %s did not load" % id)
+		return false
+	last_stand = id
+	show_toast("Стенд: %s" % entry.get("title", id))
+	stand_loaded.emit(id)
+	return true
 
 
 # --- Moments -------------------------------------------------------------------
@@ -270,6 +319,7 @@ func write_report() -> String:
 func _cheat_state() -> Dictionary:
 	return {
 		"last_moment": String(last_moment),
+		"last_stand": String(last_stand),
 		"invulnerable": invulnerable,
 		"noclip": noclip,
 		"time_scale": _time_scale,
@@ -303,7 +353,9 @@ func toggle_menu() -> void:
 		open_menu()
 
 
-func open_menu() -> void:
+## The full menu: stands, moments and cheats; `stands_only` (the main menu item «Полигон»)
+## shows just the list of stands.
+func open_menu(stands_only: bool = false) -> void:
 	if is_menu_open():
 		return
 	_menu_was_paused = get_tree().paused
@@ -313,23 +365,40 @@ func open_menu() -> void:
 	_menu.layer = MENU_LAYER
 	_menu.name = &"DebugMenu"
 	add_child(_menu)
-	var column := ShellUI.screen(_menu, "Отладка", MENU_WIDTH, "ПЛЕЙТЕСТ · ТОЛЬКО DEBUG-СБОРКА")
+	var title := "Полигон" if stands_only else "Отладка"
+	var column := ShellUI.screen(_menu, title, MENU_WIDTH * 0.5 if stands_only else MENU_WIDTH, "ПЛЕЙТЕСТ · ТОЛЬКО DEBUG-СБОРКА")
 	var sides := HBoxContainer.new()
 	sides.add_theme_constant_override(&"separation", 32)
 	column.add_child(sides)
-	var moments := _side(sides, "Моменты игры")
+	var stand_list := _side(sides, "Тестовые сцены", true)
+	for entry in _stands:
+		var id := StringName(str(entry.get("id", "")))
+		var button := ShellUI.button(stand_list, str(entry.get("title", id)), func() -> void: open_stand(id))
+		button.name = STAND_BUTTON + String(id)
+		# Long titles are clipped rather than widening the menu past the screen.
+		button.clip_text = true
+	if stands_only:
+		ShellUI.button(column, "Закрыть", close_menu, "ESC")
+		_focus_first(stand_list)
+		return
+	var moments := _side(sides, "Моменты игры", true)
 	for id: StringName in _moments:
 		var entry := _moments[id]
 		var note := "СЦЕНА %s" % entry["story_scene"] if entry.has("story_scene") else ""
-		ShellUI.button(moments, str(entry["title"]), func() -> void: go_to_moment(id), note).name = String(id)
+		var button := ShellUI.button(moments, str(entry["title"]), func() -> void: go_to_moment(id), note)
+		button.name = String(id)
+		button.clip_text = true
 	var cheats := _side(sides, "Читы")
+	cheats.size_flags_stretch_ratio = CHEATS_RATIO
 	_cheat_buttons.clear()
 	_cheat_buttons[&"invulnerable"] = ShellUI.button(cheats, "Неуязвимость", func() -> void: set_invulnerable(not invulnerable))
 	_cheat_buttons[&"noclip"] = ShellUI.button(cheats, "Ноклип и полёт", func() -> void: set_noclip(not noclip))
 	ShellUI.button(cheats, "Выдать допуски и ключи", grant_all_access)
 	_cheat_buttons[&"time"] = ShellUI.button(cheats, "Ускорение времени", cycle_time_scale)
 	_cheat_buttons[&"module"] = ShellUI.button(cheats, "Нестабильность модуля", cycle_instability_module)
-	var values := HBoxContainer.new()
+	# Three per row: the cheat column is the narrowest of the three.
+	var values := GridContainer.new()
+	values.columns = 3
 	cheats.add_child(values)
 	for value: Variant in (_data.get("cheats", {}) as Dictionary).get("instability_values", []):
 		var button := Button.new()
@@ -340,9 +409,14 @@ func open_menu() -> void:
 	ShellUI.button(cheats, "Отчёт о баге", write_report, "F12")
 	ShellUI.button(cheats, "Закрыть", close_menu, "F10")
 	_refresh_cheat_buttons()
-	var first := moments.get_child(1) as Control
-	if first:
-		first.grab_focus.call_deferred()
+	_focus_first(stand_list)
+
+
+func _focus_first(list: Control) -> void:
+	for child in list.get_children():
+		if child is ShellButton:
+			(child as Control).grab_focus.call_deferred()
+			return
 
 
 func close_menu() -> void:
@@ -356,13 +430,26 @@ func close_menu() -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
-func _side(parent: Control, title: String) -> VBoxContainer:
+## A titled column of the menu; `scrolled` puts its items into a scroll box (the column
+## returned is the one to fill).
+func _side(parent: Control, title: String, scrolled: bool = false) -> VBoxContainer:
 	var side := VBoxContainer.new()
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	side.add_theme_constant_override(&"separation", ShellUI.COLUMN_GAP)
 	parent.add_child(side)
 	ShellUI.label(side, title.to_upper(), &"ShellKicker")
-	return side
+	if not scrolled:
+		return side
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(0, LIST_HEIGHT)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.follow_focus = true
+	side.add_child(scroll)
+	var items := VBoxContainer.new()
+	items.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	items.add_theme_constant_override(&"separation", 2)
+	scroll.add_child(items)
+	return items
 
 
 func _refresh_cheat_buttons() -> void:
