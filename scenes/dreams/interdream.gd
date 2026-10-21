@@ -20,6 +20,7 @@ const TORN_WALK := 0.5
 const LOOK_LIMIT := 15.0
 ## The silhouette never lets the camera close: it is gone nearer than this.
 const SILHOUETTE_KEEP := 2.0
+const SILHOUETTE_SCENE := preload("res://objects/dream/no2_silhouette.tscn")
 const FOCUS_WEIGHT := 0.35
 ## The key is small: drawn larger than life so it reads from the walk.
 const KEY_SCALE := 1.8
@@ -272,36 +273,14 @@ func _plate(at: Vector3, variant: String) -> Node3D:
 	return plate
 
 
-## A human figure in the doorway, no details: legs, a narrow torso, shoulders, hanging arms,
-## a head on a neck. One dark tone; the fog and the overlay's blur take its edges away.
+## The silhouette of №2 in the doorway — the same figure as on the terrace of the first dream;
+## the look's contrast washes it towards the white.
 func _silhouette(at: Vector3) -> Node3D:
-	var figure := Node3D.new()
+	var figure := SILHOUETTE_SCENE.instantiate() as No2Silhouette
 	figure.position = at
+	figure.color = _tint(No2Silhouette.DEFAULT_COLOR)
 	add_child(figure)
-	var tone := _tint(Color(0.2, 0.21, 0.23))
-	for side in [-1.0, 1.0]:
-		_capsule(0.075, 0.9, Vector3(side * 0.09, 0.45, 0.0), Vector3(0, 0, side * 2.0), tone, figure)
-		_capsule(0.055, 0.66, Vector3(side * 0.235, 1.08, 0.0), Vector3(0, 0, side * 5.0), tone, figure)
-	var torso := _capsule(0.17, 0.72, Vector3(0, 1.17, 0), Vector3.ZERO, tone, figure)
-	torso.scale = Vector3(1.2, 1.0, 0.62)
-	_capsule(0.075, 0.5, Vector3(0, 1.42, 0), Vector3(0, 0, 90.0), tone, figure)
-	_capsule(0.045, 0.16, Vector3(0, 1.52, 0), Vector3.ZERO, tone, figure)
-	var head := _capsule(0.1, 0.25, Vector3(0, 1.66, 0), Vector3.ZERO, tone, figure)
-	head.scale = Vector3(1.0, 1.0, 1.1)
 	return figure
-
-
-func _capsule(radius: float, height: float, at: Vector3, degrees: Vector3, color: Color, parent: Node3D) -> MeshInstance3D:
-	var mesh := CapsuleMesh.new()
-	mesh.radius = radius
-	mesh.height = height
-	var instance := MeshInstance3D.new()
-	instance.mesh = mesh
-	instance.position = at
-	instance.rotation_degrees = degrees
-	instance.material_override = _material(color)
-	parent.add_child(instance)
-	return instance
 
 
 ## A key on a cord with a tag; the key cannot be taken.

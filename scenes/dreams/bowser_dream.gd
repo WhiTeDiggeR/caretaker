@@ -27,8 +27,7 @@ const MESSAGE_GROUP := &"message_display"
 const SILHOUETTE_DELAY := 1.5  # after the veil of the entry has lifted
 const SILHOUETTE_SECONDS := 5.0
 const SILHOUETTE_FLICKER := 0.08
-const SILHOUETTE_SIZE := Vector3(0.6, 1.9, 0.35)
-const SILHOUETTE_COLOR := Color(0.05, 0.04, 0.06, 0.85)
+const SILHOUETTE_SCENE := preload("res://objects/dream/no2_silhouette.tscn")
 const SIDE_GRATE_DROP := 5.2
 const SIDE_GRATE_SECONDS := 1.2
 
@@ -71,7 +70,7 @@ var forge: BowserForge
 @onready var _side_grate: StaticBody3D = get_node(SIDE_GRATE)
 @onready var _silhouette_spot: Node3D = get_node(SILHOUETTE_SPOT)
 
-var _silhouette: MeshInstance3D
+var _silhouette: No2Silhouette
 
 
 func _ready() -> void:
@@ -196,20 +195,11 @@ func _silhouette_flag() -> StringName:
 	return StringName(str(silhouette_line().get("flag", "")))
 
 
-## A figure without details (as in the prologue) appears as interference, speaks and falls apart.
+## The shared figure of №2 (as in the prologue and the interdream) appears as interference, speaks and falls apart.
 func _speak() -> void:
 	var line := silhouette_line()
 	GameState.set_flag(_silhouette_flag())
-	_silhouette = MeshInstance3D.new()
-	var mesh := BoxMesh.new()
-	mesh.size = SILHOUETTE_SIZE
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.albedo_color = SILHOUETTE_COLOR
-	mesh.material = material
-	_silhouette.mesh = mesh
-	_silhouette.position = Vector3.UP * SILHOUETTE_SIZE.y * 0.5
+	_silhouette = SILHOUETTE_SCENE.instantiate() as No2Silhouette
 	_silhouette_spot.add_child(_silhouette)
 	get_tree().call_group(MESSAGE_GROUP, "show_message", str(line.get("title", "")), str(line.get("text", "")))
 	silhouette_spoke.emit()
