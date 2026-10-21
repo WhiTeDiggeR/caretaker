@@ -5,7 +5,9 @@ extends Node
 ## first gate, nothing on death, the flash of the plate on the chemical awakening); an echo
 ## counts as shown only after `min_seen_seconds` and then sets its flags and adds the plate to
 ## the journal; the gate plays the corridor with the echo before the hero arrives, the first
-## one cannot be skipped, a quiet one can; death tears it without an echo.
+## one cannot be skipped, a quiet one can; death tears it without an echo. #240: the corridor
+## is built ahead and the gate opens straight into it (no veil first), the walk goes on at the
+## hero's pace, the corridor looks like a dream (blurred, hazy) and washes into the veil.
 ## Prints `INTERDREAM_CHECK_OK checks=<n>` on success.
 
 const MODULE := &"module_4"
@@ -52,6 +54,13 @@ func _run() -> void:
 	_check(InterdreamEchoes.report_seen(echo, 2.0), "an echo seen long enough counts")
 	_check(GameState.has_flag(&"part2/dream_trace_2") and GameState.has_flag(InterdreamEchoes.shown_flag("plate_2_first")), "the plate sets the trace of object 2")
 	_check(DocumentLibrary.is_read("dream_plate_2"), "the plate from the dream is in the journal")
+	_check(InterdreamCorridor.LOOKS.has(InterdreamEchoes.look()), "the corridor look is known")
+	_check(is_equal_approx(InterdreamCorridor.walk_curve(0.0, 2.0), 0.0) and is_equal_approx(InterdreamCorridor.walk_curve(1.0, 2.0), 1.0), "the walk goes from start to end")
+	_check(InterdreamCorridor.walk_curve(0.05, 2.5) > InterdreamCorridor.walk_curve(0.05, 0.0) * 2.0, "the walk starts at the hero's pace")
+	var monotonic := true
+	for i in 20:
+		monotonic = monotonic and InterdreamCorridor.walk_curve((i + 1) / 20.0, 3.0) >= InterdreamCorridor.walk_curve(i / 20.0, 3.0)
+	_check(monotonic, "the walk never steps back")
 
 	# The gate: the corridor with the plate, before the hero arrives; no skipping.
 	GameState.reset()
@@ -63,10 +72,18 @@ func _run() -> void:
 		arrived.append(reason)
 		veils.append(Dreams._fade.veil))
 	_start_visit()
-	Dreams.exit_through_gate()
-	await _seconds(Dreams.FADE_SECONDS + 1.6)
 	var overlay := Dreams.interdream()
-	_check(overlay.playing and overlay.corridor != null, "the corridor plays after the white veil")
+	overlay.prepare()
+	var prepared := overlay.corridor
+	_check(prepared != null and not overlay.playing, "the corridor is built ahead while the hero dreams")
+	Dreams.exit_through_gate()
+	await get_tree().process_frame
+	_check(overlay.playing and overlay.corridor == prepared, "the gate opens straight into the prepared corridor")
+	_check(Dreams._fade.veil < 0.5, "no white veil before the corridor")
+	await _seconds(1.6)
+	_check(overlay.playing and overlay.corridor != null, "the corridor plays")
+	_check(overlay._dream.visible, "the corridor is blurred like a dream")
+	_check(Dreams._fade.veil > 0.99, "the veil is up under the corridor once it covers the dream")
 	_check(overlay.corridor and overlay.corridor.is_prop_visible("plate_2") and overlay.corridor.is_prop_visible("silhouette_far"), "the plate and the far silhouette stand in the corridor")
 	_check(not overlay.skip(), "the first interdream cannot be skipped")
 	_check(arrived.is_empty(), "the hero is not in the chair while the corridor plays")
@@ -81,14 +98,14 @@ func _run() -> void:
 	_start_visit()
 	var started := Time.get_ticks_msec()
 	Dreams.exit_through_gate()
-	await _seconds(Dreams.FADE_SECONDS + 0.4)
+	await _seconds(0.4)
 	_check(overlay.playing and not overlay.skip(), "no skipping in the first second")
 	await _seconds(0.8)
 	_check(overlay.skip(), "a quiet interdream can be skipped")
 	await _until(func() -> bool: return arrived.size() == 2)
 	_check(finished.size() == 2 and finished[1][0] == "", "the second interdream was quiet")
 	var took := (Time.get_ticks_msec() - started) / 1000.0
-	_check(took < Dreams.FADE_SECONDS + InterdreamEchoes.seconds("quiet_seconds", 3.0), "skipping shortens it (%.1f s)" % took)
+	_check(took < InterdreamEchoes.seconds("quiet_seconds", 3.0), "skipping shortens it (%.1f s)" % took)
 	await _seconds(Dreams.FADE_SECONDS + 0.2)
 
 	# Death: torn at once, no echo, then the red veil.
@@ -96,6 +113,7 @@ func _run() -> void:
 	Dreams.die()
 	await _seconds(0.3)
 	_check(overlay.playing and overlay.torn, "death tears the interdream at once")
+	_check(not overlay._dream.visible, "a torn interdream stays sharp")
 	_check(overlay.corridor and not overlay.corridor.is_prop_visible("plate_2_flash"), "death shows no echo")
 	await _until(func() -> bool: return arrived.size() == 3)
 	_check(finished.size() == 3 and finished[2][0] == "", "death had no echo")

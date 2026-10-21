@@ -58,6 +58,8 @@ var _return_chair: StringName = &""
 var _fade: DreamTransition
 var _afterimage: DreamAfterimage
 var _interdream: InterdreamOverlay
+## The return scene loading in the background since the exit began (#240), "" — none.
+var _preloading := ""
 ## Bumped by abort(): an exit still under way stops where it is.
 var _serial := 0
 
@@ -116,6 +118,8 @@ func enter(id: StringName, chair_id: StringName, dream_scene: String = "") -> bo
 	entered.emit(id)
 	await _fade_to(1.0)
 	scene_loader.call(path)
+	# The corridor is built while the hero dreams, so the gate opens straight into it (#240).
+	_interdream.prepare()
 	await _fade_to(0.0)
 	return true
 
@@ -130,6 +134,7 @@ func abort() -> void:
 	subjective_seconds = 0.0
 	_return_scene = ""
 	_return_chair = &""
+	_preloading = ""
 	if _fade:
 		_fade.veil = 0.0
 	if _afterimage:
@@ -227,13 +232,22 @@ func _leave(reason: Exit) -> void:
 	var echo := InterdreamEchoes.pick(id, reason)
 	GameState.set_flag(StringName(RETURNED_PREFIX + String(id)))
 	_fade.show_mode(TRANSITION_BY_EXIT[reason], exit_line(reason))
+	var carry := _hero_pace()
+	get_tree().call_group(PLAYER_GROUP, "set_controls_locked", true)
+	_preload_return()
 	left.emit(id, reason)
 	if reason == Exit.GATE:
-		# White veil with the system line → the corridor rises out of it, the complex loads
-		# underneath → the corridor washes back into the white.
-		await _fade_to(1.0)
+		# #240: the gate opens straight into the corridor, which goes on at the hero's pace;
+		# the white veil with the system line goes up under it once the corridor covers the
+		# dream, and the complex loads only after the corridor has washed out into that white.
+		_interdream.covered.connect(func() -> void:
+			if serial == _serial:
+				_fade.veil = 1.0, CONNECT_ONE_SHOT)
+		await _play_interdream(id, reason, echo, carry)
+		if serial != _serial:
+			return
+		_fade.veil = 1.0
 		await _load_return()
-		await _play_interdream(id, reason, echo)
 	else:
 		# Torn: the white (amber) cut over the dream at once, then the veil of the verdict.
 		_play_interdream(id, reason, echo)
@@ -255,12 +269,33 @@ func _leave(reason: Exit) -> void:
 	await _fade_to(0.0)
 
 
+## Starts loading the scene the hero left for the dream in the background (#240), when the
+## scene changes the usual way (tests replace the loader).
+func _preload_return() -> void:
+	_preloading = ""
+	if _return_scene.is_empty() or scene_loader.get_object() != self or scene_loader.get_method() != &"_change_scene":
+		return
+	if ResourceLoader.load_threaded_request(_return_scene, "PackedScene", true) == OK:
+		_preloading = _return_scene
+
+
 ## Loads the scene the hero left for the dream and places the hero at the chair; the
 ## controls stay locked while the interdream plays.
 func _load_return() -> void:
 	if _return_scene.is_empty():
 		return
-	scene_loader.call(_return_scene)
+	if _preloading == _return_scene:
+		var path := _preloading
+		_preloading = ""
+		while ResourceLoader.load_threaded_get_status(path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+			await get_tree().process_frame
+		var packed := ResourceLoader.load_threaded_get(path) as PackedScene
+		if packed:
+			get_tree().change_scene_to_packed(packed)
+		else:
+			scene_loader.call(path)
+	else:
+		scene_loader.call(_return_scene)
 	await get_tree().process_frame
 	await get_tree().process_frame
 	if get_tree().current_scene:
@@ -268,8 +303,20 @@ func _load_return() -> void:
 	get_tree().call_group(PLAYER_GROUP, "set_controls_locked", true)
 
 
-func _play_interdream(id: StringName, reason: Exit, echo: Dictionary) -> void:
-	_interdream.play(echo, reason)
+## The hero's walk at the moment of the exit, carried into the corridor: {speed, pitch}.
+func _hero_pace() -> Dictionary:
+	var player := get_tree().get_first_node_in_group(PLAYER_GROUP) as CharacterBody3D
+	if player == null:
+		return {}
+	var camera := player.get_viewport().get_camera_3d()
+	return {
+		"speed": Vector2(player.velocity.x, player.velocity.z).length(),
+		"pitch": camera.global_rotation_degrees.x if camera else 0.0,
+	}
+
+
+func _play_interdream(id: StringName, reason: Exit, echo: Dictionary, carry: Dictionary = {}) -> void:
+	_interdream.play(echo, reason, carry)
 	var result: Array = await _interdream.finished
 	InterdreamEchoes.report_seen(echo, float(result[1]))
 	interdream_finished.emit(id, reason, str(result[0]), float(result[1]))

@@ -11,6 +11,8 @@ const SEAL := ^"SealHall/Seal"
 const GATE := ^"Bastion/Gate"
 const GATE_PROBE_FRAMES := 30
 const TIMEOUT_FRAMES := 600
+## The complex loads back only after the interdream corridor (#240): wait at least this long.
+const TIMEOUT_SECONDS := 12.0
 
 var _errors := PackedStringArray()
 var _capture_dir := ""
@@ -92,10 +94,13 @@ func _scene_is(path: String) -> bool:
 
 
 func _until(condition: Callable) -> void:
-	for _i in TIMEOUT_FRAMES:
+	var deadline := Time.get_ticks_msec() + int(TIMEOUT_SECONDS * 1000.0)
+	var frames := 0
+	while frames < TIMEOUT_FRAMES or Time.get_ticks_msec() < deadline:
 		if condition.call():
 			return
 		await get_tree().process_frame
+		frames += 1
 	_errors.append("timed out waiting")
 
 

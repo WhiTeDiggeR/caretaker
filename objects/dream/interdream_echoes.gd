@@ -27,6 +27,12 @@ static func seconds(key: String, fallback: float) -> float:
 	return float(config.get(key, fallback))
 
 
+## How the corridor looks (InterdreamCorridor.LOOKS, #240).
+static func look() -> String:
+	_ensure()
+	return str(config.get("look", InterdreamCorridor.DEFAULT_LOOK))
+
+
 static func echoes() -> Dictionary:
 	_ensure()
 	return config.get("echoes", {})
@@ -79,6 +85,8 @@ static func validate() -> PackedStringArray:
 	var all := echoes()
 	if all.is_empty():
 		found.append("interdream: no echoes")
+	if not InterdreamCorridor.LOOKS.has(look()):
+		found.append("interdream: unknown look '%s'" % look())
 	for id: String in all:
 		var echo: Dictionary = all[id]
 		for exit: Variant in echo.get("exits", DEFAULT_EXITS):
