@@ -4,6 +4,9 @@ extends CharacterBody3D
 ## Projection of the sleeper's unrest (a guard of the dream): patrols around its post,
 ## chases the hero it can see, never walks off an edge, attacks after a visible wind-up and
 ## is staggered by hits. Parameters by `enemy_type` from data/dreams/combat.json.
+## A `push` in the parameters shoves the hero that far on a hit; the look `hammer` (the forge's
+## hammerer, #234) is a bulky figure of primitives with a hammer that rises over the wind-up and
+## glows with it — the telegraph of a slow heavy blow.
 
 signal died
 ## A hit that did not kill (the death is `died`).
@@ -24,6 +27,14 @@ const DEATH_SECONDS := 0.5
 const BODY_COLOR := Color(0.12, 0.08, 0.16)
 const EYE_COLOR := Color(1.0, 0.45, 0.1)
 const WINDUP_COLOR := Color(1.0, 0.95, 0.6)
+const LOOK_HAMMER := "hammer"
+const HAMMER_BODY_COLOR := Color(0.16, 0.11, 0.1)
+const HAMMER_IRON := Color(0.3, 0.27, 0.26)
+const HAMMER_REST := Vector3(deg_to_rad(20.0), 0, 0)
+const HAMMER_RAISED := Vector3(deg_to_rad(-110.0), 0, 0)
+const HAMMER_SLAM := Vector3(deg_to_rad(75.0), 0, 0)
+const HAMMER_SLAM_SECONDS := 0.12
+const HAMMER_GLOW := 3.0
 
 @export var enemy_type: StringName = &"shade"
 ## Optional look (#199, С-01): a model standing on the floor with its front to +Z, drawn with
@@ -47,6 +58,9 @@ var _cooldown := 0.0
 var _unseen := 0.0
 var _rng := RandomNumberGenerator.new()
 var _eye_material: StandardMaterial3D
+var _hammer: Node3D
+var _hammer_material: StandardMaterial3D
+var _hammer_tween: Tween
 
 
 func _ready() -> void:
@@ -76,6 +90,7 @@ func take_hit(damage: float, push: Vector3) -> void:
 	velocity.x = push.x
 	velocity.z = push.z
 	_set_eyes(EYE_COLOR)
+	_swing(HAMMER_REST, 0.2, false)
 
 
 func _physics_process(delta: float) -> void:
@@ -101,6 +116,7 @@ func _physics_process(delta: float) -> void:
 				state = State.WINDUP
 				_timer = float(config.get("windup", 0.45))
 				_set_eyes(WINDUP_COLOR)
+				_swing(HAMMER_RAISED, _timer, true)
 				_stop()
 			else:
 				_walk_to(hero.global_position, float(config.get("chase_speed", 4.0)))
@@ -120,13 +136,14 @@ func _physics_process(delta: float) -> void:
 
 func _strike(hero: Node3D) -> void:
 	_set_eyes(EYE_COLOR)
+	_slam()
 	_cooldown = float(config.get("attack_cooldown", 1.2))
 	state = State.CHASE
 	if hero == null or _flat_distance(hero) > float(config.get("attack_range", 1.6)) + 0.3:
 		return
 	var combat := _combat_of(hero)
 	if combat:
-		combat.take_damage(float(config.get("damage", 15.0)), global_position)
+		combat.take_damage(float(config.get("damage", 15.0)), global_position, float(config.get("push", 0.0)))
 
 
 func _patrol(delta: float) -> void:
@@ -236,6 +253,8 @@ func _build() -> void:
 	add_child(collision)
 	if art:
 		_build_art()
+	elif str(config.get("look", "")) == LOOK_HAMMER:
+		_build_hammerer()
 	else:
 		var body := MeshInstance3D.new()
 		var mesh := CapsuleMesh.new()
@@ -244,7 +263,7 @@ func _build() -> void:
 		mesh.material = PropKit.material(BODY_COLOR)
 		body.mesh = mesh
 		add_child(body)
-	var eye_height := art_eye_height if art else EYE_HEIGHT
+	var eye_height := art_eye_height if art else float(config.get("eye_height", EYE_HEIGHT))
 	_eye_material = PropKit.material(EYE_COLOR, true)
 	for side: float in [-1.0, 1.0]:
 		var eye := MeshInstance3D.new()
@@ -266,3 +285,61 @@ func _build_art() -> void:
 	if art_material:
 		for mesh: Node in look.find_children("*", "MeshInstance3D", true, false):
 			(mesh as MeshInstance3D).material_override = art_material
+
+
+## The hammerer of the forge (#234), primitives until its model: a broad hunched body, a head
+## and a hammer on the right shoulder; the eyes stay where the shade has them.
+func _build_hammerer() -> void:
+	var body_material := PropKit.material(HAMMER_BODY_COLOR)
+	var body := MeshInstance3D.new()
+	var torso := CapsuleMesh.new()
+	torso.radius = 0.55
+	torso.height = HEIGHT + 0.3
+	torso.material = body_material
+	body.mesh = torso
+	body.scale = Vector3(1.0, 1.0, 0.75)
+	body.position.y = 0.15
+	add_child(body)
+	var head := MeshInstance3D.new()
+	var skull := SphereMesh.new()
+	skull.radius = 0.24
+	skull.height = 0.44
+	skull.material = body_material
+	head.mesh = skull
+	head.position = Vector3(0, float(config.get("eye_height", EYE_HEIGHT)) + 0.05, -0.12)
+	add_child(head)
+	_hammer_material = PropKit.material(HAMMER_IRON)
+	_hammer_material.emission_enabled = true
+	_hammer_material.emission = WINDUP_COLOR
+	_hammer_material.emission_energy_multiplier = 0.0
+	_hammer = Node3D.new()
+	_hammer.name = "Hammer"
+	_hammer.position = Vector3(0.62, 0.55, 0.0)
+	_hammer.rotation = HAMMER_REST
+	add_child(_hammer)
+	PropKit.box(_hammer, Vector3(0, 0, -0.55), Vector3(0.08, 0.08, 1.2), PropKit.material(Color(0.22, 0.15, 0.1)))
+	PropKit.box(_hammer, Vector3(0, 0, -1.2), Vector3(0.36, 0.36, 0.6), _hammer_material, false, Vector3(0, deg_to_rad(90.0), 0))
+
+
+## Raises (or lowers) the hammer over `seconds`; a raised hammer glows brighter as it goes up.
+func _swing(pose: Vector3, seconds: float, glow: bool) -> void:
+	if _hammer == null:
+		return
+	if _hammer_tween and _hammer_tween.is_valid():
+		_hammer_tween.kill()
+	_hammer_tween = create_tween().set_parallel()
+	_hammer_tween.tween_property(_hammer, "rotation", pose, maxf(seconds, 0.01))
+	_hammer_tween.tween_property(_hammer_material, "emission_energy_multiplier", HAMMER_GLOW if glow else 0.0, maxf(seconds, 0.01))
+
+
+## The blow: the hammer comes down at once and settles back on the shoulder.
+func _slam() -> void:
+	if _hammer == null:
+		return
+	if _hammer_tween and _hammer_tween.is_valid():
+		_hammer_tween.kill()
+	_hammer_tween = create_tween()
+	_hammer_tween.tween_property(_hammer, "rotation", HAMMER_SLAM, HAMMER_SLAM_SECONDS)
+	_hammer_tween.parallel().tween_property(_hammer_material, "emission_energy_multiplier", 0.0, HAMMER_SLAM_SECONDS * 3.0)
+	_hammer_tween.tween_interval(0.35)
+	_hammer_tween.tween_property(_hammer, "rotation", HAMMER_REST, 0.4)

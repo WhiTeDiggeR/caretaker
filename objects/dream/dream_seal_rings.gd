@@ -16,6 +16,10 @@ extends DreamSeal
 ## a hum and sparks. The glow is white (B-5). The ring positions are kept in GameState system
 ## data, so the dream remembers them across saves and returns within a visit; a new visit
 ## (a new code) scrambles them again.
+## The seal of the Forge (#234) adds two rules without new ones: `coupled` — the outer lever
+## also turns the middle ring by 1/6; `lock(text)` — the levers do not move (a hot seal) and
+## show `text` until `lock("")`. A seal with `held_flag` set in GameState is an earlier visit's
+## seal the dream remembers: it stands restored, prepares no code and its levers are still.
 
 signal ring_turned(ring: int, position: int)
 
@@ -74,6 +78,10 @@ const LEVER_SPACING := 1.2
 @export var art: PackedScene
 ## Art of a lever (loads/props/dream_seal_wheel): its node Wheel spins with every turn.
 @export var wheel_art: PackedScene
+## The outer lever drags the middle ring along by 1/6 (the seal of the Forge).
+@export var coupled := false
+## While this GameState flag is set the seal stands restored from an earlier visit.
+@export var held_flag: StringName = &""
 
 ## Positions of the rings, 0…5 sixths of a turn.
 var positions: Array[int] = []
@@ -92,6 +100,7 @@ var _scene_children: Array[Node] = []
 var _light: OmniLight3D
 var _art: Node3D
 var _wheels: Array[Node3D] = []
+var _locked_text := ""
 
 
 func _ready() -> void:
@@ -153,19 +162,45 @@ func is_solved() -> bool:
 
 
 func is_restored() -> bool:
-	return Dreams.in_dream and Dreams.seal_restored
+	return is_held() or (Dreams.in_dream and Dreams.seal_restored)
+
+
+## An earlier visit's seal the dream remembers (`held_flag`).
+func is_held() -> bool:
+	return not held_flag.is_empty() and GameState.has_flag(held_flag)
+
+
+## Holds the levers still and shows `text` on them; an empty text frees them.
+func lock(text: String) -> void:
+	_locked_text = text
+	if is_node_ready():
+		_refresh()
+
+
+func is_locked() -> bool:
+	return not _locked_text.is_empty()
+
+
+## Rings a turn of `ring`'s lever moves: the ring itself, and the middle one with the outer
+## lever of a coupled seal.
+func turned_rings(ring: int) -> Array[int]:
+	var result: Array[int] = [ring]
+	if coupled and ring == 0 and ring_count > 1:
+		result.append(1)
+	return result
 
 
 ## Turns `ring` by 1/6. A wrong result costs nothing but the hum and sparks; the last right
 ## ring restores the seal. A turn during the previous one finishes that one at once. Returns
 ## false once the seal is restored.
 func turn(ring: int) -> bool:
-	if is_restored():
+	if is_restored() or is_locked():
 		return false
-	positions[ring] = (positions[ring] + 1) % POSITIONS
+	for moved in turned_rings(ring):
+		positions[moved] = (positions[moved] + 1) % POSITIONS
+		_animate(moved)
+		ring_turned.emit(moved, positions[moved])
 	_save_positions()
-	_animate(ring)
-	ring_turned.emit(ring, positions[ring])
 	_play(turn_sound, ring)
 	if is_ring_aligned(ring):
 		_play(aligned_sound, ring)
@@ -200,8 +235,8 @@ func _refresh() -> void:
 		var lit := restored or is_ring_aligned(ring)
 		_crack_materials[ring].emission_energy_multiplier = CRACK_BRIGHT if lit else CRACK_DIM
 		_halo_materials[ring].albedo_color = _halo(HALO_BRIGHT if lit else HALO_DIM)
-		levers[ring].available = not restored
-		levers[ring].unavailable_prompt = str(DreamKnowledge.text("seal_prompt_done")) if restored else ""
+		levers[ring].available = not restored and not is_locked()
+		levers[ring].unavailable_prompt = str(DreamKnowledge.text("seal_prompt_done")) if restored else _locked_text
 	for ring in ring_count:
 		for sector in POSITIONS:
 			var lit := (restored or is_ring_aligned(ring)) and sector == positions[ring]
@@ -213,6 +248,8 @@ func _visit_code() -> PackedStringArray:
 	var result := PackedStringArray()
 	if not knowledge_id.is_empty():
 		result = DreamKnowledge.code(knowledge_id) if is_restored() else DreamKnowledge.prepare(knowledge_id)
+	if is_held() and result.size() > RING_COUNT:
+		result = result.slice(0, RING_COUNT)
 	if result.size() < RING_COUNT:
 		# Without knowledge (a decorative seal) the first glyphs of the set are the code.
 		result = DreamKnowledge.glyphs().slice(0, RING_COUNT)

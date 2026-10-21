@@ -13,6 +13,9 @@ extends Node
 ## vented and recharged from the stock before it can fire again. Anyone inside without the
 ## chair falls asleep (defeat); a hero connected to the chair is woken by object 2 and gets
 ## a shorter window.
+## The stock starts empty: the one spare charge is the reagent cylinder of the storage
+## (docs/game_design/08-part2.md, #231); loading it into a module marks the carried
+## cylinder used. The gallery tool of the workshop shortens the module's service procedures.
 ## Runs in real time whatever scene is loaded, so the complex keeps living while the
 ## hero is inside a dream. `time_scale` speeds it up for debugging only. Parameters: data/containment/modules.json.
 ## State is saved through GameState.set_system_data(&"containment", …).
@@ -63,10 +66,15 @@ var catastrophe_pairs: Array = []
 ## Module parameters by id (label, start, growth_per_minute, active_when, visible_when...).
 var modules: Dictionary[StringName, Dictionary] = {}
 ## Chemical protocol parameters: trigger_at, warning_seconds, repair_window_seconds,
-## woken_window_factor, vent_seconds, initial_reagent_stock.
+## woken_window_factor, vent_seconds, initial_reagent_stock, reagent_item, reagent_item_used.
 var chemical: Dictionary = {}
+## Module service parameters: tool_flag, tool_time_factor.
+var service: Dictionary = {}
 ## Debug multiplier of the real time (sandbox); 1 in the game.
 var time_scale := 1.0
+## Extra growth per minute from module systems (overheating of a failed cooling, #232); set
+## by those systems, which restore it after a load, so it is not saved here.
+var growth_bonus: Dictionary[StringName, float] = {}
 
 ## Modules whose chamber the hero is standing in (set by ModuleChamber areas).
 var _hero_inside: Dictionary[StringName, bool] = {}
@@ -88,6 +96,7 @@ func load_config(data: Dictionary) -> void:
 	stage_names = data.get("stage_names", [])
 	catastrophe_pairs = data.get("catastrophe_pairs", [])
 	chemical = data.get("chemical", {})
+	service = data.get("service", {})
 	modules.clear()
 	var raw: Dictionary = data.get("modules", {})
 	for id: String in raw:
@@ -107,7 +116,7 @@ func tick(seconds: float) -> void:
 		var config: Dictionary = modules[id]
 		if is_stable(id) or is_held(id) or is_awake(id) or not StateRules.check(config.get("active_when", {})):
 			continue
-		var growth := float(config.get("growth_per_minute", 0.0)) * seconds / 60.0
+		var growth := growth_per_minute(id) * seconds / 60.0
 		if growth > 0.0:
 			_set_value(id, get_instability(id) + growth)
 
@@ -126,13 +135,18 @@ func is_stable(id: StringName) -> bool:
 func forecast_seconds(id: StringName) -> float:
 	if is_stable(id) or is_held(id) or is_awake(id):
 		return -1.0
-	var rate := float((modules.get(id, {}) as Dictionary).get("growth_per_minute", 0.0)) / 60.0
+	var rate := growth_per_minute(id) / 60.0
 	if rate <= 0.0 or not StateRules.check((modules.get(id, {}) as Dictionary).get("active_when", {})):
 		return -1.0
 	var limit := MAX_INSTABILITY
 	if has_chemical_protocol(id) and chemical_phase(id) == Chemical.READY and is_charged(id) and not has_gas(id):
 		limit = float(chemical.get("trigger_at", 95.0))
 	return maxf(limit - get_instability(id), 0.0) / rate
+
+
+## Current growth of a disturbed sleep: the module's own plus `growth_bonus`.
+func growth_per_minute(id: StringName) -> float:
+	return float((modules.get(id, {}) as Dictionary).get("growth_per_minute", 0.0)) + growth_bonus.get(id, 0.0)
 
 
 ## Approximate forecast for monitors: the damaged system does not give exact numbers.
@@ -287,6 +301,15 @@ func add_reagent_stock(amount: int) -> void:
 	reagent_changed.emit()
 
 
+## Duration of a module service procedure (ventilation, later the cooling service): the
+## gallery tool shortens it by `tool_time_factor`.
+func service_seconds(base: float) -> float:
+	var tool := StringName(str(service.get("tool_flag", "")))
+	if not tool.is_empty() and GameState.has_flag(tool):
+		return base * float(service.get("tool_time_factor", 1.0))
+	return base
+
+
 func set_hero_inside(id: StringName, inside: bool) -> void:
 	_hero_inside[id] = inside
 
@@ -309,7 +332,7 @@ func vent_lock_reason(id: StringName) -> String:
 func vent(id: StringName) -> bool:
 	if not vent_lock_reason(id).is_empty():
 		return false
-	_chem(id)["venting"] = float(chemical.get("vent_seconds", 30.0))
+	_chem(id)["venting"] = service_seconds(float(chemical.get("vent_seconds", 30.0)))
 	_save()
 	reagent_changed.emit()
 	Sfx.play(&"vent")
@@ -333,6 +356,10 @@ func recharge(id: StringName) -> bool:
 	if not recharge_lock_reason(id).is_empty():
 		return false
 	_state[STOCK_KEY] = reagent_stock() - 1
+	var item := StringName(str(chemical.get("reagent_item", "")))
+	var used := StringName(str(chemical.get("reagent_item_used", "")))
+	if not item.is_empty() and not used.is_empty() and GameState.has_flag(item):
+		GameState.set_flag(used)
 	var chem := _chem(id)
 	chem["charged"] = true
 	chem["phase"] = Chemical.READY

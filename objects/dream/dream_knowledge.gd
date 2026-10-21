@@ -9,6 +9,9 @@ extends RefCounted
 ## sections 5–6); each dream sees them as its own images (`image`). The shapes are drawn by
 ## DreamGlyph. Definitions: data/dreams/knowledge.json. State: GameState system data (saved
 ## with the game); entries from older saves with unknown glyphs are dropped without an error.
+## A knowledge of `kind` «scheme» (#234, the cooling scheme of the Forge) is an order of actions
+## and one value — the level — instead of glyphs: `grant_scheme`, kept until the complex uses it
+## (`use_scheme`); its `flag` is set when it is granted. Schemes never feed the resync panel.
 
 enum Result { SYNCED, WRONG, NO_KNOWLEDGE, AWAKE }
 
@@ -17,6 +20,9 @@ const SYSTEM := &"dream_knowledge"
 const SEPARATOR := " · "
 const SKETCH_SEAL := &"seal"
 const SKETCH_IMAGES := &"images"
+const SKETCH_SCHEME := &"scheme"
+const KIND_SCHEME := "scheme"
+const LEVEL_MARKS: Array[String] = ["", "I", "II", "III", "IV"]
 
 static var _data: Dictionary = {}
 static var _loaded := false
@@ -154,12 +160,62 @@ static func code_text(id: StringName) -> String:
 	return labels_text(code(id))
 
 
-## The unspent knowledge for `module`, or an empty id.
+## The unspent glyph knowledge for `module`, or an empty id.
 static func active_for(module: StringName) -> StringName:
 	for id: String in _state().get("order", []):
-		if StringName(str(definition(StringName(id)).get("module", ""))) == module and not is_used(StringName(id)):
+		if StringName(str(definition(StringName(id)).get("module", ""))) == module and not is_used(StringName(id)) and not is_scheme(StringName(id)):
 			return StringName(id)
 	return &""
+
+
+static func is_scheme(id: StringName) -> bool:
+	return str(definition(id).get("kind", "")) == KIND_SCHEME
+
+
+## Records the scheme `id` with its `level` (replacing an earlier visit's one) and sets its flag.
+static func grant_scheme(id: StringName, level: int) -> bool:
+	if not is_scheme(id):
+		push_error("DreamKnowledge: '%s' is not a scheme" % id)
+		return false
+	var state := _state()
+	var order: Array = state.get("order", [])
+	order.erase(String(id))
+	order.append(String(id))
+	state["order"] = order
+	var visits := int(_entry(id).get("visits", 0)) + 1
+	(state["entries"] as Dictionary)[String(id)] = {"level": level, "used": false, "visits": visits}
+	GameState.set_system_data(SYSTEM, state)
+	var flag := StringName(str(definition(id).get("flag", "")))
+	if not flag.is_empty():
+		GameState.set_flag(flag)
+	return true
+
+
+## The level the scheme `id` remembers; 0 when it is not known.
+static func scheme_level(id: StringName) -> int:
+	return int(_entry(id).get("level", 0))
+
+
+## The unspent scheme for `module`, or an empty id.
+static func active_scheme_for(module: StringName) -> StringName:
+	for id: String in _state().get("order", []):
+		if is_scheme(StringName(id)) and StringName(str(definition(StringName(id)).get("module", ""))) == module and not is_used(StringName(id)):
+			return StringName(id)
+	return &""
+
+
+## The scheme was applied in the complex: the journal keeps it as spent.
+static func use_scheme(id: StringName) -> void:
+	if not has(id):
+		return
+	var state := _state()
+	((state["entries"] as Dictionary)[String(id)] as Dictionary)["used"] = true
+	GameState.set_system_data(SYSTEM, state)
+
+
+## The mark of a level as the dream's gauge shows it (I…III).
+static func level_mark(level: int) -> String:
+	return LEVEL_MARKS[level] if level > 0 and level < LEVEL_MARKS.size() else str(level)
 
 
 ## Journal entries, newest first: {"text", "used", "sketch", "dream", "code"}. The hero sketches
@@ -172,8 +228,16 @@ static func journal_entries() -> Array[Dictionary]:
 	for index in range(order.size() - 1, -1, -1):
 		var id := StringName(str(order[index]))
 		var config := definition(id)
-		var sketch := SKETCH_SEAL if int(_entry(id).get("visits", 1)) <= 1 else SKETCH_IMAGES
 		var texts: Dictionary = config.get("journal", {})
+		if is_scheme(id):
+			var level := scheme_level(id)
+			var scheme_text := str(texts.get(String(SKETCH_SCHEME), ""))
+			if scheme_text.contains("%s"):
+				scheme_text = scheme_text % level_mark(level)
+			result.append({"text": "%s. %s" % [config.get("title", id), scheme_text], "used": is_used(id),
+				"sketch": SKETCH_SCHEME, "dream": StringName(str(config.get("dream", ""))), "code": PackedStringArray(), "level": level})
+			continue
+		var sketch := SKETCH_SEAL if int(_entry(id).get("visits", 1)) <= 1 else SKETCH_IMAGES
 		var text := "%s. %s" % [config.get("title", id), texts.get(String(sketch), "")]
 		result.append({"text": text, "used": is_used(id), "sketch": sketch,
 			"dream": StringName(str(config.get("dream", ""))), "code": code(id)})

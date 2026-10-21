@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stands/stand_base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://scenes/sandbox/stations/chair_station.tscn" id="2_chairstation"]
+
+[node name="Bowser1Stand" node_paths=PackedStringArray("chamber_zone") instance=ExtResource("1_base")]
+show_overlay = true
+chamber_zone = NodePath("Stations/ChairStation/ModuleChamber/Zone")
+
+[node name="ChairStation" parent="Stations" instance=ExtResource("2_chairstation")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Player" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4.5)

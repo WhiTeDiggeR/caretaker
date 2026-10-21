@@ -1,0 +1,297 @@
+{
+  "version": 1,
+  "stands": [
+    {
+      "id": "movement",
+      "title": "Передвижение",
+      "scene": "res://scenes/sandbox/stands/movement.tscn",
+      "check": [
+        "Присядьте (Ctrl/C) под низкой балкой и проползите (Z) лаз 0,8 м",
+        "Перелезьте (Пробел) ящики 0,6 и 0,9 м и стену 1,2 м; стена 1,6 м не берётся",
+        "Поднимитесь по лестницам 3 и 6 м (E у лестницы) и шагом по ступеням 0,17 м"
+      ]
+    },
+    {
+      "id": "surfaces",
+      "title": "Поверхности и шаги",
+      "scene": "res://scenes/sandbox/stands/surfaces.tscn",
+      "check": [
+        "Пройдите дорожки бетона, металла и решётки: у каждой свой звук шагов",
+        "Ходьба, бег, присед и ползком звучат по-разному",
+        "Залезьте на уступ 1,2 м и спрыгните — звук приземления"
+      ]
+    },
+    {
+      "id": "interaction",
+      "title": "Взаимодействие",
+      "scene": "res://scenes/sandbox/stands/interaction.tscn",
+      "check": [
+        "Нажмите кнопку — загорается лампа",
+        "Удерживайте штурвал: полоска прогресса, при отпускании откат",
+        "Осмотрите панель капсулы; у обесточенной панели — «недоступно»"
+      ]
+    },
+    {
+      "id": "doors",
+      "title": "Двери, шлюз и контрольная точка",
+      "scene": "res://scenes/sandbox/stands/doors.tscn",
+      "check": [
+        "Гермодверь с пульта, механическая — штурвалом (держите; отпустили — откат), служебная заперта",
+        "F1 — питание секций: аварийная блокировка и обесточенная дверь; F2 — допуск к шлюзу позднего сектора",
+        "Гермотамбур: цикл с пульта внутри; терминал выдаёт допуск по протоколу",
+        "Контрольная точка справа: касание — автосохранение"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open"],
+        "section_power": {"sandbox_a": "emergency", "sandbox_b": "emergency"}
+      }
+    },
+    {
+      "id": "power",
+      "title": "Питание секции",
+      "scene": "res://scenes/sandbox/stands/power.tscn",
+      "check": [
+        "F1 переключает питание: авария → основное → нет питания",
+        "Лампы загораются каскадом, гул генератора следует питанию"
+      ]
+    },
+    {
+      "id": "events",
+      "title": "Скриптовая авария",
+      "scene": "res://scenes/sandbox/stands/events.tscn",
+      "check": [
+        "Войдите под навес: мигание, отключение света, дверь закрывается (один раз)",
+        "Цель «Снять аварию»: кнопка «СБРОС АВАРИИ» возвращает свет и дверь"
+      ]
+    },
+    {
+      "id": "props",
+      "title": "Пропы начала игры",
+      "scene": "res://scenes/sandbox/stands/props.tscn",
+      "check": [
+        "Капсулы персонала: занятая, пустая и капсула героя",
+        "Аварийный шкаф, завал, упавший воздуховод (присед), мнемосхема, служебная дверь",
+        "Габариты и пропорции рядом с ростом героя"
+      ]
+    },
+    {
+      "id": "opening_generator",
+      "title": "Опенинг: генератор",
+      "scene": "res://scenes/sandbox/stands/opening_generator.tscn",
+      "check": [
+        "Осмотрите щит — диагностика аварийного останова",
+        "Клапаны В-2, затем В-1: стрелка давления растёт",
+        "Автоматы 1 и 2, затем удерживайте пусковой рычаг: обороты, гул, свет на основном питании",
+        "Цель меняется на «В операторскую»"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control"],
+        "section_power": {"sandbox_a": "emergency", "sandbox_b": "emergency"},
+        "objective_chain": "opening"
+      }
+    },
+    {
+      "id": "opening_succession",
+      "title": "Опенинг: преемственность и ключ SE 067",
+      "scene": "res://scenes/sandbox/stands/opening_succession.tscn",
+      "check": [
+        "Ломом проломите стену у трещины (лом уже при себе; щит с ломом — снаружи справа)",
+        "Осмотрите старшего под трубой и возьмите личный ключ SE 067",
+        "Компьютер старшего: протокол преемственности даёт допуск смотрителя",
+        "Дверь комнаты старшего ↔ старый ЦУ открывается только с допуском"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "item_crowbar"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "opening"
+      }
+    },
+    {
+      "id": "journal",
+      "title": "Журнал и «При себе»",
+      "scene": "res://scenes/sandbox/stands/journal.tscn",
+      "check": [
+        "Прочитайте памятку и журнал смены (E); J открывает журнал с прочитанным",
+        "Возьмите ключ SE 067 и лом — они появляются во вкладке «При себе»",
+        "В журнале у ключа зарисовка и номер, у лома — пометка, откуда он"
+      ]
+    },
+    {
+      "id": "bowser_1",
+      "title": "Сон Боузера: первое посещение",
+      "scene": "res://scenes/sandbox/stands/bowser_1.tscn",
+      "check": [
+        "Сядьте в кресло модуля 4 (E): вход в сон Боузера",
+        "Во сне: двор и засада, останки героя, печать — кольца рычагами",
+        "Выход через врата возвращает к креслу; нестабильность меняется",
+        "Моменты сна (терраса, печать, после печати) — в меню F10"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "instability": {"module_4": 60},
+        "objective_chain": "opening"
+      }
+    },
+    {
+      "id": "interdream",
+      "title": "Межсонье",
+      "scene": "res://scenes/sandbox/stands/interdream.tscn",
+      "check": [
+        "Сядьте в кресло и выйдите из сна через врата (быстро — момент «Возвращение из сна» в F10)",
+        "Между сном и креслом — межсонье: табличка «2» и силуэт вдали, звук терминала",
+        "В журнале появляется зарисовка таблички; сравните со старой табличкой «2-М» слева"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "instability": {"module_4": 60},
+        "objective_chain": "opening"
+      }
+    },
+    {
+      "id": "recovery_map",
+      "title": "Часть 2: карта восстановления",
+      "scene": "res://scenes/sandbox/stands/recovery_map.tscn",
+      "check": [
+        "Пульт старого ЦУ после первого сна открывает карту восстановления",
+        "Цель меняется на «Восстановить системы»: «Верх», «Нижний контур», склад"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      }
+    },
+    {
+      "id": "storage",
+      "title": "Часть 2: склад техуровня",
+      "scene": "res://scenes/sandbox/stands/storage.tscn",
+      "check": [
+        "Возьмите баллон реагента и сервисный ключ техгалерей (появляются в «При себе»)",
+        "F6 — модуль 4 к порогу химпротокола; после газа баллон перезаряжает панель реагента у кресла слева",
+        "С ключом техгалерей вентиляция и обслуживание идут быстрее"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      }
+    },
+    {
+      "id": "upper",
+      "title": "Часть 2: верхний уровень",
+      "scene": "res://scenes/sandbox/stands/upper.tscn",
+      "check": [
+        "Восточная и западная подстанции: журнал → ввод → секция → подача, табло показывает шаг",
+        "Каждая подстанция открывает свой короткий путь",
+        "Серверная нового ЦУ запускается от обеих; монитор показывает правило 3+4 один раз"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      }
+    },
+    {
+      "id": "lower",
+      "title": "Часть 2: нижний контур и пост №2",
+      "scene": "res://scenes/sandbox/stands/lower.tscn",
+      "check": [
+        "Подстанция нижнего контура: ремонт даёт питание магистрали нижнего этажа",
+        "Короткий путь к старому ЦУ и дверь магистрали открываются от питания",
+        "Старая табличка «2-М» — сравнить с табличкой из межсонья",
+        "Ранняя лаборатория сна и пост камеры №2 открыты"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      }
+    },
+    {
+      "id": "terminal_2",
+      "title": "Часть 2: терминал №2",
+      "scene": "res://scenes/sandbox/stands/terminal_2.tscn",
+      "check": [
+        "Терминал поста №2: сначала только образы — узел связи перечёркнут",
+        "Установите плату связи из лаборатории (уже при себе): она уходит из «При себе»",
+        "Канал печатает первый текст №2 про охлаждение модуля 4 — один раз"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "objective_chain": "part2"
+      }
+    },
+    {
+      "id": "module4_crisis",
+      "title": "Часть 2: кризис модуля 4",
+      "scene": "res://scenes/sandbox/stands/module4_crisis.tscn",
+      "check": [
+        "После первого текста №2 давление охлаждения падает: табло и стрелка галереи",
+        "Почините сразу (клапаны, затем насос) или дождитесь перегрева (клавиша 7 — время ×10/×60)",
+        "После ремонта — проверка герметизации, затем «норма»"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part", "part2/n2_link_installed", "part2/n2_first_text"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "instability": {"module_4": 0},
+        "objective_chain": "part2"
+      }
+    },
+    {
+      "id": "cooling_panel",
+      "title": "Часть 2: панель охлаждения",
+      "scene": "res://scenes/sandbox/stands/cooling_panel.tscn",
+      "check": [
+        "Панель настройки охлаждения справа: схема из сна «Горн» уже запомнена",
+        "Выставьте положения по схеме — модуль 4 стабилизируется",
+        "После настройки пост №2 даёт ответ №2 (момент «ответ №2 на посту» в F10)"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part", "part2/n2_link_installed", "part2/n2_first_text", "part2/module4_crisis_resolved", "part2/module4_cooling_leak", "part2/module4_overheat", "part2/bowser_v2_seal", "part2/v2_done"],
+        "dream_schemes": {"module_4_cooling": 2},
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "instability": {"module_4": 20},
+        "objective_chain": "part2"
+      }
+    },
+    {
+      "id": "bowser_forge",
+      "title": "Сон Боузера: второе посещение «Горн»",
+      "scene": "res://scenes/sandbox/stands/bowser_forge.tscn",
+      "check": [
+        "Сядьте в кресло: второе посещение, ветка «Кузница» открыта",
+        "Галерея шлюзов и схема охлаждения, молотобоец, горячая печать со сцепкой",
+        "Метка SE 067 и отголоски в межсонье на выходе через врата",
+        "Галерея шлюзов сразу — момент «Горн — галерея шлюзов» в F10"
+      ],
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part", "part2/n2_link_installed", "part2/n2_first_text", "part2/module4_crisis_resolved", "part2/module4_cooling_leak", "part2/module4_overheat"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "instability": {"module_4": 40},
+        "objective_chain": "part2"
+      }
+    },
+    {
+      "id": "all_in_one",
+      "title": "Всё вместе (старый полигон)",
+      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "check": [
+        "Все станции частей 1 и 2 на одной площадке, цепочка целей «тур по полигону»",
+        "Клавиши F1–F6, 7, 8 — как на отдельных стендах"
+      ]
+    }
+  ]
+}

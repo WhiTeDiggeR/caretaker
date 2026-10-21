@@ -8,7 +8,8 @@ extends Node3D
 ## from the niche and the trace of the operator's death by the wake line glows white. Safety net:
 ## if the chain is not taken `echo_seconds` after the ambush, or the hero's resolve falls below
 ## `echo_resolve_ratio`, the hint `ECHO_HINT` is requested once. Texts live in data/documents
-## (`inspect_text_id`) and data/hints.
+## (`inspect_text_id`) and data/hints. On the second visit (#234) the yard stays quiet and the
+## remains answer the ambush of the forge instead (`listen_to`), with a hint of their own.
 
 signal awakened
 signal echoed
@@ -25,6 +26,7 @@ const TRACE_ENERGY := 2.5
 
 @export var weapon_id: StringName = &"dream_chain"
 @export var inspect_text_id := "bowser_hero_remains"
+@export var echo_hint: StringName = ECHO_HINT
 @export var echo_seconds := 15.0
 @export_range(0.0, 1.0) var echo_resolve_ratio := 0.5
 @export var ambush: NodePath = ^"../Ambush"
@@ -65,7 +67,14 @@ func _ready() -> void:
 	_echo_timer.one_shot = true
 	_echo_timer.timeout.connect(_echo)
 	add_child(_echo_timer)
-	_ambush = get_node_or_null(ambush) as DreamAmbush
+	listen_to(get_node_or_null(ambush) as DreamAmbush)
+
+
+## The ambush whose start wakes the chain (the yard's by default); replaces the previous one.
+func listen_to(source: DreamAmbush) -> void:
+	if _ambush and _ambush.ambush_started.is_connected(awaken):
+		_ambush.ambush_started.disconnect(awaken)
+	_ambush = source
 	if _ambush:
 		_ambush.ambush_started.connect(awaken)
 		if _ambush.started:
@@ -101,7 +110,7 @@ func _echo() -> void:
 	if echo_shown or weapon_taken:
 		return
 	echo_shown = true
-	Hints.request(ECHO_HINT)
+	Hints.request(echo_hint)
 	echoed.emit()
 
 

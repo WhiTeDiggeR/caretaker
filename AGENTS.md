@@ -15,6 +15,7 @@
 - Keep replies, issue summaries and handoff comments short: 3–5 lines, outcome first, only what the author needs to know or decide.
 - No long recaps, check lists or file inventories unless the author asks for details.
 - Write to the author in Russian.
+- Do not refer to rooms, decisions, issues or other items by codes or numbers alone (no «Р-4», «U-EMERGENCY», «#233»); use short plain-language names the author can recognise, e.g. «капсульный зал», «сон Боузера, второе посещение». Codes may follow in parentheses only when needed.
 
 ## Source of truth
 

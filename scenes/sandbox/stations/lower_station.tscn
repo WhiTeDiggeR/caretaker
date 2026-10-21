@@ -1,0 +1,99 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/lower_contour/lower_substation.tscn" id="1_substation"]
+[ext_resource type="PackedScene" path="res://objects/lower_contour/early_lab.tscn" id="2_lab"]
+[ext_resource type="PackedScene" path="res://objects/lower_contour/post_2.tscn" id="3_post"]
+[ext_resource type="PackedScene" path="res://objects/lower_contour/old_plate.tscn" id="4_plate"]
+[ext_resource type="PackedScene" path="res://objects/doors/hermetic_door.tscn" id="5_hermetic"]
+
+[sub_resource type="StandardMaterial3D" id="pillar"]
+albedo_color = Color(0.4, 0.4, 0.37, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="pillar_mesh"]
+material = SubResource("pillar")
+size = Vector3(0.8, 2.8, 0.4)
+
+[sub_resource type="BoxShape3D" id="pillar_shape"]
+size = Vector3(0.8, 2.8, 0.4)
+
+[node name="LowerStation" type="Node3D"]
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 4.6, 0)
+pixel_size = 0.006
+text = "ЧАСТЬ 2 · «НИЖНИЙ КОНТУР» (#229)
+подстанция → магистраль нижнего этажа → ранняя лаборатория → пост камеры №2"
+font_size = 48
+outline_size = 10
+
+[node name="Substation" parent="." instance=ExtResource("1_substation")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -2)
+
+[node name="ShortPath" parent="." instance=ExtResource("5_hermetic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 3)
+section = &"lower_main"
+
+[node name="ShortPathLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 3.4, 3.2)
+pixel_size = 0.004
+text = "КОРОТКИЙ ПУТЬ К СТАРОМУ ЦУ
+открывается от подстанции нижнего контура"
+font_size = 40
+outline_size = 10
+
+[node name="TrunkDoor" parent="." instance=ExtResource("5_hermetic")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -4, 0, 0)
+section = &"lower_main"
+
+[node name="TrunkLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 3.4, 1.2)
+pixel_size = 0.004
+text = "ПАССАЖИРСКАЯ МАГИСТРАЛЬ НИЖНЕГО ЭТАЖА
+питание — подстанция нижнего контура"
+font_size = 40
+outline_size = 10
+
+[node name="TrunkPillar" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+
+[node name="Mesh" type="MeshInstance3D" parent="TrunkPillar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+mesh = SubResource("pillar_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="TrunkPillar"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+shape = SubResource("pillar_shape")
+
+[node name="TrunkPlate" parent="." instance=ExtResource("4_plate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.6, -0.78)
+plate_text = "2-М"
+
+[node name="PlateLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3.0, -0.7)
+pixel_size = 0.004
+text = "СТАРАЯ ТАБЛИЧКА
+сравнить с табличкой из межсонья"
+font_size = 32
+outline_size = 10
+
+[node name="EarlyLab" parent="." instance=ExtResource("2_lab")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -1)
+
+[node name="LabLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 3.4, 1.2)
+pixel_size = 0.004
+text = "РАННЯЯ ЛАБОРАТОРИЯ СНА"
+font_size = 44
+outline_size = 10
+
+[node name="Post2" parent="." instance=ExtResource("3_post")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -1)
+
+[node name="PostLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 3.4, 1.2)
+pixel_size = 0.004
+text = "ПОСТ НАБЛЮДЕНИЯ КАМЕРЫ №2
+камера закрыта · терминал №2: образы → плата связи из лаборатории → текст"
+font_size = 40
+outline_size = 10

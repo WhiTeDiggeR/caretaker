@@ -1,0 +1,26 @@
+{
+  "id": "part2_new_cp_servers",
+  "title": "ЦЕНТРАЛЬНЫЙ ПУНКТ · СЕРВЕРНАЯ",
+  "steps": [
+    {
+      "id": "feed",
+      "hint": "Восстановить обе подстанции поздних секторов",
+      "done_when": {"all": [{"flag": "proc/part2_upper_east"}, {"flag": "proc/part2_upper_west"}]}
+    },
+    {
+      "id": "racks",
+      "hint": "Включить питание уцелевших стоек",
+      "all_on": ["ncp_rack_1", "ncp_rack_2"],
+      "early_error": "Нет питания: серверная запитана от двух поздних подстанций."
+    },
+    {
+      "id": "start",
+      "hint": "Удерживать рычаг пуска серверной",
+      "all_on": ["ncp_start"],
+      "early_error": "Стойки обесточены."
+    }
+  ],
+  "completion_effects": [
+    {"set_power": {"section": "new_cp", "power": "main"}}
+  ]
+}

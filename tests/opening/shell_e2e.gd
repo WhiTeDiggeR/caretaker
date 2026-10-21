@@ -36,6 +36,18 @@ func _run() -> void:
 	await _capture("shell_1_menu")
 
 	_check(_has_button(menu, "Полигон (отладка)"), "debug builds offer the test range")
+	# #239: the item opens the list of test stands, the old sandbox last.
+	for button: Button in menu.find_children("*", "Button", true, false):
+		if button.text == "Полигон (отладка)":
+			button.pressed.emit()
+	await _frames(2)
+	var stand_menu := Debug.get_node_or_null(^"DebugMenu")
+	var stand_buttons := stand_menu.find_children(Debug.STAND_BUTTON + "*", "Button", true, false) if stand_menu else []
+	_check(stand_buttons.size() == Debug.stands().size() and not Debug.stands().is_empty(), "the test range item lists every stand (%d)" % stand_buttons.size())
+	_check(not stand_buttons.is_empty() and (stand_buttons.back() as Button).text == "Всё вместе (старый полигон)", "the old sandbox is the last stand")
+	_press_cancel()
+	await _frames(2)
+	_check(not Debug.is_menu_open() and not tree.paused, "Esc closes the stand list")
 	# #166: waking in the capsule starts after the loading screen, not under it.
 	var wake_while_loading: Array[bool] = []
 	var on_effect := func(id: StringName) -> void:

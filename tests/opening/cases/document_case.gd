@@ -21,6 +21,9 @@ func run(c: OpeningCheck) -> void:
 	c.equal(ItemCatalog.carried().size(), 0, "reset empties the pockets")
 	GameState.from_dict(carried_save)
 	c.equal(ItemCatalog.carried()[0].get("title"), "Личный ключ старшего", "carried items survive a save")
+	var key_item := ItemCatalog.get_item(&"senior_key_taken")
+	c.is_true(key_item.get("tag") == "SE 067" and str(key_item.get("note")).contains("SE 067"), "the key's number is on its tag and in the hero's note")
+	c.is_true(str(DocumentLibrary.get_document("senior_note").get("body")).contains("SE 067"), "the senior's note is signed with the key's number")
 	GameState.reset()
 
 	c.equal(DocumentLibrary.read_ids(), [] as Array[String], "journal starts empty")

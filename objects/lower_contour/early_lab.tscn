@@ -1,0 +1,208 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/lower_contour/old_plate.tscn" id="1_plate"]
+[ext_resource type="PackedScene" path="res://objects/staff_table.tscn" id="2_table"]
+[ext_resource type="PackedScene" path="res://objects/server_rack.tscn" id="3_rack"]
+[ext_resource type="PackedScene" path="res://objects/documents/document_pickup.tscn" id="4_doc"]
+[ext_resource type="Material" path="res://materials/lower_contour/screen_static.tres" id="5_static"]
+[ext_resource type="Script" path="res://objects/events/event_sequence.gd" id="6_sequence"]
+[ext_resource type="Script" path="res://objects/events/event_trigger.gd" id="7_trigger"]
+[ext_resource type="Script" path="res://objects/items/item_pickup.gd" id="8_item"]
+
+[sub_resource type="StandardMaterial3D" id="console"]
+albedo_color = Color(0.22, 0.24, 0.21, 1)
+metallic = 0.25
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="console_mesh"]
+material = SubResource("console")
+size = Vector3(2.6, 1.0, 0.7)
+
+[sub_resource type="BoxShape3D" id="console_shape"]
+size = Vector3(2.6, 1.0, 0.7)
+
+[sub_resource type="BoxMesh" id="screen_box"]
+material = SubResource("console")
+size = Vector3(0.62, 0.5, 0.36)
+
+[sub_resource type="QuadMesh" id="screen_quad"]
+material = ExtResource("5_static")
+size = Vector2(0.5, 0.38)
+
+[sub_resource type="StandardMaterial3D" id="glass"]
+transparency = 1
+albedo_color = Color(0.55, 0.65, 0.66, 0.22)
+metallic = 0.4
+roughness = 0.08
+
+[sub_resource type="BoxMesh" id="glass_mesh"]
+material = SubResource("glass")
+size = Vector3(4.0, 1.4, 0.04)
+
+[sub_resource type="BoxShape3D" id="window_shape"]
+size = Vector3(4.0, 2.8, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="wall"]
+albedo_color = Color(0.42, 0.42, 0.39, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="sill_mesh"]
+material = SubResource("wall")
+size = Vector3(4.0, 1.0, 0.12)
+
+[sub_resource type="BoxMesh" id="lintel_mesh"]
+material = SubResource("wall")
+size = Vector3(4.0, 0.4, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="chair"]
+albedo_color = Color(0.3, 0.27, 0.24, 1)
+metallic = 0.35
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="chair_seat"]
+material = SubResource("chair")
+size = Vector3(0.8, 0.5, 1.7)
+
+[sub_resource type="BoxMesh" id="chair_back"]
+material = SubResource("chair")
+size = Vector3(0.8, 0.9, 0.15)
+
+[sub_resource type="BoxShape3D" id="chair_shape"]
+size = Vector3(0.8, 1.2, 1.8)
+
+[sub_resource type="StandardMaterial3D" id="seal"]
+albedo_color = Color(0.75, 0.68, 0.48, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="seal_mesh"]
+material = SubResource("seal")
+size = Vector3(0.9, 0.05, 0.12)
+
+[sub_resource type="BoxShape3D" id="area_shape"]
+size = Vector3(6, 3, 5)
+
+[node name="EarlyLab" type="Node3D"]
+
+[node name="EntrancePlate" parent="." instance=ExtResource("1_plate")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4, 2.6, -1.53)
+plate_text = "2-Л"
+
+[node name="ObservationWindow" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.6)
+
+[node name="Sill" type="MeshInstance3D" parent="ObservationWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("sill_mesh")
+
+[node name="Glass" type="MeshInstance3D" parent="ObservationWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+mesh = SubResource("glass_mesh")
+
+[node name="Lintel" type="MeshInstance3D" parent="ObservationWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+mesh = SubResource("lintel_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="ObservationWindow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+shape = SubResource("window_shape")
+
+[node name="SyncChair" type="StaticBody3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, -3.4)
+
+[node name="Seat" type="MeshInstance3D" parent="SyncChair"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+mesh = SubResource("chair_seat")
+
+[node name="Back" type="MeshInstance3D" parent="SyncChair"]
+transform = Transform3D(1, 0, 0, 0, 0.94, 0.34, 0, -0.34, 0.94, 0, 0.95, -0.8)
+mesh = SubResource("chair_back")
+
+[node name="SealA" type="MeshInstance3D" parent="SyncChair"]
+transform = Transform3D(0.71, 0, 0.71, 0, 1, 0, -0.71, 0, 0.71, 0, 0.72, 0.1)
+mesh = SubResource("seal_mesh")
+
+[node name="SealB" type="MeshInstance3D" parent="SyncChair"]
+transform = Transform3D(0.71, 0, -0.71, 0, 1, 0, 0.71, 0, 0.71, 0, 0.72, 0.1)
+mesh = SubResource("seal_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="SyncChair"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("chair_shape")
+
+[node name="Console" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -1.1)
+
+[node name="Mesh" type="MeshInstance3D" parent="Console"]
+mesh = SubResource("console_mesh")
+
+[node name="Collision" type="CollisionShape3D" parent="Console"]
+shape = SubResource("console_shape")
+
+[node name="Screen1" type="MeshInstance3D" parent="Console"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 0.75, 0)
+mesh = SubResource("screen_box")
+
+[node name="Static" type="MeshInstance3D" parent="Console/Screen1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.185)
+mesh = SubResource("screen_quad")
+
+[node name="Screen2" type="MeshInstance3D" parent="Console"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+mesh = SubResource("screen_box")
+
+[node name="Static" type="MeshInstance3D" parent="Console/Screen2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.185)
+mesh = SubResource("screen_quad")
+
+[node name="Screen3" type="MeshInstance3D" parent="Console"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.75, 0)
+mesh = SubResource("screen_box")
+
+[node name="Static" type="MeshInstance3D" parent="Console/Screen3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.185)
+mesh = SubResource("screen_quad")
+
+[node name="SensorRack1" parent="." instance=ExtResource("3_rack")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2.6, 0, -0.6)
+
+[node name="SensorRack2" parent="." instance=ExtResource("3_rack")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2.6, 0, 0.4)
+
+[node name="SensorLabel" type="Label3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2.1, 2.35, -0.1)
+pixel_size = 0.003
+text = "ДАТЧИКИ МОЗГОВОЙ АКТИВНОСТИ · ОБЪЕКТ 2"
+font_size = 32
+outline_size = 8
+
+[node name="Desk" parent="." instance=ExtResource("2_table")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 2.3, 0, 0.2)
+
+[node name="MemorySyncClosed" parent="." instance=ExtResource("4_doc")]
+transform = Transform3D(0.96, 0, 0.28, 0, 1, 0, -0.28, 0, 0.96, 2.2, 0.8, 0.1)
+document_id = "part2_memory_sync_closed"
+
+[node name="LinkPart" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3, 0.77, 0.75)
+script = ExtResource("8_item")
+flag = &"item_n2_link_part"
+size = Vector3(0.22, 0.03, 0.16)
+color = Color(0.16, 0.36, 0.2, 1)
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+light_color = Color(0.75, 0.85, 0.8, 1)
+light_energy = 0.6
+omni_range = 6.0
+
+[node name="ReachedEvent" type="Node" parent="."]
+script = ExtResource("6_sequence")
+event_id = &"part2_lower_lab"
+
+[node name="ReachedArea" type="Area3D" parent="." node_paths=PackedStringArray("sequence")]
+script = ExtResource("7_trigger")
+sequence = NodePath("../ReachedEvent")
+
+[node name="Shape" type="CollisionShape3D" parent="ReachedArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("area_shape")

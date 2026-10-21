@@ -13,8 +13,8 @@
       "id": "after_airlock",
       "title": "После гермотамбура",
       "story_scene": 3,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
-      "spawn": {"node": "Stations/DoorStation", "offset": [5, 1, 0], "yaw": 90},
+      "scene": "res://scenes/sandbox/stands/doors.tscn",
+      "spawn": {"node": "Stations/DoorStation", "offset": [0, 1, 5], "yaw": 0},
       "state": {
         "flags": ["opening/hero_capsule_open"],
         "section_power": {"sandbox_a": "emergency", "sandbox_b": "emergency"},
@@ -26,7 +26,7 @@
       "id": "before_generator",
       "title": "Перед генератором",
       "story_scene": 9,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "scene": "res://scenes/sandbox/stands/opening_generator.tscn",
       "spawn": {"node": "Stations/GeneratorStation", "offset": [0, 1, 5], "yaw": 0},
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control"],
@@ -39,7 +39,7 @@
       "id": "generator_running",
       "title": "Генератор запущен",
       "story_scene": 10,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "scene": "res://scenes/sandbox/stands/opening_generator.tscn",
       "spawn": {"node": "Stations/GeneratorStation", "offset": [0, 1, 5], "yaw": 0},
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator"],
@@ -52,7 +52,7 @@
       "id": "before_breach",
       "title": "Перед проломом",
       "story_scene": 10,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "scene": "res://scenes/sandbox/stands/opening_succession.tscn",
       "spawn": {"node": "Stations/BreachStation", "offset": [0, 1, 2.5], "yaw": 0},
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "item_crowbar"],
@@ -65,8 +65,8 @@
       "id": "before_module_4",
       "title": "Перед модулем №4",
       "story_scene": 11,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
-      "spawn": {"node": "Stations/ImmersionChair", "offset": [0, 1, -4.5], "yaw": 180},
+      "scene": "res://scenes/sandbox/stands/bowser_1.tscn",
+      "spawn": {"node": "Stations/ChairStation/ImmersionChair", "offset": [0, 1, 4.5], "yaw": 0},
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online"],
         "access": ["caretaker", "module_4"],
@@ -80,7 +80,7 @@
       "id": "dream_start",
       "title": "Сон: начало",
       "story_scene": 12,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "scene": "res://scenes/sandbox/stands/bowser_1.tscn",
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
         "access": ["caretaker", "module_4"],
@@ -95,7 +95,7 @@
       "id": "bowser_terrace",
       "title": "Сон Боузера: терраса",
       "story_scene": 12,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "scene": "res://scenes/sandbox/stands/bowser_1.tscn",
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
         "access": ["caretaker", "module_4"],
@@ -110,7 +110,7 @@
       "id": "dream_seal",
       "title": "Сон Боузера: перед печатью",
       "story_scene": 12,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "scene": "res://scenes/sandbox/stands/bowser_1.tscn",
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
         "access": ["caretaker", "module_4"],
@@ -125,7 +125,7 @@
       "id": "bowser_after_seal",
       "title": "Сон Боузера: после печати",
       "story_scene": 12,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "scene": "res://scenes/sandbox/stands/bowser_1.tscn",
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
         "access": ["caretaker", "module_4"],
@@ -140,7 +140,7 @@
       "id": "dream_return",
       "title": "Возвращение из сна",
       "story_scene": 12,
-      "scene": "res://scenes/sandbox/opening_sandbox.tscn",
+      "scene": "res://scenes/sandbox/stands/interdream.tscn",
       "state": {
         "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready"],
         "access": ["caretaker", "module_4"],
@@ -149,7 +149,155 @@
         "objective_chain": "opening"
       },
       "dream": {"module": "module_4", "chair": "sandbox_chair", "exit": "gate"},
-      "expect": {"objective": "", "in_dream": false, "flags": ["dream/returned/module_4"]}
+      "expect": {"objective": "part2_old_cp", "in_dream": false, "flags": ["dream/returned/module_4"]}
+    },
+    {
+      "id": "part2_recovery_map",
+      "title": "Часть 2: карта восстановления",
+      "scene": "res://scenes/sandbox/stands/recovery_map.tscn",
+      "spawn": {"node": "Stations/BreachStation", "offset": [-4.5, 1, 0.5], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_old_cp"}
+    },
+    {
+      "id": "part2_storage",
+      "title": "Часть 2: склад техуровня",
+      "scene": "res://scenes/sandbox/stands/storage.tscn",
+      "spawn": {"node": "Stations/StorageStation", "offset": [0, 1, 2.5], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore"}
+    },
+    {
+      "id": "part2_upper",
+      "title": "Часть 2: «Верх» первым",
+      "scene": "res://scenes/sandbox/stands/upper.tscn",
+      "spawn": {"node": "Stations/UpperStation", "offset": [2, 1, 7], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore"}
+    },
+    {
+      "id": "part2_upper_rule_read",
+      "title": "Часть 2: «Верх» после поста №2",
+      "scene": "res://scenes/sandbox/stands/upper.tscn",
+      "spawn": {"node": "Stations/UpperStation", "offset": [2, 1, 7], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dir_lower_done", "part2/rule_3_4"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore"}
+    },
+    {
+      "id": "part2_lower",
+      "title": "Часть 2: «Нижний контур» первым",
+      "scene": "res://scenes/sandbox/stands/lower.tscn",
+      "spawn": {"node": "Stations/LowerStation", "offset": [-9, 1, 7], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore"}
+    },
+    {
+      "id": "part2_lower_after_upper",
+      "title": "Часть 2: «Нижний контур» после «Верха»",
+      "scene": "res://scenes/sandbox/stands/lower.tscn",
+      "spawn": {"node": "Stations/LowerStation", "offset": [-9, 1, 7], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/dir_upper_done", "part2/rule_3_4"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore"}
+    },
+    {
+      "id": "part2_n2_reply",
+      "title": "Часть 2: ответ №2 на посту",
+      "scene": "res://scenes/sandbox/stands/terminal_2.tscn",
+      "spawn": {"node": "Stations/LowerStation", "offset": [12, 1, 3], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part", "part2/n2_link_installed", "part2/n2_first_text", "part2/module4_crisis_resolved", "part2/module4_cooling_leak", "part2/module4_overheat", "part2/bowser_v2_seal", "part2/v2_done", "part2/module4_cooling_tuned"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore"}
+    },
+    {
+      "id": "part2_module4_crisis",
+      "title": "Часть 2: кризис модуля №4 — давление падает",
+      "scene": "res://scenes/sandbox/stands/module4_crisis.tscn",
+      "spawn": {"node": "Stations/Module4Station", "offset": [0, 1, 3], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part", "part2/n2_link_installed", "part2/n2_first_text"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "instability": {"module_4": 0},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore", "flags": ["part2/module4_cooling_leak"]}
+    },
+    {
+      "id": "part2_bowser_v2",
+      "title": "Часть 2: сон Боузера, второе посещение «Горн»",
+      "scene": "res://scenes/sandbox/stands/bowser_forge.tscn",
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part", "part2/n2_link_installed", "part2/n2_first_text", "part2/module4_crisis_resolved", "part2/module4_cooling_leak", "part2/module4_overheat"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "instability": {"module_4": 40},
+        "objective_chain": "part2"
+      },
+      "dream": {"module": "module_4", "chair": "sandbox_chair", "spawn": {"node": "Spawn", "offset": [0, 1, 0], "yaw": -90}},
+      "expect": {"objective": "part2_restore", "in_dream": true, "scene": "res://scenes/dreams/bowser_dream.tscn"}
+    },
+    {
+      "id": "part2_bowser_v2_forge",
+      "title": "Часть 2: «Горн» — галерея шлюзов",
+      "scene": "res://scenes/sandbox/stands/bowser_forge.tscn",
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part", "part2/n2_link_installed", "part2/n2_first_text", "part2/module4_crisis_resolved", "part2/module4_cooling_leak", "part2/module4_overheat"],
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "instability": {"module_4": 40},
+        "objective_chain": "part2"
+      },
+      "dream": {"module": "module_4", "chair": "sandbox_chair", "spawn": {"node": "Forge/Relief", "offset": [0, -1.5, 3], "yaw": 0}},
+      "expect": {"objective": "part2_restore", "in_dream": true, "scene": "res://scenes/dreams/bowser_dream.tscn"}
+    },
+    {
+      "id": "part2_cooling_tuning",
+      "title": "Часть 2: настройка охлаждения модуля №4 по схеме",
+      "scene": "res://scenes/sandbox/stands/cooling_panel.tscn",
+      "spawn": {"node": "Stations/Module4Station/CoolingTuning", "offset": [0, 1, 3], "yaw": 0},
+      "state": {
+        "flags": ["opening/hero_capsule_open", "opening/left_emergency_block", "opening/reached_old_core", "opening/reached_old_control", "generator_started", "sandbox_generator_started", "sandbox_gen_diagnosed", "ctl/valve_2", "ctl/valve_1", "ctl/breaker_1", "ctl/breaker_2", "ctl/start_lever", "proc/sandbox_generator", "senior_key_taken", "caretaker_assigned", "containment_online", "opening/reached_module_4", "module4_ready", "dream/returned/module_4", "part2/recovery_map", "part2/dream_trace_2", "part2/lower_diagnosed", "proc/part2_lower_substation", "part2/lower_lab_reached", "part2/lower_post_reached", "part2/dir_lower_done", "part2/rule_3_4", "item_n2_link_part", "part2/n2_link_installed", "part2/n2_first_text", "part2/module4_crisis_resolved", "part2/module4_cooling_leak", "part2/module4_overheat", "part2/bowser_v2_seal", "part2/v2_done"],
+        "dream_schemes": {"module_4_cooling": 2},
+        "access": ["caretaker", "module_4"],
+        "section_power": {"sandbox_a": "main", "sandbox_b": "main", "lower_main": "main"},
+        "instability": {"module_4": 20},
+        "objective_chain": "part2"
+      },
+      "expect": {"objective": "part2_restore", "flags": ["part2/cooling_scheme"]}
     }
   ],
   "cheats": {

@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://objects/containment/cooling_gallery.tscn" id="1_gallery"]
+[ext_resource type="PackedScene" path="res://objects/terminal/terminal.tscn" id="2_terminal"]
+[ext_resource type="PackedScene" path="res://objects/containment/cooling_tuning_panel.tscn" id="3_tuning"]
+
+[node name="Module4Station" type="Node3D"]
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2, -3)
+pixel_size = 0.005
+text = "ЧАСТЬ 2 · КРИЗИС МОДУЛЯ 4 (#232)
+первый текст №2 → давление падает → починить сразу или ждать перегрева
+клавиша 7 — ускорить время ×10 или ×60; химпротокол — панель реагента у кресла
+справа — настройка охлаждения по схеме из сна Боузера, второе посещение (#234)"
+font_size = 40
+outline_size = 10
+
+[node name="CoolingGallery" parent="." instance=ExtResource("1_gallery")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="Post" parent="." instance=ExtResource("2_terminal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, -2)
+program_path = "res://data/terminals/opening_module4_post.json"
+section = &"sandbox_a"
+
+[node name="PostLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 2.5, -2)
+pixel_size = 0.004
+text = "ПОСТ МОДУЛЯ 4"
+font_size = 36
+outline_size = 10
+
+[node name="CoolingTuning" parent="." instance=ExtResource("3_tuning")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, -2)

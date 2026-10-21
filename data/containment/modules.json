@@ -24,7 +24,35 @@
     "repair_window_seconds": 180,
     "woken_window_factor": 0.4,
     "vent_seconds": 30,
-    "initial_reagent_stock": 1
+    "initial_reagent_stock": 0,
+    "reagent_item": "item_reagent_cylinder",
+    "reagent_item_used": "item_reagent_cylinder/used"
+  },
+  "service": {
+    "tool_flag": "item_gallery_tool",
+    "tool_time_factor": 0.5
+  },
+  "cooling": {
+    "module_4": {
+      "fails_when": {"flag": "part2/n2_first_text"},
+      "grace_seconds": 300,
+      "critical_pressure": 0.3,
+      "overheat_instability": 30,
+      "overheat_growth_per_minute": 12,
+      "seal_crack_instability": 10,
+      "dry_test_seconds": 3,
+      "repair_flag": "proc/part2_module4_cooling",
+      "trust_flag": "part2/n2_trust",
+      "trust_bonus": 1,
+      "flags": {
+        "leak": "part2/module4_cooling_leak",
+        "overheat": "part2/module4_overheat",
+        "believed": "part2/n2_believed",
+        "chem": "part2/chem_protocol_fired",
+        "resolved": "part2/module4_crisis_resolved",
+      "tuned": "part2/module4_cooling_tuned"
+      }
+    }
   },
   "modules": {
     "module_3": {

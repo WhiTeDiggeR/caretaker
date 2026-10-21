@@ -59,6 +59,21 @@
       "damage": 18,
       "attack_cooldown": 1.2,
       "stagger": 0.35
+    },
+    "hammer": {
+      "health": 120,
+      "patrol_speed": 1.0,
+      "chase_speed": 2.6,
+      "sight": 14.0,
+      "patrol_radius": 3.0,
+      "attack_range": 2.2,
+      "windup": 0.9,
+      "damage": 30,
+      "push": 2.0,
+      "attack_cooldown": 1.8,
+      "stagger": 0.2,
+      "look": "hammer",
+      "eye_height": 0.75
     }
   },
   "ambushes": {
@@ -69,6 +84,21 @@
       "art": "res://loads/props/dream_shade_guard/dream_shade_guard.gltf",
       "art_material": "res://materials/dream_bowser/shadow.tres",
       "art_eye_height": 1.39
+    },
+    "bowser_forge": {
+      "assemble_seconds": 1.5,
+      "guards": [
+        {"enemy": "shade", "count": 2, "art": "res://loads/props/dream_shade_guard/dream_shade_guard.gltf", "art_material": "res://materials/dream_bowser/shadow.tres", "art_eye_height": 1.39},
+        {"enemy": "hammer", "count": 1}
+      ],
+      "by_stage": {
+        "unrest": {
+          "guards": [
+            {"enemy": "shade", "count": 3, "art": "res://loads/props/dream_shade_guard/dream_shade_guard.gltf", "art_material": "res://materials/dream_bowser/shadow.tres", "art_eye_height": 1.39},
+            {"enemy": "hammer", "count": 1}
+          ]
+        }
+      }
     }
   }
 }
