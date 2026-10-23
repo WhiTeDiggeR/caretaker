@@ -83,6 +83,6 @@ godot --headless --editor --path . --quit
 ## Проверка
 
 - `bash tools/ci/run_checks.sh`.
-- Рендер капсулы в `scenes/sandbox/capsule_compare.tscn`: морда читается через стекло, ничего не торчит сквозь стекло и пол.
+- Рендер капсулы: морда читается через стекло, ничего не торчит сквозь стекло и пол.
 - Новые бинарные файлы (`.bin`, текстуры) идут через Git LFS (`docs/LFS.md`).
 - Источник, промпт и лицензию записать в issue и в `docs/art/prop-catalog.md`.
